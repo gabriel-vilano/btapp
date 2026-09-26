@@ -40,13 +40,28 @@ describe("formatCategoryLabel", () => {
 });
 
 describe("formatEnrollmentCount", () => {
-  it("conta duplas em categoria de duplas", () => {
-    expect(formatEnrollmentCount(16, "doubles")).toBe("16 duplas inscritas");
-    expect(formatEnrollmentCount(1, "doubles")).toBe("1 dupla inscrita");
+  const singlesB: Category = { ...doublesB, modality: "singles" };
+
+  it("conta duplas em categoria de duplas, em qualquer gênero", () => {
+    expect(formatEnrollmentCount(16, doublesB)).toBe("16 duplas inscritas");
+    expect(formatEnrollmentCount(1, doublesB)).toBe("1 dupla inscrita");
+    expect(formatEnrollmentCount(16, { ...doublesB, gender: "F" })).toBe("16 duplas inscritas");
+    expect(formatEnrollmentCount(16, { ...doublesB, gender: "mixed" })).toBe("16 duplas inscritas");
   });
 
-  it("conta jogadores em categoria de simples", () => {
-    expect(formatEnrollmentCount(24, "singles")).toBe("24 jogadores inscritos");
-    expect(formatEnrollmentCount(1, "singles")).toBe("1 jogador inscrito");
+  it("conta jogadores em categoria masculina de simples", () => {
+    expect(formatEnrollmentCount(24, singlesB)).toBe("24 jogadores inscritos");
+    expect(formatEnrollmentCount(1, singlesB)).toBe("1 jogador inscrito");
+  });
+
+  it("conta jogadoras em categoria feminina de simples", () => {
+    const singlesF: Category = { ...singlesB, gender: "F" };
+    expect(formatEnrollmentCount(12, singlesF)).toBe("12 jogadoras inscritas");
+    expect(formatEnrollmentCount(1, singlesF)).toBe("1 jogadora inscrita");
+  });
+
+  // O banco bloqueia mista em simples (§11.5); o tipo ainda permite, então cai no masculino genérico
+  it("usa jogadores em simples mista", () => {
+    expect(formatEnrollmentCount(8, { ...singlesB, gender: "mixed" })).toBe("8 jogadores inscritos");
   });
 });

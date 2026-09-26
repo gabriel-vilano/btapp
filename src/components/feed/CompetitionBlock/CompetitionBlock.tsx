@@ -45,7 +45,7 @@ export function CompetitionBlock({ competition }: CompetitionBlockProps) {
         </span>
         <span className={styles.block__line}>
           <Icon icon={UsersIcon} size="sm" weight="regular" />
-          <span>{formatEnrollmentCount(enrollment_count, category.modality)}</span>
+          <span>{formatEnrollmentCount(enrollment_count, category)}</span>
         </span>
       </div>
     </div>
