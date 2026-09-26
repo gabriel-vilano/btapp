@@ -1,5 +1,7 @@
 # 08 — Plano de validação
 
+> **Suspenso desde 26/09.** Não há pesquisa com usuários por agora: o app é construído a partir das decisões do Gabriel. Este plano fica guardado, não descartado, para quando entrevistas e Tally voltarem. As respostas já dadas às perguntas 3 e 6 do [`README.md`](README.md) valem quando a pesquisa voltar.
+
 Para as suposições mais arriscadas do [`01-mapa-suposicoes.md`](01-mapa-suposicoes.md): **qual método usar com pessoas reais, com quem, e o que perguntar**. Quatro métodos: entrevista de troca, observação num torneio, pontuação de oportunidade com Kano no Tally, e *tree testing* da navegação.
 
 Códigos de fonte no [`README.md`](README.md).
