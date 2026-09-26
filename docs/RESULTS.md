@@ -19,7 +19,9 @@ As siglas de decisão são as do `docs/DOMAIN.md` > "Fontes". As que esta spec u
 | **REF-NAV** | `docs/discovery/referencias/07-navegacao.md`: registrar resultado no contexto, badge só para o crítico ("resultado a confirmar é crítico") |
 | **INV** | `docs/discovery/referencias/inventario-componentes.md`: ScoreInput, PendingResultCard, StatusTimeline, SidePicker e primitivos |
 | **DSC** | `docs/DISCOVERY.md`: oportunidade 2.1 (registro com confirmação e prazo, a dor com mais evidência), H1 (cold start de dados), H2 (o jogador aceita registrar no app) |
-| **LEIT** | Leitura do agente desta spec, derivada das fontes acima. Vira regra só com a confirmação do Gabriel (seção 10) |
+| **NAV** | `docs/NAVIGATION.md`, spec da navegação e agenda (em aprovação): a partida como casa do resultado, atalhos, fluxos modais, pendências do admin |
+| **DEC-RES** | Respostas do Gabriel às perguntas P1–P7 desta spec e confirmação das leituras L1–L10 (comentário na issue desta spec, 26/09, ~23:37 UTC) |
+| **LEIT** | Leitura do agente desta spec, derivada das fontes acima e confirmada pelo Gabriel na DEC-RES. A lista está na seção 10 |
 
 ---
 
@@ -35,9 +37,9 @@ As siglas de decisão são as do `docs/DOMAIN.md` > "Fontes". As que esta spec u
 
 ## 2. Pontos de entrada
 
-Esta seção segue a **proposta da spec de navegação e agenda** (comentário na issue desta spec, 26/09), que ainda não foi aprovada pelo Gabriel. Se ela mudar na revisão, esta seção muda junto. A base já decidida é o `DOMAIN.md` §4: registro contextual, sem aba própria (DEC-JOGOS).
+**Esta seção acompanha a spec de navegação** (NAV), por decisão do Gabriel (DEC-RES P7). A NAV ainda está em aprovação: se ela mudar, esta seção muda junto, e as rotas que ela propõe são proposta dela, não decisão daqui. Já decidido lá: ao abrir uma partida a partir de outra aba (ex.: o Feed), **a aba de origem continua marcada**. A base é o `DOMAIN.md` §4: registro contextual, sem aba própria (DEC-JOGOS).
 
-- **RG1. A tela do confronto é a casa do resultado.** Uma tela por partida, dentro da aba Jogos, mostra conforme o estado: a marcação (SCHED §6), "Lançar resultado", a resposta com o prazo, a arbitragem e o resultado final. Toda entrada leva a ela, então o registro tem **um lugar só**. Não existe aba nem botão global "Registrar resultado" para ranking e torneio, porque o sorteio (R7) ou o cadastro do torneio (R31) já criaram a partida. [DOMAIN §4, REF-NAV caminho A, proposta de navegação]
+- **RG1. A tela do confronto é a casa do resultado.** Uma tela por partida, dentro da aba Jogos, mostra conforme o estado: a marcação (SCHED §6), "Lançar resultado", a resposta com o prazo, a arbitragem e o resultado final. Toda entrada leva a ela, então o registro tem **um lugar só**. Não existe aba nem botão global "Registrar resultado" para ranking e torneio, porque o sorteio (R7) ou o cadastro do torneio (R31) já criaram a partida. [DOMAIN §4, REF-NAV caminho A, NAV, DEC-RES P7]
 - **RG2. A pendência de resposta tem badge; as outras, não.** "Resultado a confirmar" muda o ranking de outra pessoa e tem prazo (R14), por isso ganha contagem na navegação. "Resultado a lançar" não tem prazo curto além da rodada. [REF-NAV, "badge só para o crítico"; LEIT]
 
 | Entrada | Quem vê | Abre |
@@ -48,11 +50,11 @@ Esta seção segue a **proposta da spec de navegação e agenda** (comentário n
 | **Item "Responder resultado"** nas pendências e notificação de resultado lançado | O lado adversário de quem lançou | A tela do confronto, já rolada até o resultado (§4.1). Responder não tem tela própria |
 | **Card "Confronto definido" do feed** | Todos | Para os jogadores da partida, a tela do confronto; para os outros, o detalhe público da partida, sem ações. O card não tem botão de lançar |
 | **"Registrar amistoso"** no topo da aba Jogos | Qualquer jogador | O fluxo do amistoso (§6) |
-| **Pendências do admin** na aba Jogos do admin, separadas das dele como jogador | Os admins da competição | A tela de decisão da partida (§5). Ainda é pergunta na spec de navegação |
+| **Pendências do admin** numa seção "Como admin" da aba Jogos, separada das pendências dele como jogador | Os admins da competição | A tela de decisão da partida (§5). O lugar ainda é pergunta na NAV |
 
 **O perfil do adversário não é ponto de entrada**: ele serve ao JTBD 3, e um botão de lançar ali duplicaria o lugar da ação.
 
-O fluxo de lançar abre em tela cheia **sobre** a tela do confronto. Voltar ou concluir devolve ao confronto, que já mostra o novo estado.
+A tela do confronto mantém a tab bar. **O fluxo de lançar é modal em tela cheia**: cobre a tab bar, tem "Fechar", e fechar ou concluir devolve ao confronto, que já mostra o novo estado. O registro de amistoso segue o mesmo padrão. "Confirmar" não pula direto para nenhum fluxo: abre a partida, porque o jogador precisa ver o placar antes de responder. [NAV]
 
 ---
 
@@ -74,7 +76,7 @@ flowchart LR
     F -->|Enviar| G[Aguardando confirmação]
 ```
 
-Uma tela só, com rolagem, e não um passo a passo em várias telas: o caso comum (jogo normal, 1 set) cabe inteiro em 393px. A revisão é uma folha (bottom sheet) sobre ela.
+Uma tela só (o modal em tela cheia da §2), com rolagem, e não um passo a passo em várias telas: o caso comum (jogo normal, 1 set) cabe inteiro em 393px. A revisão é uma folha (bottom sheet) sobre ela.
 
 ### 3.1 Cabeçalho da partida
 
@@ -92,23 +94,26 @@ Um controle de escolha única (SegmentedControl ou grupo de rádio) com três op
 | **Adversário desistiu** | Desistência | Placar até a desistência (§3.4) |
 | **Adversário não veio** | W.O. | Sem placar (§3.5) |
 
-- **RG4. A desistência e o W.O. são sempre a favor de quem lança.** Na desistência, a regra já diz que quem lança é o adversário de quem desistiu (R11). No W.O., o código aceita qualquer vencedor, mas lançar "eu não fui" não acontece na prática; se acontecer, o outro lado lança. As opções são escritas do ponto de vista de quem lança, e o vencedor não é perguntado. [R11; LEIT]
+- **RG4. A desistência e o W.O. são sempre a favor de quem lança.** Na desistência, a regra já diz que quem lança é o adversário de quem desistiu (R11). No W.O., o código aceita qualquer vencedor, mas lançar "eu não fui" não acontece na prática; se acontecer, o outro lado lança. As opções são escritas do ponto de vista de quem lança, e o vencedor não é perguntado. Hoje a máquina de estados aceita o W.O. lançado por jogador nas duas direções; a trava entra no código numa issue própria. [R11; LEIT, confirmada na DEC-RES]
 - **RG5. O vencedor do jogo normal sai do placar**, nunca de um campo à parte. Assim o erro `winner_mismatch` do `validateScore` fica impossível na interface. [R29; LEIT]
 
 ### 3.3 Placar do jogo normal
 
-O placar é **obrigatório**: a pontuação depende dos games (R9), e o H2H e o perfil usam o placar. A forma de entrada é a pergunta P1. A recomendação, detalhada lá, é **"quem venceu o set + games de quem perdeu"**:
+O placar é **obrigatório**: a pontuação depende dos games (R9), e o H2H e o perfil usam o placar.
+
+- **RG12. Cada set completo se informa em dois passos: quem venceu o set e quantos games fez quem perdeu.** O vencedor vem de uma escolha entre os dois lados; os games do perdedor, de um grupo de chips com os valores que o formato admite (0 a 6 no set de 6; 0 a 8 no set de 8). O app monta o placar: escolher 5 no set de 6 dá 7/5; escolher 6 dá 7/6 (R29). Só existem placares válidos. [DEC-RES P1]
+- **RG13. A prévia do placar aparece ao vivo enquanto o jogador escolhe**, escrita do ponto de vista dele ("6/4 para vocês", "4/6 para Lucas e Rafael"). É o que evita marcar o vencedor errado, o único erro que a RG12 ainda permite. [DEC-RES P1]
 
 ```
 Set 1 · até 6
   Quem venceu o set?   [ Você e Pedro ]  [ Lucas e Rafael ]
   Games de Lucas e Rafael:  (0) (1) (2) (3) (4) (5) (6)
-                                              → 6/4
+  → 6/4 para vocês
 ```
 
-- Cada set completo sai de **2 toques**, e só existem placares válidos: escolher 5 no set de 6 dá 7/5; escolher 6 dá 7/6 (R29).
+- Cada set completo sai de **2 toques**.
 - **Os sets aparecem conforme a partida pede.** No formato de 2 sets, o 2º set aparece depois do 1º; o super tiebreak aparece só no 1 set a 1, com dois campos numéricos (pontos, a partir de 10, com 2 de vantagem). Quem fechou 2 sets a 0 nunca vê o STB. Isso torna impossíveis os erros `too_many_sets`, `set_type` e `undecided` no fluxo normal.
-- **A prévia do placar** usa o `ScoreBlock` do feed (CARDS §3): o jogador vê o placar "como vai ficar" no card.
+- **A prévia da partida inteira** usa o `ScoreBlock` do feed (CARDS §3): além da frase da RG13, o jogador vê o placar "como vai ficar" no card.
 
 ### 3.4 Placar da desistência
 
@@ -124,12 +129,12 @@ Sem placar (R10). A tela mostra uma linha de contexto: "W.O. vale 100 para quem 
 ### 3.6 Revisão e envio
 
 - **RG7. Todo lançamento passa por uma revisão antes do envio**: lados, tipo, placar (completado, na desistência) e "Lucas ou Rafael têm até qui, 20h, para confirmar. Sem resposta, o resultado vale." O botão primário é **Enviar resultado**; o secundário, **Corrigir**. [R14; WCAG 3.3.4 aplicado por analogia (REF-PLACAR); LEIT]
-- Os **pontos previstos** entram na revisão ou não conforme a pergunta P5.
+- **RG14. Os pontos previstos aparecem antes de confirmar**, na revisão de quem lança e na tela de quem responde (§4.1): "Se confirmado: +110 para vocês, +40 para Lucas e Rafael." Só no ranking, que é o único que pontua; o cálculo é o do `matchPoints`, com o placar completado na desistência. [DEC-RES P5]
 - Depois do envio, a tela do confronto passa ao estado **Aguardando confirmação** (§4.3), com um Toast "Resultado enviado a Lucas e Rafael".
 
 ### 3.7 Validação e mensagens
 
-Com a entrada recomendada, quase nenhum erro de placar chega ao jogador. Os `code` do `validateScore` continuam cobertos, para a entrada escolhida na P1 e para o servidor, que sempre valida de novo:
+Com a entrada da RG12, quase nenhum erro de placar chega ao jogador. Os `code` do `validateScore` continuam cobertos, porque o servidor sempre valida de novo e o set interrompido e o STB usam campos numéricos:
 
 | `code` | Quando pode aparecer | Mensagem ao jogador |
 | --- | --- | --- |
@@ -167,6 +172,7 @@ Quem responde é qualquer jogador do lado adversário de quem lançou (R13). A r
 Lucas lançou o resultado · ter, 21h10
   [ScoreBlock: Lucas e Rafael 6 · Você e Pedro 4]
   Rodada 3 · Masculino B · 1 set de 6
+  Se confirmado: +40 para vocês, +110 para Lucas e Rafael
   Confirma sozinho em 18h (qui, 21h10)
   [ Confirmar ]            ← primário
   [ Contestar ]            ← secundário
@@ -178,7 +184,9 @@ Lucas lançou o resultado · ter, 21h10
 
 ### 4.2 Contestar
 
-Contestar abre uma folha de confirmação com o que acontece depois: "O resultado vai para o admin do Ranking BH, que define o placar. Até lá, a partida não pontua." O conteúdo da contestação (motivo, placar lembrado) é a pergunta P2. Hoje o modelo guarda só quem contestou e quando (`ReportResponse`).
+Contestar abre uma folha com o que acontece depois: "O resultado vai para o admin do Ranking BH, que define o placar. Até lá, a partida não pontua."
+
+- **RG15. A contestação pede um motivo, obrigatório, numa lista curta:** placar diferente · outro vencedor · o jogo não aconteceu · outro. Com "placar diferente", o jogador pode informar o placar que lembra, com a mesma entrada da §3.3 (opcional). O admin vê os dois na arbitragem (§5.1). Hoje o modelo guarda só quem contestou e quando (`ReportResponse`): o campo do motivo entra numa issue própria. [DEC-RES P2]
 
 Depois de contestar, a partida entra **Em arbitragem** para os 4 jogadores.
 
@@ -195,11 +203,17 @@ Todos os jogadores da partida veem o estado dela na tela do confronto, como uma 
 
 - **RG11. Todo ato de admin sobre a partida fica visível aos jogadores dela**, com o nome de quem agiu e quando. A R39 exige isso para a arbitragem da própria partida; a leitura estende a todos os atos (arbitragem, W.O., correção, anulação), porque o jogador que perdeu pontos precisa saber quem mexeu. [R39; LEIT]
 
+### 4.4 Desfazer o lançamento
+
+- **RG16. Quem lançou pode desfazer o lançamento enquanto ninguém do outro lado respondeu.** A ação fica num menu da tela do confronto, no estado Aguardando confirmação, e pede confirmação. A partida volta para Confronto definido, e o lançamento desfeito fica no histórico da partida. Depois da primeira resposta, o caminho é a contestação ou o admin. [DEC-RES P3]
+
+  **Pede uma regra nova no domínio:** a máquina de estados da partida (`DOMAIN.md` §3) não tem essa transição. A regra e o código entram numa issue própria; até lá, esta tela não tem o menu.
+
 ---
 
 ## 5. Admin
 
-A fila do admin reúne o que só ele resolve (R15). A proposta de navegação a põe nas pendências da aba Jogos do próprio admin, separada das dele como jogador, com a alternativa de entrar pela página da competição; a decisão é da spec de navegação (P7). O conteúdo:
+A fila do admin reúne o que só ele resolve (R15). A NAV a põe numa seção "Como admin" da aba Jogos, separada das pendências dele como jogador, com a alternativa de entrar pela página da competição; a escolha é da NAV (§2). O conteúdo:
 
 | Item da fila | Origem | Ação |
 | --- | --- | --- |
@@ -211,7 +225,7 @@ A fila é ordenada pela idade do item, mais antigo primeiro, e cada item mostra 
 
 ### 5.1 Arbitrar a contestação
 
-A tela mostra o placar lançado, quem lançou e quando, quem contestou e quando (e o motivo, se a P2 criar um). O admin escolhe:
+A tela mostra o placar lançado, quem lançou e quando, quem contestou e quando, o motivo e, se houver, o placar que quem contestou lembra (RG15). O admin escolhe:
 
 - **Manter o resultado lançado:** um toque, com confirmação.
 - **Definir outro resultado:** o mesmo formulário da §3, já preenchido com o lançado, e o admin escolhe também o vencedor na desistência e no W.O. (a RG4 vale só para jogadores).
@@ -248,7 +262,8 @@ O amistoso nasce do lançamento (R42) e não tem admin nem prazo (R43).
 A tela tem, nesta ordem:
 
 1. **Modalidade:** simples ou duplas (R44).
-2. **Lados** (SidePicker): o jogador já está no lado dele; escolhe o parceiro, em duplas, e o adversário ou os adversários. Quem pode ser escolhido é a pergunta P6.
+2. **Lados** (SidePicker): o jogador já está no lado dele; escolhe o parceiro, em duplas, e o adversário ou os adversários.
+   - **RG17. Pode ser escolhido qualquer jogador com conta, e os amigos aparecem primeiro na busca.** O outro lado confirma de qualquer jeito (R43), então o risco de abuso é baixo. [DEC-RES P6]
 3. **Data e arena:** data obrigatória, com hoje como padrão, sem data no futuro; arena opcional, em texto (o modelo guarda `played_at` e `venue`).
 4. **Formato:** um dos três, escolhido por quem lança (R29). O padrão é o do último amistoso do jogador, ou "1 set de 6" no primeiro.
 5. **Como terminou:** só "Jogamos até o fim" e "Adversário desistiu". **Não há W.O.** (R44).
@@ -275,6 +290,7 @@ Entrada para a spec de notificações básicas, que decide canal e política, co
 | Resultado lançado pelo parceiro | O parceiro de quem lançou | "Pedro lançou 6/4 contra Lucas e Rafael." |
 | Prazo de resposta chegando (6h antes) | Os 2 do lado adversário, se ninguém respondeu | "O resultado contra Pedro e você confirma sozinho em 6h." |
 | Resultado confirmado (qualquer via) | Os 3 que não confirmaram (ou os 4, pelo prazo ou pelo admin) | "Resultado confirmado: +110 pts. Você está em 3º." |
+| Lançamento desfeito (RG16) | Os 2 do lado adversário | "Pedro desfez o resultado lançado. O jogo volta a esperar o resultado." |
 | Resultado contestado | O lado de quem lançou | "Lucas contestou o resultado. O admin vai decidir." |
 | Admin decidiu, corrigiu ou anulou | Os 4 | "Ana (admin) corrigiu o placar para 6/3." |
 | Item novo na fila do admin | Os admins da competição | "1 contestação no Ranking BH · Masculino B." |
@@ -291,7 +307,7 @@ Entrada para a spec de notificações básicas, que decide canal e política, co
 
 É o momento do JTBD 2. A tabela atualiza ao vivo a cada confirmação (R46), então a posição já mudou quando a partida confirma. O evento "subiu N" do feed continua comparando fins de rodada (R46): **esta seção trata só do que o próprio jogador vê**, não de publicação.
 
-O que aparece, e para quem, é a pergunta P4. A recomendação, na tela do confronto (RG1) logo depois da confirmação:
+- **RG18. Logo depois da confirmação, a tela do confronto mostra os pontos da partida, a posição atual ao vivo e o delta desde antes desta partida**, para quem confirmou. Os outros jogadores recebem o mesmo na notificação (§7) e veem o bloco ao abrir a partida. O delta compara com a posição antes desta partida, não com o início da rodada: mostra a causa direta. [DEC-RES P4]
 
 ```
 Resultado confirmado
@@ -324,13 +340,13 @@ Lista para a auditoria do design system, que roda em paralelo. **Aqui não se de
 | Componente | Tier | Onde aparece | Existe? |
 | --- | --- | --- | --- |
 | **ScoreInput** (set a set, com set interrompido e STB) | 2 | §3.3, §3.4, §5, §6 | Não. É o de maior risco técnico (INV) |
-| **Stepper** (APG Spinbutton) | 1 | Set interrompido (§3.4); também na P1, opção C | Não |
-| **Chip** em grupo de escolha única (radio) | 1 | Games de quem perdeu o set (§3.3, recomendação da P1) | Não |
+| **Stepper** (APG Spinbutton) | 1 | Set interrompido (§3.4) | Não |
+| **Chip** em grupo de escolha única (radio) | 1 | Games de quem perdeu o set (RG12), motivo da contestação (RG15) | Não |
 | **SegmentedControl** | 1 | "Como terminou" (§3.2), modalidade (§6.1) | Não |
 | **SidePicker** | 2 | Lados do amistoso (§6.1) | Não |
 | **PendingResultCard** | 2 | Bloco de pendências, agenda, tela de resposta (§4.1) | Não |
 | **StatusTimeline** | 2 | Acompanhar (§4.3), atos do admin (RG11) | Não |
-| **BottomSheet / Dialog** | 1 | Revisão (RG7), contestar (§4.2), anular (§5.4) | Não |
+| **BottomSheet / Dialog** | 1 | Revisão (RG7), contestar (RG15), desfazer (RG16), anular (§5.4) | Não |
 | **Badge** | 1 | "Aguardando confirmação", "Em arbitragem", "Corrigido" | Parcial: estilos locais no card de resultado e no bloco de ranking |
 | **DeltaIndicator** | 1 | Impacto no ranking (§8.1) | Parcial: `.delta` local no bloco de ranking |
 | **CountBadge** | 1 | Badge de pendência de resposta (RG2) | Não |
@@ -340,38 +356,16 @@ Lista para a auditoria do design system, que roda em paralelo. **Aqui não se de
 
 ---
 
-## 10. Leituras e perguntas
+## 10. Leituras e perguntas respondidas
 
-### Leituras do agente
+Não há pergunta aberta. As leituras do agente e as perguntas desta spec foram respondidas pelo Gabriel na DEC-RES:
 
-Derivadas das regras e das referências, marcadas `LEIT` no texto. Viram regra com a confirmação do Gabriel:
+- **Leituras confirmadas:** L1 → RG1 (só o amistoso não parte de uma partida existente); L2 → RG2 (badge só na pendência de resposta); L3 → RG3 (lados fixos no ranking); L4 → RG4 (desistência e W.O. a favor de quem lança); L5 → RG5 (vencedor sai do placar); L6 → RG6 (placar completado da desistência antes do envio; desistência antes do primeiro game é 0/0 interrompido); L7 → RG7, RG8 (revisão e falha de rede); L8 → RG9, RG10 (prazo e peso das ações); L9 → RG11 (atos do admin visíveis); L10 → §6.2 (amistoso descartado ou cancelado no histórico de quem lançou).
+- **Perguntas respondidas:** P1 → RG12, RG13 (entrada do placar, com prévia ao vivo); P2 → RG15 (motivo da contestação); P3 → RG16 (desfazer o lançamento); P4 → RG18 (impacto no ranking); P5 → RG14 (pontos previstos); P6 → RG17 (quem entra no amistoso); P7 → §2 (acompanha a NAV).
 
-- **L1.** Só a entrada do amistoso não parte de uma partida existente (RG1); o resto segue a proposta de navegação.
-- **L2.** Só a pendência de resposta ganha badge (RG2).
-- **L3.** Os lados do ranking não se editam no lançamento (RG3).
-- **L4.** Desistência e W.O. lançados por jogador são sempre a favor de quem lança (RG4).
-- **L5.** O vencedor sai do placar (RG5).
-- **L6.** O placar completado da desistência aparece antes do envio (RG6); desistência antes do primeiro game é 0/0 interrompido.
-- **L7.** Todo lançamento passa por revisão (RG7), e a falha de rede não perde o preenchimento (RG8).
-- **L8.** O prazo aparece em contagem e data absoluta (RG9); confirmar é primário, contestar é secundário (RG10).
-- **L9.** Todo ato de admin fica visível aos jogadores da partida (RG11).
-- **L10.** Amistoso descartado ou cancelado sai da agenda e fica no histórico de quem lançou (§6.2).
+**Mudanças de domínio que as decisões pedem**, fora deste doc: a transição de desfazer o lançamento (RG16, com regra nova no `DOMAIN.md`), o campo do motivo da contestação (RG15) e a trava do W.O. a favor de quem lança (RG4). Cada uma vira issue de implementação.
 
-### Perguntas para o Gabriel
-
-As perguntas, com opções, trade-offs e recomendação, estão no comentário de Needs Decision da issue desta spec. Resumo:
-
-| # | Pergunta | Recomendação |
-| --- | --- | --- |
-| **P1** | Como o jogador digita o placar de um set? | "Quem venceu o set + games de quem perdeu": 2 toques, só placares válidos |
-| **P2** | A contestação pede motivo? | Sim: lista curta obrigatória e placar lembrado opcional |
-| **P3** | Quem lançou pode desfazer o próprio lançamento antes da resposta? | Sim, enquanto ninguém respondeu. Pede uma regra nova no `DOMAIN.md` |
-| **P4** | O que o jogador vê logo depois da confirmação? | Tela de impacto para quem confirma; notificação com o impacto para os outros; delta desde antes desta partida |
-| **P5** | Os pontos previstos aparecem antes de confirmar? | Sim, na revisão e na tela de resposta |
-| **P6** | Quem pode ser adversário ou parceiro no amistoso? | Qualquer jogador com conta, amigos primeiro |
-| **P7** | A §2 segue a proposta da spec de navegação, ainda não aprovada. Confirma? | Sim. A fila do admin (aba Jogos ou página da competição) é decidida na spec de navegação |
-
-Pergunta respondida sai daqui e vira regra RG ou ajuste de seção.
+Pergunta nova sobre o registro de resultado entra aqui com opções, trade-offs e recomendação, e sai quando vira regra.
 
 ---
 
@@ -385,7 +379,7 @@ Medidas por rodada no beta. Sem meta fixa: a primeira rodada define a linha de b
 | **Tempo de preenchimento** | Mediana entre abrir o formulário e enviar | Mede o princípio da §1. Um set de 6 deveria sair em menos de 30 segundos (**meta de referência do agente**, a validar no beta) |
 | **Via da confirmação** | % confirmados pelo adversário, pelo prazo e pelo admin | O risco da confirmação automática (`DOMAIN.md` §7). Muito "pelo prazo" quer dizer que o adversário não abre o app |
 | **Taxa de contestação** | % dos lançamentos contestados, e % das arbitragens que mudam o placar | Contestação alta com placar mantido sugere contestação por engano ou tática |
-| **Erros de validação** | Envios recusados por `code` do `validateScore` | Com a entrada da P1, deveria ser quase zero. Se não for, a entrada tem um furo |
+| **Erros de validação** | Envios recusados por `code` do `validateScore` | Com a entrada da RG12, deveria ser quase zero. Se não for, a entrada tem um furo |
 | **Correções do admin** | Correções depois da confirmação, por rodada | Resultado errado que passou pela confirmação |
 | **Amistosos pendentes** | Amistosos sem resposta há mais de 7 dias | Risco já registrado no `DOMAIN.md` §7 |
 
@@ -394,7 +388,8 @@ Medidas por rodada no beta. Sem meta fixa: a primeira rodada define a linha de b
 ## 12. Riscos para acompanhar no beta
 
 - **O adversário não abre o app.** O resultado confirma pelo prazo (R14) e o erro passa. A notificação de prazo chegando (§7) é a mitigação; a métrica "via da confirmação" mostra se basta.
-- **Lançamento errado sem saída para quem lançou.** Sem a P3, quem errou depende do adversário contestar ou do admin corrigir, e a fila do admin cresce com erro de digitação.
+- **Lançamento errado antes do desfazer existir.** Até a transição da RG16 entrar no domínio, quem errou depende do adversário contestar ou do admin corrigir, e a fila do admin cresce com erro de digitação.
+- **Desfazer como tática.** A RG16 permite desfazer até a primeira resposta. Se lançamentos desfeitos e relançados com outro placar ficarem frequentes, pesar um limite (uma vez por partida, ou uma janela curta).
 - **O set interrompido é o caso mais difícil de entender.** A desistência é rara, e o jogador vai ver o placar completado (RG6) sem ter visto a regra antes. Acompanhar contestações de desistência.
-- **Contestação como tática.** Contestar congela a pontuação até o admin decidir. Se a taxa de contestação com placar mantido for alta, pesar um custo para contestar (ex.: motivo obrigatório, que a P2 já recomenda).
+- **Contestação como tática.** Contestar congela a pontuação até o admin decidir. Se a taxa de contestação com placar mantido for alta, o motivo obrigatório (RG15) já é um custo pequeno; se não bastar, rever.
 - **O impacto no ranking na derrota.** Mostrar a queda logo depois da confirmação pode frustrar (`PRODUCT.md`, "descer frustra"). Ouvir os jogadores no beta.
