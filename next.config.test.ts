@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { findExposedSecrets } from "./next.config";
+import { findExposedSecrets, supabaseStorageImagePattern } from "./next.config";
 
 // Fixtures montados em partes para o secret scanning do GitHub (repo público)
 // não tratar valores de teste como credenciais reais
@@ -71,5 +71,42 @@ describe("findExposedSecrets", () => {
     );
 
     expect(serialized).not.toContain("valor-que-nao-pode-vazar");
+  });
+});
+
+describe("supabaseStorageImagePattern", () => {
+  it("restringe ao host do projeto em produção, sem porta e só no Storage público", () => {
+    expect(supabaseStorageImagePattern("https://exemplo.supabase.co")).toEqual({
+      protocol: "https",
+      hostname: "exemplo.supabase.co",
+      port: "",
+      pathname: "/storage/v1/object/public/**",
+    });
+  });
+
+  it("cobre o Supabase local da CI E2E (http, IP e porta explícita)", () => {
+    expect(supabaseStorageImagePattern("http://127.0.0.1:54321")).toEqual({
+      protocol: "http",
+      hostname: "127.0.0.1",
+      port: "54321",
+      pathname: "/storage/v1/object/public/**",
+    });
+  });
+
+  it("não lança sem a variável: o build da CI roda sem o Supabase", () => {
+    expect(supabaseStorageImagePattern(undefined)).toBeNull();
+    expect(supabaseStorageImagePattern("")).toBeNull();
+  });
+
+  it("recusa valor que não é URL, citando o valor recebido", () => {
+    expect(() => supabaseStorageImagePattern("exemplo.supabase.co")).toThrow(
+      "recebi 'exemplo.supabase.co'"
+    );
+  });
+
+  it("recusa protocolo que não é http nem https", () => {
+    expect(() => supabaseStorageImagePattern("ftp://exemplo.supabase.co")).toThrow(
+      "recebi o protocolo 'ftp:'"
+    );
   });
 });
