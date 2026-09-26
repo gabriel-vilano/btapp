@@ -27,7 +27,7 @@ Os **pontos de falha** (⚠) marcam onde a evidência mostra o serviço quebrand
 
 **Analogia com design:** é a diferença entre a tela do Figma e o arquivo inteiro com as camadas abertas. O jogador vê a tela; o blueprint mostra as camadas escondidas que fazem a tela existir, e qual delas está sem nome, solta ou quebrada.
 
-**O cenário:** um torneio amador de fim de semana, com chancela de federação estadual, 1 a 3 dias, em arena com 4 a 10 quadras. É o formato com mais evidência lida na íntegra (regulamento da FET, `JOR` REG1) e com mais voz de jogador. O ranking de arena (desafio) tem outro blueprint, mais simples, descrito no fim.
+**O cenário:** um torneio amador de fim de semana, com chancela de federação estadual, 1 a 3 dias, em arena com 4 a 10 quadras. É o formato com mais evidência lida na íntegra (regulamento da FET, `JOR` REG1) e com mais voz de jogador. O ranking de arena (escada de desafio, como aparece na evidência) tem outro blueprint, mais simples, descrito no fim.
 
 ---
 
@@ -139,6 +139,8 @@ Um ponto de falha **transversal**, que atravessa as quatro fases: **não há res
 ## Variação: ranking de arena (escada de desafio)
 
 Mais simples, contínuo e com outro dono do resultado. Resumo a partir do `JOR` 2 (dois regulamentos lidos na íntegra).
+
+> Descreve o mercado, não o LetzPlay. O LetzPlay não modela a escada de desafio: o ranking dele segue temporada → rodadas → sorteio dos confrontos lançado pelo admin do ranking (spec de entidades e relações do domínio).
 
 ```mermaid
 sequenceDiagram

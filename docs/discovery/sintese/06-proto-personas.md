@@ -83,7 +83,7 @@ As posições são hipótese. A persona de organizador (P6) não entra no gráfi
 | --- | --- |
 | **Comportamento-chave** | Disputa a escada de desafio da arena onde tem aula; combina data e quadra no WhatsApp; tem dupla principal |
 | **Motivação** | Pertencimento com competição: jogar com a turma, e ter um motivo para jogar |
-| **Formato** | Ranking de arena (desafio), às vezes somado aos torneios da casa |
+| **Formato** | Ranking de arena (escada de desafio, na evidência), às vezes somado aos torneios da casa. O LetzPlay não modela a escada de desafio: o ranking dele segue temporada → rodadas → sorteio dos confrontos lançado pelo admin do ranking (spec de entidades e relações do domínio). |
 | **Etapas do job em que mais dói** | 4 · confirmar (marcar o jogo), 6 · monitorar (o gestor não atualiza) |
 | **Forças dominantes** | Hábito: o grupo de WhatsApp já resolve. Empurrão: "2 meses e os jogos ainda estão pendentes" |
 

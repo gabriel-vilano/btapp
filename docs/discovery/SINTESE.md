@@ -52,7 +52,7 @@ Lançamento pelo jogador, confirmação do adversário, prazo e auto-aprovação
 | Tipo | Evidência |
 | --- | --- |
 | R | Rankings de arena no LetzPlay já usam "lança → adversário aprova → auto-aprovação em 24h" (pesquisa de domínio) |
-| O | Só Ranketes e DUPR declaram confirmação pelo adversário. No LetzPlay, só em rankings configurados. Em torneio, quem lança é o organizador |
+| O | Ranketes, DUPR, Playtomic (24h) e LetzPlay (24h, só em rankings configurados) validam pelo adversário, e nenhum arbitra a recusa. Em torneio, quem lança é o organizador (correção do `aprofundamento/`) |
 | V | "2 meses e os jogos ainda estão pendentes!" (LetzPlay) · "Não lançaram meu 3º lugar no torneio" (Reclame Aqui) · "Scores take forever to update" (DUPR) |
 | C | 4 threads sobre rating que demora meses (DUPR, UTR) |
 | N | Hipótese H1 do `DISCOVERY.md` (cold start de dados); o valor de toda estatística paga dos concorrentes depende disso |
@@ -65,7 +65,7 @@ Perfil único, categoria verdadeira, e um sinal de quanto o nível é confiável
 
 | Tipo | Evidência |
 | --- | --- |
-| R | CBT 2026 proíbe descer de categoria no ano e prevê reclassificação "pela integridade das competições" |
+| R | CBT 2026: promoção obrigatória do top 8 nacional ou por avaliação técnica discricionária; descer só a pedido depois da virada do ano, a critério da CBT; homologação obrigatória de todo torneio de BT, com veto a material de "organizações paralelas", o que atinge a CBBT (correção do `aprofundamento/`) |
 | O | Só UTR (Verified) e DUPR (Reliability Score, peso menor para autodeclarado) separam resultado confiável de autodeclarado. Nenhum app de BT faz isso |
 | V | Perfil duplicado e sandbagging: 6 menções em 4 apps. Rating que não reflete o nível: 7 em 3 apps. "possui histórico dos jogadores, mas não usa essas informações para sugerir ou limitar categorias" (LetzPlay) |
 | C | 15 threads sobre rating que "mente" e 3 sobre sandbagging. É o tema mais discutido fora das lojas |
@@ -188,7 +188,7 @@ Achados que corrigem ou atualizam o mapa anterior.
 | Taxa do LetzPlay | Não encontrada | **Pix 1,5% (mín. R$ 3), boleto R$ 3, cartão R$ 1,70 + 2,51%**, cobrada do organizador | Help center do LetzPlay (lido) |
 | Taxa do Tênis Integrado | Não encontrada | **R$ 9 por inscrição** (regulamento FET 2025/26) | Regulamento lido |
 | Playtomic Manager | €59–119/mês | **US$ 119–349/mês**, 6.700 clubes | Página de preços (lida) |
-| Concorrente novo | — | **Ranketes** (2026): confirmação pelo adversário, desafio com data, H2H da temporada, Finals, selos, preço público | Site (lido) |
+| Concorrente novo | — | **Ranketes** (2026): confirmação pelo adversário, desafio com data, H2H da temporada, Finals, selos, preço público. Uso quase nulo (1 avaliação iOS, 50+ downloads Android): desde 26/09 é referência pontual, não concorrente a monitorar | Site (lido); lojas lidas no aprofundamento |
 | Melhor avaliado do BT | — | **Meu Ranking**: 4,5★ (123) na App Store | Loja (lida) |
 | Base competitiva formal | 1,1 mi praticantes | **~65 mil cadastros** somando 8 páginas de federações e circuitos no LetzPlay. Duas ordens de grandeza abaixo | Contadores públicos (resumo de busca) |
 | Brasil no ITF | "Brasil tem 60% dos jogadores" | **180 torneios ITF em 2025**, líder mundial, mas no máximo ~1/3 do calendário. O "60%" não tem denominador | FPT sobre calendário ITF (resumo) |
@@ -203,7 +203,7 @@ Descritivos. Não são recomendações.
 | # | Risco | Evidência | Força |
 | --- | --- | --- | --- |
 | RS1 | **O incumbente está se redesenhando ao mesmo tempo.** O LetzPlay atual anunciou nova identidade e "nova fase" em agosto de 2026 | Histórico de versões lido | Forte |
-| RS2 | **Um entrante já ocupa o discurso das lacunas** do jogador competitivo (confirmação, desafio, H2H da temporada, Finals) | Site do Ranketes lido. Sem reviews para saber se entrega | Forte (discurso); sem evidência de uso |
+| RS2 | **Um entrante já ocupa o discurso das lacunas** do jogador competitivo (confirmação, desafio, H2H da temporada, Finals) | Site do Ranketes lido. Uso quase nulo nas lojas (aprofundamento) | Forte (discurso); **rebaixado**: uso quase nulo |
 | RS3 | **O público competitivo formal pode ser pequeno.** ~65 mil cadastros em circuitos no LetzPlay × 1,1 mi praticantes estimados | `MERCADO.md` D2 | Fraca (contadores parciais) |
 | RS4 | **O jogador muitas vezes não escolhe o app.** A federação, a arena ou o circuito escolhe, e o jogador segue | 4 reviews em 3 apps; white-label por arena | Forte |
 | RS5 | **O WhatsApp resolve o dia do torneio e a marcação**, e quem tentou substituí-lo (Meu Ranking) passou a apontar para ele | `CONCORRENTES.md` 1.3 e 5 | Média |
@@ -213,16 +213,20 @@ Descritivos. Não são recomendações.
 
 ## Perguntas abertas
 
-Só o Gabriel responde. Cada uma muda a leitura das oportunidades acima.
+Só o Gabriel responde. Cada uma muda a leitura das oportunidades acima. As decisões de 26/09 estão registradas abaixo da pergunta correspondente.
 
 1. **Qual é a relação do redesign com o LetzPlay atual, agora que ele lançou nova identidade e "nova fase" em agosto de 2026?** Portfolio independente, proposta para a própria empresa, ou produto que compete com ela? Muda o peso da oportunidade 5 (organizadores já estão no LetzPlay) e do risco RS1. Refina a pergunta 2 do `DISCOVERY.md`.
+   - **Adiado (26/09)** para a issue de decisões estratégicas do time Product no Linear.
 2. **O público do beta é o competidor federado (CBT, CBBT, circuitos) ou o jogador de ranking de arena?** As regras, as dores e o tamanho são diferentes (RS3). Ligada à pergunta aberta de formato de ranking da pesquisa de domínio, que continua em aberto.
 3. **A visão do organizador continua fora do MVP?** As oportunidades 1, 3 e 5 dependem de quem lança resultado e publica a programação, e em torneio esse alguém é o organizador. O `docs/PRODUCT.md` tira a visão do organizador do MVP.
 4. **O coração do produto é ranking por pontos (padrão do BT) ou algo como um nível de jogo (oportunidade 10)?** São coisas diferentes, com dores diferentes: pendência e regra no ranking, "o número mente" no rating.
 5. **Qual é a postura diante do WhatsApp:** substituir, integrar (como o Meu Ranking) ou ignorar? Muda a leitura das oportunidades 3 e 1 e do "abaixo do corte" de marcação.
 6. **O Ranketes é referência, concorrente, ou irrelevante para o objetivo de portfolio?** Ele já declara boa parte das lacunas (RS2).
+   - **Decidido (26/09):** referência pontual, não concorrente a monitorar. Uso quase nulo, segundo o `aprofundamento/TEARDOWN.md`.
 7. **Dá para fazer 5 a 8 entrevistas com jogadores competitivos e 2 a 3 com organizadores antes do beta?** É a lacuna de evidência mais cara: a voz do BT brasileiro na amostra é pequena, e as dores de organizador e arena vêm quase só de marketing de fornecedor. Dado de uso do LetzPlay atual (se houver acesso) seria a fonte mais forte de todas.
+   - **Suspensa (26/09):** não há pesquisa com usuários por agora. Entrevistas ficam para um momento posterior.
 8. **O perfil majoritariamente feminino dos estudos locais muda algo no tom e nos textos?** Conecta com a pergunta D7 do feed (gênero gramatical).
+   - **Decidido (26/09):** coberto, por ora, pelos textos neutros e pela concordância com a categoria.
 
 ---
 
