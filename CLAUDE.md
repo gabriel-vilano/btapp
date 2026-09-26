@@ -35,6 +35,7 @@ Documentamos o que é estável. Decisões, padrões, princípios, hurdles, conve
 - `CLAUDE.md` — convenções, padrões, hurdles, filosofia
 - `docs/PRODUCT.md` — visão, escopo MVP, princípios de design, métricas
 - `docs/DISCOVERY.md` — mercado, oportunidades por JTBD ranqueadas por evidência, modelos de negócio, hipóteses do beta
+- `docs/DOMAIN.md` — modelo de domínio: glossário, relações, regras numeradas (R1…), máquina de estados da partida
 - `docs/TOKENS.md` — design system
 - `docs/GIT_WORKFLOW.md` — workflow de branches, PR, versionamento
 - `docs/AGENT_WORKFLOW.md` — estrutura do Linear e coordenação de agentes em paralelo
