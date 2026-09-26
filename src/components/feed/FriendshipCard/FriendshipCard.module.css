@@ -1,0 +1,4 @@
+.minicards {
+  display: flex;
+  gap: var(--spacing-150);
+}

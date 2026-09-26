@@ -390,6 +390,16 @@ Daí acessar `http://<IP-do-dev>:3000` do celular. Em prod tudo funciona.
 
 **Solução:** `export const viewport` em `app/layout.tsx` com `maximumScale: 1, userScalable: false`. iOS 10+ ignora `user-scalable: no` para gestos manuais de pinch, então zoom manual continua funcionando — só o auto-zoom no foco é bloqueado.
 
+### Phosphor Icons: `createContext` em Server Components
+
+**Sintoma:** `createContext only works in Client Components` ao usar um ícone Phosphor em um Server Component.
+
+**Causa:** `@phosphor-icons/react` usa `createContext` internamente. Qualquer import de valor (ex: `import { Handshake } from "@phosphor-icons/react"`) num Server Component dispara o erro.
+
+**Solução:** Adicionar `"use client"` no componente que importa o ícone como valor. O wrapper `<Icon />` é seguro em Server Components porque recebe o ícone como prop (`React.ElementType`) — nunca importa valores do Phosphor diretamente.
+
+**Regra:** todo componente de feed que importa ícones Phosphor precisa de `"use client"`.
+
 ### iOS: "sticky hover" em botões com `:hover`
 
 **Sintoma:** Primeiro tap em um elemento com regra `:hover` não dispara `click` no iOS — aplica o estado hover e espera o segundo tap.

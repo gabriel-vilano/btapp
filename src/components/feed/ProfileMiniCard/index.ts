@@ -1,0 +1,1 @@
+export { ProfileMiniCard } from "./ProfileMiniCard";

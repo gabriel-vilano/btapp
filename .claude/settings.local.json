@@ -4,6 +4,7 @@
       "WebFetch(domain:skills.sh)",
       "Bash(git commit:*)",
       "Bash(git add:*)",
+      "Bash(npx tsc *)",
       "mcp__plugin_paper-desktop_paper__update_styles",
       "mcp__plugin_paper-desktop_paper__get_screenshot",
       "mcp__plugin_paper-desktop_paper__finish_working_on_nodes",

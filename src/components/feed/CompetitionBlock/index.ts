@@ -1,0 +1,1 @@
+export { CompetitionBlock } from "./CompetitionBlock";

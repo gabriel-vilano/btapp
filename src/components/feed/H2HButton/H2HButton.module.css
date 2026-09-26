@@ -1,0 +1,48 @@
+.h2h {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-100);
+  width: 100%;
+  min-height: var(--dimension-tap-target-minimum);
+  padding: var(--spacing-150) var(--spacing-200);
+  background-color: transparent;
+  border: var(--border-width-medium) solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground-accent);
+  position: relative;
+  overflow: hidden;
+}
+
+.h2h::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-state-layer-neutral);
+  pointer-events: none;
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard);
+}
+
+@media (hover: hover) {
+  .h2h:hover::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.h2h:active::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+.h2h:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.h2h:focus:not(:focus-visible) {
+  outline: none;
+}

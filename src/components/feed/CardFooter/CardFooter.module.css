@@ -1,0 +1,65 @@
+.footer {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-100);
+  min-height: var(--dimension-tap-target-minimum);
+}
+
+.action {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-100);
+  min-height: var(--dimension-tap-target-minimum);
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--color-foreground-secondary);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color var(--motion-duration-short-3) var(--motion-easing-standard);
+}
+
+/* State layer */
+.action::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  pointer-events: none;
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard);
+}
+
+@media (hover: hover) {
+  .action:hover::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.action:active::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+.action:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.action:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Liked state */
+.action--liked {
+  color: var(--color-foreground-accent);
+}
+
+.action__label {
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+  font-weight: var(--font-weight-regular);
+}

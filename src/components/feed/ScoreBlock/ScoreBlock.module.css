@@ -1,0 +1,54 @@
+.score {
+  display: grid;
+  justify-content: center;
+  align-items: baseline;
+  column-gap: var(--spacing-400);
+  row-gap: var(--spacing-50);
+  text-align: center;
+}
+
+.score--cols-1 {
+  grid-template-columns: auto;
+}
+
+.score--cols-2 {
+  grid-template-columns: auto auto;
+}
+
+.score--cols-3 {
+  grid-template-columns: auto auto auto;
+}
+
+.score__label {
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  color: var(--color-foreground-secondary);
+}
+
+.score__number {
+  font-size: var(--text-display-sm-size);
+  line-height: var(--text-display-sm-line-height);
+  letter-spacing: var(--text-display-sm-tracking);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.score__number--winner {
+  color: var(--color-foreground-primary);
+}
+
+.score__number--loser {
+  color: var(--color-foreground-secondary);
+}
+
+/* W.O. e desistência sem set jogado: rótulo no lugar do placar (§4.3) */
+.score__outcome {
+  margin: 0;
+  text-align: center;
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground-secondary);
+}

@@ -1,0 +1,108 @@
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-150);
+  padding: var(--spacing-200);
+}
+
+/* --- Avatar slot (40×40) --- */
+
+.header__avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+}
+
+.header__img {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  display: block;
+}
+
+.header__img_placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-background-tertiary);
+}
+
+.header__handshake {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-background-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-foreground-secondary);
+}
+
+/* --- Text block --- */
+
+.header__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-50);
+}
+
+/* Padrão A — line 1: fase · competição */
+.header__line1 {
+  display: flex;
+  align-items: baseline;
+  flex-direction: column;
+  gap: var(--spacing-50);
+  margin: 0;
+}
+
+.header__phase {
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground-accent);
+  white-space: nowrap;
+}
+
+.header__dot {
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  color: var(--color-foreground-secondary);
+  flex-shrink: 0;
+}
+
+.header__competition {
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground-primary);
+  /* A linha é flex em coluna sem stretch: sem max-width o span cresce até
+     o tamanho do texto e o overflow nunca acontece dentro dele. */
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Padrão A e B — line 2: @username · tempo */
+.header__line2 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-75);
+  flex-wrap: wrap;
+  margin: 0;
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  color: var(--color-foreground-secondary);
+}
+
+/* Padrão B — ação descritiva */
+.header__action {
+  margin: 0;
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-primary);
+}
