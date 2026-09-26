@@ -408,14 +408,6 @@ Daí acessar `http://<IP-do-dev>:3000` do celular. Em prod tudo funciona.
 
 **Regra do feed:** todo componente de `src/components/feed/` que importa ícone Phosphor tem `"use client"` no próprio arquivo, em vez de depender de quem o renderiza. Assim ele funciona em qualquer página, inclusive num Server Component.
 
-### Stack de avatares em duplas no CardHeader
-
-**Sintoma:** CardHeader renderiza só player_a.avatar_url em cards de enrollment duplas.
-
-**Solução pendente:** estender CardHeader para receber player_b quando enrollment_format === 'doubles' e renderizar stack com offset 8px.
-
-**Quando resolver:** ao evoluir o CardHeader para o feed real.
-
 ### Componentes com stubs sem comportamento
 
 ProfileMiniCard, H2HButton, botões Torcer e "+ Adicionar" foram implementados como <button> sem onClick.

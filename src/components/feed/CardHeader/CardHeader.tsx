@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { HandshakeIcon } from "@phosphor-icons/react";
 import { Icon } from "@/src/components/ui/Icon";
+import { Avatar, AvatarStack } from "@/src/components/feed/Avatar";
 import { formatCategoryLabel } from "@/src/lib/formatters";
 import type { CardHeader as CardHeaderData } from "@/src/types/feed";
 import styles from "./CardHeader.module.css";
@@ -56,23 +57,24 @@ export function CardHeader({
   }
 
   // Padrão B — jogador
+  const avatarSlotClass = data.partner
+    ? `${styles.header__avatar} ${styles["header__avatar--stack"]}`
+    : styles.header__avatar;
+
   return (
     <div className={styles.header}>
-      <div className={styles.header__avatar}>
+      <div className={avatarSlotClass}>
         {showHandshake ? (
           <div className={styles.header__handshake} aria-hidden>
             <Icon icon={HandshakeIcon} size="md" weight="regular" />
           </div>
-        ) : data.player.avatar_url ? (
-          <Image
-            src={data.player.avatar_url}
-            alt={data.player.name}
-            width={40}
-            height={40}
-            className={styles.header__img}
+        ) : data.partner ? (
+          <AvatarStack
+            size={40}
+            items={[data.player, data.partner].map((p) => ({ id: p.id, url: p.avatar_url, alt: p.name }))}
           />
         ) : (
-          <div className={styles.header__img_placeholder} aria-hidden />
+          <Avatar url={data.player.avatar_url} alt={data.player.name} size={40} />
         )}
       </div>
 

@@ -5,7 +5,7 @@ import { ActivityCard } from "./ActivityCard";
 import { expectNoHorizontalOverflow, feedFrame } from "../storyFixtures";
 import styles from "./ActivityCard.stories.module.css";
 
-// Tier 4: uma galeria com as 13 variações, no lugar de uma story por card.
+// Tier 4: uma galeria com as 15 variações, no lugar de uma story por card.
 const meta = {
   title: "Feed/Galeria de cards",
   component: ActivityCard,

@@ -60,7 +60,7 @@ const arenaSunset: OrgInfo = {
   avatar_url: null,
 };
 
-// --- Mock cards (13 variações) ---
+// --- Mock cards (15 variações) ---
 
 export const mockFeedCards: FeedCard[] = [
   // 1. Resultado — 1 set simples
@@ -311,12 +311,13 @@ export const mockFeedCards: FeedCard[] = [
     user_is_friend_of_b: false,
   },
 
-  // 11. Ranking — Subiu
+  // 11. Ranking — Subiu (a posição é da dupla, R1)
   {
     id: 'event-ranking-up',
     card_type: 'ranking',
     created_at: weeksAgo(1),
-    player: lucas,
+    competitor: { format: 'doubles', players: [lucas, rafael] },
+    visibility: 'public',
     ranking_name: 'Ranking BH — Masculino B',
     position: 3,
     delta: 2,
@@ -324,12 +325,13 @@ export const mockFeedCards: FeedCard[] = [
     movement: 'up',
   },
 
-  // 12. Ranking — Desceu
+  // 12. Ranking — Desceu (privado: só o próprio jogador vê, R22)
   {
     id: 'event-ranking-down',
     card_type: 'ranking',
     created_at: weeksAgo(2),
-    player: pedro,
+    competitor: { format: 'singles', player: pedro },
+    visibility: 'private',
     ranking_name: 'Ranking BH — Masculino B · Simples',
     position: 7,
     delta: 2,
@@ -337,17 +339,47 @@ export const mockFeedCards: FeedCard[] = [
     movement: 'down',
   },
 
-  // 13. Ranking — Marco (1ª posição)
+  // 13. Ranking — Marco: Líder
   {
     id: 'event-ranking-milestone',
     card_type: 'ranking',
     created_at: weeksAgo(3),
-    player: lucas,
+    competitor: { format: 'doubles', players: [lucas, rafael] },
+    visibility: 'public',
     ranking_name: 'Ranking BH — Masculino B',
     position: 1,
     delta: 1,
     points: 580,
     movement: 'milestone',
-    milestone: 'leader',
+    milestone: { type: 'leader' },
+  },
+
+  // 14. Ranking — Marco: Top N (N = classificados da final, R47)
+  {
+    id: 'event-ranking-milestone-top-n',
+    card_type: 'ranking',
+    created_at: weeksAgo(4),
+    competitor: { format: 'doubles', players: [pedro, thiago] },
+    visibility: 'public',
+    ranking_name: 'Ranking BH — Masculino B',
+    position: 8,
+    delta: 3,
+    points: 410,
+    movement: 'milestone',
+    milestone: { type: 'top_n', n: 8 },
+  },
+
+  // 15. Ranking — Classificado para a final (R28)
+  {
+    id: 'event-ranking-final-qualification',
+    card_type: 'ranking',
+    created_at: weeksAgo(5),
+    competitor: { format: 'doubles', players: [lucas, rafael] },
+    visibility: 'public',
+    ranking_name: 'Ranking BH — Masculino B',
+    position: 2,
+    points: 640,
+    movement: 'final_qualification',
+    final_name: 'Saideira',
   },
 ];

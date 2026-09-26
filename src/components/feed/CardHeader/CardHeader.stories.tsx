@@ -10,6 +10,7 @@ import {
   storyLongOrg,
   storyLongPlayer,
   storyOrg,
+  storyPartner,
   storyPlayer,
 } from "../storyFixtures";
 
@@ -41,6 +42,21 @@ export const Player: Story = {
       player: storyPlayer,
       action_text: "Lucas se inscreveu em um torneio",
     },
+  },
+};
+
+// Dupla: stack de avatares, com o parceiro por baixo (FEED_CARDS.md §6.2).
+export const PlayerDoubles: Story = {
+  args: {
+    data: {
+      header_type: "player",
+      player: { ...storyPlayer, avatar_url: STORY_AVATAR_URL },
+      partner: storyPartner,
+      action_text: "Lucas Silva e Rafael Costa subiram no ranking",
+    },
+  },
+  play: async ({ canvasElement }) => {
+    await expectNoHorizontalOverflow(canvasElement);
   },
 };
 
