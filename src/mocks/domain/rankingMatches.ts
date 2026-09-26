@@ -6,11 +6,9 @@ import type {
   RankingMatch,
   ResultReport,
   Round,
-  ScheduleOption,
-  ScheduleProposal,
   SidePoints,
 } from '@/src/types/domain';
-import { daysAgo, daysFromNow, hoursAgo, onTheHour } from '../relativeTime';
+import { daysAgo, onTheHour } from '../relativeTime';
 import {
   adminAction,
   confirmedByAdmin,
@@ -24,6 +22,7 @@ import {
 } from './builders';
 import { players as p } from './people';
 import { masculinoB as mb, mistaC40 as mx, ranking, rankingCategories, rounds } from './ranking';
+import { agreedDates, RANKING_VENUE, r3_4ReportedAt } from './scheduling';
 
 // Partidas do ranking. Os confrontos seguem a R30: cada dupla joga 2 por
 // rodada, sem repetir confronto enquanto sobra combinação nova. No Masculino B
@@ -33,7 +32,7 @@ import { masculinoB as mb, mistaC40 as mx, ranking, rankingCategories, rounds } 
 // Os pontos foram calculados à mão pela regra padrão (R9–R11): ex. 6/4 dá
 // 100 + 12 − 8 = 104 ao vencedor e 50 + 8 − 12 = 46 ao perdedor.
 
-const VENUE = 'Arena RM – Beach · Nova Lima/MG';
+const VENUE = RANKING_VENUE;
 const DEADLINE_HOURS = ranking.response_deadline_hours;
 
 function base(
@@ -128,7 +127,7 @@ const masculinoBRound2: RankingMatch[] = [
     ...confirmed(r2Reports.m2, confirmedByOpponent(p.eduardo, hoursAfter(r2Dates.m2, 4)), { a: 110, b: 40 }) },
   { ...masc('r2-3', rounds.second, mb.t1, mb.t5), scheduled_at: r2Dates.m3,
     ...confirmed(r2Reports.m3, confirmedByDeadline(r2Reports.m3, DEADLINE_HOURS), { a: 104, b: 46 }) },
-  // Sem acordo de data: a proposta do Thiago nunca foi respondida. Está na
+  // Sem acordo de data: as propostas da T2 nunca foram respondidas. Está na
   // fila do admin, e o histórico é a evidência para o W.O. (R40).
   { ...masc('r2-4', rounds.second, mb.t2, mb.t4), scheduled_at: null, status: 'not_played' },
   { ...masc('r2-5', rounds.second, mb.t4, mb.t6), scheduled_at: null,
@@ -138,36 +137,21 @@ const masculinoBRound2: RankingMatch[] = [
 ];
 
 // --- Masculino B, rodada 3 (em andamento): um exemplo de cada pendência ---
-
-const r3Options = {
-  m2: [
-    { starts_at: onTheHour(daysFromNow(1)), venue: VENUE },
-    { starts_at: onTheHour(daysFromNow(2)), venue: VENUE },
-    { starts_at: onTheHour(daysFromNow(2.5)), venue: null },
-  ],
-  m3: [
-    { starts_at: onTheHour(daysFromNow(1.2)), venue: VENUE },
-    { starts_at: onTheHour(daysFromNow(2.2)), venue: VENUE },
-  ],
-  m4: [
-    { starts_at: onTheHour(daysAgo(1)), venue: VENUE },
-    { starts_at: onTheHour(daysAgo(0.5)), venue: VENUE },
-  ],
-} satisfies Record<string, ScheduleOption[]>;
+// A marcação de cada confronto (propostas e data informada) está em scheduling.ts.
 
 const r3Reports = {
-  m4: reportBy({ type: 'normal', winner: 'a', sets: [gameSet(6, 3)] }, p.rafael, hoursAfter(r3Options.m4[0].starts_at, 2)),
-  m5: reportBy({ type: 'normal', winner: 'b', sets: [gameSet(4, 6)] }, p.caio, hoursAfter(onTheHour(daysAgo(4)), 2)),
+  m4: reportBy({ type: 'normal', winner: 'a', sets: [gameSet(6, 3)] }, p.rafael, r3_4ReportedAt),
+  m5: reportBy({ type: 'normal', winner: 'b', sets: [gameSet(4, 6)] }, p.caio, hoursAfter(agreedDates.r3_5, 2)),
   m6: reportBy({ type: 'normal', winner: 'a', sets: [gameSet(6, 2)] }, p.felipe, hoursAfter(onTheHour(daysAgo(6)), 2)),
 };
 
 const masculinoBRound3: RankingMatch[] = [
   { ...masc('r3-1', rounds.third, mb.t1, mb.t4), scheduled_at: null, status: 'defined' },
-  { ...masc('r3-2', rounds.third, mb.t2, mb.t5), scheduled_at: r3Options.m2[1].starts_at, status: 'defined' },
-  { ...masc('r3-3', rounds.third, mb.t3, mb.t6), scheduled_at: null, status: 'defined' },
-  { ...masc('r3-4', rounds.third, mb.t1, mb.t2), scheduled_at: r3Options.m4[0].starts_at,
+  { ...masc('r3-2', rounds.third, mb.t2, mb.t5), scheduled_at: agreedDates.r3_2, status: 'defined' },
+  { ...masc('r3-3', rounds.third, mb.t3, mb.t6), scheduled_at: agreedDates.r3_3, status: 'defined' },
+  { ...masc('r3-4', rounds.third, mb.t1, mb.t2), scheduled_at: agreedDates.r3_4,
     status: 'awaiting_confirmation', report: r3Reports.m4 },
-  { ...masc('r3-5', rounds.third, mb.t3, mb.t4), scheduled_at: onTheHour(daysAgo(4)),
+  { ...masc('r3-5', rounds.third, mb.t3, mb.t4), scheduled_at: agreedDates.r3_5,
     status: 'in_arbitration', report: r3Reports.m5, contest: responseBy(p.andre, hoursAfter(r3Reports.m5.reported_at, 5)) },
   { ...masc('r3-6', rounds.third, mb.t5, mb.t6), scheduled_at: onTheHour(daysAgo(6)),
     ...confirmed(r3Reports.m6, confirmedByOpponent(p.henrique, hoursAfter(r3Reports.m6.reported_at, 3)), { a: 108, b: 42 }) },
@@ -214,53 +198,4 @@ export const rankingMatches: RankingMatch[] = [
   ...masculinoBRound2,
   ...masculinoBRound3,
   ...mistaMatches,
-];
-
-function matchId(slug: string): string {
-  return `match-arena-rm-mb-${slug}`;
-}
-
-export const scheduleProposals: ScheduleProposal[] = [
-  {
-    id: 'proposal-mb-r2-4',
-    match_id: matchId('r2-4'),
-    proposed_by: p.thiago.id,
-    created_at: daysAgo(34),
-    options: [
-      { starts_at: onTheHour(daysAgo(31)), venue: VENUE },
-      { starts_at: onTheHour(daysAgo(29)), venue: VENUE },
-      { starts_at: onTheHour(daysAgo(26)), venue: null },
-    ],
-    status: 'pending',
-  },
-  {
-    id: 'proposal-mb-r3-2',
-    match_id: matchId('r3-2'),
-    proposed_by: p.pedro.id,
-    created_at: daysAgo(15),
-    options: [r3Options.m2[0], r3Options.m2[1], r3Options.m2[2]],
-    status: 'accepted',
-    accepted_option_index: 1,
-    responded_by: p.eduardo.id,
-    responded_at: daysAgo(14),
-  },
-  {
-    id: 'proposal-mb-r3-3',
-    match_id: matchId('r3-3'),
-    proposed_by: p.gustavo.id,
-    created_at: hoursAgo(20),
-    options: [r3Options.m3[0], r3Options.m3[1]],
-    status: 'pending',
-  },
-  {
-    id: 'proposal-mb-r3-4',
-    match_id: matchId('r3-4'),
-    proposed_by: p.lucas.id,
-    created_at: daysAgo(12),
-    options: [r3Options.m4[0], r3Options.m4[1]],
-    status: 'accepted',
-    accepted_option_index: 0,
-    responded_by: p.thiago.id,
-    responded_at: daysAgo(11),
-  },
 ];

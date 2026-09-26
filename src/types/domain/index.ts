@@ -5,5 +5,6 @@ export * from './competition';
 export * from './people';
 export * from './competitor';
 export * from './match';
+export * from './scheduling';
 export * from './standings';
 export * from './feedEvent';
