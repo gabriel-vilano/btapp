@@ -36,3 +36,9 @@ export function milestoneLabel(milestone: RankingMilestone, competitor: Side): s
   if (milestone.type === "top_n") return `Top ${milestone.n}`;
   return `${conjugate(competitor, "Assumiu", "Assumiram")} a liderança`;
 }
+
+/** Quem vê o card privado (R22): o jogador em simples, a dupla em duplas. */
+export function rankingPrivateAudience(card: RankingCard): "player" | "pair" | undefined {
+  if (card.visibility === "public") return undefined;
+  return card.competitor.format === "singles" ? "player" : "pair";
+}

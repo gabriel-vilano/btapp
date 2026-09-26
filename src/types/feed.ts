@@ -41,6 +41,8 @@ export interface PlayerCardHeader {
   // Em duplas, o parceiro entra no stack de avatares (FEED_CARDS.md §6.2)
   partner?: PlayerInfo;
   action_text: string;
+  // Card privado (R22): quem vê é o próprio jogador ou a dupla
+  private_to?: 'player' | 'pair';
 }
 
 export type CardHeader = OrgCardHeader | PlayerCardHeader;

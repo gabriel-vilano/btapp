@@ -104,6 +104,13 @@
   color: var(--color-foreground-secondary);
 }
 
+/* Card privado (R22): mesmo estilo dos metadados, com cadeado */
+.header__private {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-25);
+}
+
 /* Padrão B — ação descritiva */
 .header__action {
   margin: 0;

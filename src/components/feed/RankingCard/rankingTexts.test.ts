@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import type { PlayerInfo, RankingCard, Side } from "@/src/types/feed";
-import { competitorNames, milestoneLabel, rankingActionText } from "./rankingTexts";
+import {
+  competitorNames,
+  milestoneLabel,
+  rankingActionText,
+  rankingPrivateAudience,
+} from "./rankingTexts";
 
 const player = (id: string, name: string): PlayerInfo => ({
   id,
@@ -69,5 +74,22 @@ describe("milestoneLabel", () => {
   it("concorda a liderança com a unidade", () => {
     expect(milestoneLabel({ type: "leader" }, singles)).toBe("Assumiu a liderança");
     expect(milestoneLabel({ type: "leader" }, doubles)).toBe("Assumiram a liderança");
+  });
+});
+
+describe("rankingPrivateAudience", () => {
+  it("não marca o card público", () => {
+    expect(rankingPrivateAudience(upCard(doubles))).toBeUndefined();
+  });
+
+  it("marca a queda para o jogador ou para a dupla (R22)", () => {
+    const down = (competitor: Side): RankingCard => ({
+      ...upCard(competitor),
+      movement: "down",
+      visibility: "private",
+      delta: 1,
+    });
+    expect(rankingPrivateAudience(down(singles))).toBe("player");
+    expect(rankingPrivateAudience(down(doubles))).toBe("pair");
   });
 });

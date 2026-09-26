@@ -7,7 +7,7 @@ import { MatchCard } from "@/src/components/feed/MatchCard";
 import { EnrollmentCard } from "@/src/components/feed/EnrollmentCard";
 import { FriendshipCard } from "@/src/components/feed/FriendshipCard";
 import { RankingCard } from "@/src/components/feed/RankingCard";
-import { rankingActionText } from "@/src/components/feed/RankingCard/rankingTexts";
+import { rankingActionText, rankingPrivateAudience } from "@/src/components/feed/RankingCard/rankingTexts";
 import type { FeedCard, CardHeader as CardHeaderData } from "@/src/types/feed";
 
 interface ActivityCardProps {
@@ -68,7 +68,13 @@ function getHeaderProps(card: FeedCard): {
   const [player, partner] =
     competitor.format === "singles" ? [competitor.player] : competitor.players;
   return {
-    headerData: { header_type: "player", player, partner, action_text: rankingActionText(card) },
+    headerData: {
+      header_type: "player",
+      player,
+      partner,
+      action_text: rankingActionText(card),
+      private_to: rankingPrivateAudience(card),
+    },
     showHandshake: false,
   };
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { HandshakeIcon } from "@phosphor-icons/react";
+import { HandshakeIcon, LockSimpleIcon } from "@phosphor-icons/react";
 import { Icon } from "@/src/components/ui/Icon";
 import { Avatar, AvatarStack } from "@/src/components/feed/Avatar";
 import { formatCategoryLabel } from "@/src/lib/formatters";
@@ -84,9 +84,23 @@ export function CardHeader({
           <span>@{data.player.username}</span>
           <span className={styles.header__dot}>·</span>
           <span>{timestamp}</span>
+          {data.private_to && <PrivateIndicator audience={data.private_to} />}
         </p>
       </div>
     </div>
+  );
+}
+
+// Discreto de propósito: responde "meus amigos viram?" sem destacar a queda
+function PrivateIndicator({ audience }: { audience: "player" | "pair" }) {
+  return (
+    <>
+      <span className={styles.header__dot}>·</span>
+      <span className={styles.header__private}>
+        <Icon icon={LockSimpleIcon} size="xs" weight="regular" />
+        {audience === "player" ? "só você" : "só a dupla"}
+      </span>
+    </>
   );
 }
 

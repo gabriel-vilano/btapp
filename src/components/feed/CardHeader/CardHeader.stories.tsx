@@ -60,6 +60,37 @@ export const PlayerDoubles: Story = {
   },
 };
 
+// Card privado (R22): indicador discreto nos metadados.
+export const PrivateSingles: Story = {
+  args: {
+    data: {
+      header_type: "player",
+      player: storyPlayer,
+      action_text: "Lucas Silva caiu no ranking",
+      private_to: "player",
+    },
+  },
+  play: async ({ canvasElement }) => {
+    await expect(canvasElement).toHaveTextContent("só você");
+  },
+};
+
+export const PrivatePair: Story = {
+  args: {
+    data: {
+      header_type: "player",
+      player: storyPlayer,
+      partner: storyPartner,
+      action_text: "Lucas Silva e Rafael Costa caíram no ranking",
+      private_to: "pair",
+    },
+  },
+  play: async ({ canvasElement }) => {
+    await expect(canvasElement).toHaveTextContent("só a dupla");
+    await expectNoHorizontalOverflow(canvasElement);
+  },
+};
+
 export const WithPhotos: Story = {
   args: {
     data: {

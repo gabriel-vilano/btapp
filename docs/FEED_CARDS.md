@@ -546,7 +546,7 @@ Derivados da análise de referências (Strava, Bump, Zigzag, Revolut, Azar):
 
 Mesma estrutura. Diferenças:
 - Cabeçalho: "Lucas Silva caiu no ranking" (duplas: "Lucas Silva e Rafael Costa caíram no ranking")
-- Card privado (R22): não vai para o feed dos amigos
+- Card privado (R22): não vai para o feed dos amigos. Um indicador discreto na linha de metadados avisa isso: "@lucas · há 2h · 🔒 só você" (duplas: "só a dupla"). Usa o ícone `LockSimple` (12px) e o mesmo estilo de texto dos metadados. Sem aviso, o jogador não saberia se os amigos viram a queda; com destaque, a queda chamaria atenção
 - Delta: "▼ 2 posições" em `--color-foreground-attention`
 - Fundo do bloco: `--color-background-primary` — sem cor de fundo para quedas
 
