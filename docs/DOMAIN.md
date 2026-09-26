@@ -404,7 +404,7 @@ stateDiagram-v2
 
 ## 4. Agenda do jogador
 
-A navegação é de outras specs, mas o modelo precisa sustentar o que elas mostram. O app tem uma **aba "Jogos"**, a agenda do jogador, e o registro de resultado é **contextual**, sem aba própria: item do bloco de pendências no topo do feed, botão na tela do confronto e notificação. [DEC-JOGOS]
+A navegação está em `docs/NAVIGATION.md`, mas o modelo precisa sustentar o que elas mostram. O app tem uma **aba "Jogos"**, a agenda do jogador, e o registro de resultado é **contextual**, sem aba própria: item do bloco de pendências no topo do feed, botão na tela do confronto e notificação. [DEC-JOGOS]
 
 | O que a agenda mostra | De onde vem no modelo |
 | --- | --- |
