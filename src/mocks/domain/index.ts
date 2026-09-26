@@ -10,6 +10,8 @@ import type {
   Milestone,
   Organization,
   Player,
+  PlayerPhone,
+  ReportedScheduleDate,
   Round,
   ScheduleProposal,
   Season,
@@ -27,7 +29,8 @@ import {
   rounds,
   season,
 } from './ranking';
-import { rankingMatches, scheduleProposals } from './rankingMatches';
+import { rankingMatches } from './rankingMatches';
+import { playerPhones, reportedScheduleDates, scheduleProposals } from './scheduling';
 import { milestones, standingSnapshots } from './standings';
 import {
   tournament,
@@ -51,6 +54,8 @@ export interface DomainMocks {
   enrollments: Enrollment[];
   matches: Match[];
   scheduleProposals: ScheduleProposal[];
+  reportedScheduleDates: ReportedScheduleDate[];
+  playerPhones: PlayerPhone[];
   standingSnapshots: StandingSnapshot[];
   milestones: Milestone[];
   feedEvents: FeedEvent[];
@@ -78,6 +83,8 @@ export const mockDomain: DomainMocks = {
   ],
   matches: [...rankingMatches, ...tournamentMatches, ...friendlyMatches],
   scheduleProposals,
+  reportedScheduleDates,
+  playerPhones,
   standingSnapshots,
   milestones,
   feedEvents,
@@ -100,3 +107,5 @@ export const mockEntities = {
   tournamentCategories,
   tournamentEnrollments,
 };
+
+export { scheduleHistoryOf } from './scheduling';

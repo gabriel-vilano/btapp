@@ -215,35 +215,5 @@ export type MatchKind = Match['kind'];
 
 export type MatchStatus = Match['status'];
 
-// --- Marcação do confronto (R34) ---
-
-export interface ScheduleOption {
-  starts_at: string; // ISO 8601
-  venue: string | null;
-}
-
-interface ScheduleProposalBase {
-  id: string;
-  match_id: string;
-  proposed_by: string; // player_id
-  created_at: string; // ISO 8601
-  options: [ScheduleOption, ScheduleOption] | [ScheduleOption, ScheduleOption, ScheduleOption];
-}
-
-export interface PendingScheduleProposal extends ScheduleProposalBase {
-  status: 'pending';
-}
-
-/** A opção aceita vira a data acordada da partida (`scheduled_at`). */
-export interface AcceptedScheduleProposal extends ScheduleProposalBase {
-  status: 'accepted';
-  accepted_option_index: 0 | 1 | 2;
-  responded_by: string; // player_id
-  responded_at: string; // ISO 8601
-}
-
-/**
- * Proposta de horário de um lado ao outro, ligada a uma partida de competição.
- * O histórico serve de evidência numa disputa de W.O. (R40).
- */
-export type ScheduleProposal = PendingScheduleProposal | AcceptedScheduleProposal;
+// A marcação do confronto (propostas de horário e data informada) está em
+// `scheduling.ts`.

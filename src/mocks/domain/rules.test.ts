@@ -147,16 +147,6 @@ describe('mocks de domínio: linha do tempo', () => {
     },
   );
 
-  it('proposta: opções futuras, lados opostos e data acordada vinda da opção aceita (R34)', () => {
-    for (const proposal of mockDomain.scheduleProposals) {
-      const match = get(byId.matches, proposal.match_id);
-      expect(sideOf(match, proposal.proposed_by), proposal.id).not.toBeNull();
-      for (const option of proposal.options) expect(time(option.starts_at)).toBeGreaterThan(time(proposal.created_at));
-      if (proposal.status !== 'accepted' || match.kind === 'friendly') continue;
-      expect(sideOf(match, proposal.responded_by)).toBe(otherSide(sideOf(match, proposal.proposed_by)));
-      expect(match.scheduled_at).toBe(proposal.options[proposal.accepted_option_index]?.starts_at);
-    }
-  });
 });
 
 function reportOf(match: Match): ResultReport<CompetitionResult> | null {

@@ -113,11 +113,21 @@ describe('mocks de domínio: partida', () => {
     }
   });
 
-  it('proposta de horário é de uma partida de competição existente', () => {
+  it('proposta e data informada são de uma partida do ranking existente (M1)', () => {
     for (const proposal of mockDomain.scheduleProposals) {
-      expect(get(byId.matches, proposal.match_id).kind).not.toBe('friendly');
+      expect(get(byId.matches, proposal.match_id).kind, proposal.id).toBe('ranking');
       get(byId.players, proposal.proposed_by);
     }
+    for (const reported of mockDomain.reportedScheduleDates) {
+      expect(get(byId.matches, reported.match_id).kind, reported.id).toBe('ranking');
+      get(byId.players, reported.reported_by);
+    }
+  });
+
+  it('telefone é de um jogador existente, um por jogador', () => {
+    for (const phone of mockDomain.playerPhones) get(byId.players, phone.player_id);
+    const ids = mockDomain.playerPhones.map((phone) => phone.player_id);
+    expect(new Set(ids).size).toBe(ids.length);
   });
 });
 
