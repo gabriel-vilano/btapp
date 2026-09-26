@@ -195,7 +195,7 @@ erDiagram
         boolean interrompido
     }
     PROPOSTA_HORARIO {
-        string status "pendente ou aceita"
+        string status "pendente, aceita, substituída, retirada ou expirada"
         datetime criada_em
         datetime respondida_em
     }
@@ -261,7 +261,7 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
 
 ### Marcação do confronto
 
-- **R34. Um lado propõe de 2 a 3 opções de data e hora, cada uma com arena opcional, e o outro aceita uma.** O horário aceito vira a data acordada do confronto. O app guarda quem propôs, quais opções, quando propôs e quando o outro lado respondeu. A reserva de quadra e a conversa ficam fora do app: o app oferece "Abrir no WhatsApp". O detalhe da interação é da spec de marcação de jogos. [DEC-MARC]
+- **R34. Um lado propõe de 2 a 3 opções de data e hora, cada uma com arena opcional, e o outro aceita uma.** O horário aceito vira a data acordada do confronto. O app guarda quem propôs, quais opções, quando propôs e quando o outro lado respondeu. A reserva de quadra e a conversa ficam fora do app: o app oferece "Abrir no WhatsApp". O detalhe da interação está em `docs/SCHEDULING.md`. [DEC-MARC]
 - **R35. Informar uma data combinada fora das propostas continua valendo.** É o caminho de quem não usa as propostas. [DEC-MARC]
 
 ### Pontuação
