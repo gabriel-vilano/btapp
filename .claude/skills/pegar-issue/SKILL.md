@@ -39,6 +39,7 @@ Rodar localmente e corrigir até passar:
 
 ```bash
 npm run lint
+npm run typecheck
 npm test
 npm run build
 npm run test:stories   # quando mexer em componente ou story

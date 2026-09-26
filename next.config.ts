@@ -1,5 +1,11 @@
 import type { NextConfig } from "next";
 
+// Derivado do NextConfig para não importar de `next/dist/*`, que é interno e muda entre versões
+type RemotePattern = Exclude<
+  NonNullable<NonNullable<NextConfig["images"]>["remotePatterns"]>[number],
+  URL
+>;
+
 type ExposedSecret = {
   name: string;
   kind: string;
@@ -59,12 +65,55 @@ function assertNoExposedSecrets(env: NodeJS.ProcessEnv): void {
   );
 }
 
+const SUPABASE_STORAGE_PUBLIC_PATH = "/storage/v1/object/public/**";
+
+/**
+ * Padrão do `next/image` restrito ao Storage público do projeto Supabase configurado.
+ * Sem `NEXT_PUBLIC_SUPABASE_URL` devolve `null`: o build da CI roda sem as variáveis do Supabase.
+ * Ex: `supabaseStorageImagePattern("http://127.0.0.1:54321")` → host `127.0.0.1`, porta `54321`.
+ */
+export function supabaseStorageImagePattern(supabaseUrl: string | undefined): RemotePattern | null {
+  if (!supabaseUrl) return null;
+
+  const { protocol, hostname, port } = parseSupabaseUrl(supabaseUrl);
+  if (protocol !== "https:" && protocol !== "http:") {
+    throw new Error(
+      `NEXT_PUBLIC_SUPABASE_URL inválida: recebi o protocolo '${protocol}', esperado http: ou https:`
+    );
+  }
+
+  // `port` vazio casa só com a porta padrão do protocolo; o Supabase local usa porta explícita
+  return {
+    protocol: protocol === "https:" ? "https" : "http",
+    hostname,
+    port,
+    pathname: SUPABASE_STORAGE_PUBLIC_PATH,
+  };
+}
+
+function parseSupabaseUrl(supabaseUrl: string): URL {
+  try {
+    return new URL(supabaseUrl);
+  } catch {
+    throw new Error(
+      `NEXT_PUBLIC_SUPABASE_URL inválida: recebi '${supabaseUrl}', esperado uma URL como https://<projeto>.supabase.co`
+    );
+  }
+}
+
 // O Next embute toda NEXT_PUBLIC_* no bundle do navegador, então o build é o último
 // ponto antes de um segredo virar público. Roda também no `next dev`, com o .env.local.
 assertNoExposedSecrets(process.env);
 
+// Só o host do projeto, não `*.supabase.co`: o otimizador de imagens do Next baixa a URL
+// no servidor, e um curinga deixaria qualquer projeto Supabase usar o nosso como proxy.
+const supabaseImagePattern = supabaseStorageImagePattern(process.env.NEXT_PUBLIC_SUPABASE_URL);
+
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["192.168.0.0/16", "10.0.0.0/8"],
+  images: {
+    remotePatterns: supabaseImagePattern ? [supabaseImagePattern] : [],
+  },
 };
 
 export default nextConfig;

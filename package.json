@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
     "test": "vitest run --project unit",
     "test:stories": "vitest run --project storybook",
     "test:e2e": "playwright test",

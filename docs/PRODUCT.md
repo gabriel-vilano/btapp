@@ -32,6 +32,8 @@ Três objetivos simultâneos: portfolio de Design Engineer, produto real para la
 - Perfil do jogador (cadastro, foto, stats)
 - Ranking por categoria/nível
 - Registro de partidas e resultados
+- Marcação de jogos por propostas estruturadas de horário: um lado propõe de 2 a 3 opções, o outro aceita. O histórico serve de evidência em disputa de W.O. Sem chat: a conversa continua no WhatsApp
+- Agenda do jogador (aba "Jogos"): confrontos sorteados, próximos jogos, pendências, histórico e amistosos
 - Head-to-head entre jogadores
 - Feed de atividade (Activity Stream)
 
@@ -39,10 +41,10 @@ Três objetivos simultâneos: portfolio de Design Engineer, produto real para la
 
 - Torneios completos (gestão de chaves)
 - Login social (Google, Apple)
-- Aulas, quadras, agenda
-- Chat entre jogadores
+- Aulas e reserva de quadras
+- Chat entre jogadores (a marcação de jogos usa propostas estruturadas, não conversa)
 - Pagamentos
-- Visão do organizador/gestor
+- Visão do organizador/gestor (o MVP tem só o papel de admin do ranking, para arbitrar placar contestado e sortear confrontos)
 
 ---
 

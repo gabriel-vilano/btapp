@@ -44,3 +44,11 @@
   line-height: var(--text-body-md-line-height);
   max-width: 56ch;
 }
+
+/* Largura útil do card no mobile base (393px − 2 × 16px de margem).
+   Stories do feed usam este frame para reproduzir o layout real. */
+.sb-feed-frame {
+  width: 361px;
+  background-color: var(--color-background-secondary);
+  padding: var(--spacing-200) 0;
+}

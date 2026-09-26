@@ -1,0 +1,69 @@
+.card {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-50);
+  padding: var(--spacing-200) var(--spacing-150);
+  background-color: var(--color-background-secondary);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  min-height: var(--dimension-tap-target-minimum);
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-state-layer-neutral);
+  pointer-events: none;
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard);
+}
+
+@media (hover: hover) {
+  .card:hover::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.card:active::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+.card:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.card:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.card__name {
+  margin-top: var(--spacing-100);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground-primary);
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.card__username {
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  color: var(--color-foreground-secondary);
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

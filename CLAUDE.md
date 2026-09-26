@@ -22,6 +22,7 @@ O desenvolvedor é um designer (~4 anos em branding/marketing/gráfico, ~2 anos 
 - **Não simplifique demais.** Se algo é complexo, diga que é e quebre em partes menores.
 - **Conecte com o que já se sabe.** Use analogias com design, Figma e UX sempre que possível.
 - **Pergunte antes de assumir.** Se uma decisão impacta design ou experiência, pergunte antes de implementar.
+- **O Gabriel decide; o Claude questiona.** O Gabriel é o decisor de produto, negócio e tecnologia. O papel do Claude é de *sparring*: antes de acatar uma decisão, questionar as premissas, apresentar benefícios e riscos de cada abordagem e embasar a discussão em estudos de mercado, pesquisas e outras fontes confiáveis, sempre citadas. Discordar com argumento é esperado. Decidir no lugar do Gabriel, não.
 
 ## Filosofia de documentação
 
@@ -360,7 +361,7 @@ Quando propor uma solução, apresentar a versão mínima viável primeiro. Só 
 
 - [ ] Feature funcionando em mobile
 - [ ] Testes dos fluxos críticos
-- [ ] Sem erros de TypeScript (`npm run build`)
+- [ ] Sem erros de TypeScript (`npm run typecheck`)
 - [ ] CLAUDE.md atualizado (se houve novo hurdle ou padrão)
 - [ ] Commit seguindo conventional commits
 
@@ -398,11 +399,13 @@ Daí acessar `http://<IP-do-dev>:3000` do celular. Em prod tudo funciona.
 
 ### Phosphor em Server Components
 
-**Sintoma:** ícone do `@phosphor-icons/react` falha quando renderizado num Server Component.
+**Sintoma:** `createContext only works in Client Components` ao renderizar um ícone do `@phosphor-icons/react` num Server Component.
 
-**Causa:** o import padrão do Phosphor usa React Context, que não existe em Server Components (README do pacote, seção "React Server Components and SSR").
+**Causa:** o import padrão do Phosphor usa React Context, que não existe em Server Components (README do pacote, seção "React Server Components and SSR"). Qualquer import de valor (ex: `import { HandshakeIcon } from "@phosphor-icons/react"`) num Server Component dispara o erro.
 
-**Solução:** o componente que importa o ícone roda no cliente. Ou ele tem `"use client"` (`Toast`, `FormInput`, `AvatarUpload`), ou só é usado dentro de componentes client (`Alert` e `PasswordChecklist`, usados só em páginas de auth com `"use client"`). Num Server Component, importar de `@phosphor-icons/react/ssr`.
+**Solução:** o componente que importa o ícone roda no cliente. Ou ele tem `"use client"` (`Toast`, `FormInput`, `AvatarUpload`), ou só é usado dentro de componentes client (`Alert` e `PasswordChecklist`, usados só em páginas de auth com `"use client"`). Num Server Component, importar de `@phosphor-icons/react/ssr`. O wrapper `<Icon />` em si é seguro em Server Components: recebe o ícone como prop (`React.ElementType`) e não importa nada do Phosphor — o erro vem de quem importa o ícone.
+
+**Regra do feed:** todo componente de `src/components/feed/` que importa ícone Phosphor tem `"use client"` no próprio arquivo, em vez de depender de quem o renderiza. Assim ele funciona em qualquer página, inclusive num Server Component.
 
 ### Stack de avatares em duplas no CardHeader
 

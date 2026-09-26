@@ -93,7 +93,7 @@ git branch -d feature/auth
 
 GitHub Actions (`.github/workflows/ci.yml`) roda em todo PR e em todo push na `master`, em três jobs paralelos:
 
-- **Lint, testes e build** — `npm run lint`, `npm test`, `npm run build` (o build inclui a checagem de tipos)
+- **Lint, testes e build** — `npm run lint`, `npm run typecheck` (tipos do projeto inteiro, testes inclusive), `npm test`, `npm run build` (o build checa os tipos só do código do app)
 - **Stories** — `npm run test:stories` no Chromium, incluindo o addon de a11y
 - **E2E** — `npm run test:e2e`: fluxos de auth no Chromium (viewport 430px) contra um Supabase local com as migrations aplicadas do zero
 

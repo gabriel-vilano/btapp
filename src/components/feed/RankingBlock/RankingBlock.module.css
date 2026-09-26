@@ -1,0 +1,82 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-100);
+  padding: var(--spacing-300) var(--spacing-200);
+  border-radius: var(--radius-md);
+  background-color: var(--color-background-primary);
+}
+
+.block--milestone {
+  background-color: var(--color-background-accent-subtle);
+}
+
+.block__name {
+  margin: 0 0 var(--spacing-150);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground-primary);
+  text-align: center;
+}
+
+.position {
+  margin: 0;
+  font-size: var(--text-display-sm-size);
+  line-height: var(--text-display-sm-line-height);
+  letter-spacing: var(--text-display-sm-tracking);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.delta {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-50);
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.delta--up {
+  color: var(--color-foreground-success);
+}
+
+.delta--down {
+  color: var(--color-foreground-attention);
+}
+
+.points {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-50);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  color: var(--color-foreground-secondary);
+}
+
+.badge {
+  margin: var(--spacing-100) 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-50);
+  padding: var(--spacing-50) var(--spacing-100);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-background-accent-subtle);
+  color: var(--color-foreground-accent);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.block--milestone .badge {
+  background-color: var(--color-background-primary);
+}

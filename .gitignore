@@ -49,3 +49,6 @@ storybook-static
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# configurações pessoais do Claude Code (permissões e plugins de cada máquina)
+.claude/settings.local.json

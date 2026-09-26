@@ -1,0 +1,39 @@
+.cheer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+}
+
+.cheer__buttons {
+  display: flex;
+  gap: var(--spacing-150);
+}
+
+/* --- Barra proporcional (SVG) --- */
+
+.bar {
+  display: block;
+  width: 100%;
+  height: 4px;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.bar__track {
+  fill: var(--color-background-tertiary);
+}
+
+.bar__fill {
+  fill: var(--color-background-accent);
+}
+
+/* --- Contagens nas extremidades --- */
+
+.counts {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  color: var(--color-foreground-secondary);
+}

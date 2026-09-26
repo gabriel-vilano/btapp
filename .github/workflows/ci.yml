@@ -26,8 +26,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
+      # O type-check do next build ignora *.test.* e *.spec.*, e o Vitest não checa tipos:
+      # o tsc cobre o projeto inteiro, testes unitários e specs E2E inclusive
+      - run: npm run typecheck
       - run: npm test
-      # O build também roda a checagem de tipos do TypeScript
+      # O build também roda a checagem de tipos do TypeScript (só do código do app)
       - run: npm run build
 
   stories:

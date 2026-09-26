@@ -29,6 +29,7 @@ App disponível em [http://localhost:3000](http://localhost:3000). O `dev` roda 
 | `npm run build`           | Build de produção                                  |
 | `npm start`               | Roda o build localmente                            |
 | `npm run lint`            | ESLint                                             |
+| `npm run typecheck`       | Checagem de tipos do projeto inteiro (`tsc`)       |
 | `npm test`                | Testes unitários (Vitest)                          |
 | `npm run test:stories`    | Stories como testes no Chromium, com checagem a11y |
 | `npm run test:all`        | Unitários + stories                                |
