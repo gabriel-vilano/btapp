@@ -56,9 +56,11 @@ function formatLevel({ level_min, level_max }: Category): string | null {
 
 /**
  * Inscritos contados pela unidade competidora (FEED_CARDS.md §11.4).
- * Ex.: "16 duplas inscritas", "24 jogadores inscritos".
+ * Em simples, o rótulo concorda com o gênero da categoria.
+ * Ex.: "16 duplas inscritas", "24 jogadores inscritos", "12 jogadoras inscritas".
  */
-export function formatEnrollmentCount(count: number, modality: Category['modality']): string {
-  if (modality === 'doubles') return count === 1 ? '1 dupla inscrita' : `${count} duplas inscritas`;
+export function formatEnrollmentCount(count: number, category: Category): string {
+  if (category.modality === 'doubles') return count === 1 ? '1 dupla inscrita' : `${count} duplas inscritas`;
+  if (category.gender === 'F') return count === 1 ? '1 jogadora inscrita' : `${count} jogadoras inscritas`;
   return count === 1 ? '1 jogador inscrito' : `${count} jogadores inscritos`;
 }

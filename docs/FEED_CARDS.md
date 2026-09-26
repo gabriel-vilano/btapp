@@ -433,7 +433,7 @@ Mesma estrutura do WO com duas diferenças:
 - Nome do torneio: `--text-body-md`, `font-weight-bold`, `--color-foreground-primary`
 - Categoria: `--text-label-md`, `--color-foreground-secondary`
 - Data, local, inscritos: `--text-label-md`, `--color-foreground-secondary`
-  - Inscritos pela unidade competidora: "16 duplas inscritas" em duplas, "24 jogadores inscritos" em simples (ver 11.4)
+  - Inscritos pela unidade competidora: "16 duplas inscritas" em duplas; em simples, concorda com o gênero da categoria: "24 jogadores inscritos", "12 jogadoras inscritas" (ver 11.4)
   - Ícones: `Calendar`, `MapPin`, `Users` Phosphor — 16px
 
 **Decisão de hierarquia:**
@@ -716,8 +716,9 @@ O jogador vê no feed o conteúdo das organizações dos rankings e torneios em 
 
 O número de inscritos de uma categoria conta **quem compete**: duplas numa categoria de duplas, jogadores numa categoria de simples. É assim que o esporte fala: "categorias com mais de 40 duplas" (regulamento do Rankin), "as 16 melhores duplas".
 
-- Exibição: "16 duplas inscritas", "24 jogadores inscritos"
-- Cálculo: `COUNT(enrollments)` da categoria, com o rótulo vindo da modalidade
+- Exibição: "16 duplas inscritas", "24 jogadores inscritos", "12 jogadoras inscritas"
+- Cálculo: `COUNT(enrollments)` da categoria, com o rótulo vindo da modalidade e, em simples, do gênero da categoria
+- **Em simples, o rótulo concorda com o gênero da categoria:** feminina → "jogadoras inscritas" ("1 jogadora inscrita"); masculina → "jogadores inscritos". Duplas fica em "duplas inscritas" em qualquer gênero. Não contraria a regra de textos neutros de gênero (seção 2.1): a neutralidade vale para textos sobre uma pessoa, cujo gênero o cadastro não coleta; aqui o gênero é da categoria, que já o tem. Formatado por `formatEnrollmentCount` (`src/lib/formatters.ts`)
 - O total de um evento com categorias de simples e de duplas, quando existir, é em **jogadores** (a única unidade que soma)
 - Calculado ao gerar o `metadata` da activity, não guardado como contador em `categories`
 

@@ -45,6 +45,17 @@ export const SinglesLevelRange: Story = {
   },
 };
 
+// Em simples feminina, o rótulo concorda com a categoria: "12 jogadoras inscritas"
+export const SinglesFeminine: Story = {
+  args: {
+    competition: {
+      ...meta.args.competition,
+      category: { ...storyCategory, gender: "F", modality: "singles", level_min: "A", level_max: "A" },
+      enrollment_count: 12,
+    },
+  },
+};
+
 // Nível e idade coexistem: "Mista C 40+"
 export const MixedWithAgeGroup: Story = {
   args: {
