@@ -15,10 +15,10 @@ As siglas são as mesmas do `docs/DOMAIN.md` > "Fontes". As que esta spec usa:
 | **DEC-MARC** | Propostas de 2 a 3 opções com arena opcional, aceite com um toque, histórico como evidência de W.O., "Abrir no WhatsApp", data combinada fora do app. Chat fora do MVP |
 | **DEC-RESP** | P2 (qualquer jogador de cada lado lança e responde; vale a primeira resposta) e P3 (o admin decide a partida não realizada depois do prazo da rodada, com o histórico de propostas como evidência) |
 | **DEC-JOGOS** | Aba "Jogos", bloco de pendências no feed, volume de 2 a 8 jogos por mês. A linha "Data do jogo" foi substituída pela DEC-MARC; o lembrete no dia do jogo é mantido aqui como leitura (L8) |
-| **PESQ-RV** | Vila: 72h para combinar a data depois do sorteio; sem acordo, tem direito ao W.O. quem ofereceu mais datas |
+| **DEC-MARC-P** | Respostas do Gabriel às perguntas P1–P3 desta spec, confirmação das leituras L1–L9 e aprovação (issue da spec de marcação de jogos, 26/09, ~21:35 UTC) |
+| **PESQ-RV** | Vila: 72h para combinar a data depois do sorteio (não adotado, ver M19); sem acordo, tem direito ao W.O. quem ofereceu mais datas |
 | **DSC** | Suposição S22 ("o WhatsApp é substituível", com evidência contra), RS5 e RO3 (o WhatsApp continua sendo a camada de comunicação), regulamento Nômades (desafiante propõe 3 opções de horário no privado) |
-| **LEIT** | Leitura do agente desta spec, derivada das decisões acima. Está listada na seção 7 para o Gabriel conferir |
-| **PERG** | Pergunta aberta. Está na seção 8 com opções e recomendação. A regra que depende dela está marcada |
+| **LEIT** | Leitura do agente desta spec, derivada das decisões acima e confirmada pelo Gabriel na DEC-MARC-P. A lista está na seção 8 |
 
 ---
 
@@ -82,7 +82,7 @@ Quem prefere combinar tudo no grupo continua podendo: informa a data depois (R35
 
 - **M16. Nada da marcação é apagado.** Proposta criada, substituída, retirada, expirada ou aceita e data informada ficam no histórico do confronto, cada item com autor e momento. [DEC-MARC]
 - **M17. O histórico é evidência, não veredito.** Na partida não realizada (R40), o admin vê o histórico e um resumo por lado: **quantas datas distintas cada lado ofereceu**, quantas propostas ficaram sem resposta e se houve data acordada ou informada. Ele também pode considerar o que aconteceu fora do app (ex.: prints do WhatsApp), porque uma oferta feita no grupo é tão válida quanto uma feita no app. **O app nunca sugere nem aplica o W.O.** [DEC-MARC, DEC-RESP P3, R40, PESQ-RV; LEIT]
-- **M18. A marcação é visível só para os jogadores do confronto e para o admin da competição.** Não gera evento no feed (R24: pendências moram na agenda). O que o card público "Confronto definido" mostra da data e da arena depende da P3 desta spec. [R24; PERG P3]
+- **M18. As propostas e o histórico são visíveis só para os jogadores do confronto e para o admin da competição.** A marcação não gera evento no feed (R24: pendências moram na agenda). **Já a data e a arena acordadas aparecem para todos no card público "Confronto definido"**, como o `FEED_CARDS.md` §5 já desenha. O risco de exposição está registrado na seção 10. [R24, DEC-MARC-P P3]
 
 ### Máquina de estados da proposta
 
@@ -112,15 +112,16 @@ A proposta aceita continua aceita mesmo depois de uma remarcação: o histórico
 
 ## 4. Prazos
 
-A marcação convive com dois prazos que já existem no domínio e, dependendo da P1, com um terceiro.
+A marcação convive com dois prazos, e só eles.
+
+- **M19. Não existe janela para marcar.** O único prazo do confronto é o da rodada (R40). A janela de 72h depois do sorteio, que o Vila usa, não entra no app. [DEC-MARC-P P1]
 
 | Prazo | O que acontece quando vence | Origem |
 | --- | --- | --- |
 | **Horário de cada opção** | A opção deixa de poder ser aceita; sem opções válidas, a proposta expira (M12) | LEIT |
 | **Prazo da rodada** | A partida sem resultado vai para o admin como não realizada, e a marcação congela como evidência (R40, M1) | R40 |
-| **Janela para marcar** (ex.: Vila, 72h depois do sorteio) | **Pergunta aberta (P1).** A recomendação é um prazo **informativo**: gera lembrete e aparece no histórico como "sem data no prazo de marcação", sem consequência automática | PERG P1 |
 
-**A proposta não tem prazo próprio de resposta.** O que dá urgência é o horário das opções: uma proposta para sábado perde o sentido no sábado. Somar um prazo de resposta à proposta criaria um quarto relógio para o jogador acompanhar.
+**A proposta não tem prazo próprio de resposta.** O que dá urgência é o horário das opções: uma proposta para sábado perde o sentido no sábado. Somar um prazo de resposta à proposta criaria mais um relógio para o jogador acompanhar.
 
 ---
 
@@ -136,7 +137,6 @@ Quem é avisado de quê. **O canal (push, e-mail, só no app) e a política de e
 | Proposta aceita | Os 3 que não aceitaram | "Jogo marcado: sábado, 14h, Arena Sunset." |
 | Proposta expirada sem aceite | Os 2 do lado que propôs | "Nenhum horário foi aceito. Proponha novos." |
 | Data informada ou alterada | Os 3 que não informaram | "Rafael informou o jogo: sábado, 14h." |
-| Janela para marcar vencendo sem data (se a P1 criar a janela) | Os 4 | "Faltam 24h para marcar o jogo contra Lucas e Rafael." |
 | Prazo da rodada chegando sem data | Os 4 | "A rodada fecha em 3 dias e o jogo ainda não tem data." |
 | Dia do jogo (data acordada ou informada) | Os 4 | "Hoje, 14h: jogo contra Lucas e Rafael." |
 
@@ -169,7 +169,7 @@ O **histórico** fica recolhido abaixo do estado atual, em linha do tempo ("Pedr
 
 Não há estado especial: a proposta fica **aguardando o outro lado**, como qualquer outra. O que muda é o que o app oferece a quem está esperando:
 
-- **"Abrir no WhatsApp"** leva a proposta para a conversa, com o texto das opções pronto (ex.: "Proponho sáb 14h, dom 10h ou qua 19h na Arena Sunset. Responde no LetzPlay ou aqui."). Como o link é montado depende da P2.
+- **"Abrir no WhatsApp"** leva a proposta para a conversa, com o texto das opções pronto (ex.: "Proponho sáb 14h, dom 10h ou qua 19h na Arena Sunset. Responde no LetzPlay ou aqui."). Abre direto na conversa do jogador que informou o telefone; sem telefone, o jogador escolhe a conversa ou o grupo (M24).
 - Se o acordo sair no WhatsApp, **qualquer um informa a data** (M14), e o confronto fica marcado para os 4.
 - Se o jogo não sair, o histórico mostra ao admin que um lado ofereceu datas e o outro não respondeu no app (M17). O admin considera também o que houve fora dele.
 
@@ -179,55 +179,27 @@ Na partida não realizada (R40), a tela de decisão mostra o **resumo por lado**
 
 ---
 
-## 7. Leituras para conferir
+## 7. Telefone para o WhatsApp
 
-Derivei das decisões, e não foram ditas com estas palavras. Estão nas regras marcadas com LEIT.
+O "Abrir no WhatsApp" abre direto na conversa quando o jogador informou o telefone. O telefone é **dado pessoal**, então as regras abaixo seguem a LGPD (Lei 13.709/2018): consentimento destacado, finalidade única, o mínimo de gente vendo e apagar quando o jogador quiser. [DEC-MARC-P P2]
 
-- **L1. Quem propõe e quem aceita** (M2–M4): qualquer um dos 4 propõe, e responde qualquer um dos 2 do outro lado, com o primeiro aceite valendo. É a P2 aplicada à marcação.
-- **L2. Contraproposta** (M9): não existe "Recusar" vazio; "Nenhum serve" é propor outros horários, e a nova proposta substitui a pendente. Vem da regra do Vila (quem ofereceu mais datas).
-- **L3. Uma proposta pendente por confronto** (M8), que o próprio lado pode trocar ou retirar (M10).
-- **L4. Opções só no futuro e antes do prazo da rodada** (M6), porque depois dele a partida vai para o admin (R40).
-- **L5. Remarcar é propor de novo**, e a data antiga vale até a nova ser aceita (M13).
-- **L6. Data informada sem aceite do outro lado** (M14), com registro de quem informou.
-- **L7. Só a partida do ranking tem marcação** (M1): o torneio tem programação do organizador, e o amistoso nasce do resultado.
-- **L8. Lembrete no dia do jogo** (seção 5): estava na linha "Data do jogo" da DEC-JOGOS, que a DEC-MARC substituiu sem tratar do lembrete.
-- **L9. O histórico é evidência, não veredito** (M17): o admin pesa também o que aconteceu fora do app, e o app não sugere o W.O.
+- **M20. O telefone é opcional e não faz parte do cadastro.** O jogador informa no perfil ou no primeiro toque em "Abrir no WhatsApp". O cadastro continua sendo nome, e-mail e senha. [DEC-MARC-P P2, `PRODUCT.md`]
+- **M21. Salvar o telefone exige consentimento explícito**, dado numa ação própria, com a caixa desmarcada e o texto da finalidade ao lado (ex.: "Mostrar meu telefone aos adversários e ao meu parceiro enquanto o jogo não acontece, para marcarmos pelo WhatsApp"). Sem o consentimento, o número não é salvo. O app guarda quando o consentimento foi dado. [DEC-MARC-P P2; LGPD art. 7º, I, e art. 8º]
+- **M22. A finalidade é uma só: marcar o jogo.** O telefone não é usado para notificação, divulgação, busca de jogadores nem contato fora de um confronto. Uma finalidade nova pede consentimento novo. [DEC-MARC-P P2; LGPD art. 6º, I e III, e art. 9º, §2º]
+- **M23. Só veem o telefone os adversários e o parceiro de um confronto ativo**, ou seja, de uma partida do ranking em "Confronto definido" (M1). Quando a partida sai desse estado, o número deixa de aparecer para eles. **Nunca aparece** no perfil público, no feed, na busca, no histórico da marcação nem para o admin. A regra vale no banco (política de acesso), não só na interface. [DEC-MARC-P P2]
+- **M24. Sem telefone, o "Abrir no WhatsApp" continua existindo:** o app monta o texto das opções, e o jogador escolhe a conversa ou o grupo. Com o telefone de um ou mais jogadores do outro lado, o botão oferece cada um deles e também a opção sem número (ex.: mandar no grupo do ranking). [DEC-MARC-P P2]
+- **M25. O jogador apaga o telefone quando quiser, no perfil.** Apagar remove o número, não só o esconde, e vale como revogação do consentimento. Excluir a conta também apaga o telefone. Como o histórico da marcação nunca guarda o número (M23), nada sobra depois. [DEC-MARC-P P2; LGPD art. 8º, §5º, e art. 18, VI]
 
 ---
 
-## 8. Perguntas abertas
+## 8. Leituras e perguntas respondidas
 
-Só o que as decisões de 26/09 não respondem. A recomendada vem primeiro.
+Não há pergunta aberta. As leituras do agente e as perguntas desta spec foram respondidas pelo Gabriel na DEC-MARC-P:
 
-### P1. Existe uma janela para marcar, além do prazo da rodada?
+- **Leituras confirmadas:** L1 → M2–M4 (quem propõe e quem aceita); L2 → M9 (contraproposta, sem "Recusar" vazio); L3 → M8, M10 (uma proposta pendente por vez); L4 → M6 (opções antes do prazo da rodada); L5 → M13 (remarcar é propor de novo); L6 → M14 (data informada sem aceite); L7 → M1 (só a partida do ranking); L8 → seção 5 (lembrete no dia do jogo); L9 → M17 (histórico é evidência, não veredito).
+- **Perguntas respondidas:** P1 → M19 (sem janela para marcar); P2 → M20–M25 (telefone opcional); P3 → M18 (data e arena no card público).
 
-O Vila dá 72h depois do sorteio para combinar a data (PESQ-RV). O domínio já tem o prazo da rodada (R40) e o de resposta ao resultado (R14), mas não esse.
-
-1. **Configurável por ranking, padrão 72h, só informativa.** Gera lembrete e marca no histórico "sem data no prazo de marcação", sem consequência automática. — Dá ao admin um fato objetivo para a regra do Vila sem o app aplicar nada. Custo: um campo a mais no ranking e um terceiro prazo na tela.
-2. **Sem janela.** Só o prazo da rodada importa. — Mais simples. Custo: o Vila perde uma regra que já usa, e o admin avalia "quem demorou" só pelo histórico.
-3. **Configurável e com consequência** (ex.: a partida vai ao admin quando a janela vence). — Mais fiel ao regulamento. Custo: contradiz a P3, que manda a partida ao admin só no prazo da rodada, e aumenta a fila do admin, um risco já registrado no `DOMAIN.md`.
-
-**Recomendação: 1.** Segue o padrão da P1 do domínio (configurável, com padrão) e não mexe na P3.
-
-### P2. Como funciona o "Abrir no WhatsApp"?
-
-O perfil do jogador não tem telefone (`DOMAIN.md`, glossário). O link do WhatsApp aceita dois formatos: com número, abre a conversa com aquela pessoa; sem número, abre o WhatsApp para o jogador escolher a conversa ou o grupo, com o texto pronto.
-
-1. **Sem número: o app monta o texto e o jogador escolhe a conversa.** — Não coleta dado pessoal novo e funciona também para mandar no grupo da dupla ou do ranking. Custo: um toque a mais, e o jogador precisa ter o adversário salvo.
-2. **Telefone opcional no perfil, visível só para quem tem confronto com o jogador.** — Abre direto na conversa. Custo: dado pessoal novo, com consentimento e regra de visibilidade (LGPD: necessidade e minimização), e cobertura parcial, porque é opcional.
-3. **Telefone obrigatório.** — Cobertura total. Custo: atrito no cadastro, que hoje é nome, e-mail e senha, e o mesmo cuidado de LGPD da opção 2.
-
-**Recomendação: 1 no MVP.** Resolve o caso sem dado sensível; se o beta mostrar que o toque a mais pesa, a opção 2 entra depois.
-
-### P3. O card público "Confronto definido" mostra a data e a arena combinadas?
-
-A spec do card (`FEED_CARDS.md` §5) mostra data e local. Faz sentido no torneio, onde a programação é pública. No ranking, a data e a arena saem da marcação entre os jogadores e dizem **onde uma pessoa vai estar e quando**, num feed público (DEC-FEED).
-
-1. **O card mostra rodada e prazo; data e arena só para os jogadores do confronto.** — Privacidade por padrão. Custo: amigos que querem assistir ao jogo precisam perguntar.
-2. **O card mostra data e arena para quem vê o card.** — Serve ao "Torcer" e a quem quer ir assistir. Custo: expõe agenda e localização no feed público.
-3. **Data e arena só para amigos.** — Meio-termo. Custo: exige visibilidade por campo, não só por evento (R21 hoje é por evento).
-
-**Recomendação: 1 no MVP.** É o que dá para desfazer sem quebrar confiança: abrir depois é fácil, fechar depois de exposto não.
+Pergunta nova sobre a marcação entra aqui com opções, trade-offs e recomendação, e sai quando vira regra.
 
 ---
 
@@ -239,7 +211,8 @@ Medidas por rodada, no beta com Rankin e Vila. Sem meta fixa: a primeira rodada 
 | --- | --- | --- |
 | **Confrontos marcados pelo app** | % dos confrontos do ranking com data acordada por **proposta aceita**, sobre o total sorteado. Mostrar ao lado: % com data informada (M14) e % sem data | É a medida direta de adoção. Data informada alta e proposta baixa quer dizer que o jogador marca no WhatsApp e só registra: é uma resposta válida para a S22 |
 | **Disputas de W.O. com evidência do app** | % das partidas decididas pelo admin como não realizadas (R40), ou de W.O. contestado (R10), em que o histórico tem **ao menos uma proposta** | Mede se o registro auditável serve ao admin, o valor declarado da DEC-MARC |
-| **Tempo até a data** | Mediana entre o sorteio e a data acordada ou informada | Mostra se a janela da P1 é realista |
+| **Tempo até a data** | Mediana entre o sorteio e a data acordada ou informada | Mostra quanto do prazo da rodada a marcação consome, e se a ausência de janela (M19) deixa tudo para o fim |
+| **Jogadores com telefone** | % dos jogadores com confronto ativo que informaram o telefone (M20) | Mostra se o atalho direto para a conversa vale o dado pessoal que pede |
 | **Propostas sem resposta** | % de propostas que expiram ou são substituídas pelo próprio lado sem nenhuma resposta do outro | Sinal de que o outro lado não usa o app. Se for alto, a marcação vira monólogo |
 | **Uso do "Abrir no WhatsApp"** | % dos confrontos em que alguém tocou no botão | Não é falha: mostra quanto a marcação depende da conversa, a evidência a favor ou contra a S22 |
 
@@ -251,3 +224,6 @@ Medidas por rodada, no beta com Rankin e Vila. Sem meta fixa: a primeira rodada 
 - **Aceite sem o parceiro.** Em duplas, um jogador aceita pela dupla (M3) e o parceiro não pode. A saída é remarcar (M13), mas se remarcações forem frequentes, pode valer pedir o aceite dos dois.
 - **Jogador da carga sem conta ativa.** As inscrições do beta entram por carga (R32). Quem ainda não entrou no app não recebe proposta nem notificação. É o caso extremo do primeiro risco.
 - **Datas informadas por um lado só** (M14) têm peso menor como evidência. Se virarem disputa frequente, o aceite do outro lado pode entrar.
+- **O card público mostra onde e quando uma pessoa vai estar.** Pela M18, a data e a arena acordadas aparecem para todos no card "Confronto definido". O Gabriel manteve a decisão sabendo do risco, e nada novo foi criado para mitigá-lo. Acompanhar pedidos de jogadores para esconder a data ou a arena e qualquer relato de uso indevido.
+- **Sem janela para marcar, a marcação pode ficar para o fim da rodada** (M19). O tempo até a data (seção 9) mostra se isso acontece e se a fila do admin cresce por causa disso.
+- **O telefone é dado pessoal.** A proteção depende da política de acesso no banco (M23) e do apagamento real (M25). Se uma das duas falhar, o número vaza para quem não tem confronto com o jogador. As issues de implementação precisam de teste para as duas.

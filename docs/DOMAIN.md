@@ -37,7 +37,7 @@ As entidades estão agrupadas pelo papel que cumprem. Os nomes em **negrito** s�
 
 | Termo | Definição | Regras |
 | --- | --- | --- |
-| **Jogador** | Pessoa com conta no LetzPlay. Tem nome, @username, foto, **data de nascimento opcional** e o contador `total_matches`. O cadastro não coleta gênero | R18, R19, R26, R33 |
+| **Jogador** | Pessoa com conta no LetzPlay. Tem nome, @username, foto, **data de nascimento opcional**, **telefone opcional** (só para a marcação de jogos, ver `docs/SCHEDULING.md`) e o contador `total_matches`. O cadastro não coleta gênero | R18, R19, R26, R33 |
 | **Amizade** | Conexão bilateral entre dois jogadores: um pede, o outro aceita. Só a amizade aceita gera evento no feed | R24 |
 | **Admin da competição** | Jogador com permissões **numa competição específica** (ranking ou torneio): lançar o sorteio, lançar o resultado do torneio, arbitrar contestação, decidir a partida não realizada e corrigir ou anular placar. É um papel mínimo, não a visão do organizador | R15, R38–R41 |
 
@@ -162,6 +162,7 @@ erDiagram
         string nome
         string username
         date data_nascimento "opcional"
+        string telefone "opcional; só adversários e parceiro de confronto ativo"
         int total_matches
     }
     UNIDADE_COMPETIDORA {
