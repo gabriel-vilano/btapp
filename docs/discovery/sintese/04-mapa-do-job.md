@@ -71,7 +71,9 @@ As etapas 4, 5 e 7 **não têm JTBD próprio** e são justamente três das cinco
 
 O mapa muda de dono conforme o formato. O [`05-service-blueprint.md`](05-service-blueprint.md) detalha o torneio.
 
-| Etapa | Ranking de arena (desafio) | Torneio |
+A coluna de ranking de arena descreve a **escada de desafio** observada na evidência (`JOR` 2). O LetzPlay não modela a escada de desafio: o ranking dele segue temporada → rodadas → sorteio dos confrontos lançado pelo admin do ranking (spec de entidades e relações do domínio).
+
+| Etapa | Ranking de arena (escada de desafio, na evidência) | Torneio |
 | --- | --- | --- |
 | 2 · Localizar | O ranking é da arena onde o jogador já joga | Busca entre 8+ plataformas, Instagram e grupos |
 | 4 · Confirmar | O jogador combina data e quadra, no WhatsApp, com 3 opções de horário (`JOR` 2) | O organizador publica chave e programação, "preferencialmente" 48h antes (`JOR` 1.1) |

@@ -44,12 +44,12 @@ O núcleo da concorrência. Todos atendem **organizador e jogador ao mesmo tempo
 | Proposta | "A extensão da quadra na sua mão." Sistema de gestão de rankings, torneios, barragens, aulas, locações e agenda de quadras. Para o jogador: H2H, painel de desempenho, histórico | Forte (Lido) | [letzplay.me/home](https://letzplay.me/home), [App Store](https://apps.apple.com/br/app/letzplay/id1262006308) |
 | Público | Organizador (academia, arena, clube, condomínio, liga, circuito) + jogador. Tênis, BT e padel | Forte (Lido) | idem |
 | Números declarados | +9 mil locais e gestores; +2,08 mi jogadores; +10,57 mi partidas; +531 mil competições; +55 mi aulas e locações; R$ 3,5 bi "gerenciado" | Média (Lido, autodeclarado, sem data nem método) | [letzplay.me/home](https://letzplay.me/home), acesso 25/09/2026 |
-| Clientes de BT | CBBT e federações estaduais de BT (FPaBT, FGBT, FPEBT, FTBT, FBBT); Circuito Beach Tennis (19.756 jogadores, 186 rankings); CBBT (24.005 jogadores, 48 rankings, 183 torneios) | Média (Resumo) | [letzplay.me/CBBT](https://letzplay.me/CBBT/tourneys), [Circuito BT](https://letzplay.me/circuitobeachtennis/tournaments?filter=open) |
+| Clientes de BT | CBBT e federações estaduais de BT (FPaBT, FGBT, FPEBT, FTBT, FBBT); Circuito Beach Tennis (19.756 jogadores, 186 rankings); CBBT (25.894 jogadores, 50 rankings, 208 torneios, lidos em 25/09/2026 no aprofundamento; o resumo de busca dava 24.005, 48 e 183) | Média (Resumo; CBBT Lido) | [letzplay.me/CBBT](https://letzplay.me/CBBT/tourneys), [Circuito BT](https://letzplay.me/circuitobeachtennis/tournaments?filter=open) |
 | Features jogador | Lançar resultado, buscar torneio, participar de ranking, achar quadra, estatísticas, "rede social exclusiva" (seguir, torcer, comentar) | Forte (Lido) | Loja |
 | Features gestor | Clientes, agenda, aulas e professores, locação online, clubinho e day use, rankings e barragens, torneios, financeiro, loja e lanchonete, automações, "mais de 40 gráficos" | Forte (Lido) | Home |
 | Receita | SaaS para gestor. Sem preço público: CTA "Solicitar perfil de gestão" | Forte (Lido) | Home |
 | App Store | **2,8★, 217 avaliações.** Nº 29 em Esportes (grátis). Idioma declarado: só inglês | Forte (Lido, 25/09/2026) | [App Store](https://apps.apple.com/br/app/letzplay/id1262006308) |
-| Google Play | **100 mil+ downloads.** Atualizado em 10/09/2026. Nota não exibida nesta leitura; a coleta do `VOZ_DO_USUARIO.md` no mesmo dia leu **3,9★ com 238 avaliações**. Resumo de busca anterior citava 250 mil+ e 2,8★ | Forte (Lido); divergência com o resumo antigo não explicada | [Google Play](https://play.google.com/store/apps/details?id=com.lptennis.letzplay&hl=pt_BR) |
+| Google Play | **3,9★, 238 avaliações, 100 mil+ downloads.** Atualizado em 10/09/2026. A nota vem da coleta do `VOZ_DO_USUARIO.md` no mesmo dia. O resumo de busca anterior (250 mil+ e 2,8★) estava errado | Forte (Lido) | [Google Play](https://play.google.com/store/apps/details?id=com.lptennis.letzplay&hl=pt_BR) |
 | Mudança recente | Versão 10 (19/08/2026): "nova identidade visual", "prepara a infraestrutura para uma nova fase". Versão 11 (24/08/2026): "sessão passa a ser preservada após atualizações", correção de autenticação | Forte (Lido) | Histórico de versões, App Store |
 | Queixas (reviews) | Logout após poucos minutos; notificação que não aparece ("perdemos torneios"); lentidão; jogos pendentes 2 meses porque o gestor não atualiza; não dá para excluir conta; cadastro com "tente mais tarde"; não dá para remover parceiros antigos | Forte (Lido) | App Store |
 
@@ -89,16 +89,18 @@ O núcleo da concorrência. Todos atendem **organizador e jogador ao mesmo tempo
 
 ### 1.4 Ranketes
 
+> **Decisão (26/09):** o Ranketes é **referência pontual**, não concorrente a monitorar. Motivo: uso quase nulo (1 avaliação na App Store, 50+ downloads no Google Play), segundo o `aprofundamento/TEARDOWN.md`.
+
 | Campo | Achado | Força | Fonte |
 | --- | --- | --- | --- |
 | Proposta | "O jogo acabou. Agora ele vale ranking." Hub de tênis e BT para atleta, professor, promoter e arena. Em "acesso antecipado" | Forte (Lido) | [ranketes.com.br](https://www.ranketes.com.br/) |
 | Features atleta | Registro de partida com **confirmação do adversário**; desafio com dia e hora e lembrete para os dois; **H2H da temporada** (vitórias, sets, games, data da virada); atletas por distância; Match Club (sorteio de duplas, "Reis da Quadra"); torneios 8/16, grupos + mata-mata, dupla eliminação, "formato Finals"; feed, badges, perfil público; rankings de tênis e BT separados, simples e duplas | Forte (Lido) | idem |
-| Regra de pontos | Vitória 80 (partida/desafio) a 250 (ranking); derrota leva ~20%; todos começam com 100; ninguém fica negativo; torneio vale ×2; temporada 1/jan–31/dez; categorias Iniciante, C, B, A, PRO; top 10 ganha selo permanente | Forte (Lido) | FAQ |
-| Preço | Atleta grátis "para sempre". Competições organizadas: cobrança **por participação**, sem mensalidade. Professor: grátis até 10 alunos, depois R$ 159/mês (de R$ 179). Clube/Arena: a partir de R$ 280/mês, escala por quadra. Pix, cartão, boleto | Forte (Lido, 25/09/2026) | Seção Planos |
-| Lojas | App iOS id 6770686808 (meta tag do site). Sem nota encontrada | Média (Lido) | Metadados do site |
+| Regra de pontos | Vitória 80 (partida/desafio) a 250 (ranking); bônus de até 1,6× por vencer quem está acima no ranking; derrota leva ~20%; todos começam com 100; ninguém fica negativo; torneio vale ×2; temporada 1/jan–31/dez; categorias Iniciante, C, B, A, PRO; top 10 ganha selo permanente | Forte (Lido) | FAQ |
+| Preço | Atleta grátis, mas há um **Atleta Full a R$ 49/ano** (preço cheio R$ 79), também vendido na App Store, que libera participação em torneio e H2H da temporada. O próprio site se contradiz entre as páginas (correção do `aprofundamento/`). Competições organizadas: cobrança **por participação**, sem mensalidade. Professor: grátis até 10 alunos, depois R$ 159/mês (de R$ 179). Clube/Arena: a partir de R$ 280/mês, escala por quadra. Pix, cartão, boleto | Forte (Lido, 25/09/2026) | Seção Planos |
+| Lojas | App iOS id 6770686808, só iPhone: **1 avaliação** na App Store. Google Play: **50+ downloads**. Desenvolvedor pessoa física (correção do `aprofundamento/`) | Forte (Lido, 25/09/2026) | Lojas |
 
 **Fortes:** escopo e linguagem muito próximos do jogador competitivo (H2H, desafio, confirmação, temporada); preço público e simples.
-**Fracos:** produto novo, sem base nem avaliações; pontuação própria, não federativa.
+**Fracos:** produto novo, com uso quase nulo nas lojas; pontuação própria, não federativa.
 
 ### 1.5 Torneio Já
 
@@ -280,7 +282,7 @@ Notas lidas em 25/09/2026 quando marcadas com (L). "—" = não encontrado.
 
 | Produto | Tipo | Público pagante | Cobre BT? | Rating/ranking do jogador | H2H | Confirmação de resultado pelo adversário | Preço público | Nota nas lojas |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LetzPlay | Ranking + torneio + gestão | Organizador/arena | Sim (CBBT) | Ranking por competição | Sim | Em rankings configurados (ver `DISCOVERY.md`) | Não | iOS 2,8★ / 217 (L); Android 100 mil+ (L) |
+| LetzPlay | Ranking + torneio + gestão | Organizador/arena | Sim (CBBT) | Ranking por competição | Sim | Em rankings configurados (ver `DISCOVERY.md`) | Não | iOS 2,8★ / 217 (L); Android 3,9★ / 238, 100 mil+ (L) |
 | Tênis Integrado | Federativo | Federação (atleta via filiação) | Sim (CBT) | Ranking oficial | — | — | Taxas federativas | iOS 2,5★ / 68 (L) |
 | Meu Ranking (RDT) | Ranking contínuo + torneio | Organizador | Sim | Ranking por rodada | Sim | — | Não | iOS 4,5★ / 123 (L) |
 | Ranketes | Ranking aberto + torneio + gestão | Competição por participação; professor; arena | Sim | Pontos por temporada | Sim, da temporada | Sim | Sim (R$ 159; R$ 280+) | — (novo) |
@@ -324,7 +326,7 @@ Descritivo. Sem recomendação.
 | --- | --- | --- |
 | **Nota de loja dos apps de ranking BR é baixa**, exceto um | Na App Store, LetzPlay 2,8★ e Tênis Integrado 2,5★ contra Meu Ranking 4,5★ (todos lidos). No Google Play a distância é menor (LetzPlay 3,9★, Tênis Integrado 3,4★). As queixas são de sessão, notificação, lentidão, conta que não exclui, e não de feature ausente | Forte |
 | **Programação e notificação confiáveis no dia do torneio** | Review do Tênis Integrado (W.O. num Brasileiro por programação que não apareceu); reviews do LetzPlay ("perdemos torneios"); LiveBT existe desde 2019 para esse mesmo problema; organizadores empurram o jogador para o grupo de WhatsApp | Forte |
-| **Resultado depende do organizador lançar** | Review do LetzPlay: jogos pendentes 2 meses. Só Ranketes e rankings específicos declaram confirmação pelo adversário com prazo | Média |
+| **Resultado depende do organizador lançar** | Review do LetzPlay: jogos pendentes 2 meses. Ranketes, Playtomic (24h) e o LetzPlay em ranking configurado (24h) validam pelo adversário, e nenhum arbitra a recusa (correção do `aprofundamento/`) | Média |
 | **Não existe rating individual de BT que atravesse arenas e federações** | UTR, DUPR, WTN e Playtomic não cobrem BT. No Brasil, cada arena, circuito, CBT e CBBT tem seu ranking. Ranketes propõe pontos próprios, mas é novo | Forte (ausência confirmada em várias buscas) |
 | **Rating de duplas com parceiro variável é problema não resolvido nem fora do BT** | UTR aplica o mesmo delta aos dois; DUPR usa confiabilidade e peso por origem; Playtomic é criticado por ser "jogável" escolhendo parceiro | Média |
 | **Integridade de identidade** (perfil único, categoria verdadeira) | Tênis Integrado prende o CPF numa conta cancelada; Reclame Aqui do LetzPlay (sandbagging, ver `DISCOVERY.md`); DUPR e UTR separam resultado verificado de autodeclarado, os BR não | Média |

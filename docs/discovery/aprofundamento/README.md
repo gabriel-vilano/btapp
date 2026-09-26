@@ -63,7 +63,7 @@ Referência: o top 10 do `SINTESE.md` da pesquisa anterior. "Ganha" e "perde" s�
 
 ## Correções à pesquisa anterior
 
-Registradas também como comentário na issue da pesquisa anterior, sem editar aqueles arquivos.
+Registradas também como comentário na issue da pesquisa anterior. Desde 26/09 estão aplicadas também nos arquivos daquela pesquisa (`CONCORRENTES.md`, `MATRIZ_FEATURES.md`, `MERCADO.md` e `SINTESE.md`).
 
 | Tema | Pesquisa anterior | Agora | Fonte |
 | --- | --- | --- | --- |
@@ -85,7 +85,9 @@ Só o Gabriel responde. Consolidadas das cinco frentes, sem repetir as 8 do `SIN
 3. **Qual a posição do redesign diante da disputa CBT × CBBT?** O LetzPlay atual hospeda a CBBT; a CBT considera irregular o que não homologa. Muda a leitura das oportunidades 5 e 10.
 4. **O jogador deve ver a origem dos pontos de um torneio** (tabela, bônus comerciais, dupla chancela)? A evidência só diz que a conta tem mais peças do que parece.
 5. **O Ranketes ainda é referência**, sabendo que tem uso quase nulo? Refina a pergunta 6 do `SINTESE.md`.
+   - **Decidido (26/09):** referência pontual, não concorrente a monitorar.
 6. **Dá para conversar com 5 a 8 jogadores e 2 a 3 organizadores antes do beta, ou ler (com consentimento) um grupo de WhatsApp de ranking?** Esta rodada mostrou que a voz pública do BT brasileiro é quase inexistente e que as ferramentas de pesquisa de mesa não chegam aonde a conversa acontece. Reforça a pergunta 7 do `SINTESE.md`.
+   - **Suspensa (26/09):** não há pesquisa com usuários por agora.
 7. **Existe limite para cobrar do jogador?** O caso MATCHi (taxa ao jogador em app que ele não escolheu) e o caso Strava (tirar do grátis) mostram a reação. Ver `REFERENCIAS_INTERNACIONAIS.md`.
 
 ---

@@ -164,7 +164,7 @@ Página institucional da ITF ainda fala em "mais de 300 torneios em 37 países" 
 | Circuito | Volume | Fonte | Acesso | Força |
 | --- | --- | --- | --- | --- |
 | CBT nacional (GA+, GA, G1+, G1, G2, G3) | Nº de torneios em 2026 não encontrado. Inscrição R$ 157 (adimplente) ou R$ 247 | Regulamento CBT 2026 | Lido | Forte (regras); sem volume |
-| CBBT – Circuito Brasileiro | 200 torneios e 48 rankings acumulados na página | LetzPlay | Resumo | Média |
+| CBBT – Circuito Brasileiro | 25.894 jogadores, 208 torneios e 50 rankings acumulados na página (lido em 25/09/2026 no aprofundamento; o resumo dava 200 e 48) | LetzPlay | Lido | Forte |
 | Campeonato Cearense (FCTBT) | Etapas FCTBT 1000/1500/2000; até 4 etapas no interior | Regulamento FCTBT 2025 | Lido | Forte |
 | Federações de BT (seção 1.3) | 21 a 153 torneios acumulados por federação | LetzPlay | Resumo | Média |
 | Brasil Open, Superliga, Brasil Beach Games | Existem; volume de atletas só no Brasil Beach Games (1.500 em 5 modalidades) | Ver seção 2.2; `DISCOVERY.md` | Resumo | Fraca |

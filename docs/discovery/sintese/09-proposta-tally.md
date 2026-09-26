@@ -1,5 +1,7 @@
 # 09 — Proposta de ajuste na pesquisa do Tally
 
+> **Suspenso desde 26/09.** Não há pesquisa com usuários por agora: o app é construído a partir das decisões do Gabriel. O formulário não vai ao ar agora, e esta proposta fica guardada, não descartada. As respostas já dadas às perguntas 6, 7 e 8 do [`README.md`](README.md) valem quando a pesquisa voltar.
+
 Rascunho de ajustes no formulário **"Beach Tennis competitivo: como você joga e acompanha"** para medir **importância × satisfação** (pontuação de oportunidade) e **Kano**, e para identificar as proto-personas.
 
 **Só a proposta.** O formulário não foi editado. Foi lido pelo conector do Tally em 25/09/2026: está em rascunho (não publicado), com 24 perguntas em 7 páginas (fora a abertura e o agradecimento) e 0 respostas.
