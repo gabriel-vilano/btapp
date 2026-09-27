@@ -69,7 +69,7 @@ export const Loading: Story = {
     docs: {
       description: {
         story:
-          "Estado loading esconde o conteúdo (visibility: hidden) e mostra o spinner. Mantém o tamanho do botão estável — sem layout shift.",
+          "Estado loading esconde o conteúdo (opacity: 0) e mostra o Spinner sm. Mantém o tamanho do botão estável — sem layout shift.",
       },
     },
   },

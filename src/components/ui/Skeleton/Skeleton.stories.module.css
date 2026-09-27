@@ -1,0 +1,20 @@
+/* Frame da largura útil do mobile base (393px − 2 × 16px), sobre o fundo de card */
+.frame {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+  width: 361px;
+  padding: var(--spacing-200);
+  border-radius: var(--radius-card);
+  background-color: var(--color-background-primary);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-150);
+}
+
+.card {
+  --skeleton-height: 160px;
+}

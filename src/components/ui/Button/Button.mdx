@@ -50,7 +50,7 @@ Estados controlados via props (`loading`, `disabled`, `fullWidth`).
 
 ### Loading
 
-Esconde o conteúdo (`visibility: hidden`) e mostra um spinner sobreposto. **Mantém o tamanho do botão** — não causa layout shift. Use durante operações async (submit de formulário, upload). O botão fica não-clicável automaticamente.
+Deixa o conteúdo transparente (`opacity: 0`) e mostra o [`Spinner`](?path=/docs/ui-spinner--docs) `sm` sobreposto, na cor do texto da variante. **Mantém o tamanho do botão** — não causa layout shift. Use durante operações async (submit de formulário, upload). O botão fica não-clicável automaticamente.
 
 <Canvas of={ButtonStories.Loading} />
 
@@ -101,7 +101,7 @@ Sempre via componente `<Icon />`, tamanho `sm`. Cor herda do botão via `current
 - `:focus-visible` produz outline azul de alto contraste — **nunca remover** sem substituir
 - `disabled` desabilita pointer-events e foco automaticamente
 - Tap target mínimo de 48px atendido via `min-height: var(--dimension-action-height-lg)` (WCAG 2.5.5)
-- Loading substitui conteúdo via `visibility: hidden` (preserva tamanho) — leitor de tela ainda anuncia o botão como tal
+- Loading esconde o conteúdo com `opacity: 0` (preserva tamanho e nome acessível) e marca `aria-busy`. O Spinner é decorativo: o leitor de tela continua anunciando o rótulo do botão
 - Conteúdo do botão deve ser texto descritivo da ação. Em casos de ícone-only, usar `aria-label`
 
 ## Evitar

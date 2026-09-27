@@ -11,6 +11,7 @@ import { FormInput } from "@/src/components/ui/FormInput";
 import { Button } from "@/src/components/ui/Button";
 import { Alert } from "@/src/components/ui/Alert";
 import { TextLink } from "@/src/components/ui/TextLink";
+import { Spinner } from "@/src/components/ui/Spinner";
 import { slugifyName, validateUsername } from "@/src/lib/validations";
 import styles from "./page.module.css";
 
@@ -137,7 +138,7 @@ export default function ProfilePage() {
   if (!initialized) {
     return (
       <main className={styles.profile__loading}>
-        <div className={styles["profile__loading-spinner"]} />
+        <Spinner size="lg" className={styles["profile__loading-spinner"]} />
         <p>Carregando...</p>
       </main>
     );
@@ -170,7 +171,7 @@ export default function ProfilePage() {
 
           {usernameStatus === "checking" && (
             <p className={`${styles["profile__username-status"]} ${styles["profile__username-status--checking"]}`}>
-              <span className={styles.profile__spinner} />
+              <Spinner size="xs" />
               Verificando disponibilidade...
             </p>
           )}

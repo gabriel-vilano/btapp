@@ -1,0 +1,97 @@
+import {
+  Meta,
+  Subtitle,
+  Canvas,
+  ArgTypes,
+} from "@storybook/addon-docs/blocks";
+import * as SkeletonStories from "./Skeleton.stories";
+
+<Meta of={SkeletonStories} />
+
+<Subtitle>
+  Forma cinza que ocupa o lugar do conteúdo enquanto ele carrega, com o mesmo
+  tamanho do que vai chegar.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/Skeleton/Skeleton.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/Skeleton/Skeleton.tsx)
+
+## Visão geral
+
+`Skeleton` desenha a silhueta do conteúdo (linhas de texto, avatar, card) antes dele chegar. A tela já nasce com o layout final, então nada pula quando os dados carregam. A forma pulsa devagar entre `--color-loading-first` e `--color-loading-second`.
+
+<Canvas of={SkeletonStories.Text} />
+
+## Shapes
+
+Três formas, escolhidas pela prop `shape`. Montadas juntas, elas reproduzem qualquer lista ou card.
+
+<Canvas of={SkeletonStories.ListItemPlaceholder} />
+
+### Text
+
+Uma barra por linha, na altura da fonte da escala tipográfica (`textScale`). A margem completa o line-height: três linhas de Skeleton `body-md` ocupam a mesma altura de três linhas de texto `body-md`.
+
+<Canvas of={SkeletonStories.TextScales} />
+
+Com `lines`, a última linha fica com 60% da largura, como o fim de um parágrafo.
+
+<Canvas of={SkeletonStories.Paragraph} />
+
+### Circle
+
+Lugar de avatar. Os tamanhos são os do Avatar: 32, 40, 48 e 96.
+
+<Canvas of={SkeletonStories.CircleSizes} />
+
+### Rect
+
+Bloco com o raio do card, na largura do contêiner. A altura vem da custom property `--skeleton-height`, definida no CSS de quem usa (padrão de override do `docs/TOKENS.md`):
+
+```css
+.feed__placeholder {
+  --skeleton-height: 160px;
+}
+```
+
+<Canvas of={SkeletonStories.Rect} />
+
+## Quando usar
+
+- Lista ou card carregando, quando o formato do conteúdo é conhecido (ranking, feed, agenda, perfil)
+- Primeira carga de uma tela, para ela aparecer já com o layout final
+
+## Componentes relacionados
+
+- Para **ação em andamento** (enviar formulário, salvar) ou **conteúdo de formato imprevisível**, use o [`Spinner`](?path=/docs/ui-spinner--docs)
+- Para **carregamento que terminou sem resultado**, troque o Skeleton pelo EmptyState, nunca deixe o Skeleton na tela
+
+## Acessibilidade
+
+- **O Skeleton é `aria-hidden`.** Formas cinza não têm significado para o leitor de tela
+- **Quem anuncia o carregamento é o contêiner.** Marque a região com `aria-busy="true"` enquanto carrega e dê um texto de status (ex.: um `Spinner` com `label`, ou texto visualmente escondido em `role="status"`)
+- **Movimento reduzido:** com `prefers-reduced-motion: reduce`, o pulso para e a forma fica em `--color-loading-fill`, o tom entre os dois do pulso
+
+## Evitar
+
+- ❌ **Skeleton sobre `--color-background-secondary`** — o `--color-loading-first` tem o mesmo tom do fundo e a forma some na metade do pulso. Use sobre superfície de card (`--color-background-primary`)
+- ❌ **Silhueta diferente do conteúdo real** — se o card tem avatar e duas linhas, o Skeleton também. Silhueta errada faz a tela pular do mesmo jeito
+- ❌ **Skeleton para sempre** — se a carga falhar, troque por erro (Alert) ou vazio (EmptyState)
+- ❌ **Skeleton de botão ou campo** — ações aparecem prontas. O Skeleton é para conteúdo que vem do servidor
+
+## API
+
+<ArgTypes of={SkeletonStories} />
+
+## Decisões de design
+
+**Por que pulso de cor, e não shimmer (faixa de brilho que atravessa a forma)?**
+O pulso usa os dois tokens `--color-loading-first` e `--color-loading-second`, que estavam sem uso, e o `--color-loading-fill` como tom parado. O shimmer precisaria de gradiente e de uma animação por forma sincronizada, e tem mais movimento. O pulso é mais simples e mais calmo.
+
+**Por que a altura do `rect` vem de custom property, e não de prop?**
+Prop de tamanho viraria `style=` inline, que o projeto não usa. A custom property mantém a medida no CSS de quem usa, junto com o resto do layout.
+
+## Referências
+
+- [MDN — aria-busy](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-busy)
+- [MDN — prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion)
+- Tokens relacionados: `docs/TOKENS.md` (`--color-loading-*`, `--dimension-avatar-*`, `--radius-card`, `--text-*`)

@@ -55,7 +55,8 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **Tabs** (na página) | R, P | Não | Padrão APG Tabs, setas, `aria-selected`. Não confundir com a TabBar de navegação |
 | **Stepper** | S | Não | Padrão APG Spinbutton. Só se o registro de placar seguir o caminho B |
 | **ProgressBar** | R, P | Não | Trilha até a linha das Finals ou até a promoção de categoria. `role="progressbar"` com valor textual |
-| **Skeleton** | R, F, P, D | Não (os tokens `--color-loading-*` existem) | Estado de carregamento de lista e card |
+| **Skeleton** | R, F, P, D | Sim (`ui/Skeleton`: `text`, `circle`, `rect`; pulso com os tokens `--color-loading-*`) | Nada para as superfícies. Cada tela monta a silhueta do próprio conteúdo |
+| **Spinner** | S, todas | Sim (`ui/Spinner`: `xs`, `sm`, `md`, `lg`; usado pelo Button em loading) | — |
 | **Divider** | R, P, D | Não | Separador simples. Base para o ZoneDivider (Tier 3) |
 | **BottomSheet / Dialog** | D, S | Não | Padrão APG Dialog (Modal): foco preso, `Esc`, foco volta. Base da folha de filtros e da contestação |
 | **TabBar** | N | Não | Navegação principal: `<nav>` com links e `aria-current="page"`, CountBadge, safe area do iOS. Uma instância, mas é casca do app inteiro |
