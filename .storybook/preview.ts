@@ -13,9 +13,8 @@ const preview: Preview = {
     },
 
     a11y: {
-      // 'todo' — mostra violações apenas no UI; CI não falha.
-      // Promover pra 'error' quando o DS estabilizar.
-      test: "todo",
+      // 'error': violação de a11y (axe) reprova a story no `test:stories` e na CI.
+      test: "error",
     },
 
     viewport: {

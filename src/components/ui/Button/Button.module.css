@@ -102,8 +102,10 @@
   pointer-events: none;
 }
 
+/* opacity em vez de visibility: hidden, que tiraria o rótulo da árvore de
+   acessibilidade e deixaria o botão sem nome (axe button-name) */
 .btn__content--hidden {
-  visibility: hidden;
+  opacity: 0;
 }
 
 .btn__spinner {

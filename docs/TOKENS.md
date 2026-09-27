@@ -263,7 +263,7 @@ Escala de 8 stops por família. 100 = mais claro, 800 = mais escuro.
 | `--color-coral-700` | #5e1d08                 |
 | `--color-coral-800` | #2f0e04                 |
 
-**Coral de ação × coral de marca.** O coral-500 (`#f3511b`) dá 3,50:1 com o branco e não passa no contraste AA de texto (4,5:1, WCAG 1.4.3). Por isso a **cor de ação** (texto e fundo de botão, link de ação, destaque em texto) é o **coral-600** (`#d03706`): 4,96:1 com o branco, 4,63:1 sobre `--color-background-secondary` e 4,70:1 sobre o coral-100. O coral-500 fica como **cor de marca** e para usos que não são texto (logo, ilustração, barra de progresso), onde o mínimo é 3:1 (WCAG 1.4.11). A troca dos tokens `--color-background-accent`, `--color-foreground-accent` e `--color-border-accent` para o coral-600 acontece no CSS em issue própria; quando entrar, as tabelas de cores semânticas abaixo mudam junto.
+**Coral de ação × coral de marca.** O coral-500 (`#f3511b`) dá 3,50:1 com o branco e não passa no contraste AA de texto (4,5:1, WCAG 1.4.3). Por isso a **cor de ação** (texto e fundo de botão, link de ação, destaque em texto) é o **coral-600** (`#d03706`): 4,96:1 com o branco, 4,63:1 sobre `--color-background-secondary` e 4,70:1 sobre o coral-100. O coral-500 fica como **cor de marca** (`--color-brand`) e para usos que não são texto (logo, ilustração, barra de progresso como a do CheerBar), onde o mínimo é 3:1 (WCAG 1.4.11). Os tokens `--color-background-accent`, `--color-foreground-accent` e `--color-border-accent` apontam para o coral-600. A borda não é texto e passaria com o 500, mas fica no 600 para o botão secondary ter borda e texto no mesmo tom.
 
 **Kiwi — success**
 
@@ -409,7 +409,7 @@ Adicionar uma variante é trivial: estender a tabela em `semantic.css` e documen
 | `--color-background-elevated`         | `--color-neutral-100` | modais, cards elevados                     |
 | `--color-background-inverse`          | `--color-neutral-700` | fundo escuro                               |
 | `--color-background-strong`           | `--color-neutral-800` | fundo muito escuro                         |
-| `--color-background-accent`           | `--color-coral-500`   | coral — ação principal                     |
+| `--color-background-accent`           | `--color-coral-600`   | coral — ação principal                     |
 | `--color-background-attention`        | `--color-red-600`     | erro, destructive                          |
 | `--color-background-success`          | `--color-kiwi-600`    | confirmação                                |
 | `--color-background-disabled`         | `--color-neutral-400` | desabilitado                               |
@@ -425,7 +425,7 @@ Adicionar uma variante é trivial: estender a tabela em `semantic.css` e documen
 | `--color-foreground-primary`      | `--color-neutral-800` | texto principal                 |
 | `--color-foreground-secondary`    | `--color-neutral-600` | texto secundário, metadata      |
 | `--color-foreground-disabled`     | `--color-neutral-400` | texto desabilitado              |
-| `--color-foreground-accent`       | `--color-coral-500`   | destaques, links de ação        |
+| `--color-foreground-accent`       | `--color-coral-600`   | destaques, links de ação        |
 | `--color-foreground-attention`    | `--color-red-600`     | erros, alertas                  |
 | `--color-foreground-success`      | `--color-kiwi-600`    | confirmações                    |
 | `--color-foreground-on-accent`    | `--color-neutral-100` | texto branco sobre coral        |
@@ -443,7 +443,7 @@ Adicionar uma variante é trivial: estender a tabela em `semantic.css` e documen
 | `--color-border-subtle`    | `--color-neutral-300` | separadores leves       |
 | `--color-border-medium`    | `--color-neutral-500` | bordas padrão de inputs |
 | `--color-border-strong`    | `--color-neutral-700` | bordas com ênfase       |
-| `--color-border-accent`    | `--color-coral-500`   | input em foco           |
+| `--color-border-accent`    | `--color-coral-600`   | input em foco           |
 | `--color-border-attention` | `--color-red-600`     | input inválido          |
 | `--color-border-success`   | `--color-kiwi-600`    | input válido            |
 
