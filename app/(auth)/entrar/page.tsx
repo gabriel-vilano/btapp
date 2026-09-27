@@ -11,7 +11,7 @@ import { Alert } from "@/src/components/ui/Alert";
 import { TextLink } from "@/src/components/ui/TextLink";
 import { validateEmail } from "@/src/lib/validations";
 import { loginNoticeFor } from "./login-notice";
-import styles from "./page.module.css";
+import authStyles from "@/app/(auth)/auth-page.module.css";
 
 export default function LoginPage() {
   return (
@@ -72,7 +72,7 @@ function LoginContent() {
         subtitle="Entre com seu e-mail e senha"
       />
 
-      <form action={handleSubmit} className={styles.login__form}>
+      <form action={handleSubmit} className={authStyles["auth-page__form"]}>
         <FormInput
           label="E-mail"
           name="email"
@@ -122,7 +122,7 @@ function LoginContent() {
         </Button>
       </form>
 
-      <p className={styles.login__footer}>
+      <p className={authStyles["auth-page__footer"]}>
         Ainda não tem conta?{" "}
         <TextLink href="/cadastro">Criar conta</TextLink>
       </p>

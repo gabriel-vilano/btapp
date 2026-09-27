@@ -13,6 +13,7 @@ import { Alert } from "@/src/components/ui/Alert";
 import { TextLink } from "@/src/components/ui/TextLink";
 import { Spinner } from "@/src/components/ui/Spinner";
 import { slugifyName, validateUsername } from "@/src/lib/validations";
+import authStyles from "@/app/(auth)/auth-page.module.css";
 import styles from "./page.module.css";
 
 type UsernameStatus = "idle" | "checking" | "available" | "taken" | "invalid";
@@ -153,7 +154,7 @@ export default function ProfilePage() {
         subtitle="Adicione uma foto e um nome de usuário para ser reconhecido por outros jogadores"
       />
 
-      <form action={handleSubmit} className={styles.profile__form}>
+      <form action={handleSubmit} className={authStyles["auth-page__form"]}>
         <AvatarUpload onFileSelect={setAvatarFile} />
 
         <div>
