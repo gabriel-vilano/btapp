@@ -10,6 +10,7 @@ import {
   storyLongOrg,
   storyLongPlayer,
   storyOrg,
+  storyPartner,
   storyPlayer,
 } from "../storyFixtures";
 
@@ -41,6 +42,52 @@ export const Player: Story = {
       player: storyPlayer,
       action_text: "Lucas se inscreveu em um torneio",
     },
+  },
+};
+
+// Dupla: stack de avatares, com o parceiro por baixo (FEED_CARDS.md §6.2).
+export const PlayerDoubles: Story = {
+  args: {
+    data: {
+      header_type: "player",
+      player: { ...storyPlayer, avatar_url: STORY_AVATAR_URL },
+      partner: storyPartner,
+      action_text: "Lucas Silva e Rafael Costa subiram no ranking",
+    },
+  },
+  play: async ({ canvasElement }) => {
+    await expectNoHorizontalOverflow(canvasElement);
+  },
+};
+
+// Card privado (R22): indicador discreto nos metadados.
+export const PrivateSingles: Story = {
+  args: {
+    data: {
+      header_type: "player",
+      player: storyPlayer,
+      action_text: "Lucas Silva caiu no ranking",
+      private_to: "player",
+    },
+  },
+  play: async ({ canvasElement }) => {
+    await expect(canvasElement).toHaveTextContent("só você");
+  },
+};
+
+export const PrivatePair: Story = {
+  args: {
+    data: {
+      header_type: "player",
+      player: storyPlayer,
+      partner: storyPartner,
+      action_text: "Lucas Silva e Rafael Costa caíram no ranking",
+      private_to: "pair",
+    },
+  },
+  play: async ({ canvasElement }) => {
+    await expect(canvasElement).toHaveTextContent("só a dupla");
+    await expectNoHorizontalOverflow(canvasElement);
   },
 };
 

@@ -503,8 +503,12 @@ Mesma estrutura do WO com duas diferenças:
 
 **JTBD:** Job 2  
 **Gatilho:** atualização de classificação após rodada processada  
-**Variações:** subiu, desceu, marco (1ª posição / Top 10 / Finals)  
+**Variações:** subiu, desceu, marco (Líder / Top N), classificado para a final  
 **Observação:** feature nova — não existe no LetzPlay atual
+
+**A posição é da unidade competidora** (`DOMAIN.md` R1): em duplas, o card mostra os dois jogadores, com o cabeçalho de dupla da seção 6.2 (stack de avatares 40px e "[Nome1] e [Nome2] subiram no ranking"). O verbo concorda com a unidade: singular em simples, plural em duplas.
+
+**Visibilidade** (`DOMAIN.md` R21, R22): "subiu", marco e classificação são públicos. "Caiu" é privado: só o jogador, ou os dois da dupla, veem.
 
 ### 8.1 Princípios de design
 
@@ -541,7 +545,8 @@ Derivados da análise de referências (Strava, Bump, Zigzag, Revolut, Azar):
 ### 8.3 Anatomia — Desceu no ranking
 
 Mesma estrutura. Diferenças:
-- Cabeçalho: "Lucas Silva caiu no ranking"
+- Cabeçalho: "Lucas Silva caiu no ranking" (duplas: "Lucas Silva e Rafael Costa caíram no ranking")
+- Card privado (R22): não vai para o feed dos amigos. Um indicador discreto na linha de metadados avisa isso: "@lucas · há 2h · 🔒 só você" (duplas: "só a dupla"). Usa o ícone `LockSimple` (12px) e o mesmo estilo de texto dos metadados. Sem aviso, o jogador não saberia se os amigos viram a queda; com destaque, a queda chamaria atenção
 - Delta: "▼ 2 posições" em `--color-foreground-attention`
 - Fundo do bloco: `--color-background-primary` — sem cor de fundo para quedas
 
@@ -585,11 +590,20 @@ Mesma estrutura. Diferenças:
 
 ### 8.6 Marcos especiais
 
+Marcos são de primeira vez na temporada e nunca são revogados (`DOMAIN.md` R25, R47). N é a quantidade de classificados da final da temporada, ou 10 quando ela não tem final. Líder e Top N na mesma rodada geram um card só, o de Líder.
+
 | Marco | Badge | Fundo do bloco |
 |---|---|---|
-| 1ª posição | "★ Assumiu a liderança" | `--color-background-accent-subtle` |
-| Entrou no Top 10 | "Top 10" | `--color-background-accent-subtle` |
-| Garantiu vaga nas Finals | "Finals" | `--color-background-accent-subtle` |
+| Líder | "★ Assumiu a liderança" (duplas: "Assumiram a liderança") | `--color-background-accent-subtle` |
+| Entrou no Top N | "★ Top N" (ex.: "Top 8") | `--color-background-accent-subtle` |
+
+Marco na 1ª rodada da temporada não tem delta: não há foto anterior para comparar (R46). O bloco omite a linha "▲ N posições".
+
+**Classificado para a final** (`DOMAIN.md` R28) não é marco: é um evento à parte, gerado depois da data de corte para cada classificado.
+
+- Cabeçalho: "[Nome] garantiu vaga na final" (duplas: "garantiram"). O nome da final é livre ("Saideira", "Finals") e o artigo não concordaria com todos, por isso ele vai no badge, não na frase
+- Bloco: mesmo fundo de marco, posição na data de corte e pontos, **sem delta**
+- Badge: "★ [nome da final]" (ex.: "★ Saideira")
 
 **Badge de marco:**
 - Tipografia: `--text-label-md`, `font-weight-bold`

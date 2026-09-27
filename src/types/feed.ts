@@ -1,3 +1,5 @@
+import type { EventVisibility } from '@/src/types/domain';
+
 // Shared primitives
 
 export interface PlayerInfo {
@@ -36,7 +38,11 @@ export interface OrgCardHeader {
 export interface PlayerCardHeader {
   header_type: 'player';
   player: PlayerInfo;
+  // Em duplas, o parceiro entra no stack de avatares (FEED_CARDS.md §6.2)
+  partner?: PlayerInfo;
   action_text: string;
+  // Card privado (R22): quem vê é o próprio jogador ou a dupla
+  private_to?: 'player' | 'pair';
 }
 
 export type CardHeader = OrgCardHeader | PlayerCardHeader;
@@ -161,33 +167,55 @@ export interface FriendshipCard {
   user_is_friend_of_b: boolean;
 }
 
-export type RankingMilestone = 'leader' | 'top10' | 'finals';
+/** Marco de primeira vez na temporada (R47). N = classificados da final, ou 10. */
+export type RankingMilestone = { type: 'leader' } | { type: 'top_n'; n: number };
 
+// A classificação é da unidade competidora (R1): em duplas, o card mostra os dois.
 interface RankingCardBase {
   id: string;
   card_type: 'ranking';
   created_at: string;
-  player: PlayerInfo;
+  competitor: Side;
+  // Só o card de ranking pode ser privado; os demais são sempre públicos (R24)
+  visibility: EventVisibility;
   ranking_name: string;
   position: number;
-  delta: number;   // positions moved — always positive; direction from `movement`
   points: number;
 }
 
 export interface RankingUpCard extends RankingCardBase {
   movement: 'up';
+  visibility: 'public';
+  delta: number;   // positions moved — always positive; direction from `movement`
 }
 
+/** Caiu é privado: só a própria unidade vê (R22). */
 export interface RankingDownCard extends RankingCardBase {
   movement: 'down';
+  visibility: 'private';
+  delta: number;
 }
 
 export interface RankingMilestoneCard extends RankingCardBase {
   movement: 'milestone';
+  visibility: 'public';
+  // null quando o marco sai na 1ª rodada: não há foto anterior para comparar (R46)
+  delta: number | null;
   milestone: RankingMilestone;
 }
 
-export type RankingCard = RankingUpCard | RankingDownCard | RankingMilestoneCard;
+/** "Classificado para a [nome da final]", depois da data de corte (R28). */
+export interface RankingQualificationCard extends RankingCardBase {
+  movement: 'final_qualification';
+  visibility: 'public';
+  final_name: string; // livre, definido pela temporada: "Saideira", "Finals"
+}
+
+export type RankingCard =
+  | RankingUpCard
+  | RankingDownCard
+  | RankingMilestoneCard
+  | RankingQualificationCard;
 
 // --- Union ---
 
