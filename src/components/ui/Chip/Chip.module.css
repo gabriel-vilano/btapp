@@ -1,0 +1,141 @@
+/* =============================================================
+   Chip — base compartilhada pelo FilterChip (<button>) e pelos
+   chips do ChoiceChipGroup (<span> ao lado de um rádio nativo).
+   ============================================================= */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-100);
+  min-width: var(--dimension-action-height-md);
+  min-height: var(--dimension-action-height-md);
+  padding: 0 var(--spacing-200);
+  border: var(--border-width-medium) solid var(--color-border-medium);
+  border-radius: var(--radius-full);
+  background-color: var(--color-background-primary);
+  color: var(--color-foreground-primary);
+  font-family: inherit;
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+  font-weight: var(--font-weight-regular);
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+  transition: border-color var(--motion-duration-short-3) var(--motion-easing-standard);
+}
+
+/* Área tocável de 48px sem inflar o chip de 40px. Com o gap de 8px do
+   grupo, as áreas de chips vizinhos se encostam sem se sobrepor. */
+.chip::before {
+  content: "";
+  position: absolute;
+  inset: calc(var(--spacing-50) * -1);
+}
+
+/* State layer de interação (hover e press) */
+.chip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--color-state-layer-neutral);
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .chip:hover::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.chip:active::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+/* --- Selecionado ---
+   O state layer de seleção vai no background-image: o ::after fica livre
+   para hover e press, que empilham por cima. O inset shadow engrossa a
+   borda para 2px sem mudar o tamanho do chip. */
+.chip--selected,
+.chip-choice__input:checked + .chip {
+  background-image: linear-gradient(
+    var(--color-state-layer-selected),
+    var(--color-state-layer-selected)
+  );
+  border-color: var(--color-border-strong);
+  box-shadow: inset 0 0 0 var(--border-width-medium) var(--color-border-strong);
+}
+
+/* --- Foco --- */
+.chip:focus-visible,
+.chip-choice__input:focus-visible + .chip {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.chip:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* --- Desabilitado --- */
+.chip:disabled,
+.chip-choice__input:disabled + .chip {
+  border-color: var(--color-border-subtle);
+  box-shadow: none;
+  color: var(--color-foreground-disabled);
+  cursor: not-allowed;
+}
+
+.chip:disabled::after,
+.chip-choice__input:disabled + .chip::after {
+  background-color: var(--color-state-layer-neutral);
+}
+
+/* =============================================================
+   ChoiceChipGroup
+   ============================================================= */
+
+.chip-group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.chip-group__legend {
+  margin-bottom: var(--spacing-100);
+  padding: 0;
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground-primary);
+}
+
+/* Some da tela, fica para o leitor de tela: o grupo continua com nome */
+.chip-group__legend--hidden,
+.chip-choice__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.chip-group__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-100);
+}
+
+.chip-choice {
+  display: inline-flex;
+  position: relative;
+}
