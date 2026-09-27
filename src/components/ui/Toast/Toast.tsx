@@ -71,6 +71,7 @@ export function ToastVisual({
     <div className={className} role="alert">
       {message}
       <button
+        type="button"
         className={styles.toast__dismiss}
         onClick={onDismiss}
         aria-label="Fechar"

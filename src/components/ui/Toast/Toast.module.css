@@ -49,20 +49,61 @@
 }
 
 .toast__dismiss {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Área tocável de 48px; a margem negativa devolve ao layout os 24px
+     de antes, então o toast não cresce e o ícone não muda de lugar. */
+  width: var(--dimension-tap-target-minimum);
+  height: var(--dimension-tap-target-minimum);
+  margin: calc(var(--spacing-150) * -1);
   margin-left: auto;
   background: none;
   border: none;
   color: inherit;
   cursor: pointer;
-  padding: var(--spacing-50);
-  opacity: 0.7;
+  padding: 0;
   flex-shrink: 0;
 }
 
+/* O toast sempre tem fundo escuro (erro, sucesso, info): state layer claro */
+.toast__dismiss::after {
+  content: "";
+  position: absolute;
+  inset: var(--spacing-100);
+  border-radius: var(--radius-full);
+  background-color: var(--color-state-layer-neutral);
+  pointer-events: none;
+  transition: background-color var(--motion-duration-short-3)
+    var(--motion-easing-standard);
+}
+
 @media (hover: hover) {
-  .toast__dismiss:hover {
-    opacity: 1;
+  .toast__dismiss:hover::after {
+    background-color: var(--color-state-layer-hover-on-strong);
   }
+}
+
+.toast__dismiss:active::after {
+  background-color: var(--color-state-layer-pressed-on-strong);
+}
+
+/* O ring vai no state layer circular, não no botão: com border-radius no
+   botão, a área tocável viraria um círculo, porque o hit-test respeita a curva */
+.toast__dismiss:focus-visible {
+  outline: none;
+}
+
+.toast__dismiss:focus-visible::after {
+  /* Ring na cor do texto (branco): o azul do focus-ring tem ~1,1:1 sobre o
+     vermelho e ~1,2:1 sobre o verde do toast, abaixo dos 3:1 da WCAG 1.4.11 */
+  outline: var(--border-width-thick) solid currentColor;
+  outline-offset: var(--spacing-25);
+}
+
+.toast__dismiss:focus:not(:focus-visible) {
+  outline: none;
 }
 
 @keyframes toast-in {

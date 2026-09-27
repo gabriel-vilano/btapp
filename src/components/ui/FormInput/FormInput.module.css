@@ -50,8 +50,14 @@
 }
 
 .form-input__field:focus {
-  outline: none;
   border-color: var(--color-border-strong);
+}
+
+/* Campo de texto mostra foco pela borda e pelo ring: a borda sozinha
+   deixava dois estilos de foco no DS e removia o outline (auditoria C3/C4). */
+.form-input__field:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
 }
 
 .form-input__field--error {
@@ -90,11 +96,15 @@
 }
 
 .form-input__toggle {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--dimension-icon-md);
-  height: var(--dimension-icon-md);
+  /* Área tocável de 48px; a margem negativa devolve ao layout os 24px
+     do ícone, então o campo não cresce e o ícone não muda de lugar. */
+  width: var(--dimension-tap-target-minimum);
+  height: var(--dimension-tap-target-minimum);
+  margin: calc(var(--spacing-150) * -1);
   background: none;
   border: none;
   color: var(--color-foreground-secondary);
@@ -102,10 +112,45 @@
   padding: 0;
 }
 
+/* State layer circular em volta do ícone, menor que a área tocável */
+.form-input__toggle::after {
+  content: "";
+  position: absolute;
+  inset: var(--spacing-100);
+  border-radius: var(--radius-full);
+  background-color: var(--color-state-layer-neutral);
+  pointer-events: none;
+  transition: background-color var(--motion-duration-short-3)
+    var(--motion-easing-standard);
+}
+
 @media (hover: hover) {
   .form-input__toggle:hover {
     color: var(--color-foreground-primary);
   }
+
+  .form-input__toggle:hover::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.form-input__toggle:active::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+/* O ring vai no state layer circular, não no botão: com border-radius no
+   botão, a área tocável viraria um círculo, porque o hit-test respeita a curva */
+.form-input__toggle:focus-visible {
+  outline: none;
+}
+
+.form-input__toggle:focus-visible::after {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.form-input__toggle:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .form-input__error {
