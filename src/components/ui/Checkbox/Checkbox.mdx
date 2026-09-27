@@ -1,0 +1,99 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as CheckboxStories from "./Checkbox.stories";
+
+<Meta of={CheckboxStories} />
+
+<Subtitle>Uma escolha de sim ou não, confirmada pelo jogador: um consentimento, uma preferência.</Subtitle>
+
+**Código-fonte:** [`src/components/ui/Checkbox/Checkbox.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/Checkbox/Checkbox.tsx)
+
+## Visão geral
+
+A caixa de 20px fica ao lado de um texto que diz o que o jogador está aceitando. A linha inteira é o rótulo: tocar no texto também marca. O primeiro uso é o consentimento do telefone para o WhatsApp (`docs/SCHEDULING.md`, M21), que a LGPD exige desmarcado e com a finalidade escrita ao lado.
+
+<Canvas of={CheckboxStories.Default} />
+
+## Estados
+
+O Checkbox é controlado: o consumidor guarda o `checked` e recebe o novo valor em `onCheckedChange`. Os estados abaixo aparecem juntos na galeria.
+
+<Canvas of={CheckboxStories.AllStates} />
+
+### Desmarcado
+
+O estado inicial. Borda de 2px em `--color-border-medium`, que dá mais de 3:1 com o branco (WCAG 1.4.11). Nunca comece marcado quando a caixa registra um consentimento: a caixa pré-marcada não demonstra a manifestação de vontade que a LGPD pede (art. 8º).
+
+<Canvas of={CheckboxStories.Default} />
+
+### Marcado
+
+Caixa grafite (`--color-background-inverse`) com check branco (`--color-foreground-on-inverse`), como o Chip selecionado. Seleção em grafite, ação em coral (ver `docs/TOKENS.md` > "Regras fundamentais").
+
+<Canvas of={CheckboxStories.Checked} />
+
+### Rótulo curto
+
+Com uma linha de texto, a linha tem exatamente 48px. Com texto longo, a caixa fica alinhada com a primeira linha e a linha cresce para baixo.
+
+<Canvas of={CheckboxStories.ShortLabel} />
+
+### Erro
+
+`error` pinta a borda de vermelho e mostra a mensagem abaixo, alinhada com o texto. A mensagem é ligada ao campo por `aria-describedby`, e o campo ganha `aria-invalid`. Diga o que fazer, não só o que falhou: "Marque a caixa para salvar o telefone."
+
+<Canvas of={CheckboxStories.WithError} />
+
+### Desabilitado
+
+Desmarcado e desabilitado tem borda clara e texto cinza. Marcado e desabilitado segue o preenchido desabilitado do `Button` (`--color-background-disabled` com check branco), como o Chip, para continuar diferente do desmarcado.
+
+<Canvas of={CheckboxStories.Disabled} />
+
+## Quando usar
+
+- Dar um consentimento explícito, como mostrar o telefone aos adversários
+- Ligar uma preferência que só vale quando o formulário é enviado ("Lembrar de mim")
+- Marcar vários itens independentes de uma lista, um Checkbox por item
+
+## Componentes relacionados
+
+- Para **uma opção entre poucas**, use o [`ChoiceChipGroup`](?path=/docs/ui-chip--docs) ou um grupo de rádios. O Checkbox é sim ou não, independente dos vizinhos
+- Para **filtrar uma lista na hora**, use o [`FilterChip`](?path=/docs/ui-chip--docs). O Checkbox vale para formulário, onde o efeito vem ao enviar
+- Para **ligar algo que muda na hora** (uma configuração do perfil), use o Switch, quando existir
+
+## Acessibilidade
+
+- **`<input type="checkbox">` nativo**, escondido na tela e presente para o leitor e o teclado. O leitor anuncia "caixa de seleção, não marcada" e o texto do rótulo ([APG Checkbox](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/))
+- **Rótulo clicável:** a linha é um `<label>` ligado ao input. Tocar no texto marca a caixa (WCAG 1.3.1 e 3.3.2)
+- **Área tocável de 48px**, a linha inteira, mesmo com a caixa de 20px (WCAG 2.5.8 e regra do DS)
+- **Teclado:** Tab chega na caixa; espaço marca e desmarca
+- **Foco:** o ring do DS em `:focus-visible`, desenhado na caixa
+- **Erro:** `aria-invalid` e `aria-describedby` com a mensagem, que também é anunciada ao aparecer (`role="alert"`)
+- **Contraste, não só cor** (WCAG 1.4.1 e 1.4.11): o marcado muda o preenchimento e mostra o check; o erro vem com texto
+
+## Evitar
+
+- ❌ **Consentimento pré-marcado.** A LGPD pede uma manifestação do jogador. A caixa começa desmarcada
+- ❌ **Rótulo vago** ("Aceito"). O texto diz o que é aceito e para quê, como no M21
+- ❌ **Checkbox para uma escolha única entre opções.** Isso é rádio ou `ChoiceChipGroup`
+- ❌ **Checkbox que dispara ação na hora** (salvar, navegar). O efeito vem com o envio do formulário
+- ❌ **Coral na caixa marcada.** Coral é a cor de ação; a seleção é grafite
+
+## API
+
+<ArgTypes of={CheckboxStories} />
+
+## Decisões de design
+
+**Por que a caixa marcada é grafite, e não coral?** O coral é a cor de ação do app (botão, link). Um formulário de consentimento tem um botão principal coral logo abaixo, e a caixa em coral competiria com ele. O grafite dá cerca de 12:1 com o branco, bem visível ao sol, e segue o Chip selecionado. Coral-600 passaria no contraste (4,96:1), mas misturaria seleção e ação na mesma cor.
+
+**Por que input nativo escondido, e não `role="checkbox"` num `<span>`?** O input nativo já traz o espaço do teclado, o foco, o `required` e o envio em formulário. Com ARIA, o componente teria que reimplementar tudo isso.
+
+## Referências
+
+- [WAI-ARIA APG — Checkbox](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/)
+- [WCAG 2.5.8 — Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
+- [WCAG 1.4.11 — Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)
+- [LGPD, art. 8º](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm) — consentimento por manifestação do titular
+- Regras do marcar jogo: `docs/SCHEDULING.md` (M21)
+- Tokens relacionados: `docs/TOKENS.md` (`--color-background-inverse`, `--color-border-medium`, `--color-border-attention`, `--color-background-disabled`, `--dimension-tap-target-minimum`)
