@@ -12,19 +12,19 @@
   height: var(--dimension-avatar-48);
 }
 
-.block__logo_img,
-.block__logo_placeholder {
+.block__logo-img,
+.block__logo-placeholder {
   width: var(--dimension-avatar-48);
   height: var(--dimension-avatar-48);
   border-radius: var(--radius-sm);
   display: block;
 }
 
-.block__logo_img {
+.block__logo-img {
   object-fit: cover;
 }
 
-.block__logo_placeholder {
+.block__logo-placeholder {
   background-color: var(--color-background-tertiary);
 }
 
