@@ -12,13 +12,15 @@ As siglas de decisão são as mesmas do `docs/DOMAIN.md` > "Fontes". As que esta
 
 | Sigla | Conteúdo usado aqui |
 | --- | --- |
-| **DEC-FEED** | Feed público mostra conquistas e crescimento; "caiu" é privado (R20, R22) |
+| **DEC-FEED** | Feed público mostra conquistas e crescimento; "caiu" não vira publicação (R20, R22) |
 | **DEC-FINAL** | Marcos permanentes; "dentro ou fora da final" só na tela de ranking (R23, R25) |
 | **DEC-CARDS** | H2H jogador × jogador na página, dupla exata no card (R19); textos neutros (R26) |
 | **NAV** | `docs/NAVIGATION.md` (provisória, em revisão): rota do perfil (N10), tab bar visível no perfil de outro jogador (N4), engrenagem com configurações e "Sair" (N8), edição de perfil como fluxo modal (N4), histórico do próprio jogador na aba Jogos (seção 5) |
 | **REF** | `docs/discovery/referencias/03-perfil.md` (30 telas de 24 apps) e `inventario-componentes.md` |
 | **DSC** | `docs/DISCOVERY.md` (oportunidades 3.1, 3.2, 3.3, 5.1, 5.2) e `docs/discovery/` (SINTESE, VOZ_DO_USUARIO, MATRIZ_FEATURES) |
-| **LEIT** | Leitura do agente desta spec, a confirmar pelo Gabriel. A lista está na seção 10 |
+| **DEC-PERFIL** | Issue desta spec, comentário "Decisões do Gabriel" (27/09/2026): aprovação das recomendações das perguntas PQ1–PQ5 e das leituras PL1–PL8; a variação de posição aparece em todas as linhas da tabela, nos dois sentidos, e a R22 passa a valer só para o feed e as notificações |
+| **RANK** | `docs/RANKING.md`: linha da classificação (RK8), base do delta (RK12), temporada encerrada na tela (RK15) e o item de posição StandingSummaryItem (seção 9) |
+| **LEIT** | Leitura do agente desta spec, confirmada na DEC-PERFIL. A lista está na seção 10 |
 
 ---
 
@@ -42,17 +44,17 @@ A leitura competitiva vem primeiro por três razões:
 
 ## 2. Estrutura
 
-- **PF1. O perfil é uma rolagem única, sem abas.** As seções aparecem nesta ordem: **Cabeçalho · Vocês · Rankings · Partidas recentes · Temporadas**. [REF; LEIT, pergunta PQ1]
+- **PF1. O perfil é uma rolagem única, sem abas.** As seções aparecem nesta ordem: **Cabeçalho · Vocês · Rankings · Partidas recentes · Temporadas**. [REF; DEC-PERFIL PQ1]
 
-  **Por quê:** o volume é pequeno. Um jogador tem de 2 a 8 jogos por mês e 1 ou 2 inscrições (DOMAIN §4), e o beta começa do zero (DISCOVERY §7, pergunta 2). Com abas, cada aba nasceria com 2 ou 3 linhas, e quem veio avaliar o adversário teria de adivinhar qual abrir (`03-perfil.md`, caminho A, "Contra"). As abas voltam a fazer sentido quando o perfil tiver estatística por período ou conquistas em volume; a PQ1 trata disso.
+  **Por quê:** o volume é pequeno. Um jogador tem de 2 a 8 jogos por mês e 1 ou 2 inscrições (DOMAIN §4), e o beta começa do zero (DISCOVERY §7, pergunta 2). Com abas, cada aba nasceria com 2 ou 3 linhas, e quem veio avaliar o adversário teria de adivinhar qual abrir (`03-perfil.md`, caminho A, "Contra"). As abas voltam a fazer sentido quando o perfil tiver estatística por período ou conquistas em volume.
 - **PF2. A seção sem conteúdo some**, exceto "Partidas recentes", que vira o estado vazio da seção 6. O perfil de um jogador novo tem cabeçalho e a linha "Nenhuma partida ainda". [LEIT]
-- **PF3. O perfil de outro jogador e o próprio perfil são a mesma tela.** O que muda é quem vê (N10): a ação do cabeçalho, o bloco "Vocês" (só no de outro) e a variação de posição (seção 4). [NAV]
+- **PF3. O perfil de outro jogador e o próprio perfil são a mesma tela.** O que muda é quem vê (N10): a ação do cabeçalho, o bloco "Vocês" (só no de outro), a ordem das linhas de "Rankings" e a melhor posição (só no próprio). **A variação de posição aparece para qualquer jogador**, como na tabela de classificação (PF13). [NAV, DEC-PERFIL]
 
 | Seção | Perfil de outro jogador | Próprio perfil |
 | --- | --- | --- |
 | Cabeçalho | Ação de amizade | "Editar perfil" |
 | Vocês | Quando há H2H ou confronto entre os dois | Não existe |
-| Rankings | Inscrições ativas, a categoria em comum primeiro | Inscrições ativas, com variação e melhor posição |
+| Rankings | Inscrições ativas com posição e variação, a categoria em comum primeiro | Inscrições ativas com posição, variação e melhor posição |
 | Partidas recentes | As 5 últimas, com "Ver todas" | As 5 últimas, com "Ver todas" na aba Jogos |
 | Temporadas | Temporadas encerradas com posição final e marcos | Igual |
 
@@ -85,7 +87,9 @@ O cabeçalho responde "quem é" e "que tipo de jogador é" em um olhar, antes de
   - **Sem foto de capa:** o hero de foto grande "funciona com atleta profissional fotografado; com avatar de celular ou sem foto, vira um bloco vazio" (`03-perfil.md`).
   - **Sem idade nem telefone:** a data de nascimento é opcional e serve só para validar a categoria (R33), e o telefone nunca aparece no perfil público (M23). O perfil é visível para quem não é amigo (PF20), então nenhum dos dois entra nele.
 - **PF5. Jogos é o `total_matches` (R18); amigos é o número de amizades aceitas (R24).** Os dois são StatTile. Tocar em "amigos" abre a lista de amigos do jogador (`/jogadores/[username]/amigos`); "jogos" não é tocável, porque a lista de partidas já está logo abaixo. [`FEED_CARDS.md` §11.1; LEIT]
-- **PF6. O cartel é "N vitórias · N derrotas", de todas as partidas confirmadas do jogador**: ranking, torneio e amistoso, em simples e duplas, desde que ele entrou no app. **W.O. e W.O. duplo ficam fora**, como no `total_matches` (R18) e no H2H (R19); a desistência entra, porque houve jogo. Assim, vitórias + derrotas = jogos, e os dois números nunca se contradizem. Se o jogador tem W.O. em que o lado dele não compareceu, a pergunta PQ4 decide se isso aparece. [R18, R19, DSC 3.3; LEIT]
+- **PF6. O cartel é "N vitórias · N derrotas", de todas as partidas confirmadas do jogador**: ranking, torneio e amistoso, em simples e duplas, desde que ele entrou no app. **W.O. e W.O. duplo ficam fora**, como no `total_matches` (R18) e no H2H (R19); a desistência entra, porque houve jogo. Assim, vitórias + derrotas = jogos, e os dois números nunca se contradizem. **O W.O. em que o lado do jogador não compareceu também não aparece no perfil** no MVP: é decidido pelo admin (R40), e um número público de ausências expõe mais do que ajuda num beta pequeno. [R18, R19, DSC 3.3; DEC-PERFIL PQ4]
+
+  **Diferença para a linha da classificação:** a linha da tabela mostra "N jogos · N vitórias" da **dupla naquela categoria e temporada**, e ali o W.O. conta como vitória, porque "vitórias" é critério de desempate (R37; RANK RK8). O cartel conta as **partidas jogadas pelo jogador**, em qualquer competição. São duas contas com o mesmo rótulo, e por isso nunca aparecem na mesma tela: no perfil, o item de posição não mostra jogos nem vitórias (PF10), e a tabela não mostra o cartel. Se a spec de ranking mudar as contagens da linha, esta regra se ajusta a ela.
 
   **Por que carreira e não "temporada atual":** o jogador está em vários rankings (R2), cada um com a sua temporada, então "a temporada" do jogador não existe. O recorte por período fica para quando houver volume (seção 9).
 - **PF7. Ação do cabeçalho, pelo estado da amizade (R24):**
@@ -111,16 +115,16 @@ O cabeçalho responde "quem é" e "que tipo de jogador é" em um olhar, antes de
 
 A seção responde "onde esse jogador está agora". É o elo entre o perfil e a aba Ranking.
 
-- **PF10. Uma linha por inscrição ativa do jogador** (R8, R45), com: competição · categoria, o parceiro (avatar e primeiro nome; em simples, nada), a posição da unidade competidora e os pontos. Tocar na linha abre a classificação da categoria, rolada até a linha da dupla, o mesmo destino do card de movimentação (N10). [R1, NAV]
+- **PF10. Uma linha por inscrição ativa do jogador** (R8, R45), com o **StandingSummaryItem** da spec de ranking (RANK seção 9): posição da unidade competidora, variação, competição · categoria e parceiro (em simples, nada). O conteúdo e o formato do item são de lá; o perfil decide só se ele aparece, em que ordem (PF12) e o complemento do próprio perfil (PF14). Tocar na linha abre a classificação da categoria, rolada até a linha da dupla, o mesmo destino do card de movimentação (N10). [R1, NAV, RANK]
 
 ```
 Rankings
 ┌─────────────────────────────────────────────┐
-│ Ranking Rankin — Masculino B            5º  │
-│ [avt] com Rafael                  ▲ 2 · 840 │
+│ 5º   Ranking Rankin — Masculino B       ▲ 2 │
+│      [avt] com Rafael · Melhor: 3º          │
 ├─────────────────────────────────────────────┤
-│ Liga Vila — Mista C                    12º  │
-│ [avt] com Ana                          410  │
+│ 12º  Liga Vila — Mista C                ▼ 1 │
+│      [avt] com Ana                          │
 └─────────────────────────────────────────────┘
 ```
 
@@ -130,8 +134,8 @@ Rankings
   - Dentro de cada grupo, e no próprio perfil, a melhor posição primeiro.
 
   [LEIT]
-- **PF13. O perfil nunca mostra dado de ranking que a tabela de classificação não mostre.** O formato da posição e dos pontos, e se a linha mostra variação (DeltaIndicator) e contra o quê, seguem a spec de ranking. Em especial a queda: a R22 torna "caiu" privado no feed, e o perfil de outro jogador não pode revelar mais do que a tabela pública já revela. Combinado com a spec de ranking no Linear. [R22, R46; LEIT]
-- **PF14. No próprio perfil, cada linha ganha "Melhor: 3º"** quando a melhor posição da temporada é diferente da atual. Vem da foto da classificação no fim de cada rodada (R46). É a forma mínima de evolução no MVP (seção 9 e PQ3). [R46, DSC 5.1; LEIT]
+- **PF13. O perfil mostra o mesmo dado de ranking que a tabela de classificação, nem mais nem menos.** A tabela mostra a variação em todas as linhas, nos dois sentidos, contra o fim da última rodada fechada (RK12); o perfil mostra a mesma variação, no próprio perfil e no de qualquer outro jogador, **inclusive a queda**. A R22 vale só para o feed e as notificações: a queda não vira publicação nem aviso para outros jogadores, mas a posição e a variação são públicas na tabela, e o perfil não esconde o que a tabela já mostra. [R22, R46, RANK RK12, DEC-PERFIL]
+- **PF14. No próprio perfil, cada linha ganha "Melhor: 3º"** quando a melhor posição da temporada é melhor que a atual. **A melhor posição é a menor entre as fotos de fim de rodada (R46) e a posição ao vivo.** Assim o "Melhor" nunca fica pior que a posição mostrada ao lado: quem está em 2º ao vivo, com 3º como melhor foto, tem melhor posição 2º, igual à atual, e a linha não mostra o complemento. É a forma mínima de evolução no MVP (seção 9). O complemento entra na linha de apoio do StandingSummaryItem. [R46, DSC 5.1; DEC-PERFIL PQ3]
 - **PF15. Inscrição encerrada por troca de parceiro (R45) não aparece em "Rankings".** Ela aparece em "Temporadas" quando a temporada termina, com a posição congelada. [R45; LEIT]
 
 ---
@@ -140,7 +144,7 @@ Rankings
 
 ### 5.1 Vocês (só no perfil de outro jogador)
 
-O bloco responde "como foi contra mim" e é a ponte para o H2H (`03-perfil.md`, caminho C). Aparece quando existe pelo menos uma destas coisas entre quem vê e o jogador:
+O bloco responde "como foi contra mim" e é a ponte para o H2H (`03-perfil.md`, caminho C; DEC-PERFIL PQ2). Aparece quando existe pelo menos uma destas coisas entre quem vê e o jogador:
 
 - **PF16. Confronto definido entre os dois** (R7): "Próximo confronto: Rodada 3 · Sáb, 14h", que abre a partida (N10). É o momento mais forte do JTBD 3: quem abre o perfil do adversário na semana do jogo. Vem primeiro no bloco. [R7, NAV]
 - **PF17. H2H jogador × jogador** (R19): "Vocês se enfrentaram 3 vezes · você venceu 2", que abre a página de H2H. Conta como a página de H2H: partidas confirmadas, amistoso incluído, W.O. fora. A página e o que ela mostra são da spec de H2H. [R19, DEC-CARDS]
@@ -153,9 +157,13 @@ Sem confronto e sem H2H, o bloco some (PF2). Adversários em comum (DSC 3.3) sã
 
   **"Ver todas":** no próprio perfil, leva ao Histórico da aba Jogos (NAV seção 5), que já é essa lista; no de outro jogador, abre `/jogadores/[username]/partidas`, a mesma lista sem ações. Assim não existem duas listas do próprio histórico que possam divergir, como pede o risco "Histórico no perfil e na agenda" da spec de navegação. [NAV; LEIT]
 
+  **Depende da navegação:** o destino do próprio perfil supõe a aba Jogos com a seção Histórico, que ainda depende das perguntas Q1 (abas) e Q2 (seções da agenda) da spec de navegação. Se a agenda perder o Histórico, "Ver todas" do próprio perfil passa a abrir a mesma lista do perfil de outro jogador.
+
 ### 5.3 Temporadas
 
 - **PF19. Uma linha por temporada encerrada** em que o jogador teve inscrição: temporada, competição · categoria, parceiro, **posição final** e, quando houver, os marcos (★ Líder, ★ Top N) e a classificação para a final ("★ Saideira"). Mais recente primeiro. [R25, R27, R28, R47]
+
+  **Toque na linha:** abre a classificação final daquela categoria naquela temporada, rolada até a linha da dupla. A tela é a mesma da spec de ranking no estado "Temporada encerrada" (RK15), aberta numa temporada mais antiga; a spec de ranking define o conteúdo da tela, e esta spec define o destino. Combinado com a spec de ranking no Linear. [RANK RK15; LEIT]
 
   **Por quê:** é a evolução que pode ser pública. Marcos e classificação já são eventos públicos do feed (R20, R24), e a posição final é a mesma que a tabela da temporada mostra. É também o que o jogador vê entre temporadas, quando não há jogo (NAV 7.2).
 
@@ -165,19 +173,21 @@ Sem confronto e sem H2H, o bloco some (PF2). Adversários em comum (DSC 3.3) sã
 
 ### 6.1 Visibilidade
 
-- **PF20. O perfil é visível para qualquer jogador com conta**, amigo ou não. A leitura competitiva precisa disso: o adversário sorteado quase nunca é amigo. Sem login, `/jogadores/[username]` leva ao login e volta ao perfil depois dele. [R7; LEIT, pergunta PQ5]
+- **PF20. O perfil é visível para qualquer jogador com conta**, amigo ou não. A leitura competitiva precisa disso: o adversário sorteado quase nunca é amigo. Sem login, `/jogadores/[username]` leva ao login e volta ao perfil depois dele. [R7; DEC-PERFIL PQ5]
 
 ### 6.2 Vazio e borda
 
 | Situação | O que o perfil mostra |
 | --- | --- |
-| **Jogador novo** (sem partida e sem inscrição) | Cabeçalho com "0 jogos", cartel "Nenhuma partida ainda" no lugar da linha, e a seção "Partidas recentes" com EmptyState. Próprio perfil: "Suas partidas confirmadas aparecem aqui." e CTA "Registrar amistoso" (N19). Outro jogador: "As partidas de Lucas aparecem aqui.", sem CTA |
+| **Jogador novo** (sem partida e sem inscrição) | Cabeçalho com "0 jogos", cartel "Nenhuma partida ainda" no lugar da linha, e a seção "Partidas recentes" com EmptyState. Próprio perfil: "Suas partidas confirmadas aparecem aqui." e CTA "Registrar amistoso" (N19, ver a nota abaixo da tabela). Outro jogador: "As partidas de Lucas aparecem aqui.", sem CTA |
 | **Com partidas, sem inscrição ativa** | Sem "Rankings" (PF2). O resto normal |
 | **Inscrito, sem partida confirmada** | "Rankings" com a posição que a tabela mostrar para quem ainda não jogou (spec de ranking); "Partidas recentes" vazia |
 | **Só amistosos** | Cartel e partidas normais; sem "Rankings" nem "Temporadas" |
 | **Nome longo** | Nome em até 2 linhas, depois reticências. @username em 1 linha |
 | **Sem foto** | Avatar com iniciais (Avatar do DS) |
 | **@username inexistente** | Tela "Jogador não encontrado" com "Voltar ao feed". Nada revela se a conta existiu |
+
+**Depende da navegação:** o CTA "Registrar amistoso" leva ao fluxo da N19, que supõe o amistoso como botão da aba Jogos (pergunta Q2 da spec de navegação, ainda aberta). Se a navegação mudar a casa do amistoso, o CTA aponta para a casa nova; sem casa para o amistoso, o estado vazio fica sem CTA. As outras linhas da tabela não dependem das perguntas abertas.
 
 ### 6.3 Carregando e erro
 
@@ -208,14 +218,15 @@ Lista para o design system. Os três primeiros são a issue de ENG dos blocos do
 | **RecordLine** | 2 | Novo | Cartel (PF6) |
 | Avatar (96) | 1 | No master | Cabeçalho |
 | Badge | 1 | No master | Resultado nas partidas recentes; marcos nas temporadas (tom `accent`) |
-| ListItem / List | 1 | No master | Rankings, Vocês, Partidas recentes, Temporadas, lista de amigos |
+| ListItem / List | 1 | No master | Vocês, Partidas recentes, Temporadas, lista de amigos |
 | EmptyState | 2 | No master | Partidas recentes vazia |
 | Skeleton | 1 | No master | Carregando |
 | Button | 1 | No master | Ação de amizade, Editar perfil |
-| DeltaIndicator | 1 | Em PR | Variação nas linhas de Rankings, se a spec de ranking mostrar (PF13) |
+| StandingSummaryItem | 3 | Novo, da spec de ranking (RANK seção 9) | Linhas de Rankings (PF10), com a linha de apoio que recebe "Melhor: 3º" (PF14) |
+| DeltaIndicator | 1 | Em PR | Variação nas linhas de Rankings, dentro do StandingSummaryItem (PF13) |
 | ScoreBlock compacto | 3 | A definir | Placar em linha nas partidas recentes; o inventário do DS prevê a variante |
 
-**Não usados:** Tabs/SegmentedControl (PF1) e Chip. Voltam se a PQ1 escolher abas ou se entrar filtro por período.
+**Não usados:** Tabs/SegmentedControl (PF1) e Chip. Voltam quando o perfil ganhar abas ou filtro por período.
 
 ### 8.1 StatTile
 
@@ -238,7 +249,7 @@ O cartel em uma linha.
 - [ ] Com `wins + losses === 0`, mostra "Nenhuma partida ainda" em `--color-foreground-secondary`.
 - [ ] Cor neutra: vitória não é verde nem derrota vermelha. O cartel é fato, não julgamento, e o verde e o vermelho do DS já significam sucesso e erro.
 - [ ] Lido como uma frase pelo leitor de tela.
-- [ ] Preparado para o W.O., sem implementá-lo: a PQ4 decide se entra um terceiro número.
+- [ ] Sem W.O.: só vitórias e derrotas (PF6). As ausências ficam fora do perfil no MVP.
 - [ ] Story com: zerado, só vitórias, números grandes, singular.
 
 ### 8.3 ProfileHeader
@@ -262,7 +273,7 @@ Compõe Avatar 96, nome, @username, dois StatTile, RecordLine e um slot de açã
 
 | Item | Por quê |
 | --- | --- |
-| **Gráfico de evolução de posição** | Com o beta começando do zero, a temporada tem 1 a 4 rodadas de foto: poucos pontos para um gráfico dizer algo. "Melhor posição" e "Temporadas" cobrem o JTBD 5 enquanto isso (PQ3) |
+| **Gráfico de evolução de posição** | Com o beta começando do zero, a temporada tem 1 a 4 rodadas de foto: poucos pontos para um gráfico dizer algo. "Melhor posição" e "Temporadas" cobrem o JTBD 5 enquanto isso (PF14) |
 | **Estatística por período** (1M, 3M, semestre) e aproveitamento em % | "Estatística sem referência" não responde nada (`03-perfil.md`), e o volume do beta é baixo. É a camada que o mercado cobra no plano pago (DISCOVERY §4.2) |
 | **Selo de categoria do jogador e trilha de promoção** | A categoria é da inscrição (PF11), e subir de categoria está fora do MVP (DOMAIN §5) |
 | **Feed de atividade no perfil** | As partidas recentes e as temporadas já mostram o que o jogador fez. Uma aba de atividade repetiria o feed |
@@ -272,28 +283,33 @@ Compõe Avatar 96, nome, @username, dois StatTile, RecordLine e um slot de açã
 
 ---
 
-## 10. Leituras e perguntas abertas
+## 10. Decisões e dependências
 
-### Leituras do agente (a confirmar)
+### Perguntas respondidas
 
-- **PL1.** A seção sem conteúdo some, exceto "Partidas recentes" (PF2).
-- **PL2.** O cabeçalho não tem idade, telefone, bio, cidade nem foto de capa (PF4).
-- **PL3.** O cartel conta ranking, torneio e amistoso, desde a entrada no app, sem W.O. (PF6).
-- **PL4.** Desfazer amizade e cancelar pedido pedem confirmação (PF7).
-- **PL5.** No perfil de outro jogador, a categoria em comum vem primeiro em "Rankings" (PF12).
-- **PL6.** O perfil segue a tabela de classificação na variação de posição, inclusive na queda (PF13).
-- **PL7.** Inscrição encerrada por troca de parceiro sai de "Rankings" e volta em "Temporadas" (PF15).
-- **PL8.** "Ver todas" do próprio perfil leva ao Histórico da aba Jogos (PF18).
+Não há pergunta aberta. As perguntas levantadas pela spec foram respondidas pelo Gabriel (DEC-PERFIL), todas com a recomendação do agente, e viraram regras:
 
-### Perguntas para o Gabriel
+- **PQ1** (estrutura: rolagem única, sem abas) → PF1.
+- **PQ2** (bloco "Vocês" no perfil de outro jogador) → PF16, PF17.
+- **PQ3** (evolução sem gráfico no MVP) → PF14, PF19 e seção 9.
+- **PQ4** (W.O. fora do perfil) → PF6.
+- **PQ5** (perfil visível para qualquer jogador com conta) → PF20.
 
-- **PQ1. Estrutura:** rolagem única sem abas, na ordem Cabeçalho · Vocês · Rankings · Partidas recentes · Temporadas? (PF1)
-- **PQ2. Perfil do outro "em relação a mim":** o bloco "Vocês", com o próximo confronto e o resumo do H2H? (5.1)
-- **PQ3. Evolução no MVP:** sem gráfico, com "Melhor posição" e "Temporadas"? (PF14, seção 9)
-- **PQ4. W.O. no perfil:** o cartel mostra os W.O. em que o jogador não compareceu? (PF6)
-- **PQ5. Visibilidade:** perfil visível para qualquer jogador com conta? (PF20)
+Na mesma decisão: a tabela de classificação mostra a variação em todas as linhas, nos dois sentidos, e a R22 passa a valer só para o feed e as notificações. A emenda da R22 no `DOMAIN.md` é da spec de ranking; aqui ela aparece na PF13.
 
-As opções, os trade-offs e as recomendações estão no comentário de Needs Decision da issue. Cada resposta vira regra aqui, e a pergunta sai da lista.
+### Leituras confirmadas
+
+As leituras do agente foram confirmadas na DEC-PERFIL e já estão nas regras: PL1 → PF2; PL2 → PF4; PL3 → PF6; PL4 → PF7; PL5 → PF12; PL6 → PF13; PL7 → PF15; PL8 → PF18.
+
+### Dependências da spec de navegação
+
+A spec de navegação ainda tem perguntas abertas (Q1 a Q5). Estes pontos dependem delas e mudam junto se a resposta mudar:
+
+- **PF18,** "Ver todas" do próprio perfil → Histórico da aba Jogos (Q1 e Q2 da navegação).
+- **Seção 6.2,** CTA "Registrar amistoso" (N19, Q2 da navegação).
+- **PF8 e PF9,** engrenagem com configurações e "Editar perfil" como fluxo modal (N4, N8). Não são perguntas abertas lá, mas são leituras que a navegação ainda confirma.
+
+Pergunta nova entra aqui com opções, trade-offs e recomendação, e sai quando vira regra.
 
 ---
 
@@ -305,9 +321,9 @@ Medidas no beta com Rankin e Vila. Sem meta fixa: a primeira rodada define a lin
 | --- | --- | --- |
 | **Perfil do adversário antes do jogo** | % dos confrontos definidos em que um dos lados abriu o perfil do outro antes da data acordada | Mede se o perfil serve ao JTBD 3. Se for baixo, a leitura competitiva não está sendo achada |
 | **Porta de entrada do perfil** | De onde vêm as visitas a perfis de outros: feed, partida, classificação, busca, lista de amigos | Mostra qual leitura domina. Muitas vindas da partida e da classificação indicam a competitiva |
-| **Saída para o H2H** | % das visitas com o bloco "Vocês" que tocam no H2H | Testa o caminho C (PQ2) |
+| **Saída para o H2H** | % das visitas com o bloco "Vocês" que tocam no H2H | Testa o bloco "Vocês" (PF16, PF17) |
 | **Pedido de amizade pelo perfil** | Pedidos enviados a partir do perfil × a partir do card de amizade | Mede a leitura social |
-| **Visitas ao próprio perfil entre rodadas** | Sessões com o próprio perfil aberto em semanas sem confronto | Testa se "Temporadas" e "Melhor posição" sustentam o JTBD 5 sem o gráfico (PQ3) |
+| **Visitas ao próprio perfil entre rodadas** | Sessões com o próprio perfil aberto em semanas sem confronto | Testa se "Temporadas" e "Melhor posição" sustentam o JTBD 5 sem o gráfico (PF14, PF19) |
 
 ---
 
