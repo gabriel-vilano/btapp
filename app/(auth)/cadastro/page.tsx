@@ -16,6 +16,7 @@ import {
 } from "@/src/lib/validations";
 import { PasswordChecklist } from "@/src/components/auth/PasswordChecklist";
 import { useFormPersist } from "@/src/hooks/useFormPersist";
+import authStyles from "@/app/(auth)/auth-page.module.css";
 import styles from "./page.module.css";
 
 export default function SignupPage() {
@@ -86,7 +87,7 @@ export default function SignupPage() {
         subtitle="Preencha seus dados para começar"
       />
 
-      <form action={handleSubmit} className={styles.signup__form}>
+      <form action={handleSubmit} className={authStyles["auth-page__form"]}>
         <FormInput
           label="Nome"
           name="name"
@@ -144,7 +145,7 @@ export default function SignupPage() {
         </Button>
       </form>
 
-      <p className={styles.signup__footer}>
+      <p className={authStyles["auth-page__footer"]}>
         Já tem uma conta?{" "}
         <TextLink href="/entrar">Entrar</TextLink>
       </p>
