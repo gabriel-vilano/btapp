@@ -42,7 +42,7 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **IconButton** | N, D, P, S | Não | Botão só com ícone e `aria-label` obrigatório: sino, busca, fechar folha, compartilhar, favoritar competição |
 | **Icon** | todas | Sim | — |
 | **TextLink** | todas | Sim | — |
-| **FormInput** | S, D | Sim | Variante numérica (`inputmode="numeric"`) se a entrada de placar usar campo; variante de busca (ver SearchField) |
+| **FormInput** | S, D | Sim (`text`, `email`, `password`, `tel`, `search` com lupa, `datetime-local`) | Variante numérica (`inputmode="numeric"`) se a entrada de placar usar campo. Limpar e carregando da busca ficam no SearchField |
 | **SearchField** | D, N | Não | Campo com ícone de lupa, limpar e estado de carregando. Pode ser variante do FormInput |
 | **Alert** | S, D | Sim (`attention`, `success`, `information`) | — |
 | **Toast** | S | Sim | — |
@@ -63,7 +63,7 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **AppHeader** | N, todas | Não | Título, voltar, ações (IconButton). `AuthFormHeader` resolve só o caso de auth |
 | **FAB** | N, F | Não | Só se a navegação seguir o caminho C |
 | **ListItem** ⭐ | A, M, F, R, N | Sim (`ui/ListItem`, com o `List`; navegável, acionável ou estático) | Nada para as superfícies. Slot à esquerda (avatar ou ícone), título, texto de apoio, slot à direita (Badge, valor, chevron ou ação). Base do item da agenda, das pendências do feed, do RankingRow e das configurações |
-| **Checkbox** ⭐ | M, P | Não | Caixa desmarcada por padrão com o texto da finalidade ao lado. Primeiro uso: consentimento do telefone para o WhatsApp (`SCHEDULING.md` M21, LGPD) |
+| **Checkbox** ⭐ | M, P | Sim (`ui/Checkbox`) | Caixa desmarcada por padrão com o texto da finalidade ao lado. Primeiro uso: consentimento do telefone para o WhatsApp (`SCHEDULING.md` M21, LGPD) |
 
 ## Tier 2 — Compostos com estados ocultos
 
