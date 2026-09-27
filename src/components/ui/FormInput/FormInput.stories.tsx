@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Input controlado com label, validação inline e suporte a password (toggle eye). Estados de validação só aparecem quando há valor digitado.",
+          "Input controlado com label, validação inline, toggle de senha e tipos de telefone, busca e data e hora. Estados de validação só aparecem quando há valor digitado.",
       },
     },
   },
@@ -25,7 +25,7 @@ const meta = {
   argTypes: {
     type: {
       control: "inline-radio",
-      options: ["text", "email", "password"],
+      options: ["text", "email", "password", "tel", "search", "datetime-local"],
     },
     label: { control: "text" },
     placeholder: { control: "text" },
@@ -181,6 +181,142 @@ export const AllStates: Story = {
         error="Email inválido — use o formato voce@exemplo.com"
       />
       <FormInput {...args} value="gabriel@letzplay.com" disabled />
+    </div>
+  ),
+};
+
+const telArgs = {
+  label: "Telefone (WhatsApp)",
+  name: "phone",
+  type: "tel",
+  placeholder: "(11) 91234-5678",
+} as const;
+
+export const Tel: Story = {
+  args: { ...telArgs, value: "(11) 91234-5678" },
+  play: async ({ canvas }) => {
+    const field = canvas.getByLabelText("Telefone (WhatsApp)");
+    await expect(field).toHaveAttribute("type", "tel");
+    await expect(field).toHaveAttribute("autocomplete", "tel");
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Teclado de telefone no celular e `autocomplete=\"tel\"` por padrão, para o sistema sugerir o número do próprio aparelho.",
+      },
+    },
+  },
+};
+
+const searchArgs = {
+  label: "Buscar jogador",
+  name: "search",
+  type: "search",
+  placeholder: "Nome ou @username",
+} as const;
+
+export const Search: Story = {
+  args: { ...searchArgs, value: "" },
+  play: async ({ canvas }) => {
+    const field = canvas.getByRole("searchbox", { name: "Buscar jogador" });
+    await expect(field).toHaveAttribute("enterkeyhint", "search");
+    await expect(field).toHaveAttribute("autocomplete", "off");
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Lupa à esquerda e tecla \"Buscar\" no teclado (`enterKeyHint`). O X nativo fica escondido.",
+      },
+    },
+  },
+};
+
+const dateTimeArgs = {
+  label: "Opção 1",
+  name: "option-1",
+  type: "datetime-local",
+  min: "2026-09-28T06:00",
+  max: "2026-10-04T23:59",
+} as const;
+
+export const DateTime: Story = {
+  args: { ...dateTimeArgs, value: "2026-10-02T19:30" },
+  play: async ({ canvas }) => {
+    const field = canvas.getByLabelText("Opção 1");
+    await expect(field).toHaveAttribute("type", "datetime-local");
+    await expect(field).toHaveAttribute("min", "2026-09-28T06:00");
+    await expect(field).toHaveAttribute("max", "2026-10-04T23:59");
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Data e hora num campo só. O valor é `AAAA-MM-DDTHH:mm`, e o formato exibido segue o idioma do aparelho.",
+      },
+    },
+  },
+};
+
+export const DateTimeInvalid: Story = {
+  args: {
+    ...dateTimeArgs,
+    value: "2026-10-06T19:30",
+    error: "Escolha um horário antes do prazo da rodada, 04/10 às 23:59",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "O picker do iOS deixa escolher fora de `min` e `max`, então o prazo é validado no código e o erro vem pela prop `error`.",
+      },
+    },
+  },
+};
+
+export const NewTypesFocused: Story = {
+  render: (args) => (
+    <div className="sb-stack">
+      <FormInput {...args} {...telArgs} value="" />
+      <FormInput {...args} {...searchArgs} value="" />
+      <FormInput {...args} {...dateTimeArgs} value="" />
+    </div>
+  ),
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.tab();
+    await expect(canvas.getByLabelText("Telefone (WhatsApp)")).toHaveFocus();
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Os três tipos vazios, com o telefone focado pelo teclado.",
+      },
+    },
+  },
+};
+
+export const AllTypes: Story = {
+  render: (args) => (
+    <div className="sb-stack">
+      <FormInput {...args} {...telArgs} value="" />
+      <FormInput {...args} {...telArgs} value="(11) 91234-5678" valid />
+      <FormInput
+        {...args}
+        {...telArgs}
+        value="1234"
+        error="Telefone incompleto — use DDD + número, ex.: (11) 91234-5678"
+      />
+      <FormInput {...args} {...searchArgs} value="" />
+      <FormInput {...args} {...searchArgs} value="Ana Souza" />
+      <FormInput {...args} {...dateTimeArgs} value="" />
+      <FormInput {...args} {...dateTimeArgs} value="2026-10-02T19:30" />
+      <FormInput
+        {...args}
+        {...dateTimeArgs}
+        value="2026-10-06T19:30"
+        error="Escolha um horário antes do prazo da rodada, 04/10 às 23:59"
+      />
     </div>
   ),
 };

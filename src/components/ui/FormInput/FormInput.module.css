@@ -60,6 +60,56 @@
   outline-offset: var(--spacing-25);
 }
 
+/* Tipos com ícone à esquerda (search, datetime-local) */
+.form-input__field--with-leading {
+  padding-left: var(--spacing-500);
+}
+
+/* A lupa e o X nativos da busca mudam de navegador para navegador
+   (o iOS nem mostra o X). O DS usa a lupa própria, à esquerda. */
+.form-input__field::-webkit-search-decoration,
+.form-input__field::-webkit-search-cancel-button,
+.form-input__field::-webkit-search-results-button {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Âncora do indicador nativo do calendário, esticado logo abaixo */
+.form-input__field--datetime {
+  position: relative;
+}
+
+/* WebKit bug 198959: no iOS o valor da data vem centralizado e o campo
+   vazio encolhe. Alinhar à esquerda e fixar a altura da linha. */
+.form-input__field--datetime::-webkit-date-and-time-value {
+  margin: 0;
+  min-height: var(--text-body-md-line-height);
+  text-align: left;
+}
+
+/* Quando min e max têm o mesmo ano (ou mês, ou dia), como na marcação, que
+   vai de hoje ao prazo da rodada, o Chrome trava esse segmento e o pinta de
+   cinza, como se estivesse desabilitado. O valor vale: fica na cor do texto. */
+.form-input__field--datetime::-webkit-datetime-edit-year-field,
+.form-input__field--datetime::-webkit-datetime-edit-month-field,
+.form-input__field--datetime::-webkit-datetime-edit-day-field {
+  color: inherit;
+}
+
+/* O indicador de calendário do Chrome fica invisível e cobre o campo:
+   tocar em qualquer ponto abre o calendário, e o ícone visível é o do DS,
+   à esquerda. O iOS não tem esse indicador. */
+.form-input__field--datetime::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
 .form-input__field--error {
   border-color: var(--color-border-attention);
 }
@@ -74,6 +124,16 @@
 
 .form-input__field--valid:focus {
   border-color: var(--color-border-success);
+}
+
+/* Ícone do tipo. Vem depois do <input> no DOM para ficar por cima do
+   datetime-local, que é posicionado, sem precisar de z-index. */
+.form-input__leading {
+  position: absolute;
+  left: var(--spacing-200);
+  display: inline-flex;
+  color: var(--color-foreground-secondary);
+  pointer-events: none;
 }
 
 /* Icones de status e toggle, posicionados dentro do wrapper */

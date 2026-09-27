@@ -42,7 +42,7 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **IconButton** | N, D, P, S | Não | Botão só com ícone e `aria-label` obrigatório: sino, busca, fechar folha, compartilhar, favoritar competição |
 | **Icon** | todas | Sim | — |
 | **TextLink** | todas | Sim | — |
-| **FormInput** | S, D | Sim | Variante numérica (`inputmode="numeric"`) se a entrada de placar usar campo; variante de busca (ver SearchField) |
+| **FormInput** | S, D | Sim (`text`, `email`, `password`, `tel`, `search` com lupa, `datetime-local`) | Variante numérica (`inputmode="numeric"`) se a entrada de placar usar campo. Limpar e carregando da busca ficam no SearchField |
 | **SearchField** | D, N | Não | Campo com ícone de lupa, limpar e estado de carregando. Pode ser variante do FormInput |
 | **Alert** | S, D | Sim (`attention`, `success`, `information`) | — |
 | **Toast** | S | Sim | — |
