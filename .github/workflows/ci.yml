@@ -59,9 +59,11 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      # Versão fixa: com `latest` o passo consulta a API do GitHub para descobrir a última release,
+      # e o rate limit dessa API derrubava o job antes de qualquer teste. Como atualizar: GIT_WORKFLOW.md > CI
       - uses: supabase/setup-cli@v1
         with:
-          version: latest
+          version: 2.118.0
       # Sobe só o que os fluxos usam (banco, Auth, REST, Storage, gateway e Mailpit)
       - run: supabase start -x studio,postgres-meta,realtime,imgproxy,edge-runtime,logflare,vector,supavisor
       - name: Apontar app e testes para o Supabase local
