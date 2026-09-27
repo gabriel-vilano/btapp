@@ -10,6 +10,7 @@ import { Button } from "@/src/components/ui/Button";
 import { Alert } from "@/src/components/ui/Alert";
 import { TextLink } from "@/src/components/ui/TextLink";
 import { validateEmail } from "@/src/lib/validations";
+import { loginNoticeFor } from "./login-notice";
 import styles from "./page.module.css";
 
 export default function LoginPage() {
@@ -22,8 +23,8 @@ export default function LoginPage() {
 
 function LoginContent() {
   const searchParams = useSearchParams();
-  const recovered = searchParams.get("recovered") === "true";
-  const [recoveredDismissed, setRecoveredDismissed] = useState(false);
+  const notice = loginNoticeFor(searchParams);
+  const [noticeDismissed, setNoticeDismissed] = useState(false);
 
   const [state, formAction, isPending] = useActionState(login, null);
 
@@ -47,12 +48,12 @@ function LoginContent() {
 
   function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
     setEmail(e.target.value);
-    if (recovered && !recoveredDismissed) setRecoveredDismissed(true);
+    setNoticeDismissed(true);
   }
 
   function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
     setPassword(e.target.value);
-    if (recovered && !recoveredDismissed) setRecoveredDismissed(true);
+    setNoticeDismissed(true);
   }
 
   function handleSubmit(formData: FormData) {
@@ -61,7 +62,7 @@ function LoginContent() {
     formAction(formData);
   }
 
-  const showRecovered = recovered && !recoveredDismissed;
+  const visibleNotice = noticeDismissed ? null : notice;
   const showServerError = Boolean(state?.error);
 
   return (
@@ -100,11 +101,11 @@ function LoginContent() {
           autoComplete="current-password"
         />
 
-        {showRecovered && (
+        {visibleNotice && (
           <Alert
-            status="success"
-            title="Senha redefinida com sucesso"
-            description="Faça login com sua nova senha."
+            status={visibleNotice.status}
+            title={visibleNotice.title}
+            description={visibleNotice.description}
           />
         )}
 
