@@ -1,0 +1,138 @@
+import {
+  Meta,
+  Subtitle,
+  Canvas,
+  ArgTypes,
+} from "@storybook/addon-docs/blocks";
+import * as AvatarStories from "./Avatar.stories";
+
+<Meta of={AvatarStories} />
+
+<Subtitle>
+  Foto redonda de jogador ou organização, com as iniciais do nome quando não há
+  foto.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/Avatar/Avatar.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/Avatar/Avatar.tsx)
+
+## Visão geral
+
+`Avatar` identifica uma pessoa ou organização pelo rosto (ou logo). Aparece no feed, no ranking, no perfil e na agenda. Recebe a URL da foto, o nome e o tamanho; quando a URL é `null`, mostra as iniciais do nome.
+
+<Canvas of={AvatarStories.WithPhoto} />
+
+## Tamanhos
+
+Quatro tamanhos fixos, cada um com seu token `--dimension-avatar-*`. O tamanho é número (`32`, `40`, `48`, `96`) e não t-shirt (`sm`, `md`) porque cada valor tem um lugar certo no app, e o número diz exatamente o que vai aparecer na tela.
+
+<Canvas of={AvatarStories.Sizes} />
+
+<table>
+  <thead>
+    <tr>
+      <th>Tamanho</th>
+      <th>Token</th>
+      <th>Onde aparece</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>32</code></td>
+      <td><code>--dimension-avatar-32</code></td>
+      <td>Linhas densas: placar do card de resultado</td>
+    </tr>
+    <tr>
+      <td><code>40</code></td>
+      <td><code>--dimension-avatar-40</code></td>
+      <td>Header de card e mini card de perfil</td>
+    </tr>
+    <tr>
+      <td><code>48</code></td>
+      <td><code>--dimension-avatar-48</code></td>
+      <td>Confronto (bloco "vs") do card de partida</td>
+    </tr>
+    <tr>
+      <td><code>96</code></td>
+      <td><code>--dimension-avatar-96</code></td>
+      <td>Topo do perfil</td>
+    </tr>
+  </tbody>
+</table>
+
+## Estados
+
+O avatar tem três estados, decididos pelos dados que chegam: com foto, sem foto (iniciais) e sem foto nem nome.
+
+### Com foto
+
+A foto é recortada em círculo e preenche o espaço (`object-fit: cover`), sem distorcer. O `alt` é o nome.
+
+<Canvas of={AvatarStories.WithPhoto} />
+
+### Iniciais
+
+Sem foto, o avatar mostra a primeira letra do primeiro e do último nome ("Lucas Silva" vira "LS"). Nome de uma palavra mostra uma letra. As iniciais crescem junto com o círculo e usam o texto principal sobre o fundo neutro, com contraste bem acima do AA.
+
+<Canvas of={AvatarStories.Initials} />
+
+### Nome longo
+
+Nomes compostos continuam com duas letras: primeiro e último nome, pulando os do meio ("de" e "da" inclusive).
+
+<Canvas of={AvatarStories.LongName} />
+
+### Sem foto e sem nome
+
+Dado faltando de verdade: o círculo neutro segura o espaço para o layout não pular, e sai da leitura de tela porque não tem o que anunciar.
+
+<Canvas of={AvatarStories.Placeholder} />
+
+## Dupla (AvatarStack)
+
+`AvatarStack` sobrepõe dois avatares para representar uma dupla: o primeiro item fica por cima, o segundo aparece 8px à direita. Um anel na cor do fundo separa os dois círculos. Aceita `32`, `40` e `48`; o `96` é só do perfil, que mostra uma pessoa por vez.
+
+<Canvas of={AvatarStories.Stack} />
+
+## Quando usar
+
+- Identificar quem fez algo (header de card, comentário, lista de amigos)
+- Mostrar os lados de um confronto: um avatar por jogador, `AvatarStack` por dupla
+- Topo do perfil, no tamanho `96`
+
+## Componentes relacionados
+
+- Para **escolher e enviar a foto** no cadastro, use [`AvatarUpload`](?path=/docs/auth-avatarupload--docs): ele tem input de arquivo, preview e validação. O `Avatar` só exibe
+- Para **ícone ou logo sem pessoa por trás** (ex.: o aperto de mão do card de amizade), use [`Icon`](?path=/docs/ui-icon--docs) num círculo próprio do componente
+
+## Acessibilidade
+
+- Com foto, o `alt` é o nome. Com iniciais, o círculo tem `role="img"` e `aria-label` com o nome completo: o leitor de tela anuncia "Lucas Silva", não "L S"
+- Sem foto e sem nome, o círculo tem `aria-hidden` e fica fora da árvore de acessibilidade
+- O contraste das iniciais (`--color-foreground-primary` sobre `--color-background-tertiary`) passa com folga no AA de texto ([WCAG 1.4.3](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html))
+- O `Avatar` não é interativo. Se o avatar leva ao perfil, o `<a>` ou `<button>` envolve o avatar **e** o nome, e a área tocável segue os 48px do DS
+
+## Evitar
+
+- ❌ **`alt` com texto genérico** ("foto", "avatar", "imagem do usuário"). O `alt` vira as iniciais e o nome lido pelo leitor de tela: passe o nome
+- ❌ **Tamanho fora da escala** via CSS do consumidor. Se faltar um tamanho, ele entra no `Avatar` com token novo
+- ❌ **`<Image>` próprio num componente de área** para mostrar foto de jogador ou organização. Use o `Avatar`, que já trata foto ausente
+- ❌ **Mais de dois avatares no `AvatarStack`**. Ele representa uma dupla, não uma lista
+
+## API
+
+<ArgTypes of={AvatarStories} />
+
+## Decisões de design
+
+**Por que iniciais em vez de um ícone genérico de pessoa?**
+No feed, vários cards seguidos podem ter jogadores sem foto. Com um ícone igual para todos, os círculos ficam idênticos e o olho não diferencia ninguém. Com as iniciais, cada círculo já diz de quem é, antes da leitura do nome.
+
+**Por que fundo neutro em vez de uma cor por pessoa (hash do nome)?**
+Cor por pessoa briga com as cores semânticas do app: coral é ação, verde é sucesso, vermelho é erro. Num card de resultado, um avatar vermelho ao lado de uma derrota vira ruído. O neutro deixa a cor para o que tem significado.
+
+## Referências
+
+- [MDN — `<img>` e texto alternativo](https://developer.mozilla.org/docs/Web/HTML/Element/img#alt)
+- [WAI — Images Tutorial](https://www.w3.org/WAI/tutorials/images/)
+- [WCAG 1.4.3 — Contrast (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
+- Tokens de dimensão e cor: `docs/TOKENS.md`

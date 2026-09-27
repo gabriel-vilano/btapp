@@ -19,21 +19,6 @@
   width: auto;
 }
 
-.header__img {
-  width: var(--dimension-avatar-40);
-  height: var(--dimension-avatar-40);
-  border-radius: var(--radius-full);
-  object-fit: cover;
-  display: block;
-}
-
-.header__img_placeholder {
-  width: var(--dimension-avatar-40);
-  height: var(--dimension-avatar-40);
-  border-radius: var(--radius-full);
-  background-color: var(--color-background-tertiary);
-}
-
 .header__handshake {
   width: var(--dimension-avatar-40);
   height: var(--dimension-avatar-40);

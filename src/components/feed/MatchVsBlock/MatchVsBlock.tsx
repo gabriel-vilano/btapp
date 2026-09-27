@@ -1,4 +1,4 @@
-import { Avatar, AvatarStack } from "@/src/components/feed/Avatar";
+import { Avatar, AvatarStack } from "@/src/components/ui/Avatar";
 import type { MatchSide } from "@/src/types/feed";
 import styles from "./MatchVsBlock.module.css";
 
