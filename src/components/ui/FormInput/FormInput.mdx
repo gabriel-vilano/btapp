@@ -95,6 +95,18 @@ Input bloqueado, sem foco, sem cursor. Use durante submit em andamento ou quando
 
 <Canvas of={FormInputStories.Disabled} />
 
+### Foco
+
+Foco pelo teclado ou toque: borda `border-strong` **e** o ring de foco do DS. Com `error` ou `valid`, a borda mantém a cor do estado e o ring aparece por fora.
+
+<Canvas of={FormInputStories.Focused} />
+
+### Toggle de senha focado
+
+O toggle tem área tocável de 48×48, maior que o ícone, sem aumentar a altura do campo. Hover e press aplicam um state layer circular em volta do ícone.
+
+<Canvas of={FormInputStories.PasswordToggleFocused} />
+
 ### Com label trailing
 
 Slot `labelTrailing` à direita do label — útil pra ações relacionadas como "Esqueci a senha", "Por que pedimos isso?".
@@ -120,8 +132,8 @@ Slot `labelTrailing` à direita do label — útil pra ações relacionadas como
 - `aria-describedby` conecta input à mensagem de erro
 - Mensagem de erro tem `role="alert"` — leitor de tela anuncia imediatamente
 - Toggle de senha tem `aria-label` dinâmico ("Mostrar senha" / "Ocultar senha")
-- Foco visível via `:focus-visible` (outline azul)
-- Tap target do input atende mínimo de 48px
+- Foco visível via `:focus-visible` (ring azul) no input e no toggle de senha. O input nunca remove o outline no `:focus`
+- Tap target de 48px no input e no toggle de senha ([WCAG 2.5.8](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html) pede 24px; a regra do DS é 48px)
 
 ## Evitar
 
