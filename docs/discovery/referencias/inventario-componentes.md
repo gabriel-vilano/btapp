@@ -72,7 +72,7 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **EmptyState** | R, F, H, D, N | Sim (`ui/EmptyState`: ícone opcional, título, apoio e uma ação) | Sem amigos, sem ranking, sem confronto, sem resultado de filtro. A variante "e conteúdo sugerido abaixo" é composição da tela: o conteúdo vem depois do `EmptyState` |
 | **ScoreInput** | S | Não | Set completo, incompleto, inválido (7 × 7), tiebreak, super tiebreak, W.O., desistência. É o componente de maior risco técnico das 7 superfícies |
 | **PendingResultCard** | S, F | Não | Aguardando você, aguardando adversário, confirmado, contestado, confirmado automaticamente por prazo |
-| **StatusTimeline** | S | Não | Lançado → aguardando → confirmado / contestado. Útil se a confirmação ganhar tela própria |
+| **StatusTimeline** | S, M | Sim (`ui/StatusTimeline`: quem, o quê e quando, em ordem cronológica; marcador neutro) | Um evento só, histórico longo, evento do sistema (sem autor), ato de admin com o papel. Usos: histórico da marcação (`SCHEDULING.md` M16, M17) e do resultado (lançado, contestado, arbitrado, corrigido) |
 | **FilterSheet** | D, R | Não | Filtros ativos, contagem de resultados, zero resultados, limpar por seção. Compõe BottomSheet + Chip |
 | **SidePicker** (jogadores e duplas) | S, H | Não | Buscar jogador, jogador sem conta, trocar de lado, dupla incompleta |
 | **EvolutionChart** | P, R | Não | Poucos pontos (1 ou 2 partidas), período sem dados, faixa de referência ligada ou não. Alternativa textual obrigatória |
