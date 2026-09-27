@@ -5,7 +5,8 @@ import { Button, ButtonLink } from "@/src/components/ui/Button";
 import { EmptyState } from "./EmptyState";
 
 // Copy provisória: a da agenda e a do ranking vêm da spec de navegação (7.2),
-// ainda em revisão; a do feed segue o padrão das referências (título + apoio + CTA).
+// ainda em revisão; a do feed segue o padrão das referências (título + apoio + CTA)
+// e o vocabulário do domínio: entre jogadores a conexão é amizade, não "seguir" (DOMAIN.md R24).
 const meta = {
   title: "UI/EmptyState",
   component: EmptyState,
@@ -69,8 +70,8 @@ export const RankingNoSeason: Story = {
 export const FeedNoFriends: Story = {
   args: {
     icon: UsersThreeIcon,
-    title: "Siga jogadores para ver os jogos deles.",
-    description: "Resultados, inscrições e mudanças no ranking de quem você segue aparecem aqui.",
+    title: "Adicione amigos para ver os jogos deles.",
+    description: "Resultados, inscrições e mudanças no ranking dos seus amigos aparecem aqui.",
     action: <Button>Encontrar jogadores</Button>,
   },
 };
@@ -112,8 +113,8 @@ export const AllCases: Story = {
       />
       <EmptyState
         icon={UsersThreeIcon}
-        title="Siga jogadores para ver os jogos deles."
-        description="Resultados, inscrições e mudanças no ranking de quem você segue aparecem aqui."
+        title="Adicione amigos para ver os jogos deles."
+        description="Resultados, inscrições e mudanças no ranking dos seus amigos aparecem aqui."
         action={<Button>Encontrar jogadores</Button>}
       />
     </div>
