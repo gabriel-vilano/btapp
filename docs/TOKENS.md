@@ -464,6 +464,7 @@ Funcionam em qualquer cor de fundo sem calcular variações por componente.
 | `--color-state-layer-pressed-on-strong`  | `rgba(255,255,255,var(--opacity-200))` | press sobre fundo escuro       |
 | `--color-state-layer-selected-on-strong` | `rgba(255,255,255,var(--opacity-250))` | selecionado sobre fundo escuro |
 | `--color-state-focus-ring`               | `--color-blue-550`                     | outline de foco por teclado    |
+| `--color-state-focus-ring-on-strong`     | `--color-neutral-100`                  | outline de foco sobre fundo escuro ou colorido |
 
 Padrão de implementação nos componentes:
 
@@ -548,4 +549,5 @@ Se o elemento for visualmente menor, usar `min-height` ou `padding` para expandi
 
 - **Botões, links e controles** usam o ring de foco do DS: `outline: var(--border-width-thick) solid var(--color-state-focus-ring)` em `:focus-visible`, com `:focus:not(:focus-visible) { outline: none; }` (exemplo em "State layers").
 - **Campos de texto** (FormInput, OtpInput e os que vierem) mostram o foco de duas formas: a borda muda para `--color-border-strong` em `:focus`, e o ring de `:focus-visible` aparece por cima. Nenhum campo zera o outline em `:focus`: assim o DS tem um só estilo de foco por teclado.
+- **Sobre fundo forte ou colorido** (o fechar do Toast sobre vermelho, verde ou cinza escuro), o ring usa `--color-state-focus-ring-on-strong` (branco). O azul do ring padrão fica abaixo de 3:1 sobre esses fundos (WCAG 1.4.11), como os state layers, que também têm a variante `*-on-strong`. O Button primary não precisa dela: o `outline-offset` põe o ring fora do fundo coral, sobre a superfície da página.
 - Controles internos de um componente (o botão de mostrar senha, o fechar do Toast) seguem a mesma regra dos botões. O outline padrão do navegador não é o estilo do DS.
