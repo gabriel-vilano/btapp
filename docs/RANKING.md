@@ -14,14 +14,15 @@ As siglas de decisão são as do `docs/DOMAIN.md` > "Fontes". As que esta spec u
 | --- | --- |
 | **DEC-FINAL** | Linha de corte só na tela de ranking, sem badge de "zona" (R23); vaga por posição na data de corte (R28) |
 | **DEC-RESP** | Tabela ao vivo e evento "subiu N" por fim de rodada (R46); desempate fixo (R37); inscrição encerrada congelada (R45) |
+| **DEC-RANK** | Decisões do Gabriel na issue desta spec (27/09/2026): aprovação com as recomendações de RQ1 a RQ7 e as leituras RL1 a RL9; a queda aparece na tabela, e a R22 passa a valer só para o feed e as notificações |
 | **DEC-NAV** | Decisão do Gabriel (26/09), registrada no `docs/NAVIGATION.md`: **ranking como lista completa, com a linha da própria dupla fixada** |
-| **NAV** | `docs/NAVIGATION.md` (em revisão): aba Ranking (N1), rota da classificação e da competição (N9, N10), toque do card de movimentação rolando até a linha da dupla, vazio, carregando e erro (N22–N24). **As perguntas Q1–Q5 de lá seguem abertas**; esta spec depende da Q1 (abas) e da Q4 (categoria aberta na aba) |
+| **NAV** | `docs/NAVIGATION.md` (em revisão): aba Ranking (N1), rota da classificação e da competição (N9, N10), toque do card de movimentação rolando até a linha da dupla, vazio, carregando e erro (N22–N24). **As perguntas Q1–Q5 de lá seguem abertas**; esta spec depende da Q1 (abas) e da Q4 (categoria aberta na aba e seletor). As regras dependentes dizem isso no texto (RK2, RK6, RK19) |
 | **RES** | `docs/RESULTS.md` (em revisão), §8.1: impacto no ranking logo depois da confirmação (RG18) |
 | **CARDS** | `docs/FEED_CARDS.md` §8: card de movimentação, gramática posição + delta + pontos, queda sem fundo de cor |
 | **REF** | `docs/discovery/referencias/01-ranking.md` (50 telas de 30 apps, Mobbin) e `inventario-componentes.md` |
 | **DSC** | `docs/DISCOVERY.md`: oportunidades 2.2 (explicar a pontuação) e 2.3 (corrida à final com linha de corte) |
 | **WCAG** | WCAG 2.2: 1.4.1 (uso de cor), 1.4.11 (contraste de não texto), 2.5.8 (tamanho do alvo); WAI-ARIA APG (não tem padrão de leaderboard) |
-| **LEIT** | Leitura do agente desta spec, a confirmar pelo Gabriel. A lista está na seção 11 |
+| **LEIT** | Leitura do agente desta spec. RL1–RL9 confirmadas pelo Gabriel (DEC-RANK); RL10 e RL11 a confirmar. A lista está na seção 11 |
 
 ---
 
@@ -34,7 +35,7 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 | Momento | O que a tela faz | O que ela evita |
 | --- | --- | --- |
 | Subiu | Delta verde com seta e número na linha da dupla | Celebrar posição que não mudou (REF, CARDS §8.6) |
-| Caiu | Delta com seta e número, cor só no indicador | Fundo vermelho, alerta, linha inteira em cor de atenção (CARDS §8.3, RES §8.1) |
+| Caiu | Delta com seta e número, cor só no indicador. A queda aparece na tabela para todos, mas nunca vira publicação nem notificação para outros (R22) | Fundo vermelho, alerta, linha inteira em cor de atenção (CARDS §8.3, RES §8.1) |
 | Perto da linha da final | A linha de corte com texto diz o que ela significa | "Garantia matemática" ou projeção, que o domínio não usa (R28) |
 
 ---
@@ -42,7 +43,7 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 ## 2. Onde a tela mora
 
 - **RK1. A classificação é uma tela por categoria e temporada** (rota proposta `/ranking/[categoria]`, com a temporada atual; temporada encerrada em `/ranking/[categoria]?temporada=[id]`). É a mesma tela vinda da aba Ranking, do card do feed, da notificação, do perfil e da página da competição (N10). [NAV N10]
-- **RK2. A aba Ranking abre numa classificação, não numa lista de rankings.** Abre a categoria vista por último; sem histórico de visita, a da inscrição ativa com a partida confirmada mais recente. Sem inscrição ativa, mostra o vazio da seção 8. **Depende da Q4 da navegação**: se o Gabriel escolher outra entrada, esta regra muda junto. [NAV Q4; LEIT]
+- **RK2. A aba Ranking abre numa classificação, não numa lista de rankings.** Abre a categoria vista por último; sem histórico de visita, a da inscrição ativa com a partida confirmada mais recente. Sem inscrição ativa, mostra o vazio da seção 8. **Depende da Q4 da navegação**: se o Gabriel escolher outra entrada, esta regra muda junto. [NAV Q4; DEC-RANK RL1]
 
   **Por quê:** o volume é de 1 a 2 categorias por jogador (DOMAIN §4). Uma lista de rankings antes da tabela seria um toque a mais em toda visita para resolver um caso raro.
 - **RK3. O card de movimentação e o de marco abrem a classificação rolada até a linha da dupla** (NAV, "Destino de cada toque"). O card de resultado e o de confronto abrem pelo cabeçalho de competição. [NAV]
@@ -70,7 +71,7 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 │ ── Classificam para a Saideira · 8 vagas ──  │  ← ZoneDivider (RK13)
 │  9  [av][av] Você e Pedro Alves          390 │  ← linha da própria dupla (RK9)
 │              5 jogos · 3 vitórias      ▲ 2   │
-│              Faltam 12 pts para o 8º         │  ← distância da vaga (RK11, Q4)
+│              Faltam 12 pts para o 8º         │  ← distância da vaga (RK11)
 │ 10  …                                        │
 └──────────────────────────────────────────────┘
 ```
@@ -82,49 +83,61 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
 ### 3.2 Trocar de categoria
 
-- **RK6. O seletor de categoria é um botão com o nome da competição e da categoria**, que abre uma folha (o `Dialog` do DS, BottomSheet no celular). A folha tem duas partes: [LEIT; Q2]
+- **RK6. O seletor de categoria é um botão com o nome da competição e da categoria**, que abre uma folha (o `Dialog` do DS, BottomSheet no celular). A folha tem duas partes: [DEC-RANK RQ2]
   1. **"Suas categorias":** um item por inscrição ativa do jogador (StandingSummaryItem, seção 9), com a posição atual e o delta de cada uma. O jogador vê todas as suas posições de uma vez, sem abrir uma por uma.
   2. **"Outras categorias":** as categorias da mesma competição em que ele não está inscrito, com o número de inscritos ("16 duplas", `formatEnrollmentCount`). Serve para acompanhar um amigo em outra categoria ou olhar a categoria de cima.
 
   Com uma inscrição só e sem outras categorias na competição, o seletor vira texto (sem ⌄ e sem toque).
-- **RK7. Não há filtro de região nem de nível no MVP.** A classificação já é de uma categoria, e a categoria já é gênero + nível + idade (R4): filtrar por nível dentro dela não tem o que filtrar. Região e nível são filtros de **descoberta** de competição (JTBD 1), que está fora do MVP e ganha a quinta aba quando entrar (NAV N1). Nem filtro dentro da tabela: com 6 a 40 duplas por categoria (DOMAIN §7, `FEED_CARDS.md` §11.4), a lista rola em poucos gestos, e a própria linha está sempre à vista (RK9). [R4, NAV N1; Q1]
+
+  **Depende da Q4 da navegação.** O cabeçalho da aba no `NAVIGATION.md` diz "seletor de categoria quando há mais de uma inscrição". Esta regra mostra o seletor também com uma inscrição só, quando a competição tem outras categorias, para o jogador poder olhar a categoria de um amigo. Se a Q4 for aprovada como está lá, a linha do cabeçalho da navegação passa a apontar para esta regra; se o Gabriel escolher outra entrada, esta regra muda junto.
+- **RK7. Não há filtro de região nem de nível no MVP.** A classificação já é de uma categoria, e a categoria já é gênero + nível + idade (R4): filtrar por nível dentro dela não tem o que filtrar. Região e nível são filtros de **descoberta** de competição (JTBD 1), que está fora do MVP e ganha a quinta aba quando entrar (NAV N1). Nem filtro dentro da tabela: com 6 a 40 duplas por categoria (DOMAIN §7, `FEED_CARDS.md` §11.4), a lista rola em poucos gestos, e a própria linha está sempre à vista (RK9). [R4, NAV N1; DEC-RANK RQ1]
 
 ---
 
 ## 4. A linha da classificação
 
-- **RK8. Cada linha mostra, nesta ordem:** posição, a unidade competidora (avatar e nome; em duplas, os dois avatares sobrepostos e "Nome1 e Nome2"), os pontos e o delta. A linha de apoio mostra jogos e vitórias ("6 jogos · 5 vitórias"). [R1, R8, R37; Q3]
+- **RK8. Cada linha mostra, nesta ordem:** posição, a unidade competidora (avatar e nome; em duplas, os dois avatares sobrepostos e "Nome1 e Nome2"), os pontos e o delta. A linha de apoio mostra jogos e vitórias ("6 jogos · 5 vitórias"). [R1, R8, R18; DEC-RANK RQ3]
 
-  **Por que jogos e vitórias:** no meio da rodada, duas duplas com pontos diferentes podem ter jogado números diferentes de partidas, e "vitórias" é o critério de desempate depois do confronto direto (R37). Os dois explicam a ordem sem abrir outra tela. Saldo de games fica fora da linha: é o último critério antes do admin e aparece nas regras (RK5).
+  **Como se contam** (da inscrição, na temporada):
+  - **Jogos:** partidas confirmadas em que houve jogo, com resultado normal ou desistência. **W.O., W.O. duplo e partidas canceladas ficam fora**, como no `total_matches` (R18) e no cartel do perfil (`PROFILE.md`, PF6).
+  - **Vitórias:** os jogos vencidos, pela mesma conta. Vitória por W.O. não entra.
+
+  Assim, "jogos" e "vitórias" têm uma só definição no app inteiro, e vitórias nunca passam de jogos. **A diferença para o desempate é explícita:** o critério "vitórias" da R37 conta o W.O. vencido; a linha, não. A página de regras diz isso na ordem de desempate (RK17), e a linha de uma dupla com W.O. vencido explica os pontos pelas regras, não pela contagem.
+
+  **Por que jogos e vitórias:** no meio da rodada, duas duplas com pontos diferentes podem ter jogado números diferentes de partidas. Os dois explicam a ordem na maioria dos casos sem abrir outra tela. Saldo de games fica fora da linha: é o último critério antes do admin e aparece nas regras (RK5).
 - **Nome em duplas:** o jogador logado aparece como "Você" ("Você e Pedro Alves"), como na tela do confronto (RES, RG3). Nomes longos truncam o sobrenome antes do primeiro nome; o nome completo fica no nome acessível.
 - **Pontos** em `label-lg` bold, alinhados à direita com algarismos tabulares (`font-variant-numeric: tabular-nums`), para a coluna não dançar entre 98 e 610.
 - **Posição** em `title-sm` bold, largura fixa para 2 dígitos. Sem medalha, troféu ou pódio no top 3 (seção 4.3).
 
 ### 4.1 A própria linha
 
-- **RK9. A linha da própria dupla tem destaque e nunca sai da vista.** Quando ela está na área visível, aparece no lugar dela, destacada. Quando sai por baixo, uma cópia fixa aparece no rodapé da lista, acima da tab bar; quando sai por cima, a cópia fixa aparece no topo, abaixo do cabeçalho. Tocar na cópia rola a lista até a linha. [DEC-NAV; REF, caminho A; LEIT]
-- **RK10. Destaque da própria linha:** fundo sutil (`--color-background-secondary`) e o nome "Você e …". Sem fundo de marca cheio: o coral fica perto do vermelho de queda e competiria com o delta na mesma linha (REF, "o que evitar"), e a regra do DS reserva o coral para ação e o grafite para seleção (`TOKENS.md`), e a própria linha não é nenhum dos dois. [TOKENS; REF; Q5]
+- **RK9. A linha da própria dupla tem destaque e nunca sai da vista.** Quando ela está na área visível, aparece no lugar dela, destacada. Quando sai por baixo, uma cópia fixa aparece no rodapé da lista, acima da tab bar; quando sai por cima, a cópia fixa aparece no topo, abaixo do cabeçalho. Tocar na cópia rola a lista até a linha. [DEC-NAV; REF, caminho A; DEC-RANK RL2]
+- **RK10. Destaque da própria linha:** fundo sutil (`--color-background-secondary`) e o nome "Você e …". Sem fundo de marca cheio: o coral fica perto do vermelho de queda e competiria com o delta na mesma linha (REF, "o que evitar"), e a regra do DS reserva o coral para ação e o grafite para seleção (`TOKENS.md`), e a própria linha não é nenhum dos dois. [TOKENS; REF; DEC-RANK RQ5]
 - **Acessibilidade da cópia fixa:** a cópia é `aria-hidden` e não recebe foco; o leitor de tela lê a linha só no lugar dela. Para quem navega por teclado ou leitor, um link "Ir para a minha posição" no cabeçalho (visível só no foco) faz o mesmo que tocar na cópia. [REF, "Acessibilidade"; WCAG]
 - **Mais de uma dupla do jogador na mesma categoria** acontece só com a inscrição encerrada de uma troca de parceiro (R45). A linha fixada é a da inscrição ativa; a encerrada aparece na tabela como as outras encerradas (4.4).
 - **Categoria em que o jogador não está inscrito** (vinda de "Outras categorias" ou do card de um amigo): nenhuma linha destacada nem fixada.
 
 ### 4.2 Distância até a vaga
 
-- **RK11. Quando a dupla está abaixo da linha de corte, a própria linha mostra quantos pontos faltam para a última vaga:** "Faltam 12 pts para o 8º". Dentro da zona, nada: o ZoneDivider já diz que ela está dentro. Some depois da data de corte. [DSC 2.3, R28; Q4]
+- **RK11. Quando a dupla está abaixo da linha de corte, a própria linha mostra quantos pontos faltam para a última vaga:** "Faltam 12 pts para o 8º". Dentro da zona, nada: o ZoneDivider já diz que ela está dentro. Some depois da data de corte. [DSC 2.3, R28; DEC-RANK RQ4]
 
   **Por quê:** é a informação que decide como agir ("preciso ganhar os dois jogos da rodada") e cabe na regra do domínio: é distância em pontos para a posição, não garantia matemática de vaga (R28). Mostrar "12 pts acima do 9º" para quem está dentro transformaria a folga em ameaça a cada rodada.
 
 ### 4.3 Delta
 
-- **RK12. O delta de cada linha compara a posição ao vivo com a posição no fim da última rodada fechada** (a foto da classificação, R46). É a mesma base do evento "subiu N" do feed: quando a rodada fecha, o ▲ 2 da tabela é o mesmo ▲ 2 do card. No meio da rodada, o delta mostra quanto a dupla andou desde o início da rodada. [R46, CARDS §8; LEIT]
+- **RK12. O delta de cada linha compara a posição ao vivo com uma foto de fim de rodada** (a foto da classificação, R46), e aparece em todas as linhas, nos dois sentidos: a queda não é escondida na tabela (R22). A base muda assim: [R22, R46, CARDS §8; DEC-RANK; RL10]
+  - **Do fechamento da rodada N até o primeiro resultado confirmado da rodada N+1:** a base é a foto do fim da rodada N−1. Nesse intervalo a posição ao vivo é a própria foto de N, então a tabela mostra exatamente o delta do card "subiu N" que acabou de sair no feed, e o card que leva à tabela (RK3) encontra o mesmo ▲ 2 na linha.
+  - **Do primeiro resultado confirmado da rodada N+1 em diante:** a base passa a ser a foto do fim da rodada N, e o delta mostra quanto a dupla andou na rodada em curso.
   - **Posição igual:** a linha não mostra delta. O traço de "manteve" do DeltaIndicator fica para contextos em que a ausência confundiria (o StandingSummaryItem, seção 9); na tabela, uma coluna de traços é ruído.
-  - **Primeira rodada da temporada:** não há foto anterior, e nenhuma linha mostra delta (como o marco na 1ª rodada, CARDS §8.6).
+  - **Primeira rodada da temporada:** não há foto anterior, e nenhuma linha mostra delta até o primeiro resultado confirmado da 2ª rodada (como o marco na 1ª rodada, CARDS §8.6).
   - **Dupla que entrou depois da última foto** (inscrição nova, troca de parceiro): sem delta.
   - O delta usa o DeltaIndicator do DS: seta, número e cor, e o sentido no nome acessível ("Subiu 2 posições"). Nunca só cor (WCAG 1.4.1).
 
+  **Por que o primeiro resultado, e não o sorteio:** entre o fechamento e o primeiro resultado a tabela não muda, e o delta de fechamento continua sendo a notícia. O sorteio não mexe em posição nenhuma; trocar a base nele zeraria os deltas de todas as linhas sem que nada tivesse acontecido.
+
   **Diferente do RG18 do `RESULTS.md`:** a tela do confronto compara com a posição **antes daquela partida**, para mostrar a causa direta de um resultado. A tabela compara com o **fim da rodada**, porque ela é lida por várias duplas ao mesmo tempo e precisa de uma base comum.
 
-- **Top 3 sem tratamento especial.** Sem pódio, medalha nem coroa. No ranking de arena, o topo são pessoas que o jogador conhece e enfrenta na rodada, não um topo inalcançável; e a zona que importa é a da final (4.5). O Líder já tem o marco no feed (R47). [REF, padrão 5; LEIT]
+- **Top 3 sem tratamento especial.** Sem pódio, medalha nem coroa. No ranking de arena, o topo são pessoas que o jogador conhece e enfrenta na rodada, não um topo inalcançável; e a zona que importa é a da final (4.5). O Líder já tem o marco no feed (R47). [REF, padrão 5; DEC-RANK RL4]
 
 ### 4.4 Linhas com situação especial
 
@@ -132,7 +145,7 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 | --- | --- | --- |
 | **Inscrição encerrada** (troca de parceiro) | Continua na posição dela, com o texto em `--color-foreground-secondary` e um Badge neutro "Encerrada". Não conta para a linha de corte: a vaga passa para a próxima ativa (4.5) | R45, `cutoffLine` |
 | **Empate em todos os critérios** (`awaiting_admin`) | Badge neutro "Empate" nas linhas empatadas, e uma nota abaixo da tabela: "Ordem provisória até a decisão do admin (critério final de desempate)" | R37, `computeStandings` |
-| **Nenhum jogo confirmado na temporada** | Seção 8.2: sem posição, em ordem alfabética | LEIT |
+| **Nenhum jogo confirmado na temporada** | Seção 8.2: sem posição, em ordem alfabética | DEC-RANK RL6 |
 
 ### 4.5 Linha de corte da final
 
@@ -146,7 +159,7 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
 ## 5. Toque na linha
 
-- **RK14. Em simples, tocar na linha abre o perfil do jogador. Em duplas, abre uma folha com os dois jogadores**, cada um um item que leva ao perfil dele. A linha inteira é um alvo só (48px de altura mínima, `TOKENS.md`). [NAV N10; LEIT; Q6]
+- **RK14. Em simples, tocar na linha abre o perfil do jogador. Em duplas, abre uma folha com os dois jogadores**, cada um um item que leva ao perfil dele. A linha inteira é um alvo só (48px de altura mínima, `TOKENS.md`). [NAV N10; DEC-RANK RQ6]
 
   **Por que não dois links, um em cada nome:** cada nome na linha tem 20px de altura, abaixo da área tocável de 48px do DS, e dois alvos colados numa linha estreita no celular são o caminho do toque errado (WCAG 2.5.8). Não existe página de dupla no MVP, e a folha resolve a escolha em um toque.
 - O conteúdo do perfil (leitura social e competitiva) é da spec de perfil. A tela de H2H é da spec de H2H; se ela entrar na folha, é decisão de lá.
@@ -155,10 +168,11 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
 ## 6. Temporada e tempo
 
-- **RK15. A classificação mostra a temporada atual.** Depois do fim, a temporada encerrada continua na tela até a próxima começar, com o cabeçalho "Temporada encerrada" e a tabela final; a linha da própria dupla continua fixada. Quando a próxima começa, a encerrada mais recente fica acessível por um link no cabeçalho ("Temporada anterior") até o fim da nova. [R8, R27; NAV 7.2; LEIT]
+- **RK15. A classificação mostra a temporada atual.** Depois do fim, a temporada encerrada continua na tela até a próxima começar, com o cabeçalho "Temporada encerrada" e a tabela final; a linha da própria dupla continua fixada. Quando a próxima começa, a encerrada mais recente fica acessível por um link no cabeçalho ("Temporada anterior") até o fim da nova. [R8, R27; NAV 7.2; DEC-RANK RL7]
+- **RK21. Toda temporada encerrada tem a própria classificação, na mesma tela** (`/ranking/[categoria]?temporada=[id]`), no estado "Temporada encerrada" da RK15. É o destino do toque numa temporada da seção "Temporadas" do perfil (`PROFILE.md`, PF19): a tela abre rolada até a linha da dupla daquela temporada, destacada como a própria linha quando o jogador está nela. A aba Ranking só oferece a temporada anterior (RK15); as mais antigas chegam pelo perfil, que é onde mora a evolução. [NAV N10; RL11]
 - **Temporadas mais antigas e a evolução de posição ao longo do tempo** (JTBD 5) ficam com a spec de perfil, combinado com ela no Linear.
-- **RK16. A tabela atualiza ao vivo** (R46): uma confirmação muda a tabela na próxima visita ou ao puxar para atualizar. Não há atualização em tempo real com a tela aberta no MVP. Uma confirmação que muda a posição da própria dupla enquanto a tela está aberta aparece na próxima carga, sem animação. [R46; LEIT]
-- **Sem tela de celebração ao subir.** O momento de subir já tem dois lugares: a tela do confronto logo depois da confirmação (RES, RG18) e o card do feed no fim da rodada (CARDS §8). Uma terceira, interrompendo a abertura do app, repetiria o mesmo momento. [RES, CARDS; LEIT, Q7]
+- **RK16. A tabela atualiza ao vivo** (R46): uma confirmação muda a tabela na próxima visita ou ao puxar para atualizar. Não há atualização em tempo real com a tela aberta no MVP. Uma confirmação que muda a posição da própria dupla enquanto a tela está aberta aparece na próxima carga, sem animação. [R46; DEC-RANK RL8]
+- **Sem tela de celebração ao subir.** O momento de subir já tem dois lugares: a tela do confronto logo depois da confirmação (RES, RG18) e o card do feed no fim da rodada (CARDS §8). Uma terceira, interrompendo a abertura do app, repetiria o mesmo momento. [RES, CARDS; DEC-RANK RQ7]
 
 ---
 
@@ -166,14 +180,14 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
 A página da competição existe e não é aba (NAV N9); o conteúdo, no ranking, é desta spec. Rota proposta `/competicoes/[competicao]`.
 
-- **RK17. A página tem quatro blocos, nesta ordem:** cabeçalho, categorias, temporada e regras. [NAV N9; LEIT]
+- **RK17. A página tem quatro blocos, nesta ordem:** cabeçalho, categorias, temporada e regras. [NAV N9; DEC-RANK RL9]
 
 | Bloco | Conteúdo |
 | --- | --- |
 | **Cabeçalho** | Organização (avatar e nome) e nome da competição |
 | **Categorias** | Uma linha por categoria (ListItem): nome da categoria, "16 duplas", e, quando o jogador está inscrito, a posição dele (StandingSummaryItem). Toque → classificação |
 | **Temporada** | Nome e datas, rodada atual com o prazo, número de jogos por rodada; final: nome, vagas e data de corte |
-| **Regras** | Formato da partida (R29, texto do formato); a tabela de pontos do ranking (R9–R11, R36) em linguagem de jogador ("Vitória: 100 pontos, mais 2 por game vencido e menos 2 por game perdido"), com o exemplo do 6/4 6/3 calculado pela regra do próprio ranking; a ordem de desempate (R37); o prazo para confirmar (R14); o que acontece sem jogo no prazo da rodada (R40) |
+| **Regras** | Formato da partida (R29, texto do formato); a tabela de pontos do ranking (R9–R11, R36) em linguagem de jogador ("Vitória: 100 pontos, mais 2 por game vencido e menos 2 por game perdido"), com o exemplo do 6/4 6/3 calculado pela regra do próprio ranking; a ordem de desempate (R37), com a nota de que ali a vitória por W.O. conta, diferente da linha da tabela (RK8); o prazo para confirmar (R14); o que acontece sem jogo no prazo da rodada (R40) |
 
 - **RK18. As regras mostram os valores do ranking, não os padrões do app.** Cada ranking guarda a própria tabela (R9); a página lê a `ScoringRule` da competição. O exemplo usa `matchPoints` com a regra dela.
 - **Ações do admin na página:** "Lançar sorteio da rodada N", só para o admin da competição e só quando a rodada anterior fechou (R7, R15, NAV N9). **O fluxo do sorteio não é desta spec:** o botão existe, e o fluxo vira issue própria (seção 12).
@@ -184,7 +198,7 @@ A página da competição existe e não é aba (NAV N9); o conteúdo, no ranking
 
 ### 8.1 Vazio da aba
 
-- **RK19. Nenhum estado vazio deixa a tela sem próximo passo** (NAV N22). Os casos da aba Ranking:
+- **RK19. Nenhum estado vazio deixa a tela sem próximo passo** (NAV N22). Os casos da aba Ranking estão abaixo. **Depende da navegação:** a aba Ranking só existe se a Q1 de lá for aprovada, e o CTA "Registrar amistoso" leva ao fluxo da N19; se uma das duas mudar, esta regra muda junto.
 
 | Situação | Título | Apoio | Ação |
 | --- | --- | --- | --- |
@@ -196,7 +210,7 @@ Os três usam o `EmptyState` do DS (ícone opcional, título, apoio e uma ação
 
 ### 8.2 Vazio da tabela
 
-- **RK20. Temporada aberta sem nenhuma partida confirmada:** a tabela lista as inscrições em ordem alfabética, **sem posição e sem pontos**, com a nota "A classificação começa com o primeiro resultado confirmado." Sem ZoneDivider. [LEIT]
+- **RK20. Temporada aberta sem nenhuma partida confirmada:** a tabela lista as inscrições em ordem alfabética, **sem posição e sem pontos**, com a nota "A classificação começa com o primeiro resultado confirmado." Sem ZoneDivider. [DEC-RANK RL6]
 
   **Por quê:** o `computeStandings` devolve todas as linhas empatadas com `awaiting_admin`, porque 0 a 0 é empate em todos os critérios. Mostrar "1º a 16º" com 0 ponto sugeriria uma ordem que não existe, e o Badge "Empate" em todas as linhas seria ruído.
 - **Categoria com uma inscrição só:** a tabela mostra a linha, sem divisor.
@@ -264,7 +278,7 @@ Para a issue de ENG do RankingRow e do ZoneDivider.
 
 ### 9.3 Critérios de aceite da tela (para a issue da tela, depois)
 
-Ficam aqui para a issue da tela de ranking, que nasce da aprovação desta spec: RK1–RK20, com os casos da tabela 8.4 como stories ou testes, a linha de corte calculada por `cutoffLine`, o delta pela foto da última rodada fechada (`closeRound`) e a cópia fixa sem duplicar a leitura de tela.
+Ficam aqui para a issue da tela de ranking, que nasce da aprovação desta spec: RK1–RK21, com os casos da tabela 8.4 como stories ou testes, a linha de corte calculada por `cutoffLine`, o delta pelas fotos de fim de rodada (`closeRound`) com a troca de base da RK12 e a cópia fixa sem duplicar a leitura de tela.
 
 ---
 
@@ -275,31 +289,40 @@ Ficam aqui para a issue da tela de ranking, que nasce da aprovação desta spec:
 
 ---
 
-## 11. Leituras e perguntas abertas
+## 11. Decisões e leituras
 
-### Leituras do agente (a confirmar)
+### Perguntas respondidas
 
-- **L1.** A aba abre na categoria vista por último (RK2), seguindo a recomendação da Q4 da navegação.
-- **L2.** A cópia fixa aparece embaixo ou em cima, conforme o lado por onde a linha saiu, e tocar nela rola até a linha (RK9).
-- **L3.** O delta da tabela compara com o fim da última rodada fechada, e a posição igual não mostra traço (RK12).
-- **L4.** Sem pódio, medalha ou coroa no top 3 (4.3).
-- **L5.** Inscrição encerrada fica na posição dela, apagada, com "Encerrada", e a linha de corte pula ela (4.4, 4.5).
-- **L6.** Temporada sem jogo confirmado mostra a lista alfabética sem posição (RK20).
-- **L7.** A temporada encerrada fica na tela até a próxima começar; depois, só a anterior, por link (RK15). O histórico mais antigo é do perfil.
-- **L8.** Sem atualização em tempo real nem tela de celebração ao subir (RK16).
-- **L9.** A página da competição tem cabeçalho, categorias, temporada e regras com os valores do próprio ranking (RK17, RK18).
+As perguntas desta spec foram respondidas pelo Gabriel em 27/09/2026 (DEC-RANK), todas com a recomendação, e viraram regras. Os números são RQ, para não colidir com as Q da navegação.
 
-### Perguntas para o Gabriel
+- **RQ1. Filtros:** só a troca de categoria, sem filtro de região ou nível → RK7.
+- **RQ2. Troca de categoria:** botão que abre uma folha com "Suas categorias" e "Outras categorias" → RK6.
+- **RQ3. Conteúdo da linha:** posição, dupla, pontos e delta, com jogos e vitórias na linha de apoio → RK8.
+- **RQ4. Distância da vaga:** só para quem está fora da zona → RK11.
+- **RQ5. Destaque da própria linha:** fundo cinza sutil, sem coral → RK10.
+- **RQ6. Toque na linha de dupla:** folha com os dois jogadores → RK14.
+- **RQ7. Subir no ranking:** sem tela de celebração → RK16.
 
-- **Q1. Filtros:** o MVP tem só a troca de categoria, sem filtro de região ou nível? (RK7)
-- **Q2. Troca de categoria:** botão com o nome da categoria que abre uma folha com "Suas categorias" (com a posição em cada) e "Outras categorias"? (RK6)
-- **Q3. Conteúdo da linha:** posição, dupla, pontos e delta, com "jogos · vitórias" na linha de apoio? (RK8)
-- **Q4. Distância da vaga:** "Faltam 12 pts para o 8º" só para quem está fora da zona? (RK11)
-- **Q5. Destaque da própria linha:** fundo cinza sutil, sem coral? (RK10)
-- **Q6. Toque na linha de dupla:** abre uma folha com os dois jogadores? (RK14)
-- **Q7. Subir no ranking:** sem tela de celebração, com o momento na tela do confronto e no card do feed? (RK16)
+Decisão à parte, na mesma rodada: **a queda aparece na tabela**, e a R22 do `DOMAIN.md` passou a valer só para o feed e as notificações → RK12.
 
-As opções, os trade-offs e as recomendações estão no comentário de Needs Decision da issue. Cada resposta vira regra aqui, e a pergunta sai da lista.
+### Leituras do agente
+
+Confirmadas pelo Gabriel (DEC-RANK):
+
+- **RL1.** A aba abre na categoria vista por último (RK2), seguindo a recomendação da Q4 da navegação.
+- **RL2.** A cópia fixa aparece embaixo ou em cima, conforme o lado por onde a linha saiu, e tocar nela rola até a linha (RK9).
+- **RL3.** A posição igual não mostra traço na tabela (RK12).
+- **RL4.** Sem pódio, medalha ou coroa no top 3 (4.3).
+- **RL5.** Inscrição encerrada fica na posição dela, apagada, com "Encerrada", e a linha de corte pula ela (4.4, 4.5).
+- **RL6.** Temporada sem jogo confirmado mostra a lista alfabética sem posição (RK20).
+- **RL7.** A temporada encerrada fica na tela até a próxima começar; depois, a aba oferece só a anterior, por link (RK15).
+- **RL8.** Sem atualização em tempo real nem tela de celebração ao subir (RK16).
+- **RL9.** A página da competição tem cabeçalho, categorias, temporada e regras com os valores do próprio ranking (RK17, RK18).
+
+A confirmar (saíram das correções de consistência depois da aprovação):
+
+- **RL10.** A base do delta só avança para a foto da rodada que acabou de fechar no primeiro resultado confirmado da rodada seguinte; até lá, a tabela mostra o mesmo delta do card de fechamento (RK12).
+- **RL11.** Temporadas mais antigas que a anterior chegam pelo perfil, e o toque abre a classificação daquela temporada, rolada até a linha da dupla (RK21).
 
 ---
 
@@ -325,7 +348,7 @@ Medidas no beta com Rankin e Vila. Sem meta fixa: a primeira rodada define a lin
 | --- | --- | --- |
 | **Visitas à classificação depois de uma confirmação** | % das confirmações seguidas de uma visita à classificação da categoria em até 24h, por algum dos lados | Mede o JTBD 2: o jogador quer ver o efeito do resultado |
 | **Uso da cópia fixa** | Toques na cópia fixa por sessão na classificação | Se ninguém toca, a cópia informa sem precisar levar; se todos tocam, talvez a tela devesse abrir já rolada |
-| **Troca de categoria** | % das sessões na classificação que abrem o seletor; % que abrem "Outras categorias" | Valida o seletor em folha (Q2) e se olhar outras categorias tem uso |
+| **Troca de categoria** | % das sessões na classificação que abrem o seletor; % que abrem "Outras categorias" | Valida o seletor em folha (RK6) e se olhar outras categorias tem uso |
 | **Regras abertas** | Visitas a "Como funciona a pontuação" por jogador na temporada | Testa a oportunidade 2.2 (explicar a pontuação) |
 | **Aba de entrada** | % das sessões que visitam a aba Ranking; comparação com Feed e Jogos | Testa a hipótese H4 do discovery (ranking é o motivo de abrir o app) |
 

@@ -508,7 +508,7 @@ Mesma estrutura do WO com duas diferenças:
 
 **A posição é da unidade competidora** (`DOMAIN.md` R1): em duplas, o card mostra os dois jogadores, com o cabeçalho de dupla da seção 6.2 (stack de avatares 40px e "[Nome1] e [Nome2] subiram no ranking"). O verbo concorda com a unidade: singular em simples, plural em duplas.
 
-**Visibilidade** (`DOMAIN.md` R21, R22): "subiu", marco e classificação são públicos. "Caiu" é privado: só o jogador, ou os dois da dupla, veem.
+**Visibilidade** (`DOMAIN.md` R21, R22): "subiu", marco e classificação são públicos. O card "caiu" é privado: só o jogador, ou os dois da dupla, veem. A queda em si não é segredo: a tabela de classificação mostra o delta de todas as linhas (`RANKING.md` RK12); o que a R22 impede é a queda virar publicação ou notificação para outros.
 
 ### 8.1 Princípios de design
 
