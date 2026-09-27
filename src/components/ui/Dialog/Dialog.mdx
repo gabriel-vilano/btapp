@@ -12,7 +12,7 @@ import * as DialogStories from "./Dialog.stories";
 
 ## Visão geral
 
-Um só componente com duas apresentações. Abaixo de 800px o painel sobe da base da tela (BottomSheet), perto do polegar. A partir de 800px ele aparece centralizado (Dialog). O comportamento é o mesmo nas duas: foco preso no painel, `Esc` fecha, toque no scrim fecha e o foco volta para o gatilho.
+Um só componente com duas apresentações. Abaixo de 800px o painel sobe da base da tela (BottomSheet), perto do polegar. A partir de 800px ele aparece centralizado (Dialog). O comportamento é o mesmo nas duas: foco preso no painel, `Esc` fecha, toque no scrim fecha e o foco volta para o gatilho. No BottomSheet, arrastar a alça para baixo também fecha.
 
 O `Dialog` é **controlado**: quem usa guarda o `open` e fecha no `onClose`. Clique em **Abrir** nos exemplos.
 
@@ -20,9 +20,10 @@ O `Dialog` é **controlado**: quem usa guarda o `open` e fecha no `onClose`. Cli
 
 ## Anatomia
 
-Quatro partes, de cima para baixo:
+Cinco partes, de cima para baixo:
 
 - **Scrim:** a camada escura (`--color-scrim`) sobre a tela. Tocar nela fecha.
+- **Alça** *(só no BottomSheet)*: o traço no topo do painel. Arrastar por ela fecha. A área de toque tem 48px de altura na largura toda, maior que o traço.
 - **Cabeçalho:** título (`h2`, nome acessível do modal), descrição opcional e o botão de fechar.
 - **Corpo:** o conteúdo. Rola quando não cabe; cabeçalho e rodapé ficam fixos.
 - **Rodapé** *(opcional)*: as ações, separadas do corpo por uma borda.
@@ -73,6 +74,24 @@ Com `initialFocusRef`, o foco abre num elemento escolhido. Em ação destrutiva 
 
 <Canvas of={DialogStories.InitialFocus} />
 
+### Arrasto rápido fecha
+
+Arrastar a alça para baixo move o painel junto com o dedo. Um arrasto curto e rápido (acima de 0,4 px/ms) fecha, e o painel termina de descer antes de sumir.
+
+<Canvas of={DialogStories.DragFlickCloses} />
+
+### Arrasto longo fecha
+
+Um arrasto lento também fecha quando passa de 25% da altura do painel.
+
+<Canvas of={DialogStories.DragDistanceCloses} />
+
+### Arrasto curto volta
+
+Se o arrasto não passa de nenhum dos dois limites, o painel volta à posição. Arrastar para cima não move o painel: não há alturas intermediárias.
+
+<Canvas of={DialogStories.DragShortReturns} />
+
 ### Toque no scrim fecha
 
 Tocar fora do painel chama `onClose`, como o `Esc` e o botão de fechar.
@@ -102,6 +121,8 @@ Cada um cobre um nível de interrupção diferente.
 - Botão de fechar só de ícone com `aria-label="Fechar"` e área de 48×48 (regra do DS; WCAG 2.5.8).
 - Com `prefers-reduced-motion`, o painel aparece sem animação.
 - Scroll da página travado enquanto o modal está aberto.
+- Arrastar a alça nunca é o único jeito de fechar: X, `Esc` e scrim fazem o mesmo sem arrastar (WCAG 2.5.7, Movimentos de arrastar). Por isso a alça fica fora da árvore de acessibilidade (`aria-hidden`) e fora da ordem de Tab.
+- Com `prefers-reduced-motion`, o painel não anima ao voltar nem ao sair depois do arrasto.
 
 ## Evitar
 
@@ -110,6 +131,7 @@ Cada um cobre um nível de interrupção diferente.
 - ❌ Formulário longo no modal. Mais de uma rolagem de conteúdo pede página própria.
 - ❌ Esconder o botão de fechar. `Esc` e scrim não são descobríveis para todo mundo.
 - ❌ Toast para erro de algo feito dentro do modal: use Alert dentro do corpo, perto do campo.
+- ❌ Contar com o arrasto como a forma de fechar. Ele é um atalho do celular; o X continua sendo o caminho visível.
 
 ## API
 
@@ -117,7 +139,7 @@ Cada um cobre um nível de interrupção diferente.
 
 ## Decisões de design
 
-Duas escolhas não óbvias, com a alternativa que parecia natural.
+Escolhas não óbvias, com a alternativa que parecia natural.
 
 ### Por que `div` com portal em vez do `<dialog>` nativo?
 
@@ -127,10 +149,19 @@ O `<dialog>` com `showModal()` dá foco preso e `Esc` de graça, mas abre na *to
 
 A tarefa é a mesma nas duas telas; muda só onde o painel aparece. Um componente evita que cada tela escolha o seu e garante o mesmo comportamento de teclado. A troca é por CSS, no mesmo corte de 800px do layout de auth.
 
+### Por que arrastar só pela alça, e não pelo painel inteiro?
+
+O corpo do sheet rola quando o conteúdo é longo (ex.: propor horários). Com o painel inteiro arrastável, o mesmo gesto para baixo teria de decidir entre rolar o conteúdo e fechar o sheet, e errar custa caro: fechar sem querer perde o que foi preenchido. Restrito à alça, o gesto não tem ambiguidade. A alça só existe porque arrasta: sem o gesto, ela seria uma affordance falsa.
+
+### Por que esses limites (25% da altura ou 0,4 px/ms)?
+
+São os mesmos do [Vaul](https://github.com/emilkowalski/vaul), a lib de drawer mais usada no ecossistema React. Não instalamos a lib: o gesto aqui é só fechar, sem alturas intermediárias (detents), e cabe em um hook (`useSheetDrag.ts`) com a decisão numa função pura testada em unidade (`sheetDrag.ts`). Abaixo de 16px o critério de velocidade não vale, para o tremor de um toque não fechar o sheet.
+
 ## Referências
 
 - [WAI-ARIA APG: Dialog (Modal) Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
 - [Material Design 3: Bottom sheets](https://m3.material.io/components/bottom-sheets/guidelines)
+- [WCAG 2.2: 2.5.7 Movimentos de arrastar](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html)
 - [MDN: `aria-modal`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-modal)
 - [WCAG 2.2: 2.4.3 Ordem do foco](https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html)
 - `docs/TOKENS.md`: camadas (`--z-*`), `--color-scrim`, tap target e foco

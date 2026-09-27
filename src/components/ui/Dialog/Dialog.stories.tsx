@@ -1,6 +1,6 @@
 import { useRef, useState, type ComponentProps } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { expect, fn, screen, waitFor } from "storybook/test";
+import { expect, fireEvent, fn, screen, waitFor } from "storybook/test";
 import { Dialog } from "./Dialog";
 import { Button } from "@/src/components/ui/Button";
 
@@ -72,6 +72,30 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+function getGrabber(dialog: HTMLElement): HTMLElement {
+  const grabber = dialog.querySelector<HTMLElement>("[data-dialog-part='grabber']");
+  if (!grabber) throw new Error("Alça do sheet não encontrada no painel");
+  return grabber;
+}
+
+function wait(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/** Arrasta a alça `deltaY` px para baixo, levando `durationMs` entre tocar e soltar. */
+async function dragGrabber(grabber: HTMLElement, deltaY: number, durationMs: number) {
+  const startY = grabber.getBoundingClientRect().top + 24;
+  const pointer = { pointerId: 1, isPrimary: true };
+  fireEvent.pointerDown(grabber, { ...pointer, clientY: startY });
+  await wait(durationMs);
+  fireEvent.pointerMove(grabber, { ...pointer, clientY: startY + deltaY });
+  fireEvent.pointerUp(grabber, { ...pointer, clientY: startY + deltaY });
+}
+
+function dragOffsetOf(dialog: HTMLElement): string {
+  return dialog.style.getPropertyValue("--dialog-drag-offset");
+}
+
 async function openDialog() {
   screen.getByRole("button", { name: "Abrir" }).click();
   return screen.findByRole("dialog");
@@ -79,7 +103,8 @@ async function openDialog() {
 
 export const Default: Story = {
   play: async () => {
-    await openDialog();
+    const dialog = await openDialog();
+    await expect(getGrabber(dialog)).toBeVisible();
   },
 };
 
@@ -146,7 +171,8 @@ export const Desktop: Story = {
   args: { footer: footerActions },
   globals: { viewport: { value: "desktop", isRotated: false } },
   play: async () => {
-    await openDialog();
+    const dialog = await openDialog();
+    await expect(getGrabber(dialog)).not.toBeVisible();
   },
   parameters: {
     docs: {
@@ -232,5 +258,66 @@ export const ScrimCloses: Story = {
     });
     await expect(args.onClose).toHaveBeenCalledOnce();
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+  },
+};
+
+export const DragFlickCloses: Story = {
+  name: "Arrasto · Rápido fecha",
+  play: async ({ args }) => {
+    const dialog = await openDialog();
+    await dragGrabber(getGrabber(dialog), 40, 0);
+    await waitFor(() => expect(args.onClose).toHaveBeenCalledOnce());
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Arrasto curto e rápido pela alça (acima de 0,4 px/ms) fecha o sheet.",
+      },
+    },
+  },
+};
+
+export const DragDistanceCloses: Story = {
+  name: "Arrasto · Longo fecha",
+  args: { footer: footerActions },
+  play: async ({ args }) => {
+    const dialog = await openDialog();
+    const distance = dialog.offsetHeight * 0.3;
+    await dragGrabber(getGrabber(dialog), distance, 1500);
+    await waitFor(() => expect(args.onClose).toHaveBeenCalledOnce());
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Arrasto lento que passa de 25% da altura do painel também fecha.",
+      },
+    },
+  },
+};
+
+export const DragShortReturns: Story = {
+  name: "Arrasto · Curto volta",
+  play: async ({ args }) => {
+    const dialog = await openDialog();
+    const grabber = getGrabber(dialog);
+    await dragGrabber(grabber, 40, 600);
+    await expect(dragOffsetOf(dialog)).toBe("0px");
+
+    // Para cima o sheet não sobe
+    fireEvent.pointerDown(grabber, { pointerId: 1, isPrimary: true, clientY: 300 });
+    fireEvent.pointerMove(grabber, { pointerId: 1, isPrimary: true, clientY: 200 });
+    await expect(dragOffsetOf(dialog)).toBe("0px");
+    fireEvent.pointerUp(grabber, { pointerId: 1, isPrimary: true, clientY: 200 });
+
+    await expect(args.onClose).not.toHaveBeenCalled();
+    await expect(screen.getByRole("dialog")).toBeInTheDocument();
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Arrasto curto e lento volta o sheet à posição. Arrastar para cima não move o painel.",
+      },
+    },
   },
 };

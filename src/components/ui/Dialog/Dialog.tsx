@@ -10,6 +10,7 @@ import {
   useIsClient,
   useScrollLock,
 } from "./useDialogBehavior";
+import { useSheetDrag } from "./useSheetDrag";
 import styles from "./Dialog.module.css";
 
 type DialogProps = {
@@ -71,6 +72,7 @@ function DialogPanel({
       aria-describedby={description ? descriptionId : undefined}
       tabIndex={-1}
     >
+      <SheetGrabber panelRef={panelRef} onClose={onClose} />
       <DialogHeader
         title={title}
         titleId={titleId}
@@ -85,6 +87,28 @@ function DialogPanel({
       </div>
       {footer && <div className={styles.dialog__footer}>{footer}</div>}
     </div>
+  );
+}
+
+type SheetGrabberProps = {
+  panelRef: RefObject<HTMLDivElement | null>;
+  onClose: () => void;
+};
+
+/**
+ * Alça de arrastar do BottomSheet (some no Dialog de desktop). Só ponteiro:
+ * X, Esc e scrim são as alternativas sem arrastar (WCAG 2.5.7), por isso ela
+ * fica fora da árvore de acessibilidade.
+ */
+function SheetGrabber({ panelRef, onClose }: SheetGrabberProps) {
+  const dragHandlers = useSheetDrag(panelRef, onClose);
+  return (
+    <div
+      className={styles.dialog__grabber}
+      data-dialog-part="grabber"
+      aria-hidden
+      {...dragHandlers}
+    />
   );
 }
 

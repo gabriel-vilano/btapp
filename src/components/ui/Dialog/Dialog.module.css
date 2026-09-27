@@ -37,6 +37,15 @@
   padding-bottom: env(safe-area-inset-bottom);
   animation: dialog-sheet-in var(--motion-duration-medium-1)
     var(--motion-easing-quick-enter);
+  /* --dialog-drag-offset vem do gesto da alça (useSheetDrag) */
+  transform: translateY(var(--dialog-drag-offset, 0px));
+  transition: transform var(--motion-duration-medium-1)
+    var(--motion-easing-standard);
+}
+
+/* Durante o arrasto o painel segue o dedo sem atraso */
+.dialog__panel[data-dragging] {
+  transition: none;
 }
 
 /* O painel recebe foco programático ao abrir (para o leitor de tela anunciar
@@ -46,12 +55,39 @@
   outline: none;
 }
 
+/* Área de arrastar de 48px de altura na largura toda; o traço visível é
+   menor (32×4), desenhado no ::before */
+.dialog__grabber {
+  position: relative;
+  flex-shrink: 0;
+  height: var(--dimension-tap-target-minimum);
+  cursor: grab;
+  /* Sem isso o navegador usa o gesto para rolar ou puxar para atualizar */
+  touch-action: none;
+}
+
+.dialog__panel[data-dragging] .dialog__grabber {
+  cursor: grabbing;
+}
+
+.dialog__grabber::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--spacing-400);
+  height: var(--spacing-50);
+  border-radius: var(--radius-full);
+  background-color: var(--color-border-medium);
+  transform: translate(-50%, -50%);
+}
+
 .dialog__header {
   display: flex;
   align-items: flex-start;
   gap: var(--spacing-100);
-  padding: var(--spacing-300) var(--spacing-100) var(--spacing-200)
-    var(--spacing-300);
+  /* No sheet a alça (48px) já dá o respiro do topo */
+  padding: 0 var(--spacing-100) var(--spacing-200) var(--spacing-300);
 }
 
 .dialog__heading {
@@ -161,6 +197,14 @@
     padding: var(--spacing-800) var(--spacing-page-margin);
   }
 
+  .dialog__grabber {
+    display: none;
+  }
+
+  .dialog__header {
+    padding-top: var(--spacing-300);
+  }
+
   .dialog__panel {
     max-height: 100%;
     padding-bottom: 0;
@@ -187,6 +231,7 @@
   .dialog__scrim,
   .dialog__panel {
     animation: none;
+    transition: none;
   }
 }
 
