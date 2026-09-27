@@ -64,3 +64,17 @@ export function formatEnrollmentCount(count: number, category: Category): string
   if (category.gender === 'F') return count === 1 ? '1 jogadora inscrita' : `${count} jogadoras inscritas`;
   return count === 1 ? '1 jogador inscrito' : `${count} jogadores inscritos`;
 }
+
+/**
+ * Iniciais para o avatar sem foto: primeira letra do primeiro e do último nome.
+ * Ex.: "Maria Eduarda de Vasconcelos" → "MV", "Lucas" → "L", "" → "".
+ */
+export function formatInitials(name: string): string {
+  const initials = name
+    .split(/\s+/)
+    .map((word) => word.match(/[\p{L}\p{N}]/u)?.[0])
+    .filter((initial): initial is string => initial !== undefined);
+  if (initials.length === 0) return '';
+  const firstAndLast = initials.length === 1 ? initials : [initials[0], initials[initials.length - 1]];
+  return firstAndLast.join('').toLocaleUpperCase('pt-BR');
+}

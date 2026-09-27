@@ -1,4 +1,4 @@
-import { Avatar, AvatarStack } from "@/src/components/feed/Avatar";
+import { Avatar, AvatarStack } from "@/src/components/ui/Avatar";
 import { ScoreBlock } from "@/src/components/feed/ScoreBlock";
 import { MetaInfo } from "@/src/components/feed/MetaInfo";
 import { H2HButton } from "@/src/components/feed/H2HButton";
