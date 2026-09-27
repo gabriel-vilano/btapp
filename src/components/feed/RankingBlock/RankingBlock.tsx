@@ -7,6 +7,7 @@ import {
   StarIcon,
 } from "@phosphor-icons/react";
 import { Icon } from "@/src/components/ui/Icon";
+import { Badge } from "@/src/components/ui/Badge";
 import { milestoneLabel } from "@/src/components/feed/RankingCard/rankingTexts";
 import type { RankingCard } from "@/src/types/feed";
 import styles from "./RankingBlock.module.css";
@@ -64,9 +65,8 @@ function RankingBadge({ data }: RankingBlockProps) {
       ? milestoneLabel(data.milestone, data.competitor)
       : data.final_name;
   return (
-    <p className={styles.badge}>
-      <Icon icon={StarIcon} size="sm" weight="fill" />
-      <span>{label}</span>
-    </p>
+    <Badge tone="accent" icon={StarIcon} className={styles.badge}>
+      {label}
+    </Badge>
   );
 }

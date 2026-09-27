@@ -1,4 +1,5 @@
 import { Avatar, AvatarStack } from "@/src/components/ui/Avatar";
+import { Badge } from "@/src/components/ui/Badge";
 import { ScoreBlock } from "@/src/components/feed/ScoreBlock";
 import { MetaInfo } from "@/src/components/feed/MetaInfo";
 import { H2HButton } from "@/src/components/feed/H2HButton";
@@ -57,9 +58,7 @@ function PlayerRow({
         />
       )}
       <span className={styles.row__name}>{displayName}</span>
-      <span className={`${styles.label} ${styles[`label--${tone}`]}`}>
-        {resultLabel}
-      </span>
+      <Badge tone={tone}>{resultLabel}</Badge>
     </div>
   );
 }
