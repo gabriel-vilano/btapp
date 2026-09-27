@@ -45,6 +45,14 @@
   max-width: 56ch;
 }
 
+/* Largura do mobile base (393px) com a margem de página. Stories de
+   blocos de tela (fora do feed) usam este frame. */
+.sb-screen-frame {
+  width: 393px;
+  background-color: var(--color-background-primary);
+  padding: var(--spacing-200) var(--spacing-page-margin);
+}
+
 /* Largura útil do card no mobile base (393px − 2 × 16px de margem).
    Stories do feed usam este frame para reproduzir o layout real. */
 .sb-feed-frame {
