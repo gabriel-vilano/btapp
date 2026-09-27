@@ -49,7 +49,7 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **Avatar / AvatarStack** | todas | Sim, em `feed/` (tamanhos 32, 40, 48) | Mover para `ui/` (é Tier 1). Fallback com iniciais. Tamanhos maiores para cabeçalho de perfil (64 ou 96) |
 | **Badge / Tag** | R, F, P, H, S, D | Parcial (estilos locais) | Primitivo com tons (`success`, `attention`, `accent`, `neutral`) para VITÓRIA/DERROTA/W.O., marco (Líder, Finals), categoria (B, C), status de competição (Inscrições abertas, Adiado), "Aguardando confirmação" |
 | **CountBadge** | N, F | Não | Ponto ou número sobre ícone (aba, sino). Nome acessível com a contagem |
-| **DeltaIndicator** | R, F, P, H | Parcial (`.delta` no `RankingBlock`) | Seta + número + cor, com "manteve" (–). Nunca só cor (WCAG 1.4.1) |
+| **DeltaIndicator** | R, F, P, H | Sim (`ui/DeltaIndicator`; subiu, caiu e manteve; usado pelo `RankingBlock`) | Nada para as superfícies. Seta + texto + cor, nunca só cor (WCAG 1.4.1). Talvez variante compacta só com o número (▲ 2) para a coluna do RankingRow |
 | **Chip** | R, P, S, D | Não | Três usos: filtro liga/desliga (`aria-pressed`), filtro ativo removível (×), seleção única em grupo (radio). Decidir se é um componente com variantes ou três |
 | **SegmentedControl** | R, P, H, D | Não | 2 a 4 opções. Semântica de radio group ou de Tabs, conforme troque conteúdo ou filtro |
 | **Tabs** (na página) | R, P | Não | Padrão APG Tabs, setas, `aria-selected`. Não confundir com a TabBar de navegação |
