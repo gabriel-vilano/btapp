@@ -24,6 +24,9 @@ As decisões foram tomadas pelo Gabriel em 26/09/2026 e estão registradas como 
 | **DEC-FIM** | Issue da spec de domínio, comentário "Respostas do Gabriel às P14–P19" | Confrontos do torneio, formato por competição, amistoso pendente sem prazo, idade sem data de nascimento, fechamento da rodada, confirmação das leituras do agente e cancelamento do amistoso pendente. Substitui a DEC-RESP no formato, que passa a ser da competição |
 | **DEC-CARDS** | Issue do diagnóstico dos cards do feed, respostas às perguntas D1–D7 | H2H no card e na página, confronto definido no ranking, nome da categoria, textos neutros |
 | **DEC-FEED** | Issue da spec do feed com dados reais, comentário "Princípio do feed" | Feed público mostra conquistas e crescimento; evento com visibilidade |
+| **DEC-STB** | Issue da pontuação e do placar da partida, comentário "Decisão do Gabriel" | Super tiebreak pela regra da ITF em todos os rankings: 10 pontos com 2 de vantagem |
+| **DEC-DESEMP** | Issue da classificação e do desempate, comentário "Decisão do Gabriel" | Leituras da R37: W.O. no confronto direto e nas vitórias, mais de um jogo entre as duplas, confronto direto só no empate de duas |
+| **ITF** | [Rules of Beach Tennis 2025](https://www.itftennis.com/media/13855/rules-of-beach-tennis-2025.pdf), da ITF | Regra do super tiebreak |
 | **PESQ-RV** | Regras públicas do Rankin e do Vila do Tênis (BH), que usam o LetzPlay legado com a mesma configuração: `letzplay.me/rankin/rankings/55513/about`, `letzplay.me/vila-tenis-bt/rankings/56068/about`, `viladotenis.com/area-do-atleta` | Referências reais de jogos por rodada, prazo para combinar a data, regra de desistência, regra de W.O. por oferta de datas |
 | **DSC** | `docs/DISCOVERY.md` e `docs/discovery/` | Evidência de mercado citada nas regras e nas perguntas |
 
@@ -254,6 +257,8 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
   - **1 set de 6:** no 5/5, vai a 7; no 6/6, tie-break a 7. Placares válidos: 6/0 a 6/4, 7/5 e 7/6.
   - **2 sets de 6:** cada set segue a regra do set de 6, e no 1 set a 1 a partida se decide no super tiebreak.
 
+  **Super tiebreak, pela regra da ITF, em todos os rankings:** vence quem chega a 10 pontos com 2 de vantagem. No 9/9, segue até alguém abrir 2. Placares válidos: 10/0 a 10/8, 11/9, 12/10 e assim por diante; 10/9 e 13/10 não valem. [DEC-STB, ITF]
+
   O app usa o formato para **validar o placar digitado** e para **completar o placar na desistência** (R11). [DEC-RESP, DEC-FIM P15, P18]
 - **R30. O sorteio é aleatório e não repete confronto na temporada.** O confronto só se repete quando não sobra combinação nova na categoria. [DEC-RESP, DEC-SORT]
 - **R31. No MVP, o app não gera a chave do torneio.** O torneio tem inscrição, confronto e resultado lançado pelo admin (R38), e a chave vem de fora do app. O único sorteio feito no app é o da rodada do ranking. No primeiro beta, os confrontos do torneio entram por carga do time; quando entrar o primeiro torneio real, o admin passa a cadastrá-los. [DEC-RESP, DEC-FIM P14]
@@ -282,6 +287,11 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
 - **R12. Toda partida com resultado tem um tipo: normal, W.O., W.O. duplo ou desistência.** O tipo define a pontuação (R9–R11, R36), a contagem (R18) e o H2H (R19). [DEC-PESQ, DEC-RESP P3]
 - **R36. W.O. duplo vale 0 e 0** e não conta como jogo nem no H2H. Só o admin aplica, numa partida não realizada (R40). [DEC-RESP P3]
 - **R37. Desempate, nesta ordem:** pontos → confronto direto (só quando exatamente duas unidades empatam e já se enfrentaram) → vitórias → saldo de games → decisão do admin. A lista é fixa no MVP. [DEC-RESP P4]
+
+  Como cada critério se lê: [DEC-DESEMP]
+  - **O W.O. não vale como confronto direto** (como no H2H, R19), **mas conta no critério "vitórias"**.
+  - **Com mais de um jogo entre as duas unidades, o confronto direto vai para quem venceu mais.** No empate (ex.: 1 a 1), a decisão passa para "vitórias".
+  - **O confronto direto só vale no empate em pontos entre exatamente duas unidades.** Um empate de três que se reduz a duas por outro critério não volta ao confronto direto: segue na ordem da lista.
 
 ### Ciclo do resultado
 
