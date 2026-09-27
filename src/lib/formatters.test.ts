@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import type { Category } from "@/src/types/feed";
-import { formatCategoryLabel, formatEnrollmentCount, formatInitials } from "./formatters";
+import {
+  formatCategoryLabel,
+  formatEnrollmentCount,
+  formatEventMoment,
+  formatInitials,
+} from "./formatters";
 
 const doublesB: Category = {
   gender: "M",
@@ -83,5 +88,28 @@ describe("formatInitials", () => {
   it("devolve vazio quando não há letra nem número", () => {
     expect(formatInitials("")).toBe("");
     expect(formatInitials("  -- ")).toBe("");
+  });
+});
+
+describe("formatEventMoment", () => {
+  it("escreve dia da semana, data e hora cheia sem minutos", () => {
+    expect(formatEventMoment("2026-09-22T23:00:00Z")).toBe("ter, 22/09, 20h");
+  });
+
+  it("mostra os minutos quando não é hora cheia", () => {
+    expect(formatEventMoment("2026-09-25T00:10:00Z")).toBe("qui, 24/09, 21h10");
+  });
+
+  it("usa o fuso de São Paulo, não o do servidor", () => {
+    expect(formatEventMoment("2026-09-27T02:30:00Z")).toBe("sáb, 26/09, 23h30");
+  });
+
+  it("escreve a hora sem zero à esquerda, como se fala", () => {
+    expect(formatEventMoment("2026-09-25T12:05:00Z")).toBe("sex, 25/09, 9h05");
+    expect(formatEventMoment("2026-09-28T03:00:00Z")).toBe("seg, 28/09, 0h");
+  });
+
+  it("recusa data inválida dizendo o valor recebido", () => {
+    expect(() => formatEventMoment("ontem")).toThrow("recebi 'ontem'");
   });
 });

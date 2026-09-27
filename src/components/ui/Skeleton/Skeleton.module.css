@@ -1,0 +1,104 @@
+/*
+ * Pulso entre --color-loading-first e --color-loading-second.
+ * Com movimento reduzido, fica parado em --color-loading-fill,
+ * o tom entre os dois.
+ *
+ * O consumidor define a altura do shape "rect" com --skeleton-height
+ * (padrão de override em docs/TOKENS.md).
+ */
+
+.skeleton {
+  display: block;
+  background-color: var(--color-loading-fill);
+  animation: skeleton-pulse var(--motion-duration-long-3)
+    var(--motion-easing-continuous) infinite alternate;
+}
+
+/* --- Text --- */
+.skeleton__lines {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/*
+ * A barra tem a altura da fonte e a margem completa o line-height:
+ * N linhas de skeleton ocupam a mesma altura de N linhas de texto,
+ * e o conteúdo não pula quando chega.
+ */
+.skeleton--text {
+  width: 100%;
+  height: var(--skeleton-text-size);
+  margin-block: calc((var(--skeleton-line-height) - var(--skeleton-text-size)) / 2);
+  border-radius: var(--radius-sm);
+}
+
+.skeleton--text:last-child:not(:first-child) {
+  width: 60%;
+}
+
+.skeleton--label-md {
+  --skeleton-text-size: var(--text-label-md-size);
+  --skeleton-line-height: var(--text-label-md-line-height);
+}
+
+.skeleton--body-md {
+  --skeleton-text-size: var(--text-body-md-size);
+  --skeleton-line-height: var(--text-body-md-line-height);
+}
+
+.skeleton--body-lg {
+  --skeleton-text-size: var(--text-body-lg-size);
+  --skeleton-line-height: var(--text-body-lg-line-height);
+}
+
+.skeleton--title-md {
+  --skeleton-text-size: var(--text-title-md-size);
+  --skeleton-line-height: var(--text-title-md-line-height);
+}
+
+/* --- Circle --- */
+.skeleton--circle {
+  flex-shrink: 0;
+  width: var(--skeleton-circle-size);
+  height: var(--skeleton-circle-size);
+  border-radius: var(--radius-full);
+}
+
+.skeleton--circle-32 {
+  --skeleton-circle-size: var(--dimension-avatar-32);
+}
+
+.skeleton--circle-40 {
+  --skeleton-circle-size: var(--dimension-avatar-40);
+}
+
+.skeleton--circle-48 {
+  --skeleton-circle-size: var(--dimension-avatar-48);
+}
+
+.skeleton--circle-96 {
+  --skeleton-circle-size: var(--dimension-avatar-96);
+}
+
+/* --- Rect --- */
+.skeleton--rect {
+  width: 100%;
+  height: var(--skeleton-height, var(--dimension-action-height-lg));
+  border-radius: var(--radius-card);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}
+
+@keyframes skeleton-pulse {
+  from {
+    background-color: var(--color-loading-first);
+  }
+  to {
+    background-color: var(--color-loading-second);
+  }
+}

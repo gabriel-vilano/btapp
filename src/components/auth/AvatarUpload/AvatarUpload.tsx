@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
-import { Camera, Plus } from "@phosphor-icons/react";
+import { CameraIcon, PlusIcon } from "@phosphor-icons/react";
 import { Icon } from "@/src/components/ui/Icon";
 import { validateAvatar } from "@/src/lib/validations";
 import styles from "./AvatarUpload.module.css";
@@ -65,13 +65,13 @@ export function AvatarUpload({ onFileSelect }: AvatarUploadProps) {
                 className={styles.avatar__preview}
               />
               <span className={styles.avatar__badge} aria-hidden="true">
-                <Icon icon={Camera} size="sm" />
+                <Icon icon={CameraIcon} size="sm" />
               </span>
             </>
           ) : (
             <>
               <span className={styles.avatar__placeholder} aria-hidden="true">
-                <Icon icon={Plus} size="lg" />
+                <Icon icon={PlusIcon} size="lg" />
               </span>
             </>
           )}

@@ -134,9 +134,9 @@ describe("resendRecoveryOtp", () => {
 });
 
 describe("cancelRecovery", () => {
-  it("encerra a sessão de recuperação e volta para o login", async () => {
+  it("encerra só a sessão de recuperação deste aparelho e volta para o login", async () => {
     await expect(cancelRecovery()).rejects.toThrow(redirectSignal("/entrar"));
-    expect(supabase.auth.signOut).toHaveBeenCalled();
+    expect(supabase.auth.signOut).toHaveBeenCalledWith({ scope: "local" });
   });
 });
 
