@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { fn } from "storybook/test";
+import { expect, fn } from "storybook/test";
 import { useArgs } from "storybook/preview-api";
 import { OtpInput } from "./OtpInput";
 
@@ -32,11 +32,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Empty: Story = {
+  play: async ({ canvas }) => {
+    await expect(canvas.getByPlaceholderText("00000000")).toHaveFocus();
+  },
   parameters: {
     docs: {
       description: {
         story:
-          "Estado vazio — placeholder mostra '00000000'. Cursor já está focado (useEffect no mount).",
+          "Estado vazio — placeholder mostra '00000000'. O campo já nasce focado (useEffect no mount), com borda `border-strong` e ring de foco do DS.",
       },
     },
   },
