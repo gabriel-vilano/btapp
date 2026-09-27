@@ -1,0 +1,44 @@
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-600) var(--spacing-page-margin);
+  text-align: center;
+}
+
+/* Ícone em grafite neutro, não em coral: o coral fica só com a ação (regra do DS) */
+.empty-state__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dimension-icon-xl);
+  height: var(--dimension-icon-xl);
+  margin-bottom: var(--spacing-200);
+  border-radius: var(--radius-full);
+  background-color: var(--color-background-secondary);
+  color: var(--color-foreground-secondary);
+}
+
+.empty-state__title {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+/* 40ch segura a linha de apoio em ~2 linhas no mobile e evita linha longa no desktop */
+.empty-state__description {
+  max-width: 40ch;
+  margin: var(--spacing-100) 0 0;
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+}
+
+.empty-state__action {
+  margin-top: var(--spacing-300);
+}
