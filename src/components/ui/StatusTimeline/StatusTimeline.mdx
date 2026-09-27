@@ -1,0 +1,156 @@
+import {
+  Meta,
+  Subtitle,
+  Canvas,
+  ArgTypes,
+} from "@storybook/addon-docs/blocks";
+import * as StatusTimelineStories from "./StatusTimeline.stories";
+
+<Meta of={StatusTimelineStories} />
+
+<Subtitle>
+  Linha do tempo de fatos: quem fez o quê e quando. Mostra evidência, não
+  veredito.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/StatusTimeline/StatusTimeline.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/StatusTimeline/StatusTimeline.tsx)
+
+## Visão geral
+
+`StatusTimeline` lista os eventos de uma partida em ordem cronológica, do mais antigo para o mais recente. Cada evento diz **quem** agiu, **o quê** fez e **quando**, com uma linha de apoio opcional (os horários de uma proposta, o placar, o motivo de uma contestação). O componente é genérico: não conhece marcação nem resultado, só recebe os eventos prontos.
+
+<Canvas of={StatusTimelineStories.SchedulingHistory} />
+
+## Anatomia
+
+Cada evento tem até cinco partes. Só a ação e o momento são obrigatórios.
+
+<table>
+  <thead>
+    <tr>
+      <th>Parte</th>
+      <th>Prop do evento</th>
+      <th>Conteúdo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Marcador</td>
+      <td><code>icon</code></td>
+      <td>Ícone do Phosphor num círculo cinza de 24px, ou um ponto quando não há ícone. Decorativo</td>
+    </tr>
+    <tr>
+      <td>Quem</td>
+      <td><code>actor</code>, <code>actorRole</code></td>
+      <td>Nome em negrito e, quando importa, o papel entre parênteses: "Ana (admin)"</td>
+    </tr>
+    <tr>
+      <td>O quê</td>
+      <td><code>action</code></td>
+      <td>Continua o nome: "propôs 3 horários". Sem <code>actor</code>, é a frase inteira de um evento do sistema</td>
+    </tr>
+    <tr>
+      <td>Apoio</td>
+      <td><code>detail</code></td>
+      <td>Uma linha: horários, arena, placar, motivo</td>
+    </tr>
+    <tr>
+      <td>Quando</td>
+      <td><code>at</code></td>
+      <td>ISO 8601. Aparece como "ter, 22/09, 19h40", no fuso de São Paulo, dentro de um <code>&lt;time&gt;</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Usos
+
+Dois históricos usam o componente hoje. Os dois são só leitura e ficam na tela do confronto.
+
+### Histórico da marcação
+
+Propostas, contrapropostas, aceite, retirada, expiração e data informada fora do app (`docs/SCHEDULING.md` M16). É o mesmo histórico que o admin vê na partida não realizada (M17), junto do resumo por lado.
+
+<Canvas of={StatusTimelineStories.SchedulingHistory} />
+
+### Histórico do resultado
+
+Lançado, contestado, arbitrado e corrigido. Todo ato do admin aparece com o nome de quem agiu (R39), e o papel entre parênteses deixa claro que não foi um jogador da partida. A spec das telas de resultado (`docs/RESULTS.md`) ainda está em revisão: os textos são provisórios.
+
+<Canvas of={StatusTimelineStories.ResultHistory} />
+
+## Estados
+
+Estados que a tela real raramente mostra lado a lado.
+
+### Um evento só
+
+O começo de qualquer histórico: o trilho não aparece, porque não há evento seguinte para ligar.
+
+<Canvas of={StatusTimelineStories.SingleEvent} />
+
+### Histórico longo
+
+Um confronto com várias propostas, uma expiração, remarcação e o fechamento da rodada. A lista mostra tudo: é evidência, e cortar eventos esconderia justamente o que o admin precisa ver. Recolher o histórico abaixo do estado atual (`SCHEDULING.md` §6) é papel da tela.
+
+<Canvas of={StatusTimelineStories.LongHistory} />
+
+### Sem ícones
+
+Sem `icon`, o marcador é um ponto. Serve para um histórico curto num espaço apertado.
+
+<Canvas of={StatusTimelineStories.WithoutIcons} />
+
+### Vazio
+
+Sem eventos, o componente não renderiza nada. A tela decide se esconde a seção ou mostra uma linha curta.
+
+<Canvas of={StatusTimelineStories.Empty} />
+
+## Quando usar
+
+- Mostrar o que aconteceu com uma proposta de horário ou com um resultado, e quem fez cada coisa
+- Dar ao admin os fatos antes de uma decisão (partida não realizada, contestação)
+- Mostrar ao jogador quem mexeu no placar dele e quando
+
+## Componentes relacionados
+
+- Para o **estado atual** da partida ("Aguardando confirmação", "Em arbitragem"), use um [`Badge`](?path=/docs/ui-badge--docs). A linha do tempo conta o caminho, não o ponto de chegada
+- Para uma **lista de partidas ou pendências**, use [`ListItem`](?path=/docs/ui-listitem--docs). Cada item ali é uma coisa com ação; aqui é um fato sem ação
+- Para **avisar** que algo acabou de acontecer, use [`Toast`](?path=/docs/ui-toast--docs). A linha do tempo é o registro, não a notificação
+
+## Acessibilidade
+
+- A lista é um `<ol>`: a ordem importa, e o leitor de tela anuncia "lista, 3 itens". O nome da lista vem da prop `label` (`aria-label`)
+- O momento é um `<time datetime>`, com o valor ISO para máquinas e o texto em pt-BR para pessoas
+- Os ícones são decorativos (`aria-hidden`): o texto de cada evento diz tudo sozinho
+- **A cor nunca é a pista** (WCAG 1.4.1): todos os marcadores são cinza, e o tipo do evento está no texto
+- Nome em `foreground-primary` e momento em `foreground-secondary`, os dois com contraste AA (4,5:1, WCAG 1.4.3) sobre `background-primary`
+
+## Evitar
+
+- ❌ **Marcador vermelho para contestação ou verde para confirmação** — a linha do tempo mostra fatos, não julga. A cor puxaria a leitura para um lado
+- ❌ **Texto que sugere decisão** ("Lucas não respondeu, W.O. provável") — o app nunca sugere W.O. (M17). Escreva só o que aconteceu
+- ❌ **Ordem invertida** (mais recente em cima) — a linha do tempo se lê como uma história, do começo ao fim. O estado atual fica acima dela, na tela
+- ❌ **Ação dentro da linha do tempo** ("Aceitar", "Contestar") — as ações ficam no estado atual da tela. O histórico é só leitura
+- ❌ **Telefone ou contato no apoio** — o histórico da marcação nunca mostra telefone (M23)
+- ❌ **Texto com gênero** ("foi convidado") — o cadastro não coleta gênero, então as frases são neutras (R26): "propôs", "aceitou", "contestou"
+
+## API
+
+<ArgTypes of={StatusTimelineStories} />
+
+## Decisões de design
+
+**Por que todos os marcadores são cinza?** A linha do tempo é evidência, não veredito: o app nunca sugere W.O. (L9, confirmada pelo Gabriel). Um marcador vermelho na contestação ou verde no aceite julgaria o fato e daria ao admin uma leitura pronta. O cinza segue a regra do DS: coral é ação, e aqui não há ação.
+
+**Por que o componente formata a data, em vez de receber texto pronto?** Todo histórico precisa do mesmo formato, e com dia e mês: uma marcação atravessa semanas, então "seg" sozinho seria ambíguo. Recebendo ISO, o componente também preenche o `datetime` do `<time>`, e o fuso fica fixo em São Paulo, igual no servidor e no navegador.
+
+**Por que não recolhe a lista longa?** Para o admin, o histórico completo é a evidência (M17). Onde a tela quiser recolher (a marcação fica recolhida abaixo do estado atual, `SCHEDULING.md` §6), ela envolve o componente numa área expansível.
+
+## Referências
+
+- [MDN — `<ol>`](https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/ol) e [`<time>`](https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/time)
+- [WCAG 1.4.1 — Use of Color](https://www.w3.org/WAI/WCAG21/Understanding/use-of-color.html)
+- [WCAG 1.4.3 — Contrast (Minimum)](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html)
+- Regras de domínio: `docs/SCHEDULING.md` (M16, M17, M23) e `docs/DOMAIN.md` (R26, R39)
+- Tokens relacionados: `docs/TOKENS.md` (`--text-body-md-*`, `--text-label-md-*`, `--color-border-subtle`, `--dimension-icon-md`)

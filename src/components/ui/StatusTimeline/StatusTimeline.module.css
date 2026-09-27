@@ -1,0 +1,92 @@
+.status-timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Grade de duas colunas: o marcador de 24px (ícone sm + respiro) e o texto */
+.status-timeline__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--dimension-icon-md) 1fr;
+  column-gap: var(--spacing-150);
+  padding-bottom: var(--spacing-200);
+}
+
+.status-timeline__item:last-child {
+  padding-bottom: 0;
+}
+
+/* O trilho liga o marcador ao próximo evento. O último não tem trilho: a linha termina no fato mais recente */
+.status-timeline__item:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  top: var(--dimension-icon-md);
+  bottom: 0;
+  left: calc(var(--dimension-icon-md) / 2 - var(--border-width-medium) / 2);
+  width: var(--border-width-medium);
+  background-color: var(--color-border-subtle);
+}
+
+/* Marcador neutro em todos os eventos: a cor não julga o fato (contestado não é vermelho, confirmado não é verde) */
+.status-timeline__marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dimension-icon-md);
+  height: var(--dimension-icon-md);
+  border-radius: var(--radius-full);
+  background-color: var(--color-background-secondary);
+  color: var(--color-foreground-secondary);
+}
+
+.status-timeline__dot {
+  width: var(--spacing-100);
+  height: var(--spacing-100);
+  border-radius: var(--radius-full);
+  background-color: var(--color-foreground-secondary);
+}
+
+/* padding-top alinha a primeira linha de 20px ao centro do marcador de 24px */
+.status-timeline__content {
+  min-width: 0;
+  padding-top: var(--spacing-25);
+}
+
+.status-timeline__summary {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+  overflow-wrap: anywhere;
+}
+
+.status-timeline__actor {
+  font-weight: var(--font-weight-bold);
+}
+
+.status-timeline__role {
+  color: var(--color-foreground-secondary);
+}
+
+.status-timeline__detail {
+  margin: var(--spacing-25) 0 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+  overflow-wrap: anywhere;
+}
+
+.status-timeline__time {
+  display: block;
+  margin-top: var(--spacing-25);
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-regular);
+}
