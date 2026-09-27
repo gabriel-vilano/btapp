@@ -1,0 +1,142 @@
+import {
+  Meta,
+  Subtitle,
+  Canvas,
+  ArgTypes,
+} from "@storybook/addon-docs/blocks";
+import * as EmptyStateStories from "./EmptyState.stories";
+
+<Meta of={EmptyStateStories} />
+
+<Subtitle>
+  Estado vazio de uma tela ou seção: diz por que está vazia e oferece o próximo
+  passo.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/EmptyState/EmptyState.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/EmptyState/EmptyState.tsx)
+
+## Visão geral
+
+`EmptyState` ocupa o lugar do conteúdo quando não há nada para mostrar. Nenhuma aba some nem fica desabilitada quando está vazia: ela explica o motivo e aponta a saída. A fórmula vem das referências de mercado (8 de 8 apps observados): um título que explica, uma linha de apoio e uma ação.
+
+<Canvas of={EmptyStateStories.Default} />
+
+## Anatomia
+
+Quatro partes, de cima para baixo. Só o título é obrigatório.
+
+<table>
+  <thead>
+    <tr>
+      <th>Parte</th>
+      <th>Prop</th>
+      <th>Conteúdo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ícone</td>
+      <td><code>icon</code></td>
+      <td>Ícone do Phosphor, decorativo, num círculo cinza de 64px</td>
+    </tr>
+    <tr>
+      <td>Título</td>
+      <td><code>title</code></td>
+      <td>Frase curta que diz por que está vazio. Vira <code>h2</code>, em <code>title-sm</code> negrito</td>
+    </tr>
+    <tr>
+      <td>Apoio</td>
+      <td><code>description</code></td>
+      <td>Uma ou duas linhas: o que vai aparecer ali ou o que destrava a tela</td>
+    </tr>
+    <tr>
+      <td>Ação</td>
+      <td><code>action</code></td>
+      <td>Um <code>Button</code> ou <code>ButtonLink</code> do DS</td>
+    </tr>
+  </tbody>
+</table>
+
+## Casos
+
+Os três vazios que destravam a agenda, o ranking e o feed. A copy é provisória: a da agenda e a do ranking seguem a spec de navegação, ainda em revisão, e a do feed segue o padrão das referências.
+
+<Canvas of={EmptyStateStories.AllCases} />
+
+### Agenda vazia
+
+Jogador novo, sem inscrição e sem histórico. A inscrição é feita pelo organizador, então a ação que o jogador tem é registrar um amistoso.
+
+<Canvas of={EmptyStateStories.AgendaEmpty} />
+
+### Ranking sem temporada
+
+A temporada encerrou. A posição final da dupla fica no apoio e a ação leva à classificação: é a evidência de evolução num momento sem jogo.
+
+<Canvas of={EmptyStateStories.RankingNoSeason} />
+
+### Feed sem amigos
+
+O feed é o que os amigos fazem. Sem ninguém seguido, o título diz o que destrava a tela e a ação leva a encontrar jogadores.
+
+<Canvas of={EmptyStateStories.FeedNoFriends} />
+
+## Variantes
+
+O ícone e a ação são opcionais. Os dois ficam de fora quando não agregam.
+
+### Sem ícone
+
+Para vazios dentro de uma seção, onde o ícone de 64px pesa demais.
+
+<Canvas of={EmptyStateStories.WithoutIcon} />
+
+### Sem ação
+
+Quando não há nada que o jogador possa fazer: só esperar o sorteio da rodada, por exemplo. O texto diz o que vai acontecer e quando.
+
+<Canvas of={EmptyStateStories.WithoutAction} />
+
+## Quando usar
+
+- A tela ou aba inteira não tem conteúdo (agenda sem jogos, feed sem amigos)
+- Um filtro ou uma busca não retornou nada
+- Uma temporada acabou e a tela precisa dizer o que vem a seguir
+
+## Componentes relacionados
+
+- Para **erro ao carregar**, use [`Alert`](?path=/docs/ui-alert--docs) no lugar do conteúdo, com "Tentar de novo". Vazio é um estado normal, erro não
+- Para **seção sem itens dentro de uma tela com conteúdo**, a seção some. A exceção é uma linha curta, como "Nada pendente", que é texto e não `EmptyState`
+- A ação é um [`Button`](?path=/docs/ui-button--docs) quando dispara algo na tela e um [`ButtonLink`](?path=/docs/ui-buttonlink--docs) quando leva a outra rota
+
+## Acessibilidade
+
+- O título é um `h2`: o vazio fica sob o `h1` da tela e aparece na navegação por headings dos leitores de tela
+- O ícone é decorativo (`aria-hidden`): o significado está no título
+- Não tem `role="status"`: o vazio é o conteúdo da tela, não um aviso que chega depois. Quem anuncia mudança é quem troca o conteúdo (ex.: um filtro)
+- O texto de apoio usa `foreground-secondary`, que passa no contraste AA (4,5:1, WCAG 1.4.3) sobre `background-primary` e `background-secondary`
+
+## Evitar
+
+- ❌ **Ícone ou título em coral** — coral é a cor da ação. O ícone fica em grafite neutro para a ação ser o único ponto coral
+- ❌ **Duas ações** — o vazio oferece um próximo passo. Duas opções viram uma escolha que o jogador não pediu
+- ❌ **Título que só constata** ("Nada aqui") — o título explica o porquê ou o que destrava a tela
+- ❌ **Esconder ou desabilitar a aba vazia** — ela continua lá, com o `EmptyState` dizendo o motivo
+- ❌ **Ilustração grande** — o ícone basta. Ilustração desloca a ação para baixo da dobra em telas pequenas
+
+## API
+
+<ArgTypes of={EmptyStateStories} />
+
+## Decisões de design
+
+**Por que a ação é um slot e não props como `actionLabel` e `onAction`?** A ação às vezes navega (`ButtonLink`) e às vezes dispara algo (`Button`). O slot aceita os dois sem o `EmptyState` saber de rotas, e o estilo continua sendo o do `Button` do DS, sem variante nova.
+
+**Por que o ícone é cinza, e não coral?** Regra do DS: seleção em grafite, ação em coral. Com o ícone neutro, o botão é o único ponto de cor da tela e o olho vai direto para o próximo passo.
+
+## Referências
+
+- [Apple HIG — Tab bars](https://developer.apple.com/design/human-interface-guidelines/tab-bars) ("não desabilite nem esconda abas")
+- [WCAG 1.4.3 — Contrast (Minimum)](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html)
+- Referências de mercado: `docs/discovery/referencias/02-feed.md` (seção "Estado vazio")
+- Tokens relacionados: `docs/TOKENS.md` (`--text-title-sm-*`, `--text-body-md-*`, `--color-foreground-secondary`, `--dimension-icon-xl`)

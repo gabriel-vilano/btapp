@@ -29,7 +29,7 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **Tabs / SegmentedControl** | R, P, H, D (4) | Não |
 | **Chip** (filtro e seleção) | R, P, S, D (4) | Não |
 | **DeltaIndicator** (▲ 2, ▼ 3, –) | R, F, P, H (4) | Parcial: `.delta` local no `RankingBlock` |
-| **EmptyState** | R, F, H, D, N (5) | Não |
+| **EmptyState** | R, F, H, D, N (5) | Sim (`ui/EmptyState`) |
 | **StatTile** | F, P, H, R (4) | Não |
 
 ---
@@ -68,7 +68,7 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 
 | Componente | Superfícies | Existe? | Estados que justificam o tier |
 | --- | --- | --- | --- |
-| **EmptyState** | R, F, H, D, N | Não | Sem amigos, sem ranking, sem confronto, sem resultado de filtro. Título + apoio + CTA, com variante "e conteúdo sugerido abaixo" |
+| **EmptyState** | R, F, H, D, N | Sim (`ui/EmptyState`: ícone opcional, título, apoio e uma ação) | Sem amigos, sem ranking, sem confronto, sem resultado de filtro. A variante "e conteúdo sugerido abaixo" é composição da tela: o conteúdo vem depois do `EmptyState` |
 | **ScoreInput** | S | Não | Set completo, incompleto, inválido (7 × 7), tiebreak, super tiebreak, W.O., desistência. É o componente de maior risco técnico das 7 superfícies |
 | **PendingResultCard** | S, F | Não | Aguardando você, aguardando adversário, confirmado, contestado, confirmado automaticamente por prazo |
 | **StatusTimeline** | S | Não | Lançado → aguardando → confirmado / contestado. Útil se a confirmação ganhar tela própria |
