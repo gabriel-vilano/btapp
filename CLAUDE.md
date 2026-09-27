@@ -35,6 +35,7 @@ Documentamos o que é estável. Decisões, padrões, princípios, hurdles, conve
 - `CLAUDE.md` — convenções, padrões, hurdles, filosofia
 - `docs/PRODUCT.md` — visão, escopo MVP, princípios de design, métricas
 - `docs/DISCOVERY.md` — mercado, oportunidades por JTBD ranqueadas por evidência, modelos de negócio, hipóteses do beta
+- `docs/PROFILE.md` — perfil do jogador: leituras social e competitiva, seções, estados, critérios de aceite dos blocos (PF1…)
 - `docs/DOMAIN.md` — modelo de domínio: glossário, relações, regras numeradas (R1…), máquina de estados da partida
 - `docs/SCHEDULING.md` — marcação de jogos: regras da proposta de horário (M1…), prazos, notificações, telefone para o WhatsApp e métricas
 - `docs/TOKENS.md` — design system
