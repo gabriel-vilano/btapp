@@ -1,0 +1,41 @@
+/*
+ * O fundo de cada tom pode ser trocado pelo consumidor com
+ * --badge-background-color (padrão de override em docs/TOKENS.md).
+ * Ex.: sobre uma superfície já coral, o Badge accent usa fundo branco.
+ */
+
+.badge {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--spacing-50);
+  padding: var(--spacing-50) var(--spacing-100);
+  border-radius: var(--radius-sm);
+  background-color: var(--badge-background-color, var(--badge-tone-background));
+  color: var(--badge-tone-foreground);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Fundo tertiary, e não secondary: o secondary some sobre as superfícies cinza do app */
+.badge--neutral {
+  --badge-tone-background: var(--color-background-tertiary);
+  --badge-tone-foreground: var(--color-foreground-primary);
+}
+
+.badge--accent {
+  --badge-tone-background: var(--color-background-accent-subtle);
+  --badge-tone-foreground: var(--color-foreground-accent);
+}
+
+.badge--success {
+  --badge-tone-background: var(--color-background-success-subtle);
+  --badge-tone-foreground: var(--color-foreground-success);
+}
+
+.badge--attention {
+  --badge-tone-background: var(--color-background-attention-subtle);
+  --badge-tone-foreground: var(--color-foreground-attention);
+}

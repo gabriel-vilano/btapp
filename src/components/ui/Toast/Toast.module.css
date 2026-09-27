@@ -96,9 +96,9 @@
 }
 
 .toast__dismiss:focus-visible::after {
-  /* Ring na cor do texto (branco): o azul do focus-ring tem ~1,1:1 sobre o
+  /* Ring branco (on-strong): o azul do focus-ring tem ~1,1:1 sobre o
      vermelho e ~1,2:1 sobre o verde do toast, abaixo dos 3:1 da WCAG 1.4.11 */
-  outline: var(--border-width-thick) solid currentColor;
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring-on-strong);
   outline-offset: var(--spacing-25);
 }
 
