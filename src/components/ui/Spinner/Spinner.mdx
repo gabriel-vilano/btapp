@@ -1,0 +1,129 @@
+import {
+  Meta,
+  Subtitle,
+  Canvas,
+  ArgTypes,
+} from "@storybook/addon-docs/blocks";
+import * as SpinnerStories from "./Spinner.stories";
+
+<Meta of={SpinnerStories} />
+
+<Subtitle>
+  Anel girando que diz "espera, está carregando" quando não dá para prever o
+  formato do que vem.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/Spinner/Spinner.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/Spinner/Spinner.tsx)
+
+## Visão geral
+
+`Spinner` é o indicador de carregamento indeterminado do DS: um anel de três quartos que gira. A cor vem de `currentColor`, então ele assume a cor do texto de onde está (branco no Button primary, coral no secondary, cinza num texto de apoio). É o mesmo componente no Button em loading e na tela de foto do cadastro.
+
+<Canvas of={SpinnerStories.Default} />
+
+## Tamanhos
+
+Quatro tamanhos, na mesma escala do [`Icon`](?path=/docs/ui-icon--docs). Assim o Spinner ocupa o lugar de um ícone sem mudar o alinhamento.
+
+<Canvas of={SpinnerStories.AllSizes} />
+
+<table>
+  <thead>
+    <tr>
+      <th>Tamanho</th>
+      <th>Medida</th>
+      <th>Onde usar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>xs</code></td>
+      <td>12px, traço de 1px</td>
+      <td>Ao lado de texto <code>label-md</code> (ex.: "Verificando disponibilidade...")</td>
+    </tr>
+    <tr>
+      <td><code>sm</code></td>
+      <td>16px</td>
+      <td>Dentro do Button, no lugar dos ícones <code>sm</code></td>
+    </tr>
+    <tr>
+      <td><code>md</code></td>
+      <td>24px</td>
+      <td>Carregamento de um bloco dentro da tela (ex.: mais itens no fim da lista)</td>
+    </tr>
+    <tr>
+      <td><code>lg</code></td>
+      <td>32px</td>
+      <td>Tela inteira carregando</td>
+    </tr>
+  </tbody>
+</table>
+
+## Cor
+
+O Spinner não tem prop de cor: quem define é o contexto, pela propriedade `color`. Os exemplos abaixo são os usos previstos.
+
+### Accent
+
+Numa tela de carregamento, o contêiner usa `color: var(--color-foreground-accent)`.
+
+<Canvas of={SpinnerStories.Accent} />
+
+### Sobre fundo escuro
+
+Sobre `--color-background-strong`, o texto já é `--color-foreground-on-strong` e o Spinner acompanha.
+
+<Canvas of={SpinnerStories.OnStrong} />
+
+## Com label
+
+Quando não há texto visível dizendo o que carrega, passe `label`. O Spinner vira `role="status"` com o texto escondido visualmente, e o leitor de tela anuncia a mensagem.
+
+<Canvas of={SpinnerStories.WithLabel} />
+
+## Quando usar
+
+- Ação do usuário em andamento, dentro do Button (`loading`)
+- Checagem curta ao lado de um campo (disponibilidade do @username)
+- Tela ou bloco carregando cujo layout final não é conhecido
+
+## Componentes relacionados
+
+- Para **conteúdo com formato conhecido** (lista, card, perfil), prefira o [`Skeleton`](?path=/docs/ui-skeleton--docs): ele mostra a forma do que vem e o conteúdo não pula quando chega
+- Para **botão em loading**, use a prop `loading` do [`Button`](?path=/docs/ui-button--docs), que já renderiza o Spinner e marca `aria-busy`
+
+## Acessibilidade
+
+- **Decorativo por padrão** (`aria-hidden`). Nos usos com texto ao lado ("Carregando...") ou dentro do Button (`aria-busy`), o texto já comunica o estado
+- **Com `label`**, renderiza `role="status"` (região viva educada, WAI-ARIA) com o texto escondido visualmente. O leitor de tela anuncia sem roubar o foco
+- **Movimento reduzido:** com `prefers-reduced-motion: reduce`, o giro fica 4× mais lento em vez de parar (ver "Decisões de design")
+- O traço do anel é um componente gráfico: a cor precisa de 3:1 com o fundo (WCAG 1.4.11). Herdando a cor do texto, que já tem 4,5:1, isso vem de graça
+
+## Evitar
+
+- ❌ **Spinner no lugar de Skeleton** em lista ou card: esconde a forma do conteúdo e a tela pula quando ele chega
+- ❌ **Spinner sozinho sem `label`** — sem texto ao lado, o leitor de tela não sabe que algo está carregando
+- ❌ **Vários Spinners na mesma tela** — um por área carregando. Muitos anéis girando viram ruído
+- ❌ **Cor fixa no componente** — a cor vem do contexto. Um Spinner coral dentro do Button primary some no fundo coral
+
+## API
+
+<ArgTypes of={SpinnerStories} />
+
+## Decisões de design
+
+**Por que o giro fica mais lento, e não para, com movimento reduzido?**
+Um anel parado parece travado: o usuário não sabe se o app ainda está trabalhando. A preferência pede menos movimento, não nenhum sinal. O giro 4× mais lento mantém o feedback com pouco movimento. Já o Skeleton para de pulsar: a forma cinza parada continua dizendo "conteúdo a caminho".
+
+**Por que os tamanhos seguem o Icon, e não medidas próprias?**
+O Spinner ocupa o lugar de um ícone (no Button, ao lado de texto). Com a mesma escala, ele alinha sem ajuste e não precisa de token novo. O Button tinha um spinner de 20px, fora da escala; agora usa o `sm` (16px), o mesmo tamanho dos ícones dentro dele.
+
+**Por que um anel de três quartos em `currentColor`, e não trilha cinza + arco coral?**
+A tela de foto do cadastro usava trilha cinza com arco coral; o Button, anel em `currentColor`. Um desenho só dá um `@keyframes` e um componente. O `currentColor` funciona em qualquer fundo; trilha cinza some sobre o coral do Button primary.
+
+## Referências
+
+- [WAI-ARIA — role status](https://www.w3.org/TR/wai-aria-1.2/#status)
+- [MDN — prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion)
+- [WCAG 1.4.11 — Non-text Contrast](https://www.w3.org/WAI/WCAG21/Understanding/non-text-contrast.html)
+- Tokens relacionados: `docs/TOKENS.md` (`--dimension-icon-*`, `--border-width-*`, `--motion-duration-medium-3`, `--motion-easing-linear`)
