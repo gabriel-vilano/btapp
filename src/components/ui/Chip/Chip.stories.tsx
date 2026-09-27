@@ -57,7 +57,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Chip de filtro (botão de alternância) e chip de escolha em grupo de rádio. 40px de altura, área tocável de 48px e seleção por state layer.",
+          "Chip de filtro (botão de alternância) e chip de escolha em grupo de rádio. 40px de altura, área tocável de 48px e seleção com fundo escuro.",
       },
     },
   },
@@ -110,6 +110,16 @@ export const FilterSelected: Story = {
 
 export const FilterDisabled: Story = {
   args: { disabled: true },
+  render: (args) => (
+    <div className="sb-row">
+      <FilterChip {...args} selected={false}>
+        Categoria A
+      </FilterChip>
+      <FilterChip {...args} selected>
+        Categoria B
+      </FilterChip>
+    </div>
+  ),
 };
 
 export const FilterGroup: Story = {

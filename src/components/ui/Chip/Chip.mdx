@@ -56,7 +56,7 @@ Os estados valem para as duas variantes.
 
 ### Selecionado
 
-A seleção é um state layer (`--color-state-layer-selected`) sobre o fundo, com a borda em `--color-border-strong` e 2px de espessura. Hover e press empilham por cima, então o chip selecionado também reage ao toque. No filtro, o check reforça a seleção sem depender de cor.
+O chip selecionado ganha fundo grafite (`--color-background-inverse`), com texto e ícone brancos (`--color-foreground-on-inverse`). Hover e press usam os state layers para fundo escuro (`--color-state-layer-hover-on-strong` e `--color-state-layer-pressed-on-strong`), então o selecionado também reage ao toque. O ring de foco fica fora do chip, sobre a superfície da página. No filtro, o check reforça a seleção.
 
 <Canvas of={ChipStories.FilterSelected} />
 
@@ -68,7 +68,7 @@ A seleção é um state layer (`--color-state-layer-selected`) sobre o fundo, co
 
 ### Desabilitado
 
-O grupo inteiro (`disabled`) ou uma opção (`options[].disabled`). O chip desabilitado não reage a hover nem a toque.
+O grupo inteiro (`disabled`) ou uma opção (`options[].disabled`). O chip desabilitado não reage a hover nem a toque. Selecionado e desabilitado segue o preenchido desabilitado do `Button` (`--color-background-disabled` com texto branco), para continuar diferente do não selecionado.
 
 <Canvas of={ChipStories.ChoiceDisabled} />
 
@@ -94,7 +94,7 @@ O grupo inteiro (`disabled`) ou uma opção (`options[].disabled`). O chip desab
 - O `label` do grupo é obrigatório, mesmo com `hideLabel`: sem ele, "4" não diz de quem são os games
 - **Área tocável de 48px** num chip de 40px, via `::before`. Com o gap de 8px do grupo, as áreas de chips vizinhos se encostam sem se sobrepor
 - **Foco:** o ring do DS em `:focus-visible` (no rádio, o ring aparece no chip)
-- **Seleção sem depender de cor** (WCAG 1.4.1): borda de 2px em `--color-border-strong`, fundo e, no filtro, o check
+- **Seleção por contraste, não por matiz** (WCAG 1.4.1 e 1.4.11): o fundo grafite dá cerca de 12:1 com o branco do chip não selecionado. No filtro, o check reforça a seleção
 
 ## Evitar
 
@@ -120,7 +120,7 @@ O grupo inteiro (`disabled`) ou uma opção (`options[].disabled`). O chip desab
 
 **Por que rádio nativo em vez de `role="radio"` num botão?** O rádio nativo já traz as setas do teclado, o foco num item só do grupo (roving tabindex) e o envio em formulário. Com ARIA, o componente teria que reimplementar tudo isso.
 
-**Por que a seleção é um state layer e não coral?** O coral é a cor de ação do app. Um grupo de chips selecionados em coral competiria com o botão primário da tela, e o placar tem vários grupos na mesma tela. O state layer segue o padrão de camadas do DS (`docs/TOKENS.md` > "State layers").
+**Por que a seleção tem fundo escuro, e não state layer nem coral?** A primeira versão usava o state layer de seleção (`--color-state-layer-selected`, cinza de 12%). Sobre o branco, esse cinza dá cerca de 1,3:1, e esses chips são a entrada do placar, que o jogador preenche na arena, ao sol. O grafite (`--color-background-inverse`) dá cerca de 12:1. O coral ficou de fora porque é a cor de ação do app: a tela de placar tem vários grupos de chips, e todos eles em coral competiriam com o botão principal.
 
 ## Referências
 
@@ -129,4 +129,4 @@ O grupo inteiro (`disabled`) ou uma opção (`options[].disabled`). O chip desab
 - [WCAG 2.5.8 — Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
 - [WCAG 1.4.1 — Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)
 - [Material 3 — Chips](https://m3.material.io/components/chips/guidelines) (filter chip com check)
-- Tokens relacionados: `docs/TOKENS.md` (`--color-state-layer-selected`, `--dimension-action-height-md`, `--radius-full`)
+- Tokens relacionados: `docs/TOKENS.md` (`--color-background-inverse`, `--color-state-layer-*-on-strong`, `--dimension-action-height-md`, `--radius-full`)
