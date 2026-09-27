@@ -1,10 +1,11 @@
 import type {
+  Enrollment,
   RankingDownEvent,
   RankingUpEvent,
   Round,
   StandingSnapshot,
 } from '@/src/types/domain';
-import type { ActorLookup } from './feedDomain';
+import type { ActorLookup, FeedDomain } from './feedDomain';
 
 // Movimentação no ranking por rodada (R22, R24, R46). A tabela muda a cada
 // confirmação, mas o evento compara só as fotos de fechamento: a do fim da
@@ -12,6 +13,8 @@ import type { ActorLookup } from './feedDomain';
 // subiu" a cada partida.
 
 export type RankingMovementEvent = RankingUpEvent | RankingDownEvent;
+
+type MovementDomain = Pick<FeedDomain, 'standingSnapshots' | 'rounds' | 'enrollments' | 'milestones'>;
 
 function previousRound(round: Round, rounds: Round[]): Round | undefined {
   return rounds.find((other) => other.season_id === round.season_id && other.number === round.number - 1);
@@ -42,24 +45,33 @@ function movementEvent(
     : { ...movement, type: 'ranking_down', visibility: 'private' };
 }
 
+// Encerrada antes do fechamento da rodada: a dupla desfeita some do feed,
+// embora continue na tabela (R45)
+function closedBefore(enrollment: Enrollment | undefined, round: Round): boolean {
+  return enrollment?.status === 'closed' && Date.parse(enrollment.closed_at) <= Date.parse(round.deadline);
+}
+
 /**
  * Um evento por inscrição cuja posição mudou entre duas fotos consecutivas.
- * Variação zero não gera evento (R24). Quem não estava na foto anterior (a
- * 1ª rodada, ou uma inscrição nova no meio da temporada) também não: não há
- * de onde ter subido.
+ * Não geram evento: variação zero (R24); quem não estava na foto anterior (a
+ * 1ª rodada, ou uma inscrição nova no meio da temporada), porque não há de
+ * onde ter subido; a inscrição encerrada (R45); e o "subiu" da rodada em que
+ * a inscrição ganhou um marco, que já mostra quanto ela subiu (R47).
  */
-export function movementEvents(
-  snapshots: StandingSnapshot[],
-  rounds: Round[],
-  actors: ActorLookup,
-): RankingMovementEvent[] {
+export function movementEvents(domain: MovementDomain, actors: ActorLookup): RankingMovementEvent[] {
+  const { standingSnapshots: snapshots, rounds } = domain;
   const roundById = new Map(rounds.map((round) => [round.id, round]));
+  const enrollmentById = new Map(domain.enrollments.map((enrollment) => [enrollment.id, enrollment]));
+  const hasMilestone = (event: RankingMovementEvent) => domain.milestones.some((m) =>
+    m.enrollment_id === event.enrollment_id && m.round_id === event.round_id);
   return snapshots.flatMap((snapshot) => {
     const round = roundById.get(snapshot.round_id);
     if (round === undefined) throw new Error(`Foto da classificação: rodada '${snapshot.round_id}' não existe`);
+    if (closedBefore(enrollmentById.get(snapshot.enrollment_id), round)) return [];
     const previous = previousRound(round, rounds);
     const from = previous && positionIn(snapshots, previous.id, snapshot.enrollment_id);
     if (from === undefined || from === snapshot.position) return [];
-    return [movementEvent(snapshot, round, from, actors)];
+    const event = movementEvent(snapshot, round, from, actors);
+    return event.type === 'ranking_up' && hasMilestone(event) ? [] : [event];
   });
 }

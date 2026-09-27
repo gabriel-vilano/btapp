@@ -29,7 +29,7 @@ export function generateFeedEvents(domain: FeedDomain, now: string): FeedEvent[]
     ...matchDefinedEvents(domain.matches, actors),
     ...enrollmentEvents(domain.enrollments, actors),
     ...friendshipEvents(domain.friendships),
-    ...movementEvents(domain.standingSnapshots, domain.rounds, actors),
+    ...movementEvents(domain, actors),
     ...milestoneEvents(domain.milestones, actors),
     ...domain.seasons.flatMap((season) => qualificationEvents(season, domain, actors, now)),
   ];

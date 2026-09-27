@@ -100,9 +100,26 @@ describe('nada no feed é desmentido depois (R25, R41)', () => {
   });
 });
 
+describe('as duas exceções da movimentação sobre os mocks', () => {
+  const movementOf = (enrollmentId: string) => events.filter((event) =>
+    (event.type === 'ranking_up' || event.type === 'ranking_down') && event.enrollment_id === enrollmentId);
+
+  it('o T3 subiu de 3º para 1º na 2ª rodada, mas o marco de Líder substitui o "subiu" (R47)', () => {
+    expect(movementOf(mb.t3.id)).toEqual([]);
+    expect(events.some((event) => event.id === 'event-milestone-leader-arena-rm-andre-bruno')).toBe(true);
+  });
+
+  it('a M4, encerrada, caiu de 4º para 5º na 2ª rodada sem gerar o "caiu" (R45)', () => {
+    const photoOf = (roundId: string) => mockDomain.standingSnapshots.find((s) =>
+      s.enrollment_id === mockEntities.mistaC40.m4.id && s.round_id === roundId)?.position;
+    expect([photoOf(rounds.first.id), photoOf(rounds.second.id)]).toEqual([4, 5]);
+    expect(movementOf(mockEntities.mistaC40.m4.id)).toEqual([]);
+  });
+});
+
 describe('isVisibleTo (R21, R22)', () => {
   const fell = events.find((event) => event.type === 'ranking_down' && event.enrollment_id === mb.t1.id);
-  const rose = events.find((event) => event.type === 'ranking_up');
+  const result = events.find((event) => event.type === 'result');
   const t1Players = mockEntities.units.lucasRafael.player_ids;
   const outsider = mockEntities.players.marina.id;
 
@@ -112,8 +129,9 @@ describe('isVisibleTo (R21, R22)', () => {
     expect(isVisibleTo(fell, outsider)).toBe(false);
   });
 
-  it('o "subiu" é público', () => {
-    if (rose === undefined) throw new Error('mocks sem subida');
-    expect(isVisibleTo(rose, outsider)).toBe(true);
+  it('o evento público qualquer um vê', () => {
+    if (result === undefined) throw new Error('mocks sem resultado');
+    expect(result.actor_ids).not.toContain(outsider);
+    expect(isVisibleTo(result, outsider)).toBe(true);
   });
 });
