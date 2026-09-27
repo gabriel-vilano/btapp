@@ -40,6 +40,7 @@ src/components/
 - **State layers via `::after`.** Hover, press e focus são camadas semitransparentes sobrepostas — não variações de cor calculadas por componente.
 - **`:focus-visible` obrigatório.** Nunca remover outline sem substituir com `:focus-visible`. Nenhum componente remove o outline em `:focus`: campos de texto indicam foco pela borda `--color-border-strong` **e** pelo ring de `:focus-visible` (ver "Acessibilidade — foco").
 - **Área tocável de 48px em todo botão**, inclusive o só de ícone (ver "Acessibilidade — tap target").
+- **Seleção em grafite, ação em coral.** O que está selecionado ou marcado usa `--color-background-inverse` com `--color-foreground-on-inverse` (Chip selecionado, Checkbox marcado). O coral (`--color-background-accent`) fica para ação (botão, link) e não compete com o botão principal. Selecionado e desabilitado segue o preenchido desabilitado do Button (`--color-background-disabled` com `--color-foreground-on-disabled`).
 
 ---
 
