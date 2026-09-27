@@ -12,7 +12,9 @@ Consolida os componentes que as 7 superfícies pedem, com o tier da estratégia 
 - `master`: `src/components/ui/` (Alert, Button, ButtonLink, FormInput, Icon, TextLink, Toast), `src/components/auth/` (AuthFormContainer, AuthFormHeader, AvatarUpload, OtpInput, PasswordChecklist, ResendTimer), `src/components/icons/Logo`.
 - Branch `feature/feed-cards` (ainda não mergeada): `src/components/feed/` (Avatar e AvatarStack, CardShell, CardHeader, CardFooter, ScoreBlock, MetaInfo, CompetitionBlock, RankingBlock, MatchVsBlock, CheerBar, H2HButton, ProfileMiniCard e os cards ActivityCard, ResultCard, MatchCard, EnrollmentCard, FriendshipCard, RankingCard). Têm story: CardHeader, CompetitionBlock, MatchVsBlock, ProfileMiniCard. Nenhum tem MDX.
 
-**Superfícies:** R = Ranking · F = Feed · P = Perfil · H = Head-to-head · S = Registro de placar · D = Descoberta · N = Navegação.
+**Superfícies:** R = Ranking · F = Feed · P = Perfil · H = Head-to-head · S = Registro de placar · D = Descoberta · N = Navegação · A = Agenda (aba "Jogos", `DOMAIN.md` §4) · M = Marcação de jogos (`SCHEDULING.md`).
+
+A e M entraram depois, na auditoria do design system (26/09/2026), junto com os três componentes marcados com ⭐, que a pesquisa das 7 superfícies não tinha levantado.
 
 ---
 
@@ -59,6 +61,8 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **TabBar** | N | Não | Navegação principal: `<nav>` com links e `aria-current="page"`, CountBadge, safe area do iOS. Uma instância, mas é casca do app inteiro |
 | **AppHeader** | N, todas | Não | Título, voltar, ações (IconButton). `AuthFormHeader` resolve só o caso de auth |
 | **FAB** | N, F | Não | Só se a navegação seguir o caminho C |
+| **ListItem** ⭐ | A, M, F, R, N | Não | Linha genérica: slot à esquerda (avatar ou ícone), título, texto de apoio, slot à direita (Badge, botão, chevron). Base do item da agenda, das pendências do feed, do RankingRow e das configurações |
+| **Checkbox** ⭐ | M, P | Não | Caixa desmarcada por padrão com o texto da finalidade ao lado. Primeiro uso: consentimento do telefone para o WhatsApp (`SCHEDULING.md` M21, LGPD) |
 
 ## Tier 2 — Compostos com estados ocultos
 
@@ -72,6 +76,7 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **SidePicker** (jogadores e duplas) | S, H | Não | Buscar jogador, jogador sem conta, trocar de lado, dupla incompleta |
 | **EvolutionChart** | P, R | Não | Poucos pontos (1 ou 2 partidas), período sem dados, faixa de referência ligada ou não. Alternativa textual obrigatória |
 | **CelebrationScreen** | R, F | Não | Subiu, marco (Líder, Top 10, Finals), promoção de categoria. Nenhuma referência tem estado de queda |
+| **ScheduleOptionPicker** ⭐ | M | Não | As 2 ou 3 opções de horário de uma proposta como cartões de escolha única, mais "Nenhum serve" (`SCHEDULING.md` M5, M9, M11). Estados: aguardando você, aguardando o outro lado (só leitura), opção que já passou (M12), proposta expirada |
 
 ## Tier 3 — Blocos reutilizáveis de feature
 
