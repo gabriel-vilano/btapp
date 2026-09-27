@@ -61,7 +61,7 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **TabBar** | N | Não | Navegação principal: `<nav>` com links e `aria-current="page"`, CountBadge, safe area do iOS. Uma instância, mas é casca do app inteiro |
 | **AppHeader** | N, todas | Não | Título, voltar, ações (IconButton). `AuthFormHeader` resolve só o caso de auth |
 | **FAB** | N, F | Não | Só se a navegação seguir o caminho C |
-| **ListItem** ⭐ | A, M, F, R, N | Não | Linha genérica: slot à esquerda (avatar ou ícone), título, texto de apoio, slot à direita (Badge, botão, chevron). Base do item da agenda, das pendências do feed, do RankingRow e das configurações |
+| **ListItem** ⭐ | A, M, F, R, N | Sim (`ui/ListItem`, com o `List`; navegável, acionável ou estático) | Nada para as superfícies. Slot à esquerda (avatar ou ícone), título, texto de apoio, slot à direita (Badge, valor, chevron ou ação). Base do item da agenda, das pendências do feed, do RankingRow e das configurações |
 | **Checkbox** ⭐ | M, P | Não | Caixa desmarcada por padrão com o texto da finalidade ao lado. Primeiro uso: consentimento do telefone para o WhatsApp (`SCHEDULING.md` M21, LGPD) |
 
 ## Tier 2 — Compostos com estados ocultos
