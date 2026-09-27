@@ -27,11 +27,12 @@
 }
 
 /* Área tocável de 48px sem inflar o chip de 40px. Com o gap de 8px do
-   grupo, as áreas de chips vizinhos se encostam sem se sobrepor. */
+   grupo, as áreas de chips vizinhos se encostam sem se sobrepor.
+   O inset conta a partir da borda interna: soma a borda para chegar a 48px. */
 .chip::before {
   content: "";
   position: absolute;
-  inset: calc(var(--spacing-50) * -1);
+  inset: calc((var(--spacing-50) + var(--border-width-medium)) * -1);
 }
 
 /* State layer de interação (hover e press) */

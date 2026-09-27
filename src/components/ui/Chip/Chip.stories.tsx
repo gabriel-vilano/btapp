@@ -79,7 +79,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Filter: Story = {
-  render: (args) => <StatefulFilterChip {...args} />,
+  // Padding para a área tocável, que passa 4px do chip, caber no viewport do teste
+  render: (args) => (
+    <div className="sb-pad">
+      <StatefulFilterChip {...args} />
+    </div>
+  ),
   play: async ({ canvas, userEvent }) => {
     const chip = canvas.getByRole("button", { name: "Categoria B" });
     await expect(chip).toHaveAttribute("aria-pressed", "false");
@@ -89,8 +94,9 @@ export const Filter: Story = {
     await expect(height).toBe(40);
     await expect(width).toBeGreaterThanOrEqual(40);
     const centerX = left + width / 2;
-    await expect(document.elementFromPoint(centerX, top - 3)).toBe(chip);
-    await expect(document.elementFromPoint(centerX, bottom + 3)).toBe(chip);
+    // 3,5px fora do chip de 40px ainda é o chip: a área chega a 48px
+    await expect(document.elementFromPoint(centerX, top - 3.5)).toBe(chip);
+    await expect(document.elementFromPoint(centerX, bottom + 3.5)).toBe(chip);
 
     await userEvent.click(chip);
     await expect(chip).toHaveAttribute("aria-pressed", "true");
