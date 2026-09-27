@@ -90,9 +90,16 @@ export interface WoScore {
   type: 'wo';
 }
 
+/**
+ * Desistência (R11): o placar real, como foi jogado. O placar completado pelo
+ * formato vale só para os pontos e não aparece no card público.
+ */
 export interface RetiredScore {
   type: 'retired';
   completed_sets: SetScore[];
+  // Set em que houve a desistência, com os games que se jogaram nele.
+  // 0 × 0 quando a desistência veio antes do primeiro game do set.
+  interrupted_set: SetScore;
 }
 
 export type Score = NormalScore | WoScore | RetiredScore;

@@ -4,13 +4,15 @@
   background: none;
   border: none;
   padding: 0;
-  color: var(--color-foreground-primary);
+  color: var(--color-foreground-accent);
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
   letter-spacing: inherit;
   font-weight: var(--font-weight-bold);
-  text-decoration: none;
+  /* Sublinhado sempre, não só no hover: no meio do texto, a cor não pode ser
+     a única pista de que aquilo é um link (WCAG 1.4.1). */
+  text-decoration: underline;
   cursor: pointer;
 }
 
@@ -20,12 +22,6 @@
   content: "";
   position: absolute;
   inset: -16px -8px;
-}
-
-@media (hover: hover) {
-  .text-link:hover {
-    text-decoration: underline;
-  }
 }
 
 .text-link:focus-visible {
@@ -39,9 +35,12 @@
 }
 
 /* Variante block: ação isolada com alvo de toque explícito de 48px.
-   Usar quando o TextLink vive sozinho num container, não em meio a prose. */
+   Usar quando o TextLink vive sozinho num container, não em meio a prose.
+   Sem sublinhado em repouso: sozinha, a ação não precisa se destacar de um
+   texto em volta. O sublinhado volta no hover como feedback. */
 .text-link--block {
   display: inline-flex;
+  text-decoration: none;
   align-items: center;
   justify-content: center;
   min-height: var(--dimension-tap-target-minimum);
@@ -53,4 +52,10 @@
 
 .text-link--block::before {
   content: none;
+}
+
+@media (hover: hover) {
+  .text-link--block:hover {
+    text-decoration: underline;
+  }
 }

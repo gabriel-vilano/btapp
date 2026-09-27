@@ -12,6 +12,15 @@ const dirname =
     ? __dirname
     : path.dirname(fileURLToPath(import.meta.url));
 
+// Sessões do Claude Code na nuvem trazem um Chromium mais antigo que o pedido pelo
+// `playwright` do projeto e não podem rodar `playwright install` (ENG-34). Nelas,
+// a variável aponta para o Chromium do container. Vazia (CI, máquina local), o
+// Playwright usa o browser que ele mesmo instalou.
+const chromiumExecutablePath = process.env.CHROMIUM_EXECUTABLE_PATH;
+const chromiumProvider = chromiumExecutablePath
+  ? playwright({ launchOptions: { executablePath: chromiumExecutablePath } })
+  : playwright({});
+
 // Dois projects:
 // - "unit": testes node puros (validations, server actions etc.). É o que `npm test` roda.
 // - "storybook": cada story vira teste no browser via Playwright + Chromium.
@@ -43,7 +52,7 @@ export default defineConfig({
           browser: {
             enabled: true,
             headless: true,
-            provider: playwright({}),
+            provider: chromiumProvider,
             instances: [{ browser: "chromium" }],
           },
         },

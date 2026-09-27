@@ -1,0 +1,93 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as SegmentedControlStories from "./SegmentedControl.stories";
+
+<Meta of={SegmentedControlStories} />
+
+<Subtitle>Alterna entre 2 a 4 visões do mesmo conteúdo com um toque.</Subtitle>
+
+**Código-fonte:** [`src/components/ui/SegmentedControl/SegmentedControl.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/SegmentedControl/SegmentedControl.tsx)
+
+## Visão geral
+
+Um trilho com borda e de 2 a 4 segmentos de 40px, que dividem a largura por igual. O segmento selecionado é preenchido em grafite. O controle muda o recorte do que está na tela, como "Duplas" ou "Jogadores" no head-to-head, sem trocar de seção.
+
+<Canvas of={SegmentedControlStories.Default} />
+
+Com três opções, a largura continua dividida por igual.
+
+<Canvas of={SegmentedControlStories.ThreeOptions} />
+
+## Estados
+
+Os estados valem para cada segmento, e o desabilitado também para o grupo inteiro.
+
+### Selecionado
+
+O segmento selecionado tem fundo grafite (`--color-background-inverse`) e texto branco (`--color-foreground-on-inverse`), a mesma regra do `Chip`. Hover e press usam os state layers para fundo escuro (`*-on-strong`). Nos outros segmentos, os state layers comuns (`--color-state-layer-hover` e `--color-state-layer-pressed`). A visão geral acima mostra o selecionado.
+
+### Rótulo do grupo escondido
+
+`hideLabel` tira o rótulo da tela e o mantém para o leitor de tela. Use quando o título da tela já diz o que o controle escolhe.
+
+<Canvas of={SegmentedControlStories.HiddenLabel} />
+
+### Texto longo
+
+Rótulo que não cabe no segmento termina em reticências na tela e continua inteiro para o leitor de tela. Não é um estado para usar: é o sinal de que o texto precisa encurtar.
+
+<Canvas of={SegmentedControlStories.LongLabels} />
+
+### Desabilitado
+
+O grupo inteiro (`disabled`) ou um segmento (`options[].disabled`). O desabilitado não reage a hover nem a toque. Selecionado e desabilitado segue o preenchido desabilitado do `Button` (`--color-background-disabled` com texto branco).
+
+<Canvas of={SegmentedControlStories.Disabled} />
+
+## Quando usar
+
+- Mudar o recorte do mesmo conteúdo: duplas ou jogadores no head-to-head, semestre ou carreira nas estatísticas
+- Escolher entre 2 a 4 modos curtos, todos visíveis de uma vez
+- Quando a troca é imediata, sem botão de confirmar
+
+## Componentes relacionados
+
+- Para **trocar seções com conteúdo próprio** (visão geral, partidas, estatísticas), use as [`Tabs`](?path=/docs/ui-tabs--docs)
+- Para **escolher entre mais de 4 opções curtas** ou responder um formulário, use o [`ChoiceChipGroup`](?path=/docs/ui-chip--docs)
+- Para **ligar e desligar filtros** independentes, use o [`FilterChip`](?path=/docs/ui-chip--docs)
+
+## Acessibilidade
+
+- Padrão **Radio Group** do APG, com `<fieldset>`, `<legend>` e `<input type="radio">` nativos. O leitor de tela anuncia o grupo pelo nome e "botão de opção, 1 de 2"
+- **Teclado:** Tab entra no segmento selecionado; as setas trocam a seleção e dão a volta. É o comportamento nativo do rádio
+- O `label` é obrigatório, mesmo com `hideLabel`: sem ele, "Duplas" não diz o que está sendo escolhido
+- **Área tocável de 48px** num segmento de 40px: o `::before` cobre o respiro de 4px do trilho acima e abaixo
+- **Foco:** o ring do DS em `:focus-visible` aparece no segmento
+- **Seleção por contraste, não por matiz** (WCAG 1.4.1 e 1.4.11): o grafite dá cerca de 12:1 com o branco do trilho
+
+## Evitar
+
+- ❌ **Mais de 4 segmentos.** Em 393px, os rótulos viram reticências: use o `ChoiceChipGroup` ou uma lista
+- ❌ **Segmentos que trocam seções inteiras.** Conteúdo diferente em cada opção é `Tabs`
+- ❌ **Segmentos que disparam ação.** Cada segmento é uma escolha, não um botão
+- ❌ **Rótulo longo.** Uma ou duas palavras por segmento
+- ❌ **Coral no segmento selecionado.** Coral é a cor de ação do app; seleção é grafite
+
+## API
+
+<ArgTypes of={SegmentedControlStories} />
+
+## Decisões de design
+
+**Por que grupo de rádio, e não `tablist`?** O SegmentedControl muda o recorte do mesmo conteúdo, e o leitor de tela precisa anunciar uma escolha ("botão de opção, 1 de 2"), não uma seção. Quando cada opção tem um painel próprio, o componente certo são as `Tabs`, que já trazem a semântica de `tablist`.
+
+**Por que rádio nativo em vez de `role="radio"`?** O mesmo motivo do `ChoiceChipGroup`: o rádio nativo já traz as setas, o foco num item só do grupo e o envio em formulário.
+
+**Por que o controle ocupa a largura toda?** No mobile, segmentos do tamanho do texto ficariam de larguras diferentes e pequenos para o toque. Com a largura toda, cada segmento é um alvo grande e igual aos outros.
+
+## Referências
+
+- [WAI-ARIA APG — Radio Group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)
+- [Material 3 — Segmented buttons](https://m3.material.io/components/segmented-buttons/guidelines)
+- [Apple HIG — Segmented controls](https://developer.apple.com/design/human-interface-guidelines/segmented-controls)
+- [WCAG 1.4.11 — Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)
+- Tokens relacionados: `docs/TOKENS.md` (`--color-background-inverse`, `--color-state-layer-*-on-strong`, `--dimension-action-height-md`, `--radius-full`)

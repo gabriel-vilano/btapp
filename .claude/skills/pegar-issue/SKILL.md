@@ -45,6 +45,8 @@ npm run build
 npm run test:stories   # quando mexer em componente ou story
 ```
 
+Na sessão na nuvem, as stories rodam com `CHROMIUM_EXECUTABLE_PATH=/opt/pw-browsers/chromium npm run test:stories` (ver `CLAUDE.md` > "Testes").
+
 O E2E (`npm run test:e2e`) precisa de Docker e roda só na CI: acompanhar o job E2E no PR.
 
 Reler o próprio diff procurando o que a CI ou um revisor rejeitaria.

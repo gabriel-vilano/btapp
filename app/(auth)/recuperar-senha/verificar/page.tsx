@@ -18,7 +18,8 @@ import { Alert } from "@/src/components/ui/Alert";
 import { TextLink } from "@/src/components/ui/TextLink";
 import { useToast } from "@/src/components/ui/Toast";
 import { OTP_LENGTH } from "@/src/lib/validations";
-import styles from "./page.module.css";
+import authStyles from "@/app/(auth)/auth-page.module.css";
+import verifyStyles from "@/app/(auth)/verify.module.css";
 
 export default function RecoveryVerifyPage() {
   return (
@@ -80,17 +81,17 @@ function RecoveryVerifyContent() {
     <AuthFormContainer>
       <AuthFormHeader
         title="Verifique seu e-mail"
-        subtitleClassName={styles.verify__subtitle}
+        subtitleClassName={verifyStyles.verify__subtitle}
         subtitle={
           <>
             <span>Enviamos um código de {OTP_LENGTH} dígitos para</span>
-            <span className={styles.verify__email}>{email}</span>
+            <span className={verifyStyles.verify__email}>{email}</span>
             <TextLink href="/recuperar-senha">Enviar código para outro e-mail</TextLink>
           </>
         }
       />
 
-      <form action={formAction} className={styles.verify__form}>
+      <form action={formAction} className={authStyles["auth-page__form"]}>
         <input type="hidden" name="email" value={email} />
         <input type="hidden" name="otp" value={otp} />
 
@@ -114,11 +115,11 @@ function RecoveryVerifyContent() {
         </Button>
       </form>
 
-      <div className={styles.verify__resend}>
+      <div className={verifyStyles.verify__resend}>
         <ResendTimer onResend={handleResend} loading={resendLoading} />
       </div>
 
-      <p className={styles.verify__hint}>
+      <p className={verifyStyles.verify__hint}>
         Não recebeu? Verifique sua pasta de spam.
       </p>
     </AuthFormContainer>
