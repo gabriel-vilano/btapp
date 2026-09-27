@@ -3,6 +3,8 @@ import { expect, test } from "@playwright/test";
 import { submitLogin } from "./support/auth";
 import { createConfirmedUser, TEST_PASSWORD, uniqueEmail } from "./support/users";
 
+const EXPIRED_TITLE = "Sua sessão expirou";
+
 test.describe("Login e rota protegida", () => {
   test("senha errada mostra erro e mantém na tela de login", async ({ page }) => {
     const email = uniqueEmail("login-erro");
@@ -27,10 +29,25 @@ test.describe("Login e rota protegida", () => {
     await expect(page).toHaveURL(/\/feed$/);
   });
 
-  test("sem sessão, /feed leva ao login", async ({ page }) => {
+  test("sem sessão, /feed leva ao login sem aviso de sessão expirada", async ({ page }) => {
     await page.goto("/feed");
 
     await expect(page).toHaveURL(/\/entrar$/);
     await expect(page.getByRole("heading", { name: "Bem-vindo de volta", exact: true })).toBeVisible();
+    await expect(page.getByRole("alert").filter({ hasText: EXPIRED_TITLE })).toHaveCount(0);
+  });
+
+  // Regressão: o parâmetro `expired` se perdia no redirect da página raiz e o aviso nunca aparecia.
+  test("cookie de sessão inválido leva ao login com aviso, que some ao digitar", async ({ page, baseURL }) => {
+    await page.context().addCookies([{ name: "sb-127-auth-token", value: "sessao-invalida", url: baseURL }]);
+
+    await page.goto("/feed");
+
+    await expect(page).toHaveURL(/\/entrar\?expired=true$/);
+    const expiredAlert = page.getByRole("alert").filter({ hasText: EXPIRED_TITLE });
+    await expect(expiredAlert).toBeVisible();
+
+    await page.getByLabel("E-mail", { exact: true }).fill("a");
+    await expect(expiredAlert).toHaveCount(0);
   });
 });

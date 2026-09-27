@@ -30,7 +30,12 @@ export function Button({
     .join(" ");
 
   return (
-    <button className={classNames} disabled={disabled || loading} {...rest}>
+    <button
+      className={classNames}
+      disabled={disabled || loading}
+      aria-busy={loading || undefined}
+      {...rest}
+    >
       {loading && <span className={styles.btn__spinner} />}
       <span className={loading ? styles["btn__content--hidden"] : undefined}>
         {children}

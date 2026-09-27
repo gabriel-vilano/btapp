@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Category } from "@/src/types/feed";
-import { formatCategoryLabel, formatEnrollmentCount } from "./formatters";
+import { formatCategoryLabel, formatEnrollmentCount, formatInitials } from "./formatters";
 
 const doublesB: Category = {
   gender: "M",
@@ -63,5 +63,25 @@ describe("formatEnrollmentCount", () => {
   // O banco bloqueia mista em simples (§11.5); o tipo ainda permite, então cai no masculino genérico
   it("usa jogadores em simples mista", () => {
     expect(formatEnrollmentCount(8, { ...singlesB, gender: "mixed" })).toBe("8 jogadores inscritos");
+  });
+});
+
+describe("formatInitials", () => {
+  it("usa a primeira letra do primeiro e do último nome", () => {
+    expect(formatInitials("Lucas Silva")).toBe("LS");
+    expect(formatInitials("Maria Eduarda Albuquerque de Vasconcelos")).toBe("MV");
+  });
+
+  it("usa uma letra só quando o nome tem uma palavra", () => {
+    expect(formatInitials("Lucas")).toBe("L");
+  });
+
+  it("mantém acento, põe em maiúscula e ignora espaço e pontuação nas bordas", () => {
+    expect(formatInitials("  ágata   (Guto) ")).toBe("ÁG");
+  });
+
+  it("devolve vazio quando não há letra nem número", () => {
+    expect(formatInitials("")).toBe("");
+    expect(formatInitials("  -- ")).toBe("");
   });
 });

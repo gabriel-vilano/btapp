@@ -49,11 +49,13 @@ function drawableEnrollmentIds({ enrollments, category, round }: RoundDrawInput)
     .map((e) => e.id);
 }
 
-// Toda partida sorteada conta como confronto, até a cancelada: o sorteio já
-// pôs as duas duplas frente a frente naquela rodada.
+// A partida cancelada (cancelamento ou anulação) não conta como confronto:
+// o jogo não aconteceu, e as duas duplas podem ser sorteadas de novo (R30,
+// decisão do Gabriel de 27/09). As demais contam mesmo antes do resultado,
+// porque o confronto já está marcado.
 function categoryHistory({ seasonMatches, category }: RoundDrawInput): Pairing[] {
   return seasonMatches
-    .filter((match) => match.category_id === category.id)
+    .filter((match) => match.category_id === category.id && match.status !== 'cancelled')
     .map((match) => [match.side_a_enrollment_id, match.side_b_enrollment_id]);
 }
 

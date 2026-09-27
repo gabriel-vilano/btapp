@@ -52,15 +52,21 @@ export async function proxy(request: NextRequest) {
   }
 
   if (!user && !PUBLIC_AUTH_ROUTES.includes(pathname) && !ALWAYS_PUBLIC_ROUTES.includes(pathname)) {
-    const hasSessionCookie = request.cookies.getAll().some((c) => c.name.startsWith("sb-"));
-    const redirectUrl = new URL("/", request.url);
-    if (hasSessionCookie) {
-      redirectUrl.searchParams.set("expired", "true");
-    }
-    return NextResponse.redirect(redirectUrl);
+    return NextResponse.redirect(loginRedirectUrl(request));
   }
 
   return response;
+}
+
+// Vai direto para /entrar: passar por "/" perdia o `expired`, porque o
+// redirect("/entrar") da página raiz descarta a query string.
+function loginRedirectUrl(request: NextRequest): URL {
+  const redirectUrl = new URL("/entrar", request.url);
+  const hasSessionCookie = request.cookies.getAll().some((c) => c.name.startsWith("sb-"));
+  if (hasSessionCookie) {
+    redirectUrl.searchParams.set("expired", "true");
+  }
+  return redirectUrl;
 }
 
 export const config = {
