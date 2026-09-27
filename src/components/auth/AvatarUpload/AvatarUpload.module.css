@@ -21,8 +21,8 @@
 
 .avatar__area {
   position: relative;
-  width: 96px;
-  height: 96px;
+  width: var(--dimension-avatar-96);
+  height: var(--dimension-avatar-96);
   border-radius: var(--radius-full);
   background-color: var(--color-background-secondary);
   display: flex;
@@ -39,8 +39,8 @@
 }
 
 .avatar__preview {
-  width: 96px;
-  height: 96px;
+  width: var(--dimension-avatar-96);
+  height: var(--dimension-avatar-96);
   object-fit: cover;
   border-radius: var(--radius-full);
 }

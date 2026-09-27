@@ -9,7 +9,9 @@
   /* -----------------------------------------------------------
      FAMÍLIA TIPOGRÁFICA
   ----------------------------------------------------------- */
-  --font-sans: "Arimo", system-ui, sans-serif;
+  /* --font-arimo vem do next/font (app/layout.tsx) e já traz o "Arimo Fallback"
+     com métricas ajustadas, que reduz o salto de layout enquanto a fonte carrega. */
+  --font-sans: var(--font-arimo), system-ui, sans-serif;
 
   /* -----------------------------------------------------------
      TAMANHOS DE FONTE
@@ -88,6 +90,11 @@
   --dimension-icon-md: 24px;
   --dimension-icon-lg: 32px;
   --dimension-icon-xl: 64px;
+  --dimension-avatar-32: 32px;
+  --dimension-avatar-40: 40px;
+  --dimension-avatar-48: 48px;
+  --dimension-avatar-96: 96px;
+  --dimension-layout-max: 430px;
 
   /* -----------------------------------------------------------
      BORDER RADIUS
@@ -98,10 +105,6 @@
   --radius-lg: 16px;
   --radius-xl: 24px;
   --radius-full: 9999px;
-
-  --radius-form-input: var(--radius-md);
-  --radius-card: var(--radius-lg);
-  --radius-popover: var(--radius-lg);
 
   /* -----------------------------------------------------------
      BORDER WIDTH
@@ -124,6 +127,17 @@
   --opacity-100: 0.08;
   --opacity-150: 0.12;
   --opacity-200: 0.16;
+  --opacity-250: 0.2;
+
+  /* -----------------------------------------------------------
+     CAMADAS (z-index)
+     Escala global de empilhamento. Ordem relativa dentro de um
+     componente isolado (ex.: stack de avatares) não usa esta escala.
+  ----------------------------------------------------------- */
+  --z-base: 0;
+  --z-sticky: 100;
+  --z-overlay: 500;
+  --z-toast: 1000;
 
   /* -----------------------------------------------------------
      MOTION
@@ -164,6 +178,7 @@
   /* Neutral */
   --color-neutral-100: #ffffff;
   --color-neutral-200: #f7f7f7;
+  --color-neutral-250: #ededed;
   --color-neutral-300: #e5e5e5;
   --color-neutral-400: #c7c7c7;
   --color-neutral-500: #8f8f8f;
@@ -207,6 +222,7 @@
   --color-blue-300: #84b4fb;
   --color-blue-400: #4d93fc;
   --color-blue-500: #0968f6;
+  --color-blue-550: #005fcc;
   --color-blue-600: #0049b8;
   --color-blue-650: #003aa5;
   --color-blue-700: #002a69;

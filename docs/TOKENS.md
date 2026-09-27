@@ -51,9 +51,9 @@ Valores brutos sem semântica. Paleta de cores e tamanhos de fonte nunca vão di
 
 ### Família tipográfica
 
-| Token         | Valor                            |
-| ------------- | -------------------------------- |
-| `--font-sans` | `"Arimo", system-ui, sans-serif` |
+| Token         | Valor                                      |
+| ------------- | ------------------------------------------ |
+| `--font-sans` | `var(--font-arimo), system-ui, sans-serif` |
 
 Fonte: Arimo (Google Fonts), variável 400–700. Carregada via `next/font` no `layout.tsx`.
 Variável CSS injetada pelo Next.js: `--font-arimo`.
@@ -144,6 +144,11 @@ Valores absolutos (não relativos) para ritmo vertical consistente independente 
 | `--dimension-icon-md`            | 24px  | padrão                     |
 | `--dimension-icon-lg`            | 32px  |                            |
 | `--dimension-icon-xl`            | 64px  |                            |
+| `--dimension-avatar-32`          | 32px  | avatar pequeno (stack)     |
+| `--dimension-avatar-40`          | 40px  | avatar do header de card   |
+| `--dimension-avatar-48`          | 48px  | avatar grande, logo        |
+| `--dimension-avatar-96`          | 96px  | avatar de perfil / upload  |
+| `--dimension-layout-max`         | 430px | largura máxima do conteúdo |
 
 ### Border radius
 
@@ -155,9 +160,6 @@ Valores absolutos (não relativos) para ritmo vertical consistente independente 
 | `--radius-lg`         | 16px               | cards                   |
 | `--radius-xl`         | 24px               | modais, bottom sheets   |
 | `--radius-full`       | 9999px             | pill, avatar            |
-| `--radius-form-input` | `var(--radius-md)` | inputs de formulário    |
-| `--radius-card`       | `var(--radius-lg)` | cards                   |
-| `--radius-popover`    | `var(--radius-lg)` | popovers                |
 
 ### Border width
 
@@ -182,6 +184,16 @@ Valores absolutos (não relativos) para ritmo vertical consistente independente 
 | `--opacity-100` | 0.08  |
 | `--opacity-150` | 0.12  |
 | `--opacity-200` | 0.16  |
+| `--opacity-250` | 0.2   |
+
+### Camadas (z-index)
+
+| Token         | Valor | Uso                          |
+| ------------- | ----- | ---------------------------- |
+| `--z-base`    | 0     | conteúdo da página           |
+| `--z-sticky`  | 100   | headers e barras fixas       |
+| `--z-overlay` | 500   | scrim, modais, bottom sheets |
+| `--z-toast`   | 1000  | toasts, sempre acima de tudo |
 
 ### Motion — durações
 
@@ -230,6 +242,7 @@ Escala de 8 stops por família. 100 = mais claro, 800 = mais escuro.
 | --------------------- | ------- |
 | `--color-neutral-100` | #ffffff |
 | `--color-neutral-200` | #f7f7f7 |
+| `--color-neutral-250` | #ededed |
 | `--color-neutral-300` | #e5e5e5 |
 | `--color-neutral-400` | #c7c7c7 |
 | `--color-neutral-500` | #8f8f8f |
@@ -287,6 +300,7 @@ Escala de 8 stops por família. 100 = mais claro, 800 = mais escuro.
 | `--color-blue-300` | #84b4fb |
 | `--color-blue-400` | #4d93fc |
 | `--color-blue-500` | #0968f6 |
+| `--color-blue-550` | #005fcc |
 | `--color-blue-600` | #0049b8 |
 | `--color-blue-650` | #003aa5 |
 | `--color-blue-700` | #002a69 |
@@ -424,39 +438,32 @@ Adicionar uma variante é trivial: estender a tabela em `semantic.css` e documen
 
 ### Cores — border
 
-| Token                         | Primitivo             | Uso                      |
-| ----------------------------- | --------------------- | ------------------------ |
-| `--color-border-subtle`       | `--color-neutral-300` | separadores leves        |
-| `--color-border-medium`       | `--color-neutral-500` | bordas padrão de inputs  |
-| `--color-border-strong`       | `--color-neutral-700` | bordas com ênfase        |
-| `--color-border-inverse`      | `--color-neutral-100` | borda sobre fundo escuro |
-| `--color-border-accent`       | `--color-coral-500`   | input em foco            |
-| `--color-border-attention`    | `--color-red-600`     | input inválido           |
-| `--color-border-success`      | `--color-kiwi-600`    | input válido             |
-| `--color-border-disabled`     | `--color-neutral-400` | input desabilitado       |
-| `--color-border-on-accent`    | `--color-neutral-100` |                          |
-| `--color-border-on-attention` | `--color-neutral-100` |                          |
-| `--color-border-on-success`   | `--color-neutral-100` |                          |
-| `--color-border-on-disabled`  | `--color-neutral-100` |                          |
-| `--color-border-on-inverse`   | `--color-neutral-100` |                          |
+| Token                      | Primitivo             | Uso                     |
+| -------------------------- | --------------------- | ----------------------- |
+| `--color-border-subtle`    | `--color-neutral-300` | separadores leves       |
+| `--color-border-medium`    | `--color-neutral-500` | bordas padrão de inputs |
+| `--color-border-strong`    | `--color-neutral-700` | bordas com ênfase       |
+| `--color-border-accent`    | `--color-coral-500`   | input em foco           |
+| `--color-border-attention` | `--color-red-600`     | input inválido          |
+| `--color-border-success`   | `--color-kiwi-600`    | input válido            |
 
 ### State layers
 
 Camadas de interação aplicadas via `::after` como overlay semitransparente.
 Funcionam em qualquer cor de fundo sem calcular variações por componente.
 
-| Token                                    | Valor                    | Uso                            |
-| ---------------------------------------- | ------------------------ | ------------------------------ |
-| `--color-state-layer-neutral`            | `rgba(0,0,0,0)`          | repouso — transparente         |
-| `--color-state-layer-hover`              | `rgba(0,0,0,0.04)`       | hover                          |
-| `--color-state-layer-focus`              | `rgba(0,0,0,0.04)`       | foco de teclado                |
-| `--color-state-layer-pressed`            | `rgba(0,0,0,0.08)`       | press / active                 |
-| `--color-state-layer-selected`           | `rgba(0,0,0,0.12)`       | item selecionado               |
-| `--color-state-layer-hover-on-strong`    | `rgba(255,255,255,0.12)` | hover sobre fundo escuro       |
-| `--color-state-layer-focus-on-strong`    | `rgba(255,255,255,0.12)` | foco sobre fundo escuro        |
-| `--color-state-layer-pressed-on-strong`  | `rgba(255,255,255,0.16)` | press sobre fundo escuro       |
-| `--color-state-layer-selected-on-strong` | `rgba(255,255,255,0.20)` | selecionado sobre fundo escuro |
-| `--color-state-focus-ring`               | `#005fcc`                | outline de foco por teclado    |
+| Token                                    | Valor                                  | Uso                            |
+| ---------------------------------------- | -------------------------------------- | ------------------------------ |
+| `--color-state-layer-neutral`            | `transparent`                          | repouso — transparente         |
+| `--color-state-layer-hover`              | `rgba(0,0,0,var(--opacity-50))`        | hover                          |
+| `--color-state-layer-focus`              | `rgba(0,0,0,var(--opacity-50))`        | foco de teclado                |
+| `--color-state-layer-pressed`            | `rgba(0,0,0,var(--opacity-100))`       | press / active                 |
+| `--color-state-layer-selected`           | `rgba(0,0,0,var(--opacity-150))`       | item selecionado               |
+| `--color-state-layer-hover-on-strong`    | `rgba(255,255,255,var(--opacity-150))` | hover sobre fundo escuro       |
+| `--color-state-layer-focus-on-strong`    | `rgba(255,255,255,var(--opacity-150))` | foco sobre fundo escuro        |
+| `--color-state-layer-pressed-on-strong`  | `rgba(255,255,255,var(--opacity-200))` | press sobre fundo escuro       |
+| `--color-state-layer-selected-on-strong` | `rgba(255,255,255,var(--opacity-250))` | selecionado sobre fundo escuro |
+| `--color-state-focus-ring`               | `--color-blue-550`                     | outline de foco por teclado    |
 
 Padrão de implementação nos componentes:
 
@@ -497,9 +504,12 @@ Padrão de implementação nos componentes:
 | ------------------------ | --------------------- | --------------------------------- |
 | `--color-brand`          | `--color-coral-500`   | cor de marca                      |
 | `--color-scrim`          | `rgba(0,0,0,0.3)`     | overlay de modais e bottom sheets |
-| `--color-loading-fill`   | `#ededed`             | skeleton loader                   |
+| `--color-loading-fill`   | `--color-neutral-250` | skeleton loader                   |
 | `--color-loading-first`  | `--color-neutral-200` |                                   |
 | `--color-loading-second` | `--color-neutral-300` |                                   |
+| `--radius-form-input`    | `--radius-md`         | inputs de formulário              |
+| `--radius-card`          | `--radius-lg`         | cards                             |
+| `--radius-popover`       | `--radius-lg`         | popovers                          |
 
 ---
 
