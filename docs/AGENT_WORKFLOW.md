@@ -134,3 +134,12 @@ O Gabriel escolhe o lote; uma sessão orquestradora abre uma sessão na nuvem po
 
   Parar é interromper todas as sessões, não disparar nenhuma nova e registrar o motivo. O estado e os detalhes operacionais ficam no documento de orquestração do Linear.
 - **Ferramentas cobradas à parte ficam fora** (ex.: Firecrawl no modo Alexandria).
+
+---
+
+## Acesso ao LetzPlay atual
+
+**Nenhum agente acessa `letzplay.me` nem seus subdomínios:** páginas públicas, área logada ou API, com qualquer ferramenta (WebFetch, Firecrawl, Playwright, curl). Os Termos de Uso do LetzPlay ([letzplay.me/about/tos](https://letzplay.me/about/tos), seção "Restrição de Acesso Automatizado") proíbem agentes automatizados, scrapers, IA extrativa e navegadores headless para acessar, mapear ou copiar a interface, as APIs ou os dados da plataforma, salvo autorização por escrito da LPTENNIS. Os mesmos Termos proíbem usar os dados da plataforma em aplicativos concorrentes.
+
+- Material do app atual entra só por prints ou gravações feitos pelo Gabriel, guardados em lugar privado (Linear, Figma ou Dropbox), nunca no repositório, que é público.
+- Precisa de algo do app atual? Peça os prints ao Gabriel, com a lista de telas, em vez de buscar.
