@@ -1,0 +1,64 @@
+/*
+ * Anel de três quartos em currentColor com um quarto transparente.
+ * Quem usa define a cor pelo `color` do contexto (texto do botão,
+ * --color-foreground-accent numa tela de carregamento).
+ */
+
+.spinner {
+  display: inline-block;
+  flex-shrink: 0;
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+  border: var(--spinner-border-width) solid currentColor;
+  border-top-color: transparent;
+  border-radius: var(--radius-full);
+  animation: spinner-rotate var(--motion-duration-medium-3)
+    var(--motion-easing-linear) infinite;
+}
+
+.spinner--xs {
+  --spinner-size: var(--dimension-icon-xs);
+  --spinner-border-width: var(--border-width-medium);
+}
+
+.spinner--sm {
+  --spinner-size: var(--dimension-icon-sm);
+  --spinner-border-width: var(--border-width-thick);
+}
+
+.spinner--md {
+  --spinner-size: var(--dimension-icon-md);
+  --spinner-border-width: var(--border-width-thick);
+}
+
+.spinner--lg {
+  --spinner-size: var(--dimension-icon-lg);
+  --spinner-border-width: var(--border-width-thick);
+}
+
+/* Visualmente escondido, mas lido pelo leitor de tela */
+.spinner__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/*
+ * Parar o giro deixaria um anel estático, que parece travado.
+ * Com movimento reduzido, o giro fica 4× mais lento: ainda comunica
+ * "em andamento" sem o movimento rápido.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: calc(var(--motion-duration-medium-3) * 4);
+  }
+}
+
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
