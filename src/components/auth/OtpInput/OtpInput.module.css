@@ -22,14 +22,19 @@
 }
 
 .otp__field::placeholder {
-  color: var(--color-foreground-disabled);
+  /* Placeholder não é isento da WCAG 1.4.3: secondary tem 4,95:1, disabled tinha 1,69:1 */
+  color: var(--color-foreground-secondary);
   letter-spacing: 0.3em;
   font-size: var(--text-body-lg-size);
 }
 
 .otp__field:focus {
-  outline: none;
   border-color: var(--color-border-strong);
+}
+
+.otp__field:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
 }
 
 .otp__field--error {

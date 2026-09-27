@@ -32,12 +32,14 @@ src/components/
 
 ### Regras fundamentais
 
-- **Primitivos nunca são usados diretamente em componentes.** Componentes sempre referenciam tokens semânticos.
-- **Tokens semânticos apontam para primitivos.** Nunca para valores brutos.
+- **Cor e tipografia são sempre semânticas nos componentes.** Nenhum componente usa paleta (`--color-coral-500`) nem `--font-size-*`/`--line-height-*` direto: usa `--color-background-*`, `--color-foreground-*`, `--color-border-*` e `--text-*`.
+- **Escalas podem ser usadas direto.** `--spacing-*`, `--radius-*`, `--dimension-*`, `--motion-*`, `--border-width-*` e `--font-weight-*` não têm camada semântica e vão direto no componente. Um token semântico de escala só nasce quando o mesmo valor carrega uma intenção repetida (ex.: `--radius-card`, `--radius-form-input`).
+- **Tokens semânticos apontam para primitivos.** Nunca para valores brutos. Todo semântico mora em `semantic.css`.
 - **CSS Modules para tudo que é componente.** Nenhum estilo de componente em arquivos globais.
 - **BEM dentro dos `.module.css`.** Nomenclatura: `.card__header`, `.btn--primary`.
 - **State layers via `::after`.** Hover, press e focus são camadas semitransparentes sobrepostas — não variações de cor calculadas por componente.
-- **`:focus-visible` obrigatório.** Nunca remover outline sem substituir com `:focus-visible`.
+- **`:focus-visible` obrigatório.** Nunca remover outline sem substituir com `:focus-visible`. Nenhum componente remove o outline em `:focus`: campos de texto indicam foco pela borda `--color-border-strong` **e** pelo ring de `:focus-visible` (ver "Acessibilidade — foco").
+- **Área tocável de 48px em todo botão**, inclusive o só de ícone (ver "Acessibilidade — tap target").
 
 ---
 
@@ -45,7 +47,7 @@ src/components/
 
 Arquivo: `styles/tokens/primitives.css`
 
-Valores brutos sem semântica. Nunca usar diretamente em componentes.
+Valores brutos sem semântica. Paleta de cores e tamanhos de fonte nunca vão direto em componentes; as escalas (espaçamento, radius, dimensões, motion, border width e pesos) podem ir (ver "Regras fundamentais").
 
 ### Família tipográfica
 
@@ -261,6 +263,8 @@ Escala de 8 stops por família. 100 = mais claro, 800 = mais escuro.
 | `--color-coral-700` | #5e1d08                 |
 | `--color-coral-800` | #2f0e04                 |
 
+**Coral de ação × coral de marca.** O coral-500 (`#f3511b`) dá 3,50:1 com o branco e não passa no contraste AA de texto (4,5:1, WCAG 1.4.3). Por isso a **cor de ação** (texto e fundo de botão, link de ação, destaque em texto) é o **coral-600** (`#d03706`): 4,96:1 com o branco, 4,63:1 sobre `--color-background-secondary` e 4,70:1 sobre o coral-100. O coral-500 fica como **cor de marca** e para usos que não são texto (logo, ilustração, barra de progresso), onde o mínimo é 3:1 (WCAG 1.4.11). A troca dos tokens `--color-background-accent`, `--color-foreground-accent` e `--color-border-accent` para o coral-600 acontece no CSS em issue própria; quando entrar, as tabelas de cores semânticas abaixo mudam junto.
+
 **Kiwi — success**
 
 | Token              | Valor   |
@@ -390,7 +394,7 @@ Cada escala define apenas **size + line-height + tracking**. **O peso é desacop
 Só existem hoje as variantes com consumidor real ou mapeadas para telas próximas do roadmap. Quando surgir caso de uso para:
 
 - **`body-sm`**: texto muito pequeno de prose (raro, talvez desnecessário).
-- **`label-sm`** (10px, possivelmente com tracking positivo): quando o primeiro badge/pill/status for construído. Neste ponto decidir se volta a chamar `signal`, se fica `label-sm`, ou se vira um role `overline`.
+- **`label-sm`** (10px, possivelmente com tracking positivo): **continua sem existir.** Decidido no primeiro Badge: badges, pills e status usam `label-md` (12px) em negrito. 12px é o menor texto do app, e 10px ao sol de uma quadra é arriscado. Reabrir só se um contador de aba (CountBadge) não couber em `label-md`.
 - **`label-lg-caps`** (com tracking positivo para maiúsculas): eyebrows, category labels.
 
 Adicionar uma variante é trivial: estender a tabela em `semantic.css` e documentar aqui.
@@ -537,3 +541,11 @@ O consumidor pode customizar sem reescrever o componente:
 
 Todo elemento interativo deve ter área mínima tocável de `var(--dimension-tap-target-minimum)` (48px).
 Se o elemento for visualmente menor, usar `min-height` ou `padding` para expandir a área de toque.
+
+**Botão só de ícone** (mostrar senha, fechar, sino, busca) tem área de 48×48 mesmo com ícone `sm` (16px): o ícone fica centralizado e o `padding` ou um `::before` posicionado completa a área. Ícone de 16px com 4px de padding dá 24×24, que passa no mínimo da WCAG 2.5.8 (AA) mas não na regra do DS. O `aria-label` vai no `<button>`, não no `<Icon>`.
+
+### Acessibilidade — foco
+
+- **Botões, links e controles** usam o ring de foco do DS: `outline: var(--border-width-thick) solid var(--color-state-focus-ring)` em `:focus-visible`, com `:focus:not(:focus-visible) { outline: none; }` (exemplo em "State layers").
+- **Campos de texto** (FormInput, OtpInput e os que vierem) mostram o foco de duas formas: a borda muda para `--color-border-strong` em `:focus`, e o ring de `:focus-visible` aparece por cima. Nenhum campo zera o outline em `:focus`: assim o DS tem um só estilo de foco por teclado.
+- Controles internos de um componente (o botão de mostrar senha, o fechar do Toast) seguem a mesma regra dos botões. O outline padrão do navegador não é o estilo do DS.

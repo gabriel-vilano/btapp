@@ -23,6 +23,7 @@
   color: var(--color-foreground-primary);
   background: none;
   border: none;
+  border-radius: var(--radius-sm);
   cursor: pointer;
 }
 
@@ -30,6 +31,15 @@
   .resend__button:hover {
     text-decoration: underline;
   }
+}
+
+.resend__button:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.resend__button:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .resend__button--disabled {

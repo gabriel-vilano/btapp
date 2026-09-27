@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { fn } from "storybook/test";
+import { expect, fn } from "storybook/test";
 import { ResendTimer } from "./ResendTimer";
 
 const meta = {
@@ -20,6 +20,7 @@ const meta = {
   },
   argTypes: {
     loading: { control: "boolean" },
+    initialCountdown: { control: { type: "number", min: 0, max: 60 } },
   },
 } satisfies Meta<typeof ResendTimer>;
 
@@ -32,6 +33,39 @@ export const CountingDown: Story = {
       description: {
         story:
           "Estado inicial — timer começa em 60s e decresce. Espere 60s pra ver virar botão de reenvio (ou recarregue a story pra resetar).",
+      },
+    },
+  },
+};
+
+export const Available: Story = {
+  args: {
+    initialCountdown: 0,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Contagem zerada: o texto vira o botão \"Reenviar código\". Clicar chama `onResend` e reinicia a contagem em 60s.",
+      },
+    },
+  },
+};
+
+export const AvailableFocused: Story = {
+  args: {
+    initialCountdown: 0,
+  },
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.tab();
+    await expect(
+      canvas.getByRole("button", { name: "Reenviar código" }),
+    ).toHaveFocus();
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Botão de reenvio focado pelo teclado, com o ring de foco do DS.",
       },
     },
   },

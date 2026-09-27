@@ -127,6 +127,16 @@ Restrições mensuráveis, otimizadas para que o agente raciocine sobre o códig
 - Ícones customizados de marca: `src/components/icons/` (SVG próprio, fora do Phosphor)
 - Referência completa: ver `Icon.mdx` no Storybook (`UI/Icon > Docs`)
 
+## Onde mora cada componente
+
+`src/components/` se divide por grupo, e o grupo segue o Tier (ver "Storybook > Estratégia de cobertura"):
+
+- **`ui/`** guarda os Tier 1 e os Tier 2 genéricos: primitivos e compostos sem regra de negócio (Button, FormInput, Avatar, Badge, EmptyState).
+- **Grupos de área** (`auth/`, `feed/` e os próximos, como `agenda/`, `ranking/` e `profile/`) guardam os Tier 3 e Tier 4 daquela área, e os Tier 2 que só fazem sentido nela (OtpInput, PasswordChecklist).
+- **`icons/`** guarda os SVGs próprios da marca (fora do Phosphor).
+
+**Componente usado por duas ou mais áreas sobe para `ui/`.** Um grupo de área não importa de outro grupo de área: se `ranking/` precisa de algo que está em `feed/`, esse algo vai para `ui/`. Assim cada área depende só de `ui/`, e mover ou apagar uma área não quebra as outras.
+
 ## Documentação de componentes
 
 **Fonte única: arquivos `Component.mdx` ao lado de cada componente, renderizados no Storybook.** Não usamos `docs/components/` — foi deprecado e removido em favor de MDX como source of truth.

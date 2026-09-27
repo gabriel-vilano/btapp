@@ -26,7 +26,8 @@ const MX = rankingCategories.mistaC40.id;
 
 export const standingSnapshots: StandingSnapshot[] = [
   ...photo(rounds.first, MB, [[mb.t1, 212], [mb.t5, 208], [mb.t3, 206], [mb.t2, 90], [mb.t6, 88], [mb.t4, 46]]),
-  // T3 subiu 2; T1 e T5 caíram 1 (eventos em `feedEvents.ts`)
+  // T3 subiu 2 e virou Líder (o marco substitui o "subiu"); T1 e T5 caíram 1
+  // (eventos em `feedEvents.ts`)
   ...photo(rounds.second, MB, [[mb.t3, 418], [mb.t1, 364], [mb.t5, 294], [mb.t2, 202], [mb.t6, 126], [mb.t4, 46]]),
   ...photo(rounds.first, MX, [[mx.m3, 212], [mx.m1, 210], [mx.m2, 90], [mx.m4, 88]]),
   // A M4, encerrada, continua na tabela com os pontos congelados (R45)
