@@ -1,0 +1,118 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as ScheduleOptionPickerStories from "./ScheduleOptionPicker.stories";
+
+<Meta of={ScheduleOptionPickerStories} />
+
+<Subtitle>Escolher um dos horários que o outro lado propôs e confirmar, ou pedir outros.</Subtitle>
+
+**Código-fonte:** [`src/components/agenda/ScheduleOptionPicker/ScheduleOptionPicker.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/agenda/ScheduleOptionPicker/ScheduleOptionPicker.tsx)
+
+## Visão geral
+
+Mostra as 2 ou 3 opções de uma proposta de horário (`docs/SCHEDULING.md`, M5) como cartões de escolha única, com data, hora e arena. O jogador marca uma opção e confirma num botão que repete a escolha ("Marcar jogo · sáb, 3 out, 14h"). Se nenhum horário serve, "Nenhum serve" leva a propor outros (M9). É a peça central do estado "Proposta aguardando você" na tela do confronto.
+
+<Canvas of={ScheduleOptionPickerStories.Default} />
+
+## Estados
+
+Os estados vêm das opções recebidas, do "agora" (`now`) e do `confirming`. A escolha em si fica dentro do componente: o consumidor só recebe a opção confirmada em `onConfirm`.
+
+### Nenhuma opção escolhida
+
+O estado inicial. Nada vem pré-selecionado, e o botão diz só "Marcar jogo", desabilitado: sem escolha, ele não tem o que dizer.
+
+<Canvas of={ScheduleOptionPickerStories.Default} />
+
+### Opção escolhida
+
+O cartão escolhido fica grafite (`--color-background-inverse`), e o botão passa a dizer a opção na forma curta. Seleção em grafite, ação em coral (ver `docs/TOKENS.md` > "Regras fundamentais"): o cartão escuro não compete com o botão.
+
+<Canvas of={ScheduleOptionPickerStories.Selected} />
+
+### Foco por teclado
+
+Tab entra no grupo, e as setas trocam a opção, como em qualquer grupo de rádios. O ring de foco do DS aparece em volta do cartão.
+
+<Canvas of={ScheduleOptionPickerStories.KeyboardFocus} />
+
+### Duas opções
+
+A proposta tem de 2 a 3 opções (M5). O componente não tem variante por quantidade: a lista cresce ou encolhe.
+
+<Canvas of={ScheduleOptionPickerStories.TwoOptions} />
+
+### Sem arena
+
+A arena é opcional (M5). Sem ela, o cartão diz "Arena a combinar" no lugar, para todas as opções terem a mesma altura e a mesma leitura.
+
+<Canvas of={ScheduleOptionPickerStories.WithoutVenue} />
+
+### Opção indisponível
+
+Uma opção cujo horário passou não pode mais ser aceita (M12). O cartão fica desabilitado e diz "Horário já passou" no lugar da arena. Se o jogador tinha escolhido essa opção e o horário passou com a tela aberta, a escolha é desfeita.
+
+<Canvas of={ScheduleOptionPickerStories.UnavailableOption} />
+
+### Todas as opções passaram
+
+A proposta expira (M12). Todos os cartões ficam desabilitados, e "Nenhum serve" continua ativo: propor outros horários é o único caminho. A tela do confronto pode preferir mostrar o estado "Sem data" nesse caso.
+
+<Canvas of={ScheduleOptionPickerStories.AllOptionsPast} />
+
+### Nenhum serve
+
+Não existe "Recusar" sem alternativa (M9). O botão diz o que acontece ("propor outros horários") e chama `onNoneWorks`, que abre o formulário de contraproposta.
+
+<Canvas of={ScheduleOptionPickerStories.NoneWorks} />
+
+### Confirmando
+
+Com `confirming`, o botão mostra o spinner e todo o resto fica desabilitado enquanto o aceite é gravado. Evita o segundo toque e a troca de opção no meio do envio.
+
+<Canvas of={ScheduleOptionPickerStories.Confirming} />
+
+## Quando usar
+
+- Responder a uma proposta de horário na tela do confronto ("Proposta aguardando você")
+- Qualquer escolha entre 2 e 3 horários que precise de confirmação antes de valer
+
+## Componentes relacionados
+
+- Para **escolher entre opções curtas** (games de um set, categoria), use o [`ChoiceChipGroup`](?path=/docs/ui-chip--docs). O ScheduleOptionPicker é para opções de várias linhas que pedem confirmação
+- Para **mostrar a proposta enviada pelo próprio lado** (aguardando o outro lado), liste as opções só para leitura, com o [`ListItem`](?path=/docs/ui-listitem--docs): não há o que escolher
+- A confirmação usa o [`Button`](?path=/docs/ui-button--docs) primary, e o "Nenhum serve", o ghost
+
+## Acessibilidade
+
+- **Rádios nativos** (`<input type="radio">`) dentro de um `<fieldset>` com `<legend>` ("Escolha um horário"). O leitor anuncia o grupo, a posição ("1 de 3") e o texto do cartão ([APG Radio Group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/))
+- **O cartão inteiro é o rótulo:** tocar em qualquer parte escolhe a opção (WCAG 1.3.1)
+- **Teclado:** Tab entra no grupo e sai dele; as setas trocam a opção; Tab segue para os botões
+- **Foco:** o ring do DS em `:focus-visible`, desenhado no cartão
+- **Área tocável:** cada cartão tem bem mais de 48px de altura (regra do DS e WCAG 2.5.8)
+- **Não só cor** (WCAG 1.4.1): a opção escolhida muda o preenchimento e o anel ganha o ponto; a indisponível diz "Horário já passou"
+- **Revisão antes de enviar:** o aceite avisa os outros 3 jogadores e não se desfaz sozinho (M13). Escolher e confirmar, com a escolha escrita no botão, segue a WCAG 3.3.4 por analogia
+
+## Evitar
+
+- ❌ **Aceitar no toque do cartão.** Um toque errado avisaria 3 pessoas. A escolha só vale no botão
+- ❌ **Opção pré-selecionada.** Nenhum horário é a escolha óbvia; o jogador escolhe
+- ❌ **Botão genérico** ("Confirmar", "Aceitar"). O texto diz o que vai acontecer e quando
+- ❌ **Esconder a opção que passou.** Ela fica visível e desabilitada: o jogador entende o que foi proposto
+- ❌ **Coral no cartão escolhido.** Coral é a cor de ação; a seleção é grafite
+
+## API
+
+<ArgTypes of={ScheduleOptionPickerStories} />
+
+## Decisões de design
+
+**Por que escolher e confirmar, e não aceitar num toque?** O aceite define a data (M11), avisa os outros 3 jogadores (§5), publica data e arena no card público (M18) e vira evidência de W.O. (M16, M17). E não se desfaz: remarcar é propor de novo, e a data errada vale até o outro lado aceitar (M13). Como a proposta não tem prazo de resposta (§4), o toque a mais não pesa. O toque com "Desfazer" foi descartado porque exigiria atrasar o aceite e os avisos no servidor e abriria corrida com o parceiro (M3). Decisão do Gabriel, registrada na `docs/SCHEDULING.md` como DEC-ACEITE.
+
+**Por que o "agora" é uma prop?** A opção que passou (M12) depende do relógio. Recebendo `now` de fora, o componente fica previsível: as stories não mudam com o tempo e a tela decide quando atualizar. É o mesmo padrão das funções de `src/lib/domain/schedule-state`.
+
+## Referências
+
+- `docs/SCHEDULING.md`: M5, M9, M11, M12, M13 e §6
+- [APG Radio Group Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)
+- [WCAG 3.3.4 Error Prevention (Legal, Financial, Data)](https://www.w3.org/WAI/WCAG22/Understanding/error-prevention-legal-financial-data.html)
+- `docs/TOKENS.md`: "Regras fundamentais", "Acessibilidade — tap target" e "Acessibilidade — foco"

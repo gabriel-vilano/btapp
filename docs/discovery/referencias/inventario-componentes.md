@@ -77,7 +77,7 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **SidePicker** (jogadores e duplas) | S, H | Não | Buscar jogador, jogador sem conta, trocar de lado, dupla incompleta |
 | **EvolutionChart** | P, R | Não | Poucos pontos (1 ou 2 partidas), período sem dados, faixa de referência ligada ou não. Alternativa textual obrigatória |
 | **CelebrationScreen** | R, F | Não | Subiu, marco (Líder, Top 10, Finals), promoção de categoria. Nenhuma referência tem estado de queda |
-| **ScheduleOptionPicker** ⭐ | M | Não | As 2 ou 3 opções de horário de uma proposta como cartões de escolha única, mais "Nenhum serve" (`SCHEDULING.md` M5, M9, M11). Estados: aguardando você, aguardando o outro lado (só leitura), opção que já passou (M12), proposta expirada |
+| **ScheduleOptionPicker** ⭐ | M | Sim (`agenda/ScheduleOptionPicker`) | As 2 ou 3 opções de horário de uma proposta como cartões de escolha única: o jogador escolhe e confirma num botão que diz a escolha, ou toca em "Nenhum serve" (`SCHEDULING.md` M5, M9, M11). Estados: nenhuma escolhida, escolhida, opção que já passou (M12), todas passaram, confirmando. A proposta aguardando o outro lado é só leitura e não usa o componente |
 
 ## Tier 3 — Blocos reutilizáveis de feature
 
