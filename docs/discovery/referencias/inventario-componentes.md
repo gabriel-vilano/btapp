@@ -29,7 +29,7 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **Tabs / SegmentedControl** | R, P, H, D (4) | Não |
 | **Chip** (filtro e seleção) | R, P, S, D (4) | Não |
 | **DeltaIndicator** (▲ 2, ▼ 3, –) | R, F, P, H (4) | Parcial: `.delta` local no `RankingBlock` |
-| **EmptyState** | R, F, H, D, N (5) | Não |
+| **EmptyState** | R, F, H, D, N (5) | Sim (`ui/EmptyState`) |
 | **StatTile** | F, P, H, R (4) | Não |
 
 ---
@@ -42,7 +42,7 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **IconButton** | N, D, P, S | Não | Botão só com ícone e `aria-label` obrigatório: sino, busca, fechar folha, compartilhar, favoritar competição |
 | **Icon** | todas | Sim | — |
 | **TextLink** | todas | Sim | — |
-| **FormInput** | S, D | Sim | Variante numérica (`inputmode="numeric"`) se a entrada de placar usar campo; variante de busca (ver SearchField) |
+| **FormInput** | S, D | Sim (`text`, `email`, `password`, `tel`, `search` com lupa, `datetime-local`) | Variante numérica (`inputmode="numeric"`) se a entrada de placar usar campo. Limpar e carregando da busca ficam no SearchField |
 | **SearchField** | D, N | Não | Campo com ícone de lupa, limpar e estado de carregando. Pode ser variante do FormInput |
 | **Alert** | S, D | Sim (`attention`, `success`, `information`) | — |
 | **Toast** | S | Sim | — |
@@ -55,20 +55,21 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **Tabs** (na página) | R, P | Não | Padrão APG Tabs, setas, `aria-selected`. Não confundir com a TabBar de navegação |
 | **Stepper** | S | Não | Padrão APG Spinbutton. Só se o registro de placar seguir o caminho B |
 | **ProgressBar** | R, P | Não | Trilha até a linha das Finals ou até a promoção de categoria. `role="progressbar"` com valor textual |
-| **Skeleton** | R, F, P, D | Não (os tokens `--color-loading-*` existem) | Estado de carregamento de lista e card |
+| **Skeleton** | R, F, P, D | Sim (`ui/Skeleton`: `text`, `circle`, `rect`; pulso com os tokens `--color-loading-*`) | Nada para as superfícies. Cada tela monta a silhueta do próprio conteúdo |
+| **Spinner** | S, todas | Sim (`ui/Spinner`: `xs`, `sm`, `md`, `lg`; usado pelo Button em loading) | — |
 | **Divider** | R, P, D | Não | Separador simples. Base para o ZoneDivider (Tier 3) |
 | **BottomSheet / Dialog** | D, S | Não | Padrão APG Dialog (Modal): foco preso, `Esc`, foco volta. Base da folha de filtros e da contestação |
 | **TabBar** | N | Não | Navegação principal: `<nav>` com links e `aria-current="page"`, CountBadge, safe area do iOS. Uma instância, mas é casca do app inteiro |
 | **AppHeader** | N, todas | Não | Título, voltar, ações (IconButton). `AuthFormHeader` resolve só o caso de auth |
 | **FAB** | N, F | Não | Só se a navegação seguir o caminho C |
 | **ListItem** ⭐ | A, M, F, R, N | Sim (`ui/ListItem`, com o `List`; navegável, acionável ou estático) | Nada para as superfícies. Slot à esquerda (avatar ou ícone), título, texto de apoio, slot à direita (Badge, valor, chevron ou ação). Base do item da agenda, das pendências do feed, do RankingRow e das configurações |
-| **Checkbox** ⭐ | M, P | Não | Caixa desmarcada por padrão com o texto da finalidade ao lado. Primeiro uso: consentimento do telefone para o WhatsApp (`SCHEDULING.md` M21, LGPD) |
+| **Checkbox** ⭐ | M, P | Sim (`ui/Checkbox`) | Caixa desmarcada por padrão com o texto da finalidade ao lado. Primeiro uso: consentimento do telefone para o WhatsApp (`SCHEDULING.md` M21, LGPD) |
 
 ## Tier 2 — Compostos com estados ocultos
 
 | Componente | Superfícies | Existe? | Estados que justificam o tier |
 | --- | --- | --- | --- |
-| **EmptyState** | R, F, H, D, N | Não | Sem amigos, sem ranking, sem confronto, sem resultado de filtro. Título + apoio + CTA, com variante "e conteúdo sugerido abaixo" |
+| **EmptyState** | R, F, H, D, N | Sim (`ui/EmptyState`: ícone opcional, título, apoio e uma ação) | Sem amigos, sem ranking, sem confronto, sem resultado de filtro. A variante "e conteúdo sugerido abaixo" é composição da tela: o conteúdo vem depois do `EmptyState` |
 | **ScoreInput** | S | Não | Set completo, incompleto, inválido (7 × 7), tiebreak, super tiebreak, W.O., desistência. É o componente de maior risco técnico das 7 superfícies |
 | **PendingResultCard** | S, F | Não | Aguardando você, aguardando adversário, confirmado, contestado, confirmado automaticamente por prazo |
 | **StatusTimeline** | S | Não | Lançado → aguardando → confirmado / contestado. Útil se a confirmação ganhar tela própria |

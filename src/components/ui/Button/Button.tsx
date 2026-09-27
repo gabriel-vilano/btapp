@@ -1,6 +1,7 @@
 "use client";
 
 import { type ComponentProps } from "react";
+import { Spinner } from "@/src/components/ui/Spinner";
 import styles from "./Button.module.css";
 
 type ButtonProps = {
@@ -36,7 +37,7 @@ export function Button({
       aria-busy={loading || undefined}
       {...rest}
     >
-      {loading && <span className={styles.btn__spinner} />}
+      {loading && <Spinner size="sm" className={styles.btn__spinner} />}
       <span className={loading ? styles["btn__content--hidden"] : undefined}>
         {children}
       </span>

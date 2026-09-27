@@ -9,14 +9,15 @@ import * as FormInputStories from "./FormInput.stories";
 <Meta of={FormInputStories} />
 
 <Subtitle>
-  Input de formulário com label, validação inline e suporte a password.
+  Input de formulário com label, validação inline, senha, telefone, busca e
+  data e hora.
 </Subtitle>
 
 **Código-fonte:** [`src/components/ui/FormInput/FormInput.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/FormInput/FormInput.tsx)
 
 ## Visão geral
 
-`FormInput` é o input padrão do projeto — controlado, com label associada, validação inline (ícone + mensagem) e toggle de visibilidade pra senhas. Centraliza espaçamento, foco e estados de erro/sucesso.
+`FormInput` é o input padrão do projeto — controlado, com label associada, validação inline (ícone + mensagem), toggle de visibilidade pra senhas e o teclado certo no celular para cada tipo. Centraliza espaçamento, foco e estados de erro/sucesso.
 
 <Canvas of={FormInputStories.Empty} />
 
@@ -27,7 +28,7 @@ import * as FormInputStories from "./FormInput.stories";
 │ Label                  Trailing  │  ← label-row
 ├──────────────────────────────────┤
 │ ┌────────────────────────────┐   │
-│ │  field                ico  │   │  ← wrapper (input + ícone status/toggle)
+│ │ lead  field           ico  │   │  ← wrapper (ícone do tipo + input + ícone status/toggle)
 │ └────────────────────────────┘   │
 │ Mensagem de erro                  │  ← error message (quando erro)
 └──────────────────────────────────┘
@@ -35,13 +36,16 @@ import * as FormInputStories from "./FormInput.stories";
 
 - **label-row** — label do campo + slot opcional `labelTrailing` à direita (ex: "Esqueci a senha")
 - **wrapper** — contém input + ícone trailing
-- **field** — `<input>` com tipos text/email/password
+- **leading icon** — lupa (`search`) ou calendário (`datetime-local`). Decorativo, só nesses dois tipos
+- **field** — `<input>` com tipos text/email/password/tel/search/datetime-local
 - **trailing icon** — check (válido), X (inválido) ou eye toggle (password)
 - **error message** — `role="alert"`, conectada via `aria-describedby`
 
 ## Tipos
 
-`FormInput` aceita `text`, `email` e `password`. O tipo afeta validação nativa do browser e o teclado virtual no mobile.
+`FormInput` aceita `text`, `email`, `password`, `tel`, `search` e `datetime-local`. O tipo afeta a validação nativa do browser, o teclado virtual no celular e o preenchimento automático.
+
+<Canvas of={FormInputStories.AllTypes} />
 
 ### Text
 
@@ -60,6 +64,30 @@ Aplica `inputMode="email"` no mobile (teclado com `@` em destaque) e validação
 Mostra um toggle (olho/olho riscado) à direita pra revelar/ocultar a senha. Aria-label do botão muda conforme o estado.
 
 <Canvas of={FormInputStories.Password} />
+
+### Tel
+
+Teclado numérico de telefone no iOS e no Android. O `autocomplete` padrão é `tel`, então o sistema sugere o número do próprio aparelho em cima do teclado. Não há máscara: formatar e validar o número (DDD + 8 ou 9 dígitos) fica com quem usa o campo. Usado no telefone opcional da marcação de jogos (M20 do `docs/SCHEDULING.md`).
+
+<Canvas of={FormInputStories.Tel} />
+
+### Search
+
+Lupa à esquerda e tecla "Buscar" no teclado (`enterKeyHint="search"`). O leitor de tela anuncia o campo como caixa de busca (`role="searchbox"`, implícito). O `autocomplete` padrão é `off`. O X nativo de limpar fica escondido, porque cada navegador desenha um diferente e o iOS nem mostra. Limpar e estado de carregando ficam para o SearchField, quando a primeira busca do app existir.
+
+<Canvas of={FormInputStories.Search} />
+
+### Data e hora
+
+`datetime-local`: data e hora num campo só, com o calendário nativo. O valor chega no `onChange` como `AAAA-MM-DDTHH:mm` (sem fuso), e o formato exibido segue o idioma do aparelho (`02/10/2026, 19:30` em português). O ícone de calendário à esquerda identifica o campo mesmo vazio: no iOS, o campo vazio não mostra placeholder. Usado nas opções de horário da marcação (M5 e M6 do `docs/SCHEDULING.md`).
+
+<Canvas of={FormInputStories.DateTime} />
+
+### Data e hora fora do prazo
+
+`min` e `max` limitam o calendário no Android e no desktop, mas o picker do iOS deixa escolher qualquer data. Por isso a regra (ex.: "no futuro e antes do prazo da rodada") é validada no código, e o erro vem pela prop `error`.
+
+<Canvas of={FormInputStories.DateTimeInvalid} />
 
 ## Estados
 
@@ -101,6 +129,12 @@ Foco pelo teclado ou toque: borda `border-strong` **e** o ring de foco do DS. Co
 
 <Canvas of={FormInputStories.Focused} />
 
+### Foco em telefone, busca e data
+
+Os tipos novos seguem o mesmo foco. No Chrome desktop, o segmento da data em edição (dia, mês, ano, hora) usa o destaque de seleção do sistema: o navegador não deixa estilizar só o segmento ativo.
+
+<Canvas of={FormInputStories.NewTypesFocused} />
+
 ### Toggle de senha focado
 
 O toggle tem área tocável de 48×48, maior que o ícone, sem aumentar a altura do campo. Hover e press aplicam um state layer circular em volta do ícone.
@@ -115,7 +149,9 @@ Slot `labelTrailing` à direita do label — útil pra ações relacionadas como
 
 ## Quando usar
 
-- Qualquer campo de formulário de texto/email/senha
+- Qualquer campo de formulário de texto, e-mail, senha ou telefone
+- Busca simples, sem limpar nem carregando
+- Data e hora de um evento, como as opções de horário de uma proposta de jogo
 - Onde precisar de validação visual inline (sucesso ou erro)
 - Inputs com toggle de visibilidade (passwords)
 
@@ -123,6 +159,8 @@ Slot `labelTrailing` à direita do label — útil pra ações relacionadas como
 
 - Para **códigos OTP de N dígitos**, use [`OtpInput`](?path=/docs/auth-otpinput--docs) — UI dedicada pra códigos numéricos
 - Para **upload de avatar**, use [`AvatarUpload`](?path=/docs/auth-avatarupload--docs)
+- Para **busca com limpar e carregando**, o SearchField (ainda não existe). Até lá, `type="search"`
+- Para **escolher entre poucas opções fixas de horário** (ex.: sábado ou domingo), [`Chip`](?path=/docs/ui-chip--docs) é mais rápido que abrir um calendário
 - Para **textareas longos**, criar componente próprio quando surgir necessidade — `FormInput` é só pra single-line
 
 ## Acessibilidade
@@ -133,6 +171,8 @@ Slot `labelTrailing` à direita do label — útil pra ações relacionadas como
 - Mensagem de erro tem `role="alert"` — leitor de tela anuncia imediatamente
 - Toggle de senha tem `aria-label` dinâmico ("Mostrar senha" / "Ocultar senha")
 - Foco visível via `:focus-visible` (ring azul) no input e no toggle de senha. O input nunca remove o outline no `:focus`
+- `type="search"` dá ao campo o papel `searchbox`. A lupa e o calendário são decorativos (`aria-hidden`): o label já diz o que o campo pede
+- `datetime-local` é operável pelo teclado (setas mudam o segmento) e anunciado pelo leitor de tela com o label. O picker nativo de cada sistema já é acessível ao VoiceOver e ao TalkBack
 - Tap target de 48px no input e no toggle de senha ([WCAG 2.5.8](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html) pede 24px; a regra do DS é 48px)
 
 ## Evitar
@@ -141,15 +181,36 @@ Slot `labelTrailing` à direita do label — útil pra ações relacionadas como
 - ❌ **Validar antes do `onBlur`** — validação inline durante a digitação interrompe o usuário. Validar quando o foco sair do campo
 - ❌ **Mensagem de erro genérica** — "Campo obrigatório" não diz qual campo nem como corrigir. Específica: "Email inválido — use o formato voce@exemplo.com"
 - ❌ **Disabled sem feedback** — se o input está disabled por motivo não-óbvio, expor o motivo (ex: helper text ou Alert)
+- ❌ **Confiar em `min`/`max` do `datetime-local` como validação** — o iOS ignora. Validar no código e mostrar o erro
+- ❌ **`type="number"` para telefone** — tira o `+`, o zero à esquerda e os separadores, e mostra setas de incremento. Telefone é `tel`
 - ❌ **`required` sem indicação visual** — campos obrigatórios devem ser visualmente diferenciáveis dos opcionais
 
 ## API
 
 <ArgTypes of={FormInputStories} />
 
+## Decisões de design
+
+**Por que `datetime-local`, e não `date` + `time`?** A issue deixava a troca em aberto caso o iOS tratasse melhor os dois campos separados. Não trata: os problemas conhecidos do iOS valem igual para `date`, `time` e `datetime-local` (campo vazio sem placeholder e encolhido, [WebKit bug 198959](https://bugs.webkit.org/show_bug.cgi?id=198959); `min`/`max` ignorados no picker, [Apple Developer Forums](https://developer.apple.com/forums/thread/743096)). Separar não resolve nenhum deles e custa caro na marcação:
+
+- **Metade dos campos.** Uma proposta tem até 3 opções (M5). Com `date` + `time` seriam 6 campos e 6 labels numa tela de celular.
+- **Sem estado pela metade.** Com dois campos, a opção pode ter data sem hora, e o formulário precisa validar e explicar esse caso. Com um campo, o valor existe inteiro ou não existe.
+- **Um valor só para comparar.** A M6 compara cada opção com "agora" e com o prazo da rodada. `AAAA-MM-DDTHH:mm` vira um `Date` direto, sem juntar dois campos.
+- **Suporte.** `datetime-local` existe no Safari do iOS desde a versão 5 e no Chrome desde a 25 ([Can I use](https://caniuse.com/input-datetime)). No iOS abre um calendário compacto com a hora embaixo; no Android abre o calendário e, em seguida, o relógio. Os dois são pickers nativos, com o teclado e a acessibilidade do sistema.
+
+Os ajustes de CSS cobrem o que o iOS e o Chrome fazem por conta própria: valor alinhado à esquerda e altura fixa (o bug do WebKit), o indicador de calendário do Chrome desktop invisível e esticado sobre o campo (tocar em qualquer ponto abre o calendário), e o ano e o mês na cor do texto quando `min` e `max` os travam.
+
+**Por que ícone à esquerda só na busca e na data?** Nos dois o ícone diz o que o campo faz antes de qualquer valor, e no `datetime-local` vazio do iOS ele é a única pista visual. A direita continua reservada ao status (check e X) e ao toggle de senha, então os dois lados nunca disputam espaço. Telefone não ganha ícone: o label e o teclado já bastam.
+
+**Por que `autocomplete` com padrão por tipo?** Sem ele, o iOS sugere e-mails e nomes salvos em cima do teclado de telefone e da busca. `tel` deixa o sistema oferecer o número do aparelho; `off` na busca e na data tira sugestões que não fazem sentido. O consumidor ainda pode passar outro valor.
+
 ## Referências
 
 - [WCAG 1.3.1 — Info and Relationships](https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships.html)
 - [WCAG 3.3.2 — Labels or Instructions](https://www.w3.org/WAI/WCAG21/Understanding/labels-or-instructions.html)
 - [WAI-ARIA — `aria-invalid`](https://www.w3.org/TR/wai-aria-1.1/#aria-invalid)
+- [MDN — `<input type="datetime-local">`](https://developer.mozilla.org/docs/Web/HTML/Reference/Elements/input/datetime-local)
+- [MDN — `inputmode`](https://developer.mozilla.org/docs/Web/HTML/Global_attributes/inputmode) e [`enterkeyhint`](https://developer.mozilla.org/docs/Web/HTML/Global_attributes/enterkeyhint)
+- [HTML — valores de `autocomplete`](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)
+- `docs/SCHEDULING.md` — M5, M6 (opções de horário) e M20 (telefone opcional)
 - [MDN — `<input>` element](https://developer.mozilla.org/docs/Web/HTML/Element/input)

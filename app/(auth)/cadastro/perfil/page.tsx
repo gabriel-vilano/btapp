@@ -11,7 +11,9 @@ import { FormInput } from "@/src/components/ui/FormInput";
 import { Button } from "@/src/components/ui/Button";
 import { Alert } from "@/src/components/ui/Alert";
 import { TextLink } from "@/src/components/ui/TextLink";
+import { Spinner } from "@/src/components/ui/Spinner";
 import { slugifyName, validateUsername } from "@/src/lib/validations";
+import authStyles from "@/app/(auth)/auth-page.module.css";
 import styles from "./page.module.css";
 
 type UsernameStatus = "idle" | "checking" | "available" | "taken" | "invalid";
@@ -137,7 +139,7 @@ export default function ProfilePage() {
   if (!initialized) {
     return (
       <main className={styles.profile__loading}>
-        <div className={styles["profile__loading-spinner"]} />
+        <Spinner size="lg" className={styles["profile__loading-spinner"]} />
         <p>Carregando...</p>
       </main>
     );
@@ -152,7 +154,7 @@ export default function ProfilePage() {
         subtitle="Adicione uma foto e um nome de usuário para ser reconhecido por outros jogadores"
       />
 
-      <form action={handleSubmit} className={styles.profile__form}>
+      <form action={handleSubmit} className={authStyles["auth-page__form"]}>
         <AvatarUpload onFileSelect={setAvatarFile} />
 
         <div>
@@ -170,7 +172,7 @@ export default function ProfilePage() {
 
           {usernameStatus === "checking" && (
             <p className={`${styles["profile__username-status"]} ${styles["profile__username-status--checking"]}`}>
-              <span className={styles.profile__spinner} />
+              <Spinner size="xs" />
               Verificando disponibilidade...
             </p>
           )}

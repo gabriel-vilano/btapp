@@ -1,9 +1,3 @@
-.password__form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-200);
-}
-
 .password__field {
   display: flex;
   flex-direction: column;
