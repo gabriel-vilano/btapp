@@ -121,7 +121,7 @@ export const LongLabels: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Categorias do ranking com nomes longos. Em 393px não cabem: a lista rola na horizontal e a aba cortada na borda indica que há mais.",
+        story: "Rede de segurança para texto que não cabe: a lista rola na horizontal. Não é padrão de uso; lista longa como as categorias do ranking usa um botão com folha.",
       },
     },
   },
