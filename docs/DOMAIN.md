@@ -303,7 +303,7 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
 ### Troca de parceiro
 
 - **R17. No MVP, trocar de parceiro cria uma dupla nova, que começa do zero.** Na vida real a regra varia por ranking. Por isso o ranking já nasce com um campo de **política de troca**, mas o único valor que funciona no MVP é "nova dupla". [DEC-DOM]
-- **R45. A inscrição da dupla antiga fica congelada na tabela, encerrada e sem direito à final.** As partidas pendentes dela vão para o admin, como a partida não realizada (R40). Se o jogador volta ao parceiro antigo na mesma temporada, retoma a inscrição antiga. [DEC-RESP P7]
+- **R45. A inscrição da dupla antiga fica congelada na tabela, encerrada e sem direito à final.** As partidas pendentes dela vão para o admin, como a partida não realizada (R40). Se o jogador volta ao parceiro antigo na mesma temporada, retoma a inscrição antiga. Depois do encerramento, a inscrição não gera mais evento de movimentação no ranking (R24): a tabela continua mostrando a inscrição, mas o feed deixa de falar de uma dupla desfeita. [DEC-RESP P7; decisão do Gabriel na ENG-48]
 
 ### Contagens e H2H
 
@@ -320,7 +320,7 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
 - **R25. Marcos são eventos permanentes de primeira vez.** Nada no feed pode ser desmentido na rodada seguinte, nem por uma correção de placar (R41). Quais marcos existem e em que escopo estão na R47. [DEC-FINAL, DEC-FEED]
 - **R26. Textos do feed são neutros em gênero** ("agora são amigos", "Liderança"), porque o cadastro não coleta gênero. [DEC-CARDS D7]
 - **R46. A tabela atualiza ao vivo; o evento "subiu N" compara o fim da rodada com o fim da anterior.** A tela de ranking reflete cada confirmação, e a posição de cada inscrição no fim de cada rodada fica guardada para a comparação. **A rodada fecha no prazo dela:** o que o admin decidir depois (R40) entra na comparação da rodada seguinte, e o feed não espera a fila do admin. [DEC-RESP P8, DEC-FIM P19]
-- **R47. Os marcos são Líder e Top N, contados pela primeira vez em cada temporada.** N é a quantidade de classificados da final, ou 10 quando a temporada não tem final. Se os dois acontecem na mesma rodada, sai um evento só, o de Líder. Como a classificação é da dupla (R1), o marco é da dupla, e o card precisa mostrar os dois jogadores. [DEC-RESP P9]
+- **R47. Os marcos são Líder e Top N, contados pela primeira vez em cada temporada.** N é a quantidade de classificados da final, ou 10 quando a temporada não tem final. Se os dois acontecem na mesma rodada, sai um evento só, o de Líder. Do mesmo jeito, o marco substitui o "subiu" da mesma inscrição na mesma rodada: o card de marco já mostra a posição e quanto subiu. Em rodada sem marco, o "subiu" sai normalmente. Como a classificação é da dupla (R1), o marco é da dupla, e o card precisa mostrar os dois jogadores. [DEC-RESP P9; o marco no lugar do "subiu": decisão do Gabriel na ENG-48]
 
 ### Final da temporada
 
