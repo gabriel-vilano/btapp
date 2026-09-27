@@ -37,6 +37,7 @@ Documentamos o que é estável. Decisões, padrões, princípios, hurdles, conve
 - `docs/DISCOVERY.md` — mercado, oportunidades por JTBD ranqueadas por evidência, modelos de negócio, hipóteses do beta
 - `docs/DOMAIN.md` — modelo de domínio: glossário, relações, regras numeradas (R1…), máquina de estados da partida
 - `docs/SCHEDULING.md` — marcação de jogos: regras da proposta de horário (M1…), prazos, notificações, telefone para o WhatsApp e métricas
+- `docs/RANKING.md` — tela de ranking: classificação por categoria, troca de categoria, própria linha fixada, delta, linha de corte da final, página da competição, estados e critérios de aceite do RankingRow e do ZoneDivider (RK1…)
 - `docs/TOKENS.md` — design system
 - `docs/GIT_WORKFLOW.md` — workflow de branches, PR, versionamento
 - `docs/AGENT_WORKFLOW.md` — estrutura do Linear e coordenação de agentes em paralelo
