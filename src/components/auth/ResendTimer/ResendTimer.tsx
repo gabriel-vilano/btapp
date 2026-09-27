@@ -6,12 +6,18 @@ import styles from "./ResendTimer.module.css";
 type ResendTimerProps = {
   onResend: () => void;
   loading?: boolean;
+  /** Segundos iniciais da contagem. Default 60; `0` já mostra o botão. */
+  initialCountdown?: number;
 };
 
 const TIMER_SECONDS = 60;
 
-export function ResendTimer({ onResend, loading }: ResendTimerProps) {
-  const [countdown, setCountdown] = useState(TIMER_SECONDS);
+export function ResendTimer({
+  onResend,
+  loading,
+  initialCountdown = TIMER_SECONDS,
+}: ResendTimerProps) {
+  const [countdown, setCountdown] = useState(initialCountdown);
 
   useEffect(() => {
     if (countdown <= 0) return;
