@@ -26,7 +26,7 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | --- | --- | --- |
 | **Badge / Tag** | R, F, P, H, S, D (6) | Parcial: estilos locais no `ResultCard` (`.label`) e no `RankingBlock` (`.badge`) |
 | **Avatar** | R, F, P, H, S, D, N (7) | Sim, mas mora em `feed/`, não em `ui/` |
-| **Tabs / SegmentedControl** | R, P, H, D (4) | Não |
+| **Tabs / SegmentedControl** | R, P, H, D (4) | Sim (`ui/Tabs` e `ui/SegmentedControl`) |
 | **Chip** (filtro e seleção) | R, P, S, D (4) | Não |
 | **DeltaIndicator** (▲ 2, ▼ 3, –) | R, F, P, H (4) | Parcial: `.delta` local no `RankingBlock` |
 | **EmptyState** | R, F, H, D, N (5) | Sim (`ui/EmptyState`) |
@@ -51,8 +51,8 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **CountBadge** | N, F | Não | Ponto ou número sobre ícone (aba, sino). Nome acessível com a contagem |
 | **DeltaIndicator** | R, F, P, H | Sim (`ui/DeltaIndicator`; subiu, caiu e manteve; usado pelo `RankingBlock`) | Nada para as superfícies. Seta + texto + cor, nunca só cor (WCAG 1.4.1). Talvez variante compacta só com o número (▲ 2) para a coluna do RankingRow |
 | **Chip** | R, P, S, D | Não | Três usos: filtro liga/desliga (`aria-pressed`), filtro ativo removível (×), seleção única em grupo (radio). Decidir se é um componente com variantes ou três |
-| **SegmentedControl** | R, P, H, D | Não | 2 a 4 opções. Semântica de radio group ou de Tabs, conforme troque conteúdo ou filtro |
-| **Tabs** (na página) | R, P | Não | Padrão APG Tabs, setas, `aria-selected`. Não confundir com a TabBar de navegação |
+| **SegmentedControl** | R, P, H, D | Sim (`ui/SegmentedControl`; grupo de rádio, selecionado em grafite) | Nada para as superfícies. 2 a 4 opções que mudam o recorte do mesmo conteúdo. Quando cada opção troca um painel, é Tabs |
+| **Tabs** (na página) | R, P | Sim (`ui/Tabs`; APG Tabs com ativação automática, indicador grafite) | Nada para as superfícies. Não confundir com a TabBar de navegação |
 | **Stepper** | S | Não | Padrão APG Spinbutton. Só se o registro de placar seguir o caminho B |
 | **ProgressBar** | R, P | Não | Trilha até a linha das Finals ou até a promoção de categoria. `role="progressbar"` com valor textual |
 | **Skeleton** | R, F, P, D | Sim (`ui/Skeleton`: `text`, `circle`, `rect`; pulso com os tokens `--color-loading-*`) | Nada para as superfícies. Cada tela monta a silhueta do próprio conteúdo |
