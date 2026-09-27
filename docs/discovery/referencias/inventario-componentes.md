@@ -49,7 +49,7 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **Avatar / AvatarStack** | todas | Sim, em `feed/` (tamanhos 32, 40, 48) | Mover para `ui/` (é Tier 1). Fallback com iniciais. Tamanhos maiores para cabeçalho de perfil (64 ou 96) |
 | **Badge / Tag** | R, F, P, H, S, D | Parcial (estilos locais) | Primitivo com tons (`success`, `attention`, `accent`, `neutral`) para VITÓRIA/DERROTA/W.O., marco (Líder, Finals), categoria (B, C), status de competição (Inscrições abertas, Adiado), "Aguardando confirmação" |
 | **CountBadge** | N, F | Não | Ponto ou número sobre ícone (aba, sino). Nome acessível com a contagem |
-| **DeltaIndicator** | R, F, P, H | Parcial (`.delta` no `RankingBlock`) | Seta + número + cor, com "manteve" (–). Nunca só cor (WCAG 1.4.1) |
+| **DeltaIndicator** | R, F, P, H | Sim (`ui/DeltaIndicator`; subiu, caiu e manteve; usado pelo `RankingBlock`) | Nada para as superfícies. Seta + texto + cor, nunca só cor (WCAG 1.4.1). Talvez variante compacta só com o número (▲ 2) para a coluna do RankingRow |
 | **Chip** | R, P, S, D | Não | Três usos: filtro liga/desliga (`aria-pressed`), filtro ativo removível (×), seleção única em grupo (radio). Decidir se é um componente com variantes ou três |
 | **SegmentedControl** | R, P, H, D | Não | 2 a 4 opções. Semântica de radio group ou de Tabs, conforme troque conteúdo ou filtro |
 | **Tabs** (na página) | R, P | Não | Padrão APG Tabs, setas, `aria-selected`. Não confundir com a TabBar de navegação |
@@ -72,7 +72,7 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **EmptyState** | R, F, H, D, N | Sim (`ui/EmptyState`: ícone opcional, título, apoio e uma ação) | Sem amigos, sem ranking, sem confronto, sem resultado de filtro. A variante "e conteúdo sugerido abaixo" é composição da tela: o conteúdo vem depois do `EmptyState` |
 | **ScoreInput** | S | Não | Set completo, incompleto, inválido (7 × 7), tiebreak, super tiebreak, W.O., desistência. É o componente de maior risco técnico das 7 superfícies |
 | **PendingResultCard** | S, F | Não | Aguardando você, aguardando adversário, confirmado, contestado, confirmado automaticamente por prazo |
-| **StatusTimeline** | S | Não | Lançado → aguardando → confirmado / contestado. Útil se a confirmação ganhar tela própria |
+| **StatusTimeline** | S, M | Sim (`ui/StatusTimeline`: quem, o quê e quando, em ordem cronológica; marcador neutro) | Um evento só, histórico longo, evento do sistema (sem autor), ato de admin com o papel. Usos: histórico da marcação (`SCHEDULING.md` M16, M17) e do resultado (lançado, contestado, arbitrado, corrigido) |
 | **FilterSheet** | D, R | Não | Filtros ativos, contagem de resultados, zero resultados, limpar por seção. Compõe BottomSheet + Chip |
 | **SidePicker** (jogadores e duplas) | S, H | Não | Buscar jogador, jogador sem conta, trocar de lado, dupla incompleta |
 | **EvolutionChart** | P, R | Não | Poucos pontos (1 ou 2 partidas), período sem dados, faixa de referência ligada ou não. Alternativa textual obrigatória |

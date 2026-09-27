@@ -39,13 +39,13 @@ Renderiza `<button>`. Use pra ações que disparam efeito sem navegar — "Reenv
 
 ### Block (largura total, centralizado)
 
-`block=true` aplica `display: block` + alinhamento centralizado. Padrão em telas de auth onde o link aparece sozinho abaixo do formulário.
+`block=true` centraliza o link e garante a área tocável de 48px. Padrão em telas de auth onde o link aparece sozinho abaixo do formulário ("Pular por enquanto", "Cancelar"). Fica sem sublinhado em repouso, porque não há texto em volta de que se diferenciar; o sublinhado aparece no hover.
 
 <Canvas of={TextLinkStories.Block} />
 
 ### Inline em prose
 
-Embedado dentro de parágrafo. O texto continua o ritmo da linha; o link mantém sublinhado por default pra contraste de leitura.
+Embedado dentro de parágrafo. O texto continua o ritmo da linha; o link fica em coral (`--color-foreground-accent`) e sempre sublinhado, para se destacar do texto em volta.
 
 <Canvas of={TextLinkStories.InlineInProse} />
 
@@ -65,7 +65,8 @@ Embedado dentro de parágrafo. O texto continua o ritmo da linha; o link mantém
 - Quando renderiza `<a>`, leitor de tela anuncia "link" + texto
 - Quando renderiza `<button>`, anuncia "botão" + texto
 - `:focus-visible` produz outline azul de alto contraste — **nunca remover**
-- Sublinhado por padrão garante diferenciação além de cor (não depende só do coral pra distinguir do texto)
+- Sublinhado sempre no link inline garante diferenciação além da cor: não depende só do coral pra distinguir do texto ([WCAG 1.4.1](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html))
+- O coral de ação (`--color-foreground-accent`, coral-600) tem 4,96:1 com o branco e passa no AA de texto (ver `docs/TOKENS.md`)
 - Para links externos (`target="_blank"`), incluir `rel="noopener"` (já no padrão do projeto)
 
 ## Evitar
@@ -73,7 +74,7 @@ Embedado dentro de parágrafo. O texto continua o ritmo da linha; o link mantém
 - ❌ **`<a href="#">` placeholder** — quebra navegação por teclado e screen readers. Se ainda não há destino, usar `onClick` (vira botão) ou esconder o link
 - ❌ **Texto genérico** — "Clique aqui", "Saiba mais" sem contexto. O texto do link deve descrever o destino: "Ver políticas de privacidade"
 - ❌ **`onClick` em link** quando deveria ser navegação — quebra cmd+click e affordances de browser
-- ❌ **Remover o sublinhado** sem outra forma de distinção — usuários daltônicos ou com baixa visão dependem dele
+- ❌ **Remover o sublinhado do link inline** — usuários daltônicos ou com baixa visão dependem dele. Link sem sublinhado só na variante `block`, sozinho no container
 
 ## API
 
