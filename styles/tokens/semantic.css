@@ -120,6 +120,7 @@
   --color-state-layer-pressed-on-strong:  rgba(255, 255, 255, var(--opacity-200));
   --color-state-layer-selected-on-strong: rgba(255, 255, 255, var(--opacity-250));
   --color-state-focus-ring:               var(--color-blue-550);
+  --color-state-focus-ring-on-strong:     var(--color-neutral-100);
 
   /* Brand */
   --color-brand: var(--color-coral-500);
