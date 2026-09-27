@@ -60,7 +60,7 @@ Quando `exiting=true`, o toast aplica animação de saída (fade + slide). Em pr
 
 ### Fechar focado
 
-O `X` focado pelo teclado mostra o ring de foco do DS. A área tocável é de 48×48, mesmo com o ícone `sm`.
+O `X` focado pelo teclado mostra o ring de foco na cor do texto (branco): o azul do ring do DS some sobre o fundo escuro do toast. A área tocável é de 48×48, mesmo com o ícone `sm`.
 
 <Canvas of={ToastStories.DismissFocused} />
 
@@ -127,7 +127,7 @@ function MyForm() {
 ## Acessibilidade
 
 - Cada toast tem `role="alert"` — leitor de tela anuncia imediatamente
-- Botão de dismiss tem `aria-label="Fechar"`, `type="button"`, área tocável de 48×48 (maior que o ícone, sem aumentar o toast) e ring de foco do DS. Hover e press usam state layer claro, porque o toast sempre tem fundo escuro
+- Botão de dismiss tem `aria-label="Fechar"`, `type="button"`, área tocável de 48×48 (maior que o ícone, sem aumentar o toast) e ring de foco branco, que contrasta com os três fundos do toast ([WCAG 1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)). Hover e press usam state layer claro, porque o toast sempre tem fundo escuro
 - Auto-dismiss em 4s pode ser curto pra leitores lentos — usar `persistent: true` quando o conteúdo for crítico
 - Animação de entrada/saída usa `transition` curtas (170ms) — não interfere com `prefers-reduced-motion` significativamente, mas vale validar
 
