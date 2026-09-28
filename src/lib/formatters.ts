@@ -107,3 +107,18 @@ export function formatEventMoment(iso: string): string {
   const time = minute === "00" ? `${hour}h` : `${hour}h${minute}`;
   return `${weekday}, ${part("day")}/${part("month")}, ${time}`;
 }
+
+const countFormatter = new Intl.NumberFormat('pt-BR');
+
+/**
+ * Contagem com o rótulo concordando com o número, e milhar com ponto.
+ * Ex.: (1, "jogo", "jogos") → "1 jogo", (1204, "jogo", "jogos") → "1.204 jogos".
+ */
+export function formatCount(count: number, singular: string, plural: string): string {
+  return `${countFormatter.format(count)} ${count === 1 ? singular : plural}`;
+}
+
+/** Só o número, com o separador de milhar do pt-BR. Ex.: 1204 → "1.204". */
+export function formatCountValue(count: number): string {
+  return countFormatter.format(count);
+}

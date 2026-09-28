@@ -1,0 +1,85 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as StatTileStories from "./StatTile.stories";
+
+<Meta of={StatTileStories} />
+
+<Subtitle>Um número com rótulo, para contagens do perfil.</Subtitle>
+
+**Código-fonte:** [`src/components/ui/StatTile/StatTile.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/StatTile/StatTile.tsx)
+
+## Visão geral
+
+`StatTile` mostra uma contagem com destaque: o número grande em cima e o rótulo pequeno embaixo. No perfil, são os jogos e os amigos do jogador (`docs/PROFILE.md`, PF5). Ocupa a largura do contêiner, então dois tiles lado a lado dividem a linha.
+
+<Canvas of={StatTileStories.Default} />
+
+## Estados
+
+O tile muda com o valor (singular, milhar) e com a presença de `href`.
+
+<Canvas of={StatTileStories.AllStates} />
+
+### Com link
+
+Com `href`, o tile inteiro vira link, com state layer no hover e no press e o ring de foco do DS. No perfil, "amigos" abre a lista de amigos; "jogos" não é link, porque a lista de partidas já está logo abaixo.
+
+<Canvas of={StatTileStories.WithLink} />
+
+### Zero
+
+O jogador novo tem "0 jogos". O zero aparece como qualquer outro número: o vazio de verdade é tratado pela seção de partidas, não pelo tile.
+
+<Canvas of={StatTileStories.Zero} />
+
+### Singular
+
+Com valor 1, o rótulo vem de `singularLabel`: "1 jogo", nunca "1 jogos".
+
+<Canvas of={StatTileStories.One} />
+
+### Quatro dígitos
+
+O número usa o separador de milhar do pt-BR: "1.204".
+
+<Canvas of={StatTileStories.FourDigits} />
+
+## Quando usar
+
+- Contagens de um jogador que valem um olhar: jogos, amigos
+- Números que abrem uma lista (com `href`)
+
+## Componentes relacionados
+
+- Para o **cartel** (vitórias e derrotas), use o [`RecordLine`](?path=/docs/profile-recordline--docs): são dois números que formam uma frase, não duas contagens soltas
+- Para **posição no ranking** com variação, use o [`DeltaIndicator`](?path=/docs/ui-deltaindicator--docs) ao lado da posição
+
+## Acessibilidade
+
+- O leitor de tela recebe a frase inteira ("274 jogos"), na ordem valor e rótulo. A parte visual, com número e rótulo em blocos separados, fica oculta para ele (`aria-hidden`). Sem isso, o VoiceOver lê "274" e "jogos" como dois itens soltos
+- Com link, a frase é o nome acessível do link: "38 amigos"
+- O tile tem no mínimo 48px de altura (`--dimension-tap-target-minimum`)
+- O rótulo usa `foreground-secondary` sobre `background-secondary`, que passa no contraste AA (WCAG 1.4.3)
+
+## Evitar
+
+- ❌ **Percentual ou média no tile** ("67% de aproveitamento") — estatística sem referência não responde nada, e está fora do MVP (`docs/PROFILE.md`, seção 9)
+- ❌ **Rótulo só no plural** — passe sempre `singularLabel`
+- ❌ **Cor no número** — o tile é neutro. Coral é ação, verde e vermelho são sucesso e erro
+- ❌ **Mais de três tiles numa linha** — em 393px, o número deixa de caber em `title-md`
+
+## API
+
+<ArgTypes of={StatTileStories} />
+
+## Decisões de design
+
+**Por que `singularLabel` obrigatório, e não um formatador?** O tile só conhece dois rótulos por uso, e a prop obrigatória impede o "1 jogos" em tempo de compilação. Um formatador genérico de plural resolveria o português com regras, mas nenhum rótulo do produto precisa delas.
+
+**Por que o tile fica em `ui/`, e não em `profile/`?** Ele não tem regra de negócio: é um número com rótulo. Qualquer área pode usá-lo sem depender de `profile/`.
+
+## Referências
+
+- [WCAG 1.4.3 — Contrast (Minimum)](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html)
+- [WCAG 2.5.8 — Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
+- Spec: `docs/PROFILE.md`, PF5 e seção 8.1
+- Tokens relacionados: `docs/TOKENS.md` (`--text-title-md-*`, `--text-label-md-*`, `--color-background-secondary`, state layers)
