@@ -26,6 +26,7 @@ As decisões foram tomadas pelo Gabriel em 26/09/2026 e estão registradas como 
 | **DEC-FEED** | Issue da spec do feed com dados reais, comentário "Princípio do feed" | Feed público mostra conquistas e crescimento; evento com visibilidade |
 | **DEC-STB** | Issue da pontuação e do placar da partida, comentário "Decisão do Gabriel" | Super tiebreak pela regra da ITF em todos os rankings: 10 pontos com 2 de vantagem |
 | **DEC-DESEMP** | Issue da classificação e do desempate, comentário "Decisão do Gabriel" | Leituras da R37: W.O. no confronto direto e nas vitórias, mais de um jogo entre as duplas, confronto direto só no empate de duas |
+| **DEC-RANK** | Issue da spec do ranking com filtros, comentário "Decisões do Gabriel" (27/09/2026) | A queda aparece na tabela de classificação, e a R22 vale só para o feed e as notificações |
 | **DEC-SORT-BORDA** | Issue do sorteio da rodada, comentário "Decisões do Gabriel sobre os casos de borda do sorteio" (27/09/2026) | A partida cancelada não conta como confronto feito na R30; com menos adversários que jogos na rodada, cada dupla enfrenta cada outra uma vez e a rodada tem menos jogos |
 | **ITF** | [Rules of Beach Tennis 2025](https://www.itftennis.com/media/13855/rules-of-beach-tennis-2025.pdf), da ITF | Regra do super tiebreak |
 | **PESQ-RV** | Regras públicas do Rankin e do Vila do Tênis (BH), que usam o LetzPlay legado com a mesma configuração: `letzplay.me/rankin/rankings/55513/about`, `letzplay.me/vila-tenis-bt/rankings/56068/about`, `viladotenis.com/area-do-atleta` | Referências reais de jogos por rodada, prazo para combinar a data, regra de desistência, regra de W.O. por oferta de datas |
@@ -325,7 +326,7 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
 
 - **R20. O feed público mostra conquistas e crescimento.** [DEC-FEED]
 - **R21. Todo evento do feed tem visibilidade: público ou privado.** [DEC-FEED]
-- **R22. "Caiu no ranking" é privado:** só o próprio jogador vê, como informação, e não vira publicação para os amigos. Em duplas, os dois jogadores da dupla veem. [DEC-FEED; a extensão para a dupla é derivação da R1]
+- **R22. "Caiu no ranking" não vira publicação:** no feed, só o próprio jogador vê (em duplas, os dois da dupla), e ninguém é notificado da queda de outro. Na tabela de classificação, o delta aparece em todas as linhas, nos dois sentidos (`docs/RANKING.md`, RK12). [DEC-FEED, DEC-RANK; a extensão para a dupla é derivação da R1]
 - **R23. A situação "dentro ou fora da final" aparece só na tela de ranking**, como uma linha de corte na tabela. Não existe badge de "zona", que poderia sumir na rodada seguinte. [DEC-FINAL]
 - **R24. Eventos automáticos do feed:** resultado confirmado (ranking, torneio e amistoso), confronto definido, inscrição, amizade aceita, movimentação no ranking (subiu é público, caiu é privado), marco e classificação para a final. Variação zero de posição não gera evento. Pendências (resultado a lançar ou a responder, proposta a aceitar) não são eventos: moram na agenda do jogador (seção 4). [DEC-FEED, DEC-FINAL, DEC-JOGOS; `FEED_CARDS.md` §1 e §8.6]
 - **R25. Marcos são eventos permanentes de primeira vez.** Nada no feed pode ser desmentido na rodada seguinte, nem por uma correção de placar (R41). Quais marcos existem e em que escopo estão na R47. [DEC-FINAL, DEC-FEED]
