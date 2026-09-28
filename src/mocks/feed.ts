@@ -170,7 +170,7 @@ export const mockFeedCards: FeedCard[] = [
     h2h_count: 0,
   },
 
-  // 5. Resultado — Desistência (com set parcial jogado)
+  // 5. Resultado — Desistência no 2º set (exemplo da R11, do lado de quem venceu)
   {
     id: 'event-result-retired',
     card_type: 'result',
@@ -190,7 +190,11 @@ export const mockFeedCards: FeedCard[] = [
     },
     winner: { format: 'singles', player: lucas },
     loser: { format: 'singles', player: pedro },
-    score: { type: 'retired', completed_sets: [{ a: 6, b: 2 }] },
+    score: {
+      type: 'retired',
+      completed_sets: [{ a: 4, b: 6 }],
+      interrupted_set: { a: 3, b: 2 },
+    },
     date: onTheHour(daysAgo(2)),
     location: 'Arena RM – Beach · Nova Lima/MG',
     h2h_count: 0,

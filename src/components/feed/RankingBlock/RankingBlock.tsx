@@ -1,13 +1,9 @@
 "use client";
 
-import {
-  ArrowUpIcon,
-  ArrowDownIcon,
-  TrophyIcon,
-  StarIcon,
-} from "@phosphor-icons/react";
+import { TrophyIcon, StarIcon } from "@phosphor-icons/react";
 import { Icon } from "@/src/components/ui/Icon";
 import { Badge } from "@/src/components/ui/Badge";
+import { DeltaIndicator } from "@/src/components/ui/DeltaIndicator";
 import { milestoneLabel } from "@/src/components/feed/RankingCard/rankingTexts";
 import type { RankingCard } from "@/src/types/feed";
 import styles from "./RankingBlock.module.css";
@@ -45,16 +41,9 @@ function RankingDelta({ data }: RankingBlockProps) {
   // Classificação é a posição na data de corte, não uma movimentação (R28)
   if (data.movement === "final_qualification" || data.delta === null) return null;
 
-  const isDown = data.movement === "down";
-  const toneClass = isDown ? styles["delta--down"] : styles["delta--up"];
-  return (
-    <p className={`${styles.delta} ${toneClass}`}>
-      <Icon icon={isDown ? ArrowDownIcon : ArrowUpIcon} size="sm" weight="bold" />
-      <span>
-        {data.delta} {data.delta === 1 ? "posição" : "posições"}
-      </span>
-    </p>
-  );
+  // Marco só acontece subindo: a seta é a mesma do "up"
+  const direction = data.movement === "down" ? "down" : "up";
+  return <DeltaIndicator direction={direction} value={data.delta} />;
 }
 
 function RankingBadge({ data }: RankingBlockProps) {
