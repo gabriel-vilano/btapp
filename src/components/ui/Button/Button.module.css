@@ -88,13 +88,28 @@
   width: 100%;
 }
 
-/* --- Disabled --- */
+/* --- Disabled ---
+   Cada variante mantém a forma ao desabilitar: só o primary é preenchido.
+   Um fundo cinza no secondary ou no ghost daria a eles mais peso que o
+   primary ativo ao lado. Secondary e ghost seguem o desabilitado sem
+   preenchimento do Chip e do Checkbox. */
 .btn--disabled {
-  background-color: var(--color-background-disabled);
-  color: var(--color-foreground-on-disabled);
-  border-color: transparent;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+.btn--primary.btn--disabled {
+  background-color: var(--color-background-disabled);
+  color: var(--color-foreground-on-disabled);
+}
+
+.btn--secondary.btn--disabled {
+  color: var(--color-foreground-disabled);
+  border-color: var(--color-border-subtle);
+}
+
+.btn--ghost.btn--disabled {
+  color: var(--color-foreground-disabled);
 }
 
 /* --- Loading --- */
