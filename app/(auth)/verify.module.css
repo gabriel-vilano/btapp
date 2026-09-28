@@ -1,3 +1,5 @@
+/* Tela de verificação por código, compartilhada pelo cadastro e pela recuperação de senha. */
+
 .verify__subtitle {
   display: flex;
   flex-direction: column;
@@ -8,12 +10,6 @@
 .verify__email {
   font-weight: var(--font-weight-bold);
   color: var(--color-foreground-primary);
-}
-
-.verify__form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-200);
 }
 
 .verify__resend {

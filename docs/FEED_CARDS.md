@@ -140,12 +140,17 @@ Dois padrões dependendo do tipo de card:
      4       6       7   ← foreground-secondary, foreground-primary, foreground-secondary
 ```
 
-**WO e desistência — placar em cor secundária**
+**WO — sem placar**
+
+Não houve jogo, então não há números: a área do placar mostra só o rótulo "Vitória por W.O." (§4.3). Um 0/0 leria como placar real.
+
+**Desistência — placar real, com o set interrompido rotulado**
 ```
-     0      ← foreground-secondary (número não é informação)
-     0      ← foreground-secondary
+   Set 1   Interrompido
+     4          3        ← foreground-secondary (perdeu o set), foreground-secondary (set sem vencedor)
+     6          2        ← foreground-primary (venceu o set), foreground-secondary (set sem vencedor)
 ```
-Quando a desistência acontece com sets parciais jogados, esses sets usam a regra de cor normal — apenas os sets não jogados ficam em secundário.
+Os sets completos seguem a regra de cor normal. O set interrompido não tem vencedor, então os dois números ficam em `--color-foreground-secondary`, e a coluna sempre leva o rótulo "Interrompido", mesmo quando é a única. Os sets que não chegaram a ser jogados não aparecem: sem traço, sem placeholder. Detalhes no §4.4.
 
 ### 3.3 Labels de resultado
 
@@ -251,11 +256,41 @@ Todo card de resultado exibe um label ao lado do nome de cada jogador/dupla:
 
 ### 4.4 Variação — Desistência
 
-Mesma estrutura do WO com duas diferenças:
+O card mostra o **placar real**, como foi jogado, com o set interrompido marcado. É a convenção do tênis ("5–0 ret."). O placar completado pelo formato (R11, `docs/DOMAIN.md`) vale para os pontos e aparece só nas telas de revisão do resultado: publicá-lo no card mostraria games que não aconteceram.
+
+Exemplo da R11, 2 sets de 6: Pedro vence o 1º set por 6/4 e desiste perdendo o 2º por 2/3.
+
+```
+┌─────────────────────────────────────────────────────┐
+│ [Logo org]  Rodada 2 · Ranking Arena RM 2026 ·…     │
+│             @arenaRM · há 1d                        │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│  [avt]  Lucas Silva                    [VITÓRIA]   │
+│                                                     │
+│                 Set 1   Interrompido                │
+│                   4          3                      │
+│                   6          2                      │
+│                                                     │
+│  [avt]  Pedro Henrique            [Desistência]    │
+│                                                     │
+│  Jogo encerrado por desistência no 2º set           │
+│  📅 13/04/2026, Segunda às 19:00                    │
+│  📍 Arena RM – Beach · Nova Lima/MG                 │
+│                                                     │
+├─────────────────────────────────────────────────────┤
+│  ♡ Curtir   💬 Comentar   ↗ Compartilhar            │
+└─────────────────────────────────────────────────────┘
+```
+
 - Label do perdedor: "Desistência"
-- Texto: "Jogo encerrado por desistência"
-- Se houver sets parciais jogados: esses sets usam cor normal (foreground-primary/secondary conforme quem venceu). Apenas o placeholder de sets não jogados fica em foreground-secondary
-- Se nenhum set foi completado: segue o WO, sem placar. A área mostra só o rótulo "Vitória por desistência"
+- **Sets completos:** regra de cor normal (§3.1)
+- **Set interrompido:** coluna com o rótulo "Interrompido" no lugar de "Set N" ou "STB", sempre visível, mesmo quando é a única coluna (desistência no 1º set). Os dois números em `--color-foreground-secondary`, porque o set não teve vencedor. O rótulo, não a cor, é o que marca o set (WCAG 1.4.1)
+- **Sets não jogados:** não aparecem. Sem traço, sem placeholder
+- **Texto:** "Jogo encerrado por desistência no Nº set" (`--text-label-md`, `--color-foreground-secondary`). No 3º set do formato de 2 sets, "no super tiebreak". O texto fala do jogo, não de quem desistiu, e fica neutro em gênero (R26)
+- **Desistência entre sets** (o set seguinte não começou, 0 × 0): o set não vira coluna; o texto cita o set que não começou ("no 2º set")
+- **Nenhum game jogado:** segue o WO, sem placar. A área mostra só o rótulo "Vitória por desistência", e o texto é "Jogo encerrado por desistência"
+- Botão H2H: aparece, porque houve jogo (R19)
 
 ---
 
@@ -508,7 +543,7 @@ Mesma estrutura do WO com duas diferenças:
 
 **A posição é da unidade competidora** (`DOMAIN.md` R1): em duplas, o card mostra os dois jogadores, com o cabeçalho de dupla da seção 6.2 (stack de avatares 40px e "[Nome1] e [Nome2] subiram no ranking"). O verbo concorda com a unidade: singular em simples, plural em duplas.
 
-**Visibilidade** (`DOMAIN.md` R21, R22): "subiu", marco e classificação são públicos. "Caiu" é privado: só o jogador, ou os dois da dupla, veem.
+**Visibilidade** (`DOMAIN.md` R21, R22): "subiu", marco e classificação são públicos. O card "caiu" é privado: só o jogador, ou os dois da dupla, veem. A queda em si não é segredo: a tabela de classificação mostra o delta de todas as linhas (`RANKING.md` RK12); o que a R22 impede é a queda virar publicação ou notificação para outros.
 
 ### 8.1 Princípios de design
 

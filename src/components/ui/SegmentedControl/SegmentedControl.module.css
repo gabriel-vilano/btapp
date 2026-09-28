@@ -1,0 +1,144 @@
+/* =============================================================
+   SegmentedControl — escolha única entre visões (APG Radio Group)
+   ============================================================= */
+
+/* Ocupa a largura do contêiner (mobile-first): segmentos estreitos cortariam o rótulo */
+.segmented {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.segmented__legend {
+  margin-bottom: var(--spacing-100);
+  padding: 0;
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground-primary);
+}
+
+/* Some da tela, fica para o leitor de tela: o grupo continua com nome */
+.segmented__legend--hidden,
+.segmented__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Trilho com borda: separa o controle da página sobre fundo branco ou cinza */
+.segmented__track {
+  display: flex;
+  padding: var(--spacing-50);
+  border: var(--border-width-medium) solid var(--color-border-medium);
+  border-radius: var(--radius-full);
+  background-color: var(--color-background-primary);
+}
+
+/* Segmentos dividem a largura por igual, qualquer que seja o rótulo */
+.segmented__option {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  position: relative;
+}
+
+/* Área tocável de 48px: o segmento tem 40px, e o ::before cobre o respiro
+   de 4px do trilho acima e abaixo. Na horizontal os segmentos se encostam. */
+.segmented__option::before {
+  content: "";
+  position: absolute;
+  inset: calc(var(--spacing-50) * -1) 0;
+}
+
+.segmented__segment {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--dimension-action-height-md);
+  padding: var(--spacing-125) var(--spacing-150);
+  border-radius: var(--radius-full);
+  color: var(--color-foreground-primary);
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard),
+              color var(--motion-duration-short-3) var(--motion-easing-standard);
+}
+
+/* State layer de interação (hover e press). Segmento desabilitado não reage. */
+.segmented__segment::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--color-state-layer-neutral);
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .segmented__option:hover .segmented__input:enabled + .segmented__segment::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.segmented__option:active .segmented__input:enabled + .segmented__segment::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+/* --- Selecionado ---
+   Seleção em grafite, ação em coral (mesma regra do Chip): ~12:1 com o
+   branco do trilho, sem competir com o botão principal. */
+.segmented__input:checked + .segmented__segment {
+  background-color: var(--color-background-inverse);
+  color: var(--color-foreground-on-inverse);
+}
+
+@media (hover: hover) {
+  .segmented__option:hover .segmented__input:checked:enabled + .segmented__segment::after {
+    background-color: var(--color-state-layer-hover-on-strong);
+  }
+}
+
+.segmented__option:active .segmented__input:checked:enabled + .segmented__segment::after {
+  background-color: var(--color-state-layer-pressed-on-strong);
+}
+
+/* --- Foco --- */
+.segmented__input:focus-visible + .segmented__segment {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+/* --- Desabilitado --- */
+.segmented__input:disabled + .segmented__segment {
+  color: var(--color-foreground-disabled);
+  cursor: not-allowed;
+}
+
+/* Selecionado e desabilitado segue o preenchido desabilitado do Button */
+.segmented__input:checked:disabled + .segmented__segment {
+  background-color: var(--color-background-disabled);
+  color: var(--color-foreground-on-disabled);
+}
+
+.segmented:disabled .segmented__track {
+  border-color: var(--color-border-subtle);
+}

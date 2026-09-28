@@ -9,7 +9,7 @@ import { Button } from "@/src/components/ui/Button";
 import { Alert } from "@/src/components/ui/Alert";
 import { TextLink } from "@/src/components/ui/TextLink";
 import { validateEmail } from "@/src/lib/validations";
-import styles from "./page.module.css";
+import authStyles from "@/app/(auth)/auth-page.module.css";
 
 export default function RecoveryPage() {
   const [state, formAction, isPending] = useActionState(requestRecovery, null);
@@ -42,7 +42,7 @@ export default function RecoveryPage() {
         subtitle="Informe o e-mail da sua conta"
       />
 
-      <form action={handleSubmit} className={styles.recovery__form}>
+      <form action={handleSubmit} className={authStyles["auth-page__form"]}>
         <FormInput
           label="E-mail"
           name="email"
@@ -69,7 +69,7 @@ export default function RecoveryPage() {
         </Button>
       </form>
 
-      <p className={styles.recovery__footer}>
+      <p className={authStyles["auth-page__footer"]}>
         Lembrou sua senha?{" "}
         <TextLink href="/entrar">Entrar</TextLink>
       </p>
