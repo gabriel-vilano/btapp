@@ -99,7 +99,7 @@ GitHub Actions (`.github/workflows/ci.yml`) roda em todo PR e em todo push na `m
 
 Só mergear com a CI verde.
 
-**Versão fixa do Supabase CLI no E2E.** O passo `supabase/setup-cli@v1` recebe uma versão exata (`version: x.y.z`), nunca `latest`. Com `latest`, o passo consulta a API do GitHub a cada rodada para descobrir a última release, e o rate limit dessa API derruba o job antes de qualquer teste. Com a versão fixa, toda rodada também usa o mesmo CLI e, com ele, as mesmas imagens do Supabase local (Postgres, Auth, Storage): cada versão do CLI traz as tags dessas imagens embutidas.
+**Versão fixa do Supabase CLI no E2E.** O passo `supabase/setup-cli` recebe uma versão exata (`version: x.y.z`), nunca `latest`. Na v1 da action, `latest` consultava a API do GitHub a cada rodada para descobrir a última release, e o rate limit dessa API derrubava o job antes de qualquer teste. A v3 instala pelo npm, mas a versão fixa continua valendo, porque toda rodada usa o mesmo CLI e, com ele, as mesmas imagens do Supabase local (Postgres, Auth, Storage): cada versão do CLI traz as tags dessas imagens embutidas.
 
 Para atualizar, em um PR próprio:
 
@@ -108,6 +108,8 @@ Para atualizar, em um PR próprio:
 3. Esperar o job E2E verde. Ele sobe o banco do zero com as migrations, então prova que a versão nova aceita o `supabase start -x ...` e recria o schema.
 
 Atualizar quando o CLI local ficar muito atrás, quando uma feature precisar de algo novo do CLI ou quando o Postgres do projeto remoto mudar de versão: o banco local da CI deve seguir o que a integração GitHub do Supabase usa para aplicar as migrations no merge.
+
+**CLI local no mínimo 2.108.** O `supabase/config.toml` usa a seção `[local_smtp]` (o Mailpit, onde o E2E lê o código de verificação), que substituiu a `[inbucket]` nessa versão. Um CLI mais antigo recusa a seção desconhecida e não sobe o Supabase local: `supabase --version` diz a versão instalada.
 
 ### Merge
 
