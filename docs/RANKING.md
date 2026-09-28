@@ -14,7 +14,7 @@ As siglas de decisão são as do `docs/DOMAIN.md` > "Fontes". As que esta spec u
 | --- | --- |
 | **DEC-FINAL** | Linha de corte só na tela de ranking, sem badge de "zona" (R23); vaga por posição na data de corte (R28) |
 | **DEC-RESP** | Tabela ao vivo e evento "subiu N" por fim de rodada (R46); desempate fixo (R37); inscrição encerrada congelada (R45) |
-| **DEC-RANK** | Decisões do Gabriel na issue desta spec (27/09/2026): aprovação com as recomendações de RQ1 a RQ7 e as leituras RL1 a RL9; a queda aparece na tabela, e a R22 passa a valer só para o feed e as notificações |
+| **DEC-RANK** | Decisões do Gabriel na issue desta spec (27/09/2026): aprovação com as recomendações de RQ1 a RQ7 e as leituras RL1 a RL9, e confirmação da RL10 e da RL11 em 28/09/2026; a queda aparece na tabela, e a R22 passa a valer só para o feed e as notificações |
 | **DEC-NAV** | Decisão do Gabriel (26/09), registrada no `docs/NAVIGATION.md`: **ranking como lista completa, com a linha da própria dupla fixada** |
 | **NAV** | `docs/NAVIGATION.md` (em revisão): aba Ranking (N1), rota da classificação e da competição (N9, N10), toque do card de movimentação rolando até a linha da dupla, vazio, carregando e erro (N22–N24). **As perguntas Q1–Q5 de lá seguem abertas**; esta spec depende da Q1 (abas) e da Q4 (categoria aberta na aba e seletor). As regras dependentes dizem isso no texto (RK2, RK6, RK19) |
 | **RES** | `docs/RESULTS.md` (em revisão), §8.1: impacto no ranking logo depois da confirmação (RG18) |
@@ -22,7 +22,7 @@ As siglas de decisão são as do `docs/DOMAIN.md` > "Fontes". As que esta spec u
 | **REF** | `docs/discovery/referencias/01-ranking.md` (50 telas de 30 apps, Mobbin) e `inventario-componentes.md` |
 | **DSC** | `docs/DISCOVERY.md`: oportunidades 2.2 (explicar a pontuação) e 2.3 (corrida à final com linha de corte) |
 | **WCAG** | WCAG 2.2: 1.4.1 (uso de cor), 1.4.11 (contraste de não texto), 2.5.8 (tamanho do alvo); WAI-ARIA APG (não tem padrão de leaderboard) |
-| **LEIT** | Leitura do agente desta spec. RL1–RL9 confirmadas pelo Gabriel (DEC-RANK); RL10 e RL11 a confirmar. A lista está na seção 11 |
+| **LEIT** | Leitura do agente desta spec. RL1–RL11 confirmadas pelo Gabriel (DEC-RANK; RL10 e RL11 em 28/09/2026). A lista está na seção 11 |
 
 ---
 
@@ -125,7 +125,7 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
 ### 4.3 Delta
 
-- **RK12. O delta de cada linha compara a posição ao vivo com uma foto de fim de rodada** (a foto da classificação, R46), e aparece em todas as linhas, nos dois sentidos: a queda não é escondida na tabela (R22). A base muda assim: [R22, R46, CARDS §8; DEC-RANK; RL10]
+- **RK12. O delta de cada linha compara a posição ao vivo com uma foto de fim de rodada** (a foto da classificação, R46), e aparece em todas as linhas, nos dois sentidos: a queda não é escondida na tabela (R22). A base muda assim: [R22, R46, CARDS §8; DEC-RANK RL10]
   - **Do fechamento da rodada N até o primeiro resultado confirmado da rodada N+1:** a base é a foto do fim da rodada N−1. Nesse intervalo a posição ao vivo é a própria foto de N, então a tabela mostra exatamente o delta do card "subiu N" que acabou de sair no feed, e o card que leva à tabela (RK3) encontra o mesmo ▲ 2 na linha.
   - **Do primeiro resultado confirmado da rodada N+1 em diante:** a base passa a ser a foto do fim da rodada N, e o delta mostra quanto a dupla andou na rodada em curso.
   - **Posição igual:** a linha não mostra delta. O traço de "manteve" do DeltaIndicator fica para contextos em que a ausência confundiria (o StandingSummaryItem, seção 9); na tabela, uma coluna de traços é ruído.
@@ -169,7 +169,7 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 ## 6. Temporada e tempo
 
 - **RK15. A classificação mostra a temporada atual.** Depois do fim, a temporada encerrada continua na tela até a próxima começar, com o cabeçalho "Temporada encerrada" e a tabela final; a linha da própria dupla continua fixada. Quando a próxima começa, a encerrada mais recente fica acessível por um link no cabeçalho ("Temporada anterior") até o fim da nova. [R8, R27; NAV 7.2; DEC-RANK RL7]
-- **RK21. Toda temporada encerrada tem a própria classificação, na mesma tela** (`/ranking/[categoria]?temporada=[id]`), no estado "Temporada encerrada" da RK15. É o destino do toque numa temporada da seção "Temporadas" do perfil (`PROFILE.md`, PF19): a tela abre rolada até a linha da dupla daquela temporada, destacada como a própria linha quando o jogador está nela. A aba Ranking só oferece a temporada anterior (RK15); as mais antigas chegam pelo perfil, que é onde mora a evolução. [NAV N10; RL11]
+- **RK21. Toda temporada encerrada tem a própria classificação, na mesma tela** (`/ranking/[categoria]?temporada=[id]`), no estado "Temporada encerrada" da RK15. É o destino do toque numa temporada da seção "Temporadas" do perfil (`PROFILE.md`, PF19): a tela abre rolada até a linha da dupla daquela temporada, destacada como a própria linha quando o jogador está nela. A aba Ranking só oferece a temporada anterior (RK15); as mais antigas chegam pelo perfil, que é onde mora a evolução. [NAV N10; DEC-RANK RL11]
 - **Temporadas mais antigas e a evolução de posição ao longo do tempo** (JTBD 5) ficam com a spec de perfil, combinado com ela no Linear.
 - **RK16. A tabela atualiza ao vivo** (R46): uma confirmação muda a tabela na próxima visita ou ao puxar para atualizar. Não há atualização em tempo real com a tela aberta no MVP. Uma confirmação que muda a posição da própria dupla enquanto a tela está aberta aparece na próxima carga, sem animação. [R46; DEC-RANK RL8]
 - **Sem tela de celebração ao subir.** O momento de subir já tem dois lugares: a tela do confronto logo depois da confirmação (RES, RG18) e o card do feed no fim da rodada (CARDS §8). Uma terceira, interrompendo a abertura do app, repetiria o mesmo momento. [RES, CARDS; DEC-RANK RQ7]
@@ -319,7 +319,7 @@ Confirmadas pelo Gabriel (DEC-RANK):
 - **RL8.** Sem atualização em tempo real nem tela de celebração ao subir (RK16).
 - **RL9.** A página da competição tem cabeçalho, categorias, temporada e regras com os valores do próprio ranking (RK17, RK18).
 
-A confirmar (saíram das correções de consistência depois da aprovação):
+Confirmadas pelo Gabriel em 28/09/2026 (saíram das correções de consistência depois da aprovação):
 
 - **RL10.** A base do delta só avança para a foto da rodada que acabou de fechar no primeiro resultado confirmado da rodada seguinte; até lá, a tabela mostra o mesmo delta do card de fechamento (RK12).
 - **RL11.** Temporadas mais antigas que a anterior chegam pelo perfil, e o toque abre a classificação daquela temporada, rolada até a linha da dupla (RK21).
