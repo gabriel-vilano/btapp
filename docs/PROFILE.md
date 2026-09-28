@@ -19,7 +19,7 @@ As siglas de decisão são as mesmas do `docs/DOMAIN.md` > "Fontes". As que esta
 | **REF** | `docs/discovery/referencias/03-perfil.md` (30 telas de 24 apps) e `inventario-componentes.md` |
 | **DSC** | `docs/DISCOVERY.md` (oportunidades 3.1, 3.2, 3.3, 5.1, 5.2) e `docs/discovery/` (SINTESE, VOZ_DO_USUARIO, MATRIZ_FEATURES) |
 | **DEC-PERFIL** | Issue desta spec, comentário "Decisões do Gabriel" (27/09/2026): aprovação das recomendações das perguntas PQ1–PQ5 e das leituras PL1–PL8; a variação de posição aparece em todas as linhas da tabela, nos dois sentidos, e a R22 passa a valer só para o feed e as notificações |
-| **RANK** | `docs/RANKING.md`: linha da classificação (RK8), base do delta (RK12), temporada encerrada na tela (RK15) e o item de posição StandingSummaryItem (seção 9) |
+| **RANK** | `docs/RANKING.md`: linha da classificação e suas contagens (RK8), base do delta (RK12), temporada encerrada na tela (RK15), classificação de temporada antiga (RK21) e o item de posição StandingSummaryItem (seção 9) |
 | **LEIT** | Leitura do agente desta spec, confirmada na DEC-PERFIL. A lista está na seção 10 |
 
 ---
@@ -89,7 +89,7 @@ O cabeçalho responde "quem é" e "que tipo de jogador é" em um olhar, antes de
 - **PF5. Jogos é o `total_matches` (R18); amigos é o número de amizades aceitas (R24).** Os dois são StatTile. Tocar em "amigos" abre a lista de amigos do jogador (`/jogadores/[username]/amigos`); "jogos" não é tocável, porque a lista de partidas já está logo abaixo. [`FEED_CARDS.md` §11.1; LEIT]
 - **PF6. O cartel é "N vitórias · N derrotas", de todas as partidas confirmadas do jogador**: ranking, torneio e amistoso, em simples e duplas, desde que ele entrou no app. **W.O. e W.O. duplo ficam fora**, como no `total_matches` (R18) e no H2H (R19); a desistência entra, porque houve jogo. Assim, vitórias + derrotas = jogos, e os dois números nunca se contradizem. **O W.O. em que o lado do jogador não compareceu também não aparece no perfil** no MVP: é decidido pelo admin (R40), e um número público de ausências expõe mais do que ajuda num beta pequeno. [R18, R19, DSC 3.3; DEC-PERFIL PQ4]
 
-  **Diferença para a linha da classificação:** a linha da tabela mostra "N jogos · N vitórias" da **dupla naquela categoria e temporada**, e ali o W.O. conta como vitória, porque "vitórias" é critério de desempate (R37; RANK RK8). O cartel conta as **partidas jogadas pelo jogador**, em qualquer competição. São duas contas com o mesmo rótulo, e por isso nunca aparecem na mesma tela: no perfil, o item de posição não mostra jogos nem vitórias (PF10), e a tabela não mostra o cartel. Se a spec de ranking mudar as contagens da linha, esta regra se ajusta a ela.
+  **Mesma definição da linha da classificação:** a linha da tabela mostra "N jogos · N vitórias" com a mesma conta do cartel: jogos são as partidas confirmadas em que houve jogo (normal ou desistência), vitórias são os jogos vencidos, e W.O., W.O. duplo e canceladas ficam fora (RANK RK8). **A diferença é só o recorte:** a linha conta a inscrição da dupla na temporada; o cartel conta a carreira do jogador, em qualquer competição e no amistoso. Por isso a soma das linhas do jogador pode ser menor que o cartel, nunca maior.
 
   **Por que carreira e não "temporada atual":** o jogador está em vários rankings (R2), cada um com a sua temporada, então "a temporada" do jogador não existe. O recorte por período fica para quando houver volume (seção 9).
 - **PF7. Ação do cabeçalho, pelo estado da amizade (R24):**
@@ -163,7 +163,7 @@ Sem confronto e sem H2H, o bloco some (PF2). Adversários em comum (DSC 3.3) sã
 
 - **PF19. Uma linha por temporada encerrada** em que o jogador teve inscrição: temporada, competição · categoria, parceiro, **posição final** e, quando houver, os marcos (★ Líder, ★ Top N) e a classificação para a final ("★ Saideira"). Mais recente primeiro. [R25, R27, R28, R47]
 
-  **Toque na linha:** abre a classificação final daquela categoria naquela temporada, rolada até a linha da dupla. A tela é a mesma da spec de ranking no estado "Temporada encerrada" (RK15), aberta numa temporada mais antiga; a spec de ranking define o conteúdo da tela, e esta spec define o destino. Combinado com a spec de ranking no Linear. [RANK RK15; LEIT]
+  **Toque na linha:** abre a classificação final daquela categoria naquela temporada, rolada até a linha da dupla. A tela e a rota são as da RK21 da spec de ranking: a mesma classificação, no estado "Temporada encerrada" (RK15), aberta na temporada escolhida. [RANK RK15, RK21]
 
   **Por quê:** é a evolução que pode ser pública. Marcos e classificação já são eventos públicos do feed (R20, R24), e a posição final é a mesma que a tabela da temporada mostra. É também o que o jogador vê entre temporadas, quando não há jogo (NAV 7.2).
 
