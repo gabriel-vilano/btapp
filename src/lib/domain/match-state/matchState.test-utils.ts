@@ -1,6 +1,7 @@
 import { expect } from 'vitest';
 import type {
   CompetitionResult,
+  ContestDetails,
   FriendlyMatch,
   NormalResult,
   RankingMatch,
@@ -62,6 +63,9 @@ export const WIN_B: NormalResult = {
   sets: [{ games_a: 3, games_b: 6, super_tiebreak: false, interrupted: false }],
 };
 
+/** Motivo padrão das contestações nos testes que não olham o motivo (R49). */
+export const CONTEST: ContestDetails = { reason: 'different_winner' };
+
 export function definedRankingMatch(): RankingMatch {
   return {
     id: 'match-test',
@@ -69,6 +73,7 @@ export function definedRankingMatch(): RankingMatch {
     competition_id: 'ranking-test',
     category_id: 'category-test',
     round_id: 'round-test',
+    undone_reports: [],
     side_a_enrollment_id: 'enrollment-a',
     side_b_enrollment_id: 'enrollment-b',
     format: 'one_set_of_6',
@@ -129,7 +134,7 @@ export function rankingMatchIn(status: RankingMatch['status']): RankingMatch {
   const byStatus: { [S in RankingMatch['status']]: () => RankingMatch } = {
     defined: definedRankingMatch,
     awaiting_confirmation: () => awaiting,
-    in_arbitration: () => contestRankingResult(awaiting, act(PLAYER.b1), RANKING_CONTEXT),
+    in_arbitration: () => contestRankingResult(awaiting, CONTEST, act(PLAYER.b1), RANKING_CONTEXT),
     not_played: () => notPlayed,
     confirmed: () => confirmRankingResult(awaiting, act(PLAYER.b1), RANKING_CONTEXT),
     cancelled: () => cancelNotPlayed(notPlayed, act(PLAYER.admin, AFTER_ROUND_DEADLINE), ADMIN_CONTEXT),
