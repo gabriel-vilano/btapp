@@ -2,7 +2,17 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/src/lib/supabase/server";
-import { validateEmail, validatePassword, validateName, validateOtp, validateUsername, validateAvatar } from "@/src/lib/validations";
+import {
+  validateEmail,
+  validatePassword,
+  validateFirstName,
+  validateLastName,
+  validateOtp,
+  validateUsername,
+  validateAvatar,
+} from "@/src/lib/validations";
+import { joinFullName, splitFullName, type PersonName } from "@/src/lib/names";
+import type { User } from "@supabase/supabase-js";
 import { AVATAR_HEADER_LENGTH, detectAvatarFormat } from "@/src/lib/avatarFormat";
 import type { AuthActionState } from "@/src/types/auth";
 
@@ -39,13 +49,19 @@ export async function signup(
   _prevState: AuthActionState,
   formData: FormData
 ): Promise<AuthActionState> {
-  const name = (formData.get("name") as string)?.trim() ?? "";
+  const firstName = (formData.get("firstName") as string)?.trim() ?? "";
+  const lastName = (formData.get("lastName") as string)?.trim() ?? "";
   const email = (formData.get("email") as string)?.trim() ?? "";
   const password = (formData.get("password") as string) ?? "";
 
-  const nameResult = validateName(name);
-  if (!nameResult.valid) {
-    return { fieldErrors: { name: nameResult.error } };
+  const firstNameResult = validateFirstName(firstName);
+  if (!firstNameResult.valid) {
+    return { fieldErrors: { firstName: firstNameResult.error } };
+  }
+
+  const lastNameResult = validateLastName(lastName);
+  if (!lastNameResult.valid) {
+    return { fieldErrors: { lastName: lastNameResult.error } };
   }
 
   const emailResult = validateEmail(email);
@@ -63,7 +79,11 @@ export async function signup(
     email,
     password,
     options: {
-      data: { full_name: name },
+      data: {
+        first_name: firstName,
+        last_name: lastName,
+        full_name: joinFullName({ firstName, lastName }),
+      },
     },
   });
 
@@ -302,6 +322,18 @@ export async function checkUsername(username: string): Promise<{
 
 type SupabaseServerClient = Awaited<ReturnType<typeof createClient>>;
 
+// Quem se cadastrou antes dos dois campos tem só `full_name` nos metadados
+function nameFromMetadata(user: User): PersonName {
+  const metadata = user.user_metadata ?? {};
+  if (typeof metadata.first_name === "string") {
+    return {
+      firstName: metadata.first_name,
+      lastName: typeof metadata.last_name === "string" ? metadata.last_name : "",
+    };
+  }
+  return splitFullName(typeof metadata.full_name === "string" ? metadata.full_name : "");
+}
+
 // A action pode ser chamada direto (fora da tela), então o avatar é revalidado aqui:
 // tipo e tamanho declarados + formato real pelos bytes. Extensão e contentType vêm do
 // formato detectado, nunca do nome ou do `type` enviados pelo usuário.
@@ -350,8 +382,7 @@ export async function createProfile(
     return { error: "Sessão expirada. Faça login novamente." };
   }
 
-  const fullName =
-    (user.user_metadata?.full_name as string) ?? "";
+  const name = nameFromMetadata(user);
 
   if (username) {
     const usernameValidation = validateUsername(username);
@@ -377,7 +408,9 @@ export async function createProfile(
 
   const { error: insertError } = await supabase.from("profiles").upsert({
     id: user.id,
-    full_name: fullName,
+    first_name: name.firstName || null,
+    last_name: name.lastName || null,
+    full_name: joinFullName(name),
     username: username || null,
     avatar_url: avatarUrl,
   });

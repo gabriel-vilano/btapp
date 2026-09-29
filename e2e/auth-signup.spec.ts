@@ -10,7 +10,8 @@ test("cadastro completo: dados, código do e-mail, perfil e feed", async ({ page
   const username = `e2e.${Date.now().toString(36)}`;
 
   await page.goto("/cadastro");
-  await page.getByLabel("Nome", { exact: true }).fill("Jogador E2E");
+  await page.getByLabel("Nome", { exact: true }).fill("Jogador");
+  await page.getByLabel("Sobrenome", { exact: true }).fill("E2E");
   await page.getByLabel("E-mail", { exact: true }).fill(email);
   await page.getByLabel("Senha", { exact: true }).fill(TEST_PASSWORD);
   await page.getByRole("button", { name: "Criar conta", exact: true }).click();

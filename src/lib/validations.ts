@@ -3,20 +3,35 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const OTP_LENGTH = 8;
 const OTP_REGEX = new RegExp(`^\\d{${OTP_LENGTH}}$`);
 
-export const NAME_MAX_LENGTH = 30;
+export const FIRST_NAME_MAX_LENGTH = 30;
+// Sobrenome brasileiro costuma ter duas ou três palavras ("de Vasconcelos Albuquerque"
+// tem 26 caracteres), por isso o limite é maior que o do nome
+export const LAST_NAME_MAX_LENGTH = 40;
+const NAME_PART_MIN_LENGTH = 2;
 
-export function validateName(name: string) {
-  const trimmed = name.trim();
-  if (trimmed.length < 2) {
-    return { valid: false, error: "Nome precisa ter pelo menos 2 caracteres" };
+function validateNamePart(value: string, label: string, maxLength: number) {
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return { valid: false, error: `${label} é obrigatório` };
   }
-  if (trimmed.length > NAME_MAX_LENGTH) {
+  if (trimmed.length < NAME_PART_MIN_LENGTH) {
     return {
       valid: false,
-      error: `Nome deve ter no máximo ${NAME_MAX_LENGTH} caracteres`,
+      error: `${label} precisa ter pelo menos ${NAME_PART_MIN_LENGTH} caracteres`,
     };
   }
+  if (trimmed.length > maxLength) {
+    return { valid: false, error: `${label} deve ter no máximo ${maxLength} caracteres` };
+  }
   return { valid: true };
+}
+
+export function validateFirstName(firstName: string) {
+  return validateNamePart(firstName, "Nome", FIRST_NAME_MAX_LENGTH);
+}
+
+export function validateLastName(lastName: string) {
+  return validateNamePart(lastName, "Sobrenome", LAST_NAME_MAX_LENGTH);
 }
 
 export function validateEmail(email: string) {

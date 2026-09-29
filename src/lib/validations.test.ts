@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
-  validateName,
+  validateFirstName,
+  validateLastName,
   validateEmail,
   validatePassword,
   validateOtp,
@@ -9,25 +10,52 @@ import {
   validateAvatar,
 } from "./validations";
 
-describe("validateName", () => {
-  it("rejeita nome vazio", () => {
-    expect(validateName("").valid).toBe(false);
+describe("validateFirstName", () => {
+  it("rejeita nome vazio ou só com espaços", () => {
+    expect(validateFirstName("")).toEqual({ valid: false, error: "Nome é obrigatório" });
+    expect(validateFirstName("   ")).toEqual({ valid: false, error: "Nome é obrigatório" });
   });
 
   it("rejeita nome com 1 caractere", () => {
-    expect(validateName("A").valid).toBe(false);
+    expect(validateFirstName("A")).toEqual({
+      valid: false,
+      error: "Nome precisa ter pelo menos 2 caracteres",
+    });
   });
 
-  it("aceita nome com 2 caracteres", () => {
-    expect(validateName("Jo").valid).toBe(true);
+  it("aceita nome com 2 caracteres, ignorando espaços ao redor", () => {
+    expect(validateFirstName("Jo").valid).toBe(true);
+    expect(validateFirstName("  Jo  ").valid).toBe(true);
   });
 
-  it("ignora espaços ao redor", () => {
-    expect(validateName("  Jo  ").valid).toBe(true);
+  it("aceita nome composto no limite de 30 caracteres", () => {
+    expect(validateFirstName("a".repeat(30)).valid).toBe(true);
+    expect(validateFirstName("a".repeat(31))).toEqual({
+      valid: false,
+      error: "Nome deve ter no máximo 30 caracteres",
+    });
+  });
+});
+
+describe("validateLastName", () => {
+  it("rejeita sobrenome vazio", () => {
+    expect(validateLastName("  ")).toEqual({ valid: false, error: "Sobrenome é obrigatório" });
   });
 
-  it("rejeita nome com apenas espaços", () => {
-    expect(validateName("   ").valid).toBe(false);
+  it("rejeita sobrenome com 1 caractere", () => {
+    expect(validateLastName("S")).toEqual({
+      valid: false,
+      error: "Sobrenome precisa ter pelo menos 2 caracteres",
+    });
+  });
+
+  it("aceita sobrenome com partícula e limite de 40 caracteres", () => {
+    expect(validateLastName("de Vasconcelos Albuquerque").valid).toBe(true);
+    expect(validateLastName("a".repeat(40)).valid).toBe(true);
+    expect(validateLastName("a".repeat(41))).toEqual({
+      valid: false,
+      error: "Sobrenome deve ter no máximo 40 caracteres",
+    });
   });
 });
 

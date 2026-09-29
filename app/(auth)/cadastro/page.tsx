@@ -11,7 +11,10 @@ import { TextLink } from "@/src/components/ui/TextLink";
 import {
   validateEmail,
   validatePassword,
-  NAME_MAX_LENGTH,
+  validateFirstName,
+  validateLastName,
+  FIRST_NAME_MAX_LENGTH,
+  LAST_NAME_MAX_LENGTH,
   type PasswordChecks,
 } from "@/src/lib/validations";
 import { PasswordChecklist } from "@/src/components/auth/PasswordChecklist";
@@ -22,7 +25,8 @@ import styles from "./page.module.css";
 export default function SignupPage() {
   const [state, formAction, isPending] = useActionState(signup, null);
 
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordChecks, setPasswordChecks] = useState<PasswordChecks>({
@@ -31,7 +35,8 @@ export default function SignupPage() {
     hasNumber: false,
   });
   const [touched, setTouched] = useState({
-    name: false,
+    firstName: false,
+    lastName: false,
     email: false,
   });
   const [submitAttempted, setSubmitAttempted] = useState(false);
@@ -44,17 +49,12 @@ export default function SignupPage() {
 
   useFormPersist(
     "signup-form",
-    { name, email },
-    { name: setName, email: setEmail }
+    { firstName, lastName, email },
+    { firstName: setFirstName, lastName: setLastName, email: setEmail }
   );
 
-  const nameError = (() => {
-    if (!name) return "Nome é obrigatório";
-    if (name.trim().length < 2) return "Nome deve ter pelo menos 2 caracteres";
-    if (name.trim().length > NAME_MAX_LENGTH)
-      return `Nome deve ter no máximo ${NAME_MAX_LENGTH} caracteres`;
-    return null;
-  })();
+  const firstNameError = validateFirstName(firstName).error ?? null;
+  const lastNameError = validateLastName(lastName).error ?? null;
 
   const emailError = !email
     ? "E-mail é obrigatório"
@@ -65,10 +65,13 @@ export default function SignupPage() {
   const passwordValid =
     passwordChecks.minLength && passwordChecks.hasLetter && passwordChecks.hasNumber;
 
-  const hasErrors = Boolean(nameError || emailError) || !passwordValid;
+  const hasErrors =
+    Boolean(firstNameError || lastNameError || emailError) || !passwordValid;
 
-  const showNameError =
-    touched.name || submitAttempted ? nameError : null;
+  const showFirstNameError =
+    touched.firstName || submitAttempted ? firstNameError : null;
+  const showLastNameError =
+    touched.lastName || submitAttempted ? lastNameError : null;
   const showEmailError =
     touched.email || submitAttempted ? emailError : null;
 
@@ -90,15 +93,28 @@ export default function SignupPage() {
       <form action={handleSubmit} className={authStyles["auth-page__form"]}>
         <FormInput
           label="Nome"
-          name="name"
+          name="firstName"
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          onBlur={() => setTouched((prev) => ({ ...prev, name: true }))}
-          error={showNameError ?? undefined}
-          placeholder="Seu nome e sobrenome"
-          autoComplete="name"
-          maxLength={NAME_MAX_LENGTH}
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          onBlur={() => setTouched((prev) => ({ ...prev, firstName: true }))}
+          error={showFirstNameError ?? undefined}
+          placeholder="Seu nome"
+          autoComplete="given-name"
+          maxLength={FIRST_NAME_MAX_LENGTH}
+        />
+
+        <FormInput
+          label="Sobrenome"
+          name="lastName"
+          type="text"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          onBlur={() => setTouched((prev) => ({ ...prev, lastName: true }))}
+          error={showLastNameError ?? undefined}
+          placeholder="Seu sobrenome"
+          autoComplete="family-name"
+          maxLength={LAST_NAME_MAX_LENGTH}
         />
 
         <FormInput
