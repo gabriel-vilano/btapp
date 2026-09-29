@@ -3,6 +3,7 @@
 import { useState } from "react";
 import {
   acceptScheduleOption,
+  expireProposals,
   proposeSchedule,
   reportScheduleDate,
   scheduleViewOf,
@@ -71,7 +72,8 @@ export function useMatchScheduling(data: MatchScreenData, { initialNow, clock, c
       : apply((h, actor, ctx) => proposeSchedule(h, { id: createId(), options }, actor, ctx));
 
   const state: MatchSchedulingState = {
-    history,
+    // O histórico mostrado já tem expirada a proposta cujas opções passaram (M12)
+    history: expireProposals(history, now),
     view: scheduleViewOf({ history, match: data.match, sides: data.sides, viewerId: data.viewerId, now }),
     now,
     form,

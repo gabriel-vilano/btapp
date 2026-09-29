@@ -145,7 +145,7 @@ function ThirdTimeToggle({ times, onChange }: Pick<TimeFieldsProps, "times" | "o
   return (
     <Button type="button" variant="ghost" onClick={() => onChange([...times, ""])}>
       <Icon icon={PlusIcon} size="sm" />
-      Adicionar 3º horário
+      <span>Adicionar 3º horário</span>
     </Button>
   );
 }

@@ -29,12 +29,13 @@
   background-color: var(--color-background-secondary);
 }
 
+/* Mesmo tamanho da legenda do ScheduleOptionPicker, que vem logo abaixo */
 .card__title {
   margin: 0;
   color: var(--color-foreground-primary);
-  font-size: var(--text-body-lg-size);
-  line-height: var(--text-body-lg-line-height);
-  letter-spacing: var(--text-body-lg-tracking);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
   font-weight: var(--font-weight-bold);
   overflow-wrap: anywhere;
 }
@@ -141,10 +142,14 @@
   flex-direction: column;
 }
 
+/* O flex tira o marcador nativo do <summary>: o caret o substitui */
 .match-scheduling__summary {
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-100);
+  list-style: none;
   min-height: var(--dimension-tap-target-minimum);
   border-radius: var(--radius-md);
   color: var(--color-foreground-primary);
@@ -162,6 +167,19 @@
 
 .match-scheduling__summary:focus:not(:focus-visible) {
   outline: none;
+}
+
+.match-scheduling__summary::-webkit-details-marker {
+  display: none;
+}
+
+.match-scheduling__caret {
+  display: inline-flex;
+  transition: transform var(--motion-duration-short-3) var(--motion-easing-standard);
+}
+
+.match-scheduling__history[open] .match-scheduling__caret {
+  transform: rotate(180deg);
 }
 
 .match-scheduling__history[open] > .match-scheduling__summary {

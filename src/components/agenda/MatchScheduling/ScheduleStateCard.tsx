@@ -82,7 +82,7 @@ function AwaitingYouCard({ proposal, agreed, playerNames, now, onAccept, onPropo
   const proposer = nameOf(proposal.proposed_by, playerNames);
   return (
     <StateCard title={`${proposer} propôs ${proposal.options.length} horários`}>
-      <p className={styles.card__text}>Enviada {formatEventMoment(proposal.created_at)}. Escolha um e confirme.</p>
+      <p className={styles.card__text}>Enviada {formatEventMoment(proposal.created_at)}.</p>
       {agreed && <RescheduleNote agreed={agreed} now={now} />}
       <ScheduleOptionPicker
         options={proposal.options}
@@ -201,10 +201,10 @@ function StateCard({ title, children }: { title: string; children: React.ReactNo
 function AgreedDate({ agreed }: { agreed: ScheduleOption }) {
   return (
     <p className={styles.card__date}>
-      <span className={styles["card__date-when"]}>
-        {formatScheduleDay(agreed.starts_at)} · {formatScheduleTime(agreed.starts_at)}
+      <span className={styles["card__date-when"]}>{formatScheduleDay(agreed.starts_at)}</span>
+      <span className={styles["card__date-venue"]}>
+        {formatScheduleTime(agreed.starts_at)} · {agreed.venue ?? "Arena a combinar"}
       </span>
-      <span className={styles["card__date-venue"]}>{agreed.venue ?? "Arena a combinar"}</span>
     </p>
   );
 }
@@ -212,7 +212,8 @@ function AgreedDate({ agreed }: { agreed: ScheduleOption }) {
 // Remarcação pendente: a data acordada vale até alguém aceitar (M13)
 function RescheduleNote({ agreed, now }: { agreed: AgreedSchedule; now: string }) {
   const passed = Date.parse(agreed.starts_at) <= Date.parse(now);
-  const when = `${formatScheduleDay(agreed.starts_at)}, ${formatScheduleTime(agreed.starts_at)}`;
+  // No meio da frase, o dia vai em minúscula: "marcado para sábado, 3 de outubro, 14h"
+  const when = `${formatScheduleDay(agreed.starts_at).toLocaleLowerCase("pt-BR")}, ${formatScheduleTime(agreed.starts_at)}`;
   const text = passed
     ? `O jogo marcado para ${when} já passou.`
     : `O jogo marcado para ${when} continua valendo até alguém aceitar um novo horário.`;
@@ -238,7 +239,7 @@ function WhatsAppLink({ subject }: { subject: WhatsAppSubject }) {
   return (
     <ButtonLink href={scheduleWhatsAppHref(subject)} variant="ghost" fullWidth target="_blank" rel="noopener noreferrer">
       <Icon icon={WhatsappLogoIcon} size="sm" />
-      Abrir no WhatsApp
+      <span>Abrir no WhatsApp</span>
     </ButtonLink>
   );
 }

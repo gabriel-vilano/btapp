@@ -97,7 +97,7 @@ export const Agreed: Story = {
   args: { data: storyData(STORY_HISTORIES.agreed) },
   play: async ({ canvas }) => {
     await expect(canvas.getByRole("heading", { name: "Jogo marcado" })).toBeInTheDocument();
-    await expect(canvas.getByText("Sábado, 3 de outubro · 14h")).toBeInTheDocument();
+    await expect(canvas.getByText("Sábado, 3 de outubro")).toBeInTheDocument();
     await expect(canvas.getByText(/aceita por Diego/)).toBeInTheDocument();
     await expect(canvas.getByRole("button", { name: "Remarcar" })).toBeEnabled();
   },
@@ -137,13 +137,15 @@ export const FrozenAfterRoundDeadline: Story = {
     // Congelada é só leitura: nenhuma ação da marcação, e o histórico aberto (M1)
     await expect(canvas.queryByRole("button", { name: /Propor|Marcar jogo|Remarcar/ })).not.toBeInTheDocument();
     await expect(canvas.getByRole("list", { name: "Histórico da marcação" })).toBeVisible();
+    // A proposta sem aceite cujas opções passaram aparece expirada (M12)
+    await expect(canvas.getByText("A proposta de Caio expirou sem aceite.")).toBeInTheDocument();
   },
 };
 
 export const PublicViewer: Story = {
   args: { data: storyData(STORY_HISTORIES.agreed, { viewerId: OUTSIDER_ID }) },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText("Sábado, 3 de outubro · 14h")).toBeInTheDocument();
+    await expect(canvas.getByText("Sábado, 3 de outubro")).toBeInTheDocument();
     // Quem é de fora vê a data e a arena, nunca as propostas nem o histórico (M18)
     await expect(canvas.queryByText("Histórico da marcação")).not.toBeInTheDocument();
     await expect(canvas.queryByRole("button")).not.toBeInTheDocument();
@@ -156,7 +158,8 @@ export const AcceptFlow: Story = {
     await userEvent.click(canvas.getByRole("radio", { name: /Domingo, 4 de outubro/ }));
     await userEvent.click(canvas.getByRole("button", { name: "Marcar jogo · dom, 4 out, 10h" }));
     await expect(await canvas.findByRole("heading", { name: "Jogo marcado" })).toBeInTheDocument();
-    await expect(canvas.getByText("Domingo, 4 de outubro · 10h")).toBeInTheDocument();
+    await expect(canvas.getByText("Domingo, 4 de outubro")).toBeInTheDocument();
+    await expect(canvas.getByText("10h · Arena Sunset")).toBeInTheDocument();
     await expect(canvas.getByText(/aceita por Pedro/)).toBeInTheDocument();
   },
 };
@@ -204,7 +207,7 @@ export const ReportFlow: Story = {
     const dialog = within(await findDialog("Informar data combinada"));
     await userEvent.type(dialog.getByLabelText("Data e hora"), "2026-10-02T19:00");
     await userEvent.click(dialog.getByRole("button", { name: "Informar data" }));
-    await expect(await canvas.findByText("Sexta-feira, 2 de outubro · 19h")).toBeInTheDocument();
+    await expect(await canvas.findByText("Sexta-feira, 2 de outubro")).toBeInTheDocument();
     await expect(canvas.getByText(/Informado por Pedro/)).toBeInTheDocument();
   },
 };

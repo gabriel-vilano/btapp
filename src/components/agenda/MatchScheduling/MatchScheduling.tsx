@@ -1,6 +1,8 @@
 "use client";
 
+import { CaretDownIcon } from "@phosphor-icons/react";
 import { useId } from "react";
+import { Icon } from "@/src/components/ui/Icon";
 import { ScheduleTimeline } from "@/src/components/ui/ScheduleTimeline";
 import type { ScheduleHistory } from "@/src/types/domain";
 import { ScheduleStateCard, type ScheduleStateCardProps } from "./ScheduleStateCard";
@@ -47,7 +49,12 @@ function HistoryDisclosure({ history, playerNames, open }: HistoryDisclosureProp
   if (count === 0) return null;
   return (
     <details className={styles["match-scheduling__history"]} open={open}>
-      <summary className={styles["match-scheduling__summary"]}>Histórico da marcação</summary>
+      <summary className={styles["match-scheduling__summary"]}>
+        Histórico da marcação
+        <span className={styles["match-scheduling__caret"]}>
+          <Icon icon={CaretDownIcon} size="sm" />
+        </span>
+      </summary>
       <ScheduleTimeline history={history} playerNames={playerNames} />
     </details>
   );
