@@ -1,6 +1,6 @@
 import { Avatar, AvatarStack } from "@/src/components/ui/Avatar";
 import { Badge } from "@/src/components/ui/Badge";
-import { ScoreBlock, getInterruptedSetName, getOutcomeLabel } from "@/src/components/feed/ScoreBlock";
+import { ScoreBlock, getInterruptedSetName, getOutcomeLabel } from "@/src/components/ui/ScoreBlock";
 import { MetaInfo } from "@/src/components/feed/MetaInfo";
 import { H2HButton } from "@/src/components/feed/H2HButton";
 import type { ResultCard as ResultCardData, Score, Side } from "@/src/types/feed";
