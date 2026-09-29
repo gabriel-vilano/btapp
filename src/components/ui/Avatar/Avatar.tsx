@@ -2,9 +2,9 @@ import Image from "next/image";
 import { formatInitials } from "@/src/lib/formatters";
 import styles from "./Avatar.module.css";
 
-export type AvatarSize = 32 | 40 | 48 | 96;
-// 96 é o avatar de perfil: não aparece em pilha, então o stack não o aceita.
-export type AvatarStackSize = Exclude<AvatarSize, 96>;
+export type AvatarSize = 24 | 32 | 40 | 48 | 96;
+// 96 é o avatar de perfil e 24 o da aba Perfil: nenhum aparece em pilha, então o stack não os aceita.
+export type AvatarStackSize = Exclude<AvatarSize, 24 | 96>;
 
 interface AvatarProps {
   url: string | null;

@@ -68,15 +68,17 @@ export function assertAdmin(adminIds: readonly string[], playerId: string): void
   );
 }
 
-/** Na desistência, quem lança é o adversário de quem desistiu, ou seja, o vencedor (R11). */
-export function assertRetirementReportedByWinner(
-  result: CompetitionResult,
-  reporterSide: MatchSideKey,
-): void {
-  if (result.type !== 'retired' || result.winner === reporterSide) return;
+/**
+ * Na desistência e no W.O. lançados por jogador, quem lança é o vencedor: o
+ * adversário de quem desistiu (R11) ou de quem faltou (R50). O admin escolhe o
+ * vencedor livremente e não passa por aqui.
+ */
+export function assertReportedByWinner(result: CompetitionResult, reporterSide: MatchSideKey): void {
+  if (result.type === 'normal' || result.type === 'double_wo' || result.winner === reporterSide) return;
+  const rule = result.type === 'retired' ? 'o adversário de quem desistiu' : 'o lado que compareceu';
   throw new MatchTransitionError(
     'invalid_result',
-    `Desistência lançada pelo lado '${reporterSide}' com vencedor '${result.winner}': quem lança é o adversário de quem desistiu`,
+    `Resultado '${result.type}' lançado pelo lado '${reporterSide}' com vencedor '${result.winner}': esperado vencedor '${reporterSide}', porque quem lança é ${rule}`,
   );
 }
 

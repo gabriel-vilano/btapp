@@ -1,0 +1,86 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as IconButtonStories from "./IconButton.stories";
+
+<Meta of={IconButtonStories} />
+
+<Subtitle>
+  Botão só de ícone, com área tocável de 48×48 e nome acessível obrigatório.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/IconButton/IconButton.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/IconButton/IconButton.tsx)
+
+## Visão geral
+
+`IconButton` é o controle das ações que cabem num ícone conhecido: fechar, notificações, configurações. O ícone tem 24px, e a área de toque tem 48×48, a mínima do DS. A prop `label` é obrigatória e vira o `aria-label`: sem texto visível, é a única forma de dizer o que o botão faz.
+
+<Canvas of={IconButtonStories.Default} />
+
+## Variantes
+
+Os estados que o ícone pode carregar, lado a lado.
+
+<Canvas of={IconButtonStories.AllVariants} />
+
+### Com ponto
+
+A prop `badge` sem `count` põe um ponto sobre o ícone. É o sino do Feed com notificações não lidas (`docs/NAVIGATION.md` N7). O nome acessível ganha a descrição: "Notificações, há novas".
+
+<Canvas of={IconButtonStories.WithDot} />
+
+### Com número
+
+Com `count`, o badge mostra a quantidade.
+
+<Canvas of={IconButtonStories.WithCount} />
+
+### Como link
+
+O sino e a engrenagem levam a outra tela: são links, não botões. O `IconButtonLink` tem a mesma forma, a mesma área e o mesmo `label` obrigatório, e navega com o `next/link`.
+
+<Canvas of={IconButtonStories.AsLink} />
+
+## Estados
+
+O estado que não depende de interação.
+
+### Desabilitado
+
+O ícone fica em `--color-foreground-disabled` e o state layer some. Como o Button ghost, não ganha fundo.
+
+<Canvas of={IconButtonStories.Disabled} />
+
+## Quando usar
+
+- Fechar um fluxo modal de tarefa (N4)
+- Sino no cabeçalho do Feed (N7) e engrenagem no cabeçalho do Perfil (N8), como `IconButtonLink`
+- "Voltar" no `AppHeader`, que já usa o `IconButtonLink`
+
+## Componentes relacionados
+
+- Para **ação com texto**, use [`Button`](?path=/docs/ui-button--docs) `ghost`. Texto vence ícone quando o ícone não é universal (ex.: "Registrar amistoso")
+- Para **destino da navegação principal**, use a [`TabBar`](?path=/docs/ui-tabbar--docs)
+- Para **o contador sobre o ícone**, a prop `badge` usa o [`CountBadge`](?path=/docs/ui-countbadge--docs)
+
+## Acessibilidade
+
+- `label` obrigatório pelo tipo: o TypeScript recusa um `IconButton` sem nome. O `aria-label` vai no `<button>` ou no `<a>`, e o ícone fica com `aria-hidden`
+- Área de 48×48 (`--dimension-tap-target-minimum`), acima dos 24×24 da WCAG 2.5.8
+- Ring de foco para dentro da área, com o `outline-offset` negativo: num cabeçalho, o ring de fora encostaria no ícone vizinho
+- O `IconButton` é `type="button"` por padrão: dentro de um formulário, não envia
+
+## Evitar
+
+- ❌ **Ícone ambíguo** — se o jogador precisa adivinhar, é um Button com texto
+- ❌ **`IconButton` para navegar** — ícone que leva a outra tela é `IconButtonLink`: o link abre em nova aba, mostra a URL e é anunciado como link
+- ❌ **Label que descreve o ícone** — "Sino" diz a forma; "Notificações" diz o destino
+- ❌ **Área menor para caber mais ícones** — o 48×48 não se negocia. Com mais de três ações no cabeçalho, sobra ação
+
+## API
+
+<ArgTypes of={IconButtonStories} />
+
+## Referências
+
+- [WCAG 2.5.8 — Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
+- [WAI-ARIA APG — Button](https://www.w3.org/WAI/ARIA/apg/patterns/button/)
+- `docs/TOKENS.md` ("Acessibilidade — tap target", "Acessibilidade — foco") e `docs/NAVIGATION.md` (N7, N8, N26)

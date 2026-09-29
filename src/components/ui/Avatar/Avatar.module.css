@@ -6,6 +6,11 @@
   flex-shrink: 0;
 }
 
+.avatar--24 {
+  width: var(--dimension-avatar-24);
+  height: var(--dimension-avatar-24);
+}
+
 .avatar--32 {
   width: var(--dimension-avatar-32);
   height: var(--dimension-avatar-32);
@@ -41,6 +46,8 @@
   user-select: none;
 }
 
+/* 24px é o menor círculo: as iniciais ficam no menor texto do app (label-md) */
+.avatar--24.avatar__initials,
 .avatar--32.avatar__initials {
   font-size: var(--text-label-md-size);
   line-height: var(--text-label-md-line-height);
