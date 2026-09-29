@@ -1,7 +1,7 @@
 "use client";
 
 import { useId } from "react";
-import { StatusTimeline } from "@/src/components/ui/StatusTimeline";
+import { ScheduleTimeline, formatOptions, nameOf, type PlayerNames } from "@/src/components/ui/ScheduleTimeline";
 import {
   scheduleSummaryOf,
   type AgreedSchedule,
@@ -11,7 +11,6 @@ import {
 import { formatEventMoment } from "@/src/lib/formatters";
 import type { MatchSideKey, ScheduleHistory } from "@/src/types/domain";
 import { formatOfferedTimes } from "./formatOfferedTimes";
-import { formatOptions, nameOf, scheduleTimelineEventsOf, type PlayerNames } from "./scheduleTimelineEvents";
 import styles from "./ScheduleEvidence.module.css";
 
 // "use client": os ícones do histórico vêm do Phosphor (ver CLAUDE.md >
@@ -54,7 +53,6 @@ const SUMMARY_ROWS: SummaryRow[] = [
  */
 export function ScheduleEvidence({ history, sides, sideNames, playerNames, className }: ScheduleEvidenceProps) {
   const summary = scheduleSummaryOf(history, sides);
-  const events = scheduleTimelineEventsOf(history, playerNames);
   const summaryHeadingId = useId();
   const rootClasses = [styles["schedule-evidence"], className].filter(Boolean).join(" ");
 
@@ -83,8 +81,8 @@ export function ScheduleEvidence({ history, sides, sideNames, playerNames, class
       </table>
       <p className={styles["schedule-evidence__agreed"]}>{agreedSentence(summary.agreed, playerNames)}</p>
       <h3 className={styles["schedule-evidence__heading"]}>Histórico da marcação</h3>
-      {events.length > 0 ? (
-        <StatusTimeline label="Histórico da marcação" events={events} />
+      {hasHistory(history) ? (
+        <ScheduleTimeline history={history} playerNames={playerNames} />
       ) : (
         <p className={styles["schedule-evidence__empty"]}>Nenhum dos lados propôs horário nem informou data no app.</p>
       )}
@@ -100,6 +98,10 @@ function agreedSentence(agreed: AgreedSchedule | null, names: PlayerNames): stri
   }
   const reporter = nameOf(agreed.source.reported_by, names);
   return `Data informada por ${reporter}, sem aceite do outro lado: ${when}. Informada em ${formatEventMoment(agreed.agreed_at)}.`;
+}
+
+function hasHistory(history: ScheduleHistory): boolean {
+  return history.proposals.length > 0 || history.reported_dates.length > 0;
 }
 
 function formatMoment(iso: string | null): string {
