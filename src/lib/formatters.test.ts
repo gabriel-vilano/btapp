@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import type { Category } from "@/src/types/feed";
 import {
   formatCategoryLabel,
+  formatCount,
+  formatCountValue,
   formatEnrollmentCount,
   formatEventMoment,
   formatInitials,
@@ -111,5 +113,19 @@ describe("formatEventMoment", () => {
 
   it("recusa data inválida dizendo o valor recebido", () => {
     expect(() => formatEventMoment("ontem")).toThrow("recebi 'ontem'");
+  });
+});
+
+describe("formatCount", () => {
+  it("concorda o rótulo com o número", () => {
+    expect(formatCount(1, "jogo", "jogos")).toBe("1 jogo");
+    expect(formatCount(0, "jogo", "jogos")).toBe("0 jogos");
+    expect(formatCount(2, "vitória", "vitórias")).toBe("2 vitórias");
+  });
+
+  it("separa o milhar com ponto, já a partir de 4 dígitos", () => {
+    expect(formatCount(1204, "jogo", "jogos")).toBe("1.204 jogos");
+    expect(formatCountValue(1204)).toBe("1.204");
+    expect(formatCountValue(12045)).toBe("12.045");
   });
 });

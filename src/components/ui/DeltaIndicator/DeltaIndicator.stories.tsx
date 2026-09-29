@@ -17,6 +17,7 @@ const meta = {
   argTypes: {
     direction: { control: "inline-radio", options: ["up", "down", "none"] },
     value: { control: { type: "number", min: 1 } },
+    compact: { control: "boolean" },
   },
 } satisfies Meta<typeof DeltaIndicator>;
 
@@ -50,6 +51,17 @@ export const OnePosition: Story = {
   args: { direction: "up", value: 1 },
   play: async ({ canvasElement }) => {
     await expect(canvasElement.textContent).toBe("Subiu 1 posição");
+  },
+};
+
+// Coluna estreita (linha do ranking): só seta e número à vista, frase inteira no leitor de tela
+export const Compact: Story = {
+  args: { direction: "down", value: 2, compact: true },
+  play: async ({ canvasElement }) => {
+    await expect(canvasElement.textContent).toBe("Caiu 2 posições");
+    const root = canvasElement.firstElementChild as HTMLElement;
+    // Seta (16px) + 4px de gap + um dígito: sem a palavra "posições" à vista
+    await expect(root.getBoundingClientRect().width).toBeLessThan(40);
   },
 };
 
