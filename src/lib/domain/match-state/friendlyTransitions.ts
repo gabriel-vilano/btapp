@@ -2,7 +2,7 @@ import type { FriendlyMatch, FriendlyResult } from '@/src/types/domain';
 import {
   assertOpponentOfReporter,
   assertPlayerOfMatch,
-  assertRetirementReportedByWinner,
+  assertReportedByWinner,
   assertStatus,
   type MatchSidePlayers,
   type TransitionActor,
@@ -27,7 +27,7 @@ export function reportFriendly(
   sides: MatchSidePlayers,
 ): FriendlyMatch {
   const reporterSide = assertPlayerOfMatch(sides, actor.playerId);
-  assertRetirementReportedByWinner(result, reporterSide);
+  assertReportedByWinner(result, reporterSide);
   const report = { result, reported_by: actor.playerId, reported_at: actor.at };
   return { ...draft, kind: 'friendly', created_at: actor.at, report, status: 'awaiting_confirmation' };
 }

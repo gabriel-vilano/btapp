@@ -49,6 +49,7 @@ function base(
     competition_id: ranking.id,
     category_id: category.id,
     round_id: round.id,
+    undone_reports: [],
     side_a_enrollment_id: sideA.id,
     side_b_enrollment_id: sideB.id,
     format: ranking.match_format,
@@ -152,7 +153,11 @@ const masculinoBRound3: RankingMatch[] = [
   { ...masc('r3-4', rounds.third, mb.t1, mb.t2), scheduled_at: agreedDates.r3_4,
     status: 'awaiting_confirmation', report: r3Reports.m4 },
   { ...masc('r3-5', rounds.third, mb.t3, mb.t4), scheduled_at: agreedDates.r3_5,
-    status: 'in_arbitration', report: r3Reports.m5, contest: responseBy(p.andre, hoursAfter(r3Reports.m5.reported_at, 5)) },
+    status: 'in_arbitration', report: r3Reports.m5, contest: {
+      ...responseBy(p.andre, hoursAfter(r3Reports.m5.reported_at, 5)),
+      reason: 'different_score',
+      remembered_result: { type: 'normal', winner: 'b', sets: [gameSet(5, 7)] },
+    } },
   { ...masc('r3-6', rounds.third, mb.t5, mb.t6), scheduled_at: onTheHour(daysAgo(6)),
     ...confirmed(r3Reports.m6, confirmedByOpponent(p.henrique, hoursAfter(r3Reports.m6.reported_at, 3)), { a: 108, b: 42 }) },
 ];
