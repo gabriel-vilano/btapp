@@ -36,15 +36,17 @@ Três objetivos simultâneos: portfolio de Design Engineer, produto real para la
 - Agenda do jogador (aba "Jogos"): confrontos sorteados, próximos jogos, pendências, histórico e amistosos
 - Head-to-head entre jogadores
 - Feed de atividade (Activity Stream)
+- Explorar v1 (aba "Explorar"): uma busca só, com escopos jogadores, competições e arenas; a vitrine das competições e arenas dos organizadores do beta; na página da competição, "Como se inscrever" (contato do organizador) e "Tenho interesse", que mede a demanda. Detalhe em `docs/NAVIGATION.md`
 
 ### Fora do MVP
 
 - Torneios completos (gestão de chaves)
+- O resto da descoberta de competições: filtros por nível e região, recomendação, mapa e inscrição pelo app
 - Login social (Google, Apple)
 - Aulas e reserva de quadras
 - Chat entre jogadores (a marcação de jogos usa propostas estruturadas, não conversa)
 - Pagamentos
-- Visão do organizador/gestor (o MVP tem só o papel de admin do ranking, para arbitrar placar contestado e sortear confrontos)
+- Visão do organizador/gestor (o MVP tem só o papel de admin da competição, numa área "Administrar" da página da competição, para sortear confrontos, arbitrar placar contestado e decidir partida não realizada)
 
 ---
 

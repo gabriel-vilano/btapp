@@ -15,7 +15,7 @@ As siglas de decisão são as mesmas do `docs/DOMAIN.md` > "Fontes". As que esta
 | **DEC-FEED** | Feed público mostra conquistas e crescimento; "caiu" não vira publicação (R20, R22) |
 | **DEC-FINAL** | Marcos permanentes; "dentro ou fora da final" só na tela de ranking (R23, R25) |
 | **DEC-CARDS** | H2H jogador × jogador na página, dupla exata no card (R19); textos neutros (R26) |
-| **NAV** | `docs/NAVIGATION.md` (provisória, em revisão): rota do perfil (N10), tab bar visível no perfil de outro jogador (N4), engrenagem com configurações e "Sair" (N8), edição de perfil como fluxo modal (N4), histórico do próprio jogador na aba Jogos (seção 5) |
+| **NAV** | `docs/NAVIGATION.md` (perguntas Q1–Q5 respondidas em 29/09/2026): rota do perfil (N10), tab bar visível no perfil de outro jogador (N4), engrenagem com configurações e "Sair" (N8), edição de perfil como fluxo modal (N4), histórico do próprio jogador na aba Jogos (seção 5) |
 | **REF** | `docs/discovery/referencias/03-perfil.md` (30 telas de 24 apps) e `inventario-componentes.md` |
 | **DSC** | `docs/DISCOVERY.md` (oportunidades 3.1, 3.2, 3.3, 5.1, 5.2) e `docs/discovery/` (SINTESE, VOZ_DO_USUARIO, MATRIZ_FEATURES) |
 | **DEC-PERFIL** | Issue desta spec, comentário "Decisões do Gabriel" (27/09/2026): aprovação das recomendações das perguntas PQ1–PQ5 e das leituras PL1–PL8; a variação de posição aparece em todas as linhas da tabela, nos dois sentidos, e a R22 passa a valer só para o feed e as notificações |
@@ -113,7 +113,7 @@ O cabeçalho responde "quem é" e "que tipo de jogador é" em um olhar, antes de
 
 ## 4. Rankings
 
-A seção responde "onde esse jogador está agora". É o elo entre o perfil e a aba Ranking.
+A seção responde "onde esse jogador está agora". É o elo entre o perfil e a aba Competições.
 
 - **PF10. Uma linha por inscrição ativa do jogador** (R8, R45), com o **StandingSummaryItem** da spec de ranking (RANK seção 9): posição da unidade competidora, variação, competição · categoria e parceiro (em simples, nada). O conteúdo e o formato do item são de lá; o perfil decide só se ele aparece, em que ordem (PF12) e o complemento do próprio perfil (PF14). Tocar na linha abre a classificação da categoria, rolada até a linha da dupla, o mesmo destino do card de movimentação (N10). [R1, NAV, RANK]
 
@@ -157,7 +157,7 @@ Sem confronto e sem H2H, o bloco some (PF2). Adversários em comum (DSC 3.3) sã
 
   **"Ver todas":** no próprio perfil, leva ao Histórico da aba Jogos (NAV seção 5), que já é essa lista; no de outro jogador, abre `/jogadores/[username]/partidas`, a mesma lista sem ações. Assim não existem duas listas do próprio histórico que possam divergir, como pede o risco "Histórico no perfil e na agenda" da spec de navegação. [NAV; LEIT]
 
-  **Depende da navegação:** o destino do próprio perfil supõe a aba Jogos com a seção Histórico, que ainda depende das perguntas Q1 (abas) e Q2 (seções da agenda) da spec de navegação. Se a agenda perder o Histórico, "Ver todas" do próprio perfil passa a abrir a mesma lista do perfil de outro jogador.
+  A aba Jogos e a seção Histórico foram confirmadas pelo Gabriel em 29/09/2026 (Q1 e Q2 da spec de navegação, NAV N1 e N12).
 
 ### 5.3 Temporadas
 
@@ -165,7 +165,7 @@ Sem confronto e sem H2H, o bloco some (PF2). Adversários em comum (DSC 3.3) sã
 
   **Toque na linha:** abre a classificação final daquela categoria naquela temporada, rolada até a linha da dupla. A tela e a rota são as da RK21 da spec de ranking: a mesma classificação, no estado "Temporada encerrada" (RK15), aberta na temporada escolhida. [RANK RK15, RK21]
 
-  **Por quê:** é a evolução que pode ser pública. Marcos e classificação já são eventos públicos do feed (R20, R24), e a posição final é a mesma que a tabela da temporada mostra. É também o que o jogador vê entre temporadas, quando não há jogo (NAV 7.2).
+  **Por quê:** é a evolução que pode ser pública. Marcos e classificação já são eventos públicos do feed (R20, R24), e a posição final é a mesma que a tabela da temporada mostra. É também o que o jogador vê entre temporadas, quando não há jogo (NAV 9.2).
 
 ---
 
@@ -187,7 +187,7 @@ Sem confronto e sem H2H, o bloco some (PF2). Adversários em comum (DSC 3.3) sã
 | **Sem foto** | Avatar com iniciais (Avatar do DS) |
 | **@username inexistente** | Tela "Jogador não encontrado" com "Voltar ao feed". Nada revela se a conta existiu |
 
-**Depende da navegação:** o CTA "Registrar amistoso" leva ao fluxo da N19, que supõe o amistoso como botão da aba Jogos (pergunta Q2 da spec de navegação, ainda aberta). Se a navegação mudar a casa do amistoso, o CTA aponta para a casa nova; sem casa para o amistoso, o estado vazio fica sem CTA. As outras linhas da tabela não dependem das perguntas abertas.
+O CTA "Registrar amistoso" leva ao fluxo da N19: o amistoso é um botão da aba Jogos, confirmado pelo Gabriel em 29/09/2026 (Q2 da spec de navegação).
 
 ### 6.3 Carregando e erro
 
@@ -303,11 +303,11 @@ As leituras do agente foram confirmadas na DEC-PERFIL e já estão nas regras: P
 
 ### Dependências da spec de navegação
 
-A spec de navegação ainda tem perguntas abertas (Q1 a Q5). Estes pontos dependem delas e mudam junto se a resposta mudar:
+As perguntas da spec de navegação (Q1 a Q5) e as leituras de lá foram respondidas pelo Gabriel (26/09 e 29/09/2026). Os pontos daqui que dependiam delas ficaram confirmados:
 
-- **PF18,** "Ver todas" do próprio perfil → Histórico da aba Jogos (Q1 e Q2 da navegação).
-- **Seção 6.2,** CTA "Registrar amistoso" (N19, Q2 da navegação).
-- **PF8 e PF9,** engrenagem com configurações e "Editar perfil" como fluxo modal (N4, N8). Não são perguntas abertas lá, mas são leituras que a navegação ainda confirma.
+- **PF18,** "Ver todas" do próprio perfil → Histórico da aba Jogos (NAV N1, N12).
+- **Seção 6.2,** CTA "Registrar amistoso" (NAV N19).
+- **PF8 e PF9,** engrenagem com configurações e "Editar perfil" como fluxo modal (NAV N4, N8).
 
 Pergunta nova entra aqui com opções, trade-offs e recomendação, e sai quando vira regra.
 
