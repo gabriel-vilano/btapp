@@ -17,9 +17,9 @@ As siglas de decisão são as do `docs/DOMAIN.md` > "Fontes". As que esta spec u
 | **CARDS** | `docs/FEED_CARDS.md`: sistema de placar (§3), card de resultado e variações de W.O. e desistência (§4; na desistência, o placar real com o set interrompido rotulado, §4.4), bloco de posição (§8) |
 | **REF-PLACAR** | `docs/discovery/referencias/05-registro-placar.md`: Playtomic (fluxo e validação de set, documentados), cartões de aprovação com prazo (Instacart, Fiverr, Retro, Revolut Business), padrões de entrada numérica, APG Spinbutton |
 | **REF-NAV** | `docs/discovery/referencias/07-navegacao.md`: registrar resultado no contexto, badge só para o crítico ("resultado a confirmar é crítico") |
-| **INV** | `docs/discovery/referencias/inventario-componentes.md`: ScoreInput, PendingResultCard, StatusTimeline, SidePicker e primitivos |
+| **INV** | `docs/discovery/referencias/inventario-componentes.md`: ScoreInput, StatusTimeline, SidePicker e primitivos |
 | **DSC** | `docs/DISCOVERY.md`: oportunidade 2.1 (registro com confirmação e prazo, a dor com mais evidência), H1 (cold start de dados), H2 (o jogador aceita registrar no app) |
-| **NAV** | `docs/NAVIGATION.md`, spec da navegação e agenda (em aprovação): a partida como casa do resultado, atalhos, fluxos modais, pendências do admin |
+| **NAV** | `docs/NAVIGATION.md`, spec da navegação e agenda, aprovada pelo Gabriel em 29/09: a partida como casa do resultado, a agenda e a seção "Sua vez" (§5), o badge (N3), o fluxo modal de lançar (N18), a área "Administrar" da competição (N30, N31) e o AgendaItem (§11) |
 | **DEC-DES** | Decisão do Gabriel de 27/09 sobre a desistência no card: o card mostra o placar real, e o placar completado pelo formato aparece só nas telas de revisão (comentário do orquestrador na issue desta spec, 27/09) |
 | **DEC-RES** | Respostas do Gabriel às perguntas P1–P7 desta spec e confirmação das leituras L1–L10 (comentário na issue desta spec, 26/09, ~23:37 UTC) |
 | **LEIT** | Leitura do agente desta spec, derivada das fontes acima e confirmada pelo Gabriel na DEC-RES. A lista está na seção 10 |
@@ -38,20 +38,20 @@ As siglas de decisão são as do `docs/DOMAIN.md` > "Fontes". As que esta spec u
 
 ## 2. Pontos de entrada
 
-**Esta seção acompanha a spec de navegação** (NAV), por decisão do Gabriel (DEC-RES P7). A NAV ainda está em aprovação: se ela mudar, esta seção muda junto, e as rotas que ela propõe são proposta dela, não decisão daqui. Já decidido lá: ao abrir uma partida a partir de outra aba (ex.: o Feed), **a aba de origem continua marcada**. A base é o `DOMAIN.md` §4: registro contextual, sem aba própria (DEC-JOGOS).
+**Esta seção acompanha a spec de navegação** (NAV), por decisão do Gabriel (DEC-RES P7). Se a NAV mudar, esta seção muda junto, e as rotas citadas são as que a NAV propõe. Ao abrir uma partida a partir de outra aba (ex.: o Feed), **a aba de origem continua marcada** (N10). A base é o `DOMAIN.md` §4: registro contextual, sem aba própria (DEC-JOGOS).
 
 - **RG1. A tela do confronto é a casa do resultado.** Uma tela por partida, dentro da aba Jogos, mostra conforme o estado: a marcação (SCHED §6), "Lançar resultado", a resposta com o prazo, a arbitragem e o resultado final. Toda entrada leva a ela, então o registro tem **um lugar só**. Não existe aba nem botão global "Registrar resultado" para ranking e torneio, porque o sorteio (R7) ou o cadastro do torneio (R31) já criaram a partida. [DOMAIN §4, REF-NAV caminho A, NAV, DEC-RES P7]
-- **RG2. A pendência de resposta tem badge; as outras, não.** "Resultado a confirmar" muda o ranking de outra pessoa e tem prazo (R14), por isso ganha contagem na navegação. "Resultado a lançar" não tem prazo curto além da rodada. [REF-NAV, "badge só para o crítico"; LEIT]
+- **RG2. O badge da aba Jogos conta todo item de "Sua vez"**, como a N3 define: marcar jogo, responder proposta, lançar e confirmar resultado, confirmar amistoso. As pendências de admin contam no badge da aba Competições (N3, N30). Esta spec não cria badge próprio. [NAV N3]
 
 | Entrada | Quem vê | Abre |
 | --- | --- | --- |
 | **Tela do confronto** (aba Jogos) | Os jogadores da partida | Ela mesma. "Lançar resultado" é a ação principal a partir da data acordada (SCHED, "Data passou sem resultado"); antes dela, secundária |
-| **Item "Lançar resultado"** no bloco de pendências do feed e nas pendências da aba Jogos | Os jogadores da partida | **Direto o fluxo de lançar** (§3), sobre a tela do confronto |
+| **Item "Lançar resultado"** na seção "Sua vez" da aba Jogos e no bloco "Sua vez" do feed (N20) | Os jogadores da partida | **Direto o fluxo de lançar** (§3), sobre a tela do confronto (N16, N18) |
 | **Notificação "Como foi o jogo?"** | Os jogadores da partida (§7) | Direto o fluxo de lançar |
-| **Item "Responder resultado"** nas pendências e notificação de resultado lançado | O lado adversário de quem lançou | A tela do confronto, já rolada até o resultado (§4.1). Responder não tem tela própria |
+| **Item "Confirmar resultado"** em "Sua vez" e notificação de resultado lançado | O lado adversário de quem lançou | A tela do confronto, já rolada até o resultado (§4.1). Confirmar não tem tela própria. "Responder" é só da proposta de horário (NAV 5.2) |
 | **Card "Confronto definido" do feed** | Todos | Para os jogadores da partida, a tela do confronto; para os outros, o detalhe público da partida, sem ações. O card não tem botão de lançar |
 | **"Registrar amistoso"** no topo da aba Jogos | Qualquer jogador | O fluxo do amistoso (§6) |
-| **Pendências do admin** numa seção "Como admin" da aba Jogos, separada das pendências dele como jogador | Os admins da competição | A tela de decisão da partida (§5). O lugar ainda é pergunta na NAV |
+| **Bloco "Pendências de admin"** no topo da aba Competições (N30) | Só os admins da competição | A decisão na área "Administrar" da competição (§5, N31). A agenda do admin continua só de jogador |
 
 **O perfil do adversário não é ponto de entrada**: ele serve ao JTBD 3, e um botão de lançar ali duplicaria o lugar da ação.
 
@@ -214,15 +214,15 @@ Todos os jogadores da partida veem o estado dela na tela do confronto, como uma 
 
 ## 5. Admin
 
-A fila do admin reúne o que só ele resolve (R15). A NAV a põe numa seção "Como admin" da aba Jogos, separada das pendências dele como jogador, com a alternativa de entrar pela página da competição; a escolha é da NAV (§2). O conteúdo:
+A fila do admin reúne o que só ele resolve (R15). Ela mora na **área "Administrar" da página da competição** (N31, rota proposta `/competicoes/[competicao]/administrar`), visível só para o admin daquela competição, e não na aba Jogos: a agenda do admin é só de jogador. O sinal é o badge da aba Competições e o bloco "Pendências de admin" no topo dela (N3, N30), que lista os itens abaixo, cada um com a competição, e abre a decisão na área "Administrar". O conteúdo:
 
 | Item da fila | Origem | Ação |
 | --- | --- | --- |
 | **Contestação** | Em arbitragem (R14) | Arbitrar (§5.1) |
 | **Partida não realizada** | Prazo da rodada sem resultado (R40) ou dupla desfeita (R45) | Decidir (§5.2) |
-| **Confronto de torneio sem resultado** | Confronto definido no torneio (R38) | Lançar (§5.3) |
+| **Confronto de torneio sem resultado** | Confronto definido no torneio (R38). Também entra no bloco "Pendências de admin" (decisão do Gabriel na aprovação da NAV) | Lançar (§5.3) |
 
-A fila é ordenada pela idade do item, mais antigo primeiro, e cada item mostra a competição, a categoria, a rodada e os lados. **Corrigir e anular** não são itens da fila: partem da tela de uma partida confirmada (§5.4).
+A fila é ordenada pela idade do item, mais antigo primeiro, e cada item mostra a competição, a categoria, a rodada e os lados. **Corrigir e anular** não são itens da fila: partem da tela de uma partida confirmada (§5.4), à qual a área "Administrar" também leva, pela lista de partidas da competição (N31).
 
 ### 5.1 Arbitrar a contestação
 
@@ -247,7 +247,7 @@ O mesmo formulário da §3, com três diferenças (R38, R29):
 
 ### 5.4 Corrigir e anular
 
-Na tela de uma partida confirmada, o admin tem **Corrigir placar** e **Anular resultado** num menu de ações, nunca como botão primário.
+Na tela de uma partida confirmada, o admin tem **Corrigir placar** e **Anular resultado** num menu de ações, visível só para o admin da competição e nunca como botão primário. Ele chega à partida por qualquer caminho, inclusive pela lista de partidas da área "Administrar" (N31).
 
 - **Corrigir** abre o formulário da §3 preenchido. A revisão mostra o antes e o depois e, no ranking, a diferença de pontos de cada lado. O W.O. duplo só aparece quando a partida não teve lançamento (regra do código em `correctResult`).
 - **Anular** pede confirmação com a consequência escrita: "A partida sai da classificação e o card some do feed. Os marcos já conquistados ficam." (R41).
@@ -326,8 +326,8 @@ Resultado confirmado
 
 | Estado | O que o jogador vê |
 | --- | --- |
-| **Pendências** | Lista no bloco de pendências e na agenda, um item por partida, com a ação no próprio item ("Lançar", "Responder"). Ordem: a responder com prazo mais curto, depois a lançar. A composição do bloco com as pendências da marcação é da spec de navegação |
-| **Vazio** | Sem pendência de resultado, o bloco não aparece (nada de "Nenhuma pendência" no topo do feed). Na agenda, histórico vazio: "Seus resultados aparecem aqui depois do primeiro jogo confirmado", com "Registrar amistoso" |
+| **Pendências** | Itens de "Sua vez" (NAV 5.1), um por partida, com a ação no próprio item: "Lançar resultado" ou "Confirmar". A ordem e a composição com as pendências da marcação são da NAV (5.1, 5.2) |
+| **Vazio** | Segue a NAV: seção sem itens some (N14), e "Sua vez" vira a linha "Nada pendente"; o bloco "Sua vez" do feed só aparece com pendência (N20); o vazio da aba inteira é o da NAV §9.2. Esta spec não tem estado vazio próprio |
 | **Carregando** | Skeleton no formato do card da pendência e do ScoreBlock. O formulário de lançamento só abre com a partida carregada |
 | **Erro de carregamento** | Alert com "Tentar de novo", sem apagar o que já estava na tela |
 | **Erro de envio** | RG8 e as mensagens da §3.7 |
@@ -345,12 +345,12 @@ Lista para a auditoria do design system, que roda em paralelo. **Aqui não se de
 | **Chip** em grupo de escolha única (radio) | 1 | Games de quem perdeu o set (RG12), motivo da contestação (RG15) | Não |
 | **SegmentedControl** | 1 | "Como terminou" (§3.2), modalidade (§6.1) | Não |
 | **SidePicker** | 2 | Lados do amistoso (§6.1) | Não |
-| **PendingResultCard** | 2 | Bloco de pendências, agenda, tela de resposta (§4.1) | Não |
+| **AgendaItem** | 2 | Itens "Lançar resultado" e "Confirmar" em "Sua vez" (§2, §8.2). É o item da NAV (§11), não um componente desta spec | Não. Definido na NAV |
 | **StatusTimeline** | 2 | Acompanhar (§4.3), atos do admin (RG11) | Não |
 | **BottomSheet / Dialog** | 1 | Revisão (RG7), contestar (RG15), desfazer (RG16), anular (§5.4) | Não |
 | **Badge** | 1 | "Aguardando confirmação", "Em arbitragem", "Corrigido" | Parcial: estilos locais no card de resultado e no bloco de ranking |
 | **DeltaIndicator** | 1 | Impacto no ranking (§8.1) | Parcial: `.delta` local no bloco de ranking |
-| **CountBadge** | 1 | Badge de pendência de resposta (RG2) | Não |
+| **CountBadge** | 1 | Badge das abas Jogos e Competições (RG2, N3) | Não. Definido na NAV |
 | **ScoreBlock**, variante de prévia | 3 | Prévia do placar (§3.3), tela de resposta (§4.1) | Sim, no feed. Falta a variante compacta (INV) |
 | **EmptyState**, **Skeleton** | 1–2 | §8.2 | Não (os tokens `--color-loading-*` existem) |
 | **Button**, **Alert**, **Toast**, **FormInput** | 1 | Todo o fluxo | Sim |
@@ -361,7 +361,7 @@ Lista para a auditoria do design system, que roda em paralelo. **Aqui não se de
 
 Não há pergunta aberta. As leituras do agente e as perguntas desta spec foram respondidas pelo Gabriel na DEC-RES:
 
-- **Leituras confirmadas:** L1 → RG1 (só o amistoso não parte de uma partida existente); L2 → RG2 (badge só na pendência de resposta); L3 → RG3 (lados fixos no ranking); L4 → RG4 (desistência e W.O. a favor de quem lança); L5 → RG5 (vencedor sai do placar); L6 → RG6 (placar completado da desistência antes do envio; desistência antes do primeiro game é 0/0 interrompido); L7 → RG7, RG8 (revisão e falha de rede); L8 → RG9, RG10 (prazo e peso das ações); L9 → RG11 (atos do admin visíveis); L10 → §6.2 (amistoso descartado ou cancelado no histórico de quem lançou).
+- **Leituras confirmadas:** L1 → RG1 (só o amistoso não parte de uma partida existente); L2 → RG2 (badge; depois alinhada à N3 na aprovação da NAV); L3 → RG3 (lados fixos no ranking); L4 → RG4 (desistência e W.O. a favor de quem lança); L5 → RG5 (vencedor sai do placar); L6 → RG6 (placar completado da desistência antes do envio; desistência antes do primeiro game é 0/0 interrompido); L7 → RG7, RG8 (revisão e falha de rede); L8 → RG9, RG10 (prazo e peso das ações); L9 → RG11 (atos do admin visíveis); L10 → §6.2 (amistoso descartado ou cancelado no histórico de quem lançou).
 - **Perguntas respondidas:** P1 → RG12, RG13 (entrada do placar, com prévia ao vivo); P2 → RG15 (motivo da contestação); P3 → RG16 (desfazer o lançamento); P4 → RG18 (impacto no ranking); P5 → RG14 (pontos previstos); P6 → RG17 (quem entra no amistoso); P7 → §2 (acompanha a NAV).
 
 **Mudanças de domínio que as decisões pedem**, fora deste doc: a transição de desfazer o lançamento (RG16, com regra nova no `DOMAIN.md`), o campo do motivo da contestação (RG15) e a trava do W.O. a favor de quem lança (RG4). Cada uma vira issue de implementação.
