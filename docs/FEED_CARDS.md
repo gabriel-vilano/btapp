@@ -172,6 +172,17 @@ Todo card de resultado exibe um label ao lado do nome de cada jogador/dupla:
 - **O vencedor aparece sempre na linha superior** — independente de quem é o usuário logado
 - Sem ícones de checkmark (✓) ou X — os labels substituem completamente essa função
 
+### 3.4 Variante compacta (listas)
+
+Nas listas (partidas recentes do perfil, H2H, prévia do registro) o placar vira uma linha: `<ScoreBlock variant="compact" perspective=… />`, em `src/components/ui/ScoreBlock/`. Decisões do Gabriel em 29/09/2026:
+
+- **Lê-se do lado do dono da lista** (o perfil, ou você no H2H), não do vencedor: numa derrota, `Derrota · 4/6 3/6`. Placar e Badge contam a mesma história, e no H2H a leitura "eu × ele" é igual em todas as linhas. A prop `perspective` (`winner` ou `loser`) diz de que lado da partida está quem lê: o `Score` é gravado do lado vencedor.
+- **Grafia:** `6/4 3/6 10/7`. Barra dentro do set, espaço entre os sets, super tiebreak como número, sem rótulo. `--text-label-lg` em negrito.
+- **Cor:** o set vencido por quem lê em `--color-foreground-primary`, o perdido e o interrompido em `--color-foreground-secondary`.
+- **W.O.:** o texto "W.O." em `--color-foreground-secondary`, sem número. A área nunca fica vazia.
+- **Desistência:** o placar real com `desist.` depois do set interrompido (`4/6 3/2 desist.`). Desistência entre sets não escreve o set que não começou (`6/4 desist.`). Sem nenhum game jogado, só `desist.`, como o W.O.
+- **Não quebra:** a linha do placar fica inteira, e quem quebra é o texto ao lado.
+
 ---
 
 ## 4. Card — Resultado de partida

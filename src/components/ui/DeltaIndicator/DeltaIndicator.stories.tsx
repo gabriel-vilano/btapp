@@ -65,6 +65,17 @@ export const Compact: Story = {
   },
 };
 
+// Compacto no "Manteve": só o traço à vista, a frase inteira no leitor de tela
+export const UnchangedCompact: Story = {
+  args: { direction: "none", compact: true },
+  play: async ({ canvasElement }) => {
+    await expect(canvasElement.textContent).toBe("Manteve a posição");
+    const root = canvasElement.firstElementChild as HTMLElement;
+    // Só o traço (16px): o texto oculto não soma o gap
+    await expect(root.getBoundingClientRect().width).toBeLessThanOrEqual(16);
+  },
+};
+
 export const AllDirections: Story = {
   render: () => (
     <div className="sb-stack">
