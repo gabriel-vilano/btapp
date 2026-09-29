@@ -18,6 +18,8 @@ interface ListItemContent {
 interface ListItemProps extends ListItemContent {
   href?: string;
   onClick?: () => void;
+  /** Classe extra no `<li>`, para componentes de área que compõem a linha (ex.: fundo do RankingRow). */
+  className?: string;
 }
 
 /**
@@ -25,10 +27,11 @@ interface ListItemProps extends ListItemContent {
  * use dentro de `<List>`.
  * Ex.: `<ListItem href="/perfil" leading={<Avatar … />} title="Lucas Silva" trailing={chevron} />`
  */
-export function ListItem({ href, onClick, ...content }: ListItemProps) {
+export function ListItem({ href, onClick, className, ...content }: ListItemProps) {
+  const itemClass = className ? `${styles["list-item"]} ${className}` : styles["list-item"];
   if (href !== undefined) {
     return (
-      <li className={styles["list-item"]}>
+      <li className={itemClass}>
         <Link href={href} className={rowClass(true)}>
           <ListItemBody {...content} />
         </Link>
@@ -37,7 +40,7 @@ export function ListItem({ href, onClick, ...content }: ListItemProps) {
   }
   if (onClick !== undefined) {
     return (
-      <li className={styles["list-item"]}>
+      <li className={itemClass}>
         <button type="button" onClick={onClick} className={rowClass(true)}>
           <ListItemBody {...content} />
         </button>
@@ -45,7 +48,7 @@ export function ListItem({ href, onClick, ...content }: ListItemProps) {
     );
   }
   return (
-    <li className={styles["list-item"]}>
+    <li className={itemClass}>
       <div className={rowClass(false)}>
         <ListItemBody {...content} />
       </div>

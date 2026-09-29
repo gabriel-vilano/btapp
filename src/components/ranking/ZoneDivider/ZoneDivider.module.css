@@ -1,0 +1,43 @@
+/* Traço · texto · traço: as duas colunas de fora dividem o que o texto deixa livre */
+.zone-divider {
+  display: grid;
+  grid-template-columns: minmax(var(--spacing-200), 1fr) auto minmax(var(--spacing-200), 1fr);
+  align-items: center;
+  gap: var(--spacing-100);
+  padding: var(--spacing-100) var(--spacing-page-margin);
+}
+
+.zone-divider::before,
+.zone-divider::after {
+  content: "";
+  border-top: var(--border-width-medium) solid var(--color-border-subtle);
+}
+
+.zone-divider::before {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.zone-divider::after {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.zone-divider__text {
+  display: flex;
+  flex-direction: column;
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-regular);
+  text-align: center;
+  overflow-wrap: anywhere;
+  color: var(--color-foreground-secondary);
+}
+
+.zone-divider__label {
+  font-weight: var(--font-weight-bold);
+}
