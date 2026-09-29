@@ -25,6 +25,7 @@ As siglas de decisão são as mesmas do `docs/DOMAIN.md` > "Fontes". As que esta
 | **M3** | Material Design 3, "Navigation bar" e "Navigation rail" (lidos em 25 e 26/09/2026): 3 a 5 destinos na barra; janelas compactas (abaixo de 600dp) "should always use a navigation bar"; o rail serve às janelas médias e maiores, com 3 a 7 destinos |
 | **ARIA** | WAI-ARIA 1.2 e MDN `aria-current`: barra de rotas é `<nav>` com links, não o widget Tabs |
 | **DEC-NAV-A** | Aprovação da spec pelo Gabriel (29/09, ~19:00 UTC): leituras L10 a L14 confirmadas; arena do Explorar como organização do tipo arena, com tipo, cidade e contato; badge da aba Jogos pela N3; @username gerado no cadastro |
+| **DEC-EXP** | Decisões do Gabriel na spec do Explorar (`docs/EXPLORE.md`, 29/09, ~20:40 UTC): toda organização tem página, em `/organizacoes/[organizacao]`, e a arena é um tipo; a busca começa em Jogadores, com a contagem de resultados em cada escopo |
 | **RES** | `docs/RESULTS.md`: fila do admin, correção e anulação no menu da partida confirmada, amistoso descartado ou cancelado no histórico de quem lançou (§6.2) |
 | **LEIT** | Leitura do agente desta spec. Todas foram respondidas pelo Gabriel (DEC-NAV-L, DEC-NAV-A); o mapa está na seção 12 |
 
@@ -91,7 +92,7 @@ As telas de detalhe têm cabeçalho com "Voltar" e o título da entidade. O sele
 ## 4. Do feed ao detalhe
 
 - **N10. Cada entidade tem uma rota, e todo caminho até ela mostra a mesma tela.** A partida é a mesma tela vinda do feed, da agenda, da notificação ou do perfil. O que muda é **quem vê**, não a tela: o jogador da partida vê as ações; os outros veem só a leitura pública. **A aba marcada é a de origem:** uma partida aberta pelo Feed mantém o Feed marcado, e "Voltar" leva de volta a ele, como no Strava e no Instagram. O custo de rotas que isso traz (cada aba com a própria pilha de telas) é aceito. [DEC-NAV-L L2]
-- **N28. Quem chega sem aba de origem** (notificação, link externo, URL digitada) cai na aba dona do tipo da entidade: partida → Jogos; classificação e competição em que o jogador está inscrito → Competições; competição em que ele não está inscrito e arena → Explorar; jogador e H2H → Feed. [DEC-NAV-A L10]
+- **N28. Quem chega sem aba de origem** (notificação, link externo, URL digitada) cai na aba dona do tipo da entidade: partida → Jogos; classificação e competição em que o jogador está inscrito → Competições; competição em que ele não está inscrito e organização → Explorar; jogador e H2H → Feed. [DEC-NAV-A L10]
 
 | Entidade | Rota proposta | O jogador da partida (ou da competição) vê | Os outros veem |
 | --- | --- | --- | --- |
@@ -100,7 +101,7 @@ As telas de detalhe têm cabeçalho com "Voltar" e o título da entidade. O sele
 | **H2H** | Da spec de H2H | — | — |
 | **Classificação de uma categoria** | `/ranking/[categoria]` | A linha da própria dupla fixada (RK9) | A tabela |
 | **Competição** | `/competicoes/[competicao]` | A posição em cada categoria (RK17); para o admin, a área "Administrar" (N31) | Categorias, temporada, regras; para quem não está inscrito, venha de onde vier, "Como se inscrever" e "Tenho interesse" (N33). A aba marcada segue a N10 e a N28 |
-| **Arena** | `/arenas/[arena]` | — | Nome, cidade e as competições da arena (N34) |
+| **Organização** (arena, clube, federação ou grupo) | `/organizacoes/[organizacao]` | — | Nome, tipo, cidade, contato e as competições que ela promove (N34) |
 
 A rota não carrega a aba: a mesma URL abre marcando a aba de origem quando vem de dentro do app, e a aba da N28 quando vem de fora.
 
@@ -108,13 +109,15 @@ A rota não carrega a aba: a mesma URL abre marcando a aba de origem quando vem 
 
 Completa o que o `FEED_CARDS.md` já previa (H2H, perfil e "Comentar" levam ao detalhe).
 
-| Card | Toque no corpo | Cabeçalho (organização e competição) | Avatar ou nome | Outros |
+| Card | Toque no corpo | Cabeçalho (competição) | Avatar ou nome | Outros |
 | --- | --- | --- | --- | --- |
 | **Resultado** | Partida | Classificação da categoria (ranking) ou competição (torneio); amistoso não tem cabeçalho de competição | Perfil do jogador | H2H → H2H. Comentar → partida, na seção de comentários |
 | **Confronto definido** | Partida (com as ações, se o jogador for da partida) | Classificação da categoria ou competição | Perfil do jogador | H2H → H2H |
 | **Inscrição** | Competição | Competição | Perfil do jogador | — |
 | **Nova amizade** | — | — | Perfil do jogador (mini-card) | — |
 | **Movimentação e marco** | Classificação da categoria, rolada até a linha da dupla | Classificação da categoria | Perfil do jogador | — |
+
+**No cabeçalho, a organização (avatar e nome) leva à página da organização** (N34), em todos os cards que a mostram; o resto do cabeçalho segue a coluna acima. [DEC-EXP]
 
 - **N11. Card do feed não tem botão de ação da partida.** "Lançar resultado" e "Confirmar" moram na partida e aparecem no bloco "Sua vez" (N20). O card de confronto do próprio jogador leva à partida, onde as ações estão. [DEC-JOGOS, DEC-NAV]
 
@@ -208,11 +211,11 @@ A aba responde "onde eu estou nas competições que jogo?". Ela não é a classi
 
 A aba responde "o que existe para eu jogar?" (JTBD 1). No MVP ela é **enxuta**: a evidência da oportunidade 1.2 é fraca (DSC), e o beta tem os organizadores do Rankin e do Vila. O uso da aba entra nas métricas (seção 13) para decidir se ela cresce. [DEC-NAV-Q Q1, DSC]
 
-- **N32. A busca do app mora no topo do Explorar**, com três escopos: **Jogadores · Competições · Arenas** (controle segmentado). Jogadores busca por nome e @username e leva ao perfil; Competições, por nome da competição ou da organização, e leva à página da competição; Arenas, por nome e cidade, e leva à página da arena. O escopo inicial é Jogadores, porque é a busca que a amizade e o amistoso pedem. [DEC-NAV-Q Q5, DEC-NAV-A L12]
-- **N33. Sem busca digitada, o Explorar mostra as competições e as arenas dos organizadores do beta**, em duas seções: "Competições" (as com temporada aberta ou evento futuro primeiro) e "Arenas". Na página de uma competição em que o jogador **não** está inscrito, entram dois blocos no lugar da posição: [DEC-NAV-Q Q1; R32]
-  - **"Como se inscrever":** o contato do organizador (texto e link que ele informou), porque no beta a inscrição entra por carga (R32) e é feita com o organizador.
+- **N32. A busca do app mora no topo do Explorar**, com três escopos: **Jogadores · Competições · Arenas** (controle segmentado). Jogadores busca por nome e @username e leva ao perfil; Competições, por nome da competição ou da organização, e leva à página da competição; Arenas, por nome e cidade, e leva à página da organização. O escopo inicial é Jogadores, porque é a busca que a amizade e o amistoso pedem, e cada escopo mostra a contagem de resultados do termo (`EXPLORE.md`, EX5). [DEC-NAV-Q Q5, DEC-NAV-A L12, DEC-EXP]
+- **N33. Sem busca digitada, o Explorar mostra as competições e as arenas dos organizadores do beta**, em duas seções: "Competições" (as com temporada aberta ou evento futuro primeiro) e "Arenas". Na página de uma competição com categoria em que o jogador **não** está inscrito, entram dois blocos logo abaixo do cabeçalho (quando cada um aparece: `EXPLORE.md`, EX26 e EX27): [DEC-NAV-Q Q1; R32]
+  - **"Como se inscrever":** o contato do organizador (o texto ou o link que ele informou), porque no beta a inscrição entra por carga (R32) e é feita com o organizador.
   - **"Tenho interesse":** um botão que registra o interesse do jogador naquela competição e vira "Interesse registrado" (tocar de novo desfaz). No MVP, serve para **medir a demanda**: o organizador não é notificado e ninguém mais vê quem marcou. O interesse é uma relação entre jogador e competição (`DOMAIN.md`, glossário). [DEC-NAV-A L13]
-- **N34. A arena do Explorar é uma organização do tipo arena**, com página própria (rota proposta `/arenas/[arena]`): nome, cidade, contato e as competições dela. A organização ganha **tipo** (arena, clube, federação, grupo), **cidade** e **contato** (`DOMAIN.md`, glossário). A arena da partida continua sendo texto livre (R34). [DEC-NAV-A L14]
+- **N34. Toda organização tem página própria** (rota proposta `/organizacoes/[organizacao]`): nome, tipo, cidade, contato e as competições que ela promove. A organização tem **tipo** (arena, clube, federação, grupo), **cidade** e **contato** (`DOMAIN.md`, glossário). **A arena do Explorar é a organização do tipo arena**: é ela que o escopo e a seção "Arenas" listam. Chega-se às organizações de outros tipos pelo cabeçalho da competição e dos cards. O local do torneio e a arena da partida continuam sendo texto (R34) e não levam à página. O conteúdo é da `EXPLORE.md` (seção 5). [DEC-NAV-A L14, DEC-EXP]
 - **Fora do MVP:** filtros por nível e região, recomendação ("para você"), mapa e inscrição pelo app (`PRODUCT.md`; REF `06-descoberta-competicoes.md`, caminhos A a C).
 
 ---
@@ -263,7 +266,7 @@ O uso é alto durante a rodada e cai entre competições (`CLAUDE.md`, "Insights
 | **Sem nenhuma inscrição, nunca** (jogador novo) | "Você ainda não está em nenhuma competição." e a linha de que a inscrição é feita com o organizador (R32) | "Explorar competições" (leva ao Explorar) |
 | **Sem inscrição ativa, com temporada passada** | O item da última temporada, com "Encerrada" e a posição final; toque → a classificação daquela temporada (RK21) | "Explorar competições" |
 
-**Aba Explorar:** a busca sem resultado diz "Nada encontrado para '[termo]' em [escopo]." e oferece os outros dois escopos. A lista inicial nunca fica vazia no beta, porque os organizadores do beta já estão cadastrados.
+**Aba Explorar:** a busca sem resultado diz "Nada encontrado para '[termo]' em [escopo]." e oferece os outros escopos que têm resultado, com a contagem (`EXPLORE.md`, EX19). A lista inicial nunca fica vazia no beta, porque os organizadores do beta já estão cadastrados.
 
 A classificação sem temporada em andamento e a tabela sem jogo confirmado são da `RANKING.md` (RK19, RK20).
 
@@ -309,7 +312,7 @@ Lista para a auditoria do design system. **Esta spec não desenha os componentes
 | **IconButton** | 1 | Sino, engrenagem, fechar dos fluxos modais | Novo. `aria-label` obrigatório |
 | **CountBadge** | 1 | Número nas abas Jogos e Competições, ponto no sino (N3, N7) | Novo. Contagem no nome acessível |
 | **SearchField** | 1 | Campo de busca do Explorar (N32) | Novo, ou variante do FormInput |
-| **Badge** | 1 | Selo "Hoje", "Com o admin", "Encerrada", "Interesse registrado" | No `master` |
+| **Badge** | 1 | Selo "Hoje", "Com o admin", "Encerrada", "Você participa". "Interesse registrado" é o rótulo do botão de interesse, não um Badge (`EXPLORE.md`, EX29) | No `master` |
 | **SegmentedControl** | 1 | Escopos da busca (N32) | No `master` |
 | **Skeleton**, **EmptyState**, **Alert**, **Dialog**, **ListItem** | 1–2 | Carregando, vazios, erro, fluxos modais, base dos itens | No `master` |
 | **StandingSummaryItem** | 3 | Item de ranking em "Minhas competições" (N29) | No `master` |
@@ -330,6 +333,7 @@ Lista para a auditoria do design system. **Esta spec não desenha os componentes
 - **Primeira rodada** (DEC-NAV-L, 26/09): L1 → N4; **L2 rejeitada** → N10 (a aba de origem continua marcada); L3 → N13; L4 → N14; L5 → N16; L6 → N20, N21; L7 → tabela 5.2; L8 → N8; L9 → N27.
 - **Segunda rodada** (DEC-NAV-Q, 29/09): Q1 → N1 (5 abas, Competições do jogador, Explorar); Q2 → N12; Q3 → N30, N31 (admin dentro da competição, agenda só de jogador); Q4 → N29 (a aba Competições abre na lista); Q5 → N6, N32 (uma busca, no Explorar, com três escopos).
 
+- **Spec do Explorar** (DEC-EXP, 29/09): N34 passa a dar página a toda organização, em `/organizacoes/[organizacao]`; N32 ganha a contagem por escopo.
 - **Aprovação** (DEC-NAV-A, 29/09): L10 → N28; L11 → N29; L12 → N32; L13 → N33; L14 → N34 (organização com tipo, cidade e contato); badge da aba Jogos pela N3, que conta todo item de "Sua vez".
 
 Não há leitura nem pergunta aberta. Pergunta nova entra aqui com opções, trade-offs e recomendação, e sai quando vira regra.

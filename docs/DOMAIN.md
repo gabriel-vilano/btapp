@@ -53,7 +53,7 @@ As entidades estão agrupadas pelo papel que cumprem. Os nomes em **negrito** s�
 
 | Termo | Definição | Regras |
 | --- | --- | --- |
-| **Organização** | Arena, clube, federação ou grupo que promove competições. Guarda **tipo** (arena, clube, federação ou grupo), **cidade** e **contato**. Aparece no cabeçalho dos cards de resultado, confronto e inscrição. A organização do tipo arena é a arena do Explorar (`NAVIGATION.md`, N34) [DEC-NAV-A] | — |
+| **Organização** | Arena, clube, federação ou grupo que promove competições. Guarda **tipo** (arena, clube, federação ou grupo), **cidade** e **contato**. Aparece no cabeçalho dos cards de resultado, confronto e inscrição. Toda organização tem página (`NAVIGATION.md`, N34); a do tipo arena é a arena do Explorar [DEC-NAV-A; `EXPLORE.md`, DEC-EXP] | — |
 | **Competição** | Guarda-chuva de tudo que se disputa. Tem dois tipos, com peso igual no produto: **ranking** e **torneio** | R3, R6 |
 | **Ranking** | Competição contínua, dividida em temporadas. Os confrontos saem de sorteios por rodada; o jogador não escolhe o adversário. Guarda a **regra de pontuação**, o **formato da partida** (um só), o **prazo de resposta** (padrão 48h), o número de **jogos por rodada** e a **política de troca de parceiro** | R7, R9, R14, R17, R29 |
 | **Torneio** | Competição discreta, de 1 ou 2 dias. **No MVP, o app não gera a chave:** o torneio tem inscrição, confronto e resultado lançado pelo admin, e a chave vem de fora do app. Guarda um **formato padrão**, que o admin troca na partida que fugir dele. A final de uma temporada de ranking é um torneio comum | R27, R29, R31, R38 |

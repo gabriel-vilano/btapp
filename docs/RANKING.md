@@ -180,11 +180,11 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
 A página da competição existe e não é aba (NAV N9); o conteúdo, no ranking, é desta spec. Rota proposta `/competicoes/[competicao]`.
 
-- **RK17. A página tem quatro blocos, nesta ordem:** cabeçalho, categorias, temporada e regras. Dois blocos entram logo abaixo do cabeçalho conforme quem vê: para quem **não** está inscrito, "Como se inscrever" e "Tenho interesse" (NAV N33); para o admin da competição, a entrada da área "Administrar" (NAV N31). [NAV N9, N31, N33; DEC-RANK RL9]
+- **RK17. A página tem quatro blocos, nesta ordem:** cabeçalho, categorias, temporada e regras. Dois blocos entram logo abaixo do cabeçalho conforme quem vê: para quem ainda pode se inscrever, "Como se inscrever" e "Tenho interesse" (NAV N33; quando cada um aparece está em `EXPLORE.md`, EX26 e EX27); para o admin da competição, a entrada da área "Administrar" (NAV N31). [NAV N9, N31, N33; DEC-RANK RL9]
 
 | Bloco | Conteúdo |
 | --- | --- |
-| **Cabeçalho** | Organização (avatar e nome) e nome da competição |
+| **Cabeçalho** | Organização (avatar e nome, que levam à página da organização, NAV N34) e nome da competição |
 | **Categorias** | Uma linha por categoria (ListItem): nome da categoria, "16 duplas", e, quando o jogador está inscrito, a posição dele (StandingSummaryItem). Toque → classificação |
 | **Temporada** | Nome e datas, rodada atual com o prazo, número de jogos por rodada; final: nome, vagas e data de corte |
 | **Regras** | Formato da partida (R29, texto do formato); a tabela de pontos do ranking (R9–R11, R36) em linguagem de jogador ("Vitória: 100 pontos, mais 2 por game vencido e menos 2 por game perdido"), com o exemplo do 6/4 6/3 calculado pela regra do próprio ranking; a ordem de desempate (R37), com a nota de que ali a vitória por W.O. conta, diferente da linha da tabela (RK8); o prazo para confirmar (R14); o que acontece sem jogo no prazo da rodada (R40) |
