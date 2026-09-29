@@ -14,12 +14,13 @@ As siglas de decisão são as do `docs/DOMAIN.md` > "Fontes". As que esta spec u
 | --- | --- |
 | **DOMAIN** | Regras R9–R16, R29, R36, R38–R44 e a máquina de estados (§3). Agenda do jogador e registro contextual (§4) |
 | **SCHED** | `docs/SCHEDULING.md`: estados da marcação no confronto, "Data passou sem resultado", tela do admin na partida não realizada (M17) |
-| **CARDS** | `docs/FEED_CARDS.md`: sistema de placar (§3), card de resultado e variações de W.O. e desistência (§4), bloco de posição (§8) |
+| **CARDS** | `docs/FEED_CARDS.md`: sistema de placar (§3), card de resultado e variações de W.O. e desistência (§4; na desistência, o placar real com o set interrompido rotulado, §4.4), bloco de posição (§8) |
 | **REF-PLACAR** | `docs/discovery/referencias/05-registro-placar.md`: Playtomic (fluxo e validação de set, documentados), cartões de aprovação com prazo (Instacart, Fiverr, Retro, Revolut Business), padrões de entrada numérica, APG Spinbutton |
 | **REF-NAV** | `docs/discovery/referencias/07-navegacao.md`: registrar resultado no contexto, badge só para o crítico ("resultado a confirmar é crítico") |
 | **INV** | `docs/discovery/referencias/inventario-componentes.md`: ScoreInput, PendingResultCard, StatusTimeline, SidePicker e primitivos |
 | **DSC** | `docs/DISCOVERY.md`: oportunidade 2.1 (registro com confirmação e prazo, a dor com mais evidência), H1 (cold start de dados), H2 (o jogador aceita registrar no app) |
 | **NAV** | `docs/NAVIGATION.md`, spec da navegação e agenda (em aprovação): a partida como casa do resultado, atalhos, fluxos modais, pendências do admin |
+| **DEC-DES** | Decisão do Gabriel de 27/09 sobre a desistência no card: o card mostra o placar real, e o placar completado pelo formato aparece só nas telas de revisão (comentário do orquestrador na issue desta spec, 27/09) |
 | **DEC-RES** | Respostas do Gabriel às perguntas P1–P7 desta spec e confirmação das leituras L1–L10 (comentário na issue desta spec, 26/09, ~23:37 UTC) |
 | **LEIT** | Leitura do agente desta spec, derivada das fontes acima e confirmada pelo Gabriel na DEC-RES. A lista está na seção 10 |
 
@@ -113,13 +114,13 @@ Set 1 · até 6
 
 - Cada set completo sai de **2 toques**.
 - **Os sets aparecem conforme a partida pede.** No formato de 2 sets, o 2º set aparece depois do 1º; o super tiebreak aparece só no 1 set a 1, com dois campos numéricos (pontos, a partir de 10, com 2 de vantagem). Quem fechou 2 sets a 0 nunca vê o STB. Isso torna impossíveis os erros `too_many_sets`, `set_type` e `undecided` no fluxo normal.
-- **A prévia da partida inteira** usa o `ScoreBlock` do feed (CARDS §3): além da frase da RG13, o jogador vê o placar "como vai ficar" no card.
+- **A prévia da partida inteira** usa o `ScoreBlock` do feed (CARDS §3): além da frase da RG13, o jogador vê o placar "como vai ficar" no card. **Na desistência, a prévia mostra o placar real**, como o card vai publicá-lo: os sets completos e o set interrompido com o rótulo "Interrompido" (CARDS §4.4). O placar completado pelo formato não entra na prévia: ele vale para os pontos (R11) e aparece só nas telas de revisão (RG6, RG7). [DEC-DES]
 
 ### 3.4 Placar da desistência
 
 O jogador informa os sets completos (como em §3.3) e **o set interrompido**, com o placar parcial dos dois lados no momento da desistência. O set interrompido não cabe no "quem venceu + games do perdedor", porque ainda não tem vencedor: cada lado ganha um Stepper (APG Spinbutton), de 0 ao alvo do set.
 
-- **RG6. A tela mostra o placar completado antes do envio.** "O placar vale como 6/4 6/2 1/0 (STB), completado pelo formato." É o placar que pontua (R11), e o jogador precisa saber o que vai ser confirmado. A regra do completamento é do domínio (`completeRetiredScore`); a tela só a mostra. [R11; LEIT]
+- **RG6. A revisão mostra o placar completado antes do envio**, abaixo do placar real: "Para os pontos, o placar vale como 6/4 6/2 1/0 (STB), completado pelo formato." É o placar que pontua (R11), e o jogador precisa saber o que vai ser confirmado. A prévia e o card mostram só o placar real (§3.3, DEC-DES). A regra do completamento é do domínio (`completeRetiredScore`); a tela só a mostra. [R11; LEIT]
 - **Desistência antes do primeiro game** é o set interrompido em 0/0, e vale como desistência, não como W.O. (o adversário estava lá). A tela não trata como caso especial. [R11, R12; LEIT]
 
 ### 3.5 W.O.
@@ -390,6 +391,6 @@ Medidas por rodada no beta. Sem meta fixa: a primeira rodada define a linha de b
 - **O adversário não abre o app.** O resultado confirma pelo prazo (R14) e o erro passa. A notificação de prazo chegando (§7) é a mitigação; a métrica "via da confirmação" mostra se basta.
 - **Lançamento errado antes do desfazer existir.** Até a transição da RG16 entrar no domínio, quem errou depende do adversário contestar ou do admin corrigir, e a fila do admin cresce com erro de digitação.
 - **Desfazer como tática.** A RG16 permite desfazer até a primeira resposta. Se lançamentos desfeitos e relançados com outro placar ficarem frequentes, pesar um limite (uma vez por partida, ou uma janela curta).
-- **O set interrompido é o caso mais difícil de entender.** A desistência é rara, e o jogador vai ver o placar completado (RG6) sem ter visto a regra antes. Acompanhar contestações de desistência.
+- **O set interrompido é o caso mais difícil de entender.** A desistência é rara, e o jogador vai ver na revisão um placar completado (RG6) diferente do placar real da prévia, sem ter visto a regra antes. Acompanhar contestações de desistência.
 - **Contestação como tática.** Contestar congela a pontuação até o admin decidir. Se a taxa de contestação com placar mantido for alta, o motivo obrigatório (RG15) já é um custo pequeno; se não bastar, rever.
 - **O impacto no ranking na derrota.** Mostrar a queda logo depois da confirmação pode frustrar (`PRODUCT.md`, "descer frustra"). Ouvir os jogadores no beta.
