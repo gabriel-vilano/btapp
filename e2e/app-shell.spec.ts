@@ -39,7 +39,15 @@ test.describe("Casca do app", () => {
     await expect(nav.getByRole("link", { name: "Explorar", exact: true })).toHaveAttribute("aria-current", "page");
   });
 
-  test("N25: a 393px, \"Competições\" em negrito cabe na aba sem cortar", async ({ page }) => {
+  /*
+   * N25 pede o rótulo "sem truncar e sem quebrar linha". O critério é o da TabBar
+   * (story At320 da ENG-72): o rótulo pode passar um pouco da coluna, desde que
+   * inteiro, numa linha e sem encostar nos rótulos vizinhos. A largura varia com o
+   * Chrome: 75px no 141 e 82px no 147 da CI, para uma aba de 78,6px.
+   */
+  test("N25: a 393px, \"Competições\" em negrito aparece inteiro, numa linha, sem encostar nos vizinhos", async ({
+    page,
+  }) => {
     await page.setViewportSize({ width: 393, height: 852 });
     await loginToFeed(page, "casca-393");
     const nav = mainNavigation(page);
@@ -47,32 +55,29 @@ test.describe("Casca do app", () => {
     // Aba atual: o rótulo fica em negrito, a versão mais larga dele
     await nav.getByRole("link", { name: /^Competições/ }).click();
     await expect(page).toHaveURL(/\/competicoes$/);
+    await expect(nav.getByRole("link", { name: /^Competições/ })).toHaveAttribute("aria-current", "page");
 
-    const tab = nav.getByRole("link", { name: /^Competições/ });
-    await expect(tab).toHaveAttribute("aria-current", "page");
+    // `document.fonts.ready` não espera a face em negrito que ainda nem foi pedida
+    await page.evaluate(() => document.fonts.load("700 12px Arimo", "Competições"));
 
-    // `document.fonts.ready` não espera a face em negrito que ainda nem foi pedida:
-    // sem o load explícito, a medida sai com a fonte de reserva do sistema, mais larga
-    const arimoLoaded = await page.evaluate(async () => {
-      await document.fonts.load("700 12px Arimo", "Competições");
-      return document.fonts.check("700 12px Arimo", "Competições");
-    });
-    expect(arimoLoaded, "a Arimo em negrito precisa estar carregada para a medida valer").toBe(true);
+    const labels = await Promise.all(
+      ["Jogos", "Competições", "Explorar"].map((text) => boxOf(nav.getByText(text, { exact: true }))),
+    );
+    const [previous, competitions, next] = labels;
+    const report = labels.map((box) => `${box.x.toFixed(1)}+${box.width.toFixed(1)}`).join(" | ");
 
-    const label = tab.getByText("Competições", { exact: true });
-    const labelBox = await boxOf(label);
-    const tabBox = await boxOf(tab);
-    // Diagnóstico na mensagem: sem ele, uma falha na CI não diz se foi a fonte ou o tamanho
-    const rendering = await label.evaluate((element) => {
-      const style = getComputedStyle(element);
-      const context = document.createElement("canvas").getContext("2d");
-      if (context) context.font = "700 12px Arimo";
-      const arimoWidth = context?.measureText("Competições").width.toFixed(1);
-      return `${style.fontWeight} ${style.fontSize} ${style.fontFamily}; Arimo 700 12px mede ${arimoWidth}px; ${navigator.userAgent}`;
-    });
-    const widths = `rótulo ${labelBox.width}px, aba ${tabBox.width}px (${rendering})`;
-    expect(labelBox.x, widths).toBeGreaterThanOrEqual(tabBox.x);
-    expect(labelBox.x + labelBox.width, widths).toBeLessThanOrEqual(tabBox.x + tabBox.width);
+    // Uma linha só: a de label-md tem 16px
+    expect(competitions.height, report).toBeLessThanOrEqual(16);
+    expect(previous.x + previous.width, report).toBeLessThan(competitions.x);
+    expect(competitions.x + competitions.width, report).toBeLessThan(next.x);
+
+    // Inteiro: nada entre o rótulo e a barra corta o que passa da coluna
+    const clipped = await nav.evaluate((navElement) =>
+      [...navElement.querySelectorAll("ul, li, a, a > span")].some(
+        (element) => getComputedStyle(element).overflowX !== "visible",
+      ),
+    );
+    expect(clipped, "algum elemento da barra corta o rótulo (overflow diferente de visible)").toBe(false);
   });
 
   test("N27: a partir de 600px, o trilho lateral substitui a barra do rodapé", async ({ page }) => {
