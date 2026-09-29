@@ -336,23 +336,22 @@ Resultado confirmado
 
 ## 9. Componentes que a spec pede
 
-Lista para a auditoria do design system, que roda em paralelo. **Aqui não se desenha nenhum componente**: nome provisório, onde a spec o usa e o que já existe (INV).
+Lista para as issues de implementação. **Aqui não se desenha nenhum componente**: nome, onde a spec o usa e o que já existe no `master`. Componente usado por mais de uma área mora em `ui/` (`CLAUDE.md` > "Onde mora cada componente").
 
 | Componente | Tier | Onde aparece | Existe? |
 | --- | --- | --- | --- |
 | **ScoreInput** (set a set, com set interrompido e STB) | 2 | §3.3, §3.4, §5, §6 | Não. É o de maior risco técnico (INV) |
 | **Stepper** (APG Spinbutton) | 1 | Set interrompido (§3.4) | Não |
-| **Chip** em grupo de escolha única (radio) | 1 | Games de quem perdeu o set (RG12), motivo da contestação (RG15) | Não |
-| **SegmentedControl** | 1 | "Como terminou" (§3.2), modalidade (§6.1) | Não |
 | **SidePicker** | 2 | Lados do amistoso (§6.1) | Não |
-| **AgendaItem** | 2 | Itens "Lançar resultado" e "Confirmar" em "Sua vez" (§2, §8.2). É o item da NAV (§11), não um componente desta spec | Não. Definido na NAV |
-| **StatusTimeline** | 2 | Acompanhar (§4.3), atos do admin (RG11) | Não |
-| **BottomSheet / Dialog** | 1 | Revisão (RG7), contestar (RG15), desfazer (RG16), anular (§5.4) | Não |
-| **Badge** | 1 | "Aguardando confirmação", "Em arbitragem", "Corrigido" | Parcial: estilos locais no card de resultado e no bloco de ranking |
-| **DeltaIndicator** | 1 | Impacto no ranking (§8.1) | Parcial: `.delta` local no bloco de ranking |
-| **CountBadge** | 1 | Badge das abas Jogos e Competições (RG2, N3) | Não. Definido na NAV |
-| **ScoreBlock**, variante de prévia | 3 | Prévia do placar (§3.3), tela de resposta (§4.1) | Sim, no feed. Falta a variante compacta (INV) |
-| **EmptyState**, **Skeleton** | 1–2 | §8.2 | Não (os tokens `--color-loading-*` existem) |
+| **Chip** em grupo de escolha única (radio) | 1 | Games de quem perdeu o set (RG12), motivo da contestação (RG15) | Sim, `ui/Chip` |
+| **SegmentedControl** | 1 | "Como terminou" (§3.2), modalidade (§6.1) | Sim, `ui/SegmentedControl` |
+| **StatusTimeline** | 2 | Acompanhar (§4.3), atos do admin (RG11) | Sim, `ui/StatusTimeline` |
+| **Dialog** (modal e bottom sheet) | 1 | Revisão (RG7), contestar (RG15), desfazer (RG16), anular (§5.4) | Sim, `ui/Dialog` |
+| **Badge** | 1 | "Aguardando confirmação", "Em arbitragem", "Corrigido" | Sim, `ui/Badge` |
+| **DeltaIndicator** | 1 | Impacto no ranking (§8.1) | Sim, `ui/DeltaIndicator` |
+| **ScoreBlock** e a variante compacta | 3 | Prévia do placar (§3.3), tela de resposta (§4.1) | Sim, `ui/ScoreBlock`, já com o set interrompido da desistência (CARDS §4.4) |
+| **EmptyState**, **Skeleton** | 1–2 | §8.2 (vazio da NAV), carregando | Sim, `ui/EmptyState` e `ui/Skeleton` |
+| **AgendaItem**, **CountBadge** | 2, 1 | "Sua vez" e badges (RG2, §2) | Não. São da NAV (§11) e das issues dela |
 | **Button**, **Alert**, **Toast**, **FormInput** | 1 | Todo o fluxo | Sim |
 
 ---
