@@ -84,7 +84,7 @@ Quem prefere combinar tudo no grupo continua podendo: informa a data depois (R35
 ### Histórico e evidência
 
 - **M16. Nada da marcação é apagado.** Proposta criada, substituída, retirada, expirada ou aceita e data informada ficam no histórico do confronto, cada item com autor e momento. [DEC-MARC]
-- **M17. O histórico é evidência, não veredito.** Na partida não realizada (R40), o admin vê o histórico e um resumo por lado: **quantas datas distintas cada lado ofereceu**, quantas propostas ficaram sem resposta e se houve data acordada ou informada. Ele também pode considerar o que aconteceu fora do app (ex.: prints do WhatsApp), porque uma oferta feita no grupo é tão válida quanto uma feita no app. **O app nunca sugere nem aplica o W.O.** [DEC-MARC, DEC-RESP P3, R40, PESQ-RV; LEIT]
+- **M17. O histórico é evidência, não veredito.** Na partida não realizada (R40), o admin vê o histórico e um resumo por lado: **quantos horários cada lado ofereceu e em quantas datas distintas**, quantas propostas ficaram sem resposta e se houve data acordada ou informada. Ele também pode considerar o que aconteceu fora do app (ex.: prints do WhatsApp), porque uma oferta feita no grupo é tão válida quanto uma feita no app. **O app nunca sugere nem aplica o W.O.** [DEC-MARC, DEC-RESP P3, R40, PESQ-RV; LEIT]
 - **M18. As propostas e o histórico são visíveis só para os jogadores do confronto e para o admin da competição.** A marcação não gera evento no feed (R24: pendências moram na agenda). **Já a data e a arena acordadas aparecem para todos no card público "Confronto definido"**, como o `FEED_CARDS.md` §5 já desenha. O risco de exposição está registrado na seção 10. [R24, DEC-MARC-P P3]
 
 ### Máquina de estados da proposta

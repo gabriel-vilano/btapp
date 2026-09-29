@@ -1,0 +1,68 @@
+.schedule-evidence {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+  min-width: 0;
+}
+
+/* Os dois lados têm a mesma largura e o mesmo estilo: a tabela compara fatos, não aponta vencedor (M17) */
+.schedule-evidence__table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+}
+
+.schedule-evidence__table th,
+.schedule-evidence__table td {
+  padding: var(--spacing-100) var(--spacing-50);
+  border-bottom: var(--border-width-medium) solid var(--color-border-subtle);
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+/* Coluna dos rótulos mais larga; as dos lados dividem o resto */
+.schedule-evidence__table th[scope="row"] {
+  width: 40%;
+  padding-left: 0;
+  text-align: left;
+  color: var(--color-foreground-secondary);
+  font-weight: var(--font-weight-regular);
+}
+
+.schedule-evidence__table th[scope="col"] {
+  text-align: center;
+  font-weight: var(--font-weight-bold);
+}
+
+.schedule-evidence__table td {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.schedule-evidence__agreed,
+.schedule-evidence__empty {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+}
+
+.schedule-evidence__empty {
+  color: var(--color-foreground-secondary);
+}
+
+.schedule-evidence__heading {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+}
