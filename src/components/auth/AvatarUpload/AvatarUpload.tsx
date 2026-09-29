@@ -4,7 +4,8 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import { CameraIcon, PlusIcon } from "@phosphor-icons/react";
 import { Icon } from "@/src/components/ui/Icon";
-import { validateAvatar } from "@/src/lib/validations";
+import { validateAvatar, validateAvatarType } from "@/src/lib/validations";
+import { resizeAvatar } from "@/src/lib/resizeAvatar";
 import styles from "./AvatarUpload.module.css";
 
 type AvatarUploadProps = {
@@ -16,20 +17,29 @@ export function AvatarUpload({ onFileSelect }: AvatarUploadProps) {
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function rejectFile(message: string) {
+    setError(message);
+    onFileSelect(null);
+  }
+
+  // A foto é reduzida antes de validar o tamanho: uma foto de celular de 3–10MB vira
+  // um JPEG de ~100KB, abaixo do limite do bucket e do body da server action.
+  async function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const validation = validateAvatar(file);
-    if (!validation.valid) {
-      setError(validation.error ?? null);
-      onFileSelect(null);
-      return;
-    }
+    const typeValidation = validateAvatarType(file);
+    if (!typeValidation.valid) return rejectFile(typeValidation.error ?? "");
+
+    const resized = await resizeAvatar(file).catch(() => null);
+    if (!resized) return rejectFile("Não foi possível ler a foto. Tente outra imagem.");
+
+    const validation = validateAvatar(resized);
+    if (!validation.valid) return rejectFile(validation.error ?? "");
 
     setError(null);
-    setPreview(URL.createObjectURL(file));
-    onFileSelect(file);
+    setPreview(URL.createObjectURL(resized));
+    onFileSelect(resized);
   }
 
   function openPicker() {
