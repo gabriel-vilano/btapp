@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { ArrowRightIcon, TrophyIcon } from "@phosphor-icons/react";
+import { expect } from "storybook/test";
 import { Button } from "./Button";
 import { Icon } from "@/src/components/ui/Icon";
 
@@ -77,6 +78,35 @@ export const Loading: Story = {
 
 export const Disabled: Story = {
   args: { disabled: true },
+};
+
+export const DisabledVariants: Story = {
+  args: { disabled: true },
+  render: (args) => (
+    <div className="sb-row">
+      <Button {...args} variant="primary">
+        Primary
+      </Button>
+      <Button {...args} variant="secondary">
+        Secondary
+      </Button>
+      <Button {...args} variant="ghost">
+        Ghost
+      </Button>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: "Cada variante desabilitada mantém a forma: só o primary é preenchido.",
+      },
+    },
+  },
+  play: async ({ canvas }) => {
+    for (const button of canvas.getAllByRole("button")) {
+      await expect(button).toBeDisabled();
+    }
+  },
 };
 
 export const FullWidth: Story = {
