@@ -130,6 +130,7 @@ const DAY_MS = 24 * HOUR_MS;
 /**
  * Tempo desde um evento do feed, por extenso a partir de dias.
  * Semana a partir de 7 dias, mês (30 dias) a partir de 30, ano (365 dias) a partir de 365.
+ * Os meses param em 11: de 330 a 364 dias ainda é "há 11 meses", nunca "há 12 meses".
  * Ex.: "há 5min", "há 3h", "há 6 dias", "há 2 semanas", "há 5 meses", "há 1 ano".
  */
 export function formatTimestamp(iso: string): string {
@@ -146,7 +147,7 @@ export function formatTimestamp(iso: string): string {
 function formatElapsedDays(days: number): string {
   if (days < 7) return days === 1 ? "1 dia" : `${days} dias`;
   if (days < 30) return plural(Math.floor(days / 7), "semana", "semanas");
-  if (days < 365) return plural(Math.floor(days / 30), "mês", "meses");
+  if (days < 365) return plural(Math.min(Math.floor(days / 30), 11), "mês", "meses");
   return plural(Math.floor(days / 365), "ano", "anos");
 }
 

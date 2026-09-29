@@ -70,7 +70,7 @@ Dois padrões dependendo do tipo de card:
 ```
 - Nome + ação: `--text-body-md`, `--color-foreground-primary` — ex: "Lucas Silva subiu no ranking"
 
-**Timestamp "há X tempo"** (vale para os dois padrões): minutos e horas abreviados ("há 5min", "há 3h"); a partir de 1 dia, por extenso. Até 6 dias em dias ("há 6 dias"), de 7 a 29 em semanas ("há 1 semana", "há 4 semanas"), de 30 a 364 em meses de 30 dias ("há 1 mês", "há 5 meses"), e a partir de 365 em anos ("há 1 ano"). Implementado em `formatTimestamp` (`src/lib/formatters.ts`).
+**Timestamp "há X tempo"** (vale para os dois padrões): minutos e horas abreviados ("há 5min", "há 3h"); a partir de 1 dia, por extenso. Até 6 dias em dias ("há 6 dias"), de 7 a 29 em semanas ("há 1 semana", "há 4 semanas"), de 30 a 364 em meses de 30 dias ("há 1 mês", "há 5 meses", com teto em "há 11 meses": "há 12 meses" nunca aparece), e a partir de 365 em anos ("há 1 ano"). Implementado em `formatTimestamp` (`src/lib/formatters.ts`).
 
 **Textos neutros de gênero.** O cadastro não coleta gênero, então nenhum texto do feed flexiona pelo jogador: "agora são amigos" em vez de "tornou-se amigo", "Assumiu a liderança" em vez de "Líder". Verbos ("subiu", "inscreveu-se") já são neutros. Texto novo segue a mesma regra.
 - @username + timestamp: `--text-label-md`, `--color-foreground-secondary`
