@@ -59,9 +59,18 @@ test.describe("Casca do app", () => {
     });
     expect(arimoLoaded, "a Arimo em negrito precisa estar carregada para a medida valer").toBe(true);
 
-    const labelBox = await boxOf(tab.getByText("Competições", { exact: true }));
+    const label = tab.getByText("Competições", { exact: true });
+    const labelBox = await boxOf(label);
     const tabBox = await boxOf(tab);
-    const widths = `rótulo ${labelBox.width}px, aba ${tabBox.width}px`;
+    // Diagnóstico na mensagem: sem ele, uma falha na CI não diz se foi a fonte ou o tamanho
+    const rendering = await label.evaluate((element) => {
+      const style = getComputedStyle(element);
+      const context = document.createElement("canvas").getContext("2d");
+      if (context) context.font = "700 12px Arimo";
+      const arimoWidth = context?.measureText("Competições").width.toFixed(1);
+      return `${style.fontWeight} ${style.fontSize} ${style.fontFamily}; Arimo 700 12px mede ${arimoWidth}px; ${navigator.userAgent}`;
+    });
+    const widths = `rótulo ${labelBox.width}px, aba ${tabBox.width}px (${rendering})`;
     expect(labelBox.x, widths).toBeGreaterThanOrEqual(tabBox.x);
     expect(labelBox.x + labelBox.width, widths).toBeLessThanOrEqual(tabBox.x + tabBox.width);
   });
