@@ -1,17 +1,22 @@
 import { describe, expect, it } from "vitest";
 import {
-  competitorNameParts,
   formatCompetitorName,
   formatMatchRecord,
   formatRankingRowLabel,
   type RankingRowPlayer,
+  formatShortCompetitorName,
   type RankingRowSummary,
-  splitPlayerName,
 } from "./rankingRowText";
 
-const pedro: RankingRowPlayer = { id: "p", name: "Pedro Alves", avatarUrl: null };
-const viewer: RankingRowPlayer = { id: "v", name: "Gabriel Vilano", avatarUrl: null, isViewer: true };
-const lucas: RankingRowPlayer = { id: "l", name: "Lucas Silva", avatarUrl: null };
+const pedro: RankingRowPlayer = { id: "p", firstName: "Pedro", lastName: "Alves", avatarUrl: null };
+const viewer: RankingRowPlayer = {
+  id: "v",
+  firstName: "Gabriel",
+  lastName: "Vilano",
+  avatarUrl: null,
+  isViewer: true,
+};
+const lucas: RankingRowPlayer = { id: "l", firstName: "Lucas", lastName: "Silva", avatarUrl: null };
 
 const ownRow: RankingRowSummary = {
   position: 9,
@@ -85,32 +90,16 @@ describe("formatRankingRowLabel", () => {
   });
 });
 
-describe("splitPlayerName", () => {
-  it("separa o primeiro nome do resto", () => {
-    expect(splitPlayerName("Maria Eduarda de Vasconcelos")).toEqual({ first: "Maria", surname: "Eduarda de Vasconcelos" });
+describe("formatShortCompetitorName", () => {
+  it("abrevia o sobrenome dos dois jogadores", () => {
+    expect(formatShortCompetitorName([lucas, pedro])).toBe("Lucas S. e Pedro A.");
   });
 
-  it("normaliza espaços repetidos e nas pontas", () => {
-    expect(splitPlayerName("  Pedro   Alves ")).toEqual({ first: "Pedro", surname: "Alves" });
+  it("mantém Você na frente, sem abreviar", () => {
+    expect(formatShortCompetitorName([pedro, viewer])).toBe("Você e Pedro A.");
   });
 
-  it("deixa o sobrenome vazio em nome de uma palavra", () => {
-    expect(splitPlayerName("Pelé")).toEqual({ first: "Pelé", surname: "" });
-  });
-});
-
-describe("competitorNameParts", () => {
-  it("põe Você na frente, sem sobrenome", () => {
-    expect(competitorNameParts([pedro, viewer])).toEqual([
-      { id: "v", first: "Você", surname: "", isViewer: true },
-      { id: "p", first: "Pedro", surname: "Alves", isViewer: false },
-    ]);
-  });
-
-  it("parte os dois nomes da dupla, na ordem recebida", () => {
-    expect(competitorNameParts([lucas, pedro]).map(({ first, surname }) => [first, surname])).toEqual([
-      ["Lucas", "Silva"],
-      ["Pedro", "Alves"],
-    ]);
+  it("em simples, abrevia o único jogador", () => {
+    expect(formatShortCompetitorName([lucas])).toBe("Lucas S.");
   });
 });

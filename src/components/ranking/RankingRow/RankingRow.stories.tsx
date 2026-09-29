@@ -47,6 +47,8 @@ type Story = StoryObj<typeof meta>;
 export const Doubles: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.getByRole("listitem")).toHaveTextContent("1º, Lucas Silva e Rafael Costa, 610 pontos, 6 jogos, 5 vitórias");
+    // Visível: sempre abreviado (RK8)
+    await expect(canvas.getByText("Lucas S. e Rafael C.")).toBeVisible();
     // Sem toque, a linha é estática
     await expect(canvas.queryByRole("button")).toBeNull();
     await expect(canvas.queryByRole("link")).toBeNull();
@@ -60,8 +62,8 @@ export const Singles: Story = {
 // Fundo sutil e "Você" na frente do nome (RK10)
 export const Own: Story = {
   args: { position: 9, players: [P.pedro, VIEWER], points: 390, matches: 5, wins: 3, delta: 2, isOwn: true },
-  play: async ({ canvasElement }) => {
-    await expect(nameOf(canvasElement)).toHaveTextContent(/^Você e Pedro Alves$/);
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText("Você e Pedro A.")).toBeVisible();
   },
 };
 
@@ -113,11 +115,12 @@ export const WithCutoffDistance: Story = {
   },
 };
 
-// Nome longo trunca numa linha, pelo sobrenome (RK8); o nome inteiro fica no nome acessível
+// O nome abreviado cabe inteiro mesmo com nome composto longo; o completo fica no acessível
 export const LongName: Story = {
   args: { position: 12, players: [P.long, P.rafael], awaitingAdmin: true },
   play: async ({ canvas, canvasElement }) => {
-    await expectSurnameShrinksFirst(canvasElement);
+    await expect(canvas.getByText("Maria Eduarda A. e Rafael C.")).toBeVisible();
+    await expect(nameOf(canvasElement)).toHaveTextContent(/^Maria Eduarda A. e Rafael C.$/);
     await expect(canvas.getByRole("listitem")).toHaveTextContent(
       /Maria Eduarda de Vasconcelos Albuquerque e Rafael Costa/,
     );
@@ -141,22 +144,29 @@ function LongNamesFrame({ widthClass }: { widthClass: string }) {
   );
 }
 
-// Nomes longos em simples, duplas e "Você e …" no menor celular suportado
+// Nomes longos em simples, duplas e "Você e …" no menor celular suportado. Aqui as
+// reticências aparecem: é o caso extremo que o corte protege
 export const LongNames320: Story = {
   parameters: { ownList: true },
   render: () => <LongNamesFrame widthClass="sb-width-320" />,
-  play: async ({ canvasElement }) => {
-    await expectSurnameShrinksFirst(canvasElement);
+  play: async ({ canvas, canvasElement }) => {
+    await expectViewerNameIntact(canvasElement);
+    // O nome abreviado de um jogador só continua cabendo
+    await expect(isTruncated(canvas.getByText("Maria Eduarda A."))).toBe(false);
     const frame = canvasElement.querySelector(".sb-width-320") as HTMLElement;
     await expect(frame.scrollWidth).toBeLessThanOrEqual(frame.clientWidth);
   },
 };
 
+// No mobile base, o nome abreviado cabe inteiro até com "Você e " na frente. Só a linha
+// com dois nomes compostos longos chega às reticências
 export const LongNames393: Story = {
   parameters: { ownList: true },
   render: () => <LongNamesFrame widthClass="sb-width-393" />,
-  play: async ({ canvasElement }) => {
-    await expectSurnameShrinksFirst(canvasElement);
+  play: async ({ canvas, canvasElement }) => {
+    await expectViewerNameIntact(canvasElement);
+    await expect(isTruncated(canvas.getByText("Maria Eduarda A."))).toBe(false);
+    await expect(isTruncated(canvas.getByText("Você e Guilherme Henrique B."))).toBe(false);
   },
 };
 
@@ -260,19 +270,9 @@ function isTruncated(part: Element): boolean {
   return part.scrollWidth > part.clientWidth;
 }
 
-// RK8: em cada linha, primeiro nome cortado só quando não sobra nada dos sobrenomes, e
-// "Você" nunca é cortado. Ao menos um sobrenome da story está cortado
-async function expectSurnameShrinksFirst(root: HTMLElement) {
-  const surnames = [...root.querySelectorAll("[class*=ranking-row__surname]")];
-  await expect(surnames.some(isTruncated)).toBe(true);
-  for (const name of root.querySelectorAll("[aria-hidden] > [class*=ranking-row__name]")) {
-    const firstNames = [...name.querySelectorAll("[class*=ranking-row__first-name]")];
-    const rowSurnames = [...name.querySelectorAll("[class*=ranking-row__surname]")];
-    if (firstNames.some(isTruncated)) {
-      await expect(rowSurnames.every((surname) => surname.clientWidth === 0)).toBe(true);
-    }
-    for (const fixed of name.querySelectorAll("[class*=ranking-row__name-fixed]")) {
-      await expect(isTruncated(fixed)).toBe(false);
-    }
-  }
+// "Você" nunca encolhe: vem na frente do nome da dupla, e o corte é sempre no fim (RK8)
+async function expectViewerNameIntact(root: HTMLElement) {
+  const names = [...root.querySelectorAll("[aria-hidden] > [class*=ranking-row__name]")];
+  const viewerRow = names.find((name) => name.textContent?.startsWith("Você"));
+  await expect(viewerRow?.textContent).toMatch(/^Você e /);
 }

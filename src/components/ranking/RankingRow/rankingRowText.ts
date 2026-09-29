@@ -1,7 +1,8 @@
+import { abbreviateName, joinFullName, type PersonName } from "@/src/lib/names";
+
 /** Jogador de uma linha do ranking. Em duplas, a linha recebe dois. */
-export interface RankingRowPlayer {
+export interface RankingRowPlayer extends PersonName {
   id: string;
-  name: string;
   avatarUrl: string | null;
   /** O jogador logado: aparece como "Você" e vai para a frente do nome da dupla. */
   isViewer?: boolean;
@@ -35,43 +36,26 @@ export function orderPlayersForRow(players: RankingRowPlayers): RankingRowPlayer
   return [...players].sort((a, b) => Number(b.isViewer ?? false) - Number(a.isViewer ?? false));
 }
 
-/**
- * Nome da unidade competidora, com "Você" no lugar do jogador logado.
- * Ex.: "Você e Pedro Alves", "Lucas Silva e Rafael Costa", "Você".
- */
-export function formatCompetitorName(players: RankingRowPlayers): string {
+function competitorName(players: RankingRowPlayers, of: (player: RankingRowPlayer) => string): string {
   return orderPlayersForRow(players)
-    .map((player) => (player.isViewer ? "Você" : player.name))
+    .map((player) => (player.isViewer ? "Você" : of(player)))
     .join(" e ");
 }
 
-/** Um jogador no nome visível da linha, partido para o sobrenome encolher antes (RK8). */
-export interface CompetitorNamePart {
-  id: string;
-  /** Primeiro nome, ou "Você" para o jogador logado. */
-  first: string;
-  /** O resto do nome, sem o espaço inicial. Vazio para "Você" e para nome de uma palavra. */
-  surname: string;
-  isViewer: boolean;
+/**
+ * Nome completo da unidade competidora, para o nome acessível e o alt do avatar.
+ * Ex.: "Você e Pedro Alves", "Lucas Silva e Rafael Costa", "Você".
+ */
+export function formatCompetitorName(players: RankingRowPlayers): string {
+  return competitorName(players, joinFullName);
 }
 
 /**
- * Primeiro nome e o resto, com os espaços normalizados.
- * Ex.: "Maria Eduarda  Lima" → { first: "Maria", surname: "Eduarda Lima" }.
+ * Nome visível na tabela: sempre abreviado, pela regra do `abbreviateName` (RK8).
+ * Ex.: "Você e Pedro A.", "Lucas S. e Rafael C.".
  */
-export function splitPlayerName(name: string): { first: string; surname: string } {
-  const [first = "", ...rest] = name.trim().split(/\s+/);
-  return { first, surname: rest.join(" ") };
-}
-
-/**
- * Peças do nome visível, na ordem de `formatCompetitorName`.
- * Ex.: [Pedro Alves, Você] → [{ first: "Você" }, { first: "Pedro", surname: "Alves" }].
- */
-export function competitorNameParts(players: RankingRowPlayers): CompetitorNamePart[] {
-  return orderPlayersForRow(players).map(({ id, name, isViewer = false }) =>
-    isViewer ? { id, first: "Você", surname: "", isViewer } : { id, ...splitPlayerName(name), isViewer },
-  );
+export function formatShortCompetitorName(players: RankingRowPlayers): string {
+  return competitorName(players, abbreviateName);
 }
 
 /**
