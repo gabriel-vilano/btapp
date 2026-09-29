@@ -1,0 +1,27 @@
+/* Mesma coluna da tela (RANKING.md §10) */
+.ranking-skeleton {
+  max-width: var(--dimension-layout-max);
+  margin-inline: auto;
+  border-top: var(--border-width-medium) solid var(--color-border-subtle);
+}
+
+/* Mesma altura e respiro da linha real (ListItem): o conteúdo não pula quando chega */
+.ranking-skeleton__row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-150);
+  min-height: var(--dimension-tap-target-minimum);
+  padding: var(--spacing-150) var(--spacing-page-margin);
+}
+
+.ranking-skeleton__text {
+  flex: 1;
+}
+
+/* O bloco dos pontos: largura de 3 algarismos, altura dos pontos mais o delta */
+.ranking-skeleton__points {
+  --skeleton-height: var(--spacing-400);
+  flex-shrink: 0;
+  width: var(--spacing-500);
+  border-radius: var(--radius-sm);
+}
