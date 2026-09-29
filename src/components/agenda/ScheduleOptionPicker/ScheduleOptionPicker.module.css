@@ -200,17 +200,21 @@
   border-color: var(--color-border-subtle);
 }
 
-/* Selecionada e desabilitada (enquanto confirma) segue o preenchido desabilitado do Button */
-.option__input:checked:disabled + .option__card {
-  background-color: var(--color-background-disabled);
-  border-color: var(--color-background-disabled);
-  color: var(--color-foreground-on-disabled);
+/* Enquanto confirma, a escolhida continua em grafite: é ela que está sendo
+   gravada, então segue legível. Não é o "selecionado e desabilitado" do DS
+   (preenchido cinza com texto branco, 1,7:1), porque a opção não ficou
+   indisponível, só travada. Selecionada e indisponível não acontece: a
+   escolha é desfeita quando o horário passa. */
+.picker__group:disabled .option__input:checked + .option__card {
+  background-color: var(--color-background-inverse);
+  border-color: var(--color-background-inverse);
+  color: var(--color-foreground-on-inverse);
 }
 
-.option__input:checked:disabled + .option__card .option__detail,
-.option__input:checked:disabled + .option__card .option__radio {
-  color: var(--color-foreground-on-disabled);
-  border-color: var(--color-foreground-on-disabled);
+.picker__group:disabled .option__input:checked + .option__card .option__detail,
+.picker__group:disabled .option__input:checked + .option__card .option__radio {
+  color: var(--color-foreground-on-inverse);
+  border-color: var(--color-foreground-on-inverse);
 }
 
 .option__input:disabled + .option__card::after {
