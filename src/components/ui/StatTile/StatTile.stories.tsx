@@ -25,20 +25,22 @@ type Story = StoryObj<typeof meta>;
 
 // Sem link: é texto, lido como uma frase só.
 export const Default: Story = {
-  play: async ({ canvas }) => {
+  play: async ({ canvas, canvasElement }) => {
     await expect(canvas.getByText("274 jogos")).toBeInTheDocument();
     await expect(canvas.queryByRole("link")).toBeNull();
+    await expect(canvasElement.querySelector("svg")).toBeNull();
   },
 };
 
-// Com link: o nome acessível é "38 amigos", na ordem valor e rótulo.
+// Com link: chevron ao lado do rótulo, e o nome acessível continua "38 amigos".
 export const WithLink: Story = {
   args: { value: 38, label: "amigos", singularLabel: "amigo", href: "/jogadores/lucas/amigos" },
-  play: async ({ canvas }) => {
+  play: async ({ canvas, canvasElement }) => {
     await expect(canvas.getByRole("link", { name: "38 amigos" })).toHaveAttribute(
       "href",
       "/jogadores/lucas/amigos",
     );
+    await expect(canvasElement.querySelector("svg")).toBeInTheDocument();
   },
 };
 

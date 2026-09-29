@@ -1,4 +1,8 @@
+"use client";
+
+import { CaretRightIcon } from "@phosphor-icons/react";
 import Link, { type LinkProps } from "next/link";
+import { Icon } from "@/src/components/ui/Icon";
 import { formatCount, formatCountValue } from "@/src/lib/formatters";
 import styles from "./StatTile.module.css";
 
@@ -26,6 +30,7 @@ export function StatTile({ value, label, singularLabel, href, className }: StatT
       value={value}
       label={value === 1 ? singularLabel : label}
       spoken={formatCount(value, singularLabel, label)}
+      isLink={Boolean(href)}
     />
   );
 
@@ -43,17 +48,23 @@ interface StatTileContentProps {
   value: number;
   label: string;
   spoken: string;
+  isLink: boolean;
 }
 
 // Valor e rótulo em blocos separados seriam lidos soltos ("274", "jogos"):
 // o leitor de tela recebe a frase inteira, e a parte visual fica oculta para ele
-function StatTileContent({ value, label, spoken }: StatTileContentProps) {
+function StatTileContent({ value, label, spoken, isLink }: StatTileContentProps) {
   return (
     <>
       <span className={styles["tile__sr-only"]}>{spoken}</span>
       <span className={styles.tile__visual} aria-hidden="true">
         <span className={styles.tile__value}>{formatCountValue(value)}</span>
-        <span className={styles.tile__label}>{label}</span>
+        <span className={styles.tile__label}>
+          {label}
+          {/* Parado, o tile-link seria igual ao tile de texto, e no celular não há hover:
+              o chevron é a pista de que ele navega (decisão do Gabriel, 29/09) */}
+          {isLink && <Icon icon={CaretRightIcon} size="sm" weight="bold" />}
+        </span>
       </span>
     </>
   );
