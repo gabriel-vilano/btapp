@@ -51,10 +51,16 @@ O texto concorda com o número: "1 posição" no singular, "2 posições" no plu
 
 <Canvas of={DeltaIndicatorStories.OnePosition} />
 
+## Forma compacta
+
+Com `compact`, a tela mostra só a seta e o número ("▼ 2"), para colunas estreitas como a da linha do ranking (`RankingRow`), onde o delta fica embaixo dos pontos. O leitor de tela continua ouvindo a frase inteira ("Caiu 2 posições"). Só vale para subir e cair: "Manteve a posição" não tem forma curta.
+
+<Canvas of={DeltaIndicatorStories.Compact} />
+
 ## Quando usar
 
 - Movimento da unidade no bloco de ranking do feed (`RankingBlock`)
-- Coluna de variação de uma linha do ranking
+- Coluna de variação de uma linha do ranking (`RankingRow`, na forma compacta)
 - Resumo de evolução no perfil e na tela depois da confirmação do resultado
 
 ## Componentes relacionados

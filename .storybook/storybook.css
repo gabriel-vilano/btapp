@@ -26,6 +26,11 @@
   padding: var(--spacing-300);
 }
 
+/* Menor largura de celular que o app suporta: stories que provam "sem rolagem horizontal" */
+.sb-width-320 {
+  width: 320px;
+}
+
 .sb-color-accent {
   color: var(--color-foreground-accent);
 }
