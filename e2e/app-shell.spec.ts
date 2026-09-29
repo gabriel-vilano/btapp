@@ -47,14 +47,23 @@ test.describe("Casca do app", () => {
     // Aba atual: o rótulo fica em negrito, a versão mais larga dele
     await nav.getByRole("link", { name: /^Competições/ }).click();
     await expect(page).toHaveURL(/\/competicoes$/);
-    await page.evaluate(() => document.fonts.ready);
 
     const tab = nav.getByRole("link", { name: /^Competições/ });
     await expect(tab).toHaveAttribute("aria-current", "page");
+
+    // `document.fonts.ready` não espera a face em negrito que ainda nem foi pedida:
+    // sem o load explícito, a medida sai com a fonte de reserva do sistema, mais larga
+    const arimoLoaded = await page.evaluate(async () => {
+      await document.fonts.load("700 12px Arimo", "Competições");
+      return document.fonts.check("700 12px Arimo", "Competições");
+    });
+    expect(arimoLoaded, "a Arimo em negrito precisa estar carregada para a medida valer").toBe(true);
+
     const labelBox = await boxOf(tab.getByText("Competições", { exact: true }));
     const tabBox = await boxOf(tab);
-    expect(labelBox.x).toBeGreaterThanOrEqual(tabBox.x);
-    expect(labelBox.x + labelBox.width).toBeLessThanOrEqual(tabBox.x + tabBox.width);
+    const widths = `rótulo ${labelBox.width}px, aba ${tabBox.width}px`;
+    expect(labelBox.x, widths).toBeGreaterThanOrEqual(tabBox.x);
+    expect(labelBox.x + labelBox.width, widths).toBeLessThanOrEqual(tabBox.x + tabBox.width);
   });
 
   test("N27: a partir de 600px, o trilho lateral substitui a barra do rodapé", async ({ page }) => {
