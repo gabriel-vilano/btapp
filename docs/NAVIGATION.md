@@ -24,7 +24,9 @@ As siglas de decisão são as mesmas do `docs/DOMAIN.md` > "Fontes". As que esta
 | **HIG** | Apple Human Interface Guidelines, "Tab bars" (lido em 26/09/2026): "Use a tab bar to support navigation, not to provide actions"; "Make sure the tab bar is visible when people navigate to different sections of your app… The exception is when a modal view covers the tab bar"; "Reserve badges for critical information" |
 | **M3** | Material Design 3, "Navigation bar" e "Navigation rail" (lidos em 25 e 26/09/2026): 3 a 5 destinos na barra; janelas compactas (abaixo de 600dp) "should always use a navigation bar"; o rail serve às janelas médias e maiores, com 3 a 7 destinos |
 | **ARIA** | WAI-ARIA 1.2 e MDN `aria-current`: barra de rotas é `<nav>` com links, não o widget Tabs |
-| **LEIT** | Leitura do agente desta spec. As da primeira versão foram respondidas (DEC-NAV-L); as novas, a confirmar, estão na seção 12 |
+| **DEC-NAV-A** | Aprovação da spec pelo Gabriel (29/09, ~19:00 UTC): leituras L10 a L14 confirmadas; arena do Explorar como organização do tipo arena, com tipo, cidade e contato; badge da aba Jogos pela N3; @username gerado no cadastro |
+| **RES** | `docs/RESULTS.md`: fila do admin, correção e anulação no menu da partida confirmada, amistoso descartado ou cancelado no histórico de quem lançou (§6.2) |
+| **LEIT** | Leitura do agente desta spec. Todas foram respondidas pelo Gabriel (DEC-NAV-L, DEC-NAV-A); o mapa está na seção 12 |
 
 ---
 
@@ -57,7 +59,7 @@ As siglas de decisão são as mesmas do `docs/DOMAIN.md` > "Fontes". As que esta
 **Por que 5.** É o máximo do M3 e a contagem mais comum da amostra (19 de 28 apps, REF). Com 5, não sobra vaga: um destino novo entra dentro de uma aba existente, nunca como sexta aba.
 
 - **N2. Registrar resultado e registrar amistoso não são abas.** São ações com casa própria (seção 5.4). [DEC-NAV, DEC-JOGOS, HIG]
-- **N3. Duas abas têm badge, cada uma com um número só:** a aba **Jogos** conta as pendências "Sua vez" (5.1), e a aba **Competições** conta as pendências de admin, só para quem é admin de alguma competição (N30). Curtida, amizade e evento novo no feed não são críticos e não têm badge. [HIG, REF, DEC-NAV-Q Q3]
+- **N3. Duas abas têm badge, cada uma com um número só:** a aba **Jogos** conta as pendências "Sua vez" (5.1), e a aba **Competições** conta as pendências de admin, só para quem é admin de alguma competição (N30). Curtida, amizade e evento novo no feed não são críticos e não têm badge. [HIG, REF, DEC-NAV-Q Q3, DEC-NAV-A]
 - **N4. A tab bar fica visível em todas as telas, inclusive nas de detalhe** (confronto, perfil de outro jogador, classificação, página da competição). Ela some só nos **fluxos modais de tarefa**: lançar resultado, registrar amistoso, propor horários, editar perfil e as decisões do admin, que abrem em tela cheia com "Fechar". [HIG, DEC-NAV-L L1]
 
   **Por quê:** a HIG diz que esconder a tab bar faz a pessoa esquecer em que área do app está, com a exceção do modal, que é "temporário e autocontido".
@@ -70,7 +72,7 @@ As siglas de decisão são as mesmas do `docs/DOMAIN.md` > "Fontes". As que esta
 - **N6. A busca é uma só e mora no Explorar** (seção 7), com três escopos: **Jogadores · Competições · Arenas**. **Nenhuma outra aba tem lupa.** É a resposta direta à busca duplicada do audit. [DEC-NAV-Q Q5]
 - **N7. As notificações ficam no sino, no topo do Feed** (rota proposta `/notificacoes`), com um ponto quando há não lidas. Cada notificação leva à tela da entidade (confronto, perfil, classificação, área de admin). Nenhum app da amostra usa notificação como aba (REF). O conteúdo e o canal são da spec de notificações básicas. [REF, DEC-NAV-Q Q5]
 - **N8. Configurações e conta ficam atrás de uma engrenagem no topo do próprio Perfil** (rota proposta `/perfil/configuracoes`). A tela reúne: dados da conta (e-mail, senha), telefone para o WhatsApp com o consentimento e o apagamento (M20–M25), e, por último, **"Sair"**. Sair não pede confirmação: é reversível com um login. [REF (Strava, Peloton), `SCHEDULING.md` §7, DEC-NAV-L L8]
-- **N9. A página da competição existe, mas não é aba** (rota proposta `/competicoes/[competicao]`). Chega-se a ela pela aba Competições, pelo Explorar, pelo cabeçalho dos cards do feed e pela tela do confronto. O conteúdo, no ranking, é da `RANKING.md` (RK17); no torneio, da spec que vier. **Para o admin da competição, a página tem a área "Administrar"** (N29), com tudo o que ele decide. [R15, RANK, DEC-NAV-Q Q3]
+- **N9. A página da competição existe, mas não é aba** (rota proposta `/competicoes/[competicao]`). Chega-se a ela pela aba Competições, pelo Explorar, pelo cabeçalho dos cards do feed e pela tela do confronto. O conteúdo, no ranking, é da `RANKING.md` (RK17); no torneio, da spec que vier. **Para o admin da competição, a página tem a área "Administrar"** (N31), com tudo o que ele decide. [R15, RANK, DEC-NAV-Q Q3]
 
 ### Cabeçalho de cada aba
 
@@ -89,15 +91,15 @@ As telas de detalhe têm cabeçalho com "Voltar" e o título da entidade. O sele
 ## 4. Do feed ao detalhe
 
 - **N10. Cada entidade tem uma rota, e todo caminho até ela mostra a mesma tela.** A partida é a mesma tela vinda do feed, da agenda, da notificação ou do perfil. O que muda é **quem vê**, não a tela: o jogador da partida vê as ações; os outros veem só a leitura pública. **A aba marcada é a de origem:** uma partida aberta pelo Feed mantém o Feed marcado, e "Voltar" leva de volta a ele, como no Strava e no Instagram. O custo de rotas que isso traz (cada aba com a própria pilha de telas) é aceito. [DEC-NAV-L L2]
-- **N28. Quem chega sem aba de origem** (notificação, link externo, URL digitada) cai na aba dona do tipo da entidade: partida → Jogos; classificação e competição em que o jogador está inscrito → Competições; competição em que ele não está inscrito e arena → Explorar; jogador e H2H → Feed. [LEIT, L10]
+- **N28. Quem chega sem aba de origem** (notificação, link externo, URL digitada) cai na aba dona do tipo da entidade: partida → Jogos; classificação e competição em que o jogador está inscrito → Competições; competição em que ele não está inscrito e arena → Explorar; jogador e H2H → Feed. [DEC-NAV-A L10]
 
 | Entidade | Rota proposta | O jogador da partida (ou da competição) vê | Os outros veem |
 | --- | --- | --- | --- |
-| **Partida** (confronto, resultado, amistoso) | `/jogos/[partida]` | Marcação (SCHED §6), lançar, confirmar ou contestar, prazo, histórico da marcação | Lados, competição, data e arena acordadas (M18), placar confirmado, comentários |
+| **Partida** (confronto, resultado, amistoso) | `/jogos/[partida]` | Marcação (SCHED §6), lançar, confirmar ou contestar, prazo, histórico da marcação. O admin da competição também vê o histórico da marcação (M18) e, na partida confirmada, o menu com "Corrigir placar" e "Anular resultado" (N31) | Lados, competição, data e arena acordadas (M18), placar confirmado, comentários |
 | **Jogador** | `/jogadores/[username]` (o próprio: `/perfil`) | — | Perfil público (`PROFILE.md`) |
 | **H2H** | Da spec de H2H | — | — |
 | **Classificação de uma categoria** | `/ranking/[categoria]` | A linha da própria dupla fixada (RK9) | A tabela |
-| **Competição** | `/competicoes/[competicao]` | A posição em cada categoria (RK17); para o admin, a área "Administrar" (N29) | Categorias, temporada, regras; no Explorar, "Como se inscrever" e "Tenho interesse" (N33) |
+| **Competição** | `/competicoes/[competicao]` | A posição em cada categoria (RK17); para o admin, a área "Administrar" (N31) | Categorias, temporada, regras; para quem não está inscrito, venha de onde vier, "Como se inscrever" e "Tenho interesse" (N33). A aba marcada segue a N10 e a N28 |
 | **Arena** | `/arenas/[arena]` | — | Nome, cidade e as competições da arena (N34) |
 
 A rota não carrega a aba: a mesma URL abre marcando a aba de origem quando vem de dentro do app, e a aba da N28 quando vem de fora.
@@ -134,9 +136,9 @@ A agenda responde a quatro perguntas, nesta ordem: **o que eu preciso fazer, qua
 | Seção | Pergunta | O que entra | Ordem |
 | --- | --- | --- | --- |
 | **Sua vez** | O que eu preciso fazer? | Partidas em que **o jogador** precisa agir (tabela 5.2) | Prazo mais próximo primeiro: o prazo de confirmação (R14), depois o prazo da rodada (R40). Amistoso sem prazo por último |
-| **Próximos jogos** | Quando é meu próximo jogo? | Confrontos com data acordada ou informada no futuro, e confrontos de torneio | Cronológica. O jogo de hoje ganha o selo "Hoje". Torneio sem horário vai para o fim, como "Horário pelo organizador" |
-| **Aguardando** | O que está com o outro lado? | Partidas em que a vez é do adversário, do admin ou do organizador | Prazo mais próximo primeiro |
-| **Histórico** | O que eu já joguei? | Partidas confirmadas: ranking, torneio e amistoso | Mais recente primeiro, agrupado por mês, com carregamento sob demanda. Sem filtro no MVP |
+| **Próximos jogos** | Quando é meu próximo jogo? | Confrontos com data acordada ou informada no futuro, e confrontos de torneio | Cronológica. O jogo de hoje ganha o selo "Hoje". Torneio sem horário vai para o fim, como "Horário a definir" |
+| **Aguardando** | O que está com o outro lado? | Partidas em que a vez é do adversário ou do admin | Prazo mais próximo primeiro |
+| **Histórico** | O que eu já joguei? | Partidas confirmadas: ranking, torneio e amistoso. Para quem lançou, também o amistoso descartado ou cancelado (tabela 5.2) | Mais recente primeiro, agrupado por mês, com carregamento sob demanda. Sem filtro no MVP |
 
 ### 5.2 Onde cada estado da partida aparece
 
@@ -152,23 +154,24 @@ Do ponto de vista de um jogador da partida, cruzando a máquina de estados (DOMA
 | Ranking | Aguardando confirmação | Lançado pelo outro lado | Sua vez | "Confirmar resultado · confirma sozinho em 31h" |
 | Ranking | Aguardando confirmação | Lançado pelo próprio lado | Aguardando | "Aguardando confirmação · confirma sozinho em 31h" |
 | Ranking | Em arbitragem ou Não realizada | — | Aguardando | "Com o admin" |
-| Torneio | Confronto definido | Com ou sem horário | Próximos jogos | "Sáb, 9h · Quadra 3" ou "Horário pelo organizador" |
-| Torneio | Confronto definido | Horário já passou | Aguardando | "Resultado com o organizador" |
+| Torneio | Confronto definido | Com ou sem horário | Próximos jogos | "Sáb, 9h · Quadra 3" ou "Horário a definir" |
+| Torneio | Confronto definido | Horário já passou | Aguardando | "Resultado com o admin" (R38) |
 | Amistoso | Aguardando confirmação | Lançado pelo outro lado | Sua vez | "Confirmar amistoso" |
 | Amistoso | Aguardando confirmação | Lançado pelo próprio lado | Aguardando | "Aguardando confirmação" |
 | Todos | Confirmada | — | Histórico | Placar e, no ranking, os pontos |
-| Todos | Cancelada ou Descartada | — | Não aparece | A notificação avisa. A anulada some também do histórico, como o card some do feed (R41) |
+| Ranking e torneio | Cancelada | — | Não aparece | A notificação avisa. A anulada some também do histórico, como o card some do feed (R41) |
+| Amistoso | Descartada ou Cancelada | — | Histórico, só de quem lançou | O estado escrito ("Descartado", "Cancelado"). Some da agenda dos outros lados (RES §6.2) |
 
 O texto de referência é do item da lista; a redação final é da spec de registro de partidas e do DS. O prazo aparece sempre em tempo restante ("em 31h", "em 5 dias"), porque é o que o jogador decide. [DEC-NAV-L L7]
 
 ### 5.3 O item da agenda
 
-Um mesmo item serve às quatro seções e ao bloco "Sua vez" do feed:
+Um mesmo item, o **AgendaItem** (§11), serve às quatro seções e ao bloco "Sua vez" do feed:
 
 - **Lados:** avatares e nomes; em duplas, os dois jogadores de cada lado.
 - **Contexto:** competição · categoria · rodada (ranking), competição · categoria (torneio) ou "Amistoso".
 - **Situação:** o texto da tabela 5.2, com o prazo quando existe.
-- **Ação:** só nos itens de "Sua vez", um botão com a ação ("Propor horários", "Responder", "Lançar resultado", "Confirmar").
+- **Ação:** só nos itens de "Sua vez", um botão com a ação ("Propor horários", "Responder proposta", "Lançar resultado", "Confirmar"). "Responder" é só da proposta de horário; o resultado e o amistoso usam "Confirmar".
 - **Toque no item:** abre a partida (N10).
 
 - **N16. O botão "Lançar resultado" do item abre direto o fluxo de lançar**, sem passar pela partida: é um toque a menos na ação mais frequente depois do jogo. Todos os outros botões e o toque no item abrem a partida, porque neles o jogador precisa ver algo antes de decidir: as opções de horário ou o placar lançado pelo outro lado. [DEC-JOGOS, DEC-NAV-L L5]
@@ -191,11 +194,11 @@ A aba responde "onde eu estou nas competições que jogo?". Ela não é a classi
   - **Ranking:** o StandingSummaryItem (`src/components/ui/`), com a posição, o delta, competição · categoria e o parceiro. Toque → a classificação da categoria (`/ranking/[categoria]`, RK1).
   - **Torneio:** nome, categoria e a data do evento ou, quando já há confronto, o próximo jogo ("Sáb, 9h · Quadra 3"). Toque → a página do torneio (`/competicoes/[competicao]`).
 
-  Ordem: rankings primeiro, na ordem das inscrições mais recentes; depois torneios, do mais próximo ao mais distante. O seletor de categoria continua **dentro** da classificação (RK6), para trocar de categoria sem voltar à lista. [LEIT, L11]
+  Ordem: rankings primeiro, na ordem das inscrições mais recentes; depois torneios, do mais próximo ao mais distante. Temporadas encerradas saem da lista e ficam no perfil (`PROFILE.md`, PF19), com a exceção do vazio da 9.2. O seletor de categoria continua **dentro** da classificação (RK6), para trocar de categoria sem voltar à lista. [DEC-NAV-A L11]
 
   **Por quê a lista e não a última categoria vista:** a lista mostra todas as posições do jogador de uma vez, e cada item já responde "onde estou" sem abrir a tabela. O toque a mais só existe para quem quer ver quem está em volta.
-- **N30. Para quem é admin de alguma competição, a aba tem um bloco "Pendências de admin" no topo**, acima da lista, com a contagem no badge da aba (N3). O bloco lista as decisões que esperam o admin (contestação em arbitragem e partida não realizada, R40), cada uma com a competição, e o toque abre a decisão na área "Administrar" da competição (N31). Sem pendência, o bloco some. Quem não é admin nunca vê o bloco. [DEC-NAV-Q Q3]
-- **N31. A área "Administrar" fica na página da competição** (rota proposta `/competicoes/[competicao]/administrar`), visível só para o admin daquela competição. Ela reúne tudo o que o admin decide: **lançar o sorteio da rodada** (R7), **arbitrar contestação**, **decidir a partida não realizada** (com o resumo da marcação, M17), **corrigir ou anular placar** (R41) e, no torneio, **lançar resultados** (R38). O conteúdo de cada decisão é da spec de registro de partidas; esta regra diz só onde elas moram. [R15, DEC-NAV-Q Q3]
+- **N30. Para quem é admin de alguma competição, a aba tem um bloco "Pendências de admin" no topo**, acima da lista, com a contagem no badge da aba (N3). O bloco lista o que espera o admin, cada item com a competição: contestação em arbitragem, partida não realizada (R40) e confronto de torneio cujo horário passou sem resultado (R38). Os três entram no badge, e o toque abre a decisão na área "Administrar" da competição (N31). Sem pendência, o bloco some. Quem não é admin nunca vê o bloco. [DEC-NAV-Q Q3]
+- **N31. A área "Administrar" fica na página da competição** (rota proposta `/competicoes/[competicao]/administrar`), visível só para o admin daquela competição. Ela reúne tudo o que o admin decide: **lançar o sorteio da rodada** (R7), **arbitrar contestação**, **decidir a partida não realizada** (com o resumo da marcação, M17), e, no torneio, **lançar resultados** (R38). A área também lista as partidas da competição: é por ela que o admin chega a uma partida confirmada, onde **corrigir ou anular placar** (R41) fica num menu de ações visível só para ele, nunca como botão primário (RES §5.4). O conteúdo de cada decisão é da `RESULTS.md`; esta regra diz só onde elas moram. [R15, DEC-NAV-Q Q3, RES]
 
   **Por quê fora da agenda:** o admin decide partidas de outros, e o Gabriel quer admin e jogador separados. A área "Administrar" é o embrião do **modo organizador** (troca de modo ou painel web), que fica fora do MVP (`PRODUCT.md`): quando ele vier, a área muda de casa sem mexer na agenda.
 
@@ -205,11 +208,11 @@ A aba responde "onde eu estou nas competições que jogo?". Ela não é a classi
 
 A aba responde "o que existe para eu jogar?" (JTBD 1). No MVP ela é **enxuta**: a evidência da oportunidade 1.2 é fraca (DSC), e o beta tem os organizadores do Rankin e do Vila. O uso da aba entra nas métricas (seção 13) para decidir se ela cresce. [DEC-NAV-Q Q1, DSC]
 
-- **N32. A busca do app mora no topo do Explorar**, com três escopos: **Jogadores · Competições · Arenas** (controle segmentado). Jogadores busca por nome e @username e leva ao perfil; Competições, por nome da competição ou da organização, e leva à página da competição; Arenas, por nome e cidade, e leva à página da arena. O escopo inicial é Jogadores, porque é a busca que a amizade e o amistoso pedem. [DEC-NAV-Q Q5; LEIT, L12]
+- **N32. A busca do app mora no topo do Explorar**, com três escopos: **Jogadores · Competições · Arenas** (controle segmentado). Jogadores busca por nome e @username e leva ao perfil; Competições, por nome da competição ou da organização, e leva à página da competição; Arenas, por nome e cidade, e leva à página da arena. O escopo inicial é Jogadores, porque é a busca que a amizade e o amistoso pedem. [DEC-NAV-Q Q5, DEC-NAV-A L12]
 - **N33. Sem busca digitada, o Explorar mostra as competições e as arenas dos organizadores do beta**, em duas seções: "Competições" (as com temporada aberta ou evento futuro primeiro) e "Arenas". Na página de uma competição em que o jogador **não** está inscrito, entram dois blocos no lugar da posição: [DEC-NAV-Q Q1; R32]
   - **"Como se inscrever":** o contato do organizador (texto e link que ele informou), porque no beta a inscrição entra por carga (R32) e é feita com o organizador.
-  - **"Tenho interesse":** um botão que registra o interesse do jogador naquela competição e vira "Interesse registrado" (tocar de novo desfaz). No MVP, serve para **medir a demanda**: o organizador não é notificado e ninguém mais vê quem marcou. [LEIT, L13]
-- **N34. A arena é uma página com nome, cidade e as competições dela** (rota proposta `/arenas/[arena]`). No MVP, as arenas do Explorar são as **organizações do tipo arena ou clube** (`DOMAIN.md`, glossário: a organização já inclui "arena, clube"); a arena da partida continua sendo texto livre (R34). [LEIT, L14]
+  - **"Tenho interesse":** um botão que registra o interesse do jogador naquela competição e vira "Interesse registrado" (tocar de novo desfaz). No MVP, serve para **medir a demanda**: o organizador não é notificado e ninguém mais vê quem marcou. O interesse é uma relação entre jogador e competição (`DOMAIN.md`, glossário). [DEC-NAV-A L13]
+- **N34. A arena do Explorar é uma organização do tipo arena**, com página própria (rota proposta `/arenas/[arena]`): nome, cidade, contato e as competições dela. A organização ganha **tipo** (arena, clube, federação, grupo), **cidade** e **contato** (`DOMAIN.md`, glossário). A arena da partida continua sendo texto livre (R34). [DEC-NAV-A L14]
 - **Fora do MVP:** filtros por nível e região, recomendação ("para você"), mapa e inscrição pelo app (`PRODUCT.md`; REF `06-descoberta-competicoes.md`, caminhos A a C).
 
 ---
@@ -249,7 +252,7 @@ O uso é alto durante a rodada e cai entre competições (`CLAUDE.md`, "Insights
 | Situação | O que a aba mostra | CTA |
 | --- | --- | --- |
 | **Sem nenhuma inscrição ativa e sem histórico** (jogador novo) | "Você ainda não está em nenhum ranking." e uma linha dizendo que a inscrição é feita pelo organizador (R32) | "Registrar amistoso" |
-| **Inscrito, entre rodadas** (nenhum confronto aberto) | "Nenhum jogo agora. A próxima rodada de [Ranking] começa quando o organizador sortear." Abaixo, o Histórico | "Registrar amistoso" |
+| **Inscrito, entre rodadas** (nenhum confronto aberto) | "Nenhum jogo agora. A próxima rodada de [Ranking] começa quando o admin sortear." Abaixo, o Histórico | "Registrar amistoso" |
 | **Entre temporadas** (temporada encerrada) | "Temporada encerrada." com a posição final da dupla, que leva à classificação. Abaixo, o Histórico | "Registrar amistoso" |
 | **Sem inscrição, com histórico** (amistosos ou temporadas passadas) | Só o Histórico, com "Sua vez: nada pendente" no topo | "Registrar amistoso" |
 
@@ -320,24 +323,16 @@ Lista para a auditoria do design system. **Esta spec não desenha os componentes
 
 ---
 
-## 12. Decisões, leituras e perguntas
+## 12. Decisões e leituras
 
 ### Respondidas
 
 - **Primeira rodada** (DEC-NAV-L, 26/09): L1 → N4; **L2 rejeitada** → N10 (a aba de origem continua marcada); L3 → N13; L4 → N14; L5 → N16; L6 → N20, N21; L7 → tabela 5.2; L8 → N8; L9 → N27.
 - **Segunda rodada** (DEC-NAV-Q, 29/09): Q1 → N1 (5 abas, Competições do jogador, Explorar); Q2 → N12; Q3 → N30, N31 (admin dentro da competição, agenda só de jogador); Q4 → N29 (a aba Competições abre na lista); Q5 → N6, N32 (uma busca, no Explorar, com três escopos).
 
-### Leituras do agente (a confirmar)
+- **Aprovação** (DEC-NAV-A, 29/09): L10 → N28; L11 → N29; L12 → N32; L13 → N33; L14 → N34 (organização com tipo, cidade e contato); badge da aba Jogos pela N3, que conta todo item de "Sua vez".
 
-Saíram da revisão com as decisões de 29/09:
-
-- **L10.** Quem chega de fora do app cai na aba dona do tipo da entidade (N28).
-- **L11.** "Minhas competições": só inscrições ativas; rankings primeiro, depois torneios por data (N29). Temporadas encerradas saem da lista e ficam no perfil (`PROFILE.md`, PF19), com a exceção do vazio da 9.2.
-- **L12.** O escopo inicial da busca é Jogadores (N32).
-- **L13.** "Tenho interesse" é privado no MVP: registra, desfaz, e não avisa o organizador (N33).
-- **L14.** As arenas do Explorar são as organizações do tipo arena ou clube; a arena da partida continua texto (N34). Se o Gabriel preferir a arena como entidade própria, isso vira pergunta de domínio no `DOMAIN.md`.
-
-Cada leitura confirmada vira regra aqui, e a lista encolhe.
+Não há leitura nem pergunta aberta. Pergunta nova entra aqui com opções, trade-offs e recomendação, e sai quando vira regra.
 
 ---
 

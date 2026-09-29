@@ -173,7 +173,7 @@ Sem confronto e sem H2H, o bloco some (PF2). Adversários em comum (DSC 3.3) sã
 
 ### 6.1 Visibilidade
 
-- **PF20. O perfil é visível para qualquer jogador com conta**, amigo ou não. A leitura competitiva precisa disso: o adversário sorteado quase nunca é amigo. Sem login, `/jogadores/[username]` leva ao login e volta ao perfil depois dele. [R7; DEC-PERFIL PQ5]
+- **PF20. O perfil é visível para qualquer jogador com conta**, amigo ou não. A leitura competitiva precisa disso: o adversário sorteado quase nunca é amigo. Sem login, `/jogadores/[username]` leva ao login e volta ao perfil depois dele. Todo jogador tem @username, gerado a partir do nome no cadastro e editável (`PRODUCT.md`), então toda conta tem essa rota. [R7; DEC-PERFIL PQ5; decisão do Gabriel na spec de navegação, 29/09/2026]
 
 ### 6.2 Vazio e borda
 

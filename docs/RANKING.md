@@ -54,7 +54,7 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
 ```
 ┌──────────────────────────────────────────────┐
-│ Ranking                                      │  ← cabeçalho da aba (N, seção 3)
+│ ‹ Voltar                                     │  ← cabeçalho de tela de detalhe (NAV seção 3)
 │ ┌──────────────────────────────────────────┐ │
 │ │ Ranking BH · Masculino B            ⌄    │ │  ← seletor de categoria (RK6)
 │ └──────────────────────────────────────────┘ │
@@ -180,7 +180,7 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
 A página da competição existe e não é aba (NAV N9); o conteúdo, no ranking, é desta spec. Rota proposta `/competicoes/[competicao]`.
 
-- **RK17. A página tem quatro blocos, nesta ordem:** cabeçalho, categorias, temporada e regras. [NAV N9; DEC-RANK RL9]
+- **RK17. A página tem quatro blocos, nesta ordem:** cabeçalho, categorias, temporada e regras. Dois blocos entram logo abaixo do cabeçalho conforme quem vê: para quem **não** está inscrito, "Como se inscrever" e "Tenho interesse" (NAV N33); para o admin da competição, a entrada da área "Administrar" (NAV N31). [NAV N9, N31, N33; DEC-RANK RL9]
 
 | Bloco | Conteúdo |
 | --- | --- |
@@ -229,7 +229,7 @@ Usa o `EmptyState` do DS (ícone opcional, título, apoio e uma ação).
 | Aberta | Não inscrito na categoria | Tabela sem linha destacada |
 | Depois da data de corte, antes do fim | Qualquer | Divisor "Classificados para…", sem distância da vaga |
 | Encerrada | Qualquer | RK15 |
-| Sem temporada | Qualquer | RK19, terceira linha |
+| Sem temporada | Qualquer | RK19 |
 
 ---
 
@@ -313,7 +313,7 @@ Confirmadas pelo Gabriel (DEC-RANK):
 - **RL4.** Sem pódio, medalha ou coroa no top 3 (4.3).
 - **RL5.** Inscrição encerrada fica na posição dela, apagada, com "Encerrada", e a linha de corte pula ela (4.4, 4.5).
 - **RL6.** Temporada sem jogo confirmado mostra a lista alfabética sem posição (RK20).
-- **RL7.** A temporada encerrada fica na tela até a próxima começar; depois, a aba oferece só a anterior, por link (RK15).
+- **RL7.** A temporada encerrada fica na tela até a próxima começar; depois, a classificação oferece só a anterior, por link (RK15).
 - **RL8.** Sem atualização em tempo real nem tela de celebração ao subir (RK16).
 - **RL9.** A página da competição tem cabeçalho, categorias, temporada e regras com os valores do próprio ranking (RK17, RK18).
 
