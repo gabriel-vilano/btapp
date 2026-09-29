@@ -102,14 +102,27 @@ export function slugifyName(name: string): string {
 }
 
 const ALLOWED_AVATAR_TYPES = ["image/jpeg", "image/png", "image/webp"];
-const MAX_AVATAR_SIZE = 5 * 1024 * 1024;
 
-export function validateAvatar(file: File) {
+// 1MB decimal, não 1MiB: o body de uma server action tem limite padrão de 1MiB
+// (1.048.576 bytes, `serverActions.bodySizeLimit` do Next). A folga de ~48KB cobre o
+// resto do multipart (username, id da action), para uma foto que passa aqui nunca ser
+// recusada pelo Next antes da action rodar. O bucket `avatars` usa o mesmo valor.
+export const AVATAR_MAX_BYTES = 1_000_000;
+
+export function validateAvatarType(file: File) {
   if (!ALLOWED_AVATAR_TYPES.includes(file.type)) {
     return { valid: false, error: "Formato aceito: JPG, PNG ou WebP" };
   }
-  if (file.size > MAX_AVATAR_SIZE) {
-    return { valid: false, error: "Foto deve ter no máximo 5MB" };
+  return { valid: true };
+}
+
+export function validateAvatar(file: File) {
+  const typeValidation = validateAvatarType(file);
+  if (!typeValidation.valid) {
+    return typeValidation;
+  }
+  if (file.size > AVATAR_MAX_BYTES) {
+    return { valid: false, error: "Foto deve ter no máximo 1MB" };
   }
   return { valid: true };
 }
