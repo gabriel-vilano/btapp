@@ -17,6 +17,12 @@ export interface ScheduleSideSummary {
    * quem "ofereceu mais datas", e repetir não é oferecer de novo).
    */
   offeredTimeCount: number;
+  /**
+   * Dias distintos desses horários, no calendário de Brasília. Três horários
+   * na mesma noite mostram esforço, mas pouca disponibilidade: o admin vê os
+   * dois números (decisão do Gabriel, 29/09).
+   */
+  offeredDayCount: number;
   /** Propostas do lado que expiraram sem aceite nem contraproposta do outro lado (M12). */
   unansweredCount: number;
   /** Propostas do outro lado que este lado aceitou (M11). */
@@ -55,6 +61,7 @@ function sideSummaryOf(history: ScheduleHistory, sides: ScheduleSides, side: Mat
     side,
     proposalCount: own.length,
     offeredTimeCount: distinctOfferedTimes(own),
+    offeredDayCount: distinctOfferedDays(own),
     unansweredCount: own.filter((proposal) => proposal.status === 'expired').length,
     acceptedCount: history.proposals.filter((proposal) => acceptedBySide(proposal, sides, side)).length,
     reportedDateCount: history.reported_dates.filter((reported) => sideOfPlayer(sides, reported.reported_by) === side)
@@ -67,6 +74,22 @@ function sideSummaryOf(history: ScheduleHistory, sides: ScheduleSides, side: Mat
 function distinctOfferedTimes(proposals: ScheduleProposal[]): number {
   const times = proposals.flatMap((proposal) => proposal.options.map((option) => Date.parse(option.starts_at)));
   return new Set(times).size;
+}
+
+// O dia é o da quadra, em Brasília, como em `formatters.ts`: um horário às 22h
+// seria o dia seguinte em UTC. O en-CA formata como AAAA-MM-DD.
+const dayKeyFormatter = new Intl.DateTimeFormat('en-CA', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  timeZone: 'America/Sao_Paulo',
+});
+
+function distinctOfferedDays(proposals: ScheduleProposal[]): number {
+  const days = proposals.flatMap((proposal) =>
+    proposal.options.map((option) => dayKeyFormatter.format(new Date(option.starts_at))),
+  );
+  return new Set(days).size;
 }
 
 function acceptedBySide(proposal: ScheduleProposal, sides: ScheduleSides, side: MatchSideKey): boolean {

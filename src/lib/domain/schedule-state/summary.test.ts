@@ -21,6 +21,7 @@ describe('resumo da marcação por lado (M17)', () => {
       side: 'a',
       proposalCount: 0,
       offeredTimeCount: 0,
+      offeredDayCount: 0,
       unansweredCount: 0,
       acceptedCount: 0,
       reportedDateCount: 0,
@@ -84,5 +85,37 @@ describe('resumo da marcação por lado (M17)', () => {
     expect(summary.a).toMatchObject({ proposalCount: 1, offeredTimeCount: 3, unansweredCount: 0 });
     expect(summary.b).toMatchObject({ proposalCount: 0, reportedDateCount: 1 });
     expect(summary.agreed?.source).toMatchObject({ kind: 'reported_date', reported_by: p.diego.id });
+  });
+});
+
+describe('horários em quantos dias (M17)', () => {
+  const proposeA = (startsAt: readonly string[]) =>
+    proposeSchedule(EMPTY, { id: 'proposal-days', options: startsAt.map((start) => option(start)) }, act(PLAYER.a1), CONTEXT);
+
+  it('3 horários no mesmo dia contam 3 horários em 1 dia', () => {
+    // sáb 05/09 às 9h, 12h e 18h em Brasília
+    const history = proposeA(['2026-09-05T12:00:00.000Z', '2026-09-05T15:00:00.000Z', '2026-09-05T21:00:00.000Z']);
+    expect(scheduleSummaryOf(history, SIDES).a).toMatchObject({ offeredTimeCount: 3, offeredDayCount: 1 });
+  });
+
+  it('horários em dias diferentes contam um dia cada', () => {
+    const history = proposeA([SAT, SUN, WED]);
+    expect(scheduleSummaryOf(history, SIDES).a).toMatchObject({ offeredTimeCount: 3, offeredDayCount: 3 });
+  });
+
+  it('o dia é o de Brasília: 22h de sábado não vira domingo, como seria em UTC', () => {
+    // sáb 05/09 às 11h e às 22h em Brasília; o segundo já é 06/09 em UTC
+    const history = proposeA([SAT, '2026-09-06T01:00:00.000Z']);
+    expect(scheduleSummaryOf(history, SIDES).a).toMatchObject({ offeredTimeCount: 2, offeredDayCount: 1 });
+  });
+
+  it('23h59 e 0h em Brasília ficam em dias diferentes', () => {
+    const history = proposeA(['2026-09-06T02:59:00.000Z', '2026-09-06T03:00:00.000Z']);
+    expect(scheduleSummaryOf(history, SIDES).a).toMatchObject({ offeredTimeCount: 2, offeredDayCount: 2 });
+  });
+
+  it('mock da r2-4: 5 horários da T2 em 5 dias', () => {
+    const summary = scheduleSummaryOf(scheduleHistoryOf(matchId('r2-4')), MB_SIDES.r2_4);
+    expect(summary.a).toMatchObject({ offeredTimeCount: 5, offeredDayCount: 5 });
   });
 });
