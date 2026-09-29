@@ -1,0 +1,92 @@
+import {
+  Meta,
+  Subtitle,
+  Canvas,
+  ArgTypes,
+} from "@storybook/addon-docs/blocks";
+import * as DeltaIndicatorStories from "./DeltaIndicator.stories";
+
+<Meta of={DeltaIndicatorStories} />
+
+<Subtitle>
+  Variação de posição no ranking: quantas posições a unidade subiu, caiu ou se
+  manteve.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/DeltaIndicator/DeltaIndicator.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/DeltaIndicator/DeltaIndicator.tsx)
+
+## Visão geral
+
+`DeltaIndicator` mostra o movimento no ranking com três pistas ao mesmo tempo: a seta, o texto e a cor. O texto usa `label-lg` (14px) em negrito. Não é clicável: só informa.
+
+<Canvas of={DeltaIndicatorStories.Up} />
+
+## Variantes
+
+Três sentidos, definidos pela prop `direction`. Subir e cair recebem o número de posições em `value`, sempre positivo: o sentido vem de `direction`, não do sinal.
+
+<Canvas of={DeltaIndicatorStories.AllDirections} />
+
+### Subiu
+
+Seta para cima em verde (`--color-foreground-success`).
+
+<Canvas of={DeltaIndicatorStories.Up} />
+
+### Caiu
+
+Seta para baixo em vermelho (`--color-foreground-attention`). No feed, o card de queda é privado: só a própria unidade vê (`DOMAIN.md`, R22).
+
+<Canvas of={DeltaIndicatorStories.Down} />
+
+### Manteve
+
+Traço em cinza (`--color-foreground-secondary`), com o texto "Manteve a posição". Não recebe `value`.
+
+<Canvas of={DeltaIndicatorStories.Unchanged} />
+
+## Estados
+
+O texto concorda com o número: "1 posição" no singular, "2 posições" no plural.
+
+<Canvas of={DeltaIndicatorStories.OnePosition} />
+
+## Forma compacta
+
+Com `compact`, a tela mostra só a seta e o número ("▼ 2"), para colunas estreitas como a da linha do ranking (`RankingRow`), onde o delta fica embaixo dos pontos. O leitor de tela continua ouvindo a frase inteira ("Caiu 2 posições"). Só vale para subir e cair: "Manteve a posição" não tem forma curta.
+
+<Canvas of={DeltaIndicatorStories.Compact} />
+
+## Quando usar
+
+- Movimento da unidade no bloco de ranking do feed (`RankingBlock`)
+- Coluna de variação de uma linha do ranking (`RankingRow`, na forma compacta)
+- Resumo de evolução no perfil e na tela depois da confirmação do resultado
+
+## Componentes relacionados
+
+- Para **conquista** (Líder, Top 8, vaga na final), use [`Badge`](?path=/docs/ui-badge--docs) no tom `accent`. O `DeltaIndicator` diz quanto mudou; o `Badge` diz o que isso significa.
+- Para **resultado de partida** (VITÓRIA, DERROTA), use [`Badge`](?path=/docs/ui-badge--docs) nos tons `success` e `attention`.
+
+## Acessibilidade
+
+- **A cor nunca é a única pista** (WCAG 1.4.1): a seta e o texto dizem o mesmo que o verde e o vermelho.
+- **A seta é decorativa** (`aria-hidden`). O sentido chega ao leitor de tela por um prefixo visualmente oculto: o leitor anuncia "Subiu 2 posições" ou "Caiu 3 posições", enquanto a tela mostra só a seta e "2 posições".
+- **Contraste:** o verde (kiwi-600), o vermelho (red-600) e o cinza (neutral-600) passam no AA de texto (4,5:1, WCAG 1.4.3) sobre o branco (4,97, 5,41 e 4,95) e sobre o coral-100 do bloco de marco (4,70, 5,12 e 4,69).
+
+## Evitar
+
+- ❌ Mostrar só a cor, sem seta nem texto, ou só a seta, sem número
+- ❌ Passar `value` negativo para dizer que caiu: use `direction="down"`
+- ❌ Usar o `DeltaIndicator` para pontos ou saldo de games. Ele fala de posição no ranking
+- ❌ Usar coral para subir: coral é ação e marca, não sentido de movimento
+
+## API
+
+<ArgTypes of={DeltaIndicatorStories} />
+
+## Referências
+
+- [WCAG 1.4.1 — Uso de cor](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)
+- [WCAG 1.4.3 — Contraste mínimo](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
+- `docs/TOKENS.md` > "Cores — foreground"

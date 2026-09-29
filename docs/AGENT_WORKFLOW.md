@@ -9,9 +9,10 @@ Como vários agentes trabalham ao mesmo tempo em issues diferentes sem se atrope
 ## Princípios
 
 - **1 issue = 1 agente = 1 branch = 1 PR.** Cada agente trabalha isolado, na própria sessão na nuvem, com o próprio clone do repo.
-- **O Linear é o quadro compartilhado.** Agentes não conversam direto. Tudo que outro agente ou o Gabriel precisa saber vira status, relação ou comentário no Linear. Isso é o padrão *blackboard*: ninguém fala com ninguém, todos leem e escrevem no mesmo quadro. Resultado: o estado de todo o trabalho é auditável num lugar só.
+- **O Linear é o quadro compartilhado.** Agentes não conversam direto entre si. Tudo que outro agente ou o Gabriel precisa saber vira status, relação ou comentário no Linear. Isso é o padrão *blackboard*: todos leem e escrevem no mesmo quadro. Resultado: o estado de todo o trabalho é auditável num lugar só.
+- **A sessão orquestradora é o canal com o Gabriel.** As perguntas e os prints dos agentes chegam a ele por ela, e as respostas voltam às sessões pelo relay (ver "Orquestração"). O canal não substitui o quadro: a pergunta nasce como Needs Decision, e a resposta vira comentário na issue antes de voltar para a sessão.
 - **O Gabriel decide produto e domínio.** Pesquisa, implementação e testes são autônomos. Quando a decisão é de produto, de UX ou de Beach Tennis, o agente para e pergunta.
-- **A CI é o portão.** Nenhum agente mexe no `master` direto. Quem mergeia é o Gabriel, ou um agente que ele autorizou explicitamente para um lote de PRs (ver "Merge").
+- **A CI é o portão.** Nenhum agente mexe no `master` direto. Quem mergeia é a orquestradora, com autorização permanente do Gabriel, ou o próprio Gabriel (ver "Merge").
 
 ---
 
@@ -83,7 +84,7 @@ O ponto onde o agente para e chama o Gabriel. Usar quando a decisão:
 **Recomendação:** <opção e por quê>
 ```
 
-Depois de comentar, mover a issue para **Needs Decision**, **atribuir ao Gabriel** e encerrar a sessão com um resumo. O agente não fica esperando: a resposta chega como comentário, e a issue volta para Todo para ser retomada (pela mesma sessão ou por uma nova).
+Depois de comentar, mover a issue para **Needs Decision**, **atribuir ao Gabriel** e encerrar a sessão com um resumo. O agente não fica esperando. A orquestradora leva a pergunta ao Gabriel, registra a resposta como comentário na issue e a repassa à mesma sessão pelo relay. Se a sessão não existir mais, a issue volta para Todo e uma sessão nova a retoma.
 
 Não usar Needs Decision para dúvida técnica que o próprio agente consegue resolver lendo o código, a doc ou testando.
 
@@ -105,6 +106,7 @@ Não usar Needs Decision para dúvida técnica que o próprio agente consegue re
 - Nunca fazer push em branch de outro agente.
 - Antes de mexer num arquivo que outra issue em andamento também toca, comentar na outra issue.
 - Comentário começa pelo contexto e termina pelo que se pede. Quem lê pode ser um agente sem nenhuma memória da conversa.
+- **PR verde entregue, sessão parada.** O agente não agenda check-ins recorrentes (`send_later`, Routine) esperando o merge: a orquestradora acompanha o PR e faz o merge (passo 7 da skill `/pegar-issue`). Cada check-in relê o contexto inteiro da sessão e gasta a cota do plano sem mudar nada.
 - **Todo comentário de agente termina com a assinatura** `— 🤖 agente <ID>` (ou `— 🤖 agente orquestrador`). Os agentes usam a conta do Gabriel, então sem assinatura não dá para distinguir o que foi ele do que foi um agente.
 
 ---
@@ -116,15 +118,27 @@ O ruleset do `master` exige PR atualizado com a base e CI verde antes do merge (
 - **PR desatualizado não é trabalho do agente.** Não atualizar a branch só porque o `master` andou. Quem atualiza é quem vai mergear, na hora do merge (just-in-time).
 - **Conflito é do dono da branch.** Resolver mergeando o `master` na própria branch. Nunca rebase nem force push, e nunca atualizar a branch de outro agente, nem pelo botão nem pela API.
 - **Auto-merge, nunca.** Habilitar auto-merge é mergear por procuração, e a opção fica desligada no repositório de propósito.
-- **Merge delegado só com autorização explícita, por lote.** Quando o Gabriel autoriza um agente a mergear, a autorização vale só para os PRs daquele lote, não para PRs abertos depois. Antes de mergear vários PRs, simular a combinação (`git merge-tree` + lint e testes no resultado combinado) e mergear com `expectedHeadSha`.
+- **Quem mergeia é a orquestradora, com autorização permanente do Gabriel.** Os agentes de issue nunca mergeiam. A orquestradora mergeia um PR quando:
+  - a CI está verde no PR atualizado com a base;
+  - a combinação com o `master` e com os outros PRs do lote foi simulada: `git merge-tree`, depois lint, typecheck, testes, build e a varredura de variáveis CSS sem definição no resultado combinado;
+  - o Gabriel viu os prints, se o PR muda algo na tela. PR com zero mudança visual, comprovada por comparação de pixels, dispensa print;
+  - o Gabriel aprovou a spec, se o PR é de spec.
+
+  O merge usa `expectedHeadSha`, para não levar um push feito depois da validação.
 
 ---
 
 ## Orquestração
 
-O Gabriel escolhe o lote; uma sessão orquestradora abre uma sessão na nuvem por issue, com o prompt `/pegar-issue <ID>`.
+O Gabriel escolhe o lote; uma sessão orquestradora abre uma sessão na nuvem por issue, com o prompt `/pegar-issue <ID>`. O Gabriel conversa com a orquestradora pelo celular ou pelo computador: ela leva até ele as perguntas e os prints dos agentes e devolve as respostas às sessões.
 
-- **Máximo de 3 agentes simultâneos.** O gargalo é a revisão de PRs e as respostas a Needs Decision, não a quantidade de agentes.
+- **Máximo de 5 agentes simultâneos.** O gargalo é a revisão de PRs e as respostas a Needs Decision, não a quantidade de agentes.
+- **Relay para uma sessão na nuvem.** A orquestradora retoma uma sessão com uma Routine sem agenda, criada só para isso:
+  1. `create_trigger` com o `persistent_session_id` da sessão e a mensagem no `prompt`, sem `cron_expression` nem `run_once_at`;
+  2. `fire_trigger`;
+  3. `delete_trigger`, para a Routine não ficar esquecida.
+
+  A mensagem repete o que já foi registrado na issue: o relay só transporta, o registro continua no Linear. Funciona com a sessão parada há horas.
 - **Só issues independentes no mesmo lote:** sem `blocked by` entre si e, de preferência, sem arquivos em comum.
 - **Issues que compartilham uma branch de feature** (ex.: correções de uma branch ainda não mergeada) vão para **um agente só**, em sequência. Coordenar vários agentes na mesma branch custa mais do que o ganho de paralelismo.
 - **Guarda de uso:** o Gabriel reserva parte do limite semanal do plano Max para uso próprio. A cada check-in, a orquestradora lê o `rate_limit_info` das sessões na nuvem em execução (`get_session`). Ela para tudo se aparecer qualquer um destes sinais:
@@ -134,3 +148,12 @@ O Gabriel escolhe o lote; uma sessão orquestradora abre uma sessão na nuvem po
 
   Parar é interromper todas as sessões, não disparar nenhuma nova e registrar o motivo. O estado e os detalhes operacionais ficam no documento de orquestração do Linear.
 - **Ferramentas cobradas à parte ficam fora** (ex.: Firecrawl no modo Alexandria).
+
+---
+
+## Acesso ao LetzPlay atual
+
+**Nenhum agente acessa `letzplay.me` nem seus subdomínios:** páginas públicas, área logada ou API, com qualquer ferramenta (WebFetch, Firecrawl, Playwright, curl). Os Termos de Uso do LetzPlay ([letzplay.me/about/tos](https://letzplay.me/about/tos), seção "Restrição de Acesso Automatizado") proíbem agentes automatizados, scrapers, IA extrativa e navegadores headless para acessar, mapear ou copiar a interface, as APIs ou os dados da plataforma, salvo autorização por escrito da LPTENNIS. Os mesmos Termos proíbem usar os dados da plataforma em aplicativos concorrentes.
+
+- Material do app atual entra só por prints ou gravações feitos pelo Gabriel, guardados em lugar privado (Linear, Figma ou Dropbox), nunca no repositório, que é público.
+- Precisa de algo do app atual? Peça os prints ao Gabriel, com a lista de telas, em vez de buscar.

@@ -45,6 +45,8 @@ npm run build
 npm run test:stories   # quando mexer em componente ou story
 ```
 
+Na sessão na nuvem, as stories rodam com `CHROMIUM_EXECUTABLE_PATH=/opt/pw-browsers/chromium npm run test:stories` (ver `CLAUDE.md` > "Testes").
+
 O E2E (`npm run test:e2e`) precisa de Docker e roda só na CI: acompanhar o job E2E no PR.
 
 Reler o próprio diff procurando o que a CI ou um revisor rejeitaria.
@@ -58,7 +60,7 @@ Reler o próprio diff procurando o que a CI ou um revisor rejeitaria.
 3. Abrir o PR seguindo `.github/pull_request_template.md`, com `Closes <ID>` na seção "Por que". Título no estilo dos commits. **O único ID de issue no PR (título, corpo e commits) é o da issue que ele fecha.** Qualquer ID citado fica ligado ao PR, e o merge move aquela issue para Done. Outras issues são referenciadas sem ID.
 4. Acompanhar a CI. Se falhar: diagnosticar, corrigir e fazer push de novo até ficar verde. Nunca desativar teste para passar.
 5. PR desatualizado com o `master` não é trabalho seu: não atualizar a branch só por isso. Conflito é: resolver mergeando o `master` na própria branch, nunca com rebase nem force push.
-6. Não fazer merge nem habilitar auto-merge. Quem mergeia é o Gabriel, ou um agente autorizado por ele para um lote (`docs/AGENT_WORKFLOW.md` > "Merge"). Atribuir a issue ao Gabriel (PR para aprovar).
+6. Não fazer merge nem habilitar auto-merge. Quem mergeia é a orquestradora, com autorização permanente do Gabriel, ou o próprio Gabriel (`docs/AGENT_WORKFLOW.md` > "Merge"). Atribuir a issue ao Gabriel (PR para aprovar).
 7. Com a CI verde e o PR entregue, parar. Não agendar check-ins recorrentes (`send_later`, Routine) esperando o merge, mesmo que as instruções padrão da sessão na nuvem mandem: o orquestrador acompanha o PR e faz o merge. Cada check-in relê o contexto inteiro da sessão e gasta a cota do plano sem mudar nada.
 
 **PRD:**

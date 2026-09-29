@@ -50,7 +50,7 @@ Estados controlados via props (`loading`, `disabled`, `fullWidth`).
 
 ### Loading
 
-Esconde o conteúdo (`visibility: hidden`) e mostra um spinner sobreposto. **Mantém o tamanho do botão** — não causa layout shift. Use durante operações async (submit de formulário, upload). O botão fica não-clicável automaticamente.
+Deixa o conteúdo transparente (`opacity: 0`) e mostra o [`Spinner`](?path=/docs/ui-spinner--docs) `sm` sobreposto, na cor do texto da variante. **Mantém o tamanho do botão** — não causa layout shift. Use durante operações async (submit de formulário, upload). O botão fica não-clicável automaticamente.
 
 <Canvas of={ButtonStories.Loading} />
 
@@ -59,6 +59,16 @@ Esconde o conteúdo (`visibility: hidden`) e mostra um spinner sobreposto. **Man
 Use quando a ação está temporariamente indisponível **por razão evidente ao usuário** (formulário inválido com erro visível, condição de rede). Evite disabled "permanente" sem explicação — é hostil; nesse caso, esconda o botão ou exiba um Alert explicando.
 
 <Canvas of={ButtonStories.Disabled} />
+
+Cada variante desabilitada **mantém a forma** e só troca a cor para o tom de desabilitado:
+
+- **Primary:** fundo `--color-background-disabled` com texto `--color-foreground-on-disabled`.
+- **Secondary:** sem fundo, borda `--color-border-subtle` e texto `--color-foreground-disabled`.
+- **Ghost:** sem fundo e sem borda, só o texto em `--color-foreground-disabled`.
+
+Assim o secondary e o ghost continuam parecendo a mesma ação, e nenhum botão desabilitado ganha mais peso que o primary ativo ao lado dele.
+
+<Canvas of={ButtonStories.DisabledVariants} />
 
 ### Full width
 
@@ -101,7 +111,7 @@ Sempre via componente `<Icon />`, tamanho `sm`. Cor herda do botão via `current
 - `:focus-visible` produz outline azul de alto contraste — **nunca remover** sem substituir
 - `disabled` desabilita pointer-events e foco automaticamente
 - Tap target mínimo de 48px atendido via `min-height: var(--dimension-action-height-lg)` (WCAG 2.5.5)
-- Loading substitui conteúdo via `visibility: hidden` (preserva tamanho) — leitor de tela ainda anuncia o botão como tal
+- Loading esconde o conteúdo com `opacity: 0` (preserva tamanho e nome acessível) e marca `aria-busy`. O Spinner é decorativo: o leitor de tela continua anunciando o rótulo do botão
 - Conteúdo do botão deve ser texto descritivo da ação. Em casos de ícone-only, usar `aria-label`
 
 ## Evitar
@@ -116,9 +126,13 @@ Sempre via componente `<Icon />`, tamanho `sm`. Cor herda do botão via `current
 
 <ArgTypes of={ButtonStories} />
 
+## Decisões de design
+
+**Por que o secondary e o ghost desabilitados não ganham fundo cinza, como o primary?** O preenchido cinza servia para todas as variantes, e um ghost desabilitado virava um bloco cinza cheio: mudava de forma, deixava de parecer a mesma ação e pesava mais que o primary ativo ao lado dele (caso do "Nenhum serve" do ScheduleOptionPicker enquanto o aceite é gravado). Agora o desabilitado só apaga a cor, e o preenchimento continua sendo o que diferencia o primary. Secondary e ghost usam os mesmos tokens do Chip e do Checkbox não selecionados desabilitados, sem token novo.
+
 ## Referências
 
 - [MDN — `<button>` element](https://developer.mozilla.org/docs/Web/HTML/Element/button)
 - [WAI-ARIA — Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/)
 - [WCAG 2.5.5 — Target Size](https://www.w3.org/WAI/WCAG21/Understanding/target-size.html)
-- Tokens relacionados: `docs/TOKENS.md` (`--dimension-action-height-*`, `--color-state-layer-*`)
+- Tokens relacionados: `docs/TOKENS.md` (`--dimension-action-height-*`, `--color-state-layer-*`, `--color-*-disabled`)

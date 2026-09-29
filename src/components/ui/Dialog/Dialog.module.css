@@ -1,0 +1,255 @@
+/* Mobile-first: abaixo de 800px o painel é um BottomSheet preso à base.
+   A partir de 800px (--breakpoint-lg, o mesmo corte do layout de auth)
+   vira um Dialog centralizado. Custom property não funciona em @media,
+   por isso o valor aparece cru na media query. */
+
+.dialog {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.dialog__scrim {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-scrim);
+  animation: dialog-scrim-in var(--motion-duration-medium-1)
+    var(--motion-easing-standard);
+}
+
+.dialog__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--dimension-layout-max);
+  /* Sobra uma faixa de scrim no topo: mostra que é uma camada sobre a tela
+     e deixa área para tocar e fechar */
+  max-height: calc(100dvh - var(--spacing-800));
+  background-color: var(--color-background-elevated);
+  color: var(--color-foreground-primary);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-shadow: var(--shadow-strong);
+  /* Home indicator do iPhone: o conteúdo não fica embaixo da barra */
+  padding-bottom: env(safe-area-inset-bottom);
+  animation: dialog-sheet-in var(--motion-duration-medium-1)
+    var(--motion-easing-quick-enter);
+  /* --dialog-drag-offset vem do gesto da alça (useSheetDrag) */
+  transform: translateY(var(--dialog-drag-offset, 0px));
+  transition: transform var(--motion-duration-medium-1)
+    var(--motion-easing-standard);
+}
+
+/* Durante o arrasto o painel segue o dedo sem atraso */
+.dialog__panel[data-dragging] {
+  transition: none;
+}
+
+/* O painel recebe foco programático ao abrir (para o leitor de tela anunciar
+   título e descrição). Ele não é um controle: o ring de foco fica nos botões
+   e campos dentro dele. */
+.dialog__panel:focus {
+  outline: none;
+}
+
+/* Área de arrastar de 48px de altura na largura toda; o traço visível é
+   menor (32×4), desenhado no ::before */
+.dialog__grabber {
+  position: relative;
+  flex-shrink: 0;
+  height: var(--dimension-tap-target-minimum);
+  cursor: grab;
+  /* Sem isso o navegador usa o gesto para rolar ou puxar para atualizar */
+  touch-action: none;
+}
+
+.dialog__panel[data-dragging] .dialog__grabber {
+  cursor: grabbing;
+}
+
+.dialog__grabber::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--spacing-400);
+  height: var(--spacing-50);
+  border-radius: var(--radius-full);
+  background-color: var(--color-border-medium);
+  transform: translate(-50%, -50%);
+}
+
+.dialog__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-100);
+  /* No sheet a alça (48px) já dá o respiro do topo */
+  padding: 0 var(--spacing-100) var(--spacing-200) var(--spacing-300);
+}
+
+.dialog__heading {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--spacing-50);
+  /* Alinha a primeira linha do título ao centro do botão de fechar (48px) */
+  padding-top: var(--spacing-150);
+  min-width: 0;
+}
+
+.dialog__title {
+  margin: 0;
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.dialog__description {
+  margin: 0;
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-secondary);
+}
+
+.dialog__close {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--dimension-tap-target-minimum);
+  height: var(--dimension-tap-target-minimum);
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-full);
+  color: var(--color-foreground-secondary);
+  cursor: pointer;
+}
+
+.dialog__close::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-full);
+  background-color: var(--color-state-layer-neutral);
+  pointer-events: none;
+  transition: background-color var(--motion-duration-short-3)
+    var(--motion-easing-standard);
+}
+
+@media (hover: hover) {
+  .dialog__close:hover::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.dialog__close:active::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+.dialog__close:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: calc(var(--spacing-25) * -1);
+}
+
+.dialog__close:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.dialog__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 var(--spacing-300) var(--spacing-300);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+}
+
+.dialog__body:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: calc(var(--border-width-thick) * -1);
+}
+
+.dialog__body:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.dialog__footer {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--spacing-100);
+  padding: var(--spacing-200) var(--spacing-300);
+  border-top: var(--border-width-medium) solid var(--color-border-subtle);
+}
+
+@media (min-width: 800px) {
+  .dialog {
+    align-items: center;
+    padding: var(--spacing-800) var(--spacing-page-margin);
+  }
+
+  .dialog__grabber {
+    display: none;
+  }
+
+  .dialog__header {
+    padding-top: var(--spacing-300);
+  }
+
+  .dialog__panel {
+    max-height: 100%;
+    padding-bottom: 0;
+    border-radius: var(--radius-xl);
+    animation-name: dialog-center-in;
+  }
+
+  .dialog__body:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: calc(var(--border-width-thick) * -1);
+}
+
+.dialog__body:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.dialog__footer {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog__scrim,
+  .dialog__panel {
+    animation: none;
+    transition: none;
+  }
+}
+
+@keyframes dialog-scrim-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes dialog-sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes dialog-center-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}

@@ -24,10 +24,10 @@ export function CompetitionBlock({ competition }: CompetitionBlockProps) {
             alt={name}
             width={48}
             height={48}
-            className={styles.block__logo_img}
+            className={styles["block__logo-img"]}
           />
         ) : (
-          <span className={styles.block__logo_placeholder} aria-hidden />
+          <span className={styles["block__logo-placeholder"]} aria-hidden />
         )}
       </div>
 

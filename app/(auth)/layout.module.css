@@ -10,7 +10,7 @@
   display: grid;
   grid-template-columns: 1fr;
   width: 100%;
-  max-width: 430px;
+  max-width: var(--dimension-layout-max);
   padding: var(--spacing-page-margin);
 }
 

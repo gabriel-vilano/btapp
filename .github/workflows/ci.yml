@@ -19,8 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -38,8 +38,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -54,15 +54,19 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
-      - uses: supabase/setup-cli@v1
+      # Versão fixa: toda rodada usa o mesmo CLI e as mesmas imagens. Como atualizar: GIT_WORKFLOW.md > CI
+      - uses: supabase/setup-cli@v3
         with:
-          version: latest
-      # Sobe só o que os fluxos usam (banco, Auth, REST, Storage, gateway e Mailpit)
+          version: 2.118.0
+      # Sobe só o que os fluxos usam (banco, Auth, REST, Storage, gateway e Mailpit).
+      # O `toomanyrequests` do public.ecr.aws no log é esperado: o CLI baixa as imagens em paralelo,
+      # tenta de novo e, se o ECR seguir recusando, cai para o ghcr.io e o Docker Hub. Cache das
+      # imagens não compensa: salvar e restaurar alguns GB custa mais que os ~45s do download.
       - run: supabase start -x studio,postgres-meta,realtime,imgproxy,edge-runtime,logflare,vector,supavisor
       - name: Apontar app e testes para o Supabase local
         run: |
@@ -78,7 +82,7 @@ jobs:
       - run: npm run test:e2e
       - name: Relatório do Playwright
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-report
           path: |

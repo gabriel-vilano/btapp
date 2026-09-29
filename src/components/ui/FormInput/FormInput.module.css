@@ -50,8 +50,64 @@
 }
 
 .form-input__field:focus {
-  outline: none;
   border-color: var(--color-border-strong);
+}
+
+/* Campo de texto mostra foco pela borda e pelo ring: a borda sozinha
+   deixava dois estilos de foco no DS e removia o outline (auditoria C3/C4). */
+.form-input__field:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+/* Tipos com ícone à esquerda (search, datetime-local) */
+.form-input__field--with-leading {
+  padding-left: var(--spacing-500);
+}
+
+/* A lupa e o X nativos da busca mudam de navegador para navegador
+   (o iOS nem mostra o X). O DS usa a lupa própria, à esquerda. */
+.form-input__field::-webkit-search-decoration,
+.form-input__field::-webkit-search-cancel-button,
+.form-input__field::-webkit-search-results-button {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Âncora do indicador nativo do calendário, esticado logo abaixo */
+.form-input__field--datetime {
+  position: relative;
+}
+
+/* WebKit bug 198959: no iOS o valor da data vem centralizado e o campo
+   vazio encolhe. Alinhar à esquerda e fixar a altura da linha. */
+.form-input__field--datetime::-webkit-date-and-time-value {
+  margin: 0;
+  min-height: var(--text-body-md-line-height);
+  text-align: left;
+}
+
+/* Quando min e max têm o mesmo ano (ou mês, ou dia), como na marcação, que
+   vai de hoje ao prazo da rodada, o Chrome trava esse segmento e o pinta de
+   cinza, como se estivesse desabilitado. O valor vale: fica na cor do texto. */
+.form-input__field--datetime::-webkit-datetime-edit-year-field,
+.form-input__field--datetime::-webkit-datetime-edit-month-field,
+.form-input__field--datetime::-webkit-datetime-edit-day-field {
+  color: inherit;
+}
+
+/* O indicador de calendário do Chrome fica invisível e cobre o campo:
+   tocar em qualquer ponto abre o calendário, e o ícone visível é o do DS,
+   à esquerda. O iOS não tem esse indicador. */
+.form-input__field--datetime::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
 }
 
 .form-input__field--error {
@@ -68,6 +124,16 @@
 
 .form-input__field--valid:focus {
   border-color: var(--color-border-success);
+}
+
+/* Ícone do tipo. Vem depois do <input> no DOM para ficar por cima do
+   datetime-local, que é posicionado, sem precisar de z-index. */
+.form-input__leading {
+  position: absolute;
+  left: var(--spacing-200);
+  display: inline-flex;
+  color: var(--color-foreground-secondary);
+  pointer-events: none;
 }
 
 /* Icones de status e toggle, posicionados dentro do wrapper */
@@ -90,11 +156,15 @@
 }
 
 .form-input__toggle {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--dimension-icon-md);
-  height: var(--dimension-icon-md);
+  /* Área tocável de 48px; a margem negativa devolve ao layout os 24px
+     do ícone, então o campo não cresce e o ícone não muda de lugar. */
+  width: var(--dimension-tap-target-minimum);
+  height: var(--dimension-tap-target-minimum);
+  margin: calc(var(--spacing-150) * -1);
   background: none;
   border: none;
   color: var(--color-foreground-secondary);
@@ -102,10 +172,45 @@
   padding: 0;
 }
 
+/* State layer circular em volta do ícone, menor que a área tocável */
+.form-input__toggle::after {
+  content: "";
+  position: absolute;
+  inset: var(--spacing-100);
+  border-radius: var(--radius-full);
+  background-color: var(--color-state-layer-neutral);
+  pointer-events: none;
+  transition: background-color var(--motion-duration-short-3)
+    var(--motion-easing-standard);
+}
+
 @media (hover: hover) {
   .form-input__toggle:hover {
     color: var(--color-foreground-primary);
   }
+
+  .form-input__toggle:hover::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.form-input__toggle:active::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+/* O ring vai no state layer circular, não no botão: com border-radius no
+   botão, a área tocável viraria um círculo, porque o hit-test respeita a curva */
+.form-input__toggle:focus-visible {
+  outline: none;
+}
+
+.form-input__toggle:focus-visible::after {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.form-input__toggle:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .form-input__error {

@@ -35,9 +35,11 @@ Documentamos o que é estável. Decisões, padrões, princípios, hurdles, conve
 - `CLAUDE.md` — convenções, padrões, hurdles, filosofia
 - `docs/PRODUCT.md` — visão, escopo MVP, princípios de design, métricas
 - `docs/DISCOVERY.md` — mercado, oportunidades por JTBD ranqueadas por evidência, modelos de negócio, hipóteses do beta
+- `docs/PROFILE.md` — perfil do jogador: leituras social e competitiva, seções, estados, critérios de aceite dos blocos (PF1…)
 - `docs/DOMAIN.md` — modelo de domínio: glossário, relações, regras numeradas (R1…), máquina de estados da partida
 - `docs/SCHEDULING.md` — marcação de jogos: regras da proposta de horário (M1…), prazos, notificações, telefone para o WhatsApp e métricas
 - `docs/NAVIGATION.md` — navegação do app e agenda do jogador (aba Jogos): abas, rotas por entidade, seções da agenda, relação com o feed (N1…)
+- `docs/RANKING.md` — tela de ranking: classificação por categoria, troca de categoria, própria linha fixada, delta, linha de corte da final, página da competição, estados e critérios de aceite do RankingRow e do ZoneDivider (RK1…)
 - `docs/TOKENS.md` — design system
 - `docs/GIT_WORKFLOW.md` — workflow de branches, PR, versionamento
 - `docs/AGENT_WORKFLOW.md` — estrutura do Linear e coordenação de agentes em paralelo
@@ -127,6 +129,16 @@ Restrições mensuráveis, otimizadas para que o agente raciocine sobre o códig
 - Botão com ícone sem texto: `aria-label` vai no `<button>`, não no `<Icon>`
 - Ícones customizados de marca: `src/components/icons/` (SVG próprio, fora do Phosphor)
 - Referência completa: ver `Icon.mdx` no Storybook (`UI/Icon > Docs`)
+
+## Onde mora cada componente
+
+`src/components/` se divide por grupo, e o grupo segue o Tier (ver "Storybook > Estratégia de cobertura"):
+
+- **`ui/`** guarda os Tier 1 e os Tier 2 genéricos: primitivos e compostos sem regra de negócio (Button, FormInput, Avatar, Badge, EmptyState).
+- **Grupos de área** (`auth/`, `feed/` e os próximos, como `agenda/`, `ranking/` e `profile/`) guardam os Tier 3 e Tier 4 daquela área, e os Tier 2 que só fazem sentido nela (OtpInput, PasswordChecklist).
+- **`icons/`** guarda os SVGs próprios da marca (fora do Phosphor).
+
+**Componente usado por duas ou mais áreas sobe para `ui/`.** Um grupo de área não importa de outro grupo de área: se `ranking/` precisa de algo que está em `feed/`, esse algo vai para `ui/`. Assim cada área depende só de `ui/`, e mover ou apagar uma área não quebra as outras.
 
 ## Documentação de componentes
 
@@ -351,6 +363,7 @@ O Claude deve sinalizar proativamente quando:
 - **Abordagem equilibrada:** não exige TDD rigoroso, mas todo fluxo crítico ganha teste antes de ser considerado "pronto". Testar imediatamente após implementar — não deixar acumular dívida de teste
 - **Prioridade de cobertura:** auth (login, signup, validações), operações de banco (criar perfil, registrar partida), validações de input, e qualquer fluxo que envolva dados sensíveis
 - **Server actions:** testar com `vi.mock` em `@/src/lib/supabase/server` (fake de `app/(auth)/actions.test-utils.ts`) e em `next/navigation`, com `redirect` lançando `NEXT_REDIRECT:<url>` como o real. Asserção de redirect: `rejects.toThrow(redirectSignal(url))`
+- **Stories nas sessões na nuvem:** o container traz um Chromium mais antigo que o pedido pelo `playwright` do projeto, e a doc do ambiente proíbe `playwright install`. Rodar com `CHROMIUM_EXECUTABLE_PATH=/opt/pw-browsers/chromium npm run test:stories`: o `vitest.config.ts` passa a variável como `executablePath` do provider. Sem ela (CI, máquina local), nada muda. É outra versão do browser, então o job Stories da CI continua sendo a referência
 - **E2E:** Playwright em `e2e/`, contra o build de produção e um Supabase local (`supabase start`) com as migrations aplicadas do zero; o código de verificação dos e-mails vem do Mailpit. Roda no job E2E da CI. Sessões de agente não têm Docker: validam pelo resultado desse job no PR, não localmente. Cada teste cria usuário com e-mail único (`uniqueEmail`), e os helpers recusam qualquer Supabase que não seja local
 - **Seletores E2E:** preferir `getByLabel`/`getByRole` com `exact: true`. Alerta sempre filtrado pelo texto (`getByRole("alert").filter({ hasText })`): o anunciador de rota do Next também tem `role="alert"`
 - **Bug fix → teste de regressão.** Todo bug corrigido ganha um teste que reproduziria o bug, para evitar regressão futura
@@ -408,14 +421,6 @@ Daí acessar `http://<IP-do-dev>:3000` do celular. Em prod tudo funciona.
 **Solução:** o componente que importa o ícone roda no cliente. Ou ele tem `"use client"` (`Toast`, `FormInput`, `AvatarUpload`), ou só é usado dentro de componentes client (`Alert` e `PasswordChecklist`, usados só em páginas de auth com `"use client"`). Num Server Component, importar de `@phosphor-icons/react/ssr`. O wrapper `<Icon />` em si é seguro em Server Components: recebe o ícone como prop (`React.ElementType`) e não importa nada do Phosphor — o erro vem de quem importa o ícone.
 
 **Regra do feed:** todo componente de `src/components/feed/` que importa ícone Phosphor tem `"use client"` no próprio arquivo, em vez de depender de quem o renderiza. Assim ele funciona em qualquer página, inclusive num Server Component.
-
-### Stack de avatares em duplas no CardHeader
-
-**Sintoma:** CardHeader renderiza só player_a.avatar_url em cards de enrollment duplas.
-
-**Solução pendente:** estender CardHeader para receber player_b quando enrollment_format === 'doubles' e renderizar stack com offset 8px.
-
-**Quando resolver:** ao evoluir o CardHeader para o feed real.
 
 ### Componentes com stubs sem comportamento
 

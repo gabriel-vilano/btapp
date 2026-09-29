@@ -216,9 +216,31 @@ export async function resendRecoveryOtp(
   return { success: true };
 }
 
+// Sair encerra só a sessão deste aparelho. O `signOut()` sem parâmetro do auth-js
+// usa o escopo `global` e derrubaria o jogador em todos os aparelhos. O escopo `local`
+// ainda revoga no servidor o refresh token desta sessão, não só apaga os cookies.
+const SIGN_OUT_THIS_DEVICE = { scope: "local" } as const;
+
+// Server action (POST) em vez de link GET: com GET, qualquer site poderia deslogar
+// o jogador embutindo a URL numa imagem ou num link (CSRF).
+export async function logout(): Promise<AuthActionState> {
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signOut(SIGN_OUT_THIS_DEVICE);
+
+  // Com erro, o auth-js mantém a sessão: redirecionar para /entrar faria o proxy
+  // devolver o jogador ao feed, sem explicação.
+  if (error) {
+    return { error: "Não foi possível sair. Tente novamente." };
+  }
+
+  redirect("/entrar");
+}
+
+// A sessão aqui nasceu do código de recuperação neste aparelho. Cancelar não deve
+// derrubar o jogador nos outros aparelhos, onde ele pode estar logado normalmente.
 export async function cancelRecovery() {
   const supabase = await createClient();
-  await supabase.auth.signOut();
+  await supabase.auth.signOut(SIGN_OUT_THIS_DEVICE);
   redirect("/entrar");
 }
 

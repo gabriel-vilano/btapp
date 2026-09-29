@@ -24,7 +24,8 @@
 }
 
 .bar__fill {
-  fill: var(--color-background-accent);
+  /* Não é texto: 3:1 basta (WCAG 1.4.11), então fica na cor de marca */
+  fill: var(--color-brand);
 }
 
 /* --- Contagens nas extremidades --- */

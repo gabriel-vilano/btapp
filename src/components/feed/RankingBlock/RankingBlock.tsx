@@ -1,13 +1,11 @@
 "use client";
 
-import {
-  ArrowUpIcon,
-  ArrowDownIcon,
-  TrophyIcon,
-  StarIcon,
-} from "@phosphor-icons/react";
+import { TrophyIcon, StarIcon } from "@phosphor-icons/react";
 import { Icon } from "@/src/components/ui/Icon";
-import type { RankingCard, RankingMilestone } from "@/src/types/feed";
+import { Badge } from "@/src/components/ui/Badge";
+import { DeltaIndicator } from "@/src/components/ui/DeltaIndicator";
+import { milestoneLabel } from "@/src/components/feed/RankingCard/rankingTexts";
+import type { RankingCard } from "@/src/types/feed";
 import styles from "./RankingBlock.module.css";
 
 interface RankingBlockProps {
@@ -15,14 +13,11 @@ interface RankingBlockProps {
 }
 
 export function RankingBlock({ data }: RankingBlockProps) {
-  const isMilestone = data.movement === "milestone";
-  const isDown = data.movement === "down";
-  const blockClass = isMilestone
+  // Marco e classificação para a final são conquistas: ganham fundo de destaque
+  const isHighlight = data.movement === "milestone" || data.movement === "final_qualification";
+  const blockClass = isHighlight
     ? `${styles.block} ${styles["block--milestone"]}`
     : styles.block;
-  const deltaToneClass = isDown
-    ? styles["delta--down"]
-    : styles["delta--up"];
 
   return (
     <div className={blockClass}>
@@ -30,34 +25,37 @@ export function RankingBlock({ data }: RankingBlockProps) {
 
       <p className={styles.position}>{data.position}ª</p>
 
-      <p className={`${styles.delta} ${deltaToneClass}`}>
-        <Icon
-          icon={isDown ? ArrowDownIcon : ArrowUpIcon}
-          size="sm"
-          weight="bold"
-        />
-        <span>
-          {data.delta} {data.delta === 1 ? "posição" : "posições"}
-        </span>
-      </p>
+      <RankingDelta data={data} />
 
       <p className={styles.points}>
         <Icon icon={TrophyIcon} size="sm" weight="regular" />
         <span>{data.points} pontos</span>
       </p>
 
-      {isMilestone && (
-        <p className={styles.badge}>
-          <Icon icon={StarIcon} size="sm" weight="fill" />
-          <span>{getMilestoneLabel(data.milestone)}</span>
-        </p>
-      )}
+      <RankingBadge data={data} />
     </div>
   );
 }
 
-function getMilestoneLabel(milestone: RankingMilestone): string {
-  if (milestone === "leader") return "Assumiu a liderança";
-  if (milestone === "top10") return "Top 10";
-  return "Finals";
+function RankingDelta({ data }: RankingBlockProps) {
+  // Classificação é a posição na data de corte, não uma movimentação (R28)
+  if (data.movement === "final_qualification" || data.delta === null) return null;
+
+  // Marco só acontece subindo: a seta é a mesma do "up"
+  const direction = data.movement === "down" ? "down" : "up";
+  return <DeltaIndicator direction={direction} value={data.delta} />;
+}
+
+function RankingBadge({ data }: RankingBlockProps) {
+  if (data.movement !== "milestone" && data.movement !== "final_qualification") return null;
+
+  const label =
+    data.movement === "milestone"
+      ? milestoneLabel(data.milestone, data.competitor)
+      : data.final_name;
+  return (
+    <Badge tone="accent" icon={StarIcon} className={styles.badge}>
+      {label}
+    </Badge>
+  );
 }

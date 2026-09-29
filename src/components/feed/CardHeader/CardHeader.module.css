@@ -9,28 +9,19 @@
 
 .header__avatar {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
+  display: flex;
+  width: var(--dimension-avatar-40);
+  height: var(--dimension-avatar-40);
 }
 
-.header__img {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-full);
-  object-fit: cover;
-  display: block;
-}
-
-.header__img_placeholder {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-full);
-  background-color: var(--color-background-tertiary);
+/* Dupla: dois avatares de 40px sobrepostos ocupam 48px (FEED_CARDS.md §6.2) */
+.header__avatar--stack {
+  width: auto;
 }
 
 .header__handshake {
-  width: 40px;
-  height: 40px;
+  width: var(--dimension-avatar-40);
+  height: var(--dimension-avatar-40);
   border-radius: var(--radius-full);
   background-color: var(--color-background-secondary);
   display: flex;
@@ -96,6 +87,13 @@
   font-size: var(--text-label-md-size);
   line-height: var(--text-label-md-line-height);
   color: var(--color-foreground-secondary);
+}
+
+/* Card privado (R22): mesmo estilo dos metadados, com cadeado */
+.header__private {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-25);
 }
 
 /* Padrão B — ação descritiva */

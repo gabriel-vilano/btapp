@@ -1,0 +1,17 @@
+/* Blocos comuns às páginas de auth. O que só uma página usa fica no page.module.css dela. */
+
+.auth-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+}
+
+.auth-page__footer {
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-secondary);
+  text-align: center;
+  margin-top: var(--spacing-200);
+}

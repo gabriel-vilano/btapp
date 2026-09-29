@@ -88,13 +88,28 @@
   width: 100%;
 }
 
-/* --- Disabled --- */
+/* --- Disabled ---
+   Cada variante mantém a forma ao desabilitar: só o primary é preenchido.
+   Um fundo cinza no secondary ou no ghost daria a eles mais peso que o
+   primary ativo ao lado. Secondary e ghost seguem o desabilitado sem
+   preenchimento do Chip e do Checkbox. */
 .btn--disabled {
-  background-color: var(--color-background-disabled);
-  color: var(--color-foreground-on-disabled);
-  border-color: transparent;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+.btn--primary.btn--disabled {
+  background-color: var(--color-background-disabled);
+  color: var(--color-foreground-on-disabled);
+}
+
+.btn--secondary.btn--disabled {
+  color: var(--color-foreground-disabled);
+  border-color: var(--color-border-subtle);
+}
+
+.btn--ghost.btn--disabled {
+  color: var(--color-foreground-disabled);
 }
 
 /* --- Loading --- */
@@ -102,22 +117,13 @@
   pointer-events: none;
 }
 
+/* opacity em vez de visibility: hidden, que tiraria o rótulo da árvore de
+   acessibilidade e deixaria o botão sem nome (axe button-name) */
 .btn__content--hidden {
-  visibility: hidden;
+  opacity: 0;
 }
 
+/* O Spinner herda a cor do texto da variante (currentColor) */
 .btn__spinner {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  border: var(--border-width-thick) solid currentColor;
-  border-top-color: transparent;
-  border-radius: var(--radius-full);
-  animation: spin var(--motion-duration-medium-3) var(--motion-easing-linear) infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }

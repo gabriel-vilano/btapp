@@ -1,0 +1,117 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list--divided > .list-item + .list-item {
+  border-top: var(--border-width-medium) solid var(--color-border-subtle);
+}
+
+.list-item {
+  display: block;
+}
+
+/* --- Linha: leading · conteúdo · trailing --- */
+
+.list-item__row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-150);
+  width: 100%;
+  min-height: var(--dimension-tap-target-minimum);
+  padding: var(--spacing-150) var(--spacing-page-margin);
+  color: var(--color-foreground-primary);
+}
+
+/* Reset de <a> e <button>: a linha inteira é o alvo, com a cara da versão estática */
+.list-item__row--interactive {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.list-item__row--interactive::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-state-layer-neutral);
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .list-item__row--interactive:hover::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.list-item__row--interactive:active::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+/* Outline para dentro: a linha encosta nas vizinhas e nas bordas da tela,
+   e um anel para fora seria cortado por elas */
+.list-item__row--interactive:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: calc(var(--border-width-thick) * -1);
+}
+
+.list-item__row--interactive:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* --- Slots --- */
+
+/* Coluna mínima do avatar de 40px: com ícone (24px) ou avatar, os títulos
+   de uma mesma lista começam na mesma linha vertical */
+.list-item__leading {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--dimension-avatar-40);
+  color: var(--color-foreground-secondary);
+}
+
+.list-item__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--spacing-25);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.list-item__title {
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.list-item__supporting {
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-secondary);
+}
+
+.list-item__trailing {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--spacing-100);
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground-secondary);
+}

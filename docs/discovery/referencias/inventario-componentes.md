@@ -12,7 +12,9 @@ Consolida os componentes que as 7 superfícies pedem, com o tier da estratégia 
 - `master`: `src/components/ui/` (Alert, Button, ButtonLink, FormInput, Icon, TextLink, Toast), `src/components/auth/` (AuthFormContainer, AuthFormHeader, AvatarUpload, OtpInput, PasswordChecklist, ResendTimer), `src/components/icons/Logo`.
 - Branch `feature/feed-cards` (ainda não mergeada): `src/components/feed/` (Avatar e AvatarStack, CardShell, CardHeader, CardFooter, ScoreBlock, MetaInfo, CompetitionBlock, RankingBlock, MatchVsBlock, CheerBar, H2HButton, ProfileMiniCard e os cards ActivityCard, ResultCard, MatchCard, EnrollmentCard, FriendshipCard, RankingCard). Têm story: CardHeader, CompetitionBlock, MatchVsBlock, ProfileMiniCard. Nenhum tem MDX.
 
-**Superfícies:** R = Ranking · F = Feed · P = Perfil · H = Head-to-head · S = Registro de placar · D = Descoberta · N = Navegação.
+**Superfícies:** R = Ranking · F = Feed · P = Perfil · H = Head-to-head · S = Registro de placar · D = Descoberta · N = Navegação · A = Agenda (aba "Jogos", `DOMAIN.md` §4) · M = Marcação de jogos (`SCHEDULING.md`).
+
+A e M entraram depois, na auditoria do design system (26/09/2026), junto com os três componentes marcados com ⭐, que a pesquisa das 7 superfícies não tinha levantado.
 
 ---
 
@@ -24,10 +26,10 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | --- | --- | --- |
 | **Badge / Tag** | R, F, P, H, S, D (6) | Parcial: estilos locais no `ResultCard` (`.label`) e no `RankingBlock` (`.badge`) |
 | **Avatar** | R, F, P, H, S, D, N (7) | Sim, mas mora em `feed/`, não em `ui/` |
-| **Tabs / SegmentedControl** | R, P, H, D (4) | Não |
+| **Tabs / SegmentedControl** | R, P, H, D (4) | Sim (`ui/Tabs` e `ui/SegmentedControl`) |
 | **Chip** (filtro e seleção) | R, P, S, D (4) | Não |
 | **DeltaIndicator** (▲ 2, ▼ 3, –) | R, F, P, H (4) | Parcial: `.delta` local no `RankingBlock` |
-| **EmptyState** | R, F, H, D, N (5) | Não |
+| **EmptyState** | R, F, H, D, N (5) | Sim (`ui/EmptyState`) |
 | **StatTile** | F, P, H, R (4) | Não |
 
 ---
@@ -40,38 +42,42 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 | **IconButton** | N, D, P, S | Não | Botão só com ícone e `aria-label` obrigatório: sino, busca, fechar folha, compartilhar, favoritar competição |
 | **Icon** | todas | Sim | — |
 | **TextLink** | todas | Sim | — |
-| **FormInput** | S, D | Sim | Variante numérica (`inputmode="numeric"`) se a entrada de placar usar campo; variante de busca (ver SearchField) |
+| **FormInput** | S, D | Sim (`text`, `email`, `password`, `tel`, `search` com lupa, `datetime-local`) | Variante numérica (`inputmode="numeric"`) se a entrada de placar usar campo. Limpar e carregando da busca ficam no SearchField |
 | **SearchField** | D, N | Não | Campo com ícone de lupa, limpar e estado de carregando. Pode ser variante do FormInput |
 | **Alert** | S, D | Sim (`attention`, `success`, `information`) | — |
 | **Toast** | S | Sim | — |
 | **Avatar / AvatarStack** | todas | Sim, em `feed/` (tamanhos 32, 40, 48) | Mover para `ui/` (é Tier 1). Fallback com iniciais. Tamanhos maiores para cabeçalho de perfil (64 ou 96) |
 | **Badge / Tag** | R, F, P, H, S, D | Parcial (estilos locais) | Primitivo com tons (`success`, `attention`, `accent`, `neutral`) para VITÓRIA/DERROTA/W.O., marco (Líder, Finals), categoria (B, C), status de competição (Inscrições abertas, Adiado), "Aguardando confirmação" |
 | **CountBadge** | N, F | Não | Ponto ou número sobre ícone (aba, sino). Nome acessível com a contagem |
-| **DeltaIndicator** | R, F, P, H | Parcial (`.delta` no `RankingBlock`) | Seta + número + cor, com "manteve" (–). Nunca só cor (WCAG 1.4.1) |
+| **DeltaIndicator** | R, F, P, H | Sim (`ui/DeltaIndicator`; subiu, caiu e manteve; usado pelo `RankingBlock`) | Nada para as superfícies. Seta + texto + cor, nunca só cor (WCAG 1.4.1). Talvez variante compacta só com o número (▲ 2) para a coluna do RankingRow |
 | **Chip** | R, P, S, D | Não | Três usos: filtro liga/desliga (`aria-pressed`), filtro ativo removível (×), seleção única em grupo (radio). Decidir se é um componente com variantes ou três |
-| **SegmentedControl** | R, P, H, D | Não | 2 a 4 opções. Semântica de radio group ou de Tabs, conforme troque conteúdo ou filtro |
-| **Tabs** (na página) | R, P | Não | Padrão APG Tabs, setas, `aria-selected`. Não confundir com a TabBar de navegação |
+| **SegmentedControl** | R, P, H, D | Sim (`ui/SegmentedControl`; grupo de rádio, selecionado em grafite) | Nada para as superfícies. 2 a 4 opções que mudam o recorte do mesmo conteúdo. Quando cada opção troca um painel, é Tabs |
+| **Tabs** (na página) | R, P | Sim (`ui/Tabs`; APG Tabs com ativação automática, indicador grafite) | Nada para as superfícies. Não confundir com a TabBar de navegação |
 | **Stepper** | S | Não | Padrão APG Spinbutton. Só se o registro de placar seguir o caminho B |
 | **ProgressBar** | R, P | Não | Trilha até a linha das Finals ou até a promoção de categoria. `role="progressbar"` com valor textual |
-| **Skeleton** | R, F, P, D | Não (os tokens `--color-loading-*` existem) | Estado de carregamento de lista e card |
+| **Skeleton** | R, F, P, D | Sim (`ui/Skeleton`: `text`, `circle`, `rect`; pulso com os tokens `--color-loading-*`) | Nada para as superfícies. Cada tela monta a silhueta do próprio conteúdo |
+| **Spinner** | S, todas | Sim (`ui/Spinner`: `xs`, `sm`, `md`, `lg`; usado pelo Button em loading) | — |
 | **Divider** | R, P, D | Não | Separador simples. Base para o ZoneDivider (Tier 3) |
 | **BottomSheet / Dialog** | D, S | Não | Padrão APG Dialog (Modal): foco preso, `Esc`, foco volta. Base da folha de filtros e da contestação |
 | **TabBar** | N | Não | Navegação principal: `<nav>` com links e `aria-current="page"`, CountBadge, safe area do iOS. Uma instância, mas é casca do app inteiro |
 | **AppHeader** | N, todas | Não | Título, voltar, ações (IconButton). `AuthFormHeader` resolve só o caso de auth |
 | **FAB** | N, F | Não | Só se a navegação seguir o caminho C |
+| **ListItem** ⭐ | A, M, F, R, N | Sim (`ui/ListItem`, com o `List`; navegável, acionável ou estático) | Nada para as superfícies. Slot à esquerda (avatar ou ícone), título, texto de apoio, slot à direita (Badge, valor, chevron ou ação). Base do item da agenda, das pendências do feed, do RankingRow e das configurações |
+| **Checkbox** ⭐ | M, P | Sim (`ui/Checkbox`) | Caixa desmarcada por padrão com o texto da finalidade ao lado. Primeiro uso: consentimento do telefone para o WhatsApp (`SCHEDULING.md` M21, LGPD) |
 
 ## Tier 2 — Compostos com estados ocultos
 
 | Componente | Superfícies | Existe? | Estados que justificam o tier |
 | --- | --- | --- | --- |
-| **EmptyState** | R, F, H, D, N | Não | Sem amigos, sem ranking, sem confronto, sem resultado de filtro. Título + apoio + CTA, com variante "e conteúdo sugerido abaixo" |
+| **EmptyState** | R, F, H, D, N | Sim (`ui/EmptyState`: ícone opcional, título, apoio e uma ação) | Sem amigos, sem ranking, sem confronto, sem resultado de filtro. A variante "e conteúdo sugerido abaixo" é composição da tela: o conteúdo vem depois do `EmptyState` |
 | **ScoreInput** | S | Não | Set completo, incompleto, inválido (7 × 7), tiebreak, super tiebreak, W.O., desistência. É o componente de maior risco técnico das 7 superfícies |
 | **PendingResultCard** | S, F | Não | Aguardando você, aguardando adversário, confirmado, contestado, confirmado automaticamente por prazo |
-| **StatusTimeline** | S | Não | Lançado → aguardando → confirmado / contestado. Útil se a confirmação ganhar tela própria |
+| **StatusTimeline** | S, M | Sim (`ui/StatusTimeline`: quem, o quê e quando, em ordem cronológica; marcador neutro) | Um evento só, histórico longo, evento do sistema (sem autor), ato de admin com o papel. Usos: histórico da marcação (`SCHEDULING.md` M16, M17) e do resultado (lançado, contestado, arbitrado, corrigido) |
 | **FilterSheet** | D, R | Não | Filtros ativos, contagem de resultados, zero resultados, limpar por seção. Compõe BottomSheet + Chip |
 | **SidePicker** (jogadores e duplas) | S, H | Não | Buscar jogador, jogador sem conta, trocar de lado, dupla incompleta |
 | **EvolutionChart** | P, R | Não | Poucos pontos (1 ou 2 partidas), período sem dados, faixa de referência ligada ou não. Alternativa textual obrigatória |
 | **CelebrationScreen** | R, F | Não | Subiu, marco (Líder, Top 10, Finals), promoção de categoria. Nenhuma referência tem estado de queda |
+| **ScheduleOptionPicker** ⭐ | M | Sim (`agenda/ScheduleOptionPicker`) | As 2 ou 3 opções de horário de uma proposta como cartões de escolha única: o jogador escolhe e confirma num botão que diz a escolha, ou toca em "Nenhum serve" (`SCHEDULING.md` M5, M9, M11). Estados: nenhuma escolhida, escolhida, opção que já passou (M12), todas passaram, confirmando. A proposta aguardando o outro lado é só leitura e não usa o componente |
 
 ## Tier 3 — Blocos reutilizáveis de feature
 

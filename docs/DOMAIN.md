@@ -24,6 +24,11 @@ As decisões foram tomadas pelo Gabriel em 26/09/2026 e estão registradas como 
 | **DEC-FIM** | Issue da spec de domínio, comentário "Respostas do Gabriel às P14–P19" | Confrontos do torneio, formato por competição, amistoso pendente sem prazo, idade sem data de nascimento, fechamento da rodada, confirmação das leituras do agente e cancelamento do amistoso pendente. Substitui a DEC-RESP no formato, que passa a ser da competição |
 | **DEC-CARDS** | Issue do diagnóstico dos cards do feed, respostas às perguntas D1–D7 | H2H no card e na página, confronto definido no ranking, nome da categoria, textos neutros |
 | **DEC-FEED** | Issue da spec do feed com dados reais, comentário "Princípio do feed" | Feed público mostra conquistas e crescimento; evento com visibilidade |
+| **DEC-STB** | Issue da pontuação e do placar da partida, comentário "Decisão do Gabriel" | Super tiebreak pela regra da ITF em todos os rankings: 10 pontos com 2 de vantagem |
+| **DEC-DESEMP** | Issue da classificação e do desempate, comentário "Decisão do Gabriel" | Leituras da R37: W.O. no confronto direto e nas vitórias, mais de um jogo entre as duplas, confronto direto só no empate de duas |
+| **DEC-RANK** | Issue da spec do ranking com filtros, comentário "Decisões do Gabriel" (27/09/2026) | A queda aparece na tabela de classificação, e a R22 vale só para o feed e as notificações |
+| **DEC-SORT-BORDA** | Issue do sorteio da rodada, comentário "Decisões do Gabriel sobre os casos de borda do sorteio" (27/09/2026) | A partida cancelada não conta como confronto feito na R30; com menos adversários que jogos na rodada, cada dupla enfrenta cada outra uma vez e a rodada tem menos jogos |
+| **ITF** | [Rules of Beach Tennis 2025](https://www.itftennis.com/media/13855/rules-of-beach-tennis-2025.pdf), da ITF | Regra do super tiebreak |
 | **PESQ-RV** | Regras públicas do Rankin e do Vila do Tênis (BH), que usam o LetzPlay legado com a mesma configuração: `letzplay.me/rankin/rankings/55513/about`, `letzplay.me/vila-tenis-bt/rankings/56068/about`, `viladotenis.com/area-do-atleta` | Referências reais de jogos por rodada, prazo para combinar a data, regra de desistência, regra de W.O. por oferta de datas |
 | **DSC** | `docs/DISCOVERY.md` e `docs/discovery/` | Evidência de mercado citada nas regras e nas perguntas |
 
@@ -254,8 +259,10 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
   - **1 set de 6:** no 5/5, vai a 7; no 6/6, tie-break a 7. Placares válidos: 6/0 a 6/4, 7/5 e 7/6.
   - **2 sets de 6:** cada set segue a regra do set de 6, e no 1 set a 1 a partida se decide no super tiebreak.
 
+  **Super tiebreak, pela regra da ITF, em todos os rankings:** vence quem chega a 10 pontos com 2 de vantagem. No 9/9, segue até alguém abrir 2. Placares válidos: 10/0 a 10/8, 11/9, 12/10 e assim por diante; 10/9 e 13/10 não valem. [DEC-STB, ITF]
+
   O app usa o formato para **validar o placar digitado** e para **completar o placar na desistência** (R11). [DEC-RESP, DEC-FIM P15, P18]
-- **R30. O sorteio é aleatório e não repete confronto na temporada.** O confronto só se repete quando não sobra combinação nova na categoria. [DEC-RESP, DEC-SORT]
+- **R30. O sorteio é aleatório e não repete confronto na temporada.** O confronto só se repete quando não sobra combinação nova na categoria. **A partida cancelada (cancelamento ou anulação) não conta como confronto feito:** o jogo não aconteceu, e as duas duplas podem ser sorteadas de novo. Mesmo assim, o mesmo confronto não sai duas vezes na mesma rodada: com menos adversários que jogos na rodada, cada dupla enfrenta cada outra uma vez, e a rodada fica com menos jogos. [DEC-RESP, DEC-SORT, DEC-SORT-BORDA]
 - **R31. No MVP, o app não gera a chave do torneio.** O torneio tem inscrição, confronto e resultado lançado pelo admin (R38), e a chave vem de fora do app. O único sorteio feito no app é o da rodada do ranking. No primeiro beta, os confrontos do torneio entram por carga do time; quando entrar o primeiro torneio real, o admin passa a cadastrá-los. [DEC-RESP, DEC-FIM P14]
 - **R32. No primeiro beta, as inscrições entram por carga do time** (Rankin e Vila), a partir da lista do organizador. [DEC-RESP]
 - **R33. A idade da categoria conta pelo ano de nascimento.** "40+" admite quem faz 40 anos no ano da temporada, como na CBT. O jogador pode informar a data de nascimento no perfil (opcional), e o app a usa para validar a idade na inscrição. Sem a data, o jogador pode entrar numa categoria com idade no primeiro beta, e o organizador garante a elegibilidade, porque as inscrições vêm da lista dele (R32). Rever quando a inscrição tiver fluxo no app. [DEC-RESP, DEC-FIM P17]
@@ -283,6 +290,11 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
 - **R36. W.O. duplo vale 0 e 0** e não conta como jogo nem no H2H. Só o admin aplica, numa partida não realizada (R40). [DEC-RESP P3]
 - **R37. Desempate, nesta ordem:** pontos → confronto direto (só quando exatamente duas unidades empatam e já se enfrentaram) → vitórias → saldo de games → decisão do admin. A lista é fixa no MVP. [DEC-RESP P4]
 
+  Como cada critério se lê: [DEC-DESEMP]
+  - **O W.O. não vale como confronto direto** (como no H2H, R19), **mas conta no critério "vitórias"**.
+  - **Com mais de um jogo entre as duas unidades, o confronto direto vai para quem venceu mais.** No empate (ex.: 1 a 1), a decisão passa para "vitórias".
+  - **O confronto direto só vale no empate em pontos entre exatamente duas unidades.** Um empate de três que se reduz a duas por outro critério não volta ao confronto direto: segue na ordem da lista.
+
 ### Ciclo do resultado
 
 - **R13. No ranking, qualquer jogador da partida lança o resultado, e qualquer jogador do lado adversário confirma ou contesta.** Em duplas, qualquer um dos 4 lança, e responde qualquer um dos 2 adversários: vale a primeira resposta. [DEC-DOM, DEC-RESP P2]
@@ -303,7 +315,7 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
 ### Troca de parceiro
 
 - **R17. No MVP, trocar de parceiro cria uma dupla nova, que começa do zero.** Na vida real a regra varia por ranking. Por isso o ranking já nasce com um campo de **política de troca**, mas o único valor que funciona no MVP é "nova dupla". [DEC-DOM]
-- **R45. A inscrição da dupla antiga fica congelada na tabela, encerrada e sem direito à final.** As partidas pendentes dela vão para o admin, como a partida não realizada (R40). Se o jogador volta ao parceiro antigo na mesma temporada, retoma a inscrição antiga. [DEC-RESP P7]
+- **R45. A inscrição da dupla antiga fica congelada na tabela, encerrada e sem direito à final.** As partidas pendentes dela vão para o admin, como a partida não realizada (R40). Se o jogador volta ao parceiro antigo na mesma temporada, retoma a inscrição antiga. Depois do encerramento, a inscrição não gera mais evento de movimentação no ranking (R24): a tabela continua mostrando a inscrição, mas o feed deixa de falar de uma dupla desfeita. [DEC-RESP P7; decisão do Gabriel na ENG-48]
 
 ### Contagens e H2H
 
@@ -314,13 +326,13 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
 
 - **R20. O feed público mostra conquistas e crescimento.** [DEC-FEED]
 - **R21. Todo evento do feed tem visibilidade: público ou privado.** [DEC-FEED]
-- **R22. "Caiu no ranking" é privado:** só o próprio jogador vê, como informação, e não vira publicação para os amigos. Em duplas, os dois jogadores da dupla veem. [DEC-FEED; a extensão para a dupla é derivação da R1]
+- **R22. "Caiu no ranking" não vira publicação:** no feed, só o próprio jogador vê (em duplas, os dois da dupla), e ninguém é notificado da queda de outro. Na tabela de classificação, o delta aparece em todas as linhas, nos dois sentidos (`docs/RANKING.md`, RK12). [DEC-FEED, DEC-RANK; a extensão para a dupla é derivação da R1]
 - **R23. A situação "dentro ou fora da final" aparece só na tela de ranking**, como uma linha de corte na tabela. Não existe badge de "zona", que poderia sumir na rodada seguinte. [DEC-FINAL]
 - **R24. Eventos automáticos do feed:** resultado confirmado (ranking, torneio e amistoso), confronto definido, inscrição, amizade aceita, movimentação no ranking (subiu é público, caiu é privado), marco e classificação para a final. Variação zero de posição não gera evento. Pendências (resultado a lançar ou a responder, proposta a aceitar) não são eventos: moram na agenda do jogador (seção 4). [DEC-FEED, DEC-FINAL, DEC-JOGOS; `FEED_CARDS.md` §1 e §8.6]
 - **R25. Marcos são eventos permanentes de primeira vez.** Nada no feed pode ser desmentido na rodada seguinte, nem por uma correção de placar (R41). Quais marcos existem e em que escopo estão na R47. [DEC-FINAL, DEC-FEED]
 - **R26. Textos do feed são neutros em gênero** ("agora são amigos", "Liderança"), porque o cadastro não coleta gênero. [DEC-CARDS D7]
 - **R46. A tabela atualiza ao vivo; o evento "subiu N" compara o fim da rodada com o fim da anterior.** A tela de ranking reflete cada confirmação, e a posição de cada inscrição no fim de cada rodada fica guardada para a comparação. **A rodada fecha no prazo dela:** o que o admin decidir depois (R40) entra na comparação da rodada seguinte, e o feed não espera a fila do admin. [DEC-RESP P8, DEC-FIM P19]
-- **R47. Os marcos são Líder e Top N, contados pela primeira vez em cada temporada.** N é a quantidade de classificados da final, ou 10 quando a temporada não tem final. Se os dois acontecem na mesma rodada, sai um evento só, o de Líder. Como a classificação é da dupla (R1), o marco é da dupla, e o card precisa mostrar os dois jogadores. [DEC-RESP P9]
+- **R47. Os marcos são Líder e Top N, contados pela primeira vez em cada temporada.** N é a quantidade de classificados da final, ou 10 quando a temporada não tem final. Se os dois acontecem na mesma rodada, sai um evento só, o de Líder. Do mesmo jeito, o marco substitui o "subiu" da mesma inscrição na mesma rodada: o card de marco já mostra a posição e quanto subiu. Em rodada sem marco, o "subiu" sai normalmente. Como a classificação é da dupla (R1), o marco é da dupla, e o card precisa mostrar os dois jogadores. [DEC-RESP P9; o marco no lugar do "subiu": decisão do Gabriel na ENG-48]
 
 ### Final da temporada
 

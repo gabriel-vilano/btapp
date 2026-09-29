@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar } from "@/src/components/feed/Avatar";
+import { Avatar } from "@/src/components/ui/Avatar";
 import type { PlayerInfo } from "@/src/types/feed";
 import styles from "./ProfileMiniCard.module.css";
 

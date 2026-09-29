@@ -32,12 +32,16 @@ src/components/
 
 ### Regras fundamentais
 
-- **Primitivos nunca são usados diretamente em componentes.** Componentes sempre referenciam tokens semânticos.
-- **Tokens semânticos apontam para primitivos.** Nunca para valores brutos.
+- **Cor e tipografia são sempre semânticas nos componentes.** Nenhum componente usa paleta (`--color-coral-500`) nem `--font-size-*`/`--line-height-*` direto: usa `--color-background-*`, `--color-foreground-*`, `--color-border-*` e `--text-*`.
+- **Escalas podem ser usadas direto.** `--spacing-*`, `--radius-*`, `--dimension-*`, `--motion-*`, `--border-width-*` e `--font-weight-*` não têm camada semântica e vão direto no componente. Um token semântico de escala só nasce quando o mesmo valor carrega uma intenção repetida (ex.: `--radius-card`, `--radius-form-input`).
+- **Tokens semânticos apontam para primitivos.** Nunca para valores brutos. Todo semântico mora em `semantic.css`.
 - **CSS Modules para tudo que é componente.** Nenhum estilo de componente em arquivos globais.
 - **BEM dentro dos `.module.css`.** Nomenclatura: `.card__header`, `.btn--primary`.
 - **State layers via `::after`.** Hover, press e focus são camadas semitransparentes sobrepostas — não variações de cor calculadas por componente.
-- **`:focus-visible` obrigatório.** Nunca remover outline sem substituir com `:focus-visible`.
+- **`:focus-visible` obrigatório.** Nunca remover outline sem substituir com `:focus-visible`. Nenhum componente remove o outline em `:focus`: campos de texto indicam foco pela borda `--color-border-strong` **e** pelo ring de `:focus-visible` (ver "Acessibilidade — foco").
+- **Área tocável de 48px em todo botão**, inclusive o só de ícone (ver "Acessibilidade — tap target").
+- **Seleção em grafite, ação em coral.** O que está selecionado ou marcado usa `--color-background-inverse` com `--color-foreground-on-inverse` (Chip selecionado, Checkbox marcado). O coral (`--color-background-accent`) fica para ação (botão, link) e não compete com o botão principal. Selecionado e desabilitado segue o preenchido desabilitado do Button primary (`--color-background-disabled` com `--color-foreground-on-disabled`).
+- **Desabilitado mantém a forma.** Só o que já é preenchido (Button primary, item selecionado) fica com fundo `--color-background-disabled`. O que não tem fundo continua sem fundo: borda `--color-border-subtle` e texto `--color-foreground-disabled` (Button secondary, Chip e Checkbox não selecionados), ou só o texto (Button ghost).
 
 ---
 
@@ -45,13 +49,13 @@ src/components/
 
 Arquivo: `styles/tokens/primitives.css`
 
-Valores brutos sem semântica. Nunca usar diretamente em componentes.
+Valores brutos sem semântica. Paleta de cores e tamanhos de fonte nunca vão direto em componentes; as escalas (espaçamento, radius, dimensões, motion, border width e pesos) podem ir (ver "Regras fundamentais").
 
 ### Família tipográfica
 
-| Token         | Valor                            |
-| ------------- | -------------------------------- |
-| `--font-sans` | `"Arimo", system-ui, sans-serif` |
+| Token         | Valor                                      |
+| ------------- | ------------------------------------------ |
+| `--font-sans` | `var(--font-arimo), system-ui, sans-serif` |
 
 Fonte: Arimo (Google Fonts), variável 400–700. Carregada via `next/font` no `layout.tsx`.
 Variável CSS injetada pelo Next.js: `--font-arimo`.
@@ -142,6 +146,11 @@ Valores absolutos (não relativos) para ritmo vertical consistente independente 
 | `--dimension-icon-md`            | 24px  | padrão                     |
 | `--dimension-icon-lg`            | 32px  |                            |
 | `--dimension-icon-xl`            | 64px  |                            |
+| `--dimension-avatar-32`          | 32px  | avatar pequeno (stack)     |
+| `--dimension-avatar-40`          | 40px  | avatar do header de card   |
+| `--dimension-avatar-48`          | 48px  | avatar grande, logo        |
+| `--dimension-avatar-96`          | 96px  | avatar de perfil / upload  |
+| `--dimension-layout-max`         | 430px | largura máxima do conteúdo |
 
 ### Border radius
 
@@ -153,9 +162,6 @@ Valores absolutos (não relativos) para ritmo vertical consistente independente 
 | `--radius-lg`         | 16px               | cards                   |
 | `--radius-xl`         | 24px               | modais, bottom sheets   |
 | `--radius-full`       | 9999px             | pill, avatar            |
-| `--radius-form-input` | `var(--radius-md)` | inputs de formulário    |
-| `--radius-card`       | `var(--radius-lg)` | cards                   |
-| `--radius-popover`    | `var(--radius-lg)` | popovers                |
 
 ### Border width
 
@@ -180,6 +186,16 @@ Valores absolutos (não relativos) para ritmo vertical consistente independente 
 | `--opacity-100` | 0.08  |
 | `--opacity-150` | 0.12  |
 | `--opacity-200` | 0.16  |
+| `--opacity-250` | 0.2   |
+
+### Camadas (z-index)
+
+| Token         | Valor | Uso                          |
+| ------------- | ----- | ---------------------------- |
+| `--z-base`    | 0     | conteúdo da página           |
+| `--z-sticky`  | 100   | headers e barras fixas       |
+| `--z-overlay` | 500   | scrim, modais, bottom sheets |
+| `--z-toast`   | 1000  | toasts, sempre acima de tudo |
 
 ### Motion — durações
 
@@ -228,6 +244,7 @@ Escala de 8 stops por família. 100 = mais claro, 800 = mais escuro.
 | --------------------- | ------- |
 | `--color-neutral-100` | #ffffff |
 | `--color-neutral-200` | #f7f7f7 |
+| `--color-neutral-250` | #ededed |
 | `--color-neutral-300` | #e5e5e5 |
 | `--color-neutral-400` | #c7c7c7 |
 | `--color-neutral-500` | #8f8f8f |
@@ -247,6 +264,8 @@ Escala de 8 stops por família. 100 = mais claro, 800 = mais escuro.
 | `--color-coral-600` | #d03706                 |
 | `--color-coral-700` | #5e1d08                 |
 | `--color-coral-800` | #2f0e04                 |
+
+**Coral de ação × coral de marca.** O coral-500 (`#f3511b`) dá 3,50:1 com o branco e não passa no contraste AA de texto (4,5:1, WCAG 1.4.3). Por isso a **cor de ação** (texto e fundo de botão, link de ação, destaque em texto) é o **coral-600** (`#d03706`): 4,96:1 com o branco, 4,63:1 sobre `--color-background-secondary` e 4,70:1 sobre o coral-100. O coral-500 fica como **cor de marca** (`--color-brand`) e para usos que não são texto (logo, ilustração, barra de progresso como a do CheerBar), onde o mínimo é 3:1 (WCAG 1.4.11). Os tokens `--color-background-accent`, `--color-foreground-accent` e `--color-border-accent` apontam para o coral-600. A borda não é texto e passaria com o 500, mas fica no 600 para o botão secondary ter borda e texto no mesmo tom.
 
 **Kiwi — success**
 
@@ -283,6 +302,7 @@ Escala de 8 stops por família. 100 = mais claro, 800 = mais escuro.
 | `--color-blue-300` | #84b4fb |
 | `--color-blue-400` | #4d93fc |
 | `--color-blue-500` | #0968f6 |
+| `--color-blue-550` | #005fcc |
 | `--color-blue-600` | #0049b8 |
 | `--color-blue-650` | #003aa5 |
 | `--color-blue-700` | #002a69 |
@@ -376,7 +396,7 @@ Cada escala define apenas **size + line-height + tracking**. **O peso é desacop
 Só existem hoje as variantes com consumidor real ou mapeadas para telas próximas do roadmap. Quando surgir caso de uso para:
 
 - **`body-sm`**: texto muito pequeno de prose (raro, talvez desnecessário).
-- **`label-sm`** (10px, possivelmente com tracking positivo): quando o primeiro badge/pill/status for construído. Neste ponto decidir se volta a chamar `signal`, se fica `label-sm`, ou se vira um role `overline`.
+- **`label-sm`** (10px, possivelmente com tracking positivo): **continua sem existir.** Decidido no primeiro Badge: badges, pills e status usam `label-md` (12px) em negrito. 12px é o menor texto do app, e 10px ao sol de uma quadra é arriscado. Reabrir só se um contador de aba (CountBadge) não couber em `label-md`.
 - **`label-lg-caps`** (com tracking positivo para maiúsculas): eyebrows, category labels.
 
 Adicionar uma variante é trivial: estender a tabela em `semantic.css` e documentar aqui.
@@ -391,7 +411,7 @@ Adicionar uma variante é trivial: estender a tabela em `semantic.css` e documen
 | `--color-background-elevated`         | `--color-neutral-100` | modais, cards elevados                     |
 | `--color-background-inverse`          | `--color-neutral-700` | fundo escuro                               |
 | `--color-background-strong`           | `--color-neutral-800` | fundo muito escuro                         |
-| `--color-background-accent`           | `--color-coral-500`   | coral — ação principal                     |
+| `--color-background-accent`           | `--color-coral-600`   | coral — ação principal                     |
 | `--color-background-attention`        | `--color-red-600`     | erro, destructive                          |
 | `--color-background-success`          | `--color-kiwi-600`    | confirmação                                |
 | `--color-background-disabled`         | `--color-neutral-400` | desabilitado                               |
@@ -407,7 +427,7 @@ Adicionar uma variante é trivial: estender a tabela em `semantic.css` e documen
 | `--color-foreground-primary`      | `--color-neutral-800` | texto principal                 |
 | `--color-foreground-secondary`    | `--color-neutral-600` | texto secundário, metadata      |
 | `--color-foreground-disabled`     | `--color-neutral-400` | texto desabilitado              |
-| `--color-foreground-accent`       | `--color-coral-500`   | destaques, links de ação        |
+| `--color-foreground-accent`       | `--color-coral-600`   | destaques, links de ação        |
 | `--color-foreground-attention`    | `--color-red-600`     | erros, alertas                  |
 | `--color-foreground-success`      | `--color-kiwi-600`    | confirmações                    |
 | `--color-foreground-on-accent`    | `--color-neutral-100` | texto branco sobre coral        |
@@ -420,39 +440,33 @@ Adicionar uma variante é trivial: estender a tabela em `semantic.css` e documen
 
 ### Cores — border
 
-| Token                         | Primitivo             | Uso                      |
-| ----------------------------- | --------------------- | ------------------------ |
-| `--color-border-subtle`       | `--color-neutral-300` | separadores leves        |
-| `--color-border-medium`       | `--color-neutral-500` | bordas padrão de inputs  |
-| `--color-border-strong`       | `--color-neutral-700` | bordas com ênfase        |
-| `--color-border-inverse`      | `--color-neutral-100` | borda sobre fundo escuro |
-| `--color-border-accent`       | `--color-coral-500`   | input em foco            |
-| `--color-border-attention`    | `--color-red-600`     | input inválido           |
-| `--color-border-success`      | `--color-kiwi-600`    | input válido             |
-| `--color-border-disabled`     | `--color-neutral-400` | input desabilitado       |
-| `--color-border-on-accent`    | `--color-neutral-100` |                          |
-| `--color-border-on-attention` | `--color-neutral-100` |                          |
-| `--color-border-on-success`   | `--color-neutral-100` |                          |
-| `--color-border-on-disabled`  | `--color-neutral-100` |                          |
-| `--color-border-on-inverse`   | `--color-neutral-100` |                          |
+| Token                      | Primitivo             | Uso                     |
+| -------------------------- | --------------------- | ----------------------- |
+| `--color-border-subtle`    | `--color-neutral-300` | separadores leves       |
+| `--color-border-medium`    | `--color-neutral-500` | bordas padrão de inputs |
+| `--color-border-strong`    | `--color-neutral-700` | bordas com ênfase       |
+| `--color-border-accent`    | `--color-coral-600`   | input em foco           |
+| `--color-border-attention` | `--color-red-600`     | input inválido          |
+| `--color-border-success`   | `--color-kiwi-600`    | input válido            |
 
 ### State layers
 
 Camadas de interação aplicadas via `::after` como overlay semitransparente.
 Funcionam em qualquer cor de fundo sem calcular variações por componente.
 
-| Token                                    | Valor                    | Uso                            |
-| ---------------------------------------- | ------------------------ | ------------------------------ |
-| `--color-state-layer-neutral`            | `rgba(0,0,0,0)`          | repouso — transparente         |
-| `--color-state-layer-hover`              | `rgba(0,0,0,0.04)`       | hover                          |
-| `--color-state-layer-focus`              | `rgba(0,0,0,0.04)`       | foco de teclado                |
-| `--color-state-layer-pressed`            | `rgba(0,0,0,0.08)`       | press / active                 |
-| `--color-state-layer-selected`           | `rgba(0,0,0,0.12)`       | item selecionado               |
-| `--color-state-layer-hover-on-strong`    | `rgba(255,255,255,0.12)` | hover sobre fundo escuro       |
-| `--color-state-layer-focus-on-strong`    | `rgba(255,255,255,0.12)` | foco sobre fundo escuro        |
-| `--color-state-layer-pressed-on-strong`  | `rgba(255,255,255,0.16)` | press sobre fundo escuro       |
-| `--color-state-layer-selected-on-strong` | `rgba(255,255,255,0.20)` | selecionado sobre fundo escuro |
-| `--color-state-focus-ring`               | `#005fcc`                | outline de foco por teclado    |
+| Token                                    | Valor                                  | Uso                            |
+| ---------------------------------------- | -------------------------------------- | ------------------------------ |
+| `--color-state-layer-neutral`            | `transparent`                          | repouso — transparente         |
+| `--color-state-layer-hover`              | `rgba(0,0,0,var(--opacity-50))`        | hover                          |
+| `--color-state-layer-focus`              | `rgba(0,0,0,var(--opacity-50))`        | foco de teclado                |
+| `--color-state-layer-pressed`            | `rgba(0,0,0,var(--opacity-100))`       | press / active                 |
+| `--color-state-layer-selected`           | `rgba(0,0,0,var(--opacity-150))`       | item selecionado               |
+| `--color-state-layer-hover-on-strong`    | `rgba(255,255,255,var(--opacity-150))` | hover sobre fundo escuro       |
+| `--color-state-layer-focus-on-strong`    | `rgba(255,255,255,var(--opacity-150))` | foco sobre fundo escuro        |
+| `--color-state-layer-pressed-on-strong`  | `rgba(255,255,255,var(--opacity-200))` | press sobre fundo escuro       |
+| `--color-state-layer-selected-on-strong` | `rgba(255,255,255,var(--opacity-250))` | selecionado sobre fundo escuro |
+| `--color-state-focus-ring`               | `--color-blue-550`                     | outline de foco por teclado    |
+| `--color-state-focus-ring-on-strong`     | `--color-neutral-100`                  | outline de foco sobre fundo escuro ou colorido |
 
 Padrão de implementação nos componentes:
 
@@ -493,9 +507,12 @@ Padrão de implementação nos componentes:
 | ------------------------ | --------------------- | --------------------------------- |
 | `--color-brand`          | `--color-coral-500`   | cor de marca                      |
 | `--color-scrim`          | `rgba(0,0,0,0.3)`     | overlay de modais e bottom sheets |
-| `--color-loading-fill`   | `#ededed`             | skeleton loader                   |
+| `--color-loading-fill`   | `--color-neutral-250` | skeleton loader                   |
 | `--color-loading-first`  | `--color-neutral-200` |                                   |
 | `--color-loading-second` | `--color-neutral-300` |                                   |
+| `--radius-form-input`    | `--radius-md`         | inputs de formulário              |
+| `--radius-card`          | `--radius-lg`         | cards                             |
+| `--radius-popover`       | `--radius-lg`         | popovers                          |
 
 ---
 
@@ -527,3 +544,12 @@ O consumidor pode customizar sem reescrever o componente:
 
 Todo elemento interativo deve ter área mínima tocável de `var(--dimension-tap-target-minimum)` (48px).
 Se o elemento for visualmente menor, usar `min-height` ou `padding` para expandir a área de toque.
+
+**Botão só de ícone** (mostrar senha, fechar, sino, busca) tem área de 48×48 mesmo com ícone `sm` (16px): o ícone fica centralizado e o `padding` ou um `::before` posicionado completa a área. Ícone de 16px com 4px de padding dá 24×24, que passa no mínimo da WCAG 2.5.8 (AA) mas não na regra do DS. O `aria-label` vai no `<button>`, não no `<Icon>`.
+
+### Acessibilidade — foco
+
+- **Botões, links e controles** usam o ring de foco do DS: `outline: var(--border-width-thick) solid var(--color-state-focus-ring)` em `:focus-visible`, com `:focus:not(:focus-visible) { outline: none; }` (exemplo em "State layers").
+- **Campos de texto** (FormInput, OtpInput e os que vierem) mostram o foco de duas formas: a borda muda para `--color-border-strong` em `:focus`, e o ring de `:focus-visible` aparece por cima. Nenhum campo zera o outline em `:focus`: assim o DS tem um só estilo de foco por teclado.
+- **Sobre fundo forte ou colorido** (o fechar do Toast sobre vermelho, verde ou cinza escuro), o ring usa `--color-state-focus-ring-on-strong` (branco). O azul do ring padrão fica abaixo de 3:1 sobre esses fundos (WCAG 1.4.11), como os state layers, que também têm a variante `*-on-strong`. O Button primary não precisa dela: o `outline-offset` põe o ring fora do fundo coral, sobre a superfície da página.
+- Controles internos de um componente (o botão de mostrar senha, o fechar do Toast) seguem a mesma regra dos botões. O outline padrão do navegador não é o estilo do DS.
