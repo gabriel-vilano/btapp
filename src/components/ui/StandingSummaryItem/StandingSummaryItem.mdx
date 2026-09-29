@@ -1,0 +1,148 @@
+import {
+  Meta,
+  Subtitle,
+  Canvas,
+  ArgTypes,
+} from "@storybook/addon-docs/blocks";
+import * as StandingSummaryItemStories from "./StandingSummaryItem.stories";
+
+<Meta of={StandingSummaryItemStories} />
+
+<Subtitle>
+  Sua posição numa categoria: posição, competição · categoria, parceiro e
+  variação.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/StandingSummaryItem/StandingSummaryItem.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/StandingSummaryItem/StandingSummaryItem.tsx)
+
+## Visão geral
+
+`StandingSummaryItem` resume onde a unidade competidora (a dupla, ou o jogador em simples) está numa categoria. Aparece em três lugares: em "Suas categorias", na folha do seletor de categoria (`RANKING.md`, RK6); nas categorias da página da competição (RK17); e na seção Rankings do perfil (`PROFILE.md`, PF10). É um `ListItem` com os slots já preenchidos, então vive dentro de um `List`.
+
+<Canvas of={StandingSummaryItemStories.Up} />
+
+## Anatomia
+
+Quatro partes, nos slots do `ListItem`.
+
+<table>
+  <thead>
+    <tr>
+      <th>Parte</th>
+      <th>Props</th>
+      <th>O que mostra</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Posição</td>
+      <td><code>position</code></td>
+      <td>"5º", em <code>title-sm</code> negrito, numa coluna de 2 dígitos</td>
+    </tr>
+    <tr>
+      <td>Título</td>
+      <td><code>competitionName</code>, <code>categoryName</code></td>
+      <td>"Ranking BH · Masculino B"</td>
+    </tr>
+    <tr>
+      <td>Linha de apoio</td>
+      <td><code>partnerName</code>, <code>complement</code></td>
+      <td>"com Rafael · Melhor: 3º". Some quando as duas faltam</td>
+    </tr>
+    <tr>
+      <td>Variação</td>
+      <td><code>delta</code></td>
+      <td><code>DeltaIndicator</code> contra a última foto de rodada</td>
+    </tr>
+  </tbody>
+</table>
+
+## Estados
+
+Os estados vêm do dado, não de uma prop de variante.
+
+### Subiu e caiu
+
+A variação aparece nos dois sentidos, inclusive a queda: o perfil mostra o mesmo dado que a tabela (`PROFILE.md`, PF13).
+
+<Canvas of={StandingSummaryItemStories.Down} />
+
+### Manteve
+
+Com a mesma posição da última foto, o item mostra o traço de "manteve". Na tabela a linha fica sem nada, porque uma coluna de traços é ruído; aqui a ausência confundiria com "ainda não tem variação" (`RANKING.md`, RK12).
+
+<Canvas of={StandingSummaryItemStories.Kept} />
+
+### Sem variação
+
+Na 1ª rodada ainda não há foto para comparar. Sem `delta`, o trailing fica vazio.
+
+<Canvas of={StandingSummaryItemStories.NoDelta} />
+
+### Simples
+
+Sem parceiro, a linha diz só a posição e a categoria. A posição é sempre da unidade competidora (`PROFILE.md`, PF11): em duplas, o "com Rafael" deixa claro que o 5º é da dupla.
+
+<Canvas of={StandingSummaryItemStories.Singles} />
+
+### Com complemento
+
+Quem usa o item pode acrescentar um texto no fim da linha de apoio, sem criar outra variante. O perfil usa para "Melhor: 3º" (PF14). A regra de quando mostrar é de quem usa o item.
+
+<Canvas of={StandingSummaryItemStories.WithComplement} />
+
+### Nome longo
+
+Competição, categoria e parceiro quebram linha em vez de cortar. Posição e variação não encolhem.
+
+<Canvas of={StandingSummaryItemStories.LongName} />
+
+## Comportamentos
+
+Como o `ListItem`: com `href` a linha inteira é um link (a classificação da categoria, rolada até a linha da dupla); com `onClick`, um botão (a folha do seletor, que troca a categoria e fecha).
+
+<Canvas of={StandingSummaryItemStories.Pressable} />
+
+## Quando usar
+
+- Listar as inscrições ativas de um jogador, uma linha por categoria.
+- Mostrar a posição de quem vê numa lista de categorias (página da competição).
+
+## Componentes relacionados
+
+- **[ListItem](?path=/docs/ui-listitem--docs):** a base. Use direto quando a linha não é uma posição de ranking.
+- **[DeltaIndicator](?path=/docs/ui-deltaindicator--docs):** a variação, sozinha.
+- **RankingRow:** a linha da tabela de classificação, com pontos, jogos e vitórias. O `StandingSummaryItem` é o resumo de uma categoria; o `RankingRow` é uma linha dentro dela.
+
+## Acessibilidade
+
+- O slot leading do `ListItem` sai da leitura de tela. Por isso a posição entra também no título, oculta na tela: o nome do link é "5º, Ranking BH · Masculino B com Rafael Subiu 2 posições".
+- O sentido da variação está no texto do `DeltaIndicator`, não só na cor e na seta (WCAG 1.4.1).
+- A linha interativa tem 48px de altura mínima e o ring de foco do DS, herdados do `ListItem`.
+
+## Evitar
+
+- ❌ Passar o nome completo do jogador logado como parceiro. A linha é sobre a dupla vista por esse jogador: "com Rafael", não "Lucas e Rafael".
+- ❌ Usar `complement` para dado que a tabela não mostra. O perfil mostra o mesmo dado da tabela, nem mais nem menos (PF13); "Melhor" é a exceção decidida na PF14.
+- ❌ Passar `delta` com `value: 0`. Posição igual é `direction: "none"`.
+
+## API
+
+<ArgTypes of={StandingSummaryItemStories} />
+
+## Decisões de design
+
+### Por que o parceiro não tem avatar?
+
+O rascunho do perfil mostra um avatar ao lado de "com Rafael". O menor avatar do DS é de 32px (`--dimension-avatar-32`), o dobro da altura da linha de apoio (16px): a linha passaria de cerca de 62px para 78px, e numa lista de categorias o avatar competiria com a posição. O nome basta para dizer com quem o jogador compete. Se o avatar voltar, entra com um tamanho novo do DS, não com um ajuste local.
+
+### Por que em `ui/` e não em `ranking/`?
+
+O perfil também usa o item. Pela regra do `CLAUDE.md`, componente usado por duas áreas sobe para `ui/`.
+
+## Referências
+
+- `docs/RANKING.md`, seção 9 (componentes), RK6, RK12 e RK17
+- `docs/PROFILE.md`, PF10 a PF14
+- `docs/TOKENS.md`, escala tipográfica
+- [WCAG 1.4.1 — Uso de cor](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)
