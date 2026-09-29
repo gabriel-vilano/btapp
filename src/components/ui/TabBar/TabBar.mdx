@@ -1,0 +1,96 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as TabBarStories from "./TabBar.stories";
+
+<Meta of={TabBarStories} />
+
+<Subtitle>
+  Navegação principal no mobile: as 5 abas do app no rodapé.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/TabBar/TabBar.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/TabBar/TabBar.tsx)
+
+## Visão geral
+
+`TabBar` mostra os destinos do app — Feed, Jogos, Competições, Explorar e Perfil (`docs/NAVIGATION.md` N1) — e marca onde o jogador está. Cada aba é um link com ícone e rótulo de uma palavra. Ela fica visível em todas as telas, inclusive nas de detalhe, e só some nos fluxos modais de tarefa (N4).
+
+<Canvas of={TabBarStories.Default} />
+
+## Estados
+
+A aba marcada, o avatar do Perfil e os badges mudam o que a barra mostra.
+
+### Aba atual
+
+A aba atual fica em grafite, com o ícone preenchido e o rótulo em negrito; as outras ficam em cinza. A aba marcada vem da prop `currentValue`, não da URL: numa tela de detalhe, a marcada é a aba de onde o jogador veio (N10).
+
+<Canvas of={TabBarStories.WithoutBadges} />
+
+### Perfil
+
+A aba Perfil mostra o avatar do jogador no lugar do ícone. Ativa, o avatar ganha um anel grafite. Sem foto, aparecem as iniciais.
+
+<Canvas of={TabBarStories.ProfileCurrent} />
+
+<Canvas of={TabBarStories.ProfileWithoutPhoto} />
+
+### Com badges
+
+A aba Jogos conta as pendências "Sua vez"; a aba Competições conta as pendências de admin, só para quem é admin (N3, N30). A contagem entra no nome da aba.
+
+<Canvas of={TabBarStories.LongestLabelAt393} />
+
+## Largura
+
+"Competições" é o rótulo mais longo e precisa caber inteiro, sem reticências e sem quebra (N25). A 393px, cada aba tem 78,6px, e "Competições" em negrito mede 75,4px com a Arimo: cabe, com pouca folga. A story acima mede cada rótulo contra a própria aba. A 320px, abaixo da referência, o rótulo passa alguns pixels da coluna sem encostar nos vizinhos.
+
+<Canvas of={TabBarStories.At320} />
+
+## Posição e área segura
+
+A `TabBar` não se posiciona: o layout do app a fixa no rodapé e a troca pelo [`NavigationRail`](?path=/docs/ui-navigationrail--docs) a partir de 600px (N27). Ela só cuida da área segura do iOS com `padding-bottom: env(safe-area-inset-bottom)`, que exige `viewport-fit=cover` no viewport do app (N26).
+
+## Quando usar
+
+- Uma vez por tela, no layout do app, abaixo de 600px
+- Com as abas da N1, nesta ordem. Destino novo entra dentro de uma aba existente, nunca como sexta aba
+
+## Componentes relacionados
+
+- A partir de 600px, as mesmas abas viram o [`NavigationRail`](?path=/docs/ui-navigationrail--docs), com os mesmos `items`
+- Para **trocar o conteúdo na mesma tela** (seções do perfil), use [`Tabs`](?path=/docs/ui-tabs--docs): ali o padrão é `tablist`, aqui é navegação
+- Para **filtro de poucas opções** (escopos da busca), use [`SegmentedControl`](?path=/docs/ui-segmentedcontrol--docs)
+
+## Acessibilidade
+
+- `<nav aria-label="Principal">` com uma lista de links. A aba atual tem `aria-current="page"`. **Não é** `role="tablist"`: a barra troca de rota, não de painel (`docs/NAVIGATION.md` §10.3)
+- O rótulo visível é o nome acessível. Com badge, o `aria-label` começa pelo rótulo e acrescenta a contagem: "Jogos, 2 pendências" (WCAG 2.5.3)
+- O avatar do Perfil é decorativo: a aba se chama "Perfil", não o nome do jogador
+- Cada aba tem pelo menos 48px de altura e toda a largura da coluna como área de toque
+- A aba atual não depende só da cor: o ícone preenchido e o negrito também marcam (WCAG 1.4.1)
+
+## Evitar
+
+- ❌ **Ação como aba** — registrar resultado ou amistoso não é destino (N2)
+- ❌ **Rótulo truncado ou em duas linhas** — se um rótulo não couber, ele muda, e a decisão volta ao Gabriel
+- ❌ **Badge para o que não é crítico** — só as duas contagens da N3
+- ❌ **Aba marcada pela URL** — o detalhe aberto pelo Feed mantém o Feed marcado (N10)
+
+## API
+
+<ArgTypes of={TabBarStories} />
+
+## Decisões de design
+
+**Por que `currentValue` vem de fora em vez de a TabBar ler a URL?** A mesma URL de partida pode ter vindo do Feed ou da aba Jogos, e a aba marcada é a de origem (N10). Só o layout do app sabe a origem. Sem ler a URL, a TabBar também não precisa de `"use client"` e funciona num Server Component.
+
+**Por que a TabBar não é fixa no rodapé por conta própria?** A troca pelo trilho a partir de 600px e a coluna do conteúdo são do layout. Com a posição fora, a mesma barra aparece na story, no layout e em qualquer teste sem truques de CSS.
+
+**Por que grafite e não coral na aba atual?** Seleção em grafite, ação em coral (`docs/TOKENS.md`). O coral fica para os badges, que pedem ação.
+
+## Referências
+
+- [Apple HIG — Tab bars](https://developer.apple.com/design/human-interface-guidelines/tab-bars)
+- [Material Design 3 — Navigation bar](https://m3.material.io/components/navigation-bar/overview)
+- [MDN — `aria-current`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-current)
+- [WCAG 2.5.3 — Label in Name](https://www.w3.org/WAI/WCAG21/Understanding/label-in-name.html)
+- `docs/NAVIGATION.md` (N1–N4, N10, N25–N27, §10.3) e `docs/TOKENS.md`

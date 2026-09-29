@@ -1,0 +1,31 @@
+/*
+ * O badge é só visual (aria-hidden). O leitor de tela ouve a contagem no
+ * nome acessível do link ou botão pai (badgeAccessibleName).
+ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background-color: var(--color-background-accent);
+  color: var(--color-foreground-on-accent);
+  /* Anel na cor da superfície: separa o badge do ícone que ele sobrepõe */
+  box-shadow: 0 0 0 var(--border-width-thick) var(--color-background-primary);
+}
+
+.badge--count {
+  min-width: var(--dimension-icon-sm);
+  height: var(--dimension-icon-sm);
+  padding: 0 var(--spacing-50);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.badge--dot {
+  width: var(--spacing-100);
+  height: var(--spacing-100);
+}

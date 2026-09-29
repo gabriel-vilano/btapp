@@ -1,0 +1,70 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as NavigationRailStories from "./NavigationRail.stories";
+
+<Meta of={NavigationRailStories} />
+
+<Subtitle>
+  A navegação principal a partir de 600px: as mesmas 5 abas num trilho à
+  esquerda.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/TabBar/NavigationRail.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/TabBar/NavigationRail.tsx)
+
+## Visão geral
+
+`NavigationRail` é a [`TabBar`](?path=/docs/ui-tabbar--docs) do tablet e do desktop (`docs/NAVIGATION.md` N27). Recebe os mesmos `items` e o mesmo `currentValue`, e cada aba tem a mesma anatomia: ícone ou avatar, badge e rótulo embaixo. Nenhum destino novo aparece no desktop.
+
+<Canvas of={NavigationRailStories.Default} />
+
+## Estados
+
+Os mesmos da TabBar, no trilho.
+
+### Rótulo mais longo
+
+O trilho tem 88px: "Competições" em negrito, com badge, cabe com folga.
+
+<Canvas of={NavigationRailStories.LongestLabelCurrent} />
+
+### Perfil
+
+O avatar no lugar do ícone, com o anel grafite quando a aba é a atual.
+
+<Canvas of={NavigationRailStories.ProfileCurrent} />
+
+## Posição e área segura
+
+Como a TabBar, o trilho não se posiciona: o layout o prende à esquerda com a altura da tela e esconde a TabBar a partir de 600px (`--breakpoint-md`). Ele cuida da área segura da esquerda (`env(safe-area-inset-left)`) para o iPhone na horizontal.
+
+## Quando usar
+
+- No layout do app, a partir de 600px, no lugar da TabBar
+- Com os mesmos `items` da TabBar: as duas nunca divergem
+
+## Componentes relacionados
+
+- Abaixo de 600px, as abas vivem na [`TabBar`](?path=/docs/ui-tabbar--docs)
+
+## Acessibilidade
+
+- A mesma da TabBar: `<nav aria-label="Principal">`, links com `aria-current="page"`, contagem no nome acessível
+- O layout mostra só um dos dois por vez. Escondido com `display: none`, o outro sai da árvore de acessibilidade e o app fica com um só landmark "Principal"
+
+## Evitar
+
+- ❌ **Item só no desktop** — o trilho não ganha destinos que o mobile não tem (N27)
+- ❌ **Trilho e TabBar visíveis juntos** — dois landmarks com o mesmo nome confundem a navegação por leitor de tela
+
+## API
+
+<ArgTypes of={NavigationRailStories} />
+
+## Decisões de design
+
+**Por que um componente próprio e não uma prop da TabBar?** A spec sugere variante. O que muda entre os dois é o contêiner (direção, largura, área segura), e o que é igual (o link da aba) já é compartilhado pelo `NavigationLink` interno. Dois nomes deixam o layout legível: `<TabBar>` no rodapé, `<NavigationRail>` à esquerda.
+
+## Referências
+
+- [Material Design 3 — Navigation rail](https://m3.material.io/components/navigation-rail/overview)
+- [Material Design 3 — Window size classes](https://m3.material.io/foundations/layout/applying-layout/window-size-classes)
+- `docs/NAVIGATION.md` (N27, §10.3) e `docs/TOKENS.md` (`--breakpoint-md`)

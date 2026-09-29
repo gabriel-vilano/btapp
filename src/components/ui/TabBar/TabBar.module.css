@@ -1,0 +1,24 @@
+/*
+ * A TabBar não se posiciona: quem a fixa no rodapé é o layout do app.
+ * Ela só garante a área segura do iOS (NAVIGATION.md, N26), que exige
+ * viewport-fit=cover no viewport do app.
+ */
+
+.tabbar {
+  background-color: var(--color-background-primary);
+  border-top: var(--border-width-medium) solid var(--color-border-subtle);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.tabbar__list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Base 0: as 5 abas dividem a largura por igual, qualquer que seja o rótulo */
+.tabbar__item {
+  flex: 1 1 0;
+  min-width: 0;
+}
