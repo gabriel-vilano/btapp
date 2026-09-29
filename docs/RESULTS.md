@@ -220,7 +220,7 @@ A fila do admin reúne o que só ele resolve (R15). Ela mora na **área "Adminis
 | --- | --- | --- |
 | **Contestação** | Em arbitragem (R14) | Arbitrar (§5.1) |
 | **Partida não realizada** | Prazo da rodada sem resultado (R40) ou dupla desfeita (R45) | Decidir (§5.2) |
-| **Confronto de torneio sem resultado** | Confronto definido no torneio (R38). Também entra no bloco "Pendências de admin" (decisão do Gabriel na aprovação da NAV) | Lançar (§5.3) |
+| **Confronto de torneio sem resultado** | Confronto definido no torneio cujo horário passou sem resultado (R38, N30) | Lançar (§5.3) |
 
 A fila é ordenada pela idade do item, mais antigo primeiro, e cada item mostra a competição, a categoria, a rodada e os lados. **Corrigir e anular** não são itens da fila: partem da tela de uma partida confirmada (§5.4), à qual a área "Administrar" também leva, pela lista de partidas da competição (N31).
 
