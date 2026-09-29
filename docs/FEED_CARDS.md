@@ -70,6 +70,8 @@ Dois padrões dependendo do tipo de card:
 ```
 - Nome + ação: `--text-body-md`, `--color-foreground-primary` — ex: "Lucas Silva subiu no ranking"
 
+**Timestamp "há X tempo"** (vale para os dois padrões): minutos e horas abreviados ("há 5min", "há 3h"); a partir de 1 dia, por extenso. Até 6 dias em dias ("há 6 dias"), de 7 a 29 em semanas ("há 1 semana", "há 4 semanas"), de 30 a 364 em meses de 30 dias ("há 1 mês", "há 5 meses", com teto em "há 11 meses": "há 12 meses" nunca aparece), e a partir de 365 em anos ("há 1 ano"). Implementado em `formatTimestamp` (`src/lib/formatters.ts`).
+
 **Textos neutros de gênero.** O cadastro não coleta gênero, então nenhum texto do feed flexiona pelo jogador: "agora são amigos" em vez de "tornou-se amigo", "Assumiu a liderança" em vez de "Líder". Verbos ("subiu", "inscreveu-se") já são neutros. Texto novo segue a mesma regra.
 - @username + timestamp: `--text-label-md`, `--color-foreground-secondary`
 
@@ -760,7 +762,7 @@ O jogador vê no feed o conteúdo das organizações dos rankings e torneios em 
 
 **Por quê:** um feed que depende de o usuário escolher quem seguir nasce vazio (*cold start*), e a maioria das pessoas não muda o padrão (efeito padrão; Johnson & Goldstein, "Do Defaults Save Lives?", *Science*, 2003). A inscrição já é um sinal forte e gratuito de interesse.
 
-**Consequência:** o jogador competitivo circula por 3 ou mais organizações por semestre, então descobrir organizações novas importa. Esse papel fica com a **tela de competições com filtros por nível e região**, e não com o feed.
+**Consequência:** o jogador competitivo circula por 3 ou mais organizações por semestre, então descobrir organizações novas importa. Esse papel fica com a aba **Explorar** (`NAVIGATION.md`, N32 e N33), e não com o feed. No MVP ela não tem filtros; filtros por nível e região ficam para depois.
 
 **Evolução prevista:** híbrido. O vínculo implícito continua como padrão, com "Seguir" (alcançar organizações sem inscrição) e "Deixar de seguir" (silenciar). A tabela `follows (follower_id → profiles, followee_id → organizations)` só entra nesse momento.
 

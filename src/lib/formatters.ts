@@ -122,3 +122,35 @@ export function formatCount(count: number, singular: string, plural: string): st
 export function formatCountValue(count: number): string {
   return countFormatter.format(count);
 }
+
+const MINUTE_MS = 60_000;
+const HOUR_MS = 60 * MINUTE_MS;
+const DAY_MS = 24 * HOUR_MS;
+
+/**
+ * Tempo desde um evento do feed, por extenso a partir de dias.
+ * Semana a partir de 7 dias, mês (30 dias) a partir de 30, ano (365 dias) a partir de 365.
+ * Os meses param em 11: de 330 a 364 dias ainda é "há 11 meses", nunca "há 12 meses".
+ * Ex.: "há 5min", "há 3h", "há 6 dias", "há 2 semanas", "há 5 meses", "há 1 ano".
+ */
+export function formatTimestamp(iso: string): string {
+  const time = new Date(iso).getTime();
+  if (Number.isNaN(time)) {
+    throw new RangeError(`Timestamp inválido: recebi '${iso}', esperado data ISO 8601`);
+  }
+  const diff = Date.now() - time;
+  if (diff < HOUR_MS) return `há ${Math.floor(diff / MINUTE_MS)}min`;
+  if (diff < DAY_MS) return `há ${Math.floor(diff / HOUR_MS)}h`;
+  return `há ${formatElapsedDays(Math.floor(diff / DAY_MS))}`;
+}
+
+function formatElapsedDays(days: number): string {
+  if (days < 7) return days === 1 ? "1 dia" : `${days} dias`;
+  if (days < 30) return plural(Math.floor(days / 7), "semana", "semanas");
+  if (days < 365) return plural(Math.min(Math.floor(days / 30), 11), "mês", "meses");
+  return plural(Math.floor(days / 365), "ano", "anos");
+}
+
+function plural(count: number, singular: string, pluralForm: string): string {
+  return `${count} ${count === 1 ? singular : pluralForm}`;
+}

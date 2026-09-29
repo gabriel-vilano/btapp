@@ -3,7 +3,7 @@
 import { HandshakeIcon, LockSimpleIcon } from "@phosphor-icons/react";
 import { Icon } from "@/src/components/ui/Icon";
 import { Avatar, AvatarStack } from "@/src/components/ui/Avatar";
-import { formatCategoryLabel } from "@/src/lib/formatters";
+import { formatCategoryLabel, formatTimestamp } from "@/src/lib/formatters";
 import type { CardHeader as CardHeaderData } from "@/src/types/feed";
 import styles from "./CardHeader.module.css";
 
@@ -91,15 +91,4 @@ function PrivateIndicator({ audience }: { audience: "player" | "pair" }) {
       </span>
     </>
   );
-}
-
-function formatTimestamp(iso: string): string {
-  const diff = Date.now() - new Date(iso).getTime();
-  const minutes = Math.floor(diff / 60_000);
-  const hours = Math.floor(diff / 3_600_000);
-  const days = Math.floor(diff / 86_400_000);
-
-  if (minutes < 60) return `há ${minutes}min`;
-  if (hours < 24) return `há ${hours}h`;
-  return `há ${days} dia${days > 1 ? "s" : ""}`;
 }
