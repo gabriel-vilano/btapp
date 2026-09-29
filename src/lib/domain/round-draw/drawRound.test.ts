@@ -52,6 +52,7 @@ describe('drawRound: partidas criadas', () => {
         scheduled_at: null,
         venue: null,
         created_at: DRAWN_AT,
+        undone_reports: [],
       });
     }
     expect(matches.map((m) => m.id)).toEqual(['match-draw-1', 'match-draw-2', 'match-draw-3', 'match-draw-4']);

@@ -87,6 +87,7 @@ function pastMatch(
     competition_id: ranking.id,
     category_id: rankingCategories.masculinoB.id,
     round_id: matchRound.id,
+    undone_reports: [],
     side_a_enrollment_id: a.id,
     side_b_enrollment_id: b.id,
     format: ranking.match_format,

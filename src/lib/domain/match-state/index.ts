@@ -11,6 +11,7 @@ export {
   contestRankingResult,
   markRankingNotPlayed,
   reportRankingResult,
+  undoRankingReport,
   type RankingMatchContext,
 } from './rankingTransitions';
 export {
