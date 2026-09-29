@@ -1,0 +1,88 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as ProfileHeaderStories from "./ProfileHeader.stories";
+
+<Meta of={ProfileHeaderStories} />
+
+<Subtitle>Cabeçalho do perfil: quem é e que tipo de jogador é, antes de qualquer rolagem.</Subtitle>
+
+**Código-fonte:** [`src/components/profile/ProfileHeader/ProfileHeader.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/profile/ProfileHeader/ProfileHeader.tsx)
+
+## Visão geral
+
+`ProfileHeader` abre o perfil do jogador, o próprio e o de outro. Compõe o `Avatar` de 96px, o nome, o @username, dois `StatTile` (jogos e amigos), o `RecordLine` e um slot de ação (`docs/PROFILE.md`, PF4).
+
+<Canvas of={ProfileHeaderStories.NotFriends} />
+
+## Estados
+
+A ação muda com quem vê e com o estado da amizade (PF7); o resto muda com os dados do jogador.
+
+<Canvas of={ProfileHeaderStories.Gallery} />
+
+### Próprio perfil
+
+"Editar perfil", secondary. O próprio jogador não tem ação primária no cabeçalho.
+
+<Canvas of={ProfileHeaderStories.OwnProfile} />
+
+### Pedido recebido
+
+"Aceitar" e "Recusar" lado a lado, com a mesma largura. O slot divide a linha entre os filhos.
+
+<Canvas of={ProfileHeaderStories.RequestReceived} />
+
+### Jogador novo
+
+"0 jogos" e o cartel vira "Nenhuma partida ainda". O vazio das partidas recentes é da página.
+
+<Canvas of={ProfileHeaderStories.NewPlayer} />
+
+### Nome longo
+
+O nome ocupa até 2 linhas, depois reticências. O @username fica em 1 linha.
+
+<Canvas of={ProfileHeaderStories.LongName} />
+
+### Carregando
+
+`ProfileHeaderSkeleton` tem o mesmo formato do cabeçalho: círculo de 96px, duas linhas de texto, dois tiles, o cartel e o botão. O layout não pula quando os dados chegam (PF21).
+
+<Canvas of={ProfileHeaderStories.Loading} />
+
+## Quando usar
+
+- No topo da página do perfil (`/jogadores/[username]`), próprio ou de outro jogador
+
+## Componentes relacionados
+
+- Para **o jogador dentro de um card do feed**, use o `ProfileMiniCard`
+- A **posição nos rankings** não entra no cabeçalho: fica na seção Rankings, com o `StandingSummaryItem` (PF10)
+
+## Acessibilidade
+
+- O nome é o `h1` da tela
+- Os tiles e o cartel são lidos como frases ("274 jogos", "182 vitórias e 92 derrotas")
+- A ação leva o estado e o nome no nome acessível: "Amigos de Lucas, abrir opções", "Aceitar pedido de Lucas". Quem passa o botão é o consumidor, então é ele que define o `aria-label`
+- O skeleton anuncia "Carregando perfil" ao leitor de tela e marca o bloco com `aria-busy`
+
+## Evitar
+
+- ❌ **Categoria, posição ou selo de nível no cabeçalho** — a categoria é da inscrição, não do jogador (PF11)
+- ❌ **Foto de capa, bio, idade, telefone ou cidade** — fora do perfil (PF4)
+- ❌ **Mais de uma ação primária** — o slot recebe uma ação, ou o par Aceitar e Recusar
+
+## API
+
+<ArgTypes of={ProfileHeaderStories} />
+
+## Decisões de design
+
+**Por que a ação é um slot, e não uma prop `friendshipState`?** O estado da amizade traz handlers, confirmações e chamadas ao banco (cancelar pedido, desfazer amizade). Com o slot, o cabeçalho continua só de apresentação e a página decide o botão, como no `EmptyState`.
+
+**Por que o link de amigos é montado dentro do componente?** A rota vem da spec (`/jogadores/[username]/amigos`, PF5) e é a mesma para qualquer perfil. Montar aqui evita que cada consumidor erre o caminho.
+
+## Referências
+
+- Spec: `docs/PROFILE.md`, seção 3 e seção 8.3
+- Referências de mercado: `docs/discovery/referencias/03-perfil.md`
+- Tokens relacionados: `docs/TOKENS.md` (`--text-title-md-*`, `--text-label-md-*`, `--spacing-*`)

@@ -21,3 +21,4 @@ export {
   type ReportedScheduleDateDraft,
   type ScheduleProposalDraft,
 } from './transitions';
+export { scheduleSummaryOf, type ScheduleSideSummary, type ScheduleSummary } from './summary';
