@@ -1,0 +1,169 @@
+/* =============================================================
+   MatchScheduling — estado atual da marcação num cartão e o
+   histórico recolhido logo abaixo (docs/SCHEDULING.md §6)
+   ============================================================= */
+
+.match-scheduling {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+}
+
+.match-scheduling__title {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+/* --- Cartão do estado --- */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+  padding: var(--spacing-200);
+  border-radius: var(--radius-card);
+  background-color: var(--color-background-secondary);
+}
+
+.card__title {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line-height);
+  letter-spacing: var(--text-body-lg-tracking);
+  font-weight: var(--font-weight-bold);
+  overflow-wrap: anywhere;
+}
+
+.card__text,
+.card__note {
+  margin: 0;
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-secondary);
+}
+
+/* A remarcação pendente muda o que vale: o aviso fica em destaque sutil */
+.card__note {
+  padding: var(--spacing-150);
+  border-radius: var(--radius-md);
+  background-color: var(--color-background-primary);
+  color: var(--color-foreground-primary);
+}
+
+.card__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+}
+
+/* --- Data acordada --- */
+
+.card__date {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.card__date-when {
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-md-size);
+  line-height: var(--text-title-md-line-height);
+  letter-spacing: var(--text-title-md-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.card__date-venue {
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line-height);
+  letter-spacing: var(--text-body-lg-tracking);
+  font-weight: var(--font-weight-regular);
+  overflow-wrap: anywhere;
+}
+
+/* --- Opções da proposta enviada (só leitura) --- */
+
+.card__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card__option {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: var(--spacing-150);
+  padding: var(--spacing-150) var(--spacing-200);
+  border: var(--border-width-medium) solid var(--color-border-subtle);
+  border-radius: var(--radius-card);
+  background-color: var(--color-background-primary);
+  color: var(--color-foreground-primary);
+}
+
+.card__option-day {
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line-height);
+  letter-spacing: var(--text-body-lg-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.card__option-time {
+  grid-row: span 2;
+  align-self: center;
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.card__option-venue {
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  overflow-wrap: anywhere;
+}
+
+/* --- Histórico recolhido --- */
+
+.match-scheduling__history {
+  display: flex;
+  flex-direction: column;
+}
+
+.match-scheduling__summary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: var(--dimension-tap-target-minimum);
+  border-radius: var(--radius-md);
+  color: var(--color-foreground-primary);
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.match-scheduling__summary:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.match-scheduling__summary:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.match-scheduling__history[open] > .match-scheduling__summary {
+  margin-bottom: var(--spacing-100);
+}
