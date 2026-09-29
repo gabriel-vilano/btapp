@@ -1,4 +1,5 @@
 import type { RankingLine, RankingPlayer } from "@/src/lib/domain/ranking-screen";
+import { splitFullName } from "@/src/lib/names";
 import type { RankingRowPlayers } from "../RankingRow";
 import { cutoffDistanceText } from "./rankingScreenText";
 
@@ -6,9 +7,11 @@ import { cutoffDistanceText } from "./rankingScreenText";
 
 /** Jogadores da linha, com "Você" no jogador logado. */
 export function toRowPlayers(players: RankingPlayer[], viewerId: string): RankingRowPlayers {
+  // O `Player` do domínio ainda guarda o nome inteiro; a linha abrevia o sobrenome
+  // e precisa dele em dois campos (RK8)
   const [first, second] = players.map((player) => ({
     id: player.id,
-    name: player.name,
+    ...splitFullName(player.name),
     avatarUrl: player.avatar_url,
     isViewer: player.id === viewerId,
   }));

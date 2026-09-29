@@ -43,7 +43,7 @@ export const Bottom: Story = {
     const pinned = canvasElement.querySelector("[aria-hidden='true']") as HTMLElement;
     // Sem foco e fora da árvore de acessibilidade: o leitor lê a linha na tabela
     await expect(pinned.querySelector("a, button")).toBeNull();
-    await expect(pinned).toHaveTextContent("Você e Pedro Alves");
+    await expect(pinned).toHaveTextContent("Você e Pedro A.");
     await userEvent.click(pinned);
     await expect(args.onActivate).toHaveBeenCalledOnce();
   },

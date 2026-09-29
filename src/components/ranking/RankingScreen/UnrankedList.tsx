@@ -3,6 +3,7 @@
 import { Avatar, AvatarStack } from "@/src/components/ui/Avatar";
 import { List, ListItem } from "@/src/components/ui/ListItem";
 import type { RankingPlayer, UnrankedEntry } from "@/src/lib/domain/ranking-screen";
+import { joinFullName } from "@/src/lib/names";
 import { formatCompetitorName } from "../RankingRow/rankingRowText";
 import { profileHref, UNRANKED_NOTE } from "./rankingScreenText";
 import { toRowPlayers } from "./rowProps";
@@ -35,9 +36,9 @@ function UnrankedItem({ entry, viewerId, onOpenPair }: { entry: UnrankedEntry } 
   const players = toRowPlayers(entry.players, viewerId);
   const singles = entry.players.length === 1;
   const leading = singles ? (
-    <Avatar url={players[0].avatarUrl} alt={players[0].name} size={32} />
+    <Avatar url={players[0].avatarUrl} alt={joinFullName(players[0])} size={32} />
   ) : (
-    <AvatarStack items={players.map((p) => ({ id: p.id, url: p.avatarUrl, alt: p.name }))} size={32} />
+    <AvatarStack items={players.map((p) => ({ id: p.id, url: p.avatarUrl, alt: joinFullName(p) }))} size={32} />
   );
   return (
     <ListItem
