@@ -1,0 +1,34 @@
+/* Coluna única com largura máxima: no desktop a lista não estica (N27) */
+.competitions-tab {
+  width: 100%;
+  max-width: var(--dimension-layout-max);
+  margin-inline: auto;
+  padding-bottom: var(--spacing-400);
+}
+
+.competitions-tab__header {
+  padding: var(--spacing-200) var(--spacing-page-margin) var(--spacing-100);
+}
+
+.competitions-tab__title {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-md-size);
+  line-height: var(--text-title-md-line-height);
+  letter-spacing: var(--text-title-md-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.competitions-tab__section {
+  padding-top: var(--spacing-200);
+}
+
+.competitions-tab__section-title {
+  margin: 0;
+  padding-inline: var(--spacing-page-margin);
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+}
