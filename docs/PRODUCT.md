@@ -54,7 +54,7 @@ Três objetivos simultâneos: portfolio de Design Engineer, produto real para la
 
 - **Foco exclusivo no jogador competitivo de Beach Tennis.** Não é app multi-esporte, não é app para casual.
 - **Auth com email + senha apenas** — sem login social no MVP.
-- **Signup multi-step:** Step 1 (nome + email + senha) → Step 2 (foto + @username).
+- **Signup multi-step:** Step 1 (nome + sobrenome + email + senha, com nome e sobrenome em campos separados) → Step 2 (foto + @username).
 - **Redirecionar para o feed após login**, salvo quando o login veio de um link: aí volta para a tela do link (`docs/NAVIGATION.md` N28, `docs/PROFILE.md` PF20).
 - **Recuperar senha:** fluxo inteiro dentro do app.
 - **@username:** gerado a partir do nome no cadastro, editável, com validação de unicidade em tempo real. Todo jogador tem um.

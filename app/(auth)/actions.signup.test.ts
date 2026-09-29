@@ -57,26 +57,38 @@ describe("login", () => {
 });
 
 describe("signup", () => {
-  const validFields = { name: "Ana Souza", email: "ana+bt@test.com", password: "abc12345" };
+  const validFields = {
+    firstName: "Ana Clara",
+    lastName: "de Souza",
+    email: "ana+bt@test.com",
+    password: "abc12345",
+  };
   const verifyUrl = "/cadastro/verificar?email=ana%2Bbt%40test.com";
 
-  it("valida nome, email e senha antes de chamar o Supabase", async () => {
-    const shortName = await signup(null, buildFormData({ ...validFields, name: "A" }));
+  it("valida nome, sobrenome, email e senha antes de chamar o Supabase", async () => {
+    const shortName = await signup(null, buildFormData({ ...validFields, firstName: "A" }));
+    const noLastName = await signup(null, buildFormData({ ...validFields, lastName: "  " }));
     const badEmail = await signup(null, buildFormData({ ...validFields, email: "ana@" }));
     const weakPassword = await signup(null, buildFormData({ ...validFields, password: "abcdefgh" }));
 
-    expect(shortName?.fieldErrors?.name).toBeDefined();
+    expect(shortName).toEqual({
+      fieldErrors: { firstName: "Nome precisa ter pelo menos 2 caracteres" },
+    });
+    expect(noLastName).toEqual({ fieldErrors: { lastName: "Sobrenome é obrigatório" } });
     expect(badEmail?.fieldErrors?.email).toBe("Formato de e-mail inválido");
     expect(weakPassword).toEqual({ fieldErrors: { password: "Senha não atende os requisitos" } });
     expect(supabase.auth.signUp).not.toHaveBeenCalled();
   });
 
-  it("cria a conta com o nome nos metadados e redireciona para o OTP", async () => {
-    await expect(signup(null, buildFormData(validFields))).rejects.toThrow(redirectSignal(verifyUrl));
+  it("cria a conta com nome, sobrenome e nome completo nos metadados e redireciona para o OTP", async () => {
+    const form = buildFormData({ ...validFields, firstName: " Ana Clara ", lastName: " de Souza " });
+    await expect(signup(null, form)).rejects.toThrow(redirectSignal(verifyUrl));
     expect(supabase.auth.signUp).toHaveBeenCalledWith({
       email: "ana+bt@test.com",
       password: "abc12345",
-      options: { data: { full_name: "Ana Souza" } },
+      options: {
+        data: { first_name: "Ana Clara", last_name: "de Souza", full_name: "Ana Clara de Souza" },
+      },
     });
   });
 
