@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { CardShell } from "./CardShell";
 import { CardHeader } from "../CardHeader";
 import { CardFooter } from "../CardFooter";
-import { ScoreBlock } from "../ScoreBlock";
+import { ScoreBlock } from "@/src/components/ui/ScoreBlock";
 import { feedFrame, storyCategory, storyOrg } from "../storyFixtures";
 
 // O shell só organiza os três slots. A story mostra a anatomia com blocos
