@@ -1,12 +1,19 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Decorator, Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect } from "storybook/test";
 import { ScoreBlock } from "./ScoreBlock";
-import { feedFrame } from "../storyFixtures";
+
+// Largura útil do card de resultado no mobile base (361px), onde a variante padrão mora.
+// O decorator do feed não serve aqui: ui/ não importa de grupo de área.
+const cardFrame: Decorator = (Story) => (
+  <div className="sb-feed-frame">
+    <Story />
+  </div>
+);
 
 const meta = {
-  title: "Feed/ScoreBlock",
+  title: "UI/ScoreBlock",
   component: ScoreBlock,
-  decorators: [feedFrame],
+  decorators: [cardFrame],
   args: {
     score: { type: "normal", sets: [{ a: 6, b: 4 }] },
   },
