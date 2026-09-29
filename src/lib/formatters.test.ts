@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Category } from "@/src/types/feed";
 import {
   formatCategoryLabel,
@@ -7,6 +7,7 @@ import {
   formatEnrollmentCount,
   formatEventMoment,
   formatInitials,
+  formatTimestamp,
 } from "./formatters";
 
 const doublesB: Category = {
@@ -127,5 +128,49 @@ describe("formatCount", () => {
     expect(formatCount(1204, "jogo", "jogos")).toBe("1.204 jogos");
     expect(formatCountValue(1204)).toBe("1.204");
     expect(formatCountValue(12045)).toBe("12.045");
+  });
+});
+
+describe("formatTimestamp", () => {
+  const NOW = new Date("2026-09-25T12:00:00Z").getTime();
+  const ago = (ms: number) => new Date(NOW - ms).toISOString();
+  const minutes = (n: number) => ago(n * 60_000);
+  const hours = (n: number) => ago(n * 3_600_000);
+  const days = (n: number) => ago(n * 86_400_000);
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(NOW);
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  // Funções, não valores: o relógio só é congelado no beforeEach.
+  it.each([
+    ["agora", () => minutes(0), "há 0min"],
+    ["59 minutos", () => minutes(59), "há 59min"],
+    ["1 hora", () => hours(1), "há 1h"],
+    ["23 horas", () => hours(23), "há 23h"],
+    ["1 dia", () => days(1), "há 1 dia"],
+    ["6 dias (último em dias)", () => days(6), "há 6 dias"],
+    ["7 dias (primeiro em semanas)", () => days(7), "há 1 semana"],
+    ["21 dias", () => days(21), "há 3 semanas"],
+    ["29 dias (último em semanas)", () => days(29), "há 4 semanas"],
+    ["30 dias (primeiro em meses)", () => days(30), "há 1 mês"],
+    ["150 dias", () => days(150), "há 5 meses"],
+    ["329 dias", () => days(329), "há 10 meses"],
+    ["330 dias (primeiro em 11 meses)", () => days(330), "há 11 meses"],
+    ["360 dias (teto de 11 meses)", () => days(360), "há 11 meses"],
+    ["364 dias (último em meses)", () => days(364), "há 11 meses"],
+    ["365 dias (primeiro em anos)", () => days(365), "há 1 ano"],
+    ["800 dias", () => days(800), "há 2 anos"],
+  ])("%s", (_label, compute, expected) => {
+    expect(formatTimestamp(compute())).toBe(expected);
+  });
+
+  it("rejeita data inválida citando o valor recebido", () => {
+    expect(() => formatTimestamp("ontem")).toThrow("recebi 'ontem'");
   });
 });

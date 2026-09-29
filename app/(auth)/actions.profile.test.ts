@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createClient } from "@/src/lib/supabase/server";
+import { AVATAR_MAX_BYTES } from "@/src/lib/validations";
 import { checkUsername, createProfile } from "./actions";
 import {
   asSupabaseClient,
@@ -160,9 +161,9 @@ describe("createProfile", () => {
   });
 
   it("rejeita foto acima do limite sem subir nada", async () => {
-    const oversized = new File([new Uint8Array(5 * 1024 * 1024 + 1)], "foto.png", { type: "image/png" });
+    const oversized = new File([new Uint8Array(AVATAR_MAX_BYTES + 1)], "foto.png", { type: "image/png" });
     const result = await createProfile(null, buildFormData({ username: "", avatar: oversized }));
-    expect(result).toEqual({ error: "Foto deve ter no máximo 5MB" });
+    expect(result).toEqual({ error: "Foto deve ter no máximo 1MB" });
     expect(supabase.avatarsBucket.upload).not.toHaveBeenCalled();
   });
 

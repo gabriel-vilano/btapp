@@ -1,0 +1,27 @@
+/* Uma linha só: numa lista estreita o placar não quebra, quem encolhe é o texto ao lado */
+.compact {
+  white-space: nowrap;
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+/* O espaço entre os sets é texto; a margem só alarga o respiro */
+.compact__item + .compact__item {
+  margin-inline-start: var(--spacing-50);
+}
+
+.compact__set--won {
+  color: var(--color-foreground-primary);
+}
+
+.compact__set--muted {
+  color: var(--color-foreground-secondary);
+}
+
+/* W.O. e o marcador da desistência */
+.compact__outcome {
+  color: var(--color-foreground-secondary);
+}
