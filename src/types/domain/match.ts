@@ -74,6 +74,25 @@ export interface ReportResponse {
   responded_at: string; // ISO 8601
 }
 
+/** Motivo da contestação, de uma lista curta, obrigatório (R49). */
+export type ContestReason = 'different_score' | 'different_winner' | 'not_played' | 'other';
+
+/**
+ * O que quem contesta informa (R49). Só com "placar diferente" ele pode dizer
+ * o placar que lembra, e mesmo assim é opcional. O admin vê os dois ao arbitrar.
+ */
+export type ContestDetails =
+  | { reason: 'different_score'; remembered_result: NormalResult | null }
+  | { reason: Exclude<ContestReason, 'different_score'> };
+
+/** Contestação no ranking: quem contestou, quando e por quê (R14, R49). */
+export type ResultContest = ReportResponse & ContestDetails;
+
+/** Lançamento que quem lançou desfez antes da resposta; fica no histórico da partida (R48). */
+export interface UndoneReport extends ResultReport {
+  undone_at: string; // ISO 8601
+}
+
 /** Ato de um admin da competição. Fica registrado quem fez (R39). */
 export interface AdminAction {
   admin_id: string; // player_id
@@ -106,7 +125,7 @@ export interface AwaitingConfirmationState {
 export interface InArbitrationState {
   status: 'in_arbitration';
   report: ResultReport;
-  contest: ReportResponse;
+  contest: ResultContest;
 }
 
 /** Prazo da rodada passou sem resultado: vai para o admin (R40). */
@@ -147,6 +166,9 @@ interface CompetitionMatchBase {
 interface RankingMatchBase extends CompetitionMatchBase {
   kind: 'ranking';
   round_id: string; // a rodada cujo sorteio criou a partida
+  // Atravessa os estados: a partida desfeita volta a Confronto definido, mas o
+  // lançamento desfeito continua visível no histórico (R48).
+  undone_reports: UndoneReport[];
 }
 
 interface TournamentMatchBase extends CompetitionMatchBase {

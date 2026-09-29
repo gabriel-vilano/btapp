@@ -14,10 +14,12 @@ import {
   contestRankingResult,
   markRankingNotPlayed,
   reportRankingResult,
+  undoRankingReport,
 } from './rankingTransitions';
 import {
   ADMIN_CONTEXT,
   AFTER_ROUND_DEADLINE,
+  CONTEST,
   PLAYER,
   RANKING_CONTEXT,
   RANKING_STATUSES,
@@ -43,7 +45,8 @@ const rankingActions: { name: string; from: RankingStatus; to: RankingStatus; ru
   { name: 'prazo da rodada passa', from: 'defined', to: 'not_played', run: (m) => markRankingNotPlayed(m, AFTER_ROUND_DEADLINE, RANKING_CONTEXT) },
   { name: 'adversário confirma', from: 'awaiting_confirmation', to: 'confirmed', run: (m) => confirmRankingResult(m, act(PLAYER.b1), RANKING_CONTEXT) },
   { name: 'prazo de resposta passa', from: 'awaiting_confirmation', to: 'confirmed', run: (m) => confirmRankingByDeadline(m, LATE, RANKING_CONTEXT) },
-  { name: 'adversário contesta', from: 'awaiting_confirmation', to: 'in_arbitration', run: (m) => contestRankingResult(m, act(PLAYER.b1), RANKING_CONTEXT) },
+  { name: 'quem lançou desfaz', from: 'awaiting_confirmation', to: 'defined', run: (m) => undoRankingReport(m, act(PLAYER.a1), RANKING_CONTEXT) },
+  { name: 'adversário contesta', from: 'awaiting_confirmation', to: 'in_arbitration', run: (m) => contestRankingResult(m, CONTEST, act(PLAYER.b1), RANKING_CONTEXT) },
   { name: 'admin arbitra', from: 'in_arbitration', to: 'confirmed', run: (m) => arbitrateRankingResult(m, WIN_B, admin, ADMIN_CONTEXT) },
   { name: 'admin aplica W.O.', from: 'not_played', to: 'confirmed', run: (m) => decideNotPlayed(m, { type: 'wo', winner: 'a' }, admin, ADMIN_CONTEXT) },
   { name: 'admin cancela', from: 'not_played', to: 'cancelled', run: (m) => cancelNotPlayed(m, admin, ADMIN_CONTEXT) },

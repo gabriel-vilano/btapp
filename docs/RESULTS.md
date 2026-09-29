@@ -95,7 +95,7 @@ Um controle de escolha única (SegmentedControl ou grupo de rádio) com três op
 | **Adversário desistiu** | Desistência | Placar até a desistência (§3.4) |
 | **Adversário não veio** | W.O. | Sem placar (§3.5) |
 
-- **RG4. A desistência e o W.O. são sempre a favor de quem lança.** Na desistência, a regra já diz que quem lança é o adversário de quem desistiu (R11). No W.O., o código aceita qualquer vencedor, mas lançar "eu não fui" não acontece na prática; se acontecer, o outro lado lança. As opções são escritas do ponto de vista de quem lança, e o vencedor não é perguntado. Hoje a máquina de estados aceita o W.O. lançado por jogador nas duas direções; a trava entra no código numa issue própria. [R11; LEIT, confirmada na DEC-RES]
+- **RG4. A desistência e o W.O. são sempre a favor de quem lança.** Na desistência, a regra já diz que quem lança é o adversário de quem desistiu (R11). No W.O., o código aceita qualquer vencedor, mas lançar "eu não fui" não acontece na prática; se acontecer, o outro lado lança. As opções são escritas do ponto de vista de quem lança, e o vencedor não é perguntado. A máquina de estados recusa o W.O. lançado a favor do outro lado (R50). [R11, R50; LEIT, confirmada na DEC-RES]
 - **RG5. O vencedor do jogo normal sai do placar**, nunca de um campo à parte. Assim o erro `winner_mismatch` do `validateScore` fica impossível na interface. [R29; LEIT]
 
 ### 3.3 Placar do jogo normal
@@ -187,7 +187,7 @@ Lucas lançou o resultado · ter, 21h10
 
 Contestar abre uma folha com o que acontece depois: "O resultado vai para o admin do Ranking BH, que define o placar. Até lá, a partida não pontua."
 
-- **RG15. A contestação pede um motivo, obrigatório, numa lista curta:** placar diferente · outro vencedor · o jogo não aconteceu · outro. Com "placar diferente", o jogador pode informar o placar que lembra, com a mesma entrada da §3.3 (opcional). O admin vê os dois na arbitragem (§5.1). Hoje o modelo guarda só quem contestou e quando (`ReportResponse`): o campo do motivo entra numa issue própria. [DEC-RES P2]
+- **RG15. A contestação pede um motivo, obrigatório, numa lista curta:** placar diferente · outro vencedor · o jogo não aconteceu · outro. Com "placar diferente", o jogador pode informar o placar que lembra, com a mesma entrada da §3.3 (opcional). O admin vê os dois na arbitragem (§5.1). O modelo guarda o motivo e o placar lembrado junto de quem contestou e quando (`ResultContest`, R49). [DEC-RES P2]
 
 Depois de contestar, a partida entra **Em arbitragem** para os 4 jogadores.
 
@@ -206,9 +206,7 @@ Todos os jogadores da partida veem o estado dela na tela do confronto, como uma 
 
 ### 4.4 Desfazer o lançamento
 
-- **RG16. Quem lançou pode desfazer o lançamento enquanto ninguém do outro lado respondeu.** A ação fica num menu da tela do confronto, no estado Aguardando confirmação, e pede confirmação. A partida volta para Confronto definido, e o lançamento desfeito fica no histórico da partida. Depois da primeira resposta, o caminho é a contestação ou o admin. [DEC-RES P3]
-
-  **Pede uma regra nova no domínio:** a máquina de estados da partida (`DOMAIN.md` §3) não tem essa transição. A regra e o código entram numa issue própria; até lá, esta tela não tem o menu.
+- **RG16. Quem lançou pode desfazer o lançamento enquanto ninguém do outro lado respondeu.** A ação fica num menu da tela do confronto, no estado Aguardando confirmação, e pede confirmação. A partida volta para Confronto definido, e o lançamento desfeito fica no histórico da partida. Depois da primeira resposta, o caminho é a contestação ou o admin. Só quem lançou desfaz, nem o parceiro, e só até o fim do prazo de resposta. A regra do domínio é a R48. [DEC-RES P3]
 
 ---
 
@@ -363,7 +361,7 @@ Não há pergunta aberta. As leituras do agente e as perguntas desta spec foram 
 - **Leituras confirmadas:** L1 → RG1 (só o amistoso não parte de uma partida existente); L2 → RG2 (badge; depois alinhada à N3 na aprovação da NAV); L3 → RG3 (lados fixos no ranking); L4 → RG4 (desistência e W.O. a favor de quem lança); L5 → RG5 (vencedor sai do placar); L6 → RG6 (placar completado da desistência antes do envio; desistência antes do primeiro game é 0/0 interrompido); L7 → RG7, RG8 (revisão e falha de rede); L8 → RG9, RG10 (prazo e peso das ações); L9 → RG11 (atos do admin visíveis); L10 → §6.2 (amistoso descartado ou cancelado no histórico de quem lançou).
 - **Perguntas respondidas:** P1 → RG12, RG13 (entrada do placar, com prévia ao vivo); P2 → RG15 (motivo da contestação); P3 → RG16 (desfazer o lançamento); P4 → RG18 (impacto no ranking); P5 → RG14 (pontos previstos); P6 → RG17 (quem entra no amistoso); P7 → §2 (acompanha a NAV).
 
-**Mudanças de domínio que as decisões pedem**, fora deste doc: a transição de desfazer o lançamento (RG16, com regra nova no `DOMAIN.md`), o campo do motivo da contestação (RG15) e a trava do W.O. a favor de quem lança (RG4). Cada uma vira issue de implementação.
+**Mudanças de domínio que as decisões pediram**, já no `DOMAIN.md`: desfazer o lançamento (RG16 → R48), o motivo da contestação (RG15 → R49) e o W.O. a favor de quem lança (RG4 → R50).
 
 Pergunta nova sobre o registro de resultado entra aqui com opções, trade-offs e recomendação, e sai quando vira regra.
 
@@ -388,7 +386,6 @@ Medidas por rodada no beta. Sem meta fixa: a primeira rodada define a linha de b
 ## 12. Riscos para acompanhar no beta
 
 - **O adversário não abre o app.** O resultado confirma pelo prazo (R14) e o erro passa. A notificação de prazo chegando (§7) é a mitigação; a métrica "via da confirmação" mostra se basta.
-- **Lançamento errado antes do desfazer existir.** Até a transição da RG16 entrar no domínio, quem errou depende do adversário contestar ou do admin corrigir, e a fila do admin cresce com erro de digitação.
 - **Desfazer como tática.** A RG16 permite desfazer até a primeira resposta. Se lançamentos desfeitos e relançados com outro placar ficarem frequentes, pesar um limite (uma vez por partida, ou uma janela curta).
 - **O set interrompido é o caso mais difícil de entender.** A desistência é rara, e o jogador vai ver na revisão um placar completado (RG6) diferente do placar real da prévia, sem ter visto a regra antes. Acompanhar contestações de desistência.
 - **Contestação como tática.** Contestar congela a pontuação até o admin decidir. Se a taxa de contestação com placar mantido for alta, o motivo obrigatório (RG15) já é um custo pequeno; se não bastar, rever.

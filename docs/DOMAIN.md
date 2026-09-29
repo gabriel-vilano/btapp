@@ -28,6 +28,7 @@ As decisões foram tomadas pelo Gabriel em 26/09/2026 e estão registradas como 
 | **DEC-DESEMP** | Issue da classificação e do desempate, comentário "Decisão do Gabriel" | Leituras da R37: W.O. no confronto direto e nas vitórias, mais de um jogo entre as duplas, confronto direto só no empate de duas |
 | **DEC-RANK** | Issue da spec do ranking com filtros, comentário "Decisões do Gabriel" (27/09/2026) | A queda aparece na tabela de classificação, e a R22 vale só para o feed e as notificações |
 | **DEC-SORT-BORDA** | Issue do sorteio da rodada, comentário "Decisões do Gabriel sobre os casos de borda do sorteio" (27/09/2026) | A partida cancelada não conta como confronto feito na R30; com menos adversários que jogos na rodada, cada dupla enfrenta cada outra uma vez e a rodada tem menos jogos |
+| **DEC-RES** | Issue da spec de registro de partidas (`docs/RESULTS.md`), respostas do Gabriel às perguntas P1–P7 e aprovação da spec (29/09/2026) | Desfazer o lançamento, motivo da contestação e W.O. lançado só a favor de quem lança |
 | **ITF** | [Rules of Beach Tennis 2025](https://www.itftennis.com/media/13855/rules-of-beach-tennis-2025.pdf), da ITF | Regra do super tiebreak |
 | **PESQ-RV** | Regras públicas do Rankin e do Vila do Tênis (BH), que usam o LetzPlay legado com a mesma configuração: `letzplay.me/rankin/rankings/55513/about`, `letzplay.me/vila-tenis-bt/rankings/56068/about`, `viladotenis.com/area-do-atleta` | Referências reais de jogos por rodada, prazo para combinar a data, regra de desistência, regra de W.O. por oferta de datas |
 | **DSC** | `docs/DISCOVERY.md` e `docs/discovery/` | Evidência de mercado citada nas regras e nas perguntas |
@@ -114,6 +115,7 @@ erDiagram
     INSCRICAO |o--o{ PARTIDA : "lado A ou B (competição)"
     UNIDADE_COMPETIDORA |o--o{ PARTIDA : "lado A ou B (amistoso)"
     PARTIDA ||--o{ SET_PLACAR : "placar"
+    PARTIDA ||--o{ LANCAMENTO_DESFEITO : "histórico (R48)"
     PARTIDA ||--o{ PROPOSTA_HORARIO : "marcação"
     PROPOSTA_HORARIO ||--|{ OPCAO_HORARIO : "2 a 3 opções"
     JOGADOR ||--o{ PROPOSTA_HORARIO : "propõe"
@@ -198,10 +200,17 @@ erDiagram
         datetime data_acordada "opcional"
         string arena "opcional"
         string lancado_por
+        string motivo_contestacao "R49"
+        string placar_lembrado "opcional, só com placar diferente (R49)"
         string respondido_por
         string arbitrado_por
         int pontos_lado_a
         int pontos_lado_b
+    }
+    LANCAMENTO_DESFEITO {
+        string lancado_por
+        datetime lancado_em
+        datetime desfeito_em
     }
     SET_PLACAR {
         int ordem
@@ -316,6 +325,9 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
 - **R39. O admin pode arbitrar a própria partida**, e fica registrado, visível para os envolvidos, quem arbitrou. [DEC-RESP P11]
 - **R40. A partida do sorteio sem resultado no prazo da rodada vai para o admin.** Ele decide entre W.O. para um lado, W.O. duplo ou cancelamento, com o histórico de propostas como evidência (referência real do Vila: sem acordo, tem direito ao W.O. quem ofereceu mais datas). **O app nunca aplica W.O. sozinho.** [DEC-MARC, DEC-RESP P3, PESQ-RV]
 - **R41. Correção ou anulação depois da confirmação:** o card de resultado acompanha a partida (mostra o placar corrigido e some se a partida for anulada), e os marcos já concedidos ficam. [DEC-RESP P10]
+- **R48. Quem lançou pode desfazer o lançamento enquanto ninguém do outro lado respondeu.** A partida volta para Confronto definido, e qualquer jogador lança de novo (R13). O lançamento desfeito fica no histórico da partida, com a hora em que foi desfeito. O parceiro de quem lançou não desfaz. Vale até o fim do prazo de resposta, inclusive: depois dele, quem calou consentiu (R14). Depois da primeira resposta, o caminho é a contestação ou o admin (R15). [DEC-RES P3; `RESULTS.md` RG16]
+- **R49. A contestação guarda um motivo, obrigatório, de uma lista:** placar diferente, outro vencedor, o jogo não aconteceu ou outro. Com "placar diferente", quem contesta pode informar o placar que lembra, opcional, que precisa valer no formato da partida (R29). O admin vê o motivo e o placar lembrado ao arbitrar. [DEC-RES P2; `RESULTS.md` RG15]
+- **R50. O W.O. lançado por jogador é sempre a favor de quem lança**, como a desistência (R11): lançar "eu não fui" não acontece na prática, e, se acontecer, o outro lado lança. O admin escolhe o vencedor livremente, ao decidir a partida não realizada (R40), ao arbitrar e ao corrigir. [DEC-RES; `RESULTS.md` RG4]
 
 ### Amistoso
 
@@ -374,7 +386,8 @@ stateDiagram-v2
     Definida --> NaoRealizada: prazo da rodada sem resultado
     Aguardando --> Confirmada: adversário confirma
     Aguardando --> Confirmada: prazo sem resposta
-    Aguardando --> Arbitragem: adversário contesta
+    Aguardando --> Arbitragem: adversário contesta, com motivo (R49)
+    Aguardando --> Definida: quem lançou desfaz (R48)
     Arbitragem --> Confirmada: admin define o resultado
     NaoRealizada --> Confirmada: admin aplica W.O. ou W.O. duplo
     NaoRealizada --> Cancelada: admin cancela

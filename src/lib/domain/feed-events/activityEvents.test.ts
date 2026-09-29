@@ -23,6 +23,7 @@ const defined: RankingMatch = {
   competition_id: confirmed.competition_id,
   category_id: confirmed.category_id,
   round_id: testRounds.first.id,
+  undone_reports: [],
   side_a_enrollment_id: t1.id,
   side_b_enrollment_id: t2.id,
   format: 'one_set_of_6',
