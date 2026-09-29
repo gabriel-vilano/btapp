@@ -50,8 +50,19 @@ export const Down: Story = {
 };
 
 // Mesma posição da última foto de rodada: aqui o traço aparece (RANKING.md, RK12).
+// Só o traço à vista, para o título caber em 1 linha; a frase fica no leitor de tela.
 export const Kept: Story = {
   args: { delta: { direction: "none" } },
+  play: async ({ canvas }) => {
+    await expect(
+      canvas.getByRole("link", {
+        name: "5º, Ranking BH · Masculino B com Rafael Manteve a posição",
+      }),
+    ).toBeVisible();
+    // Só o traço (16px) ocupa o trailing, sem a frase à vista
+    const delta = canvas.getByText("Manteve a posição").parentElement as HTMLElement;
+    await expect(delta.getBoundingClientRect().width).toBeLessThanOrEqual(16);
+  },
 };
 
 // 1ª rodada: ainda não há foto para comparar, então não há delta.

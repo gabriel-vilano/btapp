@@ -31,6 +31,7 @@ As decisões foram tomadas pelo Gabriel em 26/09/2026 e estão registradas como 
 | **ITF** | [Rules of Beach Tennis 2025](https://www.itftennis.com/media/13855/rules-of-beach-tennis-2025.pdf), da ITF | Regra do super tiebreak |
 | **PESQ-RV** | Regras públicas do Rankin e do Vila do Tênis (BH), que usam o LetzPlay legado com a mesma configuração: `letzplay.me/rankin/rankings/55513/about`, `letzplay.me/vila-tenis-bt/rankings/56068/about`, `viladotenis.com/area-do-atleta` | Referências reais de jogos por rodada, prazo para combinar a data, regra de desistência, regra de W.O. por oferta de datas |
 | **DSC** | `docs/DISCOVERY.md` e `docs/discovery/` | Evidência de mercado citada nas regras e nas perguntas |
+| **DEC-NAV-A** | Issue da spec de navegação, comentário "Decisões do Gabriel (29/09, ~19:00 UTC)" | Organização com tipo, cidade e contato (a arena do Explorar é a do tipo arena); "Tenho interesse" como relação entre jogador e competição |
 
 ---
 
@@ -45,12 +46,13 @@ As entidades estão agrupadas pelo papel que cumprem. Os nomes em **negrito** s�
 | **Jogador** | Pessoa com conta no LetzPlay. Tem nome, @username, foto, **data de nascimento opcional**, **telefone opcional** (só para a marcação de jogos, ver `docs/SCHEDULING.md`) e o contador `total_matches`. O cadastro não coleta gênero | R18, R19, R26, R33 |
 | **Amizade** | Conexão bilateral entre dois jogadores: um pede, o outro aceita. Só a amizade aceita gera evento no feed | R24 |
 | **Admin da competição** | Jogador com permissões **numa competição específica** (ranking ou torneio): lançar o sorteio, lançar o resultado do torneio, arbitrar contestação, decidir a partida não realizada e corrigir ou anular placar. É um papel mínimo, não a visão do organizador | R15, R38–R41 |
+| **Interesse** | Marca privada de um jogador numa competição em que ele não está inscrito ("Tenho interesse"). Mede a demanda: não avisa o organizador nem aparece para outros jogadores | — |
 
 ### Competição
 
 | Termo | Definição | Regras |
 | --- | --- | --- |
-| **Organização** | Arena, clube, federação ou grupo que promove competições. Aparece no cabeçalho dos cards de resultado, confronto e inscrição | — |
+| **Organização** | Arena, clube, federação ou grupo que promove competições. Guarda **tipo** (arena, clube, federação ou grupo), **cidade** e **contato**. Aparece no cabeçalho dos cards de resultado, confronto e inscrição. A organização do tipo arena é a arena do Explorar (`NAVIGATION.md`, N34) [DEC-NAV-A] | — |
 | **Competição** | Guarda-chuva de tudo que se disputa. Tem dois tipos, com peso igual no produto: **ranking** e **torneio** | R3, R6 |
 | **Ranking** | Competição contínua, dividida em temporadas. Os confrontos saem de sorteios por rodada; o jogador não escolhe o adversário. Guarda a **regra de pontuação**, o **formato da partida** (um só), o **prazo de resposta** (padrão 48h), o número de **jogos por rodada** e a **política de troca de parceiro** | R7, R9, R14, R17, R29 |
 | **Torneio** | Competição discreta, de 1 ou 2 dias. **No MVP, o app não gera a chave:** o torneio tem inscrição, confronto e resultado lançado pelo admin, e a chave vem de fora do app. Guarda um **formato padrão**, que o admin troca na partida que fugir dele. A final de uma temporada de ranking é um torneio comum | R27, R29, R31, R38 |
@@ -119,10 +121,18 @@ erDiagram
     RODADA ||--o{ FOTO_CLASSIFICACAO : "fim da rodada"
     JOGADOR ||--o{ AMIZADE : "pede ou aceita"
     JOGADOR ||--o{ EVENTO_FEED : "é ator de"
+    JOGADOR ||--o{ INTERESSE : "marca"
+    COMPETICAO ||--o{ INTERESSE : "recebe"
 
     ORGANIZACAO {
         string nome
         string username
+        string tipo "arena, clube, federação ou grupo"
+        string cidade
+        string contato "texto ou link do organizador"
+    }
+    INTERESSE {
+        datetime marcado_em
     }
     COMPETICAO {
         string tipo "ranking ou torneio"
@@ -237,7 +247,8 @@ erDiagram
 - **Classificação** não aparece como entidade: é a soma de `pontos_lado_*` das partidas confirmadas de cada inscrição, ordenada pela R37. A **foto da classificação** guarda a posição de cada inscrição no fim de cada rodada, para o evento "subiu N" e os marcos (R46, R47).
 - **Sorteio e confronto** também não aparecem: o sorteio cria partidas, e o confronto é a partida no estado "Confronto definido". A data acordada mora na partida, venha ela de uma proposta aceita ou de uma data informada (R35).
 - **Temporada → competição (final)** é opcional: a temporada pode apontar para o torneio que é a final dela.
-- **Arena** é texto, não entidade. Nenhuma regra precisa dela como entidade ainda.
+- **A arena da partida** é texto, não entidade (R34). A arena do Explorar é outra coisa: a organização do tipo arena (NAV N34). As duas não precisam estar ligadas no MVP.
+- **Interesse** liga um jogador a uma competição em que ele não está inscrito ("Tenho interesse", NAV N33). É privado: serve para medir demanda, não avisa o organizador e não aparece para outros jogadores.
 
 ---
 
@@ -416,7 +427,7 @@ stateDiagram-v2
 
 ## 4. Agenda do jogador
 
-A navegação é de outras specs, mas o modelo precisa sustentar o que elas mostram. O app tem uma **aba "Jogos"**, a agenda do jogador, e o registro de resultado é **contextual**, sem aba própria: item do bloco de pendências no topo do feed, botão na tela do confronto e notificação. [DEC-JOGOS]
+A navegação está em `docs/NAVIGATION.md`, mas o modelo precisa sustentar o que elas mostram. O app tem uma **aba "Jogos"**, a agenda do jogador, e o registro de resultado é **contextual**, sem aba própria: item do bloco de pendências no topo do feed, botão na tela do confronto e notificação. [DEC-JOGOS]
 
 | O que a agenda mostra | De onde vem no modelo |
 | --- | --- |

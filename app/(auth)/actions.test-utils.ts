@@ -5,7 +5,7 @@ type SupabaseServerClient = Awaited<ReturnType<typeof createClient>>;
 
 export const TEST_USER = {
   id: "user-123",
-  user_metadata: { full_name: "Ana Souza" },
+  user_metadata: { first_name: "Ana Clara", last_name: "de Souza", full_name: "Ana Clara de Souza" },
 };
 
 /**

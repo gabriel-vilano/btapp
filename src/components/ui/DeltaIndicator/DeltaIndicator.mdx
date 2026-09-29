@@ -53,14 +53,25 @@ O texto concorda com o número: "1 posição" no singular, "2 posições" no plu
 
 ## Forma compacta
 
-Com `compact`, a tela mostra só a seta e o número ("▼ 2"), para colunas estreitas como a da linha do ranking (`RankingRow`), onde o delta fica embaixo dos pontos. O leitor de tela continua ouvindo a frase inteira ("Caiu 2 posições"). Só vale para subir e cair: "Manteve a posição" não tem forma curta.
+Com `compact`, a tela mostra só o ícone e o número, e o leitor de tela continua ouvindo a frase inteira. Vale para os três sentidos.
+
+### Subiu e caiu
+
+A tela mostra a seta e o número ("▼ 2"), para colunas estreitas como a da linha do ranking (`RankingRow`), onde o delta fica embaixo dos pontos. O leitor de tela ouve "Caiu 2 posições".
 
 <Canvas of={DeltaIndicatorStories.Compact} />
+
+### Manteve
+
+A tela mostra só o traço, e o leitor de tela ouve "Manteve a posição". É a forma do `StandingSummaryItem`: a frase inteira é larga e empurrava o título do item para 2 linhas em 393px. Lá, subiu e caiu seguem com a frase ("2 posições"), que cabe e diz mais.
+
+<Canvas of={DeltaIndicatorStories.UnchangedCompact} />
 
 ## Quando usar
 
 - Movimento da unidade no bloco de ranking do feed (`RankingBlock`)
 - Coluna de variação de uma linha do ranking (`RankingRow`, na forma compacta)
+- Trailing do resumo de posição no perfil (`StandingSummaryItem`, com o "Manteve" na forma compacta)
 - Resumo de evolução no perfil e na tela depois da confirmação do resultado
 
 ## Componentes relacionados

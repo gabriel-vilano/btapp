@@ -162,7 +162,7 @@ Do ponto de vista de um jogador, o confronto está sempre em um destes estados:
 | **Sem data** | Adversários, rodada e prazo da rodada | "Propor horários"; secundárias "Informar data" e "Abrir no WhatsApp" | Sim, como "marcar jogo" |
 | **Proposta aguardando você** | As 2 ou 3 opções, quem propôs e quando | Escolher uma opção e confirmar no botão que diz a escolha ("Marcar jogo · sáb, 3 out, 14h"); "Nenhum serve" (M9) | Sim, como "responder proposta" |
 | **Proposta aguardando o outro lado** | As opções enviadas, por quem e quando | "Trocar horários" ou "Retirar"; "Abrir no WhatsApp" | Não: a vez é do outro lado |
-| **Data acordada** | Data, hora, arena e como foi definida (proposta aceita ou data informada, e por quem) | "Remarcar" e "Abrir no WhatsApp" | Não, até o dia do jogo |
+| **Data acordada** | Data, hora, arena e como foi definida (proposta aceita ou data informada, e por quem) | "Remarcar" e "Abrir no WhatsApp" | Não. No dia do jogo, o aviso chega pela notificação (seção 5), não pelo feed (`NAVIGATION.md`, N21) |
 | **Data passou sem resultado** | A data acordada | "Lançar resultado" (spec de registro de partidas) | Sim, como pendência de resultado |
 | **Congelada** | O histórico, só leitura | Nenhuma | Não |
 
@@ -186,12 +186,12 @@ Na partida não realizada (R40), a tela de decisão mostra o **resumo por lado**
 
 O "Abrir no WhatsApp" abre direto na conversa quando o jogador informou o telefone. O telefone é **dado pessoal**, então as regras abaixo seguem a LGPD (Lei 13.709/2018): consentimento destacado, finalidade única, o mínimo de gente vendo e apagar quando o jogador quiser. [DEC-MARC-P P2]
 
-- **M20. O telefone é opcional e não faz parte do cadastro.** O jogador informa no perfil ou no primeiro toque em "Abrir no WhatsApp". O cadastro continua sendo nome, e-mail e senha. [DEC-MARC-P P2, `PRODUCT.md`]
+- **M20. O telefone é opcional e não faz parte do cadastro.** O jogador informa nas configurações (`NAVIGATION.md` N8, `PROFILE.md` PF9) ou no primeiro toque em "Abrir no WhatsApp". O cadastro continua sendo nome, e-mail e senha. [DEC-MARC-P P2, `PRODUCT.md`]
 - **M21. Salvar o telefone exige consentimento explícito**, dado numa ação própria, com a caixa desmarcada e o texto da finalidade ao lado (ex.: "Mostrar meu telefone aos adversários e ao meu parceiro enquanto o jogo não acontece, para marcarmos pelo WhatsApp"). Sem o consentimento, o número não é salvo. O app guarda quando o consentimento foi dado. [DEC-MARC-P P2; LGPD art. 7º, I, e art. 8º]
 - **M22. A finalidade é uma só: marcar o jogo.** O telefone não é usado para notificação, divulgação, busca de jogadores nem contato fora de um confronto. Uma finalidade nova pede consentimento novo. [DEC-MARC-P P2; LGPD art. 6º, I e III, e art. 9º, §2º]
 - **M23. Só veem o telefone os adversários e o parceiro de um confronto ativo**, ou seja, de uma partida do ranking em "Confronto definido" (M1). Quando a partida sai desse estado, o número deixa de aparecer para eles. **Nunca aparece** no perfil público, no feed, na busca, no histórico da marcação nem para o admin. A regra vale no banco (política de acesso), não só na interface. [DEC-MARC-P P2]
 - **M24. Sem telefone, o "Abrir no WhatsApp" continua existindo:** o app monta o texto das opções, e o jogador escolhe a conversa ou o grupo. Com o telefone de um ou mais jogadores do outro lado, o botão oferece cada um deles e também a opção sem número (ex.: mandar no grupo do ranking). [DEC-MARC-P P2]
-- **M25. O jogador apaga o telefone quando quiser, no perfil.** Apagar remove o número, não só o esconde, e vale como revogação do consentimento. Excluir a conta também apaga o telefone. Como o histórico da marcação nunca guarda o número (M23), nada sobra depois. [DEC-MARC-P P2; LGPD art. 8º, §5º, e art. 18, VI]
+- **M25. O jogador apaga o telefone quando quiser, nas configurações** (`NAVIGATION.md` N8). Apagar remove o número, não só o esconde, e vale como revogação do consentimento. Excluir a conta também apaga o telefone. Como o histórico da marcação nunca guarda o número (M23), nada sobra depois. [DEC-MARC-P P2; LGPD art. 8º, §5º, e art. 18, VI]
 
 ---
 

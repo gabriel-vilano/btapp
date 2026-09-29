@@ -48,7 +48,7 @@ export function StandingSummaryItem({
         </>
       }
       supportingText={buildSupportingText(partnerName, complement)}
-      trailing={delta && <DeltaIndicator {...delta} />}
+      trailing={delta && <DeltaIndicator {...delta} compact={delta.direction === "none"} />}
     />
   );
 }

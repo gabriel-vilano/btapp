@@ -19,7 +19,7 @@ function sameTie(x: StandingRow, y: StandingRow): boolean {
  * toda inscrição desse empate espera a decisão do admin (R37): anunciar e
  * depois retirar desmentiria o feed (R25).
  */
-function certainQualifiers(rows: StandingRow[], qualifiers: number): string[] {
+export function certainQualifiers(rows: StandingRow[], qualifiers: number): string[] {
   const cutoff = cutoffLine(rows, qualifiers);
   if (!cutoff.awaiting_admin) return cutoff.qualified_ids;
   const lastIn = rows.find((row) => row.enrollment_id === cutoff.qualified_ids.at(-1));

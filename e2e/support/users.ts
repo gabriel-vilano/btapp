@@ -25,7 +25,7 @@ export async function createConfirmedUser(email: string, password = TEST_PASSWOR
     email,
     password,
     email_confirm: true,
-    user_metadata: { full_name: "Jogador E2E" },
+    user_metadata: { first_name: "Jogador", last_name: "E2E", full_name: "Jogador E2E" },
   });
 
   if (error) {

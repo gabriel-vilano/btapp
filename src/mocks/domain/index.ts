@@ -29,6 +29,14 @@ import {
   rounds,
   season,
 } from './ranking';
+import {
+  pastMasculinoB,
+  pastMatches,
+  pastMilestones,
+  pastRounds,
+  pastSeason,
+  pastSnapshots,
+} from './pastSeason';
 import { rankingMatches } from './rankingMatches';
 import { playerPhones, reportedScheduleDates, scheduleProposals } from './scheduling';
 import { milestones, standingSnapshots } from './standings';
@@ -107,5 +115,23 @@ export const mockEntities = {
   tournamentCategories,
   tournamentEnrollments,
 };
+
+/**
+ * O `mockDomain` com uma temporada encerrada do mesmo ranking (1º semestre),
+ * para a seção "Temporadas" do perfil (PF19). Separado para que as contagens
+ * e o feed dos outros testes sigam só a temporada atual.
+ * Ex.: `profileSeasons(mockProfileDomain, mockEntities.players.lucas.id, now)`.
+ */
+export const mockProfileDomain: DomainMocks = {
+  ...mockDomain,
+  seasons: [pastSeason, ...mockDomain.seasons],
+  rounds: [...Object.values(pastRounds), ...mockDomain.rounds],
+  enrollments: [...Object.values(pastMasculinoB), ...mockDomain.enrollments],
+  matches: [...pastMatches, ...mockDomain.matches],
+  standingSnapshots: [...pastSnapshots, ...mockDomain.standingSnapshots],
+  milestones: [...pastMilestones, ...mockDomain.milestones],
+};
+
+export const pastSeasonEntities = { season: pastSeason, rounds: pastRounds, masculinoB: pastMasculinoB };
 
 export { scheduleHistoryOf } from './scheduling';

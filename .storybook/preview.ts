@@ -19,6 +19,12 @@ const preview: Preview = {
 
     viewport: {
       options: {
+        // Menor celular suportado: stories de texto longo conferem que nada vaza
+        mobile320: {
+          name: "Mobile 320 (iPhone SE 1ª geração)",
+          styles: { width: "320px", height: "568px" },
+          type: "mobile",
+        },
         mobile393: {
           name: "Mobile 393 (iPhone 15)",
           styles: { width: "393px", height: "852px" },

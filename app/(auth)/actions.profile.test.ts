@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createClient } from "@/src/lib/supabase/server";
+import { AVATAR_MAX_BYTES } from "@/src/lib/validations";
 import { checkUsername, createProfile } from "./actions";
 import {
   asSupabaseClient,
@@ -103,10 +104,36 @@ describe("createProfile", () => {
     expect(supabase.profilesQuery.maybeSingle).not.toHaveBeenCalled();
     expect(supabase.profilesQuery.upsert).toHaveBeenCalledWith({
       id: TEST_USER.id,
-      full_name: "Ana Souza",
+      first_name: "Ana Clara",
+      last_name: "de Souza",
+      full_name: "Ana Clara de Souza",
       username: null,
       avatar_url: null,
     });
+  });
+
+  it("cadastro antigo, só com full_name: separa a primeira palavra como nome", async () => {
+    supabase.auth.getUser.mockResolvedValueOnce({
+      data: { user: { ...TEST_USER, user_metadata: { full_name: "João Pedro  Silva" } } },
+    });
+    await expect(createProfile(null, buildFormData({ username: "" }))).rejects.toThrow(
+      redirectSignal("/feed"),
+    );
+    expect(supabase.profilesQuery.upsert).toHaveBeenCalledWith(
+      expect.objectContaining({ first_name: "João", last_name: "Pedro Silva", full_name: "João Pedro Silva" }),
+    );
+  });
+
+  it("cadastro antigo com nome de uma palavra: sobrenome fica null", async () => {
+    supabase.auth.getUser.mockResolvedValueOnce({
+      data: { user: { ...TEST_USER, user_metadata: { full_name: "Gabriel" } } },
+    });
+    await expect(createProfile(null, buildFormData({ username: "" }))).rejects.toThrow(
+      redirectSignal("/feed"),
+    );
+    expect(supabase.profilesQuery.upsert).toHaveBeenCalledWith(
+      expect.objectContaining({ first_name: "Gabriel", last_name: null, full_name: "Gabriel" }),
+    );
   });
 
   it("com foto: sobe no bucket do usuário e salva a URL pública", async () => {
@@ -160,9 +187,9 @@ describe("createProfile", () => {
   });
 
   it("rejeita foto acima do limite sem subir nada", async () => {
-    const oversized = new File([new Uint8Array(5 * 1024 * 1024 + 1)], "foto.png", { type: "image/png" });
+    const oversized = new File([new Uint8Array(AVATAR_MAX_BYTES + 1)], "foto.png", { type: "image/png" });
     const result = await createProfile(null, buildFormData({ username: "", avatar: oversized }));
-    expect(result).toEqual({ error: "Foto deve ter no máximo 5MB" });
+    expect(result).toEqual({ error: "Foto deve ter no máximo 1MB" });
     expect(supabase.avatarsBucket.upload).not.toHaveBeenCalled();
   });
 

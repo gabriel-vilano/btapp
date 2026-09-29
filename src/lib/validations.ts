@@ -3,20 +3,35 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const OTP_LENGTH = 8;
 const OTP_REGEX = new RegExp(`^\\d{${OTP_LENGTH}}$`);
 
-export const NAME_MAX_LENGTH = 30;
+export const FIRST_NAME_MAX_LENGTH = 30;
+// Sobrenome brasileiro costuma ter duas ou três palavras ("de Vasconcelos Albuquerque"
+// tem 26 caracteres), por isso o limite é maior que o do nome
+export const LAST_NAME_MAX_LENGTH = 40;
+const NAME_PART_MIN_LENGTH = 2;
 
-export function validateName(name: string) {
-  const trimmed = name.trim();
-  if (trimmed.length < 2) {
-    return { valid: false, error: "Nome precisa ter pelo menos 2 caracteres" };
+function validateNamePart(value: string, label: string, maxLength: number) {
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return { valid: false, error: `${label} é obrigatório` };
   }
-  if (trimmed.length > NAME_MAX_LENGTH) {
+  if (trimmed.length < NAME_PART_MIN_LENGTH) {
     return {
       valid: false,
-      error: `Nome deve ter no máximo ${NAME_MAX_LENGTH} caracteres`,
+      error: `${label} precisa ter pelo menos ${NAME_PART_MIN_LENGTH} caracteres`,
     };
   }
+  if (trimmed.length > maxLength) {
+    return { valid: false, error: `${label} deve ter no máximo ${maxLength} caracteres` };
+  }
   return { valid: true };
+}
+
+export function validateFirstName(firstName: string) {
+  return validateNamePart(firstName, "Nome", FIRST_NAME_MAX_LENGTH);
+}
+
+export function validateLastName(lastName: string) {
+  return validateNamePart(lastName, "Sobrenome", LAST_NAME_MAX_LENGTH);
 }
 
 export function validateEmail(email: string) {
@@ -87,14 +102,27 @@ export function slugifyName(name: string): string {
 }
 
 const ALLOWED_AVATAR_TYPES = ["image/jpeg", "image/png", "image/webp"];
-const MAX_AVATAR_SIZE = 5 * 1024 * 1024;
 
-export function validateAvatar(file: File) {
+// 1MB decimal, não 1MiB: o body de uma server action tem limite padrão de 1MiB
+// (1.048.576 bytes, `serverActions.bodySizeLimit` do Next). A folga de ~48KB cobre o
+// resto do multipart (username, id da action), para uma foto que passa aqui nunca ser
+// recusada pelo Next antes da action rodar. O bucket `avatars` usa o mesmo valor.
+export const AVATAR_MAX_BYTES = 1_000_000;
+
+export function validateAvatarType(file: File) {
   if (!ALLOWED_AVATAR_TYPES.includes(file.type)) {
     return { valid: false, error: "Formato aceito: JPG, PNG ou WebP" };
   }
-  if (file.size > MAX_AVATAR_SIZE) {
-    return { valid: false, error: "Foto deve ter no máximo 5MB" };
+  return { valid: true };
+}
+
+export function validateAvatar(file: File) {
+  const typeValidation = validateAvatarType(file);
+  if (!typeValidation.valid) {
+    return typeValidation;
+  }
+  if (file.size > AVATAR_MAX_BYTES) {
+    return { valid: false, error: "Foto deve ter no máximo 1MB" };
   }
   return { valid: true };
 }

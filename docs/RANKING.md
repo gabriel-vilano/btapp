@@ -1,6 +1,6 @@
 # RANKING.md — LetzPlay
 
-Spec da tela de ranking: a classificação de uma categoria, como o jogador troca de categoria, como vê a própria posição e o quanto ela mudou, a linha de corte da final, a página da competição e os estados da aba Ranking. Dá também os critérios de aceite do RankingRow e do ZoneDivider.
+Spec da tela de ranking: a classificação de uma categoria, como o jogador troca de categoria, como vê a própria posição e o quanto ela mudou, a linha de corte da final, a página da competição e os estados da classificação. Dá também os critérios de aceite do RankingRow e do ZoneDivider.
 
 > Este doc decide **o que o jogador vê na classificação e como a lê**. As regras que produzem a classificação (pontuação, desempate, fotos por rodada, final, inscrição encerrada) estão em `docs/DOMAIN.md` e **não são reabertas aqui**. O cálculo já existe: `computeStandings` (`src/lib/domain/standings.ts`) e `cutoffLine`/`closeRound` (`src/lib/domain/roundClose.ts`). Onde a classificação mora na navegação é do `docs/NAVIGATION.md` (N…). As regras deste doc são numeradas **RK1, RK2…**, para não colidir com as R do domínio, as M da marcação, as N da navegação e as RG do registro de resultado. Rotas são propostas; nomes de componente são para a auditoria do DS.
 
@@ -16,7 +16,7 @@ As siglas de decisão são as do `docs/DOMAIN.md` > "Fontes". As que esta spec u
 | **DEC-RESP** | Tabela ao vivo e evento "subiu N" por fim de rodada (R46); desempate fixo (R37); inscrição encerrada congelada (R45) |
 | **DEC-RANK** | Decisões do Gabriel na issue desta spec (27/09/2026): aprovação com as recomendações de RQ1 a RQ7 e as leituras RL1 a RL9, e confirmação da RL10 e da RL11 em 28/09/2026; a queda aparece na tabela, e a R22 passa a valer só para o feed e as notificações |
 | **DEC-NAV** | Decisão do Gabriel (26/09), registrada no `docs/NAVIGATION.md`: **ranking como lista completa, com a linha da própria dupla fixada** |
-| **NAV** | `docs/NAVIGATION.md` (em revisão): aba Ranking (N1), rota da classificação e da competição (N9, N10), toque do card de movimentação rolando até a linha da dupla, vazio, carregando e erro (N22–N24). **As perguntas Q1–Q5 de lá seguem abertas**; esta spec depende da Q1 (abas) e da Q4 (categoria aberta na aba e seletor). As regras dependentes dizem isso no texto (RK2, RK6, RK19) |
+| **NAV** | `docs/NAVIGATION.md`: aba Competições com a lista "Minhas competições" (N1, N29), rota da classificação e da competição (N9, N10), área "Administrar" da competição (N31), toque do card de movimentação rolando até a linha da dupla, vazio, carregando e erro (N22–N24). As perguntas Q1–Q5 de lá foram respondidas pelo Gabriel em 29/09/2026 |
 | **RES** | `docs/RESULTS.md` (em revisão), §8.1: impacto no ranking logo depois da confirmação (RG18) |
 | **CARDS** | `docs/FEED_CARDS.md` §8: card de movimentação, gramática posição + delta + pontos, queda sem fundo de cor |
 | **REF** | `docs/discovery/referencias/01-ranking.md` (50 telas de 30 apps, Mobbin) e `inventario-componentes.md` |
@@ -42,10 +42,10 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
 ## 2. Onde a tela mora
 
-- **RK1. A classificação é uma tela por categoria e temporada** (rota proposta `/ranking/[categoria]`, com a temporada atual; temporada encerrada em `/ranking/[categoria]?temporada=[id]`). É a mesma tela vinda da aba Ranking, do card do feed, da notificação, do perfil e da página da competição (N10). [NAV N10]
-- **RK2. A aba Ranking abre numa classificação, não numa lista de rankings.** Abre a categoria vista por último; sem histórico de visita, a da inscrição ativa com a partida confirmada mais recente. Sem inscrição ativa, mostra o vazio da seção 8. **Depende da Q4 da navegação**: se o Gabriel escolher outra entrada, esta regra muda junto. [NAV Q4; DEC-RANK RL1]
+- **RK1. A classificação é uma tela por categoria e temporada** (rota proposta `/ranking/[categoria]`, com a temporada atual; temporada encerrada em `/ranking/[categoria]?temporada=[id]`). É a mesma tela vinda da aba Competições, do card do feed, da notificação, do perfil e da página da competição (N10). [NAV N10]
+- **RK2. A classificação abre pelo item da lista "Minhas competições" da aba Competições** (NAV N29): cada ranking do jogador aparece lá com a posição e o delta (StandingSummaryItem), e o toque abre a classificação daquela categoria. A aba não abre direto numa classificação. Os vazios da aba são da navegação (NAV 9.2); os da classificação estão na seção 8. [NAV N29; DEC-NAV-Q Q1, Q4, que substitui a RL1]
 
-  **Por quê:** o volume é de 1 a 2 categorias por jogador (DOMAIN §4). Uma lista de rankings antes da tabela seria um toque a mais em toda visita para resolver um caso raro.
+  **Por quê:** a lista já responde "onde estou" em todas as categorias de uma vez, sem abrir a tabela. O toque a mais só existe para quem quer ver quem está em volta.
 - **RK3. O card de movimentação e o de marco abrem a classificação rolada até a linha da dupla** (NAV, "Destino de cada toque"). O card de resultado e o de confronto abrem pelo cabeçalho de competição. [NAV]
 
 ---
@@ -54,7 +54,7 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
 ```
 ┌──────────────────────────────────────────────┐
-│ Ranking                                      │  ← cabeçalho da aba (N, seção 3)
+│ ‹ Voltar                                     │  ← cabeçalho de tela de detalhe (NAV seção 3)
 │ ┌──────────────────────────────────────────┐ │
 │ │ Ranking BH · Masculino B            ⌄    │ │  ← seletor de categoria (RK6)
 │ └──────────────────────────────────────────┘ │
@@ -89,8 +89,8 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
   Com uma inscrição só e sem outras categorias na competição, o seletor vira texto (sem ⌄ e sem toque).
 
-  **Depende da Q4 da navegação.** O cabeçalho da aba no `NAVIGATION.md` diz "seletor de categoria quando há mais de uma inscrição". Esta regra mostra o seletor também com uma inscrição só, quando a competição tem outras categorias, para o jogador poder olhar a categoria de um amigo. Se a Q4 for aprovada como está lá, a linha do cabeçalho da navegação passa a apontar para esta regra; se o Gabriel escolher outra entrada, esta regra muda junto.
-- **RK7. Não há filtro de região nem de nível no MVP.** A classificação já é de uma categoria, e a categoria já é gênero + nível + idade (R4): filtrar por nível dentro dela não tem o que filtrar. Região e nível são filtros de **descoberta** de competição (JTBD 1), que está fora do MVP e ganha a quinta aba quando entrar (NAV N1). Nem filtro dentro da tabela: com 6 a 40 duplas por categoria (DOMAIN §7, `FEED_CARDS.md` §11.4), a lista rola em poucos gestos, e a própria linha está sempre à vista (RK9). [R4, NAV N1; DEC-RANK RQ1]
+  O seletor fica **dentro** da classificação, não no cabeçalho da aba (NAV seção 3): troca de categoria sem voltar à lista "Minhas competições". Aparece também com uma inscrição só, quando a competição tem outras categorias, para o jogador poder olhar a categoria de um amigo.
+- **RK7. Não há filtro de região nem de nível no MVP.** A classificação já é de uma categoria, e a categoria já é gênero + nível + idade (R4): filtrar por nível dentro dela não tem o que filtrar. Região e nível são filtros de **descoberta** de competição (JTBD 1), que no MVP é o Explorar sem filtros (NAV N33); os filtros ficam fora do MVP. Nem filtro dentro da tabela: com 6 a 40 duplas por categoria (DOMAIN §7, `FEED_CARDS.md` §11.4), a lista rola em poucos gestos, e a própria linha está sempre à vista (RK9). [R4, NAV N33; DEC-RANK RQ1]
 
 ---
 
@@ -168,8 +168,8 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
 ## 6. Temporada e tempo
 
-- **RK15. A classificação mostra a temporada atual.** Depois do fim, a temporada encerrada continua na tela até a próxima começar, com o cabeçalho "Temporada encerrada" e a tabela final; a linha da própria dupla continua fixada. Quando a próxima começa, a encerrada mais recente fica acessível por um link no cabeçalho ("Temporada anterior") até o fim da nova. [R8, R27; NAV 7.2; DEC-RANK RL7]
-- **RK21. Toda temporada encerrada tem a própria classificação, na mesma tela** (`/ranking/[categoria]?temporada=[id]`), no estado "Temporada encerrada" da RK15. É o destino do toque numa temporada da seção "Temporadas" do perfil (`PROFILE.md`, PF19): a tela abre rolada até a linha da dupla daquela temporada, destacada como a própria linha quando o jogador está nela. A aba Ranking só oferece a temporada anterior (RK15); as mais antigas chegam pelo perfil, que é onde mora a evolução. [NAV N10; DEC-RANK RL11]
+- **RK15. A classificação mostra a temporada atual.** Depois do fim, a temporada encerrada continua na tela até a próxima começar, com o cabeçalho "Temporada encerrada" e a tabela final; a linha da própria dupla continua fixada. Quando a próxima começa, a encerrada mais recente fica acessível por um link no cabeçalho ("Temporada anterior") até o fim da nova. [R8, R27; NAV 9.2; DEC-RANK RL7]
+- **RK21. Toda temporada encerrada tem a própria classificação, na mesma tela** (`/ranking/[categoria]?temporada=[id]`), no estado "Temporada encerrada" da RK15. É o destino do toque numa temporada da seção "Temporadas" do perfil (`PROFILE.md`, PF19): a tela abre rolada até a linha da dupla daquela temporada, destacada como a própria linha quando o jogador está nela. A classificação só oferece a temporada anterior (RK15); as mais antigas chegam pelo perfil, que é onde mora a evolução. [NAV N10; DEC-RANK RL11]
 - **Temporadas mais antigas e a evolução de posição ao longo do tempo** (JTBD 5) ficam com a spec de perfil, combinado com ela no Linear.
 - **RK16. A tabela atualiza ao vivo** (R46): uma confirmação muda a tabela na próxima visita ou ao puxar para atualizar. Não há atualização em tempo real com a tela aberta no MVP. Uma confirmação que muda a posição da própria dupla enquanto a tela está aberta aparece na próxima carga, sem animação. [R46; DEC-RANK RL8]
 - **Sem tela de celebração ao subir.** O momento de subir já tem dois lugares: a tela do confronto logo depois da confirmação (RES, RG18) e o card do feed no fim da rodada (CARDS §8). Uma terceira, interrompendo a abertura do app, repetiria o mesmo momento. [RES, CARDS; DEC-RANK RQ7]
@@ -180,7 +180,7 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
 A página da competição existe e não é aba (NAV N9); o conteúdo, no ranking, é desta spec. Rota proposta `/competicoes/[competicao]`.
 
-- **RK17. A página tem quatro blocos, nesta ordem:** cabeçalho, categorias, temporada e regras. [NAV N9; DEC-RANK RL9]
+- **RK17. A página tem quatro blocos, nesta ordem:** cabeçalho, categorias, temporada e regras. Dois blocos entram logo abaixo do cabeçalho conforme quem vê: para quem **não** está inscrito, "Como se inscrever" e "Tenho interesse" (NAV N33); para o admin da competição, a entrada da área "Administrar" (NAV N31). [NAV N9, N31, N33; DEC-RANK RL9]
 
 | Bloco | Conteúdo |
 | --- | --- |
@@ -190,23 +190,21 @@ A página da competição existe e não é aba (NAV N9); o conteúdo, no ranking
 | **Regras** | Formato da partida (R29, texto do formato); a tabela de pontos do ranking (R9–R11, R36) em linguagem de jogador ("Vitória: 100 pontos, mais 2 por game vencido e menos 2 por game perdido"), com o exemplo do 6/4 6/3 calculado pela regra do próprio ranking; a ordem de desempate (R37), com a nota de que ali a vitória por W.O. conta, diferente da linha da tabela (RK8); o prazo para confirmar (R14); o que acontece sem jogo no prazo da rodada (R40) |
 
 - **RK18. As regras mostram os valores do ranking, não os padrões do app.** Cada ranking guarda a própria tabela (R9); a página lê a `ScoringRule` da competição. O exemplo usa `matchPoints` com a regra dela.
-- **Ações do admin na página:** "Lançar sorteio da rodada N", só para o admin da competição e só quando a rodada anterior fechou (R7, R15, NAV N9). **O fluxo do sorteio não é desta spec:** o botão existe, e o fluxo vira issue própria (seção 12).
+- **Ações do admin na página:** ficam na área "Administrar" da competição (NAV N31), visível só para o admin dela. Entre elas, "Lançar sorteio da rodada N", disponível só quando a rodada anterior fechou (R7, R15). **O fluxo do sorteio não é desta spec:** o botão existe, e o fluxo vira issue própria (seção 12).
 
 ---
 
 ## 8. Estados
 
-### 8.1 Vazio da aba
+### 8.1 Vazio da classificação
 
-- **RK19. Nenhum estado vazio deixa a tela sem próximo passo** (NAV N22). Os casos da aba Ranking estão abaixo. **Depende da navegação:** a aba Ranking só existe se a Q1 de lá for aprovada, e o CTA "Registrar amistoso" leva ao fluxo da N19; se uma das duas mudar, esta regra muda junto.
+- **RK19. Nenhum estado vazio deixa a tela sem próximo passo** (NAV N22). Os vazios de quem não tem inscrição (jogador novo, ou só temporadas passadas) são da aba Competições, que é por onde a classificação abre (RK2, NAV 9.2). A classificação em si é sempre de uma categoria: quem a abre sem estar inscrito vê a tabela sem linha destacada (8.4). O vazio que sobra para ela é o da competição sem temporada:
 
 | Situação | Título | Apoio | Ação |
 | --- | --- | --- | --- |
-| **Sem nenhuma inscrição, nunca** (jogador novo) | "Você ainda não está em nenhum ranking" | "A inscrição é feita pelo organizador do ranking. Quando você entrar, sua posição aparece aqui." (R32) | "Registrar amistoso" (leva ao fluxo da aba Jogos, N19) |
-| **Sem inscrição ativa, com temporada passada** | — | Mostra a classificação final da última temporada em que jogou, com o cabeçalho "Temporada encerrada" | — |
 | **Ranking sem temporada em andamento** (competição sem temporada aberta) | "Nenhuma temporada em andamento" | "A próxima temporada do [Ranking] ainda não começou." Abaixo, a tabela final da última, se houver | "Ver regras do ranking" |
 
-Os três usam o `EmptyState` do DS (ícone opcional, título, apoio e uma ação).
+Usa o `EmptyState` do DS (ícone opcional, título, apoio e uma ação).
 
 ### 8.2 Vazio da tabela
 
@@ -231,7 +229,7 @@ Os três usam o `EmptyState` do DS (ícone opcional, título, apoio e uma ação
 | Aberta | Não inscrito na categoria | Tabela sem linha destacada |
 | Depois da data de corte, antes do fim | Qualquer | Divisor "Classificados para…", sem distância da vaga |
 | Encerrada | Qualquer | RK15 |
-| Sem temporada | Qualquer | RK19, terceira linha |
+| Sem temporada | Qualquer | RK19 |
 
 ---
 
@@ -243,7 +241,7 @@ Os três usam o `EmptyState` do DS (ícone opcional, título, apoio e uma ação
 | --- | --- | --- | --- |
 | **RankingRow** | 3 | Linha da classificação (seção 4) | Novo, issue de ENG já aberta. Parte do ListItem |
 | **ZoneDivider** | 3 | Linha de corte da final (4.5) | Novo, mesma issue |
-| **StandingSummaryItem** | 3 | "Sua posição em uma categoria": posição, delta, competição · categoria, parceiro. Na folha do seletor (RK6), na página da competição (RK17) e, se a spec de perfil quiser, no perfil | Novo. Parte do ListItem |
+| **StandingSummaryItem** | 3 | "Sua posição em uma categoria": posição, delta, competição · categoria, parceiro. Na lista "Minhas competições" da aba Competições (NAV N29), na folha do seletor (RK6), na página da competição (RK17) e no perfil | Novo. Parte do ListItem |
 | **PinnedStandingRow** | 3 | A cópia fixa da própria linha (RK9) | Novo. Compõe o RankingRow; o comportamento de fixar é da tela |
 | **DeltaIndicator** | 1 | Delta da linha e do item | Em PR aberto |
 | **ListItem**, **Badge**, **EmptyState**, **Skeleton**, **Dialog**, **Alert** | 1–2 | Base da linha, "Encerrada"/"Empate", vazios, carregando, folhas, erro | No `master` |
@@ -309,13 +307,13 @@ Decisão à parte, na mesma rodada: **a queda aparece na tabela**, e a R22 do `D
 
 Confirmadas pelo Gabriel (DEC-RANK):
 
-- **RL1.** A aba abre na categoria vista por último (RK2), seguindo a recomendação da Q4 da navegação.
+- **RL1.** ~~A aba abre na categoria vista por último.~~ Substituída pela Q1 e pela Q4 da navegação (29/09/2026): a aba Competições abre na lista, e a classificação abre pelo item (RK2).
 - **RL2.** A cópia fixa aparece embaixo ou em cima, conforme o lado por onde a linha saiu, e tocar nela rola até a linha (RK9).
 - **RL3.** A posição igual não mostra traço na tabela (RK12).
 - **RL4.** Sem pódio, medalha ou coroa no top 3 (4.3).
 - **RL5.** Inscrição encerrada fica na posição dela, apagada, com "Encerrada", e a linha de corte pula ela (4.4, 4.5).
 - **RL6.** Temporada sem jogo confirmado mostra a lista alfabética sem posição (RK20).
-- **RL7.** A temporada encerrada fica na tela até a próxima começar; depois, a aba oferece só a anterior, por link (RK15).
+- **RL7.** A temporada encerrada fica na tela até a próxima começar; depois, a classificação oferece só a anterior, por link (RK15).
 - **RL8.** Sem atualização em tempo real nem tela de celebração ao subir (RK16).
 - **RL9.** A página da competição tem cabeçalho, categorias, temporada e regras com os valores do próprio ranking (RK17, RK18).
 
@@ -332,7 +330,7 @@ Confirmadas pelo Gabriel em 28/09/2026 (saíram das correções de consistência
 | --- | --- |
 | Fluxo do sorteio da rodada (o que o admin vê, confirmação, erro) | Issue própria, a criar depois da aprovação. O botão está na RK18 |
 | Decisão do admin no empate total (R37, último critério) | O domínio não guarda essa decisão hoje (`computeStandings` só marca `awaiting_admin`). Issue própria de domínio e tela |
-| Descoberta de competições com filtros de nível e região | JTBD 1, fora do MVP (`PRODUCT.md`); quinta aba reservada (NAV N1) |
+| Descoberta de competições com filtros de nível e região | JTBD 1. No MVP, o Explorar tem a busca e a vitrine dos organizadores do beta, sem filtros (NAV N32, N33; `PRODUCT.md`) |
 | Recorte social ("só amigos" na tabela) | Futuro. Com 6 a 40 duplas por categoria, o ganho é pequeno no MVP (REF, padrão 4) |
 | Histórico de temporadas e evolução da posição | Spec de perfil (JTBD 5) |
 | Classificação em tempo real com a tela aberta | Futuro (RK16) |
@@ -350,7 +348,7 @@ Medidas no beta com Rankin e Vila. Sem meta fixa: a primeira rodada define a lin
 | **Uso da cópia fixa** | Toques na cópia fixa por sessão na classificação | Se ninguém toca, a cópia informa sem precisar levar; se todos tocam, talvez a tela devesse abrir já rolada |
 | **Troca de categoria** | % das sessões na classificação que abrem o seletor; % que abrem "Outras categorias" | Valida o seletor em folha (RK6) e se olhar outras categorias tem uso |
 | **Regras abertas** | Visitas a "Como funciona a pontuação" por jogador na temporada | Testa a oportunidade 2.2 (explicar a pontuação) |
-| **Aba de entrada** | % das sessões que visitam a aba Ranking; comparação com Feed e Jogos | Testa a hipótese H4 do discovery (ranking é o motivo de abrir o app) |
+| **Aba de entrada** | % das sessões que visitam a aba Competições; comparação com Feed e Jogos | Testa a hipótese H4 do discovery (ranking é o motivo de abrir o app) |
 
 ---
 
