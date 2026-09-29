@@ -146,6 +146,7 @@ Valores absolutos (não relativos) para ritmo vertical consistente independente 
 | `--dimension-icon-md`            | 24px  | padrão                     |
 | `--dimension-icon-lg`            | 32px  |                            |
 | `--dimension-icon-xl`            | 64px  |                            |
+| `--dimension-avatar-24`          | 24px  | avatar na aba Perfil       |
 | `--dimension-avatar-32`          | 32px  | avatar pequeno (stack)     |
 | `--dimension-avatar-40`          | 40px  | avatar do header de card   |
 | `--dimension-avatar-48`          | 48px  | avatar grande, logo        |
