@@ -10,6 +10,7 @@ import {
 } from "@/src/lib/domain/schedule-state";
 import { formatEventMoment } from "@/src/lib/formatters";
 import type { MatchSideKey, ScheduleHistory } from "@/src/types/domain";
+import { formatOfferedTimes } from "./formatOfferedTimes";
 import { formatOptions, nameOf, scheduleTimelineEventsOf, type PlayerNames } from "./scheduleTimelineEvents";
 import styles from "./ScheduleEvidence.module.css";
 
@@ -36,7 +37,7 @@ interface SummaryRow {
 const EMPTY_MOMENT = "Nenhuma";
 
 const SUMMARY_ROWS: SummaryRow[] = [
-  { label: "Horários oferecidos", value: (s) => String(s.offeredTimeCount) },
+  { label: "Horários oferecidos", value: formatOfferedTimes },
   { label: "Propostas enviadas", value: (s) => String(s.proposalCount) },
   { label: "Propostas expiradas sem aceite", value: (s) => String(s.unansweredCount) },
   { label: "Propostas do outro lado aceitas", value: (s) => String(s.acceptedCount) },

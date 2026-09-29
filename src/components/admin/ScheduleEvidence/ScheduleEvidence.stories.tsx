@@ -63,8 +63,8 @@ type Story = StoryObj<typeof meta>;
 /** Só a dupla A propôs; as duas propostas expiraram sem aceite. */
 export const OneSideProposed: Story = {
   play: async ({ canvasElement }) => {
-    await expect(cellOf(canvasElement, "Horários oferecidos", 0)).toHaveTextContent("5");
-    await expect(cellOf(canvasElement, "Horários oferecidos", 1)).toHaveTextContent("0");
+    await expect(cellOf(canvasElement, "Horários oferecidos", 0)).toHaveTextContent("5 horários em 5 dias");
+    await expect(cellOf(canvasElement, "Horários oferecidos", 1)).toHaveTextContent("Nenhum");
     await expect(cellOf(canvasElement, "Propostas expiradas sem aceite", 0)).toHaveTextContent("2");
     await expect(cellOf(canvasElement, "Primeira proposta", 1)).toHaveTextContent("Nenhuma");
     const canvas = within(canvasElement);
@@ -79,7 +79,8 @@ export const OneSideProposed: Story = {
 export const BothSidesProposed: Story = {
   args: { history: BOTH_SIDES_HISTORY },
   play: async ({ canvasElement }) => {
-    await expect(cellOf(canvasElement, "Horários oferecidos", 1)).toHaveTextContent("5");
+    await expect(cellOf(canvasElement, "Horários oferecidos", 0)).toHaveTextContent("2 horários em 2 dias");
+    await expect(cellOf(canvasElement, "Horários oferecidos", 1)).toHaveTextContent("5 horários em 4 dias");
     await expect(cellOf(canvasElement, "Propostas do outro lado aceitas", 0)).toHaveTextContent("1");
     await expect(within(canvasElement).getByText(/^Data acordada:/)).toHaveTextContent("Thiago aceitou");
     await expectNoHorizontalOverflow(canvasElement);
