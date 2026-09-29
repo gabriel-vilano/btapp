@@ -13,7 +13,12 @@ type DeltaIndicatorProps =
       compact?: boolean;
       className?: string;
     }
-  | { direction: "none"; compact?: never; className?: string };
+  | {
+      direction: "none";
+      /** Só o traço à vista. "Manteve a posição" continua no leitor de tela. */
+      compact?: boolean;
+      className?: string;
+    };
 
 type DeltaDirection = DeltaIndicatorProps["direction"];
 
@@ -45,7 +50,11 @@ export function DeltaIndicator(props: DeltaIndicatorProps) {
 }
 
 function DeltaText(props: DeltaIndicatorProps) {
-  if (props.direction === "none") return <span>Manteve a posição</span>;
+  if (props.direction === "none") {
+    // Oculto direto como filho do flex: posicionado em absoluto, não soma o gap ao lado do traço
+    const className = props.compact ? styles.delta__direction : undefined;
+    return <span className={className}>Manteve a posição</span>;
+  }
 
   // Número e palavra em nós de texto separados, como no RankingBlock original:
   // juntar numa string só muda a largura medida em frações de pixel
