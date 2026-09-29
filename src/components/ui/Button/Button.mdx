@@ -60,6 +60,16 @@ Use quando a ação está temporariamente indisponível **por razão evidente ao
 
 <Canvas of={ButtonStories.Disabled} />
 
+Cada variante desabilitada **mantém a forma** e só troca a cor para o tom de desabilitado:
+
+- **Primary:** fundo `--color-background-disabled` com texto `--color-foreground-on-disabled`.
+- **Secondary:** sem fundo, borda `--color-border-subtle` e texto `--color-foreground-disabled`.
+- **Ghost:** sem fundo e sem borda, só o texto em `--color-foreground-disabled`.
+
+Assim o secondary e o ghost continuam parecendo a mesma ação, e nenhum botão desabilitado ganha mais peso que o primary ativo ao lado dele.
+
+<Canvas of={ButtonStories.DisabledVariants} />
+
 ### Full width
 
 Ocupa 100% da largura do container. Padrão em formulários mobile e bottom sheets, onde o botão é a ação ancora da tela.
@@ -116,9 +126,13 @@ Sempre via componente `<Icon />`, tamanho `sm`. Cor herda do botão via `current
 
 <ArgTypes of={ButtonStories} />
 
+## Decisões de design
+
+**Por que o secondary e o ghost desabilitados não ganham fundo cinza, como o primary?** O preenchido cinza servia para todas as variantes, e um ghost desabilitado virava um bloco cinza cheio: mudava de forma, deixava de parecer a mesma ação e pesava mais que o primary ativo ao lado dele (caso do "Nenhum serve" do ScheduleOptionPicker enquanto o aceite é gravado). Agora o desabilitado só apaga a cor, e o preenchimento continua sendo o que diferencia o primary. Secondary e ghost usam os mesmos tokens do Chip e do Checkbox não selecionados desabilitados, sem token novo.
+
 ## Referências
 
 - [MDN — `<button>` element](https://developer.mozilla.org/docs/Web/HTML/Element/button)
 - [WAI-ARIA — Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/)
 - [WCAG 2.5.5 — Target Size](https://www.w3.org/WAI/WCAG21/Understanding/target-size.html)
-- Tokens relacionados: `docs/TOKENS.md` (`--dimension-action-height-*`, `--color-state-layer-*`)
+- Tokens relacionados: `docs/TOKENS.md` (`--dimension-action-height-*`, `--color-state-layer-*`, `--color-*-disabled`)
