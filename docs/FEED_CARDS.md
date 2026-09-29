@@ -70,6 +70,8 @@ Dois padrões dependendo do tipo de card:
 ```
 - Nome + ação: `--text-body-md`, `--color-foreground-primary` — ex: "Lucas Silva subiu no ranking"
 
+**Timestamp "há X tempo"** (vale para os dois padrões): minutos e horas abreviados ("há 5min", "há 3h"); a partir de 1 dia, por extenso. Até 6 dias em dias ("há 6 dias"), de 7 a 29 em semanas ("há 1 semana", "há 4 semanas"), de 30 a 364 em meses de 30 dias ("há 1 mês", "há 5 meses", com teto em "há 11 meses": "há 12 meses" nunca aparece), e a partir de 365 em anos ("há 1 ano"). Implementado em `formatTimestamp` (`src/lib/formatters.ts`).
+
 **Textos neutros de gênero.** O cadastro não coleta gênero, então nenhum texto do feed flexiona pelo jogador: "agora são amigos" em vez de "tornou-se amigo", "Assumiu a liderança" em vez de "Líder". Verbos ("subiu", "inscreveu-se") já são neutros. Texto novo segue a mesma regra.
 - @username + timestamp: `--text-label-md`, `--color-foreground-secondary`
 
@@ -169,6 +171,17 @@ Todo card de resultado exibe um label ao lado do nome de cada jogador/dupla:
 - Padding: `--spacing-50` vertical, `--spacing-100` horizontal
 - **O vencedor aparece sempre na linha superior** — independente de quem é o usuário logado
 - Sem ícones de checkmark (✓) ou X — os labels substituem completamente essa função
+
+### 3.4 Variante compacta (listas)
+
+Nas listas (partidas recentes do perfil, H2H, prévia do registro) o placar vira uma linha: `<ScoreBlock variant="compact" perspective=… />`, em `src/components/ui/ScoreBlock/`. Decisões do Gabriel em 29/09/2026:
+
+- **Lê-se do lado do dono da lista** (o perfil, ou você no H2H), não do vencedor: numa derrota, `Derrota · 4/6 3/6`. Placar e Badge contam a mesma história, e no H2H a leitura "eu × ele" é igual em todas as linhas. A prop `perspective` (`winner` ou `loser`) diz de que lado da partida está quem lê: o `Score` é gravado do lado vencedor.
+- **Grafia:** `6/4 3/6 10/7`. Barra dentro do set, espaço entre os sets, super tiebreak como número, sem rótulo. `--text-label-lg` em negrito.
+- **Cor:** o set vencido por quem lê em `--color-foreground-primary`, o perdido e o interrompido em `--color-foreground-secondary`.
+- **W.O.:** o texto "W.O." em `--color-foreground-secondary`, sem número. A área nunca fica vazia.
+- **Desistência:** o placar real com `desist.` depois do set interrompido (`4/6 3/2 desist.`). Desistência entre sets não escreve o set que não começou (`6/4 desist.`). Sem nenhum game jogado, só `desist.`, como o W.O.
+- **Não quebra:** a linha do placar fica inteira, e quem quebra é o texto ao lado.
 
 ---
 
@@ -749,7 +762,7 @@ O jogador vê no feed o conteúdo das organizações dos rankings e torneios em 
 
 **Por quê:** um feed que depende de o usuário escolher quem seguir nasce vazio (*cold start*), e a maioria das pessoas não muda o padrão (efeito padrão; Johnson & Goldstein, "Do Defaults Save Lives?", *Science*, 2003). A inscrição já é um sinal forte e gratuito de interesse.
 
-**Consequência:** o jogador competitivo circula por 3 ou mais organizações por semestre, então descobrir organizações novas importa. Esse papel fica com a **tela de competições com filtros por nível e região**, e não com o feed.
+**Consequência:** o jogador competitivo circula por 3 ou mais organizações por semestre, então descobrir organizações novas importa. Esse papel fica com a aba **Explorar** (`NAVIGATION.md`, N32 e N33), e não com o feed. No MVP ela não tem filtros; filtros por nível e região ficam para depois.
 
 **Evolução prevista:** híbrido. O vínculo implícito continua como padrão, com "Seguir" (alcançar organizações sem inscrição) e "Deixar de seguir" (silenciar). A tabela `follows (follower_id → profiles, followee_id → organizations)` só entra nesse momento.
 

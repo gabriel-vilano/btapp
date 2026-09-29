@@ -1,8 +1,17 @@
 import type { RetiredScore, Score, SetScore } from "@/src/types/feed";
+import { CompactScore, type ScorePerspective } from "./CompactScore";
 import styles from "./ScoreBlock.module.css";
+import { hasPlayedGames, isStarted } from "./scoreSets";
 
 interface ScoreBlockProps {
   score: Score;
+  /** `default`: grade do card de resultado. `compact`: uma linha, para listas. */
+  variant?: "default" | "compact";
+  /**
+   * Só no `compact`: de que lado a linha se lê. O card sempre lê do vencedor (vencedor em cima);
+   * numa lista, o lado é o do dono dela (o perfil, ou você no H2H).
+   */
+  perspective?: ScorePerspective;
 }
 
 /** Uma coluna da grade: um set. `interrupted` é o set da desistência (R11). */
@@ -12,7 +21,12 @@ interface ScoreColumn {
   interrupted: boolean;
 }
 
-export function ScoreBlock({ score }: ScoreBlockProps) {
+/**
+ * Placar de uma partida confirmada.
+ * Ex.: `<ScoreBlock score={score} variant="compact" perspective="loser" />` → "4/6 3/6"
+ */
+export function ScoreBlock({ score, variant = "default", perspective = "winner" }: ScoreBlockProps) {
+  if (variant === "compact") return <CompactScore score={score} perspective={perspective} />;
   const outcomeLabel = getOutcomeLabel(score);
   if (outcomeLabel) {
     return <p className={styles.score__outcome}>{outcomeLabel}</p>;
@@ -41,14 +55,6 @@ export function getOutcomeLabel(score: Score): string | null {
 export function getInterruptedSetName(score: RetiredScore): string {
   const index = score.completed_sets.length;
   return index === 2 ? "super tiebreak" : `${index + 1}º set`;
-}
-
-function hasPlayedGames(score: RetiredScore): boolean {
-  return score.completed_sets.length > 0 || isStarted(score.interrupted_set);
-}
-
-function isStarted(set: SetScore): boolean {
-  return set.a + set.b > 0;
 }
 
 function getColumns(score: Score): ScoreColumn[] {
