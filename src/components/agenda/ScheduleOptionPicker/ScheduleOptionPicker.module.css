@@ -1,0 +1,222 @@
+/* =============================================================
+   ScheduleOptionPicker — rádios nativos escondidos + cartões
+   desenhados. O <input> guarda estado, foco e setas do teclado;
+   o cartão só reflete o estado dele via seletor irmão, como o
+   ChoiceChipGroup e o Checkbox.
+   ============================================================= */
+
+.picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-300);
+}
+
+.picker__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.picker__legend {
+  margin-bottom: var(--spacing-100);
+  padding: 0;
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground-primary);
+}
+
+.picker__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+}
+
+/* --- Opção --- */
+
+.option {
+  display: flex;
+  position: relative;
+}
+
+/* Some da tela, fica para o leitor de tela e para o teclado */
+.option__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.option__card {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--spacing-150);
+  min-height: var(--dimension-tap-target-minimum);
+  padding: var(--spacing-150) var(--spacing-200);
+  border: var(--border-width-medium) solid var(--color-border-medium);
+  border-radius: var(--radius-card);
+  background-color: var(--color-background-primary);
+  color: var(--color-foreground-primary);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard),
+              border-color var(--motion-duration-short-3) var(--motion-easing-standard),
+              color var(--motion-duration-short-3) var(--motion-easing-standard);
+}
+
+/* State layer de interação (hover e press) */
+.option__card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--color-state-layer-neutral);
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .option__card:hover::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.option__card:active::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+/* Anel de 20px: mesmo tamanho da caixa do Checkbox */
+.option__radio {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--text-body-md-line-height);
+  height: var(--text-body-md-line-height);
+  border: var(--border-width-thick) solid var(--color-border-medium);
+  border-radius: var(--radius-full);
+}
+
+.option__radio::before {
+  content: "";
+  width: var(--spacing-100);
+  height: var(--spacing-100);
+  border-radius: var(--radius-full);
+  background-color: currentColor;
+  opacity: 0;
+  transition: opacity var(--motion-duration-short-2) var(--motion-easing-standard);
+}
+
+.option__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.option__day {
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line-height);
+  letter-spacing: var(--text-body-lg-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.option__detail {
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-secondary);
+  overflow-wrap: anywhere;
+}
+
+.option__time {
+  flex-shrink: 0;
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+/* --- Selecionada ---
+   Seleção em grafite, ação em coral (docs/TOKENS.md): o cartão
+   escuro não compete com o botão "Marcar jogo". */
+.option__input:checked + .option__card {
+  background-color: var(--color-background-inverse);
+  border-color: var(--color-background-inverse);
+  color: var(--color-foreground-on-inverse);
+}
+
+.option__input:checked + .option__card .option__detail {
+  color: var(--color-foreground-on-inverse);
+}
+
+.option__input:checked + .option__card .option__radio {
+  border-color: var(--color-foreground-on-inverse);
+}
+
+.option__input:checked + .option__card .option__radio::before {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .option__input:checked + .option__card:hover::after {
+    background-color: var(--color-state-layer-hover-on-strong);
+  }
+}
+
+.option__input:checked + .option__card:active::after {
+  background-color: var(--color-state-layer-pressed-on-strong);
+}
+
+/* --- Foco --- */
+.option__input:focus-visible + .option__card {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+/* --- Indisponível (horário passou, M12) ou confirmando --- */
+.option__input:disabled + .option__card {
+  border-color: var(--color-border-subtle);
+  color: var(--color-foreground-disabled);
+  cursor: not-allowed;
+}
+
+.option__input:disabled + .option__card .option__detail,
+.option__input:disabled + .option__card .option__radio {
+  color: var(--color-foreground-disabled);
+  border-color: var(--color-border-subtle);
+}
+
+/* Enquanto confirma, a escolhida continua em grafite: é ela que está sendo
+   gravada, então segue legível. Não é o "selecionado e desabilitado" do DS
+   (preenchido cinza com texto branco, 1,7:1), porque a opção não ficou
+   indisponível, só travada. Selecionada e indisponível não acontece: a
+   escolha é desfeita quando o horário passa. */
+.picker__group:disabled .option__input:checked + .option__card {
+  background-color: var(--color-background-inverse);
+  border-color: var(--color-background-inverse);
+  color: var(--color-foreground-on-inverse);
+}
+
+.picker__group:disabled .option__input:checked + .option__card .option__detail,
+.picker__group:disabled .option__input:checked + .option__card .option__radio {
+  color: var(--color-foreground-on-inverse);
+  border-color: var(--color-foreground-on-inverse);
+}
+
+.option__input:disabled + .option__card::after {
+  background-color: var(--color-state-layer-neutral);
+}

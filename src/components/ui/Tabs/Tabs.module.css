@@ -1,0 +1,114 @@
+/* =============================================================
+   Tabs — abas de página (APG Tabs)
+   ============================================================= */
+
+.tabs {
+  min-width: 0;
+}
+
+/* Abas demais para a largura rolam na horizontal: a aba cortada na borda
+   indica que há mais. A linha de base é sombra interna, para o indicador
+   da aba ativa (dentro da aba) ficar por cima dela. */
+.tabs__list {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  box-shadow: inset 0 calc(var(--border-width-medium) * -1) 0 var(--color-border-subtle);
+}
+
+.tabs__list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Base 0 com mínimo no conteúdo: abas que cabem dividem a largura por igual;
+   as que não cabem mantêm o texto inteiro e a lista rola. */
+.tabs__tab {
+  flex: 1 0 0;
+  min-width: max-content;
+  min-height: var(--dimension-tap-target-minimum);
+  padding: 0 var(--spacing-200);
+  border: 0;
+  background-color: transparent;
+  color: var(--color-foreground-secondary);
+  font-family: inherit;
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+  cursor: pointer;
+  position: relative;
+  transition: color var(--motion-duration-short-3) var(--motion-easing-standard);
+}
+
+/* Indicador da aba ativa */
+.tabs__tab::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: var(--border-width-thick);
+  background-color: transparent;
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard);
+}
+
+/* State layer de interação (hover e press) */
+.tabs__tab::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-state-layer-neutral);
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .tabs__tab:hover::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.tabs__tab:active::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+/* --- Selecionada ---
+   Seleção em grafite, ação em coral: o indicador escuro dá ~12:1 com o
+   branco e não compete com o botão principal. */
+.tabs__tab[aria-selected="true"] {
+  color: var(--color-foreground-primary);
+}
+
+.tabs__tab[aria-selected="true"]::before {
+  background-color: var(--color-background-inverse);
+}
+
+/* --- Foco ---
+   Ring para dentro: a lista rola, e um ring para fora seria cortado por ela. */
+.tabs__tab:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: calc(var(--border-width-thick) * -1);
+}
+
+.tabs__tab:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* --- Desabilitada --- */
+.tabs__tab:disabled {
+  color: var(--color-foreground-disabled);
+  cursor: not-allowed;
+}
+
+.tabs__tab:disabled::after {
+  background-color: var(--color-state-layer-neutral);
+}
+
+/* --- Painel --- */
+.tabs__panel:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.tabs__panel:focus:not(:focus-visible) {
+  outline: none;
+}

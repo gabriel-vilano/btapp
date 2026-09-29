@@ -1,1 +1,1 @@
-export { ScoreBlock } from "./ScoreBlock";
+export { ScoreBlock, getInterruptedSetName, getOutcomeLabel } from "./ScoreBlock";

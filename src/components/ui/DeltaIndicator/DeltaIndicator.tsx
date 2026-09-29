@@ -9,9 +9,11 @@ type DeltaIndicatorProps =
       direction: "up" | "down";
       /** Posições movidas, sempre positivo: o sentido vem de `direction`. */
       value: number;
+      /** Só a seta e o número à vista, para colunas estreitas (linha do ranking). A frase inteira continua no leitor de tela. */
+      compact?: boolean;
       className?: string;
     }
-  | { direction: "none"; className?: string };
+  | { direction: "none"; compact?: never; className?: string };
 
 type DeltaDirection = DeltaIndicatorProps["direction"];
 
@@ -47,10 +49,12 @@ function DeltaText(props: DeltaIndicatorProps) {
 
   // Número e palavra em nós de texto separados, como no RankingBlock original:
   // juntar numa string só muda a largura medida em frações de pixel
+  const unit = props.value === 1 ? "posição" : "posições";
   return (
     <span>
       <span className={styles.delta__direction}>{DIRECTION_LABELS[props.direction]} </span>
-      {props.value} {props.value === 1 ? "posição" : "posições"}
+      {props.value}
+      {props.compact ? <span className={styles.delta__direction}> {unit}</span> : <> {unit}</>}
     </span>
   );
 }
