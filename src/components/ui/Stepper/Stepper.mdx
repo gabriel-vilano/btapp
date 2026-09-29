@@ -1,0 +1,87 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as StepperStories from "./Stepper.stories";
+
+<Meta of={StepperStories} />
+
+<Subtitle>Um número pequeno, ajustado de 1 em 1 entre um mínimo e um máximo.</Subtitle>
+
+**Código-fonte:** [`src/components/ui/Stepper/Stepper.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/Stepper/Stepper.tsx)
+
+## Visão geral
+
+O rótulo fica à esquerda e os controles à direita: botão −, o valor e botão +. O primeiro uso é o set interrompido da desistência, em que cada lado informa os games que tinha no momento, de 0 ao alvo do set (`docs/RESULTS.md` §3.4).
+
+<Canvas of={StepperStories.Default} />
+
+## Estados
+
+O Stepper é controlado: o consumidor guarda o `value` e recebe o novo valor em `onValueChange`, sempre dentro de `min` e `max`. Os estados abaixo aparecem juntos na galeria.
+
+<Canvas of={StepperStories.AllStates} />
+
+### Nos limites
+
+No `min`, o botão − fica desabilitado; no `max`, o +. As setas do teclado também param no limite. O jogador vê pelo botão apagado que não dá para ir além, sem mensagem de erro.
+
+<Canvas of={StepperStories.AtMinimum} />
+
+<Canvas of={StepperStories.AtMaximum} />
+
+### Desabilitado
+
+Os dois botões e o valor ficam cinza, e o valor sai da ordem do Tab. Desabilitado mantém a forma: o círculo continua com borda, agora `--color-border-subtle` (ver `docs/TOKENS.md` > "Regras fundamentais").
+
+<Canvas of={StepperStories.Disabled} />
+
+## Em uso: set interrompido
+
+Dois Steppers empilhados, um por lado, com o rótulo dizendo de quem são os games. Na largura mínima do app (320px), o rótulo quebra linha e os controles ficam fixos à direita.
+
+<Canvas of={StepperStories.InterruptedSet} />
+
+## Quando usar
+
+- Informar um número inteiro pequeno, perto de um valor conhecido: games de um set, quantidade de vagas
+- Quando o intervalo é curto (até uns 10 passos) e o jogador ajusta mais do que digita
+
+## Componentes relacionados
+
+- Para **escolher um valor entre poucos, todos visíveis**, use o [`ChoiceChipGroup`](?path=/docs/ui-chip--docs), como os games do perdedor no set completo (`docs/RESULTS.md` §3.3). Um toque escolhe; o Stepper pede um toque por passo
+- Para **um número grande ou sem limite prático** (pontos do super tiebreak, telefone), use o [`FormInput`](?path=/docs/ui-forminput--docs) com `inputMode="numeric"`
+
+## Acessibilidade
+
+- **`role="spinbutton"`** no valor, com `aria-valuenow`, `aria-valuemin` e `aria-valuemax`, e o rótulo visível como nome acessível (`aria-labelledby`), no padrão [APG Spinbutton](https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/). O leitor anuncia "Games de Lucas e Rafael, 2, botão giratório"
+- **Teclado:** Tab chega no valor. Seta para cima e para baixo andam de 1 em 1; Home vai ao mínimo e End ao máximo
+- **Botões fora do Tab** (`tabIndex={-1}`): as setas já fazem o trabalho deles, e o Tab passa por um ponto só em vez de três. No toque, o leitor de tela ainda chega neles, com o nome "Diminuir …" e "Aumentar …"
+- **Área tocável de 48×48** em cada botão, com o círculo visível de 32px no centro (WCAG 2.5.8 e regra do DS)
+- **Foco:** o ring do DS em `:focus-visible`, desenhado no valor
+- **Borda do círculo** em `--color-border-medium`, acima de 3:1 com o branco (WCAG 1.4.11)
+
+## Evitar
+
+- ❌ **Stepper para intervalo longo.** Ir de 0 a 30 pede 30 toques: use um campo numérico
+- ❌ **Rótulo genérico** ("Quantidade"). O rótulo diz o que é contado e de quem, como "Games de Lucas e Rafael"
+- ❌ **Coral nos botões.** − e + ajustam um valor, não disparam uma ação: coral é a cor de ação e fica para o botão principal da tela
+- ❌ **Mensagem de erro no limite.** O botão desabilitado já diz que não dá para passar
+
+## API
+
+<ArgTypes of={StepperStories} />
+
+## Decisões de design
+
+**Por que o valor não é um campo de texto editável?** O intervalo do primeiro uso é curto: de 0 ao alvo do set. Um campo editável abriria o teclado numérico no celular e traria validação de texto (vazio, fora do limite, letra) para um número que se ajusta em poucos toques. Se aparecer um uso com intervalo longo, o caminho é o `FormInput`, não esticar o Stepper.
+
+**Por que os botões não são focáveis pelo Tab?** O APG põe o foco no spinbutton e deixa as setas fazerem o incremento. Com os botões no Tab, cada Stepper custaria três paradas, e o set interrompido tem dois. Os botões também não pegam foco no clique: ao chegar no limite eles ficam desabilitados, e o foco cairia no começo da página.
+
+**Por que o rótulo é visível e fica ao lado?** O rótulo visível é o nome acessível, então quem usa comando de voz fala o que vê (WCAG 2.5.3). Ao lado, e não em cima, dois Steppers empilhados ficam alinhados como uma tabela de placar, com os números numa coluna só.
+
+## Referências
+
+- [WAI-ARIA APG — Spinbutton](https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/)
+- [WCAG 2.5.8 — Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
+- [WCAG 2.5.3 — Label in Name](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html)
+- [WCAG 1.4.11 — Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)
+- Registro de resultado: `docs/RESULTS.md` (§3.4)
+- Tokens relacionados: `docs/TOKENS.md` (`--dimension-tap-target-minimum`, `--dimension-action-height-sm`, `--color-border-medium`, `--color-border-subtle`, `--color-foreground-disabled`, `--color-state-focus-ring`)
