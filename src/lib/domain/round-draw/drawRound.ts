@@ -79,6 +79,7 @@ function toMatch(input: RoundDrawInput, [sideA, sideB]: Pairing, id: string): Dr
     competition_id: input.ranking.id,
     category_id: input.category.id,
     round_id: input.round.id,
+    undone_reports: [],
     side_a_enrollment_id: sideA,
     side_b_enrollment_id: sideB,
     format: input.ranking.match_format, // o ranking tem um formato só (R29)

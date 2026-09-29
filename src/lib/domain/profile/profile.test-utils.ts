@@ -51,6 +51,7 @@ export function definedMatch(a: Enrollment, b: Enrollment, scheduledAt: string |
     competition_id: 'comp-test',
     category_id: CATEGORY_ID,
     round_id: testRounds.second.id,
+    undone_reports: [],
     side_a_enrollment_id: a.id,
     side_b_enrollment_id: b.id,
     format: 'one_set_of_6',

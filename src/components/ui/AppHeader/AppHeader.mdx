@@ -1,0 +1,111 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as AppHeaderStories from "./AppHeader.stories";
+
+<Meta of={AppHeaderStories} />
+
+<Subtitle>
+  Cabeçalho das abas e das telas de detalhe: "Voltar", título e ações.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/AppHeader/AppHeader.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/AppHeader/AppHeader.tsx)
+
+## Visão geral
+
+`AppHeader` abre cada tela do app. O título é o `h1` da página. A raiz de uma aba mostra só o título e as ações (`docs/NAVIGATION.md` seção 3); a tela de detalhe ganha o "Voltar" à esquerda. O cabeçalho fica preso ao topo durante a rolagem.
+
+<Canvas of={AppHeaderStories.TabRoot} />
+
+## Variantes
+
+Uma variante por tipo de tela. As das abas seguem a tabela "Cabeçalho de cada aba" da spec.
+
+### Feed
+
+O `<Logo />` no lugar do título e o sino com o ponto de não lidas (N7). O `h1` continua lá: o nome acessível é o `alt` do logo, "LetzPlay".
+
+<Canvas of={AppHeaderStories.Feed} />
+
+### Com ação de texto
+
+A aba Jogos tem o "Registrar amistoso" (N19): uma ação sem ícone universal, então é um Button `ghost`.
+
+<Canvas of={AppHeaderStories.WithTextAction} />
+
+### Perfil
+
+O @username como título e a engrenagem das configurações (N8).
+
+<Canvas of={AppHeaderStories.Profile} />
+
+### Tela de detalhe
+
+Com `backHref`, o "Voltar" aparece. O destino é a aba de origem (N10), que o layout do app conhece.
+
+<Canvas of={AppHeaderStories.Detail} />
+
+### Fluxo modal de tarefa
+
+Lançar resultado, propor horários e editar perfil abrem em tela cheia, sem TabBar e sem "Voltar": saem pelo "Fechar", nas ações (N4).
+
+<Canvas of={AppHeaderStories.ModalTask} />
+
+## Estados
+
+O caso extremo de texto.
+
+### Título longo
+
+O título fica numa linha e termina em reticências. O nome inteiro aparece no conteúdo da tela; o cabeçalho não cresce, e o "Voltar" e as ações nunca saem da tela.
+
+<Canvas of={AppHeaderStories.LongTitle} />
+
+## Anatomia
+
+- **Voltar** — `IconButtonLink` com seta, rótulo "Voltar". Só com `backHref`
+- **Título** — `h1` em `title-sm` negrito, uma linha
+- **Ações** — até três `IconButton`, `IconButtonLink` ou um Button `ghost`, à direita
+
+A margem de 16px da página vale para o ícone, não para a área de toque: o cabeçalho tem 4px de padding, e os 12px de respiro do `IconButton` completam os 16px.
+
+## Área segura
+
+Com `viewport-fit=cover`, o conteúdo desce atrás do recorte da câmera do iPhone. O cabeçalho soma `env(safe-area-inset-top)` ao padding e à altura mínima de 56px.
+
+## Quando usar
+
+- No topo de toda tela do app, uma vez por tela
+- Com `backHref` só nas telas de detalhe, nunca na raiz de uma aba
+
+## Componentes relacionados
+
+- As ações usam [`IconButton`](?path=/docs/ui-iconbutton--docs) e [`Button`](?path=/docs/ui-button--docs) `ghost`
+- A navegação entre abas é da [`TabBar`](?path=/docs/ui-tabbar--docs), não do cabeçalho
+
+## Acessibilidade
+
+- Renderiza `<header>` com o `h1` da página: cada tela tem exatamente um
+- "Voltar" é um link (`<a>`), porque leva a uma URL. O nome é "Voltar", não o nome da tela anterior
+- Todas as ações têm área de 48×48 (N26)
+
+## Evitar
+
+- ❌ **Lupa no cabeçalho** — a busca é uma só e mora no Explorar (N6)
+- ❌ **Seletor no cabeçalho** — o seletor de categoria fica dentro da classificação (RK6)
+- ❌ **Mais de três ações** — o que não cabe vai para a tela, não para um menu escondido
+- ❌ **"Voltar" num fluxo modal** — o fluxo modal sai pelo "Fechar"
+
+## API
+
+<ArgTypes of={AppHeaderStories} />
+
+## Decisões de design
+
+**Por que título alinhado à esquerda?** Com "Voltar" e ações de largura variável, o título centralizado fica descentrado ou perde espaço dos dois lados. Alinhado à esquerda, ele usa toda a largura que sobra, o que importa para nomes de competição longos.
+
+**Por que `backHref` e não `router.back()`?** O "Voltar" leva à aba de origem (N10), mesmo quando o jogador chegou por um link compartilhado e não há histórico. Com um destino explícito, o comportamento é o mesmo nos dois casos.
+
+## Referências
+
+- [Apple HIG — Navigation bars](https://developer.apple.com/design/human-interface-guidelines/navigation-bars)
+- [Material Design 3 — Top app bar](https://m3.material.io/components/top-app-bar/overview)
+- `docs/NAVIGATION.md` (seção 3, N4, N6–N8, N10) e `docs/TOKENS.md` (`--text-title-sm-*`, `--z-sticky`)

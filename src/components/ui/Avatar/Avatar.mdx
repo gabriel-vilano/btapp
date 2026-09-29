@@ -23,7 +23,7 @@ import * as AvatarStories from "./Avatar.stories";
 
 ## Tamanhos
 
-Quatro tamanhos fixos, cada um com seu token `--dimension-avatar-*`. O tamanho é número (`32`, `40`, `48`, `96`) e não t-shirt (`sm`, `md`) porque cada valor tem um lugar certo no app, e o número diz exatamente o que vai aparecer na tela.
+Cinco tamanhos fixos, cada um com seu token `--dimension-avatar-*`. O tamanho é número (`24`, `32`, `40`, `48`, `96`) e não t-shirt (`sm`, `md`) porque cada valor tem um lugar certo no app, e o número diz exatamente o que vai aparecer na tela.
 
 <Canvas of={AvatarStories.Sizes} />
 
@@ -36,6 +36,11 @@ Quatro tamanhos fixos, cada um com seu token `--dimension-avatar-*`. O tamanho �
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td><code>24</code></td>
+      <td><code>--dimension-avatar-24</code></td>
+      <td>Aba Perfil da TabBar e do NavigationRail, no lugar do ícone de 24px</td>
+    </tr>
     <tr>
       <td><code>32</code></td>
       <td><code>--dimension-avatar-32</code></td>
@@ -89,7 +94,7 @@ Dado faltando de verdade: o círculo neutro segura o espaço para o layout não 
 
 ## Dupla (AvatarStack)
 
-`AvatarStack` sobrepõe dois avatares para representar uma dupla: o primeiro item fica por cima, o segundo aparece 8px à direita. Um anel na cor do fundo separa os dois círculos. Aceita `32`, `40` e `48`; o `96` é só do perfil, que mostra uma pessoa por vez.
+`AvatarStack` sobrepõe dois avatares para representar uma dupla: o primeiro item fica por cima, o segundo aparece 8px à direita. Um anel na cor do fundo separa os dois círculos. Aceita `32`, `40` e `48`; o `96` é só do perfil, que mostra uma pessoa por vez, e o `24` só da aba Perfil.
 
 <Canvas of={AvatarStories.Stack} />
 
