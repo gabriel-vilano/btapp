@@ -143,7 +143,8 @@ const events: FeedEvent[] = [
     actor_ids: [friendships.lucasPedro.requester_id, friendships.lucasPedro.addressee_id],
     created_at: friendships.lucasPedro.accepted_at,
   },
-  movementEvent(mb.t3, rounds.second, 3, 1),
+  // O T3 subiu de 3º para 1º, mas virou Líder na mesma rodada: o marco
+  // substitui o "subiu" (R47). A M4, encerrada, não tem o "caiu" (R45)
   movementEvent(mb.t1, rounds.second, 1, 2),
   movementEvent(mb.t5, rounds.second, 2, 3),
   ...milestones.filter((milestone) => !isShadowedByLeader(milestone)).map(milestoneEvent),

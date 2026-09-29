@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { fn } from "storybook/test";
+import { expect, fn } from "storybook/test";
 import { ToastVisual, ToastProvider, useToast } from "./Toast";
 import { Button } from "@/src/components/ui/Button";
 
@@ -65,6 +65,35 @@ export const Exiting: Story = {
       description: {
         story:
           "Estado de saída — quando exiting=true, o toast aplica animação de exit. Em produção, dura ~170ms antes de ser removido do DOM.",
+      },
+    },
+  },
+};
+
+export const DismissFocused: Story = {
+  args: {
+    type: "error",
+    message: "Sem conexão com o servidor",
+  },
+  play: async ({ args, canvas, userEvent }) => {
+    const dismiss = canvas.getByRole("button", { name: "Fechar" });
+    await userEvent.tab();
+    await expect(dismiss).toHaveFocus();
+    await expect(dismiss).toHaveAttribute("type", "button");
+
+    // Regra do DS: botão só de ícone tem área tocável de 48×48
+    const { width, height } = dismiss.getBoundingClientRect();
+    await expect(width).toBeGreaterThanOrEqual(48);
+    await expect(height).toBeGreaterThanOrEqual(48);
+
+    await userEvent.keyboard("{Enter}");
+    await expect(args.onDismiss).toHaveBeenCalledOnce();
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Fechar focado pelo teclado. A área tocável é de 48×48, maior que o ícone, sem aumentar o toast.",
       },
     },
   },

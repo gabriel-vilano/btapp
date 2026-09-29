@@ -1,0 +1,100 @@
+.ranking-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Cor do texto da linha num token local: a inscrição encerrada troca uma vez só */
+.ranking-row {
+  --ranking-row-text: var(--color-foreground-primary);
+}
+
+.ranking-row--own {
+  background-color: var(--color-background-secondary);
+}
+
+.ranking-row--closed {
+  --ranking-row-text: var(--color-foreground-secondary);
+}
+
+/* --- Leading: posição e avatar --- */
+
+.ranking-row__leading {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-150);
+}
+
+/* Largura de 2 dígitos com algarismos tabulares: o avatar começa na mesma coluna do 1º ao 40º */
+.ranking-row__position {
+  min-width: 2ch;
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  color: var(--ranking-row-text);
+}
+
+/* --- Conteúdo: nome, badges e linha de apoio --- */
+
+/* Visível só para leitor de tela: é o nome acessível da linha inteira */
+.ranking-row__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Os badges quebram para baixo do nome quando não sobram 8 caracteres de nome ao lado deles
+   (320px com "Encerrada" e "Empate"): sem isso, o nome encolheria até sumir */
+.ranking-row__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-50) var(--spacing-100);
+  min-width: 0;
+  color: var(--ranking-row-text);
+}
+
+/* Base de 8ch para decidir a quebra; cresce até o tamanho do texto, e o resto vira reticências */
+.ranking-row__name {
+  flex: 1 1 8ch;
+  max-width: max-content;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ranking-row__title > :not(.ranking-row__name) {
+  flex-shrink: 0;
+}
+
+.ranking-row__supporting {
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Trailing: pontos e delta --- */
+
+.ranking-row__trailing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.ranking-row__points {
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--ranking-row-text);
+}

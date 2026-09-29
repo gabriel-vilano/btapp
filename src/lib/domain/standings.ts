@@ -1,4 +1,5 @@
 import type { Enrollment } from '@/src/types/domain';
+import { isPlayedResult } from './match-count';
 import {
   countedEnrollments,
   countedMatches,
@@ -50,7 +51,7 @@ function groupTies(sorted: EnrollmentStats[], compare: Compare): EnrollmentStats
 function headToHeadWins(matches: ConfirmedRankingMatch[], x: string, y: string): number {
   return matches.filter((match) => {
     // W.O. não é confronto (R19): quem não jogou não "já se enfrentou"
-    if (match.result.type !== 'normal' && match.result.type !== 'retired') return false;
+    if (!isPlayedResult(match.result)) return false;
     const side = sideOf(match, x);
     return side !== null && sideOf(match, y) !== null && winnerOf(match) === side;
   }).length;

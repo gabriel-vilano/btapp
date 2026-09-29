@@ -1,0 +1,105 @@
+.avatar {
+  display: inline-block;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  background-color: var(--color-background-tertiary);
+  flex-shrink: 0;
+}
+
+.avatar--32 {
+  width: var(--dimension-avatar-32);
+  height: var(--dimension-avatar-32);
+}
+
+.avatar--40 {
+  width: var(--dimension-avatar-40);
+  height: var(--dimension-avatar-40);
+}
+
+.avatar--48 {
+  width: var(--dimension-avatar-48);
+  height: var(--dimension-avatar-48);
+}
+
+.avatar--96 {
+  width: var(--dimension-avatar-96);
+  height: var(--dimension-avatar-96);
+}
+
+.avatar__placeholder {
+  background-color: var(--color-background-tertiary);
+}
+
+/* --- Iniciais: mesmo fundo do placeholder, texto escalado com o círculo --- */
+
+.avatar__initials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-foreground-primary);
+  font-weight: var(--font-weight-bold);
+  user-select: none;
+}
+
+.avatar--32.avatar__initials {
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+}
+
+.avatar--40.avatar__initials {
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+}
+
+.avatar--48.avatar__initials {
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line-height);
+  letter-spacing: var(--text-body-lg-tracking);
+}
+
+.avatar--96.avatar__initials {
+  font-size: var(--text-title-lg-size);
+  line-height: var(--text-title-lg-line-height);
+  letter-spacing: var(--text-title-lg-tracking);
+}
+
+/* --- Stack: dois avatares sobrepostos com leve overlap (8px) e ring branco --- */
+
+.stack {
+  display: inline-flex;
+  isolation: isolate;
+}
+
+.stack__item {
+  display: inline-flex;
+  position: relative;
+}
+
+.stack__item:first-child {
+  z-index: 2;
+}
+
+.stack__item:nth-child(2) {
+  z-index: 1;
+}
+
+.stack__item .avatar {
+  box-shadow: 0 0 0 2px var(--color-background-primary);
+}
+
+/* Overlap: segunda posição vem com margin-left negativo para sobrepor a primeira.
+   8px é a "fatia visível" de cada avatar peeking out além do outro. */
+
+.stack--32 .stack__item:nth-child(2) {
+  margin-left: -24px;
+}
+
+.stack--40 .stack__item:nth-child(2) {
+  margin-left: -32px;
+}
+
+.stack--48 .stack__item:nth-child(2) {
+  margin-left: -40px;
+}

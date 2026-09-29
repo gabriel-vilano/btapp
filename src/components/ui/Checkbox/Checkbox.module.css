@@ -1,0 +1,146 @@
+/* =============================================================
+   Checkbox — checkbox nativo escondido + caixa desenhada.
+   O <input> nativo guarda o estado, o foco e o envio em
+   formulário; a caixa só reflete o estado dele via seletor irmão.
+   ============================================================= */
+
+.checkbox {
+  display: flex;
+  flex-direction: column;
+}
+
+/* A linha inteira é o <label>: tocar no texto também marca.
+   O padding vertical centraliza a primeira linha de texto numa
+   área de 48px, e textos longos crescem para baixo. */
+.checkbox__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-150);
+  min-height: var(--dimension-tap-target-minimum);
+  padding-block: calc(
+    (var(--dimension-tap-target-minimum) - var(--text-body-md-line-height)) / 2
+  );
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Some da tela, fica para o leitor de tela e para o teclado */
+.checkbox__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Caixa de 20px, a mesma altura da linha de texto: fica alinhada
+   com a primeira linha do rótulo sem ajuste fino. */
+.checkbox__box {
+  position: relative;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--text-body-md-line-height);
+  height: var(--text-body-md-line-height);
+  border: var(--border-width-thick) solid var(--color-border-medium);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-background-primary);
+  color: var(--color-foreground-on-inverse);
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard),
+              border-color var(--motion-duration-short-3) var(--motion-easing-standard);
+}
+
+/* State layer circular em volta da caixa (hover e press) */
+.checkbox__box::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--spacing-100) * -1 - var(--border-width-thick));
+  border-radius: var(--radius-full);
+  background-color: var(--color-state-layer-neutral);
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .checkbox__row:hover .checkbox__box::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.checkbox__row:active .checkbox__box::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+.checkbox__check {
+  opacity: 0;
+  transition: opacity var(--motion-duration-short-2) var(--motion-easing-standard);
+}
+
+.checkbox__label {
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-primary);
+}
+
+/* --- Marcado ---
+   Seleção em grafite, ação em coral (docs/TOKENS.md, como o Chip). */
+.checkbox__input:checked + .checkbox__box {
+  background-color: var(--color-background-inverse);
+  border-color: var(--color-background-inverse);
+}
+
+.checkbox__input:checked + .checkbox__box .checkbox__check {
+  opacity: 1;
+}
+
+/* --- Foco --- */
+.checkbox__input:focus-visible + .checkbox__box {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+/* --- Erro --- */
+.checkbox__input[aria-invalid="true"] + .checkbox__box {
+  border-color: var(--color-border-attention);
+}
+
+/* Alinhado com o texto do rótulo, não com a caixa */
+.checkbox__error {
+  padding-left: calc(var(--text-body-md-line-height) + var(--spacing-150));
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-attention);
+}
+
+/* --- Desabilitado --- */
+.checkbox__input:disabled + .checkbox__box {
+  border-color: var(--color-border-subtle);
+}
+
+.checkbox__input:disabled ~ .checkbox__label {
+  color: var(--color-foreground-disabled);
+}
+
+/* Marcado e desabilitado segue o preenchido desabilitado do Button */
+.checkbox__input:checked:disabled + .checkbox__box {
+  background-color: var(--color-background-disabled);
+  border-color: var(--color-background-disabled);
+  color: var(--color-foreground-on-disabled);
+}
+
+.checkbox__row:has(.checkbox__input:disabled) {
+  cursor: not-allowed;
+}
+
+.checkbox__row:has(.checkbox__input:disabled) .checkbox__box::after {
+  background-color: var(--color-state-layer-neutral);
+}

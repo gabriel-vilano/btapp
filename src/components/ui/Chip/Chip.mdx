@@ -1,0 +1,132 @@
+import {
+  Meta,
+  Subtitle,
+  Canvas,
+  ArgTypes,
+} from "@storybook/addon-docs/blocks";
+import * as ChipStories from "./Chip.stories";
+import { FilterChip } from "./FilterChip";
+import { ChoiceChipGroup } from "./ChoiceChipGroup";
+
+<Meta of={ChipStories} />
+
+<Subtitle>
+  Escolha compacta entre opções curtas: filtrar uma lista ou marcar uma resposta.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/Chip/FilterChip.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/Chip/FilterChip.tsx) e [`src/components/ui/Chip/ChoiceChipGroup.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/Chip/ChoiceChipGroup.tsx)
+
+## Visão geral
+
+O chip é uma pílula de 40px com uma opção curta, um número ou uma ou duas palavras. Ele aparece em fileira, nunca sozinho, e mostra de uma vez todas as opções que o jogador pode tocar.
+
+<Canvas of={ChipStories.AllVariants} />
+
+## Variantes
+
+As duas variantes têm o mesmo visual e semânticas diferentes. A escolha depende do que o toque faz: aplica um filtro na tela ou marca a resposta de um formulário.
+
+### Chip de filtro
+
+`FilterChip` é um botão de alternância (`aria-pressed`). Liga e desliga um filtro, e a tela reage na hora. Selecionado, ganha um check à esquerda. É o filtro de categoria do ranking e, no futuro, o da descoberta.
+
+<Canvas of={ChipStories.Filter} />
+
+O estado de cada chip é do consumidor. Para uma categoria por vez, o consumidor desliga os outros; para vários filtros ao mesmo tempo, cada chip guarda o próprio estado. Uma fileira de filtros vai dentro de um `role="group"` com `aria-label`.
+
+<Canvas of={ChipStories.FilterGroup} />
+
+### Chip de escolha em grupo de rádio
+
+`ChoiceChipGroup` é um grupo de rádios nativos com cara de chip, para escolher uma opção entre poucas. É a entrada dos games de quem perdeu o set, no registro de partidas: o jogador escolhe quem venceu e toca nos games de quem perdeu, e o app monta o placar. Só existem placares válidos.
+
+<Canvas of={ChipStories.ChoiceGames} />
+
+No set de 8 são nove chips, que quebram em duas linhas em 393px. Quem monta a tela decide se isso basta ou se a entrada precisa de outro arranjo.
+
+<Canvas of={ChipStories.ChoiceGamesSetOf8} />
+
+As opções também podem ser texto, como no motivo da contestação.
+
+<Canvas of={ChipStories.ChoiceText} />
+
+## Estados
+
+Os estados valem para as duas variantes.
+
+### Selecionado
+
+O chip selecionado ganha fundo grafite (`--color-background-inverse`), com texto e ícone brancos (`--color-foreground-on-inverse`). Hover e press usam os state layers para fundo escuro (`--color-state-layer-hover-on-strong` e `--color-state-layer-pressed-on-strong`), então o selecionado também reage ao toque. O ring de foco fica fora do chip, sobre a superfície da página. No filtro, o check reforça a seleção.
+
+<Canvas of={ChipStories.FilterSelected} />
+
+### Rótulo do grupo escondido
+
+`hideLabel` tira o rótulo da tela e o mantém para o leitor de tela. Use quando a tela já diz o que o grupo pergunta, como um título de set logo acima.
+
+<Canvas of={ChipStories.ChoiceHiddenLabel} />
+
+### Desabilitado
+
+O grupo inteiro (`disabled`) ou uma opção (`options[].disabled`). O chip desabilitado não reage a hover nem a toque. Selecionado e desabilitado segue o preenchido desabilitado do `Button` (`--color-background-disabled` com texto branco), para continuar diferente do não selecionado.
+
+<Canvas of={ChipStories.ChoiceDisabled} />
+
+<Canvas of={ChipStories.FilterDisabled} />
+
+## Quando usar
+
+- Filtrar uma lista por um atributo curto, como a categoria do ranking
+- Escolher um valor entre poucos, curtos e visíveis de uma vez, como os games de um set
+- Responder uma pergunta de lista curta num formulário, como o motivo da contestação
+
+## Componentes relacionados
+
+- Para **escolher entre 2 ou 3 modos que mudam a tela inteira** ("como terminou a partida"), use o SegmentedControl, quando existir
+- Para **um número numa faixa longa** ou sem valores fixos (o set interrompido), use o Stepper, quando existir
+- Para **uma ação**, use [`Button`](?path=/docs/ui-button--docs). O chip marca uma escolha, não dispara uma ação
+- Para **mostrar um status** sem interação, use o Badge
+
+## Acessibilidade
+
+- **Filtro:** `<button type="button" aria-pressed>`. O leitor de tela anuncia "botão de alternância, pressionado" ([APG Button](https://www.w3.org/WAI/ARIA/apg/patterns/button/))
+- **Escolha:** `<fieldset>` com `<legend>` e `<input type="radio">` nativos. O leitor anuncia o grupo pelo nome e "botão de opção, 4 de 7". Tab entra no grupo; as setas trocam a opção ([APG Radio Group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/))
+- O `label` do grupo é obrigatório, mesmo com `hideLabel`: sem ele, "4" não diz de quem são os games
+- **Área tocável de 48px** num chip de 40px, via `::before`. Com o gap de 8px do grupo, as áreas de chips vizinhos se encostam sem se sobrepor
+- **Foco:** o ring do DS em `:focus-visible` (no rádio, o ring aparece no chip)
+- **Seleção por contraste, não por matiz** (WCAG 1.4.1 e 1.4.11): o fundo grafite dá cerca de 12:1 com o branco do chip não selecionado. No filtro, o check reforça a seleção
+
+## Evitar
+
+- ❌ **Chip de filtro para responder um formulário.** A resposta é escolha única com semântica de rádio: use `ChoiceChipGroup`
+- ❌ **Chip sozinho.** Um só filtro liga/desliga é um switch ou checkbox
+- ❌ **Texto longo.** Uma ou duas palavras. Opção que precisa de frase vai num rádio com label comum
+- ❌ **Muitas opções.** Acima de umas 10, o jogador não vê tudo de uma vez: use lista ou Stepper
+- ❌ **Gap menor que 8px entre chips.** As áreas tocáveis de 48px passam a se sobrepor
+
+## API
+
+### FilterChip
+
+<ArgTypes of={FilterChip} />
+
+### ChoiceChipGroup
+
+<ArgTypes of={ChoiceChipGroup} />
+
+## Decisões de design
+
+**Por que dois componentes e não um `Chip` com prop `variant`?** Porque a diferença é de semântica, não de visual. O filtro é um botão com estado próprio; a escolha é um rádio que só faz sentido dentro de um grupo com nome. Uma prop `variant` deixaria montar um rádio solto, sem grupo, que o leitor de tela anuncia sem contexto.
+
+**Por que rádio nativo em vez de `role="radio"` num botão?** O rádio nativo já traz as setas do teclado, o foco num item só do grupo (roving tabindex) e o envio em formulário. Com ARIA, o componente teria que reimplementar tudo isso.
+
+**Por que a seleção tem fundo escuro, e não state layer nem coral?** A primeira versão usava o state layer de seleção (`--color-state-layer-selected`, cinza de 12%). Sobre o branco, esse cinza dá cerca de 1,3:1, e esses chips são a entrada do placar, que o jogador preenche na arena, ao sol. O grafite (`--color-background-inverse`) dá cerca de 12:1. O coral ficou de fora porque é a cor de ação do app: a tela de placar tem vários grupos de chips, e todos eles em coral competiriam com o botão principal.
+
+## Referências
+
+- [WAI-ARIA APG — Radio Group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)
+- [WAI-ARIA APG — Button (toggle)](https://www.w3.org/WAI/ARIA/apg/patterns/button/)
+- [WCAG 2.5.8 — Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
+- [WCAG 1.4.1 — Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)
+- [Material 3 — Chips](https://m3.material.io/components/chips/guidelines) (filter chip com check)
+- Tokens relacionados: `docs/TOKENS.md` (`--color-background-inverse`, `--color-state-layer-*-on-strong`, `--dimension-action-height-md`, `--radius-full`)

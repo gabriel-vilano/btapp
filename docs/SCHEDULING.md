@@ -12,9 +12,10 @@ As siglas são as mesmas do `docs/DOMAIN.md` > "Fontes". As que esta spec usa:
 
 | Sigla | Conteúdo usado aqui |
 | --- | --- |
-| **DEC-MARC** | Propostas de 2 a 3 opções com arena opcional, aceite com um toque, histórico como evidência de W.O., "Abrir no WhatsApp", data combinada fora do app. Chat fora do MVP |
+| **DEC-MARC** | Propostas de 2 a 3 opções com arena opcional, aceite com um toque (revisto pela DEC-ACEITE), histórico como evidência de W.O., "Abrir no WhatsApp", data combinada fora do app. Chat fora do MVP |
 | **DEC-RESP** | P2 (qualquer jogador de cada lado lança e responde; vale a primeira resposta) e P3 (o admin decide a partida não realizada depois do prazo da rodada, com o histórico de propostas como evidência) |
 | **DEC-JOGOS** | Aba "Jogos", bloco de pendências no feed, volume de 2 a 8 jogos por mês. A linha "Data do jogo" foi substituída pela DEC-MARC; o lembrete no dia do jogo é mantido aqui como leitura (L8) |
+| **DEC-ACEITE** | Decisão do Gabriel que revê o aceite da DEC-MARC: o jogador escolhe uma opção e confirma num botão que diz o que vai acontecer (issue do ScheduleOptionPicker, 27/09, ~17:55 UTC) |
 | **DEC-MARC-P** | Respostas do Gabriel às perguntas P1–P3 desta spec, confirmação das leituras L1–L9 e aprovação (issue da spec de marcação de jogos, 26/09, ~21:35 UTC) |
 | **PESQ-RV** | Vila: 72h para combinar a data depois do sorteio (não adotado, ver M19); sem acordo, tem direito ao W.O. quem ofereceu mais datas |
 | **DSC** | Suposição S22 ("o WhatsApp é substituível", com evidência contra), RS5 e RO3 (o WhatsApp continua sendo a camada de comunicação), regulamento Nômades (desafiante propõe 3 opções de horário no privado) |
@@ -26,7 +27,7 @@ As siglas são as mesmas do `docs/DOMAIN.md` > "Fontes". As que esta spec usa:
 
 **O app registra o acordo; a conversa continua no WhatsApp.** A síntese do discovery tem evidência de média a forte contra a ideia de substituir o WhatsApp (S22, RS5, RO3): quem tentou passou a apontar para ele. Por isso a proposta de horário não tenta ser conversa. Ela faz três coisas que o WhatsApp não faz:
 
-1. **Estrutura a oferta**: 2 ou 3 horários concretos, com um toque para aceitar.
+1. **Estrutura a oferta**: 2 ou 3 horários concretos; quem responde escolhe um e confirma.
 2. **Dá memória ao confronto**: a data acordada aparece na agenda e dispara lembretes.
 3. **Deixa um registro auditável** para o admin, numa partida que não saiu (R40).
 
@@ -68,6 +69,8 @@ Quem prefere combinar tudo no grupo continua podendo: informa a data depois (R35
 ### Aceite, expiração e remarcação
 
 - **M11. Aceitar uma opção define a data acordada** (e a arena, se a opção tinha). A proposta passa a aceita, e a opção escolhida fica marcada. [DEC-MARC, R34]
+
+  **Como se aceita:** o jogador escolhe uma opção e confirma num botão que diz o que vai acontecer ("Marcar jogo · sáb, 3 out, 14h"). Não existe aceite num toque: o aceite avisa os outros 3 jogadores (seção 5), publica data e arena no card (M18), vira evidência (M16, M17) e não se desfaz sozinho (M13). Como a proposta não tem prazo de resposta (seção 4), o toque a mais não pesa. [DEC-ACEITE]
 - **M12. Uma opção cujo horário passou não pode mais ser aceita.** Quando todas passaram, a proposta **expira** sozinha. Isso não é consequência para ninguém: só libera o confronto para uma nova proposta. [LEIT]
 - **M13. Remarcar é propor de novo.** Com a data acordada, qualquer lado pode propor novos horários (chuva, lesão, imprevisto). A data acordada **continua valendo** até a nova proposta ser aceita; se ninguém aceitar, nada muda. [LEIT]
 
@@ -81,7 +84,7 @@ Quem prefere combinar tudo no grupo continua podendo: informa a data depois (R35
 ### Histórico e evidência
 
 - **M16. Nada da marcação é apagado.** Proposta criada, substituída, retirada, expirada ou aceita e data informada ficam no histórico do confronto, cada item com autor e momento. [DEC-MARC]
-- **M17. O histórico é evidência, não veredito.** Na partida não realizada (R40), o admin vê o histórico e um resumo por lado: **quantas datas distintas cada lado ofereceu**, quantas propostas ficaram sem resposta e se houve data acordada ou informada. Ele também pode considerar o que aconteceu fora do app (ex.: prints do WhatsApp), porque uma oferta feita no grupo é tão válida quanto uma feita no app. **O app nunca sugere nem aplica o W.O.** [DEC-MARC, DEC-RESP P3, R40, PESQ-RV; LEIT]
+- **M17. O histórico é evidência, não veredito.** Na partida não realizada (R40), o admin vê o histórico e um resumo por lado: **quantos horários cada lado ofereceu e em quantas datas distintas**, quantas propostas ficaram sem resposta e se houve data acordada ou informada. Ele também pode considerar o que aconteceu fora do app (ex.: prints do WhatsApp), porque uma oferta feita no grupo é tão válida quanto uma feita no app. **O app nunca sugere nem aplica o W.O.** [DEC-MARC, DEC-RESP P3, R40, PESQ-RV; LEIT]
 - **M18. As propostas e o histórico são visíveis só para os jogadores do confronto e para o admin da competição.** A marcação não gera evento no feed (R24: pendências moram na agenda). **Já a data e a arena acordadas aparecem para todos no card público "Confronto definido"**, como o `FEED_CARDS.md` §5 já desenha. O risco de exposição está registrado na seção 10. [R24, DEC-MARC-P P3]
 
 ### Máquina de estados da proposta
@@ -157,7 +160,7 @@ Do ponto de vista de um jogador, o confronto está sempre em um destes estados:
 | Estado | O que o jogador vê | Ação principal | Entra nas pendências do feed? |
 | --- | --- | --- | --- |
 | **Sem data** | Adversários, rodada e prazo da rodada | "Propor horários"; secundárias "Informar data" e "Abrir no WhatsApp" | Sim, como "marcar jogo" |
-| **Proposta aguardando você** | As 2 ou 3 opções, quem propôs e quando | Tocar numa opção para aceitar; "Nenhum serve" (M9) | Sim, como "responder proposta" |
+| **Proposta aguardando você** | As 2 ou 3 opções, quem propôs e quando | Escolher uma opção e confirmar no botão que diz a escolha ("Marcar jogo · sáb, 3 out, 14h"); "Nenhum serve" (M9) | Sim, como "responder proposta" |
 | **Proposta aguardando o outro lado** | As opções enviadas, por quem e quando | "Trocar horários" ou "Retirar"; "Abrir no WhatsApp" | Não: a vez é do outro lado |
 | **Data acordada** | Data, hora, arena e como foi definida (proposta aceita ou data informada, e por quem) | "Remarcar" e "Abrir no WhatsApp" | Não, até o dia do jogo |
 | **Data passou sem resultado** | A data acordada | "Lançar resultado" (spec de registro de partidas) | Sim, como pendência de resultado |

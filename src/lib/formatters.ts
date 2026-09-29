@@ -64,3 +64,61 @@ export function formatEnrollmentCount(count: number, category: Category): string
   if (category.gender === 'F') return count === 1 ? '1 jogadora inscrita' : `${count} jogadoras inscritas`;
   return count === 1 ? '1 jogador inscrito' : `${count} jogadores inscritos`;
 }
+
+/**
+ * Iniciais para o avatar sem foto: primeira letra do primeiro e do último nome.
+ * Ex.: "Maria Eduarda de Vasconcelos" → "MV", "Lucas" → "L", "" → "".
+ */
+export function formatInitials(name: string): string {
+  const initials = name
+    .split(/\s+/)
+    .map((word) => word.match(/[\p{L}\p{N}]/u)?.[0])
+    .filter((initial): initial is string => initial !== undefined);
+  if (initials.length === 0) return '';
+  const firstAndLast = initials.length === 1 ? initials : [initials[0], initials[initials.length - 1]];
+  return firstAndLast.join('').toLocaleUpperCase('pt-BR');
+}
+
+const eventMomentFormatter = new Intl.DateTimeFormat("pt-BR", {
+  weekday: "short",
+  day: "2-digit",
+  month: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23",
+  timeZone: TIMEZONE,
+});
+
+/**
+ * Momento de um evento de histórico, no jeito falado do app: dia da semana, data e hora.
+ * A data entra porque um histórico atravessa semanas, e "seg" sozinho seria ambíguo.
+ * Ex.: "2026-09-22T23:00:00Z" → "ter, 22/09, 20h"; "2026-09-25T12:05:00Z" → "sex, 25/09, 9h05".
+ */
+export function formatEventMoment(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) {
+    throw new RangeError(`Momento inválido: recebi '${iso}', esperado data ISO 8601`);
+  }
+  const parts = eventMomentFormatter.formatToParts(date);
+  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === type)?.value ?? "";
+  const weekday = part("weekday").replace(".", "");
+  const hour = Number(part("hour"));
+  const minute = part("minute");
+  const time = minute === "00" ? `${hour}h` : `${hour}h${minute}`;
+  return `${weekday}, ${part("day")}/${part("month")}, ${time}`;
+}
+
+const countFormatter = new Intl.NumberFormat('pt-BR');
+
+/**
+ * Contagem com o rótulo concordando com o número, e milhar com ponto.
+ * Ex.: (1, "jogo", "jogos") → "1 jogo", (1204, "jogo", "jogos") → "1.204 jogos".
+ */
+export function formatCount(count: number, singular: string, plural: string): string {
+  return `${countFormatter.format(count)} ${count === 1 ? singular : plural}`;
+}
+
+/** Só o número, com o separador de milhar do pt-BR. Ex.: 1204 → "1.204". */
+export function formatCountValue(count: number): string {
+  return countFormatter.format(count);
+}

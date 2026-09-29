@@ -1,0 +1,78 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as RecordLineStories from "./RecordLine.stories";
+
+<Meta of={RecordLineStories} />
+
+<Subtitle>O cartel do jogador em uma linha: vitórias e derrotas.</Subtitle>
+
+**Código-fonte:** [`src/components/profile/RecordLine/RecordLine.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/profile/RecordLine/RecordLine.tsx)
+
+## Visão geral
+
+`RecordLine` mostra o cartel de carreira do jogador: todas as partidas confirmadas, de ranking, torneio e amistoso, em simples e duplas (`docs/PROFILE.md`, PF6). Os números vêm em negrito e o texto em volta é neutro.
+
+<Canvas of={RecordLineStories.Default} />
+
+## Estados
+
+O texto se ajusta ao valor: vazio, singular e milhar.
+
+<Canvas of={RecordLineStories.AllStates} />
+
+### Sem partidas
+
+Com vitórias e derrotas zeradas, a linha vira "Nenhuma partida ainda", em cinza. "0 vitórias · 0 derrotas" diz a mesma coisa com mais esforço de leitura.
+
+<Canvas of={RecordLineStories.Empty} />
+
+### Só vitórias
+
+A derrota aparece zerada. Esconder o zero faria o cartel parecer incompleto.
+
+<Canvas of={RecordLineStories.OnlyWins} />
+
+### Singular
+
+"1 vitória · 1 derrota".
+
+<Canvas of={RecordLineStories.Singular} />
+
+### Números grandes
+
+Milhar com ponto, como no pt-BR.
+
+<Canvas of={RecordLineStories.LargeNumbers} />
+
+## Quando usar
+
+- No cabeçalho do perfil, abaixo dos tiles de jogos e amigos
+
+## Componentes relacionados
+
+- Para **uma contagem sozinha** (jogos, amigos), use o [`StatTile`](?path=/docs/ui-stattile--docs)
+- O **confronto direto** entre dois jogadores ("vocês se enfrentaram 3 vezes") é do H2H, não do cartel
+
+## Acessibilidade
+
+- O leitor de tela recebe uma frase só: "182 vitórias e 92 derrotas". O "·" e os negritos ficam ocultos para ele, que leria o separador como "ponto" e cada número como um item solto
+- O resultado não depende de cor: o texto diz "vitórias" e "derrotas"
+
+## Evitar
+
+- ❌ **Vitórias em verde e derrotas em vermelho** — o cartel é fato, não julgamento. No DS, verde e vermelho significam sucesso e erro
+- ❌ **Terceiro número para W.O.** — W.O. fica fora do perfil no MVP, e vitórias + derrotas = jogos (PF6)
+- ❌ **Percentual de aproveitamento** — fora do MVP (`docs/PROFILE.md`, seção 9)
+
+## API
+
+<ArgTypes of={RecordLineStories} />
+
+## Decisões de design
+
+**Por que sem W.O.?** Vitórias e derrotas contam só partidas em que houve jogo, como o `total_matches` (R18) e o H2H (R19). Assim, vitórias + derrotas = jogos, e os dois números do cabeçalho nunca se contradizem. O W.O. em que o jogador não compareceu é decidido pelo admin, e um número público de ausências expõe mais do que ajuda num beta pequeno (PF6, decisão PQ4).
+
+## Referências
+
+- [WCAG 1.4.1 — Use of Color](https://www.w3.org/WAI/WCAG21/Understanding/use-of-color.html)
+- Spec: `docs/PROFILE.md`, PF6 e seção 8.2
+- Tokens relacionados: `docs/TOKENS.md` (`--text-body-md-*`, `--color-foreground-secondary`)

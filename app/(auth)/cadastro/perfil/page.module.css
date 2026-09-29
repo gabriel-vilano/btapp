@@ -9,25 +9,7 @@
 }
 
 .profile__loading-spinner {
-  width: var(--dimension-icon-lg);
-  height: var(--dimension-icon-lg);
-  border: var(--border-width-thick) solid var(--color-border-subtle);
-  border-top-color: var(--color-border-accent);
-  border-radius: var(--radius-full);
-  animation: spin var(--motion-duration-medium-3) var(--motion-easing-linear)
-    infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.profile__form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-200);
+  color: var(--color-foreground-accent);
 }
 
 .profile__username-status {
@@ -47,17 +29,6 @@
 
 .profile__username-status--available {
   color: var(--color-foreground-success);
-}
-
-.profile__spinner {
-  display: inline-block;
-  width: var(--dimension-icon-xs);
-  height: var(--dimension-icon-xs);
-  border: var(--border-width-medium) solid currentColor;
-  border-top-color: transparent;
-  border-radius: var(--radius-full);
-  animation: spin var(--motion-duration-medium-3) var(--motion-easing-linear)
-    infinite;
 }
 
 .profile__skip {

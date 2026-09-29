@@ -10,6 +10,7 @@ import { Button } from "@/src/components/ui/Button";
 import { Alert } from "@/src/components/ui/Alert";
 import { TextLink } from "@/src/components/ui/TextLink";
 import { validatePassword, type PasswordChecks } from "@/src/lib/validations";
+import authStyles from "@/app/(auth)/auth-page.module.css";
 import styles from "./page.module.css";
 
 export default function NewPasswordPage() {
@@ -57,7 +58,7 @@ export default function NewPasswordPage() {
     <AuthFormContainer>
       <AuthFormHeader title="Nova senha" subtitle="Defina sua nova senha" />
 
-      <form action={handleSubmit} className={styles.password__form}>
+      <form action={handleSubmit} className={authStyles["auth-page__form"]}>
         <div className={styles.password__field}>
           <FormInput
             label="Nova senha"

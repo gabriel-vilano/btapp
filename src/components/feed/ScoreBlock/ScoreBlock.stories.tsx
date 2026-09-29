@@ -41,13 +41,48 @@ export const WalkOver: Story = {
   },
 };
 
-export const RetiredAfterOneSet: Story = {
-  args: { score: { type: "retired", completed_sets: [{ a: 6, b: 2 }] } },
+// Desistência: placar real, com o set interrompido rotulado (FEED_CARDS.md §4.4).
+// Exemplo da R11: o desistente venceu o 1º set e desistiu perdendo o 2º por 2/3.
+export const RetiredInSecondSet: Story = {
+  args: {
+    score: {
+      type: "retired",
+      completed_sets: [{ a: 4, b: 6 }],
+      interrupted_set: { a: 3, b: 2 },
+    },
+  },
+  play: async ({ canvasElement }) => {
+    await expect(canvasElement).toHaveTextContent("Interrompido");
+    await expect(canvasElement.textContent).not.toMatch(/[-–—]/);
+  },
 };
 
-// Nenhum set completo: mesma estrutura do W.O. (§4.4).
-export const RetiredBeforeFirstSet: Story = {
-  args: { score: { type: "retired", completed_sets: [] } },
+export const RetiredInFirstSet: Story = {
+  args: {
+    score: { type: "retired", completed_sets: [], interrupted_set: { a: 3, b: 2 } },
+  },
+};
+
+export const RetiredInSuperTiebreak: Story = {
+  args: {
+    score: {
+      type: "retired",
+      completed_sets: [{ a: 6, b: 4 }, { a: 3, b: 6 }],
+      interrupted_set: { a: 5, b: 3 },
+    },
+  },
+};
+
+// O set seguinte não começou: nenhuma coluna para ele.
+export const RetiredBetweenSets: Story = {
+  args: {
+    score: { type: "retired", completed_sets: [{ a: 6, b: 4 }], interrupted_set: { a: 0, b: 0 } },
+  },
+};
+
+// Nenhum game jogado: mesma estrutura do W.O. (§4.4).
+export const RetiredBeforeFirstGame: Story = {
+  args: { score: { type: "retired", completed_sets: [], interrupted_set: { a: 0, b: 0 } } },
   play: async ({ canvasElement }) => {
     await expect(canvasElement).toHaveTextContent("Vitória por desistência");
     await expect(canvasElement.textContent).not.toMatch(/\d/);

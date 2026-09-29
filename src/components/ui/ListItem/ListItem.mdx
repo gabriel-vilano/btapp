@@ -1,0 +1,191 @@
+import {
+  Meta,
+  Subtitle,
+  Canvas,
+  ArgTypes,
+} from "@storybook/addon-docs/blocks";
+import * as ListItemStories from "./ListItem.stories";
+
+<Meta of={ListItemStories} />
+
+<Subtitle>
+  Linha de lista com quatro slots: leading, título, texto de apoio e trailing.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/ListItem/ListItem.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/ListItem/ListItem.tsx)
+
+## Visão geral
+
+`ListItem` é a linha genérica das listas do app: item da agenda, pendência do feed, linha do ranking, opção das configurações. Cada um desses compõe o `ListItem` preenchendo os slots, em vez de redesenhar a linha. Sempre vive dentro de um `List`, que é o `<ul>` sem marcadores.
+
+<Canvas of={ListItemStories.Navigable} />
+
+## Anatomia
+
+Quatro slots, da esquerda para a direita. Só o título é obrigatório.
+
+<table>
+  <thead>
+    <tr>
+      <th>Slot</th>
+      <th>Prop</th>
+      <th>O que vai</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Leading</td>
+      <td><code>leading</code></td>
+      <td><code>Avatar</code>, <code>AvatarStack</code> ou <code>Icon</code>. Decorativo</td>
+    </tr>
+    <tr>
+      <td>Título</td>
+      <td><code>title</code></td>
+      <td>Quem ou o quê: nome do jogador, adversário, opção</td>
+    </tr>
+    <tr>
+      <td>Texto de apoio</td>
+      <td><code>supportingText</code></td>
+      <td>Contexto: data, local, categoria, estado</td>
+    </tr>
+    <tr>
+      <td>Trailing</td>
+      <td><code>trailing</code></td>
+      <td>Badge, valor, chevron ou ação (<code>Button</code>)</td>
+    </tr>
+  </tbody>
+</table>
+
+## Comportamentos
+
+A linha tem três comportamentos, decididos pelas props: navegar, agir ou só exibir.
+
+### Navegável
+
+Com `href`, a linha inteira vira um link (`next/link`). Use o chevron (`CaretRightIcon`) no trailing para dizer que ela leva a outra tela.
+
+<Canvas of={ListItemStories.Navigable} />
+
+### Acionável
+
+Com `onClick`, a linha inteira vira um botão. Para ações que não trocam de rota: abrir uma folha, sair da conta.
+
+<Canvas of={ListItemStories.Pressable} />
+
+### Estática
+
+Sem `href` nem `onClick`, a linha só exibe. É o caso quando o trailing tem a própria ação: o botão é o único alvo de toque.
+
+<Canvas of={ListItemStories.Static} />
+
+## Slots
+
+Os exemplos abaixo mostram o que cada slot aceita.
+
+### Com ícone
+
+Linhas de configurações usam `Icon` no leading. O ícone herda `--color-foreground-secondary`.
+
+<Canvas of={ListItemStories.WithIcon} />
+
+### Com dupla
+
+Um `AvatarStack` no leading representa a dupla. O título leva os dois nomes.
+
+<Canvas of={ListItemStories.WithDoubles} />
+
+### Valor no trailing
+
+Texto no trailing ganha o estilo de rótulo em negrito e cor secundária: pontos, placar, contagem.
+
+<Canvas of={ListItemStories.TrailingValue} />
+
+### Ação no trailing
+
+Um `Button` no trailing, com a linha estática. É o formato das pendências: responder a uma proposta de horário, confirmar um placar.
+
+<Canvas of={ListItemStories.TrailingAction} />
+
+## Estados
+
+Casos que a produção raramente mostra, mas que a linha precisa aguentar.
+
+### Só título
+
+Sem texto de apoio, a linha fica com uma linha de texto e continua com os 48px mínimos.
+
+<Canvas of={ListItemStories.TitleOnly} />
+
+### Texto longo
+
+Título e apoio quebram linha em vez de cortar. Leading e trailing não encolhem e ficam centralizados na altura.
+
+<Canvas of={ListItemStories.LongText} />
+
+### Dado faltando
+
+Sem leading e sem apoio, a linha continua alinhada com a margem da página.
+
+<Canvas of={ListItemStories.MissingData} />
+
+## Usos previstos
+
+A galeria mostra as composições previstas lado a lado: um jogo da agenda, uma pendência com ação e as configurações com divisórias (`<List divided>`).
+
+<Canvas of={ListItemStories.Uses} />
+
+## Quando usar
+
+- Listas homogêneas em que cada linha é uma pessoa, um jogo ou uma opção
+- Base de componentes de área: item da agenda, pendência do feed, `RankingRow`, configurações
+- Menus de navegação em lista (configurações, "Mais")
+
+## Componentes relacionados
+
+- Para **uma ação isolada**, fora de lista, use [`Button`](?path=/docs/ui-button--docs) ou [`ButtonLink`](?path=/docs/ui-buttonlink--docs)
+- Para **conteúdo rico** (placar, bloco "vs", várias linhas de metadado), use os blocos do feed (`CardShell` e companhia). O `ListItem` é uma linha, não um card
+- O **leading** usa [`Avatar`](?path=/docs/ui-avatar--docs) ou [`Icon`](?path=/docs/ui-icon--docs)
+
+## Acessibilidade
+
+- `List` renderiza `<ul role="list">` e cada `ListItem` um `<li>`: o leitor de tela anuncia "lista, 3 itens". O `role="list"` explícito é porque o Safari tira a semântica de listas sem marcador
+- Linha navegável é `<a>`; acionável é `<button type="button">`. O nome acessível é o título seguido do texto de apoio
+- O leading tem `aria-hidden`: o avatar repetiria o nome do título ("Lucas Silva, Lucas Silva"). Se a informação do leading importa, ela vai no título ou no apoio
+- Altura mínima de 48px (`--dimension-tap-target-minimum`) em toda linha, e a linha inteira é o alvo de toque ([WCAG 2.5.8](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html))
+- Foco por teclado com o ring do DS desenhado **para dentro** da linha: linhas vizinhas e a borda da tela cortariam um anel para fora
+- Texto de apoio em `--color-foreground-secondary` (4,95:1 sobre o branco) passa no AA ([WCAG 1.4.3](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html))
+- Dê nome à lista com `aria-label` quando não houver título visível ligado a ela
+
+## Evitar
+
+- ❌ **Linha tocável com ação no trailing** (`href` ou `onClick` junto de um `Button`). Botão dentro de link é HTML inválido e o leitor de tela não chega ao botão. Com ação no trailing, a linha fica estática
+- ❌ **`href` e `onClick` juntos.** O `href` vence e o `onClick` é ignorado. Para navegar, `href`; para agir, `onClick`
+- ❌ **Informação só no leading.** Ele sai da leitura de tela. O que o usuário precisa saber vai no título ou no apoio
+- ❌ **`ListItem` fora de `List`.** O `<li>` solto é HTML inválido
+- ❌ **Chevron em linha estática.** O chevron promete que a linha leva a algum lugar
+
+## API
+
+<ArgTypes of={ListItemStories} />
+
+## Decisões de design
+
+**Por que o leading é decorativo?**
+Em quase toda lista do app, o avatar e o título dizem a mesma coisa (a foto e o nome da pessoa). Com o avatar lido, o leitor de tela anuncia o nome duas vezes, e o axe acusa `image-redundant-alt`. Tirar o leading da leitura deixa o nome acessível limpo: "Lucas Silva, Categoria B · Arena Beira-Mar".
+
+**Por que a linha inteira é o alvo, e não só o título?**
+No celular, o dedo acerta a linha, não a palavra. Uma linha de 48 a 64px de altura e 393px de largura é um alvo muito maior e mais previsível do que um link no título. É o padrão das listas do iOS e do Material.
+
+**Por que o leading tem largura mínima de 40px?**
+Uma lista pode misturar ícone (24px) e avatar (40px), como a agenda com um jogo e uma pendência. Sem coluna fixa, cada título começa num ponto diferente e a lista fica serrilhada. Com 40px mínimos, o ícone centraliza na coluna do avatar e todos os títulos alinham. O `AvatarStack` passa dos 40px e empurra o título, como deve: a dupla ocupa mais espaço.
+
+**Por que o texto quebra linha em vez de cortar com reticências?**
+Cortar esconde a informação que diferencia uma linha da outra: dois jogos no mesmo dia na mesma arena só se distinguem pelo fim do texto. Quebrar mantém tudo visível e aguenta o zoom de texto ([WCAG 1.4.10](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html)). Se uma lista específica precisar de altura fixa (ranking longo), o componente de área decide cortar.
+
+## Referências
+
+- [MDN — `<ul>`: The Unordered List element](https://developer.mozilla.org/docs/Web/HTML/Element/ul)
+- [Material 3 — Lists](https://m3.material.io/components/lists/guidelines)
+- [Apple HIG — Lists and tables](https://developer.apple.com/design/human-interface-guidelines/lists-and-tables)
+- [WCAG 2.5.8 — Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
+- Tokens de espaçamento, dimensão e cor: `docs/TOKENS.md`

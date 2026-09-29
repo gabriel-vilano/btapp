@@ -56,8 +56,18 @@
   --text-label-md-tracking:    var(--font-letter-spacing-none);
 
   /* -----------------------------------------------------------
+     BORDER RADIUS
+  ----------------------------------------------------------- */
+  --radius-form-input: var(--radius-md);
+  --radius-card:       var(--radius-lg);
+  --radius-popover:    var(--radius-lg);
+
+  /* -----------------------------------------------------------
      CORES
   ----------------------------------------------------------- */
+
+  /* Accent (ação) usa o coral-600: o 500 dá 3,50:1 com o branco e reprova
+     o contraste AA de texto (WCAG 1.4.3). O 500 fica em --color-brand. */
 
   /* Background */
   --color-background-primary:          var(--color-neutral-100);
@@ -66,7 +76,7 @@
   --color-background-elevated:         var(--color-neutral-100);
   --color-background-inverse:          var(--color-neutral-700);
   --color-background-strong:           var(--color-neutral-800);
-  --color-background-accent:           var(--color-coral-500);
+  --color-background-accent:           var(--color-coral-600);
   --color-background-attention:        var(--color-red-600);
   --color-background-success:          var(--color-kiwi-600);
   --color-background-disabled:         var(--color-neutral-400);
@@ -79,7 +89,7 @@
   --color-foreground-primary:      var(--color-neutral-800);
   --color-foreground-secondary:    var(--color-neutral-600);
   --color-foreground-disabled:     var(--color-neutral-400);
-  --color-foreground-accent:       var(--color-coral-500);
+  --color-foreground-accent:       var(--color-coral-600);
   --color-foreground-attention:    var(--color-red-600);
   --color-foreground-success:      var(--color-kiwi-600);
   --color-foreground-on-accent:    var(--color-neutral-100);
@@ -94,34 +104,29 @@
   --color-border-subtle:      var(--color-neutral-300);
   --color-border-medium:      var(--color-neutral-500);
   --color-border-strong:      var(--color-neutral-700);
-  --color-border-inverse:     var(--color-neutral-100);
-  --color-border-accent:      var(--color-coral-500);
+  --color-border-accent:      var(--color-coral-600);
   --color-border-attention:   var(--color-red-600);
   --color-border-success:     var(--color-kiwi-600);
-  --color-border-disabled:    var(--color-neutral-400);
-  --color-border-on-accent:   var(--color-neutral-100);
-  --color-border-on-attention:var(--color-neutral-100);
-  --color-border-on-success:  var(--color-neutral-100);
-  --color-border-on-disabled: var(--color-neutral-100);
-  --color-border-on-inverse:  var(--color-neutral-100);
 
-  /* State Layer */
-  --color-state-layer-neutral:          rgba(0, 0, 0, 0);
-  --color-state-layer-hover:            rgba(0, 0, 0, 0.04);
-  --color-state-layer-focus:            rgba(0, 0, 0, 0.04);
-  --color-state-layer-pressed:          rgba(0, 0, 0, 0.08);
-  --color-state-layer-selected:         rgba(0, 0, 0, 0.12);
-  --color-state-layer-hover-on-strong:    rgba(255, 255, 255, 0.12);
-  --color-state-layer-focus-on-strong:    rgba(255, 255, 255, 0.12);
-  --color-state-layer-pressed-on-strong:  rgba(255, 255, 255, 0.16);
-  --color-state-layer-selected-on-strong: rgba(255, 255, 255, 0.20);
-  --color-state-focus-ring: #005fcc;
+  /* State Layer
+     Preto ou branco com a opacidade da escala --opacity-*. */
+  --color-state-layer-neutral:            transparent;
+  --color-state-layer-hover:              rgba(0, 0, 0, var(--opacity-50));
+  --color-state-layer-focus:              rgba(0, 0, 0, var(--opacity-50));
+  --color-state-layer-pressed:            rgba(0, 0, 0, var(--opacity-100));
+  --color-state-layer-selected:           rgba(0, 0, 0, var(--opacity-150));
+  --color-state-layer-hover-on-strong:    rgba(255, 255, 255, var(--opacity-150));
+  --color-state-layer-focus-on-strong:    rgba(255, 255, 255, var(--opacity-150));
+  --color-state-layer-pressed-on-strong:  rgba(255, 255, 255, var(--opacity-200));
+  --color-state-layer-selected-on-strong: rgba(255, 255, 255, var(--opacity-250));
+  --color-state-focus-ring:               var(--color-blue-550);
+  --color-state-focus-ring-on-strong:     var(--color-neutral-100);
 
   /* Brand */
   --color-brand: var(--color-coral-500);
 
   /* Skeleton */
-  --color-loading-fill:   #ededed;
+  --color-loading-fill:   var(--color-neutral-250);
   --color-loading-first:  var(--color-neutral-200);
   --color-loading-second: var(--color-neutral-300);
 

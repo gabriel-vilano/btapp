@@ -5,7 +5,7 @@ import { ActivityCard } from "./ActivityCard";
 import { expectNoHorizontalOverflow, feedFrame } from "../storyFixtures";
 import styles from "./ActivityCard.stories.module.css";
 
-// Tier 4: uma galeria com as 13 variações, no lugar de uma story por card.
+// Tier 4: uma galeria com as 15 variações, no lugar de uma story por card.
 const meta = {
   title: "Feed/Galeria de cards",
   component: ActivityCard,
@@ -35,5 +35,8 @@ export const AllCards: Story = {
     // W.O. não tem placar: a área mostra só o rótulo (FEED_CARDS.md §4.3).
     const woCard = within(canvasElement).getByRole("region", { name: "event-result-wo" });
     await expect(woCard).toHaveTextContent("Vitória por W.O.");
+    // Desistência: placar real e o set em que ela aconteceu (§4.4).
+    const retiredCard = within(canvasElement).getByRole("region", { name: "event-result-retired" });
+    await expect(retiredCard).toHaveTextContent("Jogo encerrado por desistência no 2º set");
   },
 };

@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
-import { Camera, Plus } from "@phosphor-icons/react";
+import { CameraIcon, PlusIcon } from "@phosphor-icons/react";
 import { Icon } from "@/src/components/ui/Icon";
 import { validateAvatar } from "@/src/lib/validations";
 import styles from "./AvatarUpload.module.css";
@@ -37,58 +37,66 @@ export function AvatarUpload({ onFileSelect }: AvatarUploadProps) {
   }
 
   return (
-    <div
-      className={styles.avatar}
-      onClick={openPicker}
-      role="button"
-      tabIndex={0}
-      aria-label={preview ? "Trocar foto de perfil" : "Adicionar foto de perfil"}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          openPicker();
+    <>
+      <div
+        className={styles.avatar}
+        onClick={openPicker}
+        role="button"
+        tabIndex={0}
+        aria-label={
+          preview ? "Trocar foto de perfil" : "Adicionar foto de perfil"
         }
-      }}
-    >
-      <div className={styles.avatar__area}>
-        {preview ? (
-          <>
-            <Image
-              src={preview}
-              alt="Preview da foto de perfil"
-              width={96}
-              height={96}
-              unoptimized
-              className={styles.avatar__preview}
-            />
-            <span className={styles.avatar__badge} aria-hidden="true">
-              <Icon icon={Camera} size="sm" />
-            </span>
-          </>
-        ) : (
-          <>
-            <span className={styles.avatar__placeholder} aria-hidden="true">
-              <Icon icon={Plus} size="lg" />
-            </span>
-          </>
-        )}
-        <input
-          ref={inputRef}
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          onChange={handleChange}
-          className={styles.avatar__input}
-          tabIndex={-1}
-        />
-      </div>
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openPicker();
+          }
+        }}
+      >
+        <div className={styles.avatar__area}>
+          {preview ? (
+            <>
+              <Image
+                src={preview}
+                alt="Preview da foto de perfil"
+                width={96}
+                height={96}
+                unoptimized
+                className={styles.avatar__preview}
+              />
+              <span className={styles.avatar__badge} aria-hidden="true">
+                <Icon icon={CameraIcon} size="sm" />
+              </span>
+            </>
+          ) : (
+            <>
+              <span className={styles.avatar__placeholder} aria-hidden="true">
+                <Icon icon={PlusIcon} size="lg" />
+              </span>
+            </>
+          )}
+        </div>
 
-      {error ? (
-        <span className={styles.avatar__error}>{error}</span>
-      ) : (
-        <span className={styles.avatar__label}>
-          {preview ? "Trocar foto" : "Adicionar foto"}
-        </span>
-      )}
-    </div>
+        {error ? (
+          <span className={styles.avatar__error}>{error}</span>
+        ) : (
+          <span className={styles.avatar__label}>
+            {preview ? "Trocar foto" : "Adicionar foto"}
+          </span>
+        )}
+      </div>
+      {/* Fora do role="button": controle interativo aninhado em outro é
+        inválido (axe nested-interactive). O input só é acionado pelo
+        openPicker, então sai da árvore de acessibilidade e do Tab. */}
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        onChange={handleChange}
+        className={styles.avatar__input}
+        tabIndex={-1}
+        aria-hidden="true"
+      />
+    </>
   );
 }

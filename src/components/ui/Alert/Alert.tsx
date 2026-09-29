@@ -1,4 +1,4 @@
-import { WarningCircle, CheckCircle, Info } from "@phosphor-icons/react";
+import { WarningCircleIcon, CheckCircleIcon, InfoIcon } from "@phosphor-icons/react";
 import { Icon } from "@/src/components/ui/Icon";
 import styles from "./Alert.module.css";
 
@@ -12,9 +12,9 @@ type AlertProps = {
 };
 
 const iconByStatus = {
-  attention: WarningCircle,
-  success: CheckCircle,
-  information: Info,
+  attention: WarningCircleIcon,
+  success: CheckCircleIcon,
+  information: InfoIcon,
 };
 
 export function Alert({ status, title, description, className }: AlertProps) {

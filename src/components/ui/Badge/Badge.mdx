@@ -1,0 +1,104 @@
+import {
+  Meta,
+  Subtitle,
+  Canvas,
+  ArgTypes,
+} from "@storybook/addon-docs/blocks";
+import * as BadgeStories from "./Badge.stories";
+
+<Meta of={BadgeStories} />
+
+<Subtitle>
+  Selo curto de status ou categoria: resultado da partida, marco no ranking,
+  categoria do jogador.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/Badge/Badge.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/Badge/Badge.tsx)
+
+## Visão geral
+
+`Badge` rotula um elemento com uma ou duas palavras. Não é clicável: só informa. O texto usa `label-md` (12px) em negrito, o menor texto do app.
+
+<Canvas of={BadgeStories.Neutral} />
+
+## Variantes
+
+Quatro tons. O tom comunica a natureza da informação, e o texto sempre diz o mesmo sem depender da cor.
+
+<Canvas of={BadgeStories.AllTones} />
+
+### Neutral
+
+Informação sem carga positiva ou negativa: categoria, formato, estado neutro de uma partida.
+
+<Canvas of={BadgeStories.Neutral} />
+
+### Accent
+
+Conquista e destaque da marca: marco no ranking, vaga na final.
+
+<Canvas of={BadgeStories.Accent} />
+
+### Success
+
+Resultado positivo: vitória, confirmação.
+
+<Canvas of={BadgeStories.Success} />
+
+### Attention
+
+Resultado negativo ou problema: derrota, W.O., desistência.
+
+<Canvas of={BadgeStories.Attention} />
+
+## Com ícone
+
+A prop `icon` recebe o componente do Phosphor e o mostra antes do texto, em tamanho `sm` e peso `fill`. O ícone é decorativo (`aria-hidden`): o significado está no texto.
+
+<Canvas of={BadgeStories.WithIcon} />
+
+## Fundo customizado
+
+Sobre uma superfície que já tem a cor do tom (ex.: o bloco de marco do ranking, em coral-100), o fundo sutil do Badge some. O consumidor troca o fundo pela custom property `--badge-background-color`, sem mexer no componente:
+
+```css
+.block--milestone {
+  --badge-background-color: var(--color-background-primary);
+}
+```
+
+A cor do texto não muda: só o fundo é customizável, e o novo fundo precisa manter o contraste AA com o texto do tom.
+
+## Quando usar
+
+- Resultado de uma partida no card do feed (VITÓRIA, DERROTA, W.O.)
+- Marco ou classificação no ranking (Top 10, Assumiu a liderança)
+- Categoria ou estado curto ao lado de um nome
+
+## Componentes relacionados
+
+- Para **mensagem com frase completa**, use [`Alert`](?path=/docs/ui-alert--docs)
+- Para **filtro ou seleção clicável**, use um Chip, não um Badge: o Badge não tem estado de interação
+
+## Acessibilidade
+
+- Renderiza `<span>` sem role: leitores de tela leem o texto no fluxo da frase
+- A cor nunca é o único sinal (WCAG 1.4.1): o texto sempre nomeia o status
+- Os quatro tons passam no contraste AA de texto (4,5:1, WCAG 1.4.3) sobre o próprio fundo e sobre `--color-background-primary`. O `accent` depende do coral-600 de ação
+
+## Evitar
+
+- ❌ **Frase no Badge** — acima de três palavras, é texto corrido, não selo
+- ❌ **Badge clicável** — não tem foco, hover nem área tocável de 48px. Ação é Button ou Chip
+- ❌ **Tom pela cor que “combina”** — o tom segue o significado: `success` só para resultado positivo
+- ❌ **Vários Badges lado a lado** — um por elemento. Dois selos competem e nenhum se destaca
+
+## API
+
+<ArgTypes of={BadgeStories} />
+
+## Referências
+
+- [WCAG 1.4.1 — Use of Color](https://www.w3.org/WAI/WCAG21/Understanding/use-of-color.html)
+- [WCAG 1.4.3 — Contrast (Minimum)](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html)
+- Tokens relacionados: `docs/TOKENS.md` (`--text-label-md-*`, `--color-background-*-subtle`, `--color-foreground-*`)

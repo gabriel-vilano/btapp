@@ -9,6 +9,8 @@
 }
 
 .block--milestone {
+  /* O fundo do bloco já é coral-100: o selo ganha fundo branco para se destacar */
+  --badge-background-color: var(--color-background-primary);
   background-color: var(--color-background-accent-subtle);
 }
 
@@ -32,25 +34,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-.delta {
-  margin: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-50);
-  font-size: var(--text-label-lg-size);
-  line-height: var(--text-label-lg-line-height);
-  letter-spacing: var(--text-label-lg-tracking);
-  font-weight: var(--font-weight-bold);
-}
-
-.delta--up {
-  color: var(--color-foreground-success);
-}
-
-.delta--down {
-  color: var(--color-foreground-attention);
-}
-
 .points {
   margin: 0;
   display: inline-flex;
@@ -63,20 +46,5 @@
 }
 
 .badge {
-  margin: var(--spacing-100) 0 0;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-50);
-  padding: var(--spacing-50) var(--spacing-100);
-  border-radius: var(--radius-sm);
-  background-color: var(--color-background-accent-subtle);
-  color: var(--color-foreground-accent);
-  font-size: var(--text-label-md-size);
-  line-height: var(--text-label-md-line-height);
-  letter-spacing: var(--text-label-md-tracking);
-  font-weight: var(--font-weight-bold);
-}
-
-.block--milestone .badge {
-  background-color: var(--color-background-primary);
+  margin-top: var(--spacing-100);
 }

@@ -22,7 +22,7 @@ import * as ResendTimerStories from "./ResendTimer.stories";
 
 ## Estados
 
-O countdown é gerenciado internamente — começa em 60s no mount e não é controlável externamente.
+O countdown é gerenciado internamente — começa em 60s no mount (ou em `initialCountdown`, quando passado) e não é controlável depois disso.
 
 ### Em contagem
 
@@ -30,13 +30,23 @@ Texto "Reenviar código em Ns" (não-clicável). Decresce 1s por segundo.
 
 <Canvas of={ResendTimerStories.CountingDown} />
 
+### Disponível
+
+Contagem zerada: o texto vira o botão "Reenviar código". O clique chama `onResend` e reinicia a contagem em 60s.
+
+<Canvas of={ResendTimerStories.Available} />
+
+### Disponível com foco
+
+O botão focado pelo teclado mostra o ring de foco do DS.
+
+<Canvas of={ResendTimerStories.AvailableFocused} />
+
 ### Loading
 
 Quando `loading=true`, fica desabilitado mesmo após o countdown terminar — use durante a chamada async de reenvio pra evitar double-submit.
 
 <Canvas of={ResendTimerStories.Loading} />
-
-> **Nota:** estado "available to resend" (countdown=0, clicável) não está documentado como story estática porque o countdown só zera após 60s reais. Espere pra ver, ou veja após reload + 60s. Tracking pra refactor — exposing `initialCountdown` como prop permitiria stories pros 3 estados explicitamente.
 
 ## Quando usar
 
@@ -52,6 +62,7 @@ Quando `loading=true`, fica desabilitado mesmo após o countdown terminar — us
 
 - Renderiza `<span>` durante countdown (texto não-interativo) e `<button>` quando disponível
 - `<button>` é nativo — Enter/Space disparam o reenvio
+- Foco visível via `:focus-visible` (ring azul do DS); área tocável de 48px de altura
 - Mudança de "span → button" é detectada por leitores de tela em re-render
 - Sem `aria-live` por enquanto — atualização do número não é anunciada constantemente (decisão deliberada pra não spammar leitor de tela)
 
@@ -68,7 +79,7 @@ Quando `loading=true`, fica desabilitado mesmo após o countdown terminar — us
 ## Decisões de design
 
 **Por que countdown gerenciado internamente em vez de controlado por prop?**
-O timer é puramente local à UI — não há estado de domínio que faça sentido elevar pra o consumidor. Aceitar `countdown` como prop forçaria todo consumidor a manter `useState` próprio só pra isso, multiplicando boilerplate. Trade aceito: stories estáticas são limitadas (tem que esperar o tempo real). Refactor futuro: aceitar `initialCountdown` opcional preserva o comportamento default e permite stories.
+O timer é puramente local à UI — não há estado de domínio que faça sentido elevar pra o consumidor. Aceitar `countdown` como prop forçaria todo consumidor a manter `useState` próprio só pra isso, multiplicando boilerplate. O `initialCountdown` opcional só define o ponto de partida: preserva o comportamento default e permite stories dos três estados.
 
 **Por que 60s e não menos?**
 Backend de email transacional (Supabase, Resend) costuma ter rate limit similar. 60s alinha com o esperado pelo provedor e dá fricção saudável contra spam não-intencional.

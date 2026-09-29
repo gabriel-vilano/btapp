@@ -58,4 +58,12 @@ describe("mockFeedCards", () => {
     const times = mockFeedCards.map((card) => Date.parse(card.created_at));
     expect(times).toEqual([...times].sort((a, b) => b - a));
   });
+
+  it("marco condiz com a posição: Líder em 1º, Top N até a posição N (R47)", () => {
+    for (const card of mockFeedCards) {
+      if (card.card_type !== "ranking" || card.movement !== "milestone") continue;
+      const limit = card.milestone.type === "leader" ? 1 : card.milestone.n;
+      expect(card.position, card.id).toBeLessThanOrEqual(limit);
+    }
+  });
 });

@@ -1,0 +1,7 @@
+/* Largura útil do mobile base (393px − 2 × 16px), em duas colunas como no cabeçalho do perfil */
+.frame {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-100);
+  width: 361px;
+}
