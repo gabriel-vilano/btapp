@@ -17,4 +17,5 @@ export const STORY_PLAYERS = {
   davi: player("davi", "Davi Melo", true),
   pedro: player("pedro", "Pedro Alves", false),
   long: player("long", "Maria Eduarda de Vasconcelos Albuquerque", false),
+  longPartner: player("longPartner", "Guilherme Nascimento Bittencourt", true),
 } as const;

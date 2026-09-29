@@ -65,3 +65,8 @@
   background-color: var(--color-background-secondary);
   padding: var(--spacing-200) 0;
 }
+
+/* Mobile base (393px) sem margem: stories de linhas de ponta a ponta, ao lado da de 320px */
+.sb-width-393 {
+  width: 393px;
+}

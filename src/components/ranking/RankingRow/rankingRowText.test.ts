@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
+  competitorNameParts,
   formatCompetitorName,
   formatMatchRecord,
   formatRankingRowLabel,
   type RankingRowPlayer,
   type RankingRowSummary,
+  splitPlayerName,
 } from "./rankingRowText";
 
 const pedro: RankingRowPlayer = { id: "p", name: "Pedro Alves", avatarUrl: null };
@@ -80,5 +82,35 @@ describe("formatRankingRowLabel", () => {
 
   it("usa ponto no singular", () => {
     expect(formatRankingRowLabel({ ...ownRow, points: 1 })).toContain(", 1 ponto,");
+  });
+});
+
+describe("splitPlayerName", () => {
+  it("separa o primeiro nome do resto", () => {
+    expect(splitPlayerName("Maria Eduarda de Vasconcelos")).toEqual({ first: "Maria", surname: "Eduarda de Vasconcelos" });
+  });
+
+  it("normaliza espaços repetidos e nas pontas", () => {
+    expect(splitPlayerName("  Pedro   Alves ")).toEqual({ first: "Pedro", surname: "Alves" });
+  });
+
+  it("deixa o sobrenome vazio em nome de uma palavra", () => {
+    expect(splitPlayerName("Pelé")).toEqual({ first: "Pelé", surname: "" });
+  });
+});
+
+describe("competitorNameParts", () => {
+  it("põe Você na frente, sem sobrenome", () => {
+    expect(competitorNameParts([pedro, viewer])).toEqual([
+      { id: "v", first: "Você", surname: "", isViewer: true },
+      { id: "p", first: "Pedro", surname: "Alves", isViewer: false },
+    ]);
+  });
+
+  it("parte os dois nomes da dupla, na ordem recebida", () => {
+    expect(competitorNameParts([lucas, pedro]).map(({ first, surname }) => [first, surname])).toEqual([
+      ["Lucas", "Silva"],
+      ["Pedro", "Alves"],
+    ]);
   });
 });

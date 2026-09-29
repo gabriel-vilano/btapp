@@ -63,14 +63,39 @@
   color: var(--ranking-row-text);
 }
 
-/* Base de 8ch para decidir a quebra; cresce até o tamanho do texto, e o resto vira reticências */
+/* Base de 8ch para decidir a quebra; cresce até o tamanho do texto, e o que não cabe
+   encolhe peça a peça, abaixo */
 .ranking-row__name {
+  display: flex;
   flex: 1 1 8ch;
   max-width: max-content;
   min-width: 0;
   overflow: hidden;
+}
+
+/* `pre` guarda o espaço no começo do sobrenome e em " e ": num item flex, `nowrap` o descartaria */
+.ranking-row__name > * {
+  min-width: 0;
+  overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: pre;
+}
+
+/* O sobrenome encolhe primeiro (RK8). O flex divide o que falta pelo fator vezes a largura:
+   com 10000 contra 1, o primeiro nome perde menos de um pixel enquanto houver sobrenome, e só
+   encolhe de fato quando os sobrenomes chegam a zero. Em duplas, os dois sobrenomes encolhem
+   na proporção da largura de cada um */
+.ranking-row__surname {
+  flex-shrink: 10000;
+}
+
+.ranking-row__first-name {
+  flex-shrink: 1;
+}
+
+/* "Você" e o " e " entre os nomes nunca encolhem */
+.ranking-row__name-fixed {
+  flex-shrink: 0;
 }
 
 .ranking-row__title > :not(.ranking-row__name) {

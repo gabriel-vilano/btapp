@@ -260,7 +260,7 @@ Para a issue de ENG do RankingRow e do ZoneDivider.
 - [ ] `status = closed`: texto em `--color-foreground-secondary` e Badge neutro "Encerrada". Os pontos continuam visíveis.
 - [ ] `awaitingAdmin`: Badge neutro "Empate".
 - [ ] Slot opcional abaixo da linha de apoio para a distância da vaga ("Faltam 12 pts para o 8º"), em `label-md`, `--color-foreground-secondary`. A tela decide quando preencher (RK11).
-- [ ] Nome longo: trunca com reticências numa linha; o nome completo fica no nome acessível.
+- [ ] Nome longo: fica numa linha, e o sobrenome encolhe primeiro, com reticências (RK8). O primeiro nome só encolhe quando não sobra nada do sobrenome. Em duplas, os dois sobrenomes encolhem antes de qualquer primeiro nome, cada um na proporção da própria largura, e "Você" nunca encolhe. O nome completo fica no nome acessível.
 - [ ] Altura mínima de 48px; a linha inteira é o alvo de toque (RK14). Sem toque, é estática (o ListItem já tem as três formas).
 - [ ] Nome acessível: "9º, Você e Pedro Alves, 390 pontos, subiu 2 posições, 5 jogos, 3 vitórias". Os avatares são decorativos.
 - [ ] Semântica: a classificação é uma lista ordenada (`<ol>`); cada linha, um item. Não é `<table>`: são poucas colunas e a linha é um card (REF, "Acessibilidade").

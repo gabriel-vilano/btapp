@@ -1,10 +1,10 @@
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import { Avatar, AvatarStack } from "@/src/components/ui/Avatar";
 import { Badge } from "@/src/components/ui/Badge";
 import { DeltaIndicator } from "@/src/components/ui/DeltaIndicator";
 import { ListItem } from "@/src/components/ui/ListItem";
 import {
-  formatCompetitorName,
+  competitorNameParts,
   formatMatchRecord,
   formatRankingRowLabel,
   orderPlayersForRow,
@@ -94,11 +94,28 @@ function RowTitle({ label, players, closed, awaitingAdmin }: RowTitleProps) {
     <>
       <span className={styles["ranking-row__label"]}>{label}</span>
       <span className={styles["ranking-row__title"]} aria-hidden>
-        <span className={styles["ranking-row__name"]}>{formatCompetitorName(players)}</span>
+        <CompetitorName players={players} />
         {closed && <Badge tone="neutral">Encerrada</Badge>}
         {awaitingAdmin && <Badge tone="neutral">Empate</Badge>}
       </span>
     </>
+  );
+}
+
+// Uma peça por parte do nome: o CSS encolhe os sobrenomes antes dos primeiros nomes (RK8)
+function CompetitorName({ players }: Pick<RankingRowProps, "players">) {
+  return (
+    <span className={styles["ranking-row__name"]}>
+      {competitorNameParts(players).map((part, index) => (
+        <Fragment key={part.id}>
+          {index > 0 && <span className={styles["ranking-row__name-fixed"]}>{" e "}</span>}
+          <span className={styles[part.isViewer ? "ranking-row__name-fixed" : "ranking-row__first-name"]}>
+            {part.first}
+          </span>
+          {part.surname && <span className={styles["ranking-row__surname"]}>{` ${part.surname}`}</span>}
+        </Fragment>
+      ))}
+    </span>
   );
 }
 

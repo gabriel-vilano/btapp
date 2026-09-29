@@ -45,6 +45,35 @@ export function formatCompetitorName(players: RankingRowPlayers): string {
     .join(" e ");
 }
 
+/** Um jogador no nome visível da linha, partido para o sobrenome encolher antes (RK8). */
+export interface CompetitorNamePart {
+  id: string;
+  /** Primeiro nome, ou "Você" para o jogador logado. */
+  first: string;
+  /** O resto do nome, sem o espaço inicial. Vazio para "Você" e para nome de uma palavra. */
+  surname: string;
+  isViewer: boolean;
+}
+
+/**
+ * Primeiro nome e o resto, com os espaços normalizados.
+ * Ex.: "Maria Eduarda  Lima" → { first: "Maria", surname: "Eduarda Lima" }.
+ */
+export function splitPlayerName(name: string): { first: string; surname: string } {
+  const [first = "", ...rest] = name.trim().split(/\s+/);
+  return { first, surname: rest.join(" ") };
+}
+
+/**
+ * Peças do nome visível, na ordem de `formatCompetitorName`.
+ * Ex.: [Pedro Alves, Você] → [{ first: "Você" }, { first: "Pedro", surname: "Alves" }].
+ */
+export function competitorNameParts(players: RankingRowPlayers): CompetitorNamePart[] {
+  return orderPlayersForRow(players).map(({ id, name, isViewer = false }) =>
+    isViewer ? { id, first: "Você", surname: "", isViewer } : { id, ...splitPlayerName(name), isViewer },
+  );
+}
+
 /**
  * Linha de apoio: jogos e vitórias, com singular.
  * Ex.: "6 jogos · 5 vitórias", "1 jogo · 0 vitórias".

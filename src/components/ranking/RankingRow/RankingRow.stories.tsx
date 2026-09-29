@@ -60,8 +60,8 @@ export const Singles: Story = {
 // Fundo sutil e "Você" na frente do nome (RK10)
 export const Own: Story = {
   args: { position: 9, players: [P.pedro, VIEWER], points: 390, matches: 5, wins: 3, delta: 2, isOwn: true },
-  play: async ({ canvas }) => {
-    await expect(canvas.getByText("Você e Pedro Alves")).toBeVisible();
+  play: async ({ canvasElement }) => {
+    await expect(nameOf(canvasElement)).toHaveTextContent(/^Você e Pedro Alves$/);
   },
 };
 
@@ -113,15 +113,50 @@ export const WithCutoffDistance: Story = {
   },
 };
 
-// Nome longo trunca numa linha; o nome inteiro fica no nome acessível
+// Nome longo trunca numa linha, pelo sobrenome (RK8); o nome inteiro fica no nome acessível
 export const LongName: Story = {
   args: { position: 12, players: [P.long, P.rafael], awaitingAdmin: true },
   play: async ({ canvas, canvasElement }) => {
-    const name = canvasElement.querySelector("[aria-hidden] [class*=ranking-row__name]") as HTMLElement;
-    await expect(name.scrollWidth).toBeGreaterThan(name.clientWidth);
+    await expectSurnameShrinksFirst(canvasElement);
     await expect(canvas.getByRole("listitem")).toHaveTextContent(
       /Maria Eduarda de Vasconcelos Albuquerque e Rafael Costa/,
     );
+  },
+};
+
+type GalleryRow = Parameters<typeof RankingRow>[0];
+
+const LONG_NAME_ROWS: GalleryRow[] = [
+  { position: 3, players: [P.long], points: 560, matches: 6, wins: 4, delta: 1 },
+  { position: 4, players: [P.long, P.longPartner], points: 512, matches: 5, wins: 4, delta: -2 },
+  { position: 5, players: [P.davi, P.lucas], points: 470, matches: 5, wins: 3 },
+  { position: 9, players: [P.longPartner, VIEWER], points: 390, matches: 5, wins: 3, delta: 2, isOwn: true },
+];
+
+function LongNamesFrame({ widthClass }: { widthClass: string }) {
+  return (
+    <div className={widthClass}>
+      <RankingList aria-label="Classificação">{LONG_NAME_ROWS.map(galleryRow)}</RankingList>
+    </div>
+  );
+}
+
+// Nomes longos em simples, duplas e "Você e …" no menor celular suportado
+export const LongNames320: Story = {
+  parameters: { ownList: true },
+  render: () => <LongNamesFrame widthClass="sb-width-320" />,
+  play: async ({ canvasElement }) => {
+    await expectSurnameShrinksFirst(canvasElement);
+    const frame = canvasElement.querySelector(".sb-width-320") as HTMLElement;
+    await expect(frame.scrollWidth).toBeLessThanOrEqual(frame.clientWidth);
+  },
+};
+
+export const LongNames393: Story = {
+  parameters: { ownList: true },
+  render: () => <LongNamesFrame widthClass="sb-width-393" />,
+  play: async ({ canvasElement }) => {
+    await expectSurnameShrinksFirst(canvasElement);
   },
 };
 
@@ -166,8 +201,6 @@ export const Narrow320: Story = {
     await expect(frame.scrollWidth).toBeLessThanOrEqual(frame.clientWidth);
   },
 };
-
-type GalleryRow = Parameters<typeof RankingRow>[0];
 
 const TABLE: GalleryRow[] = [
   { position: 1, players: [P.lucas, P.rafael], points: 610, matches: 6, wins: 5, delta: 1 },
@@ -217,4 +250,29 @@ export const Gallery: Story = {
 
 function galleryRow(row: GalleryRow) {
   return <RankingRow key={row.position} {...row} onClick={fn()} />;
+}
+
+function nameOf(root: HTMLElement): HTMLElement {
+  return root.querySelector("[aria-hidden] > [class*=ranking-row__name]") as HTMLElement;
+}
+
+function isTruncated(part: Element): boolean {
+  return part.scrollWidth > part.clientWidth;
+}
+
+// RK8: em cada linha, primeiro nome cortado só quando não sobra nada dos sobrenomes, e
+// "Você" nunca é cortado. Ao menos um sobrenome da story está cortado
+async function expectSurnameShrinksFirst(root: HTMLElement) {
+  const surnames = [...root.querySelectorAll("[class*=ranking-row__surname]")];
+  await expect(surnames.some(isTruncated)).toBe(true);
+  for (const name of root.querySelectorAll("[aria-hidden] > [class*=ranking-row__name]")) {
+    const firstNames = [...name.querySelectorAll("[class*=ranking-row__first-name]")];
+    const rowSurnames = [...name.querySelectorAll("[class*=ranking-row__surname]")];
+    if (firstNames.some(isTruncated)) {
+      await expect(rowSurnames.every((surname) => surname.clientWidth === 0)).toBe(true);
+    }
+    for (const fixed of name.querySelectorAll("[class*=ranking-row__name-fixed]")) {
+      await expect(isTruncated(fixed)).toBe(false);
+    }
+  }
 }
