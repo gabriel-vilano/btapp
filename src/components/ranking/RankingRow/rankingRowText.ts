@@ -1,7 +1,8 @@
+import { abbreviateName, joinFullName, type PersonName } from "@/src/lib/names";
+
 /** Jogador de uma linha do ranking. Em duplas, a linha recebe dois. */
-export interface RankingRowPlayer {
+export interface RankingRowPlayer extends PersonName {
   id: string;
-  name: string;
   avatarUrl: string | null;
   /** O jogador logado: aparece como "Você" e vai para a frente do nome da dupla. */
   isViewer?: boolean;
@@ -35,14 +36,26 @@ export function orderPlayersForRow(players: RankingRowPlayers): RankingRowPlayer
   return [...players].sort((a, b) => Number(b.isViewer ?? false) - Number(a.isViewer ?? false));
 }
 
+function competitorName(players: RankingRowPlayers, of: (player: RankingRowPlayer) => string): string {
+  return orderPlayersForRow(players)
+    .map((player) => (player.isViewer ? "Você" : of(player)))
+    .join(" e ");
+}
+
 /**
- * Nome da unidade competidora, com "Você" no lugar do jogador logado.
+ * Nome completo da unidade competidora, para o nome acessível e o alt do avatar.
  * Ex.: "Você e Pedro Alves", "Lucas Silva e Rafael Costa", "Você".
  */
 export function formatCompetitorName(players: RankingRowPlayers): string {
-  return orderPlayersForRow(players)
-    .map((player) => (player.isViewer ? "Você" : player.name))
-    .join(" e ");
+  return competitorName(players, joinFullName);
+}
+
+/**
+ * Nome visível na tabela: sempre abreviado, pela regra do `abbreviateName` (RK8).
+ * Ex.: "Você e Pedro A.", "Lucas S. e Rafael C.".
+ */
+export function formatShortCompetitorName(players: RankingRowPlayers): string {
+  return competitorName(players, abbreviateName);
 }
 
 /**
