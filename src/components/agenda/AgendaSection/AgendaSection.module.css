@@ -1,0 +1,35 @@
+.agenda-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.agenda-section__title {
+  margin: 0;
+  padding: var(--spacing-200) var(--spacing-page-margin) var(--spacing-50);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground-primary);
+}
+
+.agenda-section__group {
+  margin: 0;
+  padding: var(--spacing-150) var(--spacing-page-margin) var(--spacing-50);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground-secondary);
+}
+
+/* "Nada pendente": dizer que o jogador está em dia também é informação (N14) */
+.agenda-section__empty {
+  margin: 0;
+  padding: var(--spacing-100) var(--spacing-page-margin) var(--spacing-150);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-secondary);
+}
