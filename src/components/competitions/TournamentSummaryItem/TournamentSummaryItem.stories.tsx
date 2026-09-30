@@ -130,9 +130,11 @@ export const WithStandings: Story = {
   ),
   play: async ({ canvas }) => {
     const [ranking, tournament] = await canvas.findAllByRole("link");
-    // A coluna da posição tem 3ch em Arimo bold: medida com a fonte de fallback,
-    // o título do ranking sai deslocado e a story falhava às vezes (ENG-128)
-    await document.fonts.load("700 20px Arimo");
+    // A coluna da posição tem 3ch em Arimo bold: medida no meio da troca da fonte
+    // de fallback pela Arimo, o título do ranking sai deslocado e a story falhava
+    // às vezes (ENG-128). A Arimo vem do Google Fonts: se o pedido falhar, não há
+    // troca, as duas linhas ficam na fallback e a medida continua valendo
+    await document.fonts.load("700 20px Arimo").catch(() => undefined);
     const titleLeft = (link: HTMLElement) =>
       (link.querySelector("span:nth-child(2)") as HTMLElement).getBoundingClientRect().left;
     await expect(titleLeft(tournament)).toBe(titleLeft(ranking));
