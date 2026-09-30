@@ -26,6 +26,7 @@ As siglas são as mesmas do `docs/DOMAIN.md` > "Fontes" e da `docs/NAVIGATION.md
 | **HIG-SEARCH** | Apple Human Interface Guidelines, ["Search fields"](https://developer.apple.com/design/human-interface-guidelines/search-fields) (lido em 29/09/2026): "If possible, start search immediately when a person types"; "Use placeholder text to help people know what they can search for… when you need to reinforce the scope"; "Default to a broader scope and let people refine it as they need" |
 | **MOB** | Telas de busca no Mobbin (29/09/2026), 10 apps. Com uma visão "todos" antes dos escopos: 5 ([Givingli](https://mobbin.com/screens/af2aa6db-4042-441f-993b-8d7e12da1708), [Posh](https://mobbin.com/screens/fe24a89a-b184-4763-bc6c-4e1ff3146b76), [Substack](https://mobbin.com/screens/231a27f2-0cf7-4041-a275-f96bbdba0f28), [Hulu](https://mobbin.com/screens/6ee2fbb3-d7cf-4e42-99ee-8998c1ebc01d), [Hypelist](https://mobbin.com/screens/7ace65a4-e8e0-4799-a49b-f2081931bce4)). Só com escopos: 4 ([Strava](https://mobbin.com/screens/d9be8a1e-6e79-4bac-8741-e2bf33b81395), [Polarsteps](https://mobbin.com/screens/7fd17bf2-7230-4415-9eca-a2d0d1e01bf7), [Vestiaire](https://mobbin.com/screens/1a20b6c0-36fe-4a9f-a8c9-483703cb88ff), [pliability](https://mobbin.com/screens/83a41f1f-dc86-47ad-8055-ecd0df594f1a)). O Hulu mostra a contagem em cada escopo ("Movies (11)", "Episodes (12)"). Amostra pequena: serve de exemplo, não de estatística |
 | **DEC-EXP-2** | Resposta do Gabriel na issue desta spec (30/09): confirma a EX27 ("Tenho interesse" só enquanto há categoria livre e o jogador não tem inscrição na competição) e a EL15 |
+| **DEC-EXP-3** | Decisão do Gabriel na issue do SearchField e da contagem nas Tabs (30/09): os escopos da busca usam as **Tabs do DS**, e não o SegmentedControl. As Tabs não pedem variante nova e, com o texto ampliado (WCAG 1.4.4 e 1.4.10), rolam em vez de cortar. Medido com a Arimo a 393px: as três abas com contagem ocupam 120, 131 e 110px; no SegmentedControl, cada segmento igual tem 93px para o texto, e "Competições 1" (99,6px) sairia cortado |
 | **WCAG-253** | WCAG 2.2, critério 2.5.3 "Label in Name": o nome acessível contém o rótulo visível |
 | **APG-BUTTON** | WAI-ARIA Authoring Practices, padrão "Button": num botão de alternar, o rótulo não muda com o estado; se o rótulo muda, não se usa `aria-pressed` |
 | **LEIT** | Leitura do agente desta spec. Todas foram confirmadas pelo Gabriel: EL1 a EL14 na DEC-EXP, EL15 e a junção da EX27 na DEC-EXP-2. O mapa está na seção 10 |
@@ -52,17 +53,17 @@ A busca tem outro papel: é a porta mais curta para um perfil (JTBD 3, avaliar o
 
 ## 2. A tela
 
-- **EX1. O Explorar tem, de cima para baixo: o título "Explorar", o campo de busca e a vitrine** (seção 3). O controle de escopos (Jogadores · Competições · Arenas) aparece **só quando o campo tem foco ou texto**, logo abaixo dele, e a vitrine dá lugar aos resultados. [NAV N32, N33; HIG-SEARCH; DEC-EXP EL1]
+- **EX1. O Explorar tem, de cima para baixo: o título "Explorar", o campo de busca e a vitrine** (seção 3). As abas de escopo (Jogadores · Competições · Arenas, com as Tabs do DS) aparecem **só quando o campo tem foco ou texto**, logo abaixo dele, e a vitrine dá lugar aos resultados. [NAV N32, N33; HIG-SEARCH; DEC-EXP EL1; DEC-EXP-3]
 
-  **Por quê:** a HIG põe a barra de escopo "na área de resultados". Mostrar os escopos sem busca poria três segmentos acima de uma vitrine que não depende deles.
+  **Por quê:** a HIG põe a barra de escopo "na área de resultados". Mostrar os escopos sem busca poria três abas acima de uma vitrine que não depende deles.
 - **EX2. A busca começa enquanto o jogador digita, a partir de 2 caracteres.** Com 1 caractere, a área de resultados diz "Digite ao menos 2 letras." Sem termo e com foco, ela fica vazia, com o controle de escopos visível. [HIG-SEARCH; DEC-EXP EL1]
 - **EX3. O placeholder diz o que o escopo busca:** "Nome ou @username" (Jogadores), "Competição ou organizador" (Competições), "Arena ou cidade" (Arenas). O rótulo acessível do campo é "Buscar". [HIG-SEARCH]
 - **EX4. O escopo começa em Jogadores** (N32) e volta para ele quando o campo é limpo ou o jogador sai da aba. Ao voltar de um resultado com "Voltar", o termo, o escopo e a rolagem continuam como estavam. [NAV N10, N32; NNG-SCOPE; DEC-EXP EL2]
 
   **Por quê voltar ao padrão:** a NN/g observa que quem troca de escopo esquece que trocou e faz a busca seguinte no escopo errado. Guardar o escopo só enquanto há termo evita isso sem apagar o trabalho de quem abriu um resultado e voltou.
-- **EX5. Cada segmento mostra a contagem de resultados do termo atual:** "Jogadores 0 · Competições 1 · Arenas 1". A contagem aparece a partir da primeira busca (2 caracteres) e se atualiza com o termo; sem termo, os segmentos mostram só o nome. O nome acessível de cada segmento inclui a contagem ("Competições, 1 resultado"). [DEC-EXP EQ1; NNG-SCOPE; MOB (Hulu)]
+- **EX5. Cada aba de escopo mostra a contagem de resultados do termo atual:** "Jogadores 0 · Competições 1 · Arenas 1". A contagem aparece a partir da primeira busca (2 caracteres) e se atualiza com o termo; sem termo, as abas mostram só o nome. Acima de 99, a aba mostra "99+". O nome acessível de cada aba inclui a contagem ("Competições, 1 resultado"). Os escopos usam as Tabs do DS, e não o SegmentedControl (DEC-EXP-3). [DEC-EXP EQ1; DEC-EXP-3; NNG-SCOPE; MOB (Hulu)]
 
-  **Por quê:** a busca começa num escopo só, que é o caso que a NN/g aponta como o de maior risco: quem digita "Vila" em Jogadores não vê o Vila do Tênis e conclui que ele não está no app. O número no segmento mostra onde está o resultado sem mudar o escopo inicial.
+  **Por quê:** a busca começa num escopo só, que é o caso que a NN/g aponta como o de maior risco: quem digita "Vila" em Jogadores não vê o Vila do Tênis e conclui que ele não está no app. O número na aba mostra onde está o resultado sem mudar o escopo inicial.
 
   **Limite de largura:** as três contagens precisam caber a 393px ao lado de "Competições" (NAV N25), sem truncar. A issue do SearchField testa com a fonte real e com contagens de 2 dígitos. Se não couber, a decisão volta ao Gabriel. Trocar para um escopo "Tudo" também precisa da aprovação dele. [DEC-EXP EQ1]
 
@@ -120,7 +121,7 @@ Os escopos, o que cada um busca e o escopo inicial são da N32. Esta seção def
 
   **Por quê a competição em comum:** dois "Lucas" no mesmo beta são prováveis. A competição separa o adversário do homônimo sem abrir o perfil.
 - **EX18. Até 20 resultados, com "Mostrar mais"** no fim da lista. A contagem total é anunciada ("12 jogadores encontrados") numa região `aria-live="polite"` (NAV 10.3; WCAG 4.1.3). [DEC-EXP-2 EL15]
-- **EX19. Sem resultado:** "Nada encontrado para '[termo]' em [escopo]." e, abaixo, um link para cada **outro escopo com resultado** para o mesmo termo, com a contagem ("Ver 2 em Competições"). Escopo com zero não ganha link: ele levaria a outra tela vazia. Se nenhum escopo tem resultado, só a frase. A contagem dos segmentos (EX5) já mostra os três números. [NAV 9.2; NNG-SCOPE]
+- **EX19. Sem resultado:** "Nada encontrado para '[termo]' em [escopo]." e, abaixo, um link para cada **outro escopo com resultado** para o mesmo termo, com a contagem ("Ver 2 em Competições"). Escopo com zero não ganha link: ele levaria a outra tela vazia. Se nenhum escopo tem resultado, só a frase. A contagem das abas (EX5) já mostra os três números. [NAV 9.2; NNG-SCOPE]
 - **EX20. Carregando e erro:** 3 linhas de Skeleton no formato do item do escopo; se a busca falha, "Não foi possível buscar. Tentar de novo" no lugar dos resultados, e o campo continua editável. Resultado que chega fora de ordem (o de um termo anterior) é descartado. [NAV N23, N24]
 - **EX21. A busca exige login**, como o perfil (PF20). Sem login, `/explorar` leva ao login e volta ao Explorar depois dele (NAV N28). [PROF PF20]
 
@@ -201,7 +202,7 @@ Lista para a auditoria do design system, como na NAVIGATION (seção 11). **Esta
 | Componente | Tier | Papel nesta spec | Situação |
 | --- | --- | --- | --- |
 | **SearchField** | 1 | Campo de busca (EX1, EX3) | Novo, ou variante do FormInput (NAV) |
-| **SegmentedControl** | 1 | Escopos da busca com a contagem em cada segmento (EX1, EX5) | No `master`. A contagem pode pedir variante; testar a largura a 393px |
+| **Tabs** | 1 | Escopos da busca com a contagem em cada aba (EX1, EX5) | No `master`, com a contagem opcional por aba. Tabs, e não o SegmentedControl (DEC-EXP-3) |
 | **CompetitionListItem** | 3 | Item de competição na vitrine, na busca e na página da organização (EX10) | Novo, ou o `CompetitionBlock` do feed como base. Parte do ListItem |
 | **ArenaListItem** | 3 | Item de arena na vitrine e na busca (EX11) | Novo. Parte do ListItem |
 | **PlayerListItem** | 2 | Item de jogador na busca (EX17) | Novo, ou o ListItem com Avatar. Pode servir à lista de amigos (PF5) |
@@ -221,7 +222,7 @@ As métricas "Uso do Explorar", "Tenho interesse" e "Busca por escopo" já estã
 | **Tenho interesse** | Interesses por competição e % dos jogadores que marcaram algum (NAV) | Mede a procura por competições novas |
 | **Interesse que virou inscrição** | Dos interesses, % cujo jogador teve inscrição ativa na competição até o fim da temporada seguinte | Diz se o interesse prevê inscrição. Se prevê, é o argumento para avisar o organizador e para a inscrição pelo app |
 | **Busca por escopo** | Buscas por escopo e % que terminam numa página aberta (NAV) | Qual escopo tem uso real |
-| **Busca no escopo errado** | % das buscas com zero resultado no escopo escolhido e resultado em outro; delas, % em que o jogador trocou de escopo | Mede se a contagem nos segmentos (EX5) resolve o risco do escopo inicial. Taxa alta sem troca de escopo é o sinal para reabrir o "Tudo" com o Gabriel |
+| **Busca no escopo errado** | % das buscas com zero resultado no escopo escolhido e resultado em outro; delas, % em que o jogador trocou de escopo | Mede se a contagem nas abas (EX5) resolve o risco do escopo inicial. Taxa alta sem troca de escopo é o sinal para reabrir o "Tudo" com o Gabriel |
 
 ---
 
@@ -266,7 +267,7 @@ As métricas "Uso do Explorar", "Tenho interesse" e "Busca por escopo" já estã
 | Filtros por nível e região | DEC-NAV-Q; evidência fraca (DSC 1.2) e pouco volume | "Uso do Explorar" alto entre temporadas, com mais organizadores |
 | Recomendação ("para você") | Pede categoria e região no perfil e o mapeamento de nomes de categoria (DSC 1.3) | Depois dos filtros |
 | Mapa | Custo alto; com poucas arenas, o mapa fica vazio (REF, caminho C) | Com dezenas de arenas |
-| Escopo "Tudo" na busca | DEC-EXP EQ1: a contagem nos segmentos vem primeiro | "Busca no escopo errado" alta, ou a contagem não cabe a 393px |
+| Escopo "Tudo" na busca | DEC-EXP EQ1: a contagem nas abas vem primeiro | "Busca no escopo errado" alta, ou a contagem não cabe a 393px |
 | Inscrição pelo app | `PRODUCT.md`; a inscrição é feita com o organizador (R32) | "Interesse que virou inscrição" alto |
 | Avisar o organizador do interesse | O interesse é privado no MVP (DEC-NAV-A L13) | Idem |
 | Buscas recentes e sugestões | A HIG sugere, mas o volume do beta não pede | Se "Busca por escopo" mostrar buscas repetidas |
