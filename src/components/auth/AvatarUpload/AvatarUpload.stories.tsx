@@ -57,6 +57,11 @@ async function uploadPhoto(canvasElement: HTMLElement, file: File): Promise<void
   await userEvent.setup({ pointerEventsCheck: 0 }).upload(input, file);
 }
 
+// Decodificar a foto de ~17MB, reduzir e recodificar leva ~300ms numa máquina de 4
+// núcleos. O timeout padrão do waitFor (1s) estourava na CI mais lenta, e a story
+// falhava às vezes com "onFileSelect not called" (ENG-115).
+const RESIZE_TIMEOUT_MS = 5000;
+
 export const LargePhoto: Story = {
   parameters: {
     docs: {
@@ -74,7 +79,9 @@ export const LargePhoto: Story = {
 
     await uploadPhoto(canvasElement, photo);
 
-    await waitFor(() => expect(args.onFileSelect).toHaveBeenCalled());
+    await waitFor(() => expect(args.onFileSelect).toHaveBeenCalled(), {
+      timeout: RESIZE_TIMEOUT_MS,
+    });
     const selected = (args.onFileSelect as Mock).mock.lastCall?.[0] as File;
     await expect(selected).toBeInstanceOf(File);
     await expect(selected.size).toBeLessThanOrEqual(AVATAR_MAX_BYTES);
