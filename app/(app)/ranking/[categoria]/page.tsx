@@ -1,11 +1,10 @@
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import { RankingScreen, type RankingScreenLinks } from "@/src/components/ranking/RankingScreen";
+import { DetailHeader } from "@/src/components/shell/DetailHeader";
 import { rankingScreen, type RankingScreenModel } from "@/src/lib/domain/ranking-screen";
 import { mockProfileDomain } from "@/src/mocks/domain";
 import { MOCK_VIEWER_ID, mockRankingRoutes } from "@/src/mocks/rankingRoutes";
-
-const BACK_HREF = "/competicoes";
 
 function firstValue(value: string | string[] | undefined): string | undefined {
   return Array.isArray(value) ? value[0] : value;
@@ -15,7 +14,6 @@ function screenLinks(model: RankingScreenModel): RankingScreenLinks {
   const content = model.content;
   const previous = content.kind === "no_season" ? null : content.header.previous_season_id;
   return {
-    back: BACK_HREF,
     rules: mockRankingRoutes.rulesHref(model.competition_id),
     previousSeason: previous && mockRankingRoutes.categoryHref(model.category.id, previous),
   };
@@ -43,12 +41,15 @@ export default async function RankingPage(props: RankingPageProps) {
   if (model === null) notFound();
 
   return (
-    <RankingScreen
-      model={model}
-      viewerId={MOCK_VIEWER_ID}
-      now={now}
-      links={screenLinks(model)}
-      scrollToOwnOnOpen={seasonId !== null}
-    />
+    <>
+      <DetailHeader title="Classificação" />
+      <RankingScreen
+        model={model}
+        viewerId={MOCK_VIEWER_ID}
+        now={now}
+        links={screenLinks(model)}
+        scrollToOwnOnOpen={seasonId !== null}
+      />
+    </>
   );
 }
