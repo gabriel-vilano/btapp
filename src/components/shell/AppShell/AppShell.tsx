@@ -12,6 +12,7 @@ import { createContext, useContext, type ElementType, type ReactNode } from "rea
 import type { CountBadgeInfo } from "@/src/components/ui/CountBadge";
 import { NavigationRail, TabBar, type NavigationItem } from "@/src/components/ui/TabBar";
 import { MAIN_TABS, mainTabHref, type MainTab } from "@/src/lib/navigation/mainTabs";
+import { isTaskRoute } from "./taskRoutes";
 import { useCurrentTab } from "./useCurrentTab";
 import styles from "./AppShell.module.css";
 
@@ -47,12 +48,14 @@ const ShellNavigationContext = createContext<ShellNavigation | null>(null);
  * @example <AppShell badges={{ jogos: { count: 2, description: "2 pendências" } }} profileAvatar={null}>…</AppShell>
  */
 export function AppShell({ badges, profileAvatar, children }: AppShellProps) {
-  const tab = useCurrentTab(usePathname());
+  const pathname = usePathname();
+  const tab = useCurrentTab(pathname);
   const items = navigationItems(badges, profileAvatar);
+  const shellClass = [styles.shell, isTaskRoute(pathname) && styles["shell--task"]].filter(Boolean).join(" ");
 
   return (
     <ShellNavigationContext.Provider value={{ currentTab: tab, backHref: mainTabHref(tab) }}>
-      <div className={styles.shell}>
+      <div className={shellClass}>
         <NavigationRail items={items} currentValue={tab} className={styles.shell__rail} />
         <div className={styles.shell__content}>{children}</div>
         <TabBar items={items} currentValue={tab} className={styles.shell__tabbar} />

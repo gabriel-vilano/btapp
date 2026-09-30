@@ -4,9 +4,8 @@ import { ReportResultFlow } from "@/src/components/agenda/ReportResult";
 import { reportResultDataOf } from "@/src/mocks/reportResult";
 
 // Lançar o resultado (docs/RESULTS.md §3, NAVIGATION.md N18) sobre os mocks,
-// visto pelo Lucas. Mora no grupo (tarefa), fora da casca do app: os fluxos
-// modais de tarefa cobrem a tab bar (N4), e sem a casca montada não sobra
-// navegação escondida atrás do modal para o foco do teclado alcançar.
+// visto pelo Lucas. É rota de tarefa (N4): a casca esconde a TabBar e o
+// NavigationRail aqui (shell/AppShell/taskRoutes.ts), sem desmontar.
 export default async function ReportResultPage({ params }: { params: Promise<{ partida: string }> }) {
   // Renderiza a cada acesso: o "agora" conta o prazo de resposta da revisão
   await connection();
