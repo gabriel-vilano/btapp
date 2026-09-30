@@ -18,7 +18,7 @@ const meta = {
       name: "Copa Nubeach de Beach Tennis",
       category: storyCategory,
       date_display: "20 e 21 de maio de 2026",
-      location: "Arena RM · Nova Lima/MG",
+      location: "Arena Mangaba · Nova Lima/MG",
       enrollment_count: 48,
       org_avatar_url: null,
     },
@@ -75,7 +75,7 @@ export const LongText: Story = {
       category: { ...storyCategory, age_group: "40+" },
       date_display: "29, 30 e 31 de outubro e 1º de novembro de 2026",
       location:
-        "Arena Sunset Beach Club – Quadras Cobertas · Belo Horizonte/MG",
+        "Arena Tucum Beach Club – Quadras Cobertas · Belo Horizonte/MG",
       enrollment_count: 1024,
       org_avatar_url: null,
     },

@@ -65,7 +65,7 @@ export interface ProfileMatchItem {
   result_type: 'normal' | 'retired' | 'wo';
   score: Score; // gravado do lado vencedor, como no card
   opponents: string; // "Pedro e Thiago" ou "Thiago Mendes"
-  context: string; // "Ranking Arena RM 2026 · Masculino B" ou "Amistoso"
+  context: string; // "Ranking Arena Mangaba 2026 · Masculino B" ou "Amistoso"
   played_at: string; // ISO 8601
   href: string;
 }

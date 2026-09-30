@@ -9,7 +9,7 @@ const meta = {
   args: {
     // Data fixa: o texto formatado não muda com o relógio.
     date: "2026-05-20T22:00:00Z",
-    location: "Arena RM – Beach · Nova Lima/MG",
+    location: "Arena Mangaba – Beach · Nova Lima/MG",
   },
 } satisfies Meta<typeof MetaInfo>;
 
@@ -29,7 +29,7 @@ export const RetiredNote: Story = {
 export const LongLocation: Story = {
   args: {
     location:
-      "Arena Sunset Beach Club – Quadras Cobertas 1 a 6 · Belo Horizonte/MG",
+      "Arena Tucum Beach Club – Quadras Cobertas 1 a 6 · Belo Horizonte/MG",
   },
   play: async ({ canvasElement }) => {
     await expectNoHorizontalOverflow(canvasElement);

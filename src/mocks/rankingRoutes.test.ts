@@ -19,7 +19,7 @@ describe('mockRankingRoutes.categoryHref', () => {
     const { masculinoB } = mockEntities.rankingCategories;
     expect(mockRankingRoutes.categoryHref(masculinoB.id)).toBe('/ranking/masculino-b');
     expect(mockRankingRoutes.categoryId('masculino-b')).toBe(masculinoB.id);
-    expect(mockRankingRoutes.categoryHref(masculinoB.id, 'season-arena-rm-2026-1')).toBe(
+    expect(mockRankingRoutes.categoryHref(masculinoB.id, 'season-arena-mangaba-2026-1')).toBe(
       '/ranking/masculino-b?temporada=2026-1',
     );
   });
