@@ -43,6 +43,14 @@ function expectNoClippedTab(tabs: HTMLElement[]) {
   }
 }
 
+/**
+ * Largura só vale medida com a Arimo: a fonte de fallback é mais larga. O `fonts.ready`
+ * sozinho resolve antes de a fonte ser pedida, e a story falhava às vezes na rodada completa.
+ */
+async function loadArimo() {
+  await Promise.all([document.fonts.load("700 14px Arimo"), document.fonts.load("400 12px Arimo")]);
+}
+
 type StatefulTabsProps = Omit<ComponentProps<typeof Tabs>, "value" | "onValueChange"> & {
   initialValue: string;
 };
@@ -179,6 +187,7 @@ export const WithCount: Story = {
     </div>
   ),
   play: async ({ canvas }) => {
+    await loadArimo();
     const tabs = SEARCH_SCOPE_NAMES.map((name) => canvas.getByRole("tab", { name }));
     // Acima de 99, a aba mostra "99+"; o número visível fica fora do nome acessível
     await expect(tabs[2]).toHaveTextContent("99+");
@@ -236,6 +245,7 @@ export const WithCountWidest: Story = {
     </div>
   ),
   play: async ({ canvas }) => {
+    await loadArimo();
     const tablist = canvas.getByRole("tablist");
     await expect(tablist.scrollWidth).toBeLessThanOrEqual(tablist.clientWidth);
     expectNoClippedTab(canvas.getAllByRole("tab"));
@@ -261,6 +271,7 @@ export const WithCountLargeText: Story = {
     </div>
   ),
   play: async ({ canvas, userEvent }) => {
+    await loadArimo();
     const tabs = SEARCH_SCOPE_NAMES.map((name) => canvas.getByRole("tab", { name }));
     const tablist = canvas.getByRole("tablist");
     // Texto a 200% (WCAG 1.4.4): a lista rola, e cada aba mantém o texto inteiro
