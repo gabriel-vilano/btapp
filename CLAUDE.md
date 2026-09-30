@@ -367,6 +367,7 @@ O Claude deve sinalizar proativamente quando:
 - **Prioridade de cobertura:** auth (login, signup, validações), operações de banco (criar perfil, registrar partida), validações de input, e qualquer fluxo que envolva dados sensíveis
 - **Server actions:** testar com `vi.mock` em `@/src/lib/supabase/server` (fake de `app/(auth)/actions.test-utils.ts`) e em `next/navigation`, com `redirect` lançando `NEXT_REDIRECT:<url>` como o real. Asserção de redirect: `rejects.toThrow(redirectSignal(url))`
 - **Stories nas sessões na nuvem:** o container traz um Chromium mais antigo que o pedido pelo `playwright` do projeto, e a doc do ambiente proíbe `playwright install`. Rodar com `CHROMIUM_EXECUTABLE_PATH=/opt/pw-browsers/chromium npm run test:stories`: o `vitest.config.ts` passa a variável como `executablePath` do provider. Sem ela (CI, máquina local), nada muda. É outra versão do browser, então o job Stories da CI continua sendo a referência
+- **`play` das stories:** esperar a renderização com `findBy*`, não com `getBy*` logo no início. Não depender de rolagem suave, animação ou timer sem controle (rolar com `behavior: "instant"`). Antes de rolar numa tela que usa IntersectionObserver, esperar o primeiro aviso com `firstIntersectionDelivered` (`.storybook/playHelpers.ts`). Nunca espera fixa (`setTimeout`, `sleep`): o que se espera é uma condição, com `findBy*` ou `waitFor`. Story nova ou alterada com `play` passa pela prova de estabilidade da skill `/pegar-issue` (passo 4) antes do push, e a CI repete 5 vezes as stories alteradas pelo PR
 - **E2E:** Playwright em `e2e/`, contra o build de produção e um Supabase local (`supabase start`) com as migrations aplicadas do zero; o código de verificação dos e-mails vem do Mailpit. Roda no job E2E da CI. Sessões de agente não têm Docker: validam pelo resultado desse job no PR, não localmente. Cada teste cria usuário com e-mail único (`uniqueEmail`), e os helpers recusam qualquer Supabase que não seja local
 - **Seletores E2E:** preferir `getByLabel`/`getByRole` com `exact: true`. Alerta sempre filtrado pelo texto (`getByRole("alert").filter({ hasText })`): o anunciador de rota do Next também tem `role="alert"`
 - **Bug fix → teste de regressão.** Todo bug corrigido ganha um teste que reproduziria o bug, para evitar regressão futura
@@ -424,6 +425,22 @@ Daí acessar `http://<IP-do-dev>:3000` do celular. Em prod tudo funciona.
 **Solução:** o componente que importa o ícone roda no cliente. Ou ele tem `"use client"` (`Toast`, `FormInput`, `AvatarUpload`), ou só é usado dentro de componentes client (`Alert` e `PasswordChecklist`, usados só em páginas de auth com `"use client"`). Num Server Component, importar de `@phosphor-icons/react/ssr`. O wrapper `<Icon />` em si é seguro em Server Components: recebe o ícone como prop (`React.ElementType`) e não importa nada do Phosphor — o erro vem de quem importa o ícone.
 
 **Regra do feed:** todo componente de `src/components/feed/` que importa ícone Phosphor tem `"use client"` no próprio arquivo, em vez de depender de quem o renderiza. Assim ele funciona em qualquer página, inclusive num Server Component.
+
+### Dump do Testing Library nas stories parece vazio
+
+**Sintoma:** a story falha com `Unable to find an element…`, e o DOM impresso no erro só mostra os placeholders do Storybook. Parece que a story "não montou".
+
+**Causa:** o dump imprime o `document.body` inteiro e corta em 7.000 caracteres (`DEBUG_PRINT_LIMIT`). Os placeholders do Storybook vêm antes da raiz da story e enchem o limite antes do conteúdo. Aumentar o `DEBUG_PRINT_LIMIT` no shell não adianta: no modo browser do Vitest a variável não chega ao `process.env` da página.
+
+**Solução:** imprimir só a raiz da story, sem limite, com um `console.warn` temporário no `play` (o `console.log` do browser não aparece no terminal; o `console.warn` sim):
+
+```ts
+import { prettyDOM } from "storybook/test";
+// dentro do play, antes da linha que falha
+console.warn(prettyDOM(canvasElement, 100_000));
+```
+
+Tirar a linha antes do commit.
 
 ### Componentes com stubs sem comportamento
 

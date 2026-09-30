@@ -94,7 +94,7 @@ git branch -d feature/auth
 GitHub Actions (`.github/workflows/ci.yml`) roda em todo PR e em todo push na `master`, em três jobs paralelos:
 
 - **Lint, testes e build** — `npm run lint`, `npm run typecheck` (tipos do projeto inteiro, testes inclusive), `npm test`, `npm run build` (o build checa os tipos só do código do app)
-- **Stories** — `npm run test:stories` no Chromium, incluindo o addon de a11y
+- **Stories** — `npm run test:stories` no Chromium, incluindo o addon de a11y. Em PR, um passo seguinte roda 5 vezes os arquivos `*.stories.tsx` que o PR altera (diff contra a base) e reprova na primeira falha: story instável passa numa rodada só, então a repetição a pega no PR dela, e não no `master`. Sem story alterada, o passo não faz nada. É um passo do mesmo job, e não um job novo, para não mexer na lista de checks obrigatórios do ruleset. Não há `retry`: falhou uma vez, a story é instável
 - **E2E** — `npm run test:e2e`: fluxos de auth no Chromium (viewport 430px) contra um Supabase local com as migrations aplicadas do zero
 
 Só mergear com a CI verde.

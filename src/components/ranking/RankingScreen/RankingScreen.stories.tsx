@@ -1,6 +1,7 @@
 import type { Decorator, Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, screen, waitFor, within } from "storybook/test";
 import type { RankingScreenContent } from "@/src/lib/domain/ranking-screen";
+import { firstIntersectionDelivered } from "@/.storybook/playHelpers";
 import { AppHeader } from "@/src/components/ui/AppHeader";
 import { RankingScreen } from "./RankingScreen";
 import {
@@ -47,19 +48,6 @@ type Story = StoryObj<typeof meta>;
 
 const ownPinned = (root: HTMLElement) => root.ownerDocument.querySelector<HTMLElement>("[class*='pinned--']");
 const rowsWith = (items: HTMLElement[], text: string) => items.filter((item) => item.textContent?.includes(text));
-
-// Resolve na primeira entrega de IntersectionObserver do documento. Todos os
-// observers são calculados no mesmo passo de renderização e avisados na ordem
-// em que nasceram: quando este é avisado, o do useOwnRow, criado antes, já foi
-function firstIntersectionDelivered(target: Element): Promise<void> {
-  return new Promise((resolve) => {
-    const probe = new IntersectionObserver(() => {
-      probe.disconnect();
-      resolve();
-    });
-    probe.observe(target);
-  });
-}
 
 // Própria dupla em 18º, fora da zona: distância da vaga, e a cópia fixa no rodapé
 // enquanto a linha está abaixo da vista (RK9, RK11)
