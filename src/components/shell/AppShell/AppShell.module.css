@@ -1,0 +1,56 @@
+/*
+ * Uma coluna no mobile, com a TabBar no rodapé; a partir de 600px, o
+ * NavigationRail à esquerda e o conteúdo numa coluna central (NAVIGATION.md,
+ * N27). Só uma das duas navegações fica visível: `display: none` tira a outra
+ * da árvore de acessibilidade, e sobra um só <nav aria-label="Principal">.
+ */
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: var(--color-background-primary);
+}
+
+.shell__rail {
+  display: none;
+}
+
+/* Largura máxima: feed, agenda, competições e classificação são listas de uma coluna */
+.shell__content {
+  flex: 1;
+  width: 100%;
+  max-width: var(--dimension-layout-max);
+  margin-inline: auto;
+}
+
+/*
+ * Sticky em vez de fixed: a barra fica no fluxo, colada no fim da tela
+ * enquanto a página rola, e o fim da lista nunca some atrás dela sem
+ * precisar de um padding com a altura da barra calculada à mão.
+ */
+.shell__tabbar {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--z-sticky);
+}
+
+/* 600px = --breakpoint-md: custom property não funciona em @media */
+@media (min-width: 600px) {
+  .shell {
+    flex-direction: row;
+  }
+
+  .shell__rail {
+    display: block;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    z-index: var(--z-sticky);
+  }
+
+  .shell__tabbar {
+    display: none;
+  }
+}

@@ -1,0 +1,155 @@
+/* Coluna única com largura máxima: no desktop a página não estica (N27) */
+.competition-page {
+  width: 100%;
+  max-width: var(--dimension-layout-max);
+  margin-inline: auto;
+  padding-bottom: var(--spacing-400);
+}
+
+/* --- Cabeçalho: organização e tipo, abaixo do título --- */
+
+.competition-page__organizer {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-150);
+  padding: var(--spacing-100) var(--spacing-page-margin) var(--spacing-200);
+}
+
+.competition-page__organizer-name {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.competition-page__organizer-kind {
+  margin: 0;
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+}
+
+/* --- Seções --- */
+
+.competition-page__section {
+  padding-top: var(--spacing-300);
+}
+
+/* O link "Como funciona a pontuação" (RK5) rola até aqui: a margem deixa o
+   título visível abaixo do cabeçalho da tela */
+.competition-page__section,
+.competition-page__subsection {
+  scroll-margin-top: var(--spacing-800);
+}
+
+.competition-page__section-title {
+  margin: 0 0 var(--spacing-100);
+  padding-inline: var(--spacing-page-margin);
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.competition-page__subsection {
+  padding: var(--spacing-150) var(--spacing-page-margin) 0;
+}
+
+.competition-page__subsection-title {
+  margin: 0 0 var(--spacing-50);
+  color: var(--color-foreground-primary);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line-height);
+  letter-spacing: var(--text-body-lg-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.competition-page__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-150);
+  padding-inline: var(--spacing-page-margin);
+}
+
+.competition-page__text,
+.competition-page__list {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+}
+
+.competition-page__text--secondary {
+  color: var(--color-foreground-secondary);
+}
+
+/* O contato aparece como o organizador escreveu, e dá para copiar (N33) */
+.competition-page__contact {
+  user-select: text;
+  overflow-wrap: anywhere;
+}
+
+/* O reset tira os marcadores; na ordem de desempate o número é a informação */
+.competition-page__list {
+  padding-inline-start: var(--spacing-250);
+  list-style: decimal;
+}
+
+.competition-page__list > li + li {
+  margin-top: var(--spacing-50);
+}
+
+/* --- Pares rótulo · valor (temporada e tabela de pontos) --- */
+
+.competition-page__facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-150);
+  margin: 0;
+}
+
+.competition-page__fact-label {
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+}
+
+.competition-page__fact-value {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+}
+
+.competition-page__example {
+  padding: var(--spacing-150);
+  border-radius: var(--radius-md);
+  background-color: var(--color-background-secondary);
+}
+
+/* --- Tenho interesse --- */
+
+.competition-page__interest {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-100);
+}
+
+.competition-page__visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
