@@ -40,6 +40,7 @@ Documentamos o que é estável. Decisões, padrões, princípios, hurdles, conve
 - `docs/SCHEDULING.md` — marcação de jogos: regras da proposta de horário (M1…), prazos, notificações, telefone para o WhatsApp e métricas
 - `docs/RESULTS.md` — registro de resultado: telas e fluxos de lançar, confirmar ou contestar, fila do admin e amistoso (RG1…), notificações e métricas
 - `docs/NAVIGATION.md` — navegação do app e agenda do jogador (aba Jogos): abas, rotas por entidade, seções da agenda, relação com o feed (N1…)
+- `docs/EXPLORE.md` — aba Explorar: vitrine de competições e arenas, busca com três escopos, página da organização, "Como se inscrever" e "Tenho interesse" (EX1…)
 - `docs/RANKING.md` — tela de ranking: classificação por categoria, troca de categoria, própria linha fixada, delta, linha de corte da final, página da competição, estados e critérios de aceite do RankingRow e do ZoneDivider (RK1…)
 - `docs/TOKENS.md` — design system
 - `docs/GIT_WORKFLOW.md` — workflow de branches, PR, versionamento
