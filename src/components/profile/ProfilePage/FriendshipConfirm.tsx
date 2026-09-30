@@ -21,13 +21,13 @@ interface FriendshipConfirmProps {
 const COPY: Record<ConfirmedAction, (name: string) => { title: string; description: string; keep: string; confirm: string }> = {
   cancel: (name) => ({
     title: `Cancelar o pedido para ${name}?`,
-    description: `${name} não recebe aviso. Se você pedir de novo, a amizade volta a depender do aceite de ${name}.`,
+    description: `${name} não recebe aviso. Se você pedir de novo, o pedido espera um novo aceite.`,
     keep: "Manter pedido",
     confirm: "Cancelar pedido",
   }),
   unfriend: (name) => ({
     title: `Desfazer a amizade com ${name}?`,
-    description: `${name} não recebe aviso. Para voltarem a ser amigos, um novo pedido precisa do aceite de ${name}.`,
+    description: `${name} não recebe aviso. Para voltarem a ser amigos, vai ser preciso um novo pedido e um novo aceite.`,
     keep: "Manter amizade",
     confirm: "Desfazer amizade",
   }),
