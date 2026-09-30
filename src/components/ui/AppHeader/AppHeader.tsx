@@ -10,6 +10,11 @@ type AppHeaderProps = {
   title: ReactNode;
   /** Destino do "Voltar". Sem ele, a tela é a raiz de uma aba e o cabeçalho não tem "Voltar". */
   backHref?: string;
+  /**
+   * Tag do título. `h1` (padrão) na maioria das telas; `p` quando o conteúdo já tem o próprio `h1`,
+   * como o nome no perfil (PROFILE.md §7). Cada tela tem exatamente um `h1`.
+   */
+  titleAs?: "h1" | "p";
   /** Ações à direita: IconButton, IconButtonLink ou um Button ghost. */
   actions?: ReactNode;
   className?: string;
@@ -19,7 +24,7 @@ type AppHeaderProps = {
  * Cabeçalho das abas e das telas de detalhe (NAVIGATION.md, seção 3): "Voltar", título e ações.
  * @example <AppHeader title="Jogos" actions={<Button variant="ghost">Registrar amistoso</Button>} />
  */
-export function AppHeader({ title, backHref, actions, className }: AppHeaderProps) {
+export function AppHeader({ title, titleAs: TitleTag = "h1", backHref, actions, className }: AppHeaderProps) {
   const classes = [styles.header, backHref && styles["header--with-back"], className]
     .filter(Boolean)
     .join(" ");
@@ -27,7 +32,7 @@ export function AppHeader({ title, backHref, actions, className }: AppHeaderProp
   return (
     <header className={classes}>
       {backHref && <IconButtonLink href={backHref} icon={CaretLeftIcon} label="Voltar" />}
-      <h1 className={styles.header__title}>{title}</h1>
+      <TitleTag className={styles.header__title}>{title}</TitleTag>
       {actions && <div className={styles.header__actions}>{actions}</div>}
     </header>
   );

@@ -73,11 +73,17 @@ export const WithTextAction: Story = {
   },
 };
 
-/** Perfil: o @username e a engrenagem das configurações (N8). */
+/** Perfil: o @username e a engrenagem (N8). O `h1` da tela é o nome, no conteúdo: o título vira `p`. */
 export const Profile: Story = {
   args: {
     title: "@lucassilva",
+    titleAs: "p",
     actions: <IconButtonLink href="/perfil/configuracoes" icon={GearSixIcon} label="Configurações" />,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByText("@lucassilva").tagName).toBe("P");
+    await expect(canvas.queryByRole("heading", { level: 1 })).toBeNull();
   },
 };
 

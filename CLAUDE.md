@@ -429,6 +429,8 @@ Daí acessar `http://<IP-do-dev>:3000` do celular. Em prod tudo funciona.
 ProfileMiniCard, H2HButton, botões Torcer e "+ Adicionar" foram implementados como <button> sem onClick.
 Quando resolver: plugar handlers e <Link> ao integrar esses componentes com o feed real.
 
+No perfil, os botões de amizade do `ProfileAction` (Adicionar, Pedido enviado, Aceitar, Recusar, Amigos) também não agem ainda: os handlers e as confirmações entram com as ações de amizade (PF7).
+
 ## Regras gerais
 
 - Não instalar dependências sem justificativa clara
