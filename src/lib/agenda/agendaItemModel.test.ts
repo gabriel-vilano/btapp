@@ -46,7 +46,8 @@ describe('agendaActionOf', () => {
   });
 
   it('resultado e amistoso usam "Confirmar", que abre a partida', () => {
-    expect(agendaActionOf({ kind: 'confirm_result', deadline: NOW }, 'm-1')?.label).toBe('Confirmar');
+    // Confirmar abre a partida já no resultado (RESULTS.md §4.1)
+    expect(agendaActionOf({ kind: 'confirm_result', deadline: NOW }, 'm-1')).toEqual({ label: 'Confirmar', href: '/jogos/m-1#resultado' });
     expect(agendaActionOf({ kind: 'confirm_friendly' }, 'm-1')).toEqual({ label: 'Confirmar', href: '/jogos/m-1' });
   });
 

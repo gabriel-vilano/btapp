@@ -1,6 +1,6 @@
 import type { PlayerNames } from "@/src/components/ui/ScheduleTimeline";
 import type { ScheduleSides } from "@/src/lib/domain/schedule-state";
-import type { MatchSideKey, RankingMatch, ScheduleHistory } from "@/src/types/domain";
+import type { MatchSideKey, RankingMatch, ScheduleHistory, ScoringRule } from "@/src/types/domain";
 
 /**
  * O que a tela do confronto precisa, já resolvido das tabelas: a partida, o
@@ -20,4 +20,10 @@ export interface MatchScreenData {
   categoryName: string;
   roundNumber: number;
   roundDeadline: string; // ISO 8601
+  /** Horas que o lado adversário tem para responder ao lançamento (R14). */
+  responseDeadlineHours: number;
+  /** Regra de pontuação do ranking: os pontos previstos da resposta saem dela (RG14). */
+  scoringRule: ScoringRule;
+  /** Primeiro nome dos admins da competição, por player_id: os atos deles ficam visíveis (RG11). */
+  adminNames: Record<string, string>;
 }

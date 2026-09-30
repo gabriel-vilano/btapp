@@ -31,17 +31,27 @@ export function matchScreenDataOf(matchId: string, viewerId: string = MOCK_VIEWE
   };
 }
 
-type CompetitionContext = Pick<MatchScreenData, 'competitionName' | 'categoryName' | 'roundNumber' | 'roundDeadline'>;
+type CompetitionContext = Pick<
+  MatchScreenData,
+  'competitionName' | 'categoryName' | 'roundNumber' | 'roundDeadline' | 'responseDeadlineHours' | 'scoringRule' | 'adminNames'
+>;
 
 function competitionContextOf(match: RankingMatch): CompetitionContext {
   const competition = findOrThrow(mockDomain.competitions, match.competition_id, 'competição');
   const category = findOrThrow(mockDomain.categories, match.category_id, 'categoria');
   const round = findOrThrow(mockDomain.rounds, match.round_id, 'rodada');
+  if (competition.type !== 'ranking') {
+    throw new Error(`Tela do confronto: competição '${competition.id}' é '${competition.type}', esperado 'ranking'`);
+  }
+  const adminIds = mockDomain.admins.filter((admin) => admin.competition_id === competition.id).map((admin) => admin.player_id);
   return {
     competitionName: competition.name,
     categoryName: categoryLabel(category),
     roundNumber: round.number,
     roundDeadline: round.deadline,
+    responseDeadlineHours: competition.response_deadline_hours,
+    scoringRule: competition.scoring_rule,
+    adminNames: Object.fromEntries(adminIds.map((id) => [id, firstName(playerOf(id))])),
   };
 }
 

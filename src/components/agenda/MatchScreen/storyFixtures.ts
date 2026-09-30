@@ -4,7 +4,7 @@ import {
   reportScheduleDate,
   type ScheduleContext,
 } from "@/src/lib/domain/schedule-state";
-import type { RankingMatch, ScheduleHistory, ScheduleOption } from "@/src/types/domain";
+import { DEFAULT_SCORING_RULE, type RankingMatch, type ScheduleHistory, type ScheduleOption } from "@/src/types/domain";
 import type { MatchScreenData } from "./matchScreenData";
 
 // Confronto fictício da rodada 3, só para stories. Datas fixas em UTC (a tela
@@ -18,11 +18,14 @@ export const STORY_NOW = "2026-10-01T12:00:00.000Z";
 /** Terça, 6/10, 23h59 em Brasília. */
 const ROUND_DEADLINE = "2026-10-07T02:59:00.000Z";
 
-const PLAYER = { pedro: "story-pedro", thiago: "story-thiago", caio: "story-caio", diego: "story-diego" };
+export const PLAYER = { pedro: "story-pedro", thiago: "story-thiago", caio: "story-caio", diego: "story-diego" };
+
+/** Admin do ranking das stories: os atos dela aparecem com o nome (RG11). */
+export const ADMIN_ID = "story-ana";
 
 const VENUE = "Arena Tucum";
 
-const MATCH: RankingMatch = {
+export const MATCH: RankingMatch = {
   id: "story-match-r3",
   kind: "ranking",
   round_id: "story-round-3",
@@ -38,7 +41,7 @@ const MATCH: RankingMatch = {
   status: "defined",
 };
 
-const SIDES = { a: [PLAYER.pedro, PLAYER.thiago], b: [PLAYER.caio, PLAYER.diego] };
+export const SIDES = { a: [PLAYER.pedro, PLAYER.thiago], b: [PLAYER.caio, PLAYER.diego] };
 
 const CONTEXT: ScheduleContext = { match: MATCH, sides: SIDES, roundDeadline: ROUND_DEADLINE };
 
@@ -98,6 +101,9 @@ export function storyData(history: ScheduleHistory, overrides: Partial<MatchScre
     categoryName: "Masculino B",
     roundNumber: 3,
     roundDeadline: ROUND_DEADLINE,
+    responseDeadlineHours: 48,
+    scoringRule: DEFAULT_SCORING_RULE,
+    adminNames: { [ADMIN_ID]: "Ana" },
     ...overrides,
   };
 }
