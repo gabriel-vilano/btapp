@@ -1,0 +1,81 @@
+/* Coluna única com largura máxima: no desktop a área não estica (N27) */
+.admin-area {
+  width: 100%;
+  max-width: var(--dimension-layout-max);
+  margin-inline: auto;
+  padding-bottom: var(--spacing-400);
+}
+
+/* A competição abaixo do título "Administrar": diz de qual competição é a área */
+.admin-area__competition {
+  margin: 0;
+  padding: 0 var(--spacing-page-margin) var(--spacing-100);
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+}
+
+/* --- Seções --- */
+
+.admin-area__section {
+  padding-top: var(--spacing-300);
+}
+
+.admin-area__section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-100);
+  margin: 0 0 var(--spacing-100);
+  padding-inline: var(--spacing-page-margin);
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.admin-area__round-title {
+  margin: 0;
+  padding: var(--spacing-150) var(--spacing-page-margin) 0;
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.admin-area__empty {
+  margin: 0;
+  padding-inline: var(--spacing-page-margin);
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+}
+
+/* --- Sorteio --- */
+
+.admin-area__draw {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-50);
+  padding-inline: var(--spacing-page-margin);
+}
+
+.admin-area__draw-round {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.admin-area__draw-hint {
+  margin: 0 0 var(--spacing-150);
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+}
