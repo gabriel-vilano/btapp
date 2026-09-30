@@ -1,0 +1,101 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as SearchFieldStories from "./SearchField.stories";
+
+<Meta of={SearchFieldStories} />
+
+<Subtitle>Campo onde o jogador digita o que procura, com a lupa à esquerda e o botão de limpar à direita.</Subtitle>
+
+**Código-fonte:** [`src/components/ui/SearchField/SearchField.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/SearchField/SearchField.tsx)
+
+## Visão geral
+
+Um campo de 48px de altura, com a mesma caixa do `FormInput` (borda, raio e tipografia), mas sem rótulo visível: a lupa e o placeholder dizem o que o campo é. O valor é do consumidor (`value` e `onValueChange`), e o foco e o blur chegam a ele por `onFocus` e `onBlur`. No Explorar, é o campo de busca do topo, e os escopos (Jogadores, Competições, Arenas) aparecem só enquanto ele tem foco ou texto (`docs/EXPLORE.md`, EX1).
+
+<Canvas of={SearchFieldStories.WithText} />
+
+## Estados
+
+O campo tem três estados (vazio, com texto e com foco), e o limpar leva do segundo ao primeiro.
+
+### Vazio
+
+Mostra a lupa e o placeholder, que vem de quem usa e diz o que o escopo atual busca (EX3). Sem texto, não há botão de limpar.
+
+<Canvas of={SearchFieldStories.Empty} />
+
+### Com texto
+
+O botão de limpar aparece à direita.
+
+<Canvas of={SearchFieldStories.WithText} />
+
+### Limpar
+
+O botão de limpar esvazia o campo e devolve o foco a ele, porque quem limpa a busca quase sempre vai digitar outro termo. A story abaixo toca no botão ao abrir e termina com o campo vazio e focado.
+
+<Canvas of={SearchFieldStories.ClearReturnsFocus} />
+
+### Com foco
+
+A borda escurece para `--color-border-strong` e, pelo teclado, o ring de foco aparece por cima, como em todo campo de texto do DS.
+
+<Canvas of={SearchFieldStories.Focused} />
+
+## Anatomia
+
+- **Lupa** à esquerda, decorativa, em `--color-foreground-secondary`
+- **Campo** (`<input type="search">`), com o placeholder do escopo
+- **Rótulo** "Buscar", visualmente oculto: existe só para o leitor de tela
+- **Botão de limpar** à direita, só com texto no campo, com área tocável de 48px
+
+## Placeholder por escopo
+
+O placeholder muda com o escopo da busca, e o rótulo acessível continua "Buscar". No Explorar: "Nome ou @username" (Jogadores), "Competição ou organizador" (Competições) e "Arena ou cidade" (Arenas).
+
+<Canvas of={SearchFieldStories.OtherScope} />
+
+## Quando usar
+
+- A busca do Explorar, no topo da aba, com os escopos logo abaixo
+- Qualquer campo cujo único papel é buscar, sem outro campo de formulário ao lado
+
+## Componentes relacionados
+
+- Para um campo de **formulário** com rótulo visível, validação e erro, use o [`FormInput`](?path=/docs/ui-forminput--docs). O `type="search"` dele serve a uma busca dentro de um formulário, com rótulo à vista
+- Para os **escopos da busca**, com a contagem de resultados em cada um, use as [`Tabs`](?path=/docs/ui-tabs--docs) com `count`
+
+## Acessibilidade
+
+- `<input type="search">` tem o papel `searchbox`, e o rótulo "Buscar" (prop `label`) é um `<label>` ligado ao campo, visualmente oculto. O placeholder não substitui o rótulo: ele some ao digitar e nem todo leitor de tela o anuncia (WCAG 1.3.1 e 4.1.2)
+- O botão de limpar tem `aria-label="Limpar busca"`, área tocável de 48px e o ring de foco do DS. Ele só existe com texto no campo
+- Depois de limpar, o foco volta ao campo, e o teclado não se perde no botão que sumiu (WCAG 2.4.3)
+- A lupa é decorativa (`aria-hidden`)
+- `enterKeyHint="search"` põe "Buscar" na tecla de enviar do teclado do celular, e `autoComplete="off"` evita que o iOS sugira nomes e e-mails salvos
+- O `<search>` ou o `role="search"` em volta do campo é da tela, que decide o que entra no landmark
+
+## Evitar
+
+- ❌ **Placeholder genérico** como "Buscar...". Ele deve dizer o que o escopo busca (EX3)
+- ❌ **Rótulo visível acima do campo** no topo de uma tela de busca. A lupa já diz o que é; o rótulo ocupa uma linha sem informar nada novo
+- ❌ **Usar o X nativo do navegador.** Ele muda de navegador para navegador, e o iOS nem mostra. O campo esconde o nativo e usa o próprio botão
+- ❌ **Buscar no blur.** O blur existe para a tela esconder os escopos, não para disparar a busca: ela acontece enquanto se digita (EX2)
+
+## API
+
+<ArgTypes of={SearchFieldStories} />
+
+## Decisões de design
+
+**Por que um componente novo, e não o `FormInput` com `type="search"`?** O `FormInput` é um campo de formulário: rótulo visível, validação e erro. A busca pede o contrário: rótulo oculto, botão de limpar e foco e blur expostos para a tela mostrar os escopos. Juntar os dois poria no `FormInput` props que só a busca usa. A caixa é a mesma, para os dois parecerem da mesma família.
+
+**Por que o botão de limpar aparece só com texto?** Sem texto, ele não faz nada, e um botão que não faz nada é uma parada a mais para quem navega pelo teclado ou pelo leitor de tela.
+
+## Referências
+
+- [Apple HIG — Search fields](https://developer.apple.com/design/human-interface-guidelines/search-fields)
+- [MDN — `<input type="search">`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/search)
+- [WAI — Labeling Controls (rótulo oculto)](https://www.w3.org/WAI/tutorials/forms/labels/#hiding-the-label-element)
+- [WCAG 2.4.3 — Focus Order](https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html)
+- [WCAG 2.5.8 — Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
+- Spec: `docs/EXPLORE.md` (EX1, EX3)
+- Tokens relacionados: `docs/TOKENS.md` (`--radius-form-input`, `--color-border-strong`, `--color-state-focus-ring`, `--dimension-tap-target-minimum`)
