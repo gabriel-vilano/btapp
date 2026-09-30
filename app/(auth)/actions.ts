@@ -12,6 +12,7 @@ import {
   validateAvatar,
 } from "@/src/lib/validations";
 import { joinFullName, splitFullName, type PersonName } from "@/src/lib/names";
+import { pickFreeUsername, usernameBaseFromName, usernameSearchPrefix } from "@/src/lib/username";
 import type { User } from "@supabase/supabase-js";
 import { AVATAR_HEADER_LENGTH, detectAvatarFormat } from "@/src/lib/avatarFormat";
 import type { AuthActionState } from "@/src/types/auth";
@@ -334,6 +335,40 @@ function nameFromMetadata(user: User): PersonName {
   return splitFullName(typeof metadata.full_name === "string" ? metadata.full_name : "");
 }
 
+// Busca numa consulta só todos os @usernames que começam como a base, em vez de
+// testar gabrielvilano, gabrielvilano2, ... um por um. A base tem só [a-z0-9], então
+// não carrega os curingas do LIKE (`%` e `_`). O próprio perfil fica de fora.
+async function findFreeUsername(
+  supabase: SupabaseServerClient,
+  userId: string,
+  name: PersonName
+): Promise<string | null> {
+  const base = usernameBaseFromName(name);
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("username")
+    .like("username", `${usernameSearchPrefix(base)}%`)
+    .neq("id", userId);
+
+  if (error || !data) return null;
+  const taken = new Set(data.map((row) => row.username).filter((u): u is string => Boolean(u)));
+  return pickFreeUsername(base, taken);
+}
+
+/**
+ * Sugestão de @username para o passo 2 do cadastro, já livre no momento da consulta.
+ * `null` sem sessão ou se a consulta falhar: o campo fica vazio e o jogador digita.
+ */
+export async function suggestUsername(): Promise<string | null> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return null;
+
+  return findFreeUsername(supabase, user.id, nameFromMetadata(user));
+}
+
 // A action pode ser chamada direto (fora da tela), então o avatar é revalidado aqui:
 // tipo e tamanho declarados + formato real pelos bytes. Extensão e contentType vêm do
 // formato detectado, nunca do nome ou do `type` enviados pelo usuário.
@@ -366,11 +401,63 @@ async function uploadAvatar(
   return { avatarUrl: publicUrl };
 }
 
+// Username digitado passa pela validação e pela checagem de unicidade. Vazio (o
+// jogador pulou o passo 2) vira a sugestão: todo jogador tem @username, porque o
+// perfil mora em /jogadores/[username].
+async function resolveUsername(
+  supabase: SupabaseServerClient,
+  user: User,
+  typed: string
+): Promise<{ username: string } | NonNullable<AuthActionState>> {
+  if (!typed) {
+    const suggested = await findFreeUsername(supabase, user.id, nameFromMetadata(user));
+    return suggested ? { username: suggested } : { error: "Erro ao salvar perfil. Tente novamente." };
+  }
+
+  const validation = validateUsername(typed);
+  if (!validation.valid) {
+    return { fieldErrors: { username: validation.error } };
+  }
+
+  const { available, error: checkError } = await checkUsername(typed);
+  return available ? { username: typed } : { error: checkError ?? "Username já está em uso." };
+}
+
+async function resolveAvatarUrl(
+  supabase: SupabaseServerClient,
+  userId: string,
+  avatarFile: File | null
+): Promise<{ avatarUrl: string | null } | { error: string }> {
+  if (!avatarFile || avatarFile.size === 0) return { avatarUrl: null };
+  return uploadAvatar(supabase, userId, avatarFile);
+}
+
+// Devolve a mensagem de erro para o jogador, ou `null` se salvou
+async function saveProfile(
+  supabase: SupabaseServerClient,
+  user: User,
+  username: string,
+  avatarUrl: string | null
+): Promise<string | null> {
+  const name = nameFromMetadata(user);
+  const { error } = await supabase.from("profiles").upsert({
+    id: user.id,
+    first_name: name.firstName || null,
+    last_name: name.lastName || null,
+    full_name: joinFullName(name),
+    username,
+    avatar_url: avatarUrl,
+  });
+
+  if (!error) return null;
+  return error.message.includes("unique") ? "Username já está em uso." : "Erro ao salvar perfil. Tente novamente.";
+}
+
 export async function createProfile(
   _prevState: AuthActionState,
   formData: FormData
 ): Promise<AuthActionState> {
-  const username = (formData.get("username") as string)?.trim() ?? "";
+  const typedUsername = (formData.get("username") as string)?.trim() ?? "";
   const avatarFile = formData.get("avatar") as File | null;
 
   const supabase = await createClient();
@@ -382,45 +469,14 @@ export async function createProfile(
     return { error: "Sessão expirada. Faça login novamente." };
   }
 
-  const name = nameFromMetadata(user);
+  const resolved = await resolveUsername(supabase, user, typedUsername);
+  if (!("username" in resolved)) return resolved;
 
-  if (username) {
-    const usernameValidation = validateUsername(username);
-    if (!usernameValidation.valid) {
-      return { fieldErrors: { username: usernameValidation.error } };
-    }
+  const avatar = await resolveAvatarUrl(supabase, user.id, avatarFile);
+  if ("error" in avatar) return { error: avatar.error };
 
-    const { available, error: checkError } = await checkUsername(username);
-    if (!available) {
-      return { error: checkError ?? "Username já está em uso." };
-    }
-  }
-
-  let avatarUrl: string | null = null;
-
-  if (avatarFile && avatarFile.size > 0) {
-    const upload = await uploadAvatar(supabase, user.id, avatarFile);
-    if ("error" in upload) {
-      return { error: upload.error };
-    }
-    avatarUrl = upload.avatarUrl;
-  }
-
-  const { error: insertError } = await supabase.from("profiles").upsert({
-    id: user.id,
-    first_name: name.firstName || null,
-    last_name: name.lastName || null,
-    full_name: joinFullName(name),
-    username: username || null,
-    avatar_url: avatarUrl,
-  });
-
-  if (insertError) {
-    if (insertError.message.includes("unique")) {
-      return { error: "Username já está em uso." };
-    }
-    return { error: "Erro ao salvar perfil. Tente novamente." };
-  }
+  const saveError = await saveProfile(supabase, user, resolved.username, avatar.avatarUrl);
+  if (saveError) return { error: saveError };
 
   redirect("/feed");
 }

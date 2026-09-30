@@ -6,7 +6,6 @@ import {
   validatePassword,
   validateOtp,
   validateUsername,
-  slugifyName,
   validateAvatar,
   validateAvatarType,
   AVATAR_MAX_BYTES,
@@ -147,30 +146,6 @@ describe("validateUsername", () => {
     expect(validateUsername("gabriel.vilano").valid).toBe(true);
     expect(validateUsername("player_123").valid).toBe(true);
     expect(validateUsername("bt.pro").valid).toBe(true);
-  });
-});
-
-describe("slugifyName", () => {
-  it("converte para lowercase com pontos", () => {
-    expect(slugifyName("Gabriel Vilano")).toBe("gabriel.vilano");
-  });
-
-  it("remove acentos", () => {
-    expect(slugifyName("Jose da Silva")).toBe("jose.da.silva");
-    expect(slugifyName("Joao")).toBe("joao");
-  });
-
-  it("remove caracteres especiais", () => {
-    expect(slugifyName("Ana & Maria")).toBe("ana.maria");
-  });
-
-  it("limita a 20 caracteres", () => {
-    const result = slugifyName("Nome Muito Grande Que Excede o Limite");
-    expect(result.length).toBeLessThanOrEqual(20);
-  });
-
-  it("remove pontos duplicados", () => {
-    expect(slugifyName("Ana  Maria")).toBe("ana.maria");
   });
 });
 

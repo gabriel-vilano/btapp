@@ -4,7 +4,7 @@ export type PersonName = {
 };
 
 // Partículas não carregam o sobrenome: "de Vasconcelos Albuquerque" abrevia pelo "A."
-const SURNAME_PARTICLES = new Set(["de", "da", "do", "dos", "das", "e"]);
+export const SURNAME_PARTICLES: ReadonlySet<string> = new Set(["de", "da", "do", "dos", "das", "e"]);
 
 function words(value: string): string[] {
   return value.trim().split(/\s+/).filter(Boolean);
