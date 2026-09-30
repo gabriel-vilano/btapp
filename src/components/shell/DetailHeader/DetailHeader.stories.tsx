@@ -17,7 +17,7 @@ const meta = {
   ],
   parameters: {
     layout: "fullscreen",
-    nextjs: { appDirectory: true, navigation: { pathname: "/competicoes/liga-vila/administrar" } },
+    nextjs: { appDirectory: true, navigation: { pathname: "/competicoes/liga-pitanga/administrar" } },
     docs: {
       description: {
         component:
@@ -40,9 +40,9 @@ export const TabRoot: Story = {
 
 // Área "Administrar": o "Voltar" volta à página da competição, a tela pai (N31)
 export const ParentScreen: Story = {
-  args: { parentHref: "/competicoes/liga-vila" },
+  args: { parentHref: "/competicoes/liga-pitanga" },
   play: async ({ canvas }) => {
-    await expect(canvas.getByRole("link", { name: "Voltar" })).toHaveAttribute("href", "/competicoes/liga-vila");
+    await expect(canvas.getByRole("link", { name: "Voltar" })).toHaveAttribute("href", "/competicoes/liga-pitanga");
     await expect(canvas.getByRole("heading", { level: 1, name: "Administrar" })).toBeVisible();
   },
 };

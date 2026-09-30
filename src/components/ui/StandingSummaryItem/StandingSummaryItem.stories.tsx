@@ -137,7 +137,7 @@ export const Uses: Story = {
       />
       <StandingSummaryItem
         position={12}
-        competitionName="Liga Vila"
+        competitionName="Liga Pitanga"
         categoryName="Mista C"
         partnerName="Ana"
         delta={{ direction: "down", value: 1 }}
@@ -145,7 +145,7 @@ export const Uses: Story = {
       />
       <StandingSummaryItem
         position={1}
-        competitionName="Ranking Pampulha"
+        competitionName="Ranking Umbu"
         categoryName="Masculino A"
         partnerName="Bruno"
         delta={{ direction: "none" }}

@@ -63,7 +63,7 @@ A busca tem outro papel: é a porta mais curta para um perfil (JTBD 3, avaliar o
   **Por quê voltar ao padrão:** a NN/g observa que quem troca de escopo esquece que trocou e faz a busca seguinte no escopo errado. Guardar o escopo só enquanto há termo evita isso sem apagar o trabalho de quem abriu um resultado e voltou.
 - **EX5. Cada aba de escopo mostra a contagem de resultados do termo atual:** "Jogadores 0 · Competições 1 · Arenas 1". A contagem aparece a partir da primeira busca (2 caracteres) e se atualiza com o termo; sem termo, as abas mostram só o nome. Acima de 99, a aba mostra "99+". O nome acessível de cada aba inclui a contagem ("Competições, 1 resultado"). Os escopos usam as Tabs do DS, e não o SegmentedControl (DEC-EXP-3). [DEC-EXP EQ1; DEC-EXP-3; NNG-SCOPE; MOB (Hulu)]
 
-  **Por quê:** a busca começa num escopo só, que é o caso que a NN/g aponta como o de maior risco: quem digita "Vila" em Jogadores não vê o Vila do Tênis e conclui que ele não está no app. O número na aba mostra onde está o resultado sem mudar o escopo inicial.
+  **Por quê:** a busca começa num escopo só, que é o caso que a NN/g aponta como o de maior risco: quem digita "Mangaba" em Jogadores não vê a Arena Mangaba e conclui que ela não está no app. O número na aba mostra onde está o resultado sem mudar o escopo inicial.
 
   **Limite de largura:** as três contagens precisam caber a 393px ao lado de "Competições" (NAV N25), sem truncar. A issue do SearchField testa com a fonte real e com contagens de 2 dígitos. Se não couber, a decisão volta ao Gabriel. Trocar para um escopo "Tudo" também precisa da aprovação dele. [DEC-EXP EQ1]
 
@@ -84,7 +84,7 @@ A vitrine é o Explorar sem termo digitado. Responde "o que existe para eu jogar
 - **EX9. As competições em que o jogador já está inscrito aparecem na vitrine**, no mesmo lugar da ordem, com o Badge "Você participa". Tirar da vitrine faria o jogador de um ranking do Vila achar que o Vila não está no app. [DEC-EXP EL4]
 - **EX10. O item de competição** (CompetitionListItem, seção 8):
   - avatar da organização e nome da competição;
-  - linha de apoio: tipo · organização · cidade ("Ranking · Vila do Tênis · Belo Horizonte");
+  - linha de apoio: tipo · organização · cidade ("Ranking · Arena Mangaba · Belo Horizonte");
   - situação: no ranking, "Temporada 2026/2 · rodada 3" ou "Entre temporadas"; no torneio, a data e o local ("Sáb, 12/10 · Arena Tucum") ou "Encerrado";
   - Badge "Você participa" quando há inscrição ativa (EX9).
 

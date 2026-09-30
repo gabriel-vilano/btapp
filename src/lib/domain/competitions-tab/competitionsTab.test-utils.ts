@@ -21,7 +21,7 @@ export function tournamentItem(id: string, startsOn: string, nextMatchAt?: strin
   return {
     kind: 'tournament',
     enrollment_id: id,
-    competition_name: 'Open Pampulha',
+    competition_name: 'Open Umbu',
     category_name: 'Masculino B',
     partner_name: 'Rafael',
     href: `/competicoes/${id}`,

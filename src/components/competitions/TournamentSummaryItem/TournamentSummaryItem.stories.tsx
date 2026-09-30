@@ -119,12 +119,12 @@ export const WithStandings: Story = {
       <TournamentSummaryItem {...args} nextMatch={{ startsAt: "2026-10-10T12:00:00.000Z", court: "Quadra 3" }} />
       <TournamentSummaryItem
         {...args}
-        competitionName="Open Pampulha"
+        competitionName="Open Umbu"
         categoryName="Mista C 40+"
         partnerName="Ana"
         startsOn="2026-10-31T11:00:00.000Z"
         endsOn="2026-11-01T21:00:00.000Z"
-        href="/competicoes/open-pampulha"
+        href="/competicoes/open-umbu"
       />
     </List>
   ),

@@ -58,7 +58,7 @@ export function formatLabel(format: MatchFormat): string {
 
 /**
  * Linha de contexto do cabeçalho: competição, categoria e rodada ou fase.
- * @example matchContextLine(data) // "Ranking Vila · Masculino B · Rodada 3"
+ * @example matchContextLine(data) // "Ranking Arena Mangaba · Masculino B · Rodada 3"
  */
 export function matchContextLine(data: ReportResultData): string {
   return [data.competitionName, data.categoryName, stageLabel(data)].filter(Boolean).join(" · ");

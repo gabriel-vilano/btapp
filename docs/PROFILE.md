@@ -123,7 +123,7 @@ Rankings
 │ 5º   Ranking Rankin — Masculino B       ▲ 2 │
 │      [avt] com Rafael · Melhor: 3º          │
 ├─────────────────────────────────────────────┤
-│ 12º  Liga Vila — Mista C                ▼ 1 │
+│ 12º  Liga Pitanga — Mista C             ▼ 1 │
 │      [avt] com Ana                          │
 └─────────────────────────────────────────────┘
 ```
