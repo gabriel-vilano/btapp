@@ -106,7 +106,7 @@ describe('mocks da marcação: data do confronto', () => {
   });
 
   it('histórico do confronto junta propostas e datas informadas (M16)', () => {
-    const history = scheduleHistoryOf('match-arena-rm-mb-r3-1');
+    const history = scheduleHistoryOf('match-arena-mangaba-mb-r3-1');
     expect(history.proposals.map((proposal) => proposal.status)).toEqual(['expired', 'superseded', 'withdrawn']);
     expect(history.reported_dates).toEqual([]);
   });

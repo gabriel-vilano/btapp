@@ -13,7 +13,7 @@ describe("tabAtRoot", () => {
     expect(tabAtRoot(pathname)).toBe(tab);
   });
 
-  it.each(["/jogos/p-123", "/competicoes/copa-sunset", "/perfil/configuracoes", "/jogadores", "/"])(
+  it.each(["/jogos/p-123", "/competicoes/copa-tucum", "/perfil/configuracoes", "/jogadores", "/"])(
     "%s não é raiz de aba",
     (pathname) => {
       expect(tabAtRoot(pathname)).toBeNull();
@@ -25,8 +25,8 @@ describe("arrivalTab (N28)", () => {
   it.each([
     ["/jogos/p-123", "jogos"],
     ["/ranking/masculino-b", "competicoes"],
-    ["/competicoes/copa-sunset", "competicoes"],
-    ["/arenas/arena-rm", "explorar"],
+    ["/competicoes/copa-tucum", "competicoes"],
+    ["/arenas/arena-mangaba", "explorar"],
     ["/jogadores/lucas", "feed"],
     ["/notificacoes", "feed"],
     ["/perfil/configuracoes", "perfil"],

@@ -46,7 +46,7 @@ function lookup<T extends { id: string }>(items: T[], what: string): (id: string
 /**
  * Resolve os atores de um evento: numa unidade de duplas, os dois jogadores,
  * que também são o público do evento privado (R22).
- * Ex.: `actorLookup(mockDomain).ofEnrollment('enr-arena-rm-lucas-rafael')`.
+ * Ex.: `actorLookup(mockDomain).ofEnrollment('enr-arena-mangaba-lucas-rafael')`.
  */
 export function actorLookup(domain: Pick<FeedDomain, 'units' | 'enrollments'>): ActorLookup {
   const unit = lookup(domain.units, 'unidade');

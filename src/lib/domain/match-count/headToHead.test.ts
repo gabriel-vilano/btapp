@@ -11,7 +11,7 @@ describe('unitHeadToHead: dupla exata, para o card', () => {
   it('mocks: Lucas e Rafael × Pedro e Thiago se enfrentaram 2 vezes', () => {
     // r1-1 do ranking e o amistoso contam; a r3-4 ainda aguarda confirmação
     expect(unitHeadToHead(mockDomain, units.lucasRafael.id, units.pedroThiago.id)).toEqual({
-      match_ids: ['match-arena-rm-mb-r1-1', 'match-friendly-lucas-rafael-pedro-thiago'],
+      match_ids: ['match-arena-mangaba-mb-r1-1', 'match-friendly-lucas-rafael-pedro-thiago'],
       wins: 2,
       losses: 0,
     });
@@ -56,7 +56,7 @@ describe('playerHeadToHead: jogador × jogador, para a página', () => {
     // r1-1 e amistoso em duplas, e o amistoso de simples com a desistência do Thiago
     expect(playerHeadToHead(mockDomain, players.lucas.id, players.thiago.id)).toEqual({
       match_ids: [
-        'match-arena-rm-mb-r1-1',
+        'match-arena-mangaba-mb-r1-1',
         'match-friendly-lucas-rafael-pedro-thiago',
         'match-friendly-lucas-thiago',
       ],

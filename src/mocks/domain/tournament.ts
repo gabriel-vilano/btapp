@@ -15,13 +15,13 @@ import { organizations, players as p, units } from './people';
 // já nascem confirmados (R38). As duplas do Masculino B são as mesmas do
 // ranking: a mesma unidade, inscrita em duas competições (R2).
 
-const VENUE = 'Arena Sunset · Carandaí/MG';
+const VENUE = 'Arena Tucum · Carandaí/MG';
 const STARTS_ON = onTheHour(daysAgo(0.75));
 
 export const tournament: TournamentCompetition = {
-  id: 'comp-copa-sunset',
-  organization_id: organizations.arenaSunset.id,
-  name: 'Copa Sunset de Beach Tennis',
+  id: 'comp-copa-tucum',
+  organization_id: organizations.arenaTucum.id,
+  name: 'Copa Tucum de Beach Tennis',
   type: 'tournament',
   default_match_format: 'one_set_of_6',
   starts_on: STARTS_ON,
@@ -37,7 +37,7 @@ export const tournamentAdmin: CompetitionAdmin = {
 
 export const tournamentCategories = {
   masculinoB: {
-    id: 'cat-copa-sunset-masculino-b',
+    id: 'cat-copa-tucum-masculino-b',
     competition_id: tournament.id,
     gender: 'M',
     modality: 'doubles',
@@ -46,7 +46,7 @@ export const tournamentCategories = {
     min_age: null,
   },
   masculinoCSimples: {
-    id: 'cat-copa-sunset-masculino-c-simples',
+    id: 'cat-copa-tucum-masculino-c-simples',
     competition_id: tournament.id,
     gender: 'M',
     modality: 'singles',
@@ -58,7 +58,7 @@ export const tournamentCategories = {
 
 function eventEnrollment(unit: CompetitorUnit, category: CompetitionCategory, weeksBefore: number): Enrollment {
   return {
-    id: `enr-copa-sunset-${unit.id.replace('unit-', '')}`,
+    id: `enr-copa-tucum-${unit.id.replace('unit-', '')}`,
     unit_id: unit.id,
     category_id: category.id,
     season_id: null, // no torneio a inscrição é do evento
@@ -87,7 +87,7 @@ const LOADED_AT = daysAgo(2);
 
 function base(slug: string, category: CompetitionCategory, sideA: Enrollment, sideB: Enrollment, stage: string) {
   return {
-    id: `match-copa-sunset-${slug}`,
+    id: `match-copa-tucum-${slug}`,
     kind: 'tournament' as const,
     competition_id: tournament.id,
     category_id: category.id,

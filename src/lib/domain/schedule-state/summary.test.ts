@@ -7,7 +7,7 @@ import { acceptScheduleOption, proposeSchedule, reportScheduleDate } from './tra
 import { expireProposals } from './history';
 import { CONTEXT, EMPTY, NOW, PLAYER, SAT, SIDES, SUN, WED, act, option, withPending } from './scheduleState.test-utils';
 
-const matchId = (slug: string): string => `match-arena-rm-mb-${slug}`;
+const matchId = (slug: string): string => `match-arena-mangaba-mb-${slug}`;
 
 const MB_SIDES = {
   r2_4: { a: [p.pedro.id, p.thiago.id], b: [p.caio.id, p.diego.id] },
