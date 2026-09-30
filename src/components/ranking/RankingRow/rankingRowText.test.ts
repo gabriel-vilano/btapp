@@ -4,12 +4,19 @@ import {
   formatMatchRecord,
   formatRankingRowLabel,
   type RankingRowPlayer,
+  formatShortCompetitorName,
   type RankingRowSummary,
 } from "./rankingRowText";
 
-const pedro: RankingRowPlayer = { id: "p", name: "Pedro Alves", avatarUrl: null };
-const viewer: RankingRowPlayer = { id: "v", name: "Gabriel Vilano", avatarUrl: null, isViewer: true };
-const lucas: RankingRowPlayer = { id: "l", name: "Lucas Silva", avatarUrl: null };
+const pedro: RankingRowPlayer = { id: "p", firstName: "Pedro", lastName: "Alves", avatarUrl: null };
+const viewer: RankingRowPlayer = {
+  id: "v",
+  firstName: "Gabriel",
+  lastName: "Vilano",
+  avatarUrl: null,
+  isViewer: true,
+};
+const lucas: RankingRowPlayer = { id: "l", firstName: "Lucas", lastName: "Silva", avatarUrl: null };
 
 const ownRow: RankingRowSummary = {
   position: 9,
@@ -80,5 +87,19 @@ describe("formatRankingRowLabel", () => {
 
   it("usa ponto no singular", () => {
     expect(formatRankingRowLabel({ ...ownRow, points: 1 })).toContain(", 1 ponto,");
+  });
+});
+
+describe("formatShortCompetitorName", () => {
+  it("abrevia o sobrenome dos dois jogadores", () => {
+    expect(formatShortCompetitorName([lucas, pedro])).toBe("Lucas S. e Pedro A.");
+  });
+
+  it("mantém Você na frente, sem abreviar", () => {
+    expect(formatShortCompetitorName([pedro, viewer])).toBe("Você e Pedro A.");
+  });
+
+  it("em simples, abrevia o único jogador", () => {
+    expect(formatShortCompetitorName([lucas])).toBe("Lucas S.");
   });
 });

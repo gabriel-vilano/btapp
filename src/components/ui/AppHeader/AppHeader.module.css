@@ -1,0 +1,54 @@
+/*
+ * Cabeçalho fixo no topo da rolagem. O padding lateral é de 4px porque os
+ * IconButtons têm 12px de respiro em volta do ícone: 4 + 12 põe o ícone
+ * na margem de página de 16px. O título sem "Voltar" completa os 12px por
+ * conta própria.
+ */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-50);
+  /* 56px de barra, mais o recorte da câmera no iPhone com viewport-fit=cover */
+  min-height: calc(var(--spacing-700) + env(safe-area-inset-top, 0px));
+  padding: env(safe-area-inset-top, 0px) var(--spacing-50) 0;
+  background-color: var(--color-background-primary);
+  border-bottom: var(--border-width-medium) solid var(--color-border-subtle);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+}
+
+/*
+ * Título de uma linha: o nome de uma competição pode ser longo, e o
+ * cabeçalho não cresce. O nome inteiro aparece no conteúdo da tela.
+ */
+.header__title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding-left: var(--spacing-150);
+  overflow: hidden;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* O Logo é uma imagem: fica em bloco para o h1 não somar a linha de texto à altura dela */
+.header__title > img {
+  display: block;
+}
+
+.header--with-back .header__title {
+  padding-left: 0;
+}
+
+.header__actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}

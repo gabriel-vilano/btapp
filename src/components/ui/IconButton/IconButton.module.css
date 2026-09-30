@@ -1,0 +1,68 @@
+/*
+ * Botão só de ícone: ícone md (24px) centrado numa área de 48×48, que é a
+ * área tocável mínima do DS (docs/TOKENS.md > "Acessibilidade — tap target").
+ * O círculo do state layer ocupa a área inteira.
+ */
+
+.button {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--dimension-tap-target-minimum);
+  height: var(--dimension-tap-target-minimum);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background-color: transparent;
+  color: var(--color-foreground-primary);
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--color-state-layer-neutral);
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .button:hover::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.button:active::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+.button:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: calc(var(--border-width-thick) * -1);
+}
+
+.button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.button:disabled {
+  color: var(--color-foreground-disabled);
+  cursor: not-allowed;
+}
+
+.button:disabled::after {
+  background-color: var(--color-state-layer-neutral);
+}
+
+/* Canto superior direito do ícone de 24px, que começa a 12px da borda */
+.button__badge {
+  position: absolute;
+  top: var(--spacing-100);
+  left: calc(50% + var(--spacing-50));
+}
+
