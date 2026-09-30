@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createClient } from "@/src/lib/supabase/server";
 import { AVATAR_MAX_BYTES } from "@/src/lib/validations";
-import { checkUsername, createProfile } from "./actions";
+import { checkUsername, createProfile, suggestUsername } from "./actions";
 import {
   asSupabaseClient,
   buildFormData,
@@ -37,6 +37,13 @@ function mockUsernameQueryFailure() {
   supabase.profilesQuery.maybeSingle.mockResolvedValueOnce({ data: null, error: { message: INTERNAL_ERROR } });
 }
 
+function mockTakenUsernames(usernames: string[]) {
+  supabase.profilesQuery.neq.mockResolvedValueOnce({
+    data: usernames.map((username) => ({ username })),
+    error: null,
+  });
+}
+
 const USERNAME_CHECK_FAILED = "Não foi possível verificar o username. Tente novamente.";
 
 describe("checkUsername", () => {
@@ -63,6 +70,41 @@ describe("checkUsername", () => {
   it("falha na consulta não vira disponível e não vaza o erro interno", async () => {
     mockUsernameQueryFailure();
     expect(await checkUsername("ana.bt")).toEqual({ available: false, error: USERNAME_CHECK_FAILED });
+  });
+});
+
+describe("suggestUsername", () => {
+  it("sugere nome e sobrenome juntos, sem partícula", async () => {
+    expect(await suggestUsername()).toBe("anaclarasouza");
+  });
+
+  it("busca os já usados pelo prefixo, deixando o próprio perfil de fora", async () => {
+    await suggestUsername();
+    expect(supabase.profilesQuery.like).toHaveBeenCalledWith("username", "anaclarasouza%");
+    expect(supabase.profilesQuery.neq).toHaveBeenCalledWith("id", TEST_USER.id);
+  });
+
+  it("sugestão em uso: ganha número", async () => {
+    mockTakenUsernames(["anaclarasouza"]);
+    expect(await suggestUsername()).toBe("anaclarasouza2");
+  });
+
+  it("sem sessão: sem sugestão e sem consulta", async () => {
+    supabase.auth.getUser.mockResolvedValueOnce({ data: { user: null } });
+    expect(await suggestUsername()).toBeNull();
+    expect(supabase.from).not.toHaveBeenCalled();
+  });
+
+  it("falha na consulta: sem sugestão", async () => {
+    supabase.profilesQuery.neq.mockResolvedValueOnce({ data: null, error: { message: INTERNAL_ERROR } });
+    expect(await suggestUsername()).toBeNull();
+  });
+
+  it("cadastro antigo, só com full_name: usa o nome inteiro", async () => {
+    supabase.auth.getUser.mockResolvedValueOnce({
+      data: { user: { ...TEST_USER, user_metadata: { full_name: "João Pedro da Silva" } } },
+    });
+    expect(await suggestUsername()).toBe("joaopedrosilva");
   });
 });
 
@@ -97,7 +139,7 @@ describe("createProfile", () => {
     expect(supabase.profilesQuery.upsert).not.toHaveBeenCalled();
   });
 
-  it("username é opcional: salva com null e vai para o feed", async () => {
+  it("pulou o passo 2: grava a sugestão gerada do nome e vai para o feed", async () => {
     await expect(createProfile(null, buildFormData({ username: "" }))).rejects.toThrow(
       redirectSignal("/feed"),
     );
@@ -107,9 +149,26 @@ describe("createProfile", () => {
       first_name: "Ana Clara",
       last_name: "de Souza",
       full_name: "Ana Clara de Souza",
-      username: null,
+      username: "anaclarasouza",
       avatar_url: null,
     });
+  });
+
+  it("pulou o passo 2 com a sugestão em uso: grava a próxima variação livre", async () => {
+    mockTakenUsernames(["anaclarasouza", "anaclarasouza2"]);
+    await expect(createProfile(null, buildFormData({ username: "" }))).rejects.toThrow(
+      redirectSignal("/feed"),
+    );
+    expect(supabase.profilesQuery.upsert).toHaveBeenCalledWith(
+      expect.objectContaining({ username: "anaclarasouza3" }),
+    );
+  });
+
+  it("pulou o passo 2 e a busca de @usernames falhou: não salva sem @username", async () => {
+    supabase.profilesQuery.neq.mockResolvedValueOnce({ data: null, error: { message: INTERNAL_ERROR } });
+    const result = await createProfile(null, buildFormData({ username: "" }));
+    expect(result).toEqual({ error: "Erro ao salvar perfil. Tente novamente." });
+    expect(supabase.profilesQuery.upsert).not.toHaveBeenCalled();
   });
 
   it("cadastro antigo, só com full_name: separa a primeira palavra como nome", async () => {

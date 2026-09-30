@@ -19,13 +19,17 @@ export function createSupabaseMock() {
     select: vi.fn(),
     eq: vi.fn(),
     limit: vi.fn(),
+    like: vi.fn(),
+    // Fim da busca de @usernames já usados (sugestão): por padrão, nenhum
+    neq: vi.fn().mockResolvedValue({ data: [], error: null }),
     maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }),
     upsert: vi.fn().mockResolvedValue({ error: null }),
   };
-  // Query builder encadeável: select().eq().limit() devolvem o próprio builder
+  // Query builder encadeável: select(), eq(), limit() e like() devolvem o próprio builder
   profilesQuery.select.mockReturnValue(profilesQuery);
   profilesQuery.eq.mockReturnValue(profilesQuery);
   profilesQuery.limit.mockReturnValue(profilesQuery);
+  profilesQuery.like.mockReturnValue(profilesQuery);
 
   const avatarsBucket = {
     upload: vi.fn().mockResolvedValue({ error: null }),
