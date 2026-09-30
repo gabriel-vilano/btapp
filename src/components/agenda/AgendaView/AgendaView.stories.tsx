@@ -17,10 +17,12 @@ const meta = {
   parameters: { layout: "fullscreen" },
   decorators: [
     (Story) => (
-      <main>
+      <>
         <AgendaHeader />
-        <Story />
-      </main>
+        <main>
+          <Story />
+        </main>
+      </>
     ),
   ],
   args: {

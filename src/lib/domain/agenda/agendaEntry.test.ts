@@ -171,7 +171,7 @@ describe('rankingAgendaEntry: depois do lançamento', () => {
       ...definedRankingMatch(),
       status: 'in_arbitration',
       report: { result: WIN_A, reported_by: PLAYER.b1, reported_at: REPORTED_AT },
-      contest: { responded_by: PLAYER.a1, responded_at: REPORTED_AT },
+      contest: { responded_by: PLAYER.a1, responded_at: REPORTED_AT, reason: 'other' },
     };
     const notPlayed: RankingMatch = { ...definedRankingMatch(), status: 'not_played' };
     expect(rankingAgendaEntry(arbitration, ctx())?.situation.kind).toBe('with_admin');

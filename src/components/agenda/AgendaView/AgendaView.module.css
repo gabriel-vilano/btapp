@@ -4,25 +4,6 @@
   padding-bottom: var(--spacing-300);
 }
 
-/* --- Cabeçalho --- */
-
-.agenda-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-150);
-  padding: var(--spacing-200) var(--spacing-page-margin) var(--spacing-100);
-}
-
-.agenda-header__title {
-  margin: 0;
-  font-size: var(--text-title-lg-size);
-  line-height: var(--text-title-lg-line-height);
-  letter-spacing: var(--text-title-lg-tracking);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-foreground-primary);
-}
-
 /* A posição final leva à classificação (9.2): link de ação, em coral */
 .agenda-view__link {
   color: var(--color-foreground-accent);

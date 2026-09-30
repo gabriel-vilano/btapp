@@ -1,5 +1,5 @@
+import { AppHeader } from "@/src/components/ui/AppHeader";
 import { ButtonLink } from "@/src/components/ui/Button";
-import styles from "./AgendaView.module.css";
 
 /** Rota proposta do registro de amistoso (N19). O fluxo é de outra issue. */
 export const FRIENDLY_HREF = "/jogos/amistoso";
@@ -10,11 +10,13 @@ export const FRIENDLY_HREF = "/jogos/amistoso";
  */
 export function AgendaHeader() {
   return (
-    <header className={styles["agenda-header"]}>
-      <h1 className={styles["agenda-header__title"]}>Jogos</h1>
-      <ButtonLink href={FRIENDLY_HREF} variant="secondary">
-        Registrar amistoso
-      </ButtonLink>
-    </header>
+    <AppHeader
+      title="Jogos"
+      actions={
+        <ButtonLink href={FRIENDLY_HREF} variant="ghost">
+          Registrar amistoso
+        </ButtonLink>
+      }
+    />
   );
 }
