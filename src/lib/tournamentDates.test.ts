@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatNextMatch, formatTournamentDates } from "./tournamentSummaryText";
+import { formatNextMatch, formatTournamentDates } from "./tournamentDates";
 
 // Horários em UTC; Brasília é UTC−3 (sem horário de verão desde 2019)
 

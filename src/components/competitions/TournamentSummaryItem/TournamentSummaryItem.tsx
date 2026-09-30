@@ -3,7 +3,7 @@
 import { TrophyIcon } from "@phosphor-icons/react";
 import { Icon } from "@/src/components/ui/Icon";
 import { ListItem } from "@/src/components/ui/ListItem";
-import { formatNextMatch, formatTournamentDates, type TournamentNextMatchText } from "./tournamentSummaryText";
+import { formatNextMatch, formatTournamentDates, type TournamentNextMatchText } from "@/src/lib/tournamentDates";
 
 interface TournamentSummaryItemProps {
   competitionName: string;
