@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+import { DEFAULT_AFTER_LOGIN, LOGIN_RETURN_PARAM, safeReturnPath } from "@/src/lib/navigation/loginReturn";
 import { getSupabasePublicEnv } from "@/src/lib/supabase/env";
 
 const PUBLIC_AUTH_ROUTES = ["/", "/entrar", "/cadastro"];
@@ -65,6 +66,11 @@ function loginRedirectUrl(request: NextRequest): URL {
   const hasSessionCookie = request.cookies.getAll().some((c) => c.name.startsWith("sb-"));
   if (hasSessionCookie) {
     redirectUrl.searchParams.set("expired", "true");
+  }
+  const returnPath = safeReturnPath(`${request.nextUrl.pathname}${request.nextUrl.search}`);
+  // O feed já é o destino padrão do login: sem o parâmetro, a URL fica limpa
+  if (returnPath !== DEFAULT_AFTER_LOGIN) {
+    redirectUrl.searchParams.set(LOGIN_RETURN_PARAM, returnPath);
   }
   return redirectUrl;
 }

@@ -56,6 +56,29 @@ describe("login", () => {
   });
 });
 
+describe("login — volta para a tela do link (EX21, PF20)", () => {
+  const credentials = { email: "ana@test.com", password: "abc12345" };
+
+  it.each(["/explorar?q=ana", "/jogadores/lucas"])("vai para o caminho interno %s", async (next) => {
+    const form = buildFormData({ ...credentials, next });
+    await expect(login(null, form)).rejects.toThrow(redirectSignal(next));
+  });
+
+  it.each(["//evil.com", "https://evil.com", "javascript:alert(1)"])(
+    "manda %s para o feed, sem redirecionamento aberto",
+    async (next) => {
+      const form = buildFormData({ ...credentials, next });
+      await expect(login(null, form)).rejects.toThrow(redirectSignal("/feed"));
+    }
+  );
+
+  it("com senha errada, não redireciona para o caminho", async () => {
+    supabase.auth.signInWithPassword.mockResolvedValueOnce({ error: { message: INTERNAL_ERROR } });
+    const form = buildFormData({ ...credentials, next: "/jogadores/lucas" });
+    await expect(login(null, form)).resolves.toEqual({ error: "E-mail ou senha incorretos" });
+  });
+});
+
 describe("signup", () => {
   const validFields = {
     firstName: "Ana Clara",
