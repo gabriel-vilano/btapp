@@ -1,0 +1,88 @@
+/* =============================================================
+   ScoreInput — sets empilhados, um grupo por set.
+   ============================================================= */
+
+.score-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-300);
+}
+
+.score-input__note {
+  margin: 0;
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-secondary);
+}
+
+/* --- Um set --- */
+
+.score-set {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+}
+
+/* Divisória, não cartão: o padding lateral de um cartão faria os 7 chips do
+   set de 6 (328px) quebrarem linha nos 361px úteis de uma tela de 393px */
+.score-set + .score-set {
+  padding-top: var(--spacing-300);
+  border-top: var(--border-width-medium) solid var(--color-border-subtle);
+}
+
+.score-set__title {
+  margin: 0;
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground-primary);
+}
+
+/* Set de 8: os 9 chips quebrariam em 7 + 2 em 393px. A grade de 5 colunas
+   equilibra em 5 + 4 sem reduzir o gap, que protege as áreas de 48px.
+   Duas classes para vencer o display: flex da fileira do Chip. */
+.score-set .score-set__games--grid {
+  display: grid;
+  grid-template-columns: repeat(5, max-content);
+}
+
+/* STB: os dois campos lado a lado cabem em 393px */
+.score-set__sides {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-200);
+}
+
+.score-set__steppers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+}
+
+.score-set__error {
+  margin: 0;
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-attention);
+}
+
+/* A prévia é onde o jogador confere o vencedor (RG13): negrito */
+.score-set__preview {
+  margin: 0;
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line-height);
+  letter-spacing: var(--text-body-lg-tracking);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground-primary);
+}
+
+/* Vazia, a prévia continua montada (é a região viva) e anula o gap do grupo.
+   display: none a tiraria da árvore de acessibilidade. */
+.score-set__preview:empty {
+  margin-top: calc(var(--spacing-200) * -1);
+}

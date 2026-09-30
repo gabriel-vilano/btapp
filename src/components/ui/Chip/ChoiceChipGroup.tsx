@@ -18,6 +18,8 @@ type ChoiceChipGroupProps = {
   onValueChange: (value: string) => void;
   disabled?: boolean;
   className?: string;
+  /** Classe da fileira de chips, para o consumidor trocar o arranjo (ex.: grade no placar do set de 8). */
+  optionsClassName?: string;
 };
 
 /**
@@ -33,13 +35,14 @@ export function ChoiceChipGroup({
   onValueChange,
   disabled = false,
   className,
+  optionsClassName,
 }: ChoiceChipGroupProps) {
   const legendClass = hideLabel ? styles["chip-group__legend--hidden"] : styles["chip-group__legend"];
 
   return (
     <fieldset className={[styles["chip-group"], className].filter(Boolean).join(" ")} disabled={disabled}>
       <legend className={legendClass}>{label}</legend>
-      <div className={styles["chip-group__options"]}>
+      <div className={[styles["chip-group__options"], optionsClassName].filter(Boolean).join(" ")}>
         {options.map((option) => (
           <label key={option.value} className={styles["chip-choice"]}>
             <input
