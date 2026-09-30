@@ -12,3 +12,10 @@ export {
 } from './rankings';
 export { profileSeasons, type ProfileSeasonRow, type SeasonMilestone } from './seasons';
 export { profileVersus, type ProfileVersus } from './versus';
+export {
+  playedAt,
+  recentMatches,
+  RECENT_MATCHES_LIMIT,
+  type RecentMatchResult,
+  type RecentMatchRow,
+} from './recentMatches';

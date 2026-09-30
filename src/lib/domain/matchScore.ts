@@ -44,6 +44,11 @@ const SET_KINDS: Record<MatchFormat, SetKind[]> = {
   two_sets_of_6_stb: [SIX, SIX, SUPER_TIEBREAK],
 };
 
+/** Tipo de cada set do formato, na ordem. Ex.: 2 sets + STB → [6, 6, STB]. */
+export function setKindsOf(format: MatchFormat): SetKind[] {
+  return SET_KINDS[format];
+}
+
 // O STB conta como set: no formato de 2 sets, quem fecha 2 vence
 const SETS_TO_WIN: Record<MatchFormat, number> = {
   one_set_of_6: 1,

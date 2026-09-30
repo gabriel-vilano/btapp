@@ -10,7 +10,7 @@ import {
   STORY_PLAYER_NAMES,
   STORY_SIDE_NAMES,
   STORY_SIDES,
-} from "./storyFixtures";
+} from "@/src/components/ui/ScheduleTimeline/storyFixtures";
 
 const screenFrame: Decorator = (Story) => (
   <div className="sb-screen-frame">

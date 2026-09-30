@@ -3,7 +3,7 @@
 // ScheduleError quando a ação não vale no confronto ou para quem age.
 
 export { ScheduleError, type ScheduleErrorCode } from './scheduleError';
-export type { ScheduleActor, ScheduleContext, ScheduleSides } from './guards';
+export { sideOfPlayer, type ScheduleActor, type ScheduleContext, type ScheduleSides } from './guards';
 export {
   agreedScheduleOf,
   expireProposals,
@@ -22,3 +22,4 @@ export {
   type ScheduleProposalDraft,
 } from './transitions';
 export { scheduleSummaryOf, type ScheduleSideSummary, type ScheduleSummary } from './summary';
+export { scheduleViewOf, type ScheduleView, type ScheduleViewInput, type ScheduleViewKind } from './scheduleView';

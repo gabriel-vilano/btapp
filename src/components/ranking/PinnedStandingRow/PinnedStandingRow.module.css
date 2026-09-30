@@ -1,0 +1,29 @@
+/*
+ * Fixa na viewport, na coluna do conteúdo (N27): largura máxima do layout,
+ * centralizada. A cópia não entra no fluxo da página, então aparecer e sumir
+ * não empurra a lista nem muda qual linha está à vista.
+ *
+ * A casca (AppShell) define --shell-rail-width e --shell-bottom-offset. Com o
+ * rail, a coluna fica centrada no espaço à direita dele: o centro anda metade
+ * da largura do rail. Fora da casca (stories), as duas caem no padrão.
+ */
+.pinned {
+  position: fixed;
+  left: calc(50% + var(--shell-rail-width, 0px) / 2);
+  z-index: var(--z-sticky);
+  width: 100%;
+  max-width: var(--dimension-layout-max);
+  transform: translateX(-50%);
+  box-shadow: var(--shadow-subtle);
+  cursor: pointer;
+}
+
+/* Abaixo do AppHeader, que tem 56px mais o recorte da câmera */
+.pinned--top {
+  top: calc(var(--spacing-700) + env(safe-area-inset-top, 0px));
+}
+
+/* Acima da TabBar no celular; sem ela, no rodapé, fora da área segura do iOS */
+.pinned--bottom {
+  bottom: var(--shell-bottom-offset, env(safe-area-inset-bottom, 0px));
+}

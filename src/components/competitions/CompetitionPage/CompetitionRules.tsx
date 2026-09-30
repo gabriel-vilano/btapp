@@ -13,10 +13,10 @@ import {
   TIEBREAK_WO_NOTE,
   type CompetitionPageData,
 } from "@/src/lib/domain/competition-page";
+import { SCORING_ANCHOR } from "@/src/lib/navigation/competitionAnchors";
 import styles from "./CompetitionPage.module.css";
 
-/** Âncora da pontuação: o "Como funciona a pontuação" da classificação leva até ela (RK5). */
-export const SCORING_ANCHOR = "pontuacao";
+export { SCORING_ANCHOR };
 
 type RulesData = Pick<CompetitionPageData, "match_format" | "scoring_rule" | "response_deadline_hours">;
 
