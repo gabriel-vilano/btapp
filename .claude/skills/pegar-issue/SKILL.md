@@ -47,6 +47,24 @@ npm run test:stories   # quando mexer em componente ou story
 
 Na sessão na nuvem, as stories rodam com `CHROMIUM_EXECUTABLE_PATH=/opt/pw-browsers/chromium npm run test:stories` (ver `CLAUDE.md` > "Testes").
 
+**Prova de estabilidade.** Story nova ou alterada com `play` roda **10 vezes seguidas** no arquivo dela, e todas passam. Uma rodada verde não prova nada: a story instável que chegou ao `master` passava numa rodada só e falhava em ~30% delas sob carga. Na nuvem, com o `CHROMIUM_EXECUTABLE_PATH` (fora dela, sem a variável):
+
+```bash
+STORY=src/components/<grupo>/<Componente>/<Componente>.stories.tsx
+export CHROMIUM_EXECUTABLE_PATH=/opt/pw-browsers/chromium
+for i in $(seq 10); do npx vitest run --project storybook "$STORY" || { echo "Falhou na rodada $i"; break; }; done
+```
+
+Se o `play` depende de rolagem, IntersectionObserver, imagem ou timer, repetir as 10 rodadas com a CPU ocupada, que é o cenário da CI:
+
+```bash
+for c in $(seq "$(getconf _NPROCESSORS_ONLN)"); do yes > /dev/null & done
+for i in $(seq 10); do npx vitest run --project storybook "$STORY" || { echo "Falhou na rodada $i"; break; }; done
+kill $(jobs -p)
+```
+
+A CI repete 5 vezes as stories alteradas pelo PR (`docs/GIT_WORKFLOW.md` > "CI"), mas é a última barreira: a prova local vem antes do push. Regras de escrita do `play` em `CLAUDE.md` > "Testes".
+
 O E2E (`npm run test:e2e`) precisa de Docker e roda só na CI: acompanhar o job E2E no PR.
 
 Reler o próprio diff procurando o que a CI ou um revisor rejeitaria.

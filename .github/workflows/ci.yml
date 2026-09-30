@@ -46,6 +46,28 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run test:stories
+      # Story instável passava numa rodada só e falhava no master (ENG-127). Repetir as stories
+      # alteradas pelo PR pega a instabilidade no PR dela. O Vitest 4 só tem `repeats` por teste
+      # (as stories viram testes pelo plugin do Storybook, sem esse controle), por isso o loop.
+      # O checkout do PR é o merge com a base: o diff contra a ponta da base é o que o PR muda.
+      - name: Repetir 5x as stories alteradas pelo PR
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          git fetch --no-tags --depth=1 origin "$BASE_REF"
+          mapfile -t changed < <(git diff --name-only --diff-filter=d FETCH_HEAD HEAD -- '*.stories.tsx')
+          if [ ${#changed[@]} -eq 0 ]; then
+            echo "Nenhuma story alterada pelo PR."
+            exit 0
+          fi
+          printf 'Stories alteradas:\n'; printf '  %s\n' "${changed[@]}"
+          for run in 1 2 3 4 5; do
+            echo "::group::Rodada $run de 5"
+            npx vitest run --project storybook "${changed[@]}"
+            echo "::endgroup::"
+            echo "Rodada $run de 5: verde"
+          done
 
   # Fluxos de auth de ponta a ponta contra um Supabase local: agentes sem Docker validam por aqui.
   # Como o banco sobe do zero, o job também prova que as migrations recriam o schema inteiro.
