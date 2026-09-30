@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { expect, fn } from "storybook/test";
+import { expect, fn, waitFor } from "storybook/test";
 import { List } from "@/src/components/ui/ListItem";
 import { StandingSummaryItem } from "@/src/components/ui/StandingSummaryItem";
 import { TournamentSummaryItem } from "./TournamentSummaryItem";
@@ -130,13 +130,12 @@ export const WithStandings: Story = {
   ),
   play: async ({ canvas }) => {
     const [ranking, tournament] = await canvas.findAllByRole("link");
-    // A coluna da posição tem 3ch em Arimo bold: medida no meio da troca da fonte
-    // de fallback pela Arimo, o título do ranking sai deslocado e a story falhava
-    // às vezes (ENG-128). A Arimo vem do Google Fonts: se o pedido falhar, não há
-    // troca, as duas linhas ficam na fallback e a medida continua valendo
-    await document.fonts.load("700 20px Arimo").catch(() => undefined);
     const titleLeft = (link: HTMLElement) =>
       (link.querySelector("span:nth-child(2)") as HTMLElement).getBoundingClientRect().left;
-    await expect(titleLeft(tournament)).toBe(titleLeft(ranking));
+    // A coluna da posição tem 3ch em Arimo bold, e a Arimo vem do Google Fonts:
+    // medida antes de a fonte chegar, o título do ranking sai deslocado e a story
+    // falhava às vezes (ENG-128). O fonts.load resolve vazio enquanto a folha da
+    // fonte não registrou o @font-face, então a espera é pela própria medida
+    await waitFor(() => expect(titleLeft(tournament)).toBe(titleLeft(ranking)), { timeout: 5000 });
   },
 };
