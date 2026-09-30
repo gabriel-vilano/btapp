@@ -25,9 +25,10 @@ As siglas são as mesmas do `docs/DOMAIN.md` > "Fontes" e da `docs/NAVIGATION.md
 | **NNG-SCOPE** | Katie Sherwin, ["Scoped Search: Dangerous, but Sometimes Useful"](https://www.nngroup.com/articles/scoped-search/), Nielsen Norman Group, 2015 (lido em 29/09/2026): "Sites that select a scope by default are the worst offenders"; "Always set the default scope to 'all'"; "Users are more likely to change the search scope in retrospect than during their first search attempt"; o resultado deve dizer o escopo e oferecer ampliar num toque |
 | **HIG-SEARCH** | Apple Human Interface Guidelines, ["Search fields"](https://developer.apple.com/design/human-interface-guidelines/search-fields) (lido em 29/09/2026): "If possible, start search immediately when a person types"; "Use placeholder text to help people know what they can search for… when you need to reinforce the scope"; "Default to a broader scope and let people refine it as they need" |
 | **MOB** | Telas de busca no Mobbin (29/09/2026), 10 apps. Com uma visão "todos" antes dos escopos: 5 ([Givingli](https://mobbin.com/screens/af2aa6db-4042-441f-993b-8d7e12da1708), [Posh](https://mobbin.com/screens/fe24a89a-b184-4763-bc6c-4e1ff3146b76), [Substack](https://mobbin.com/screens/231a27f2-0cf7-4041-a275-f96bbdba0f28), [Hulu](https://mobbin.com/screens/6ee2fbb3-d7cf-4e42-99ee-8998c1ebc01d), [Hypelist](https://mobbin.com/screens/7ace65a4-e8e0-4799-a49b-f2081931bce4)). Só com escopos: 4 ([Strava](https://mobbin.com/screens/d9be8a1e-6e79-4bac-8741-e2bf33b81395), [Polarsteps](https://mobbin.com/screens/7fd17bf2-7230-4415-9eca-a2d0d1e01bf7), [Vestiaire](https://mobbin.com/screens/1a20b6c0-36fe-4a9f-a8c9-483703cb88ff), [pliability](https://mobbin.com/screens/83a41f1f-dc86-47ad-8055-ecd0df594f1a)). O Hulu mostra a contagem em cada escopo ("Movies (11)", "Episodes (12)"). Amostra pequena: serve de exemplo, não de estatística |
+| **DEC-EXP-2** | Resposta do Gabriel na issue desta spec (30/09): confirma a EX27 ("Tenho interesse" só enquanto há categoria livre e o jogador não tem inscrição na competição) e a EL15 |
 | **WCAG-253** | WCAG 2.2, critério 2.5.3 "Label in Name": o nome acessível contém o rótulo visível |
 | **APG-BUTTON** | WAI-ARIA Authoring Practices, padrão "Button": num botão de alternar, o rótulo não muda com o estado; se o rótulo muda, não se usa `aria-pressed` |
-| **LEIT** | Leitura do agente desta spec. As EL1 a EL14 foram confirmadas pelo Gabriel (DEC-EXP); a EL15 continua a confirmar. O mapa está na seção 10 |
+| **LEIT** | Leitura do agente desta spec. Todas foram confirmadas pelo Gabriel: EL1 a EL14 na DEC-EXP, EL15 e a junção da EX27 na DEC-EXP-2. O mapa está na seção 10 |
 
 ---
 
@@ -118,7 +119,7 @@ Os escopos, o que cada um busca e o escopo inicial são da N32. Esta seção def
 - **EX17. O item de jogador** (PlayerListItem): avatar, nome completo e @username; na linha de apoio, "Amigo", ou a competição em comum ("Rankin · Masculino B"), ou nada. O item de competição e o de arena são os da vitrine (EX10, EX11). [PROF PF4; DEC-EXP EL8]
 
   **Por quê a competição em comum:** dois "Lucas" no mesmo beta são prováveis. A competição separa o adversário do homônimo sem abrir o perfil.
-- **EX18. Até 20 resultados, com "Mostrar mais"** no fim da lista. A contagem total é anunciada ("12 jogadores encontrados") numa região `aria-live="polite"` (NAV 10.3; WCAG 4.1.3). [EL15, a confirmar]
+- **EX18. Até 20 resultados, com "Mostrar mais"** no fim da lista. A contagem total é anunciada ("12 jogadores encontrados") numa região `aria-live="polite"` (NAV 10.3; WCAG 4.1.3). [DEC-EXP-2 EL15]
 - **EX19. Sem resultado:** "Nada encontrado para '[termo]' em [escopo]." e, abaixo, um link para cada **outro escopo com resultado** para o mesmo termo, com a contagem ("Ver 2 em Competições"). Escopo com zero não ganha link: ele levaria a outra tela vazia. Se nenhum escopo tem resultado, só a frase. A contagem dos segmentos (EX5) já mostra os três números. [NAV 9.2; NNG-SCOPE]
 - **EX20. Carregando e erro:** 3 linhas de Skeleton no formato do item do escopo; se a busca falha, "Não foi possível buscar. Tentar de novo" no lugar dos resultados, e o campo continua editável. Resultado que chega fora de ordem (o de um termo anterior) é descartado. [NAV N23, N24]
 - **EX21. A busca exige login**, como o perfil (PF20). Sem login, `/explorar` leva ao login e volta ao Explorar depois dele (NAV N28). [PROF PF20]
@@ -148,7 +149,7 @@ Toda organização tem página, qualquer que seja o tipo (arena, clube, federaç
 A página é da `RANKING.md` (RK17). A NAVIGATION (N33) decidiu que dois blocos entram logo abaixo do cabeçalho para quem ainda pode se inscrever. Esta seção define quando eles aparecem e o que mostram.
 
 - **EX26. "Como se inscrever" aparece enquanto houver categoria da competição em que o jogador não tem inscrição ativa**, venha ele de onde vier (N33). Um jogador pode jogar mais de uma categoria (R2), então estar inscrito numa não esconde o bloco. Quem tem inscrição ativa em todas as categorias não vê o bloco. [NAV N33; R2; DEC-EXP EL9]
-- **EX27. "Tenho interesse" aparece nas mesmas condições da EX26, e só enquanto o jogador não tem nenhuma inscrição ativa na competição.** Depois da primeira inscrição, o botão some, e o interesse já marcado fica guardado para a métrica de conversão (EX31). [DEC-EXP EL9, EL12]
+- **EX27. "Tenho interesse" aparece nas mesmas condições da EX26, e só enquanto o jogador não tem nenhuma inscrição ativa na competição.** Depois da primeira inscrição, o botão some, e o interesse já marcado fica guardado para a métrica de conversão (EX31). [DEC-EXP EL9, EL12; DEC-EXP-2]
 
   **Por que o interesse some antes do "Como se inscrever":** o interesse é por competição (EX31), não por categoria. Quem já está inscrito numa categoria já é da competição; o interesse dele não mede procura nova. O "Como se inscrever" continua, porque ele ainda pode entrar em outra categoria.
 
@@ -250,9 +251,9 @@ As métricas "Uso do Explorar", "Tenho interesse" e "Busca por escopo" já estã
 | **EL12.** O interesse é por competição, vale até ser desfeito; depois da inscrição, fica guardado e o botão some | EX27, EX31 | Confirmada com ajuste do Gabriel (o botão some) |
 | **EL13.** Página da organização sem endereço nem mapa; local do torneio e arena da partida sem link | EX24, EX25 | Confirmada |
 | **EL14.** Conteúdo mínimo da página do torneio para o Explorar | EX34 | Confirmada |
-| **EL15.** Até 20 resultados por busca, com "Mostrar mais" | EX18 | **A confirmar**: ficou fora da lista apresentada ao Gabriel |
+| **EL15.** Até 20 resultados por busca, com "Mostrar mais" | EX18 | Confirmada (DEC-EXP-2) |
 
-**Como a EL9 e a EL12 convivem:** o "Como se inscrever" segue a EL9 (aparece enquanto houver categoria livre). O "Tenho interesse" segue as duas: aparece enquanto houver categoria livre **e** o jogador ainda não tiver inscrição na competição, porque o interesse é por competição e, depois da primeira inscrição, o botão some (EL12). A regra está na EX27.
+**Como a EL9 e a EL12 convivem:** o "Como se inscrever" segue a EL9 (aparece enquanto houver categoria livre). O "Tenho interesse" segue as duas: aparece enquanto houver categoria livre **e** o jogador ainda não tiver inscrição na competição, porque o interesse é por competição e, depois da primeira inscrição, o botão some (EL12). A regra está na EX27, confirmada pelo Gabriel (DEC-EXP-2).
 
 ---
 
