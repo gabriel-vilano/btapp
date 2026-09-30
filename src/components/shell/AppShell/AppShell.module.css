@@ -75,3 +75,19 @@
     display: none;
   }
 }
+
+/*
+ * Fluxo modal de tarefa (N4, taskRoutes.ts): a tela cobre a navegação. `display:
+ * none` tira as duas da árvore de acessibilidade e do foco do teclado, sem
+ * desmontar a casca, que guarda a aba de origem (N10). Duas classes vencem a
+ * regra do @media acima.
+ */
+.shell--task {
+  --shell-bottom-offset: env(safe-area-inset-bottom, 0px);
+  --shell-rail-width: 0px;
+}
+
+.shell--task .shell__rail,
+.shell--task .shell__tabbar {
+  display: none;
+}

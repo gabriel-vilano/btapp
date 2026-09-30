@@ -52,6 +52,7 @@ const meta = {
     type: { control: "inline-radio", options: ["normal", "retired", "wo"] },
     userSide: { control: "inline-radio", options: ["a", "b"] },
     isSingles: { control: "boolean" },
+    neutral: { control: "boolean" },
     value: { control: false },
     sideNames: { control: false },
     onValueChange: { table: { disable: true } },
@@ -200,5 +201,19 @@ export const Singles: Story = {
   },
   play: async ({ canvas }) => {
     await expect(canvas.getByText("6/2 para você")).toBeVisible();
+  },
+};
+
+export const Neutral: Story = {
+  name: "Neutro (admin do torneio)",
+  args: {
+    neutral: true,
+    sideNames: { a: "Lucas e Rafael", b: "André e Bruno" },
+    value: { ...EMPTY_SCORE_DRAFT, gamesSets: [{ winner: "b", loserGames: 4 }] },
+  },
+  play: async ({ canvas }) => {
+    // Quem lança não joga: a prévia nomeia os dois lados, sem "vocês"
+    await expect(canvas.getByText("4/6 para André e Bruno")).toBeVisible();
+    await expect(canvas.getByRole("group", { name: "Games de Lucas e Rafael" })).toBeVisible();
   },
 };

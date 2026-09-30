@@ -21,6 +21,12 @@ type ScoreInputProps = {
   sideNames: Record<MatchSideKey, string>;
   /** Partida de simples: "você" no lugar de "vocês". */
   isSingles?: boolean;
+  /**
+   * Quem lança não fala por um lado, como o admin que lança o resultado do torneio
+   * (RESULTS.md §5.3): a prévia usa o nome dos dois lados, e `userSide` é só o vencedor
+   * da desistência e do W.O.
+   */
+  neutral?: boolean;
   value: ScoreDraft;
   onValueChange: (draft: ScoreDraft) => void;
   className?: string;
@@ -43,9 +49,19 @@ function withGamesSet(draft: ScoreDraft, index: number, entry: GamesSetEntry): S
  * Controlado: o consumidor guarda o `ScoreDraft` e lê o resultado com `draftToResult`.
  * @example <ScoreInput format="one_set_of_6" type="normal" userSide="a" sideNames={names} value={draft} onValueChange={setDraft} />
  */
-export function ScoreInput({ format, type, userSide, sideNames, isSingles = false, value, onValueChange, className }: ScoreInputProps) {
+export function ScoreInput({
+  format,
+  type,
+  userSide,
+  sideNames,
+  isSingles = false,
+  neutral = false,
+  value,
+  onValueChange,
+  className,
+}: ScoreInputProps) {
   const name = useId();
-  const perspective: ScorePerspective = { userSide, sideNames, isSingles };
+  const perspective: ScorePerspective = { userSide, sideNames, isSingles, neutral };
   const askInterruptedSet = type === "retired" && setKindsOf(format).length > 1;
 
   function renderSlot(slot: ScoreSlot) {

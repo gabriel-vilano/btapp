@@ -192,4 +192,10 @@ describe("setPreview", () => {
     const set = { games_a: 2, games_b: 6, super_tiebreak: false, interrupted: false };
     expect(setPreview(set, { ...perspective, isSingles: true })).toBe("6/2 para você");
   });
+
+  it("nomeia os dois lados quando quem lança não joga (admin do torneio)", () => {
+    const set = { games_a: 4, games_b: 6, super_tiebreak: false, interrupted: false };
+    const names = { a: "Lucas e Rafael", b: "André e Bruno" };
+    expect(setPreview(set, { ...perspective, sideNames: names, neutral: true })).toBe("6/4 para André e Bruno");
+  });
 });

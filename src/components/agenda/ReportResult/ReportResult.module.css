@@ -1,0 +1,130 @@
+/* Tela cheia sem casca (N4), em coluna única com largura máxima (N27) */
+.report-result {
+  width: 100%;
+  max-width: var(--dimension-layout-max);
+  min-height: 100dvh;
+  margin-inline: auto;
+  background-color: var(--color-background-primary);
+}
+
+/* Sem padding lateral além da margem da página: o set de 6 do ScoreInput
+   cabe numa linha só nos 361px úteis de uma tela de 393px */
+.report-result__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-300);
+  padding: var(--spacing-200) var(--spacing-page-margin) 0;
+}
+
+.report-result__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+}
+
+.report-result__context,
+.report-result__meta {
+  margin: 0;
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-regular);
+}
+
+.report-result__sides {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-50);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.report-result__side {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-100);
+}
+
+.report-result__side-name,
+.report-result__review-sides {
+  min-width: 0;
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+  overflow-wrap: anywhere;
+}
+
+.report-result__note {
+  margin: 0;
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+}
+
+.report-result__winner {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.report-result__preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+  padding: var(--spacing-200);
+  border-radius: var(--radius-card);
+  background-color: var(--color-background-secondary);
+}
+
+/* O botão acompanha a rolagem: o placar de 2 sets passa da altura da tela */
+.report-result__footer {
+  position: sticky;
+  bottom: 0;
+  padding: var(--spacing-200) 0 calc(var(--spacing-200) + env(safe-area-inset-bottom, 0px));
+  background-color: var(--color-background-primary);
+}
+
+.report-result__review {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-150);
+}
+
+.report-result__actions {
+  display: flex;
+  gap: var(--spacing-100);
+}
+
+.report-result__sent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+}
+
+.report-result__sent-title {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-md-size);
+  line-height: var(--text-title-md-line-height);
+  letter-spacing: var(--text-title-md-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.report-result__sent-title:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.report-result__sent-title:focus:not(:focus-visible) {
+  outline: none;
+}

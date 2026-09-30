@@ -72,33 +72,23 @@ export function validateOtp(code: string) {
 }
 
 const USERNAME_REGEX = /^[a-z0-9._]+$/;
+export const USERNAME_MIN_LENGTH = 3;
+export const USERNAME_MAX_LENGTH = 20;
 
 export function validateUsername(username: string) {
   if (!username) {
     return { valid: true };
   }
-  if (username.length < 3) {
-    return { valid: false, error: "Username precisa ter pelo menos 3 caracteres" };
+  if (username.length < USERNAME_MIN_LENGTH) {
+    return { valid: false, error: `Username precisa ter pelo menos ${USERNAME_MIN_LENGTH} caracteres` };
   }
-  if (username.length > 20) {
-    return { valid: false, error: "Username pode ter no máximo 20 caracteres" };
+  if (username.length > USERNAME_MAX_LENGTH) {
+    return { valid: false, error: `Username pode ter no máximo ${USERNAME_MAX_LENGTH} caracteres` };
   }
   if (!USERNAME_REGEX.test(username)) {
     return { valid: false, error: "Apenas letras minúsculas, números, pontos e underscores" };
   }
   return { valid: true };
-}
-
-export function slugifyName(name: string): string {
-  return name
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/\s+/g, ".")
-    .replace(/[^a-z0-9._]/g, "")
-    .replace(/\.{2,}/g, ".")
-    .replace(/^\.+|\.+$/g, "")
-    .slice(0, 20);
 }
 
 const ALLOWED_AVATAR_TYPES = ["image/jpeg", "image/png", "image/webp"];
