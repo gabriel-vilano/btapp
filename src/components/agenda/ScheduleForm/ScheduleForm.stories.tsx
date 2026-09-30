@@ -69,13 +69,13 @@ export const ThreeOptions: Story = {
     await userEvent.type(form.getByLabelText("1º horário"), "2026-10-03T14:00");
     await userEvent.type(form.getByLabelText("2º horário"), "2026-10-04T10:00");
     await userEvent.type(form.getByLabelText("3º horário"), "2026-10-06T19:30");
-    await userEvent.type(form.getByLabelText("Arena (opcional)"), "  Arena Sunset ");
+    await userEvent.type(form.getByLabelText("Arena (opcional)"), "  Arena Tucum ");
     await userEvent.click(form.getByRole("button", { name: "Enviar proposta" }));
     // O horário digitado é o de Brasília, e a arena vai sem os espaços das pontas
     await expect(args.onSubmit).toHaveBeenCalledWith([
-      { starts_at: "2026-10-03T17:00:00.000Z", venue: "Arena Sunset" },
-      { starts_at: "2026-10-04T13:00:00.000Z", venue: "Arena Sunset" },
-      { starts_at: "2026-10-06T22:30:00.000Z", venue: "Arena Sunset" },
+      { starts_at: "2026-10-03T17:00:00.000Z", venue: "Arena Tucum" },
+      { starts_at: "2026-10-04T13:00:00.000Z", venue: "Arena Tucum" },
+      { starts_at: "2026-10-06T22:30:00.000Z", venue: "Arena Tucum" },
     ]);
   },
 };
@@ -83,16 +83,16 @@ export const ThreeOptions: Story = {
 export const ChangeProposal: Story = {
   args: {
     initialOptions: [
-      { starts_at: "2026-10-03T17:00:00.000Z", venue: "Arena Sunset" },
-      { starts_at: "2026-10-04T13:00:00.000Z", venue: "Arena Sunset" },
-      { starts_at: "2026-10-06T22:30:00.000Z", venue: "Arena Sunset" },
+      { starts_at: "2026-10-03T17:00:00.000Z", venue: "Arena Tucum" },
+      { starts_at: "2026-10-04T13:00:00.000Z", venue: "Arena Tucum" },
+      { starts_at: "2026-10-06T22:30:00.000Z", venue: "Arena Tucum" },
     ],
   },
   play: async () => {
     // "Trocar horários" parte da proposta atual
     const form = await findForm("Propor horários");
     await expect(form.getByLabelText("3º horário")).toHaveValue("2026-10-06T19:30");
-    await expect(form.getByLabelText("Arena (opcional)")).toHaveValue("Arena Sunset");
+    await expect(form.getByLabelText("Arena (opcional)")).toHaveValue("Arena Tucum");
     await expect(form.getByRole("button", { name: "Remover 3º horário" })).toBeInTheDocument();
   },
 };

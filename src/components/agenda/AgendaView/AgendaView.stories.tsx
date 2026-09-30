@@ -75,10 +75,10 @@ export const BetweenRounds: Story = {
     yourTurn: [],
     upcoming: [],
     waiting: [],
-    empty: { kind: "between_rounds", competitionName: "Ranking Arena RM 2026" },
+    empty: { kind: "between_rounds", competitionName: "Ranking Arena Mangaba 2026" },
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText(/A próxima rodada de Ranking Arena RM 2026/)).toBeVisible();
+    await expect(canvas.getByText(/A próxima rodada de Ranking Arena Mangaba 2026/)).toBeVisible();
     await expect(canvas.getByRole("heading", { name: "Histórico" })).toBeVisible();
   },
 };
@@ -92,13 +92,13 @@ export const SeasonEnded: Story = {
     empty: {
       kind: "season_ended",
       position: 3,
-      competitionName: "Ranking Arena RM 2026",
+      competitionName: "Ranking Arena Mangaba 2026",
       categoryName: "Masculino B",
-      href: "/ranking/cat-arena-rm-masculino-b?temporada=season-arena-rm-2026-2",
+      href: "/ranking/cat-arena-mangaba-masculino-b?temporada=season-arena-mangaba-2026-2",
     },
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByRole("link", { name: "3º lugar em Ranking Arena RM 2026 · Masculino B" })).toBeVisible();
+    await expect(canvas.getByRole("link", { name: "3º lugar em Ranking Arena Mangaba 2026 · Masculino B" })).toBeVisible();
   },
 };
 

@@ -137,7 +137,7 @@ Quem é avisado de quê. **O canal (push, e-mail, só no app) e a política de e
 | Confronto sorteado sem data | Os 4 | "Confronto definido contra Lucas e Rafael. Proponha horários." |
 | Proposta recebida (inclui contraproposta) | Os 2 do outro lado | "Pedro propôs 3 horários para o jogo contra vocês." |
 | Proposta enviada pelo parceiro | O parceiro de quem enviou | "Pedro propôs 3 horários para Lucas e Rafael." |
-| Proposta aceita | Os 3 que não aceitaram | "Jogo marcado: sábado, 14h, Arena Sunset." |
+| Proposta aceita | Os 3 que não aceitaram | "Jogo marcado: sábado, 14h, Arena Tucum." |
 | Proposta expirada sem aceite | Os 2 do lado que propôs | "Nenhum horário foi aceito. Proponha novos." |
 | Data informada ou alterada | Os 3 que não informaram | "Rafael informou o jogo: sábado, 14h." |
 | Prazo da rodada chegando sem data | Os 4 | "A rodada fecha em 3 dias e o jogo ainda não tem data." |
@@ -172,7 +172,7 @@ O **histórico** fica recolhido abaixo do estado atual, em linha do tempo ("Pedr
 
 Não há estado especial: a proposta fica **aguardando o outro lado**, como qualquer outra. O que muda é o que o app oferece a quem está esperando:
 
-- **"Abrir no WhatsApp"** leva a proposta para a conversa, com o texto das opções pronto (ex.: "Proponho sáb 14h, dom 10h ou qua 19h na Arena Sunset. Responde no LetzPlay ou aqui."). Abre direto na conversa do jogador que informou o telefone; sem telefone, o jogador escolhe a conversa ou o grupo (M24).
+- **"Abrir no WhatsApp"** leva a proposta para a conversa, com o texto das opções pronto (ex.: "Proponho sáb 14h, dom 10h ou qua 19h na Arena Tucum. Responde no LetzPlay ou aqui."). Abre direto na conversa do jogador que informou o telefone; sem telefone, o jogador escolhe a conversa ou o grupo (M24).
 - Se o acordo sair no WhatsApp, **qualquer um informa a data** (M14), e o confronto fica marcado para os 4.
 - Se o jogo não sair, o histórico mostra ao admin que um lado ofereceu datas e o outro não respondeu no app (M17). O admin considera também o que houve fora dele.
 

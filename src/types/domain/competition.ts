@@ -2,12 +2,21 @@
 // Os registros se ligam por id, como linhas de tabela: é o formato que o
 // Supabase devolve e o que deixa os mocks checáveis por integridade.
 
+/** O tipo aparece escrito na página da organização (EXPLORE.md, EX22). */
+export type OrganizationKind = 'arena' | 'club' | 'federation' | 'group';
+
 /** Arena, clube, federação ou grupo que promove competições. */
 export interface Organization {
   id: string;
   name: string;
-  username: string;
+  username: string; // também é o slug da página: /organizacoes/[username]
   avatar_url: string | null;
+  kind: OrganizationKind;
+  city: string; // 'Belo Horizonte'
+  // Um campo só, como a organização informou: link ('https://wa.me/…') ou
+  // texto ('WhatsApp da recepção: (31) 90000-0000'). Quem decide se vira
+  // botão é `readOrganizationContact`. Público para quem está logado (EXPLORE.md §7.1).
+  contact: string | null;
 }
 
 /**

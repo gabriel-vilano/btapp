@@ -24,7 +24,7 @@ function base(
     side_b_unit_id: sideB.id,
     format,
     played_at: playedAt,
-    venue: 'Arena RM – Beach · Nova Lima/MG',
+    venue: 'Arena Mangaba – Beach · Nova Lima/MG',
     created_at: report.reported_at,
     report,
   };

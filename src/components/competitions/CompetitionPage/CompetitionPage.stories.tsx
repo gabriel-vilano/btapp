@@ -31,7 +31,7 @@ export const Enrolled: Story = {
     await expect(canvas.queryByRole("region", { name: "Como se inscrever" })).toBeNull();
     await expect(canvas.queryByRole("link", { name: /Administrar/ })).toBeNull();
     const categories = within(canvas.getByRole("region", { name: "Categorias" }));
-    await expect(categories.getByRole("link", { name: /3º, Ranking Arena RM · Masculino B/ })).toHaveAttribute(
+    await expect(categories.getByRole("link", { name: /3º, Ranking Arena Mangaba · Masculino B/ })).toHaveAttribute(
       "href",
       "/ranking/masculino-b",
     );

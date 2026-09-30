@@ -8,8 +8,8 @@ import { ScheduleOptionPicker } from "./ScheduleOptionPicker";
 // passariam com o tempo e as stories mudariam sozinhas.
 const NOW = "2026-10-01T12:00:00.000Z";
 
-const SAT_14H: ScheduleOption = { starts_at: "2026-10-03T17:00:00.000Z", venue: "Arena Sunset" };
-const SUN_10H: ScheduleOption = { starts_at: "2026-10-04T13:00:00.000Z", venue: "Arena Sunset" };
+const SAT_14H: ScheduleOption = { starts_at: "2026-10-03T17:00:00.000Z", venue: "Arena Tucum" };
+const SUN_10H: ScheduleOption = { starts_at: "2026-10-04T13:00:00.000Z", venue: "Arena Tucum" };
 const WED_19H30: ScheduleOption = { starts_at: "2026-10-07T22:30:00.000Z", venue: null };
 const THU_8H_PAST: ScheduleOption = { starts_at: "2026-10-01T11:00:00.000Z", venue: "Arena Praia Norte" };
 

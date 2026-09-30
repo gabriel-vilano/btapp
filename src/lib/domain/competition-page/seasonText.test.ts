@@ -3,6 +3,7 @@ import {
   formatFinalLine,
   formatRoundDeadline,
   formatRoundLine,
+  formatRoundName,
   formatSeasonDates,
 } from './seasonText';
 
@@ -51,6 +52,13 @@ describe('formatRoundLine', () => {
 
   it('antes do primeiro sorteio, diz que não há rodada', () => {
     expect(formatRoundLine(null, NOW)).toBe('Primeira rodada ainda não sorteada');
+  });
+});
+
+describe('formatRoundName', () => {
+  it('sem o prazo, para a vitrine do Explorar (EX10)', () => {
+    expect(formatRoundName({ number: 3, total: 4 })).toBe('Rodada 3 de 4');
+    expect(formatRoundName({ number: 3, total: null })).toBe('Rodada 3');
   });
 });
 
