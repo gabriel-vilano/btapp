@@ -1,10 +1,14 @@
 import type { Decorator, Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, screen, waitFor, within } from "storybook/test";
+import { AppHeader } from "@/src/components/ui/AppHeader";
 import { MatchScreen } from "./MatchScreen";
 import { NOT_PLAYED_MATCH, OUTSIDER_ID, STORY_HISTORIES, STORY_NOW, storyData } from "./storyFixtures";
 
+// O cabeçalho é da página (DetailHeader). A story não tem a casca: mostra o
+// AppHeader com o "Voltar" fixo, para a tela aparecer inteira
 const screenFrame: Decorator = (Story) => (
   <div className="sb-screen-frame">
+    <AppHeader title="Confronto" backHref="/jogos" />
     <Story />
   </div>
 );
