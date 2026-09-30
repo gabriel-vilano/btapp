@@ -1,0 +1,134 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as ScoreInputStories from "./ScoreInput.stories";
+
+<Meta of={ScoreInputStories} />
+
+<Subtitle>Entrada de placar set a set, que só deixa montar placar válido.</Subtitle>
+
+**Código-fonte:** [`src/components/ui/ScoreInput/ScoreInput.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/ScoreInput/ScoreInput.tsx)
+
+## Visão geral
+
+Cada set completo sai de dois toques: quem venceu e quantos games fez quem perdeu. O componente monta o placar (5 no set de 6 vira 7/5) e escreve a prévia do ponto de vista de quem lança: "7/5 para vocês". A prévia é onde o jogador confere o vencedor, o único erro que a entrada ainda permite (`docs/RESULTS.md` RG12 e RG13).
+
+<Canvas of={ScoreInputStories.Default} />
+
+O ScoreInput é controlado e não conhece a tela em volta. O consumidor guarda o rascunho (`ScoreDraft`, começando em `EMPTY_SCORE_DRAFT`) e lê o resultado com `draftToResult`, que devolve `incomplete`, `invalid` (com o `code` do `validateScore`) ou `valid` (com o resultado pronto para a revisão). O "como terminou", a revisão e as mensagens de erro de envio são do fluxo de lançar o resultado.
+
+## Formatos
+
+Os sets aparecem conforme a partida pede: o próximo só quando o anterior fecha. Assim os erros de set a mais, de super tiebreak fora do lugar e de partida sem vencedor não acontecem na interface.
+
+### Set de 6
+
+Os games de quem perdeu vão de 0 a 6 numa fileira só, que cabe nos 361px úteis de uma tela de 393px.
+
+<Canvas of={ScoreInputStories.SetOf6} />
+
+### Set de 8
+
+São 9 opções (0 a 8). Em fileira, elas quebrariam em 7 + 2; numa grade de 5 colunas, ficam 5 + 4, sem apertar o espaço entre os chips.
+
+<Canvas of={ScoreInputStories.SetOf8} />
+
+### 2 sets + super tiebreak
+
+O 2º set aparece depois do 1º. O super tiebreak aparece só no 1 set a 1, com dois campos numéricos: vence quem chega a 10 com 2 de vantagem (regra da ITF). Quem fechou 2 sets a 0 nunca vê o super tiebreak.
+
+<Canvas of={ScoreInputStories.TwoSetsWithSuperTiebreak} />
+
+## Estados
+
+Além do jogo até o fim, o componente cobre a desistência, o W.O., o erro do super tiebreak e a partida de simples.
+
+### Desistência
+
+O jogador informa os sets completos, como no jogo normal, e o set interrompido, com um [`Stepper`](?path=/docs/ui-stepper--docs) por lado. No formato de 2 sets, ele diz antes em que set foi a desistência. O set interrompido começa em 0/0, que é a desistência antes do primeiro game. O vencedor é sempre quem lança (RG4).
+
+<Canvas of={ScoreInputStories.Retired} />
+
+### Desistência no super tiebreak
+
+Com a desistência no super tiebreak, a partida estava 1 set a 1. No 2º set, a opção do lado que venceu o 1º fica desabilitada: com ela, a partida teria fechado em 2 a 0.
+
+<Canvas of={ScoreInputStories.RetiredInSuperTiebreak} />
+
+### Limites do set interrompido
+
+Os limites de cada Stepper dependem do outro lado. No set de 6, um lado chega a 6 só com o outro em 5 ou 6, porque 6/4 já fecharia o set. Para informar 6/5, o jogador põe o 5 antes do 6.
+
+<Canvas of={ScoreInputStories.RetiredStepperBounds} />
+
+### W.O.
+
+Sem placar (R10). O componente diz só que a vitória fica com quem lança.
+
+<Canvas of={ScoreInputStories.Walkover} />
+
+### Super tiebreak inválido
+
+O placar do super tiebreak é o único digitado, então é o único que pode sair inválido. O erro aparece quando o jogador sai do campo, não enquanto digita: no meio de "12", o "1" não é erro.
+
+<Canvas of={ScoreInputStories.InvalidSuperTiebreak} />
+
+### Simples
+
+No amistoso de simples, a prévia fala com "você" em vez de "vocês".
+
+<Canvas of={ScoreInputStories.Singles} />
+
+## Anatomia
+
+1. **Título do set:** número e alvo ("Set 1 · até 6", "Set 2 · interrompido")
+2. **Quem venceu o set:** grupo de chips com os dois lados, o de quem lança primeiro
+3. **Games de quem perdeu:** grupo de chips de 0 ao alvo, que aparece depois do vencedor
+4. **Prévia:** o placar do ponto de vista de quem lança, em negrito
+
+## Quando usar
+
+- Lançar o resultado de uma partida de ranking, de torneio ou amistoso
+- Informar o placar que o jogador lembra, na contestação
+- Corrigir o placar, na área do admin
+
+## Componentes relacionados
+
+- [`ChoiceChipGroup`](?path=/docs/ui-chip--docs): o vencedor e os games de quem perdeu
+- [`Stepper`](?path=/docs/ui-stepper--docs): o set interrompido
+- [`FormInput`](?path=/docs/ui-forminput--docs): os pontos do super tiebreak
+- `ScoreBlock`: mostra o placar já lançado. Na tela de lançar, ele é a prévia da partida inteira, ao lado da prévia por set do ScoreInput
+
+## Acessibilidade
+
+- **Cada set é um `role="group"`** nomeado pelo título, e cada escolha é um `fieldset` com `legend`: o leitor anuncia "Set 1 · até 6, Quem venceu o set?"
+- **Rádios nativos** nos chips: as setas trocam a opção dentro do grupo e o Tab pula de grupo em grupo
+- **A prévia é uma região viva** (`aria-live="polite"`): o leitor anuncia "7/5 para vocês" logo depois do toque, sem o jogador procurar
+- **O erro do super tiebreak** tem `role="alert"` e fica ligado ao grupo por `aria-describedby`. A mensagem diz o placar recebido e a regra (WCAG 3.3.1 e 3.3.3)
+- **Área tocável de 48px** nos chips e nos botões do Stepper, herdada dos componentes
+
+## Evitar
+
+- ❌ **Campo de texto para os games de um set completo.** Os chips mostram só os valores possíveis; um campo aceitaria 6/5
+- ❌ **Campo "vencedor da partida" à parte.** O vencedor sai do placar (RG5); um campo a mais abriria a chance de contradizer o placar
+- ❌ **Mostrar todos os sets de uma vez.** Quem fechou 2 a 0 não precisa ver o super tiebreak
+- ❌ **Guardar o placar completado no rascunho.** O placar da desistência completado pelo formato vale para os pontos e aparece só na revisão (RG6)
+
+## API
+
+<ArgTypes of={ScoreInputStories} />
+
+## Decisões de design
+
+**Por que "em que set foi a desistência?" é uma pergunta à parte?** No formato de 2 sets, a desistência pode ser no 1º set, no 2º ou no super tiebreak, e isso decide quantos sets completos vêm antes do interrompido. Perguntar primeiro deixa a tela mostrar só os sets que existem. A alternativa, um "set interrompido" como opção dentro de cada set, punha uma escolha a mais em todo set do jogo normal.
+
+**Por que os limites do Stepper mudam com o outro lado?** A spec previa uma mensagem para placar parcial impossível (§3.7). Com os limites, esse placar não se monta, como na RG12, e o Stepper segue a regra do DS de não mostrar erro no limite: o botão apagado já diz que não dá. O custo é a ordem: para 6/5, o 5 vem antes do 6.
+
+**Por que o super tiebreak usa campos numéricos, e não chips?** Os pontos não têm teto (12/10, 15/13), e uma fileira de chips de 0 a 15 não cabe na tela. Dois campos com teclado numérico resolvem com dois toques e quatro dígitos.
+
+## Referências
+
+- Registro de resultado: `docs/RESULTS.md` (§3.3, §3.4, §3.7, RG4, RG5, RG6, RG12, RG13)
+- Regras do placar: `docs/DOMAIN.md` (R10, R11, R29) e `src/lib/domain/matchScore.ts`
+- [WAI-ARIA APG — Radio Group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)
+- [WCAG 3.3.1 — Error Identification](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html)
+- [WCAG 4.1.3 — Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html)
+- Tokens relacionados: `docs/TOKENS.md` (`--text-title-sm-*`, `--text-body-lg-*`, `--color-border-subtle`, `--color-foreground-attention`)

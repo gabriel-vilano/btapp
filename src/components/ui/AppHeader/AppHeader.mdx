@@ -11,7 +11,7 @@ import * as AppHeaderStories from "./AppHeader.stories";
 
 ## Visão geral
 
-`AppHeader` abre cada tela do app. O título é o `h1` da página. A raiz de uma aba mostra só o título e as ações (`docs/NAVIGATION.md` seção 3); a tela de detalhe ganha o "Voltar" à esquerda. O cabeçalho fica preso ao topo durante a rolagem.
+`AppHeader` abre cada tela do app. O título é o `h1` da página, salvo quando o conteúdo já traz o próprio `h1` (ver "Perfil"). A raiz de uma aba mostra só o título e as ações (`docs/NAVIGATION.md` seção 3); a tela de detalhe ganha o "Voltar" à esquerda. O cabeçalho fica preso ao topo durante a rolagem.
 
 <Canvas of={AppHeaderStories.TabRoot} />
 
@@ -33,7 +33,7 @@ A aba Jogos tem o "Registrar amistoso" (N19): uma ação sem ícone universal, e
 
 ### Perfil
 
-O @username como título e a engrenagem das configurações (N8).
+O @username como título e a engrenagem das configurações (N8). O `h1` do perfil é o nome do jogador, no cabeçalho do conteúdo (`docs/PROFILE.md` §7). Por isso o título do `AppHeader` vem com `titleAs="p"`: mesmo estilo, sem heading. Assim a tela continua com exatamente um `h1`.
 
 <Canvas of={AppHeaderStories.Profile} />
 
@@ -62,7 +62,7 @@ O título fica numa linha e termina em reticências. O nome inteiro aparece no c
 ## Anatomia
 
 - **Voltar** — `IconButtonLink` com seta, rótulo "Voltar". Só com `backHref`
-- **Título** — `h1` em `title-sm` negrito, uma linha
+- **Título** — `h1` em `title-sm` negrito, uma linha; `p` com o mesmo estilo quando a tela tem outro `h1` (`titleAs`)
 - **Ações** — até três `IconButton`, `IconButtonLink` ou um Button `ghost`, à direita
 
 A margem de 16px da página vale para o ícone, não para a área de toque: o cabeçalho tem 4px de padding, e os 12px de respiro do `IconButton` completam os 16px.
@@ -83,7 +83,7 @@ Com `viewport-fit=cover`, o conteúdo desce atrás do recorte da câmera do iPho
 
 ## Acessibilidade
 
-- Renderiza `<header>` com o `h1` da página: cada tela tem exatamente um
+- Renderiza `<header>` com o `h1` da página: cada tela tem exatamente um. Quando o conteúdo já tem o `h1` (o nome no perfil), use `titleAs="p"`
 - "Voltar" é um link (`<a>`), porque leva a uma URL. O nome é "Voltar", não o nome da tela anterior
 - Todas as ações têm área de 48×48 (N26)
 
@@ -93,6 +93,7 @@ Com `viewport-fit=cover`, o conteúdo desce atrás do recorte da câmera do iPho
 - ❌ **Seletor no cabeçalho** — o seletor de categoria fica dentro da classificação (RK6)
 - ❌ **Mais de três ações** — o que não cabe vai para a tela, não para um menu escondido
 - ❌ **"Voltar" num fluxo modal** — o fluxo modal sai pelo "Fechar"
+- ❌ **Dois `h1` na tela** — se o conteúdo tem o próprio `h1`, o título do cabeçalho vai com `titleAs="p"`
 
 ## API
 

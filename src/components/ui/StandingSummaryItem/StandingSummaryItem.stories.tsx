@@ -73,6 +73,15 @@ export const NoDelta: Story = {
   },
 };
 
+// Categoria sem partida confirmada (RANKING.md, RK20): a tabela ainda não tem posição.
+export const NoPosition: Story = {
+  args: { position: null, delta: undefined },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText("–")).toBeVisible();
+    await expect(canvas.getByText(/Sem posição ainda/)).toBeInTheDocument();
+  },
+};
+
 // Simples: não há parceiro, e a linha de apoio some.
 export const Singles: Story = {
   args: { partnerName: undefined, categoryName: "Simples Masculino A" },
