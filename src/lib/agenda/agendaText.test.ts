@@ -60,7 +60,7 @@ describe('agendaSituationText: textos de referência da tabela 5.2', () => {
     [{ kind: 'schedule_match', deadline: '2026-09-16T13:00:00.000Z' }, 'Marcar jogo · rodada fecha em 5 dias'],
     [{ kind: 'answer_proposal', openOptionCount: 3, deadline: NOW }, 'Responder proposta · 3 horários'],
     [{ kind: 'proposal_sent', deadline: NOW }, 'Proposta enviada · aguardando Pedro e Thiago'],
-    [{ kind: 'scheduled', startsAt: '2026-09-12T17:00:00.000Z', venue: 'Arena Sunset' }, 'Sáb, 14h · Arena Sunset'],
+    [{ kind: 'scheduled', startsAt: '2026-09-12T17:00:00.000Z', venue: 'Arena Tucum' }, 'Sáb, 14h · Arena Tucum'],
     [{ kind: 'report_result', deadline: NOW }, 'Lançar resultado'],
     [
       { kind: 'confirm_result', deadline: '2026-09-12T20:00:00.000Z' },

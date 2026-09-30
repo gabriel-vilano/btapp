@@ -29,12 +29,12 @@ const meta = {
       ),
   ],
   args: {
-    competitionName: "Copa Sunset de Beach Tennis",
+    competitionName: "Copa Tucum de Beach Tennis",
     categoryName: "Masculino B",
     partnerName: "Rafael",
     startsOn: "2026-10-10T11:00:00.000Z",
     endsOn: "2026-10-11T21:00:00.000Z",
-    href: "/competicoes/copa-sunset",
+    href: "/competicoes/copa-tucum",
   },
   argTypes: {
     nextMatch: { control: "object" },
@@ -48,9 +48,9 @@ type Story = StoryObj<typeof meta>;
 export const EventDates: Story = {
   play: async ({ canvas }) => {
     const link = canvas.getByRole("link", {
-      name: "Copa Sunset de Beach Tennis · Masculino B com Rafael · 10 e 11 de outubro",
+      name: "Copa Tucum de Beach Tennis · Masculino B com Rafael · 10 e 11 de outubro",
     });
-    await expect(link).toHaveAttribute("href", "/competicoes/copa-sunset");
+    await expect(link).toHaveAttribute("href", "/competicoes/copa-tucum");
   },
 };
 
@@ -97,7 +97,7 @@ export const LongName: Story = {
 export const Pressable: Story = {
   args: { href: undefined, onClick: fn() },
   play: async ({ args, canvas, userEvent }) => {
-    await userEvent.click(canvas.getByRole("button", { name: /^Copa Sunset/ }));
+    await userEvent.click(canvas.getByRole("button", { name: /^Copa Tucum/ }));
     await expect(args.onClick).toHaveBeenCalledOnce();
   },
 };
@@ -110,7 +110,7 @@ export const WithStandings: Story = {
     <List aria-label="Minhas competições">
       <StandingSummaryItem
         position={3}
-        competitionName="Ranking Arena RM"
+        competitionName="Ranking Arena Mangaba"
         categoryName="Masculino B"
         partnerName="Rafael"
         delta={{ direction: "up", value: 2 }}

@@ -19,7 +19,7 @@ const SEASON_BY_SLUG: Record<string, string> = {
 };
 
 const COMPETITION_SLUG: Record<string, string> = {
-  [ranking.id]: 'ranking-arena-rm',
+  [ranking.id]: 'ranking-arena-mangaba',
 };
 
 function slugOf(table: Record<string, string>, id: string): string | undefined {

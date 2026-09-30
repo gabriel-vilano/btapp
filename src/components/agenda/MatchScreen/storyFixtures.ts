@@ -20,7 +20,7 @@ const ROUND_DEADLINE = "2026-10-07T02:59:00.000Z";
 
 const PLAYER = { pedro: "story-pedro", thiago: "story-thiago", caio: "story-caio", diego: "story-diego" };
 
-const VENUE = "Arena Sunset";
+const VENUE = "Arena Tucum";
 
 const MATCH: RankingMatch = {
   id: "story-match-r3",
@@ -70,7 +70,7 @@ export const STORY_HISTORIES = {
   ]),
   reported: reportScheduleDate(
     CAIO_PROPOSED,
-    { id: "story-rd1", starts_at: "2026-10-02T22:00:00.000Z", venue: "Arena RM – Beach · Nova Lima/MG" },
+    { id: "story-rd1", starts_at: "2026-10-02T22:00:00.000Z", venue: "Arena Mangaba – Beach · Nova Lima/MG" },
     { playerId: PLAYER.thiago, at: "2026-10-01T10:30:00.000Z" },
     CONTEXT,
   ),
@@ -94,7 +94,7 @@ export function storyData(history: ScheduleHistory, overrides: Partial<MatchScre
     sideNames: { a: "Pedro e Thiago", b: "Caio e Diego" },
     playerNames: { [PLAYER.pedro]: "Pedro", [PLAYER.thiago]: "Thiago", [PLAYER.caio]: "Caio", [PLAYER.diego]: "Diego" },
     viewerId: PLAYER.pedro,
-    competitionName: "Ranking Arena RM 2026",
+    competitionName: "Ranking Arena Mangaba 2026",
     categoryName: "Masculino B",
     roundNumber: 3,
     roundDeadline: ROUND_DEADLINE,

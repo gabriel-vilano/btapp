@@ -11,8 +11,8 @@ const { players } = mockEntities;
 describe('profileVersus: mocks do domínio', () => {
   it('Lucas vendo o André: final do torneio marcada e a derrota na r2-1', () => {
     expect(profileVersus(mockDomain, players.andre.id, players.lucas.id)).toEqual({
-      next_match_id: 'match-copa-sunset-mb-final',
-      head_to_head: { match_ids: ['match-arena-rm-mb-r2-1'], wins: 0, losses: 1 },
+      next_match_id: 'match-copa-tucum-mb-final',
+      head_to_head: { match_ids: ['match-arena-mangaba-mb-r2-1'], wins: 0, losses: 1 },
     });
   });
 
@@ -20,14 +20,14 @@ describe('profileVersus: mocks do domínio', () => {
     // r1-1 do ranking e o amistoso; a r3-4 aguarda confirmação e não é "definido"
     expect(profileVersus(mockDomain, players.pedro.id, players.lucas.id)).toEqual({
       next_match_id: null,
-      head_to_head: { match_ids: ['match-arena-rm-mb-r1-1', 'match-friendly-lucas-rafael-pedro-thiago'], wins: 2, losses: 0 },
+      head_to_head: { match_ids: ['match-arena-mangaba-mb-r1-1', 'match-friendly-lucas-rafael-pedro-thiago'], wins: 2, losses: 0 },
     });
   });
 
   it('H2H sem confronto: só o próximo jogo, ainda sem data', () => {
     // r3-1 (T1 × T4) sem data acordada; a r2-5 entre eles foi cancelada
     expect(profileVersus(mockDomain, players.caio.id, players.lucas.id)).toEqual({
-      next_match_id: 'match-arena-rm-mb-r3-1',
+      next_match_id: 'match-arena-mangaba-mb-r3-1',
       head_to_head: null,
     });
   });

@@ -11,13 +11,13 @@ import { daysAgo, daysFromNow } from './relativeTime';
 const { ranking, season, rounds, organizations } = mockEntities;
 
 /** Inscrito em duas categorias, sem ser admin. Regra e temporada vêm do cenário do domínio. */
-const arenaRM: CompetitionPageData = {
-  slug: 'ranking-arena-rm',
-  name: 'Ranking Arena RM',
+const arenaMangaba: CompetitionPageData = {
+  slug: 'ranking-arena-mangaba',
+  name: 'Ranking Arena Mangaba',
   organizer: {
-    name: organizations.arenaRM.name,
-    avatar_url: organizations.arenaRM.avatar_url,
-    contact: { text: 'WhatsApp da recepção da Arena RM', href: 'https://wa.me/5531900000000' },
+    name: organizations.arenaMangaba.name,
+    avatar_url: organizations.arenaMangaba.avatar_url,
+    contact: { text: 'WhatsApp da recepção da Arena Mangaba', href: 'https://wa.me/5531900000000' },
   },
   categories: [
     {
@@ -59,9 +59,9 @@ const ligaVila: CompetitionPageData = {
   slug: 'liga-vila',
   name: 'Liga Vila',
   organizer: {
-    name: 'Vila Beach',
+    name: 'Arena Mangaba',
     avatar_url: null,
-    contact: { text: 'Instagram @vilabeach', href: 'https://instagram.com/vilabeach' },
+    contact: { text: 'Instagram @arenamangaba', href: 'https://instagram.com/arenamangaba' },
   },
   categories: [
     { category_id: 'cat-liga-vila-masculino-c', name: 'Masculino C', modality: 'doubles', unit_count: 10, href: '/ranking/masculino-c', standing: null },
@@ -128,7 +128,7 @@ const praiaNorte: CompetitionPageData = {
  * - `withoutContact`: organizador sem contato cadastrado.
  */
 export const mockCompetitionPage = {
-  enrolled: arenaRM,
+  enrolled: arenaMangaba,
   admin: ligaVila,
   notEnrolled: praiaNorte,
   interested: { ...praiaNorte, viewer: { is_admin: false, interested: true } },
@@ -136,7 +136,7 @@ export const mockCompetitionPage = {
   withoutContact: { ...praiaNorte, organizer: { ...praiaNorte.organizer, contact: null } },
 } satisfies Record<string, CompetitionPageData>;
 
-const bySlug = new Map([arenaRM, ligaVila, praiaNorte].map((page) => [page.slug, page]));
+const bySlug = new Map([arenaMangaba, ligaVila, praiaNorte].map((page) => [page.slug, page]));
 
 /** A página mockada de uma rota, ou undefined quando o slug não existe. */
 export function mockCompetitionPageBySlug(slug: string): CompetitionPageData | undefined {

@@ -43,7 +43,7 @@ export function act(playerId: string, at: string = NOW): ScheduleActor {
   return { playerId, at };
 }
 
-export function option(startsAt: string, venue: string | null = 'Arena Sunset'): ScheduleOption {
+export function option(startsAt: string, venue: string | null = 'Arena Tucum'): ScheduleOption {
   return { starts_at: startsAt, venue };
 }
 

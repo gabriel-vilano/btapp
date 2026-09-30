@@ -93,7 +93,7 @@ function ScheduleFormFields({ formId, mode, initialOptions, onSubmit, now, round
         name={`${formId}-venue`}
         value={venue}
         onChange={(event) => setVenue(event.target.value)}
-        placeholder="Ex.: Arena Sunset"
+        placeholder="Ex.: Arena Tucum"
         maxLength={VENUE_MAX_LENGTH}
       />
     </form>
