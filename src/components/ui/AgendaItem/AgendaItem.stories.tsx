@@ -11,7 +11,7 @@ const rafael = { id: "p-rafael", name: "Rafael Costa", avatarUrl: null };
 const pedro = { id: "p-pedro", name: "Pedro Henrique", avatarUrl: null };
 const thiago = { id: "p-thiago", name: "Thiago Mendes", avatarUrl: null };
 
-const RANKING = "Ranking Arena RM 2026 · Masculino B · Rodada 3";
+const RANKING = "Ranking Arena Mangaba 2026 · Masculino B · Rodada 3";
 const HREF = "/jogos/match-r3-1";
 
 const meta = {
@@ -102,7 +102,7 @@ export const ConfirmFriendly: Story = {
 // --- Próximos jogos, Aguardando e Histórico: sem botão ---
 
 export const Scheduled: Story = {
-  args: { situation: "Sáb, 14h · Arena Sunset", action: null },
+  args: { situation: "Sáb, 14h · Arena Tucum", action: null },
   play: async ({ canvas }) => {
     await expect(canvas.getAllByRole("link")).toHaveLength(1);
   },
@@ -111,7 +111,7 @@ export const Scheduled: Story = {
 // O selo é texto, não só cor (10.3).
 export const Today: Story = {
   args: {
-    context: "Copa Sunset de Beach Tennis · Masculino B · Final",
+    context: "Copa Tucum de Beach Tennis · Masculino B · Final",
     situation: "Sáb, 9h · Quadra 3",
     badge: "Hoje",
     action: null,
@@ -122,7 +122,7 @@ export const Today: Story = {
 };
 
 export const TournamentWithoutTime: Story = {
-  args: { context: "Copa Sunset de Beach Tennis · Masculino B", situation: "Horário a definir", action: null },
+  args: { context: "Copa Tucum de Beach Tennis · Masculino B", situation: "Horário a definir", action: null },
 };
 
 export const ProposalSent: Story = {
@@ -138,7 +138,7 @@ export const WithAdmin: Story = {
 };
 
 export const Confirmed: Story = {
-  args: { context: "Ranking Arena RM 2026 · Masculino B · Rodada 1", situation: "Vitória 6/4 · 104 pts", action: null },
+  args: { context: "Ranking Arena Mangaba 2026 · Masculino B · Rodada 1", situation: "Vitória 6/4 · 104 pts", action: null },
 };
 
 export const FriendlyDiscarded: Story = {
@@ -184,7 +184,7 @@ export const Uses: Story = {
     <List aria-label="Agenda">
       <AgendaItem {...args} />
       <AgendaItem {...args} situation="Confirmar resultado · confirma sozinho em 31h" action={{ label: "Confirmar", href: HREF }} />
-      <AgendaItem {...args} situation="Sáb, 14h · Arena Sunset" badge="Hoje" action={null} />
+      <AgendaItem {...args} situation="Sáb, 14h · Arena Tucum" badge="Hoje" action={null} />
       <AgendaItem {...args} situation="Proposta enviada · aguardando Pedro e Thiago" action={null} />
       <AgendaItem {...args} context="Amistoso" ownSide={[lucas]} opponentSide={[thiago]} situation="Vitória 6/3" action={null} />
     </List>

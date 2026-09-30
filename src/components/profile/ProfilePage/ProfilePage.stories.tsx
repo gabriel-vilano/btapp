@@ -1,14 +1,49 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Decorator, Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect } from "storybook/test";
+import { AppHeader } from "@/src/components/ui/AppHeader";
 import { mockProfilePages } from "@/src/mocks/profilePage";
 import { PlayerNotFound } from "./PlayerNotFound";
-import { ProfilePage, ProfilePageSkeleton } from "./ProfilePage";
+import { OwnProfileHeader, ProfilePage, ProfilePageSkeleton, type ProfilePageProps } from "./ProfilePage";
+import { ProfileMenu } from "./ProfileMenu";
 
 // Tier 4: uma story por situação do perfil (docs/PROFILE.md §6), sobre os
 // mocks do domínio vistos pelo Lucas. O detalhe de cada peça está na story dela
+// O cabeçalho é da página: o OwnProfileHeader na aba Perfil; o DetailHeader, com
+// o menu ⋯, no perfil de outro. A story não tem a casca: mostra o AppHeader com o
+// "Voltar" fixo, para a tela aparecer inteira
+const pageHeader: Decorator<ProfilePageProps> = (Story, { args, parameters }) => {
+  // Carregando e não encontrado não têm perfil: trazem o próprio cabeçalho
+  if (parameters.ownPageHeader) return <Story />;
+  const { username, name } = args.data.player;
+  return (
+    <>
+      {args.data.relation === "self" ? (
+        <OwnProfileHeader username={username} />
+      ) : (
+        <AppHeader
+          title={`@${username}`}
+          titleAs="p"
+          backHref="/feed"
+          actions={<ProfileMenu username={username} name={name} />}
+        />
+      )}
+      <Story />
+    </>
+  );
+};
+
+/** Carregando e não encontrado: o cabeçalho de detalhe com o título "Perfil". */
+const detailHeader: Decorator = (Story) => (
+  <>
+    <AppHeader title="Perfil" backHref="/feed" />
+    <Story />
+  </>
+);
+
 const meta = {
   title: "Profile/ProfilePage",
   component: ProfilePage,
+  decorators: [pageHeader],
   parameters: {
     layout: "fullscreen",
     // "Tentar de novo" usa o router do App Router
@@ -118,6 +153,8 @@ export const SectionError: Story = {
 
 // Carregando: o cabeçalho da tela na hora e o esqueleto do conteúdo (PF21)
 export const Loading: Story = {
+  decorators: [detailHeader],
+  parameters: { ownPageHeader: true },
   render: () => <ProfilePageSkeleton />,
   play: async ({ canvas }) => {
     await expect(canvas.getByRole("heading", { level: 1, name: "Perfil" })).toBeVisible();
@@ -127,6 +164,8 @@ export const Loading: Story = {
 
 // @username inexistente (§6.2)
 export const NotFound: Story = {
+  decorators: [detailHeader],
+  parameters: { ownPageHeader: true },
   render: () => <PlayerNotFound />,
   play: async ({ canvas }) => {
     await expect(canvas.getByText("Jogador não encontrado")).toBeVisible();

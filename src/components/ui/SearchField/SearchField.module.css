@@ -1,0 +1,126 @@
+/* =============================================================
+   SearchField — campo de busca com lupa e botão de limpar
+   ============================================================= */
+
+.search-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* O rótulo existe para o leitor de tela; na tela, a lupa e o placeholder dizem o que é */
+.search-field__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Mesma caixa do FormInput: altura, borda, raio e tipografia */
+.search-field__input {
+  width: 100%;
+  height: var(--dimension-action-height-lg);
+  padding: var(--spacing-150) var(--spacing-600) var(--spacing-150) var(--spacing-500);
+  background-color: var(--color-background-primary);
+  border: var(--border-width-medium) solid var(--color-border-subtle);
+  border-radius: var(--radius-form-input);
+  font-family: inherit;
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-primary);
+  transition: border-color var(--motion-duration-short-3) var(--motion-easing-standard);
+}
+
+.search-field__input::placeholder {
+  color: var(--color-foreground-secondary);
+}
+
+.search-field__input:focus {
+  border-color: var(--color-border-strong);
+}
+
+.search-field__input:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+/* A lupa e o X nativos mudam de navegador para navegador (o iOS nem mostra o X).
+   O DS usa a lupa própria e o próprio botão de limpar, com área de 48px. */
+.search-field__input::-webkit-search-decoration,
+.search-field__input::-webkit-search-cancel-button,
+.search-field__input::-webkit-search-results-button {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Vem depois do <input> no DOM para ficar por cima dele sem z-index */
+.search-field__leading {
+  position: absolute;
+  left: var(--spacing-200);
+  display: inline-flex;
+  color: var(--color-foreground-secondary);
+  pointer-events: none;
+}
+
+/* Área tocável de 48px, da altura do campo, encostada na borda direita */
+.search-field__clear {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dimension-tap-target-minimum);
+  height: var(--dimension-tap-target-minimum);
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--color-foreground-secondary);
+  cursor: pointer;
+}
+
+/* State layer circular em volta do ícone, menor que a área tocável */
+.search-field__clear::after {
+  content: "";
+  position: absolute;
+  inset: var(--spacing-100);
+  border-radius: var(--radius-full);
+  background-color: var(--color-state-layer-neutral);
+  pointer-events: none;
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard);
+}
+
+@media (hover: hover) {
+  .search-field__clear:hover {
+    color: var(--color-foreground-primary);
+  }
+
+  .search-field__clear:hover::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.search-field__clear:active::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+/* O ring vai no state layer circular: com border-radius no botão, a área
+   tocável viraria um círculo, porque o hit-test respeita a curva */
+.search-field__clear:focus-visible {
+  outline: none;
+}
+
+.search-field__clear:focus-visible::after {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.search-field__clear:focus:not(:focus-visible) {
+  outline: none;
+}

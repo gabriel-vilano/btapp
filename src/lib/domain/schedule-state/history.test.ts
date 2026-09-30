@@ -3,7 +3,7 @@ import { agreedDates, scheduleHistoryOf } from '@/src/mocks/domain/scheduling';
 import { agreedScheduleOf, expireProposals, isOptionOpen, pendingProposalOf } from './history';
 import { EMPTY, NOW, SAT, SUN, option, withPending } from './scheduleState.test-utils';
 
-const matchId = (slug: string): string => `match-arena-rm-mb-${slug}`;
+const matchId = (slug: string): string => `match-arena-mangaba-mb-${slug}`;
 
 describe('expirar a proposta (M12)', () => {
   it('pendente com alguma opção aberta continua pendente', () => {

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import { MatchScreen } from "@/src/components/agenda/MatchScreen";
+import { DetailHeader } from "@/src/components/shell/DetailHeader";
 import { matchScreenDataOf } from "@/src/mocks/matchScreen";
 
 // Tela do confronto (docs/NAVIGATION.md N10, docs/SCHEDULING.md §6) sobre os
@@ -14,8 +15,11 @@ export default async function MatchPage({ params }: { params: Promise<{ partida:
   const data = matchScreenDataOf(decodeURIComponent(partida));
   if (data === null) notFound();
   return (
-    <main>
-      <MatchScreen data={data} now={new Date().toISOString()} />
-    </main>
+    <>
+      <DetailHeader title="Confronto" />
+      <main>
+        <MatchScreen data={data} now={new Date().toISOString()} />
+      </main>
+    </>
   );
 }

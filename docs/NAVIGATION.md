@@ -152,7 +152,7 @@ Do ponto de vista de um jogador da partida, cruzando a máquina de estados (DOMA
 | Ranking | Confronto definido | Sem data e sem proposta pendente | Sua vez | "Marcar jogo · rodada fecha em 5 dias" |
 | Ranking | Confronto definido | Proposta do outro lado pendente | Sua vez | "Responder proposta · 3 horários" |
 | Ranking | Confronto definido | Proposta do próprio lado pendente | Aguardando | "Proposta enviada · aguardando Lucas e Rafael" |
-| Ranking | Confronto definido | Data acordada no futuro | Próximos jogos | "Sáb, 14h · Arena Sunset" |
+| Ranking | Confronto definido | Data acordada no futuro | Próximos jogos | "Sáb, 14h · Arena Tucum" |
 | Ranking | Confronto definido | Data acordada já passou | Sua vez | "Lançar resultado" |
 | Ranking | Aguardando confirmação | Lançado pelo outro lado | Sua vez | "Confirmar resultado · confirma sozinho em 31h" |
 | Ranking | Aguardando confirmação | Lançado pelo próprio lado | Aguardando | "Aguardando confirmação · confirma sozinho em 31h" |
@@ -211,7 +211,7 @@ A aba responde "onde eu estou nas competições que jogo?". Ela não é a classi
 
 A aba responde "o que existe para eu jogar?" (JTBD 1). No MVP ela é **enxuta**: a evidência da oportunidade 1.2 é fraca (DSC), e o beta tem os organizadores do Rankin e do Vila. O uso da aba entra nas métricas (seção 13) para decidir se ela cresce. [DEC-NAV-Q Q1, DSC]
 
-- **N32. A busca do app mora no topo do Explorar**, com três escopos: **Jogadores · Competições · Arenas** (controle segmentado). Jogadores busca por nome e @username e leva ao perfil; Competições, por nome da competição ou da organização, e leva à página da competição; Arenas, por nome e cidade, e leva à página da organização. O escopo inicial é Jogadores, porque é a busca que a amizade e o amistoso pedem, e cada escopo mostra a contagem de resultados do termo (`EXPLORE.md`, EX5). [DEC-NAV-Q Q5, DEC-NAV-A L12, DEC-EXP]
+- **N32. A busca do app mora no topo do Explorar**, com três escopos: **Jogadores · Competições · Arenas** (Tabs do DS, decisão do Gabriel de 30/09: DEC-EXP-3 na `EXPLORE.md`). Jogadores busca por nome e @username e leva ao perfil; Competições, por nome da competição ou da organização, e leva à página da competição; Arenas, por nome e cidade, e leva à página da organização. O escopo inicial é Jogadores, porque é a busca que a amizade e o amistoso pedem, e cada escopo mostra a contagem de resultados do termo (`EXPLORE.md`, EX5). [DEC-NAV-Q Q5, DEC-NAV-A L12, DEC-EXP]
 - **N33. Sem busca digitada, o Explorar mostra as competições e as arenas dos organizadores do beta**, em duas seções: "Competições" (as com temporada aberta ou evento futuro primeiro) e "Arenas". Na página de uma competição com categoria em que o jogador **não** está inscrito, entram dois blocos logo abaixo do cabeçalho (quando cada um aparece: `EXPLORE.md`, EX26 e EX27): [DEC-NAV-Q Q1; R32]
   - **"Como se inscrever":** o contato do organizador (o texto ou o link que ele informou), porque no beta a inscrição entra por carga (R32) e é feita com o organizador.
   - **"Tenho interesse":** um botão que registra o interesse do jogador naquela competição e vira "Interesse registrado" (tocar de novo desfaz). No MVP, serve para **medir a demanda**: o organizador não é notificado e ninguém mais vê quem marcou. O interesse é uma relação entre jogador e competição (`DOMAIN.md`, glossário). [DEC-NAV-A L13]
@@ -292,7 +292,7 @@ A classificação sem temporada em andamento e a tabela sem jogo confirmado são
 
 ### 10.3 Acessibilidade
 
-- A navegação principal é `<nav aria-label="Principal">` com links, e a aba atual tem `aria-current="page"`. **Não é** `role="tablist"`: a barra troca de rota, não de painel (ARIA). Os escopos da busca, que trocam o conteúdo na mesma tela, são outra coisa: controle segmentado ou Tabs do DS.
+- A navegação principal é `<nav aria-label="Principal">` com links, e a aba atual tem `aria-current="page"`. **Não é** `role="tablist"`: a barra troca de rota, não de painel (ARIA). Os escopos da busca, que trocam o conteúdo na mesma tela, são outra coisa: as Tabs do DS, com `tablist` (`EXPLORE.md`, DEC-EXP-3).
 - O rótulo visível é o nome acessível. A aba Perfil, que mostra o avatar, mantém o rótulo "Perfil".
 - O badge entra no nome acessível: "Jogos, 2 pendências", "Competições, 1 pendência de admin". O ponto do sino também: "Notificações, há novas".
 - Cada seção da agenda é um `<section>` com título (`h2`), e cada lista é uma lista (`<ul>`). O selo "Hoje" e o prazo são texto, não só cor.
@@ -313,7 +313,7 @@ Lista para a auditoria do design system. **Esta spec não desenha os componentes
 | **CountBadge** | 1 | Número nas abas Jogos e Competições, ponto no sino (N3, N7) | Novo. Contagem no nome acessível |
 | **SearchField** | 1 | Campo de busca do Explorar (N32) | Novo, ou variante do FormInput |
 | **Badge** | 1 | Selo "Hoje", "Com o admin", "Encerrada", "Você participa". "Interesse registrado" é o rótulo do botão de interesse, não um Badge (`EXPLORE.md`, EX29) | No `master` |
-| **SegmentedControl** | 1 | Escopos da busca (N32) | No `master` |
+| **Tabs** | 1 | Escopos da busca, com a contagem em cada aba (N32). Tabs, e não o SegmentedControl (`EXPLORE.md`, DEC-EXP-3) | No `master` |
 | **Skeleton**, **EmptyState**, **Alert**, **Dialog**, **ListItem** | 1–2 | Carregando, vazios, erro, fluxos modais, base dos itens | No `master` |
 | **StandingSummaryItem** | 3 | Item de ranking em "Minhas competições" (N29) | No `master` |
 | **AgendaItem** | 2 | Item da agenda e do bloco "Sua vez" (5.3) | Novo. Estados da tabela 5.2; com e sem botão de ação |

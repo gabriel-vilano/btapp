@@ -44,7 +44,7 @@ function base(
   createdAt: string = round.starts_at,
 ) {
   return {
-    id: `match-arena-rm-${slug}`,
+    id: `match-arena-mangaba-${slug}`,
     kind: 'ranking' as const,
     competition_id: ranking.id,
     category_id: category.id,

@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Decorator, Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, screen, waitFor, within } from "storybook/test";
 import type { RankingScreenContent } from "@/src/lib/domain/ranking-screen";
+import { AppHeader } from "@/src/components/ui/AppHeader";
 import { RankingScreen } from "./RankingScreen";
 import {
   STORY_HEADER,
@@ -15,9 +16,19 @@ import {
 // Tier 4: uma story por caso do mapa de estados (docs/RANKING.md 8.4), para ver
 // a tela inteira; o detalhe de cada peça está na story dela (RankingRow,
 // ZoneDivider, PinnedStandingRow)
+// O cabeçalho é da página (DetailHeader). A story não tem a casca: mostra o
+// AppHeader com o "Voltar" fixo, para a tela aparecer inteira
+const pageHeader: Decorator = (Story) => (
+  <>
+    <AppHeader title="Classificação" backHref="/competicoes" />
+    <Story />
+  </>
+);
+
 const meta = {
   title: "Ranking/RankingScreen",
   component: RankingScreen,
+  decorators: [pageHeader],
   parameters: {
     layout: "fullscreen",
     docs: {
@@ -36,6 +47,19 @@ type Story = StoryObj<typeof meta>;
 
 const ownPinned = (root: HTMLElement) => root.ownerDocument.querySelector<HTMLElement>("[class*='pinned--']");
 const rowsWith = (items: HTMLElement[], text: string) => items.filter((item) => item.textContent?.includes(text));
+
+// Resolve na primeira entrega de IntersectionObserver do documento. Todos os
+// observers são calculados no mesmo passo de renderização e avisados na ordem
+// em que nasceram: quando este é avisado, o do useOwnRow, criado antes, já foi
+function firstIntersectionDelivered(target: Element): Promise<void> {
+  return new Promise((resolve) => {
+    const probe = new IntersectionObserver(() => {
+      probe.disconnect();
+      resolve();
+    });
+    probe.observe(target);
+  });
+}
 
 // Própria dupla em 18º, fora da zona: distância da vaga, e a cópia fixa no rodapé
 // enquanto a linha está abaixo da vista (RK9, RK11)
@@ -67,6 +91,10 @@ export const OwnInsideZone: Story = {
   args: { model: storyModel(storyTable({ ownAt: 2 })) },
   play: async ({ canvas, canvasElement }) => {
     await expect(canvas.queryByText(/^Faltam/)).toBeNull();
+    // Rolar antes do primeiro aviso do observer do useOwnRow perdia a rolagem
+    // no Chromium sob carga: o primeiro cálculo saía com a posição de antes
+    // (linha à vista), e o observer não recalculava mais (ENG-127)
+    await firstIntersectionDelivered(rowsWith(canvas.getAllByRole("listitem"), "Você e")[0]);
     const view = canvasElement.ownerDocument.defaultView as Window;
     // Rola de novo a cada tentativa: um scroll só falhava na CI quando a
     // página era reposicionada depois dele (a rolagem suave da story anterior

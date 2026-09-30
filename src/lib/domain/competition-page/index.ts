@@ -17,5 +17,12 @@ export {
   type ScoringExample,
   type ScoringLine,
 } from './rulesText';
-export { formatDayMonth, formatFinalLine, formatRoundDeadline, formatRoundLine, formatSeasonDates } from './seasonText';
+export {
+  formatDayMonth,
+  formatFinalLine,
+  formatRoundDeadline,
+  formatRoundLine,
+  formatRoundName,
+  formatSeasonDates,
+} from './seasonText';
 export { competitionPageBlocks, isEnrolledInCompetition, type CompetitionPageBlocks } from './viewerBlocks';

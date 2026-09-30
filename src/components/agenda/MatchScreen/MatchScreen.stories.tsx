@@ -1,10 +1,14 @@
 import type { Decorator, Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, screen, waitFor, within } from "storybook/test";
+import { AppHeader } from "@/src/components/ui/AppHeader";
 import { MatchScreen } from "./MatchScreen";
 import { NOT_PLAYED_MATCH, OUTSIDER_ID, STORY_HISTORIES, STORY_NOW, storyData } from "./storyFixtures";
 
+// O cabeçalho é da página (DetailHeader). A story não tem a casca: mostra o
+// AppHeader com o "Voltar" fixo, para a tela aparecer inteira
 const screenFrame: Decorator = (Story) => (
   <div className="sb-screen-frame">
+    <AppHeader title="Confronto" backHref="/jogos" />
     <Story />
   </div>
 );
@@ -161,7 +165,7 @@ export const AcceptFlow: Story = {
     await userEvent.click(canvas.getByRole("button", { name: "Marcar jogo · dom, 4 out, 10h" }));
     await expect(await canvas.findByRole("heading", { name: "Jogo marcado" })).toBeInTheDocument();
     await expect(canvas.getByText("Domingo, 4 de outubro")).toBeInTheDocument();
-    await expect(canvas.getByText("10h · Arena Sunset")).toBeInTheDocument();
+    await expect(canvas.getByText("10h · Arena Tucum")).toBeInTheDocument();
     await expect(canvas.getByText(/aceita por Pedro/)).toBeInTheDocument();
   },
 };
@@ -183,7 +187,7 @@ export const ProposeFlow: Story = {
 
     await userEvent.clear(dialog.getByLabelText("2º horário"));
     await userEvent.type(dialog.getByLabelText("2º horário"), "2026-10-04T10:00");
-    await userEvent.type(dialog.getByLabelText("Arena (opcional)"), "Arena Sunset");
+    await userEvent.type(dialog.getByLabelText("Arena (opcional)"), "Arena Tucum");
     await userEvent.click(dialog.getByRole("button", { name: "Enviar proposta" }));
 
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());

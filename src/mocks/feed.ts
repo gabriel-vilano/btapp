@@ -46,17 +46,17 @@ const thiago: PlayerInfo = {
   total_matches: 220,
 };
 
-const arenaRM: OrgInfo = {
-  id: 'org-arena-rm',
-  name: 'Arena RM',
-  username: 'arenarm',
+const arenaMangaba: OrgInfo = {
+  id: 'org-arena-mangaba',
+  name: 'Arena Mangaba',
+  username: 'arenamangaba',
   avatar_url: null,
 };
 
-const arenaSunset: OrgInfo = {
-  id: 'org-arena-sunset',
-  name: 'Arena Sunset',
-  username: 'arenasunset',
+const arenaTucum: OrgInfo = {
+  id: 'org-arena-tucum',
+  name: 'Arena Tucum',
+  username: 'arenatucum',
   avatar_url: null,
 };
 
@@ -70,7 +70,7 @@ export const mockFeedCards: FeedCard[] = [
     created_at: minutesAgo(15),
     header: {
       header_type: 'org',
-      org: arenaRM,
+      org: arenaMangaba,
       phase: 'Rodada 3',
       competition_name: 'Copa Nubeach de Beach Tennis',
       category: {
@@ -85,7 +85,7 @@ export const mockFeedCards: FeedCard[] = [
     loser: { format: 'singles', player: pedro },
     score: { type: 'normal', sets: [{ a: 6, b: 4 }] },
     date: onTheHour(hoursAgo(1)),
-    location: 'Arena RM – Beach · Nova Lima/MG',
+    location: 'Arena Mangaba – Beach · Nova Lima/MG',
     h2h_count: 2,
   },
 
@@ -96,9 +96,9 @@ export const mockFeedCards: FeedCard[] = [
     created_at: hoursAgo(2),
     header: {
       header_type: 'org',
-      org: arenaRM,
+      org: arenaMangaba,
       phase: 'Rodada 2',
-      competition_name: 'Open Arena RM de Beach Tennis',
+      competition_name: 'Open Arena Mangaba de Beach Tennis',
       category: {
         gender: 'M',
         modality: 'singles',
@@ -111,7 +111,7 @@ export const mockFeedCards: FeedCard[] = [
     loser: { format: 'singles', player: pedro },
     score: { type: 'normal', sets: [{ a: 6, b: 4 }, { a: 6, b: 3 }] },
     date: onTheHour(hoursAgo(4)),
-    location: 'Arena RM – Beach · Nova Lima/MG',
+    location: 'Arena Mangaba – Beach · Nova Lima/MG',
     h2h_count: 1,
   },
 
@@ -122,7 +122,7 @@ export const mockFeedCards: FeedCard[] = [
     created_at: hoursAgo(5),
     header: {
       header_type: 'org',
-      org: arenaSunset,
+      org: arenaTucum,
       phase: 'Semifinal',
       competition_name: 'Copa BH de Beach Tennis',
       category: {
@@ -140,7 +140,7 @@ export const mockFeedCards: FeedCard[] = [
       sets: [{ a: 6, b: 4 }, { a: 4, b: 6 }, { a: 10, b: 7 }],
     },
     date: onTheHour(hoursAgo(7)),
-    location: 'Arena Sunset · Carandaí/MG',
+    location: 'Arena Tucum · Carandaí/MG',
     h2h_count: 3,
   },
 
@@ -151,7 +151,7 @@ export const mockFeedCards: FeedCard[] = [
     created_at: hoursAgo(18),
     header: {
       header_type: 'org',
-      org: arenaRM,
+      org: arenaMangaba,
       phase: 'Rodada 1',
       competition_name: 'Ranking BH',
       category: {
@@ -166,7 +166,7 @@ export const mockFeedCards: FeedCard[] = [
     loser: { format: 'singles', player: pedro },
     score: { type: 'wo' },
     date: onTheHour(daysAgo(1)),
-    location: 'Arena RM – Beach · Nova Lima/MG',
+    location: 'Arena Mangaba – Beach · Nova Lima/MG',
     h2h_count: 0,
   },
 
@@ -177,9 +177,9 @@ export const mockFeedCards: FeedCard[] = [
     created_at: daysAgo(1),
     header: {
       header_type: 'org',
-      org: arenaRM,
+      org: arenaMangaba,
       phase: 'Rodada 2',
-      competition_name: 'Ranking Arena RM 2026',
+      competition_name: 'Ranking Arena Mangaba 2026',
       category: {
         gender: 'M',
         modality: 'singles',
@@ -196,7 +196,7 @@ export const mockFeedCards: FeedCard[] = [
       interrupted_set: { a: 3, b: 2 },
     },
     date: onTheHour(daysAgo(2)),
-    location: 'Arena RM – Beach · Nova Lima/MG',
+    location: 'Arena Mangaba – Beach · Nova Lima/MG',
     h2h_count: 0,
   },
 
@@ -207,9 +207,9 @@ export const mockFeedCards: FeedCard[] = [
     created_at: daysAgo(2),
     header: {
       header_type: 'org',
-      org: arenaSunset,
+      org: arenaTucum,
       phase: 'QF',
-      competition_name: 'Torneio Sunset',
+      competition_name: 'Torneio Tucum',
       category: {
         gender: 'M',
         modality: 'singles',
@@ -221,7 +221,7 @@ export const mockFeedCards: FeedCard[] = [
     side_a: { format: 'singles', player: lucas },
     side_b: { format: 'singles', player: pedro },
     date: onTheHour(daysFromNow(1)),
-    location: 'Arena Sunset · Carandaí/MG',
+    location: 'Arena Tucum · Carandaí/MG',
     cheer_a: 12,
     cheer_b: 8,
     user_cheer: null,
@@ -235,9 +235,9 @@ export const mockFeedCards: FeedCard[] = [
     created_at: daysAgo(3),
     header: {
       header_type: 'org',
-      org: arenaSunset,
+      org: arenaTucum,
       phase: 'QF',
-      competition_name: 'Torneio Sunset',
+      competition_name: 'Torneio Tucum',
       category: {
         gender: 'M',
         modality: 'doubles',
@@ -249,7 +249,7 @@ export const mockFeedCards: FeedCard[] = [
     side_a: { format: 'doubles', players: [lucas, rafael] },
     side_b: { format: 'doubles', players: [pedro, thiago] },
     date: onTheHour(daysFromNow(1.1)),
-    location: 'Arena Sunset · Carandaí/MG',
+    location: 'Arena Tucum · Carandaí/MG',
     cheer_a: 12,
     cheer_b: 8,
     user_cheer: 'a',
@@ -274,7 +274,7 @@ export const mockFeedCards: FeedCard[] = [
         age_group: null,
       },
       date_display: '20 e 21 de maio de 2026',
-      location: 'Arena Sunset · Carandaí/MG',
+      location: 'Arena Tucum · Carandaí/MG',
       enrollment_count: 24,
       org_avatar_url: null,
     },
@@ -298,7 +298,7 @@ export const mockFeedCards: FeedCard[] = [
         age_group: null,
       },
       date_display: '20 e 21 de maio de 2026',
-      location: 'Arena Sunset · Carandaí/MG',
+      location: 'Arena Tucum · Carandaí/MG',
       enrollment_count: 16,
       org_avatar_url: null,
     },

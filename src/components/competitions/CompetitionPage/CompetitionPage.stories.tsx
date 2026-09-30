@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, userEvent, within } from "storybook/test";
 import { mockCompetitionPage } from "@/src/mocks/competitionPage";
+import { AppHeader } from "@/src/components/ui/AppHeader";
 import { CompetitionPage } from "./CompetitionPage";
 
 // Tier 4: uma story por relação de quem vê com a competição (RANKING.md RK17,
@@ -9,6 +10,16 @@ import { CompetitionPage } from "./CompetitionPage";
 const meta = {
   title: "Competitions/CompetitionPage",
   component: CompetitionPage,
+  // O cabeçalho é da página (DetailHeader). A story não tem a casca: mostra o
+  // AppHeader com o "Voltar" fixo, para a tela aparecer inteira
+  decorators: [
+    (Story, { args }) => (
+      <>
+        <AppHeader title={args.data.name} backHref="/competicoes" />
+        <Story />
+      </>
+    ),
+  ],
   parameters: {
     layout: "fullscreen",
     docs: {
@@ -31,7 +42,7 @@ export const Enrolled: Story = {
     await expect(canvas.queryByRole("region", { name: "Como se inscrever" })).toBeNull();
     await expect(canvas.queryByRole("link", { name: /Administrar/ })).toBeNull();
     const categories = within(canvas.getByRole("region", { name: "Categorias" }));
-    await expect(categories.getByRole("link", { name: /3º, Ranking Arena RM · Masculino B/ })).toHaveAttribute(
+    await expect(categories.getByRole("link", { name: /3º, Ranking Arena Mangaba · Masculino B/ })).toHaveAttribute(
       "href",
       "/ranking/masculino-b",
     );
