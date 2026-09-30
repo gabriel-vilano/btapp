@@ -1,0 +1,12 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-300);
+}
+
+.form__times {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+  align-items: stretch;
+}
