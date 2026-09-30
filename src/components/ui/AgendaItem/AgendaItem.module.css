@@ -1,0 +1,102 @@
+.agenda-item {
+  /* Largura da pilha de 2 avatares de 40px (8px do segundo à mostra): simples
+     e duplas começam o texto na mesma linha vertical, e o botão também */
+  --agenda-item-leading-width: calc(var(--dimension-avatar-40) + var(--spacing-100));
+
+  display: block;
+}
+
+/* --- Área principal: o link da partida (N10) --- */
+
+.agenda-item__main {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-150);
+  min-height: var(--dimension-tap-target-minimum);
+  padding: var(--spacing-150) var(--spacing-page-margin);
+  overflow: hidden;
+  color: var(--color-foreground-primary);
+  text-decoration: none;
+}
+
+.agenda-item__main::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-state-layer-neutral);
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .agenda-item__main:hover::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.agenda-item__main:active::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+/* Outline para dentro, como no ListItem: o item encosta nas bordas da tela */
+.agenda-item__main:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: calc(var(--border-width-thick) * -1);
+}
+
+.agenda-item__main:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.agenda-item__leading {
+  display: flex;
+  flex-shrink: 0;
+  width: var(--agenda-item-leading-width);
+}
+
+.agenda-item__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--spacing-25);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.agenda-item__title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-100);
+}
+
+.agenda-item__sides {
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.agenda-item__context {
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-secondary);
+}
+
+/* A situação é o que o jogador decide: cor primária, abaixo do contexto */
+.agenda-item__situation {
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+}
+
+/* --- Ação: irmã do link, alinhada com a coluna do texto --- */
+
+.agenda-item__action {
+  padding: 0 var(--spacing-page-margin) var(--spacing-150)
+    calc(var(--spacing-page-margin) + var(--agenda-item-leading-width) + var(--spacing-150));
+}

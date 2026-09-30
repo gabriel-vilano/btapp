@@ -1,0 +1,151 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as AgendaItemStories from "./AgendaItem.stories";
+
+<Meta of={AgendaItemStories} />
+
+<Subtitle>
+  Uma partida na agenda do jogador: quem joga, onde, em que pé está e, quando
+  é a vez dele, o botão da ação.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/AgendaItem/AgendaItem.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/AgendaItem/AgendaItem.tsx)
+
+## Visão geral
+
+`AgendaItem` é o item das quatro seções da aba Jogos (Sua vez, Próximos jogos, Aguardando e Histórico) e do bloco "Sua vez" do feed (`docs/NAVIGATION.md`, §5.3 e N20). Por isso mora em `ui/`: duas áreas usam. O toque no item abre a partida; o botão, quando existe, faz a ação. Os textos chegam prontos de `agendaItemModel` (`src/lib/agenda/`), que traduz a situação da partida (tabela 5.2) em frase.
+
+<Canvas of={AgendaItemStories.ScheduleMatch} />
+
+## Anatomia
+
+Cinco partes. Só a ação é opcional.
+
+<table>
+  <thead>
+    <tr>
+      <th>Parte</th>
+      <th>Props</th>
+      <th>O que mostra</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Avatar</td>
+      <td><code>opponentSide</code></td>
+      <td>Os avatares do lado adversário, sobrepostos em duplas</td>
+    </tr>
+    <tr>
+      <td>Lados</td>
+      <td><code>ownSide</code>, <code>opponentSide</code>, <code>badge</code></td>
+      <td>"Lucas e Rafael × Pedro e Thiago", o lado de quem vê primeiro, e o selo "Hoje"</td>
+    </tr>
+    <tr>
+      <td>Contexto</td>
+      <td><code>context</code></td>
+      <td>Competição · categoria · rodada, competição · categoria · fase, ou "Amistoso"</td>
+    </tr>
+    <tr>
+      <td>Situação</td>
+      <td><code>situation</code></td>
+      <td>O que está acontecendo, com o prazo em tempo restante ("confirma sozinho em 31h")</td>
+    </tr>
+    <tr>
+      <td>Ação</td>
+      <td><code>action</code></td>
+      <td>Botão secondary, só nos itens de "Sua vez"</td>
+    </tr>
+  </tbody>
+</table>
+
+## Estados
+
+Os estados vêm do dado: a situação da partida decide a frase e se há botão. Uma story por linha da tabela 5.2.
+
+### Sua vez
+
+O jogador precisa agir, e o botão diz o quê: "Propor horários", "Responder proposta", "Lançar resultado" ou "Confirmar". "Responder" é só da proposta de horário; resultado e amistoso usam "Confirmar". "Lançar resultado" é o único botão que não abre a partida: vai direto ao fluxo de lançar, um toque a menos na ação mais frequente depois do jogo (N16).
+
+<Canvas of={AgendaItemStories.AnswerProposal} />
+
+<Canvas of={AgendaItemStories.ReportResult} />
+
+<Canvas of={AgendaItemStories.ConfirmResult} />
+
+<Canvas of={AgendaItemStories.ConfirmFriendly} />
+
+### Próximos jogos
+
+Sem botão: a situação diz quando e onde. O jogo de hoje ganha o selo "Hoje", e o confronto de torneio sem horário fica no fim da seção, como "Horário a definir".
+
+<Canvas of={AgendaItemStories.Today} />
+
+<Canvas of={AgendaItemStories.TournamentWithoutTime} />
+
+### Aguardando
+
+A vez é do adversário ou do admin. A frase diz de quem e, quando há, o prazo.
+
+<Canvas of={AgendaItemStories.ProposalSent} />
+
+<Canvas of={AgendaItemStories.AwaitingConfirmation} />
+
+<Canvas of={AgendaItemStories.WithAdmin} />
+
+### Histórico
+
+O placar lido do lado de quem vê e, no ranking, os pontos. O amistoso descartado ou cancelado aparece só para quem lançou, com o estado escrito.
+
+<Canvas of={AgendaItemStories.Confirmed} />
+
+<Canvas of={AgendaItemStories.FriendlyDiscarded} />
+
+### Simples e texto longo
+
+Em simples, cada lado tem um nome. Nomes, contexto e situação longos quebram linha em vez de cortar; o selo não encolhe.
+
+<Canvas of={AgendaItemStories.Singles} />
+
+<Canvas of={AgendaItemStories.LongText} />
+
+## Quando usar
+
+- Listar partidas do próprio jogador, com o que ele precisa saber ou fazer em cada uma.
+- No bloco "Sua vez" do feed, com os mesmos itens da aba Jogos (N20).
+
+## Componentes relacionados
+
+- **[ListItem](?path=/docs/ui-listitem--docs):** a linha genérica. O `AgendaItem` não é um `ListItem` porque o botão da ação é um segundo alvo, fora do link do item.
+- **[StandingSummaryItem](?path=/docs/ui-standingsummaryitem--docs):** a posição numa categoria, na aba Competições. O `AgendaItem` é a partida; o `StandingSummaryItem`, a classificação.
+- **[AgendaSection](?path=/docs/agenda-agendasection--docs):** a seção que agrupa os itens, com título e a regra de sumir quando vazia.
+
+## Acessibilidade
+
+- O item é um link para a partida. O nome dele é o texto inteiro: lados, contexto e situação.
+- O botão da ação é outro link, irmão do item, com o próprio nome ("Confirmar"). Link dentro de link é HTML inválido, e o leitor de tela anunciaria os dois como um só.
+- Os avatares saem da leitura de tela (`aria-hidden`): os nomes já estão no título.
+- O selo "Hoje" e o prazo são texto, não só cor (WCAG 1.4.1).
+- Item e botão têm 48px de altura mínima (`--dimension-tap-target-minimum`).
+
+## Evitar
+
+- ❌ Confirmar o resultado no próprio item. Confirmar muda a classificação de outra pessoa: o jogador precisa ver o placar antes (N16).
+- ❌ Botão fora de "Sua vez". Nas outras seções o jogador não tem o que fazer, e um botão sugeriria que tem.
+- ❌ Mostrar o prazo como data ("até qui, 21h"). O prazo é sempre tempo restante, que é o que o jogador decide (5.2).
+- ❌ Escrever a frase da situação na tela. Ela vem de `agendaSituationText`, que o feed também usa: duas redações da mesma situação divergem.
+
+## API
+
+<ArgTypes of={AgendaItemStories} />
+
+## Decisões de design
+
+**Por que o avatar é só do lado adversário?** Em 393px, duas pilhas de avatares de duplas ocupariam quase metade da largura. O jogador sabe quem é o próprio lado; o que muda de item para item é o adversário. Os nomes dos dois lados continuam no título.
+
+**Por que o botão fica abaixo do texto, e não à direita?** Os rótulos ("Responder proposta", "Lançar resultado") não cabem ao lado dos nomes em 393px sem espremer o texto. Abaixo, alinhado com a coluna do texto, o botão tem a largura que precisa e o item continua legível.
+
+## Referências
+
+- `docs/NAVIGATION.md`: §5.2 (onde cada estado aparece), §5.3 (o item) e §10.3 (acessibilidade)
+- [WCAG 1.4.1 Uso de cor](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)
+- [HTML: conteúdo interativo não pode conter outro interativo](https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-a-element)
+- `docs/TOKENS.md`: tap target e foco

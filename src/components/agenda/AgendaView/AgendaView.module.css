@@ -1,0 +1,45 @@
+.agenda-view {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--spacing-300);
+}
+
+/* A posição final leva à classificação (9.2): link de ação, em coral */
+.agenda-view__link {
+  color: var(--color-foreground-accent);
+  font-weight: var(--font-weight-bold);
+  text-decoration: underline;
+}
+
+.agenda-view__link:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.agenda-view__link:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* --- Carregando: o mesmo ritmo das seções e dos itens --- */
+
+.agenda-skeleton__section {
+  display: flex;
+  flex-direction: column;
+}
+
+.agenda-skeleton__title {
+  width: 40%;
+  box-sizing: content-box;
+  padding: var(--spacing-200) var(--spacing-page-margin) var(--spacing-50);
+}
+
+.agenda-skeleton__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-150);
+  padding: var(--spacing-150) var(--spacing-page-margin);
+}
+
+.agenda-skeleton__lines {
+  flex: 1;
+}
