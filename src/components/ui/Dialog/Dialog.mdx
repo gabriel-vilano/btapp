@@ -118,6 +118,7 @@ Cada um cobre um nível de interrupção diferente.
 - Foco preso no painel e retorno ao gatilho ao fechar (WCAG 2.4.3, Ordem do foco).
 - `Esc` fecha em qualquer ponto do modal (WCAG 2.1.1, Teclado).
 - O corpo rolável recebe foco por Tab, com ring (WCAG 2.1.1; regra `scrollable-region-focusable` do axe).
+- Sem `children` (confirmação só com título e descrição), o corpo não é renderizado: seria uma parada de Tab vazia.
 - Botão de fechar só de ícone com `aria-label="Fechar"` e área de 48×48 (regra do DS; WCAG 2.5.8).
 - Com `prefers-reduced-motion`, o painel aparece sem animação.
 - Scroll da página travado enquanto o modal está aberto.

@@ -1,5 +1,5 @@
 import type { Decorator, Meta, StoryObj } from "@storybook/nextjs-vite";
-import { expect } from "storybook/test";
+import { expect, screen, waitFor } from "storybook/test";
 import { AppHeader } from "@/src/components/ui/AppHeader";
 import { mockProfilePages } from "@/src/mocks/profilePage";
 import { PlayerNotFound } from "./PlayerNotFound";
@@ -110,7 +110,7 @@ export const Opponent: Story = {
 export const RequestSent: Story = {
   args: { data: mockProfilePages.requestSent },
   play: async ({ canvas }) => {
-    await expect(canvas.getByRole("button", { name: "Pedido enviado" })).toBeVisible();
+    await expect(canvas.getByRole("button", { name: "Pedido enviado para Thiago, abrir opções" })).toBeVisible();
   },
 };
 
@@ -119,6 +119,81 @@ export const RequestReceived: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.getByRole("button", { name: "Aceitar pedido de Thiago" })).toBeVisible();
     await expect(canvas.getByRole("button", { name: "Recusar pedido de Thiago" })).toBeVisible();
+  },
+};
+
+// --- Ações de amizade (PF7): com os mocks, a ação muda só a tela ---
+
+// "+ Adicionar" vira "Pedido enviado" sem confirmação; o foco fica no botão e o leitor de tela ouve o aviso
+export const AddFriend: Story = {
+  args: { data: mockProfilePages.opponent },
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(await canvas.findByRole("button", { name: /Adicionar Caio/ }));
+    const sent = await canvas.findByRole("button", { name: "Pedido enviado para Caio, abrir opções" });
+    await expect(sent).toHaveFocus();
+    await expect(canvas.getByRole("status")).toHaveTextContent("Pedido enviado para Caio.");
+  },
+};
+
+// Cancelar o pedido pede confirmação, com o foco inicial na opção que não desfaz nada
+export const CancelRequest: Story = {
+  args: { data: mockProfilePages.requestSent },
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(await canvas.findByRole("button", { name: /Pedido enviado para Thiago/ }));
+    const dialog = await screen.findByRole("dialog", { name: "Cancelar o pedido para Thiago?" });
+    await expect(dialog).toHaveAccessibleDescription(/Thiago não recebe aviso/);
+    await expect(screen.getByRole("button", { name: "Manter pedido" })).toHaveFocus();
+    await userEvent.click(screen.getByRole("button", { name: "Cancelar pedido" }));
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+    await expect(await canvas.findByRole("button", { name: /Adicionar Thiago/ })).toHaveFocus();
+  },
+};
+
+// Aceitar vira "Amigos ✓" e o número de amigos do Thiago sobe (PF5)
+export const AcceptRequest: Story = {
+  args: { data: mockProfilePages.requestReceived },
+  play: async ({ canvas, userEvent }) => {
+    await expect(await canvas.findByRole("link", { name: "1 amigo" })).toBeVisible();
+    await userEvent.click(canvas.getByRole("button", { name: "Aceitar pedido de Thiago" }));
+    await expect(await canvas.findByRole("button", { name: "Amigos de Thiago, abrir opções" })).toHaveFocus();
+    await expect(canvas.queryByRole("button", { name: /Recusar/ })).toBeNull();
+    await expect(canvas.getByRole("link", { name: "2 amigos" })).toBeVisible();
+    await expect(canvas.getByRole("status")).toHaveTextContent("Agora vocês são amigos.");
+  },
+};
+
+// Recusar não pede confirmação; o botão some, e o foco vai para o que fica
+export const DeclineRequest: Story = {
+  args: { data: mockProfilePages.requestReceived },
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(await canvas.findByRole("button", { name: "Recusar pedido de Thiago" }));
+    await expect(await canvas.findByRole("button", { name: /Adicionar Thiago/ })).toHaveFocus();
+    await expect(canvas.getByRole("status")).toHaveTextContent("Pedido de Thiago recusado.");
+  },
+};
+
+// Desfazer a amizade pede confirmação; confirmado, o número de amigos do Pedro cai
+export const Unfriend: Story = {
+  args: { data: mockProfilePages.friend },
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(await canvas.findByRole("button", { name: "Amigos de Pedro, abrir opções" }));
+    await screen.findByRole("dialog", { name: "Desfazer a amizade com Pedro?" });
+    await userEvent.click(screen.getByRole("button", { name: "Desfazer amizade" }));
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+    await expect(await canvas.findByRole("button", { name: /Adicionar Pedro/ })).toHaveFocus();
+    await expect(canvas.getByRole("link", { name: "0 amigos" })).toBeVisible();
+  },
+};
+
+// "Manter amizade" fecha sem mudar nada
+export const KeepFriendship: Story = {
+  args: { data: mockProfilePages.friend },
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(await canvas.findByRole("button", { name: "Amigos de Pedro, abrir opções" }));
+    await userEvent.click(await screen.findByRole("button", { name: "Manter amizade" }));
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+    await expect(canvas.getByRole("button", { name: "Amigos de Pedro, abrir opções" })).toHaveFocus();
+    await expect(canvas.getByRole("status")).toBeEmptyDOMElement();
   },
 };
 
