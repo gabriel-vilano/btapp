@@ -129,7 +129,10 @@ export const WithStandings: Story = {
     </List>
   ),
   play: async ({ canvas }) => {
-    const [ranking, tournament] = canvas.getAllByRole("link");
+    const [ranking, tournament] = await canvas.findAllByRole("link");
+    // A coluna da posição tem 3ch em Arimo bold: medida com a fonte de fallback,
+    // o título do ranking sai deslocado e a story falhava às vezes (ENG-128)
+    await document.fonts.load("700 20px Arimo");
     const titleLeft = (link: HTMLElement) =>
       (link.querySelector("span:nth-child(2)") as HTMLElement).getBoundingClientRect().left;
     await expect(titleLeft(tournament)).toBe(titleLeft(ranking));
