@@ -48,7 +48,7 @@ export function ReportForm({ data, role, now, clock, submit, matchHref }: Report
 
   if (sendState.kind === "sent" && result.status === "valid") {
     return (
-      <ReportSent data={data} result={result.result} reporterSide={flow.userSide} sentAt={sendState.at} matchHref={matchHref} />
+      <ReportSent data={data} result={result.result} voice={voice} reporterSide={flow.userSide} sentAt={sendState.at} matchHref={matchHref} />
     );
   }
   return (

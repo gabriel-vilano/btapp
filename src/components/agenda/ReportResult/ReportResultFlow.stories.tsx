@@ -102,6 +102,8 @@ export const Walkover: Story = {
     await userEvent.click(canvas.getByRole("button", { name: "Revisar resultado" }));
     const review = within(await findReview());
     await expect(review.getByText("Se confirmado: +100 para vocês, 0 para Caio e Diego.")).toBeVisible();
+    await userEvent.click(review.getByRole("button", { name: "Enviar resultado" }));
+    await expect(await canvas.findByText("Vitória de vocês por W.O.")).toBeVisible();
   },
 };
 
@@ -121,6 +123,7 @@ export const Tournament: Story = {
     await expect(review.getByText("O resultado vale na hora e aparece no feed.")).toBeVisible();
     await userEvent.click(review.getByRole("button", { name: "Enviar resultado" }));
     await expect(await canvas.findByRole("heading", { name: "Resultado lançado" })).toBeVisible();
+    await expect(canvas.getByText("Vitória de Caio e Diego por W.O.")).toBeVisible();
   },
 };
 

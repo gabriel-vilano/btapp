@@ -7,12 +7,13 @@ import { toScore } from "@/src/lib/domain/profile-page/score";
 import type { ReportableResult } from "@/src/types/domain";
 import type { ReportResultData } from "./reportResultData";
 import { otherSide } from "./reportResultModel";
-import { responseDeadlineText } from "./reportSummary";
+import { responseDeadlineText, winnerLine, type SideVoice } from "./reportSummary";
 import styles from "./ReportResult.module.css";
 
 type ReportSentProps = {
   data: ReportResultData;
   result: ReportableResult;
+  voice: SideVoice;
   /** Lado de quem lançou: o outro é quem confirma. Ignorado no torneio. */
   reporterSide: "a" | "b";
   sentAt: string;
@@ -23,7 +24,7 @@ type ReportSentProps = {
  * Fim do fluxo: o que foi enviado, quem confirma e até quando (RG7, §3.6).
  * O foco vem para o título, porque a revisão que tinha o foco fechou.
  */
-export function ReportSent({ data, result, reporterSide, sentAt, matchHref }: ReportSentProps) {
+export function ReportSent({ data, result, voice, reporterSide, sentAt, matchHref }: ReportSentProps) {
   const titleRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => titleRef.current?.focus(), []);
   const title = data.ranking ? `Resultado enviado a ${data.sideNames[otherSide(reporterSide)]}` : "Resultado lançado";
@@ -33,7 +34,12 @@ export function ReportSent({ data, result, reporterSide, sentAt, matchHref }: Re
       <h2 id="report-result-sent-title" ref={titleRef} tabIndex={-1} className={styles["report-result__sent-title"]}>
         {title}
       </h2>
-      <ScoreBlock score={toScore(result)} />
+      {/* O W.O. não tem placar: a linha diz quem venceu, no lugar do ScoreBlock */}
+      {result.type === "wo" ? (
+        <p className={styles["report-result__winner"]}>{winnerLine(result, voice)} por W.O.</p>
+      ) : (
+        <ScoreBlock score={toScore(result)} />
+      )}
       <p className={styles["report-result__note"]}>{responseDeadlineText(data, reporterSide, sentAt)}</p>
       <ButtonLink href={matchHref} fullWidth>
         Voltar para a partida
