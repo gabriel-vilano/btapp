@@ -33,7 +33,7 @@ export const Player: Story = {
     await expect(hrefs).toEqual([
       "/ranking/mista-c-40",
       "/ranking/masculino-b",
-      "/competicoes/copa-sunset",
+      "/competicoes/copa-tucum",
       "/competicoes/open-pampulha",
     ]);
   },

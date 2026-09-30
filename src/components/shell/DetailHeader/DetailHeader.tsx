@@ -17,7 +17,7 @@ type DetailHeaderProps = Omit<AppHeaderProps, "backHref"> & {
 /**
  * Cabeçalho das telas de detalhe (partida, jogador, competição): o "Voltar" leva à
  * raiz da aba marcada, a de origem ou a da N28, como ela estava (NAVIGATION.md, N10).
- * @example <DetailHeader title="Ranking Arena RM" arrivalTab={competitionArrivalTab(isEnrolled)} />
+ * @example <DetailHeader title="Ranking Arena Mangaba" arrivalTab={competitionArrivalTab(isEnrolled)} />
  */
 export function DetailHeader({ arrivalTab, ...props }: DetailHeaderProps) {
   const { backHref, declareArrivalTab } = useShellNavigation();

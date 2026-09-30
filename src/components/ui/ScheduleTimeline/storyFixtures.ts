@@ -26,7 +26,7 @@ export const STORY_PLAYER_NAMES: PlayerNames = {
 };
 
 const MATCH_ID = "story-match-r2-4";
-const VENUE = "Arena RM – Beach · Nova Lima/MG";
+const VENUE = "Arena Mangaba – Beach · Nova Lima/MG";
 
 const at = (startsAt: string, venue: string | null = VENUE): ScheduleOption => ({ starts_at: startsAt, venue });
 
@@ -92,7 +92,7 @@ export const BOTH_SIDES_HISTORY: ScheduleHistory = {
       side: "b",
       proposed_by: "story-diego",
       created_at: "2026-09-09T15:05:00Z",
-      options: [at("2026-09-15T22:00:00Z"), at("2026-09-17T22:00:00Z", "Arena Sunset · Belo Horizonte/MG")],
+      options: [at("2026-09-15T22:00:00Z"), at("2026-09-17T22:00:00Z", "Arena Tucum · Belo Horizonte/MG")],
       status: "accepted",
       accepted_option_index: 0,
       responded_by: "story-thiago",

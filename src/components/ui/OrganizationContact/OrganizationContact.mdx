@@ -1,0 +1,62 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as OrganizationContactStories from "./OrganizationContact.stories";
+
+<Meta of={OrganizationContactStories} />
+
+<Subtitle>O contato que a organização informou: link vira botão, texto aparece como foi escrito.</Subtitle>
+
+**Código-fonte:** [`src/components/ui/OrganizationContact/OrganizationContact.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/OrganizationContact/OrganizationContact.tsx)
+
+## Visão geral
+
+A organização guarda o contato num campo só, texto ou link (`docs/DOMAIN.md`). O `OrganizationContact` decide como mostrar: na página da organização (`docs/EXPLORE.md`, EX22) e no "Como se inscrever" da página da competição (EX28). Mora em `ui/` porque as duas áreas usam.
+
+<Canvas of={OrganizationContactStories.WithLink} />
+
+## Estados
+
+São três, e quem escolhe é o valor do `contact`, não uma prop de variante.
+
+### Link
+
+Um link `https` inteiro vira o Button secondary, que abre fora do app. O rótulo vem de quem usa: "Falar com [nome]" na página da organização, "Falar com o organizador" no "Como se inscrever".
+
+<Canvas of={OrganizationContactStories.WithLink} />
+
+### Texto
+
+Telefone, e-mail ou um recado ("procure o Carlos na recepção") aparecem como foram escritos, selecionáveis para copiar, sem botão. Qualquer valor que não seja um link `https` cai aqui, inclusive `http:`, `mailto:` e `javascript:`.
+
+<Canvas of={OrganizationContactStories.WithText} />
+<Canvas of={OrganizationContactStories.UnsafeLinkAsText} />
+
+### Sem contato
+
+Sem contato (ou só espaços), o componente não renderiza nada. Na página da organização o bloco some; no "Como se inscrever" fica a linha com o nome da organização. Essa decisão é da tela, por isso o componente não tem fallback.
+
+<Canvas of={OrganizationContactStories.NoContact} />
+
+## Acessibilidade
+
+- O botão é um link (`<a>`), porque leva para fora do app. O nome acessível é o rótulo visível (WCAG 2.5.3).
+- O link abre em outra aba com `rel="noopener noreferrer"`, para a página externa não controlar o app.
+- O texto não tem `user-select: none` nem truncamento: o jogador precisa copiar o telefone inteiro.
+
+## Evitar
+
+- ❌ Montar o `href` fora do componente a partir do campo cru. A regra de segurança (só `https`) mora em `readOrganizationContact`, em `src/lib/organizationContact.ts`.
+- ❌ Mostrar o texto e o botão juntos. O campo é um só: ou é link, ou é texto.
+
+## API
+
+<ArgTypes of={OrganizationContactStories} />
+
+## Decisões de design
+
+**Por que só `https` vira botão?** O contato é texto livre gravado na carga do time. Aceitar qualquer esquema abriria a porta para `javascript:` ou `data:` num link. O React 19 bloqueia o `javascript:` no `href`, mas a regra não deve depender da versão de uma lib, e uma lista de esquemas permitidos é mais segura que uma de proibidos. `http:` sem TLS também fica como texto: não há motivo para um organizador divulgar um link inseguro, e o texto continua visível.
+
+## Referências
+
+- `docs/EXPLORE.md`, EX22, EX28 e §7.1 (segurança)
+- [WCAG 2.5.3 — Label in Name](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html)
+- [MDN — `rel="noopener"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/noopener)

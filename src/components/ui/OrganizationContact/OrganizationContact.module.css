@@ -1,0 +1,12 @@
+/* Texto livre do organizador: telefone, e-mail ou recado. Selecionável para
+   copiar, e quebra em qualquer ponto para um e-mail longo não estourar a tela */
+.organization-contact__text {
+  color: var(--color-foreground-primary);
+  font-size: var(--text-body-md-size);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--text-body-md-tracking);
+  line-height: var(--text-body-md-line-height);
+  margin: 0;
+  overflow-wrap: anywhere;
+  user-select: text;
+}

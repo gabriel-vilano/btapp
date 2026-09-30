@@ -7,18 +7,18 @@ import type {
 import { daysAgo, daysFromNow, hoursAgo, onTheHour } from './relativeTime';
 
 // Aba Competições do Lucas (docs/NAVIGATION.md §6) em cada situação da 9.2.
-// Os nomes são os do cenário de `src/mocks/domain/` (Ranking Arena RM, Copa
-// Sunset). As datas são relativas ao carregamento, para os itens não
+// Os nomes são os do cenário de `src/mocks/domain/` (Ranking Arena Mangaba, Copa
+// Tucum). As datas são relativas ao carregamento, para os itens não
 // envelhecerem com o calendário.
 
 const competitions: MyCompetitionItem[] = [
   {
     kind: 'tournament',
-    enrollment_id: 'enr-copa-sunset',
-    competition_name: 'Copa Sunset de Beach Tennis',
+    enrollment_id: 'enr-copa-tucum',
+    competition_name: 'Copa Tucum de Beach Tennis',
     category_name: 'Masculino B',
     partner_name: 'Rafael',
-    href: '/competicoes/copa-sunset',
+    href: '/competicoes/copa-tucum',
     starts_on: onTheHour(daysFromNow(3)),
     ends_on: onTheHour(daysFromNow(4)),
     next_match: { starts_at: onTheHour(daysFromNow(3)), court: 'Quadra 3' },
@@ -26,7 +26,7 @@ const competitions: MyCompetitionItem[] = [
   {
     kind: 'ranking',
     enrollment_id: 'enr-rm-masculino-b',
-    competition_name: 'Ranking Arena RM',
+    competition_name: 'Ranking Arena Mangaba',
     category_name: 'Masculino B',
     partner_name: 'Rafael',
     href: '/ranking/masculino-b',
@@ -48,7 +48,7 @@ const competitions: MyCompetitionItem[] = [
   {
     kind: 'ranking',
     enrollment_id: 'enr-rm-mista-c40',
-    competition_name: 'Ranking Arena RM',
+    competition_name: 'Ranking Arena Mangaba',
     category_name: 'Mista C 40+',
     partner_name: 'Ana',
     href: '/ranking/mista-c-40',
@@ -90,7 +90,7 @@ const adminPendings: AdminPendingItem[] = [
 
 const lastSeason: PastSeasonItem = {
   enrollment_id: 'enr-rm-masculino-b-2026-1',
-  competition_name: 'Ranking Arena RM',
+  competition_name: 'Ranking Arena Mangaba',
   category_name: 'Masculino B',
   season_name: '1º semestre de 2026',
   partner_name: 'Rafael',

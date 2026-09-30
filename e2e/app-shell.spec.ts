@@ -108,9 +108,9 @@ test.describe("Voltar das telas de detalhe (N10 e N28)", () => {
     await nav.getByRole("link", { name: "Perfil", exact: true }).click();
     await expect(page).toHaveURL(/\/perfil$/);
     // Uma partida de ranking do Lucas em "Partidas recentes": o nome do link é o dos adversários
-    await page.getByRole("main").locator('a[href="/jogos/match-arena-rm-mb-r2-1"]').first().click();
+    await page.getByRole("main").locator('a[href="/jogos/match-arena-mangaba-mb-r2-1"]').first().click();
 
-    await expect(page).toHaveURL(/\/jogos\/match-arena-rm-mb-r2-1$/);
+    await expect(page).toHaveURL(/\/jogos\/match-arena-mangaba-mb-r2-1$/);
     await expect(nav.getByRole("link", { name: "Perfil", exact: true })).toHaveAttribute("aria-current", "page");
     await expect(backLink(page)).toHaveAttribute("href", "/perfil");
 
@@ -133,7 +133,7 @@ test.describe("Voltar das telas de detalhe (N10 e N28)", () => {
     await loginToFeed(page, "voltar-competicao");
     const nav = mainNavigation(page);
 
-    await page.goto("/competicoes/ranking-arena-rm");
+    await page.goto("/competicoes/ranking-arena-mangaba");
     await expect(nav.getByRole("link", { name: /^Competições/ })).toHaveAttribute("aria-current", "page");
     await expect(backLink(page)).toHaveAttribute("href", "/competicoes");
 

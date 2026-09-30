@@ -165,7 +165,7 @@ describe('retirar a proposta (M10, M16)', () => {
 });
 
 describe('informar a data combinada fora do app (M14, M15)', () => {
-  const draft = { id: 'reported-1', starts_at: WED, venue: 'Arena Sunset' };
+  const draft = { id: 'reported-1', starts_at: WED, venue: 'Arena Tucum' };
 
   it('qualquer jogador informa, sem aceite, e fica registrado quem e quando', () => {
     const history = reportScheduleDate(EMPTY, draft, act(PLAYER.b2, LATER), CONTEXT);

@@ -22,7 +22,7 @@ describe("tabAtRoot", () => {
     expect(tabAtRoot(pathname)).toBe(tab);
   });
 
-  it.each(["/jogos/p-123", "/competicoes/copa-sunset", "/perfil/configuracoes", "/jogadores", "/"])(
+  it.each(["/jogos/p-123", "/competicoes/copa-tucum", "/perfil/configuracoes", "/jogadores", "/"])(
     "%s não é raiz de aba",
     (pathname) => {
       expect(tabAtRoot(pathname)).toBeNull();
@@ -34,8 +34,8 @@ describe("arrivalTab (N28)", () => {
   it.each([
     ["/jogos/p-123", "jogos"],
     ["/ranking/masculino-b", "competicoes"],
-    ["/competicoes/copa-sunset", "competicoes"],
-    ["/organizacoes/arena-rm", "explorar"],
+    ["/competicoes/copa-tucum", "competicoes"],
+    ["/organizacoes/arena-mangaba", "explorar"],
     ["/jogadores/lucas", "feed"],
     ["/notificacoes", "feed"],
     ["/perfil/configuracoes", "perfil"],
@@ -61,11 +61,11 @@ describe("currentTab (N10)", () => {
   });
 
   it("num detalhe sem origem, a aba que a tela declarou vence a da rota (N28)", () => {
-    expect(currentTab("/competicoes/copa-sunset", null, "explorar")).toBe("explorar");
+    expect(currentTab("/competicoes/copa-tucum", null, "explorar")).toBe("explorar");
   });
 
   it("a aba de origem vence a declarada: de dentro do app, vale a N10", () => {
-    expect(currentTab("/competicoes/copa-sunset", "feed", "explorar")).toBe("feed");
+    expect(currentTab("/competicoes/copa-tucum", "feed", "explorar")).toBe("feed");
   });
 
   it("na raiz de uma aba, a declarada não muda nada", () => {
@@ -95,7 +95,7 @@ describe("rememberTabRoot e tabBackHref (N10, pilha por aba)", () => {
   it("num detalhe, não muda nada", () => {
     const roots = { explorar: "/explorar?q=ana" };
     expect(rememberTabRoot(roots, "/jogadores/ana", "")).toBe(roots);
-    expect(rememberTabRoot(roots, "/competicoes/copa-sunset", "aba=regras")).toBe(roots);
+    expect(rememberTabRoot(roots, "/competicoes/copa-tucum", "aba=regras")).toBe(roots);
   });
 
   it("a mesma URL devolve o mesmo objeto, sem render a mais", () => {

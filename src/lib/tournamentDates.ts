@@ -1,7 +1,8 @@
-// Linha de apoio do TournamentSummaryItem (docs/NAVIGATION.md, N29): a data
-// do evento ou, quando já há confronto, o próximo jogo. O fuso é o de
-// Brasília, como em `src/lib/formatters.ts`: o horário é o da quadra, não o
-// do aparelho de quem lê.
+// Datas do torneio: o dia do evento e o próximo jogo. Usado pelo
+// TournamentSummaryItem (docs/NAVIGATION.md, N29) e pela vitrine do Explorar
+// (docs/EXPLORE.md, EX10), por isso mora em `src/lib/` e não num grupo de
+// área. O fuso é o de Brasília, como em `src/lib/formatters.ts`: o horário é
+// o da quadra, não o do aparelho de quem lê.
 
 const TIMEZONE = "America/Sao_Paulo";
 

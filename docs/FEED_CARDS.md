@@ -196,7 +196,7 @@ Nas listas (partidas recentes do perfil, H2H, prévia do registro) o placar vira
 ```
 ┌─────────────────────────────────────────────────────┐
 │ [Logo org]  Rodada 3 · Ranking BH — Masculino B ·…  │
-│             @arenaRM · há 2h · Seguir               │
+│             @arenaMangaba · há 2h · Seguir          │
 ├─────────────────────────────────────────────────────┤
 │                                                     │
 │  [avt 32px]  Lucas Silva               [VITÓRIA]   │
@@ -207,7 +207,7 @@ Nas listas (partidas recentes do perfil, H2H, prévia do registro) o placar vira
 │  [avt 32px]  Pedro Henrique            [DERROTA]   │
 │                                                     │
 │  📅 13/04/2026, Segunda às 19:00                    │
-│  📍 Arena RM – Beach · Nova Lima/MG                 │
+│  📍 Arena Mangaba – Beach · Nova Lima/MG            │
 │                                                     │
 │  ┌─────────────────────────────────────────────┐   │
 │  │  ⚖️  Já jogaram 2 vezes, veja o H2H         │   │
@@ -244,7 +244,7 @@ Nas listas (partidas recentes do perfil, H2H, prévia do registro) o placar vira
 ```
 ┌─────────────────────────────────────────────────────┐
 │ [Logo org]  Rodada 3 · Ranking BH — Masculino B ·…  │
-│             @arenaRM · há 2h                        │
+│             @arenaMangaba · há 2h                   │
 ├─────────────────────────────────────────────────────┤
 │                                                     │
 │  [avt]  Lucas Silva                    [VITÓRIA]   │
@@ -255,7 +255,7 @@ Nas listas (partidas recentes do perfil, H2H, prévia do registro) o placar vira
 │                                                     │
 │  Jogo encerrado por W.O.                            │
 │  📅 13/04/2026, Segunda às 19:00                    │
-│  📍 Arena RM – Beach · Nova Lima/MG                 │
+│  📍 Arena Mangaba – Beach · Nova Lima/MG            │
 │                                                     │
 ├─────────────────────────────────────────────────────┤
 │  ♡ Curtir   💬 Comentar   ↗ Compartilhar            │
@@ -275,8 +275,8 @@ Exemplo da R11, 2 sets de 6: Pedro vence o 1º set por 6/4 e desiste perdendo o 
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│ [Logo org]  Rodada 2 · Ranking Arena RM 2026 ·…     │
-│             @arenaRM · há 1d                        │
+│ [Logo org]  Rodada 2 · Ranking Arena Mangaba 2026…  │
+│             @arenaMangaba · há 1d                   │
 ├─────────────────────────────────────────────────────┤
 │                                                     │
 │  [avt]  Lucas Silva                    [VITÓRIA]   │
@@ -289,7 +289,7 @@ Exemplo da R11, 2 sets de 6: Pedro vence o 1º set por 6/4 e desiste perdendo o 
 │                                                     │
 │  Jogo encerrado por desistência no 2º set           │
 │  📅 13/04/2026, Segunda às 19:00                    │
-│  📍 Arena RM – Beach · Nova Lima/MG                 │
+│  📍 Arena Mangaba – Beach · Nova Lima/MG            │
 │                                                     │
 ├─────────────────────────────────────────────────────┤
 │  ♡ Curtir   💬 Comentar   ↗ Compartilhar            │
@@ -317,8 +317,8 @@ Exemplo da R11, 2 sets de 6: Pedro vence o 1º set por 6/4 e desiste perdendo o 
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│ [Logo org]  QF · Torneio Sunset — Masculino B ·…    │
-│             @arenasunset · há 3h · Seguir            │
+│ [Logo org]  QF · Torneio Tucum — Masculino B ·…     │
+│             @arenatucum · há 3h · Seguir             │
 ├─────────────────────────────────────────────────────┤
 │                                                     │
 │   [avt 48px]          VS          [avt 48px]        │
@@ -331,7 +331,7 @@ Exemplo da R11, 2 sets de 6: Pedro vence o 1º set por 6/4 e desiste perdendo o 
 │   12 torcendo                     8 torcendo        │
 │                                                     │
 │   📅 20/04/2026, Sábado às 14:00                    │
-│   📍 Arena Sunset · Carandaí/MG                     │
+│   📍 Arena Tucum · Carandaí/MG                      │
 │                                                     │
 │  ┌─────────────────────────────────────────────┐   │
 │  │  ⚖️  Já jogaram 3 vezes, veja o H2H         │   │
@@ -346,8 +346,8 @@ Exemplo da R11, 2 sets de 6: Pedro vence o 1º set por 6/4 e desiste perdendo o 
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│ [Logo org]  QF · Torneio Sunset — Masculino B       │
-│             @arenasunset · há 3h · Seguir            │
+│ [Logo org]  QF · Torneio Tucum — Masculino B        │
+│             @arenatucum · há 3h · Seguir             │
 ├─────────────────────────────────────────────────────┤
 │                                                     │
 │  [avt][avt]        VS        [avt][avt]             │
@@ -360,7 +360,7 @@ Exemplo da R11, 2 sets de 6: Pedro vence o 1º set por 6/4 e desiste perdendo o 
 │   12 torcendo                 8 torcendo            │
 │                                                     │
 │   📅 20/04/2026, Sábado às 14:00                    │
-│   📍 Arena Sunset · Carandaí/MG                     │
+│   📍 Arena Tucum · Carandaí/MG                      │
 │                                                     │
 │  ┌─────────────────────────────────────────────┐   │
 │  │  ⚖️  Já jogaram 2 vezes, veja o H2H         │   │
@@ -434,7 +434,7 @@ Exemplo da R11, 2 sets de 6: Pedro vence o 1º set por 6/4 e desiste perdendo o 
 │  │ [Logo  │  Copa BH de Beach Tennis             │  │
 │  │  48px] │  Masculino B · Simples               │  │
 │  │        │  📅 20 e 21 de maio de 2026          │  │
-│  │        │  📍 Arena Sunset · Carandaí/MG       │  │
+│  │        │  📍 Arena Tucum · Carandaí/MG        │  │
 │  │        │  👥 24 jogadores inscritos           │  │
 │  └───────────────────────────────────────────────┘  │
 │                                                     │
@@ -455,7 +455,7 @@ Exemplo da R11, 2 sets de 6: Pedro vence o 1º set por 6/4 e desiste perdendo o 
 │  │ [Logo  │  Copa BH de Beach Tennis             │  │
 │  │  48px] │  Mista C                             │  │
 │  │        │  📅 20 e 21 de maio de 2026          │  │
-│  │        │  📍 Arena Sunset · Carandaí/MG       │  │
+│  │        │  📍 Arena Tucum · Carandaí/MG        │  │
 │  │        │  👥 16 duplas inscritas              │  │
 │  └───────────────────────────────────────────────┘  │
 │                                                     │

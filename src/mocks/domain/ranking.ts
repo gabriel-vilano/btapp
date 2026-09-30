@@ -17,9 +17,9 @@ import { organizations, players, units } from './people';
 // não começou.
 
 export const ranking: RankingCompetition = {
-  id: 'comp-ranking-arena-rm',
-  organization_id: organizations.arenaRM.id,
-  name: 'Ranking Arena RM 2026',
+  id: 'comp-ranking-arena-mangaba',
+  organization_id: organizations.arenaMangaba.id,
+  name: 'Ranking Arena Mangaba 2026',
   type: 'ranking',
   match_format: 'one_set_of_6',
   response_deadline_hours: DEFAULT_RESPONSE_DEADLINE_HOURS,
@@ -35,7 +35,7 @@ export const rankingAdmin: CompetitionAdmin = {
 };
 
 export const season: Season = {
-  id: 'season-arena-rm-2026-2',
+  id: 'season-arena-mangaba-2026-2',
   ranking_id: ranking.id,
   name: '2º semestre de 2026',
   starts_on: daysAgo(60),
@@ -49,7 +49,7 @@ export const season: Season = {
 };
 
 function round(number: number, startsAt: string, deadline: string): Round {
-  return { id: `round-arena-rm-${number}`, season_id: season.id, number, starts_at: startsAt, deadline };
+  return { id: `round-arena-mangaba-${number}`, season_id: season.id, number, starts_at: startsAt, deadline };
 }
 
 export const rounds = {
@@ -61,7 +61,7 @@ export const rounds = {
 
 export const rankingCategories = {
   masculinoB: {
-    id: 'cat-arena-rm-masculino-b',
+    id: 'cat-arena-mangaba-masculino-b',
     competition_id: ranking.id,
     gender: 'M',
     modality: 'doubles',
@@ -70,7 +70,7 @@ export const rankingCategories = {
     min_age: null,
   },
   mistaC40: {
-    id: 'cat-arena-rm-mista-c-40',
+    id: 'cat-arena-mangaba-mista-c-40',
     competition_id: ranking.id,
     gender: 'mixed',
     modality: 'doubles',
@@ -84,7 +84,7 @@ type UnitKey = keyof typeof units;
 
 function seasonEnrollment(unit: UnitKey, category: CompetitionCategory, enrolledAt: string): Enrollment {
   return {
-    id: `enr-arena-rm-${units[unit].id.replace('unit-', '')}`,
+    id: `enr-arena-mangaba-${units[unit].id.replace('unit-', '')}`,
     unit_id: units[unit].id,
     category_id: category.id,
     season_id: season.id,
