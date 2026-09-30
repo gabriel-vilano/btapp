@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, within } from "storybook/test";
+import { AppHeader } from "@/src/components/ui/AppHeader";
 import { mockAdminArea } from "@/src/mocks/adminArea";
 import { AdminArea } from "./AdminArea";
 
@@ -8,6 +9,16 @@ import { AdminArea } from "./AdminArea";
 const meta = {
   title: "Admin/AdminArea",
   component: AdminArea,
+  // O cabeçalho é da página (DetailHeader, com o "Voltar" para a competição).
+  // A story não tem a casca: mostra o AppHeader com o mesmo destino
+  decorators: [
+    (Story, { args }) => (
+      <>
+        <AppHeader title="Administrar" backHref={args.data.competition_href} />
+        <Story />
+      </>
+    ),
+  ],
   parameters: {
     layout: "fullscreen",
     docs: {
@@ -28,6 +39,7 @@ type Story = StoryObj<typeof meta>;
 export const WithDecisions: Story = {
   play: async ({ canvas, args }) => {
     await expect(canvas.getByText(args.data.competition_name)).toBeVisible();
+    await expect(canvas.getByRole("link", { name: "Voltar" })).toHaveAttribute("href", "/competicoes/liga-vila");
     const decisions = within(canvas.getByRole("region", { name: "Decisões pendentes 2" }));
     const items = decisions.getAllByRole("listitem");
     // A contestação espera há 2 dias, a partida não realizada há 1: a contestação vem antes

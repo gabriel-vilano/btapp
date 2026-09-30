@@ -31,6 +31,7 @@ const roundThree = [
 const withDecisions: AdminAreaData = {
   slug: ligaVila.slug,
   competition_name: ligaVila.name,
+  competition_href: `/competicoes/${ligaVila.slug}`,
   current_round: ligaVila.season?.current_round ?? null,
   // Fora de ordem de propósito: quem ordena a fila é a tela (RESULTS §5)
   decisions: [

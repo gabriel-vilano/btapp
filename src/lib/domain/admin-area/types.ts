@@ -41,6 +41,7 @@ export interface AdminMatchRound {
 export interface AdminAreaData {
   slug: string; // o segmento da rota: /competicoes/[slug]/administrar
   competition_name: string;
+  competition_href: string; // o "Voltar" da área: a página da competição, a tela pai
   /** Rodada em andamento, para o sorteio. null antes do primeiro sorteio. */
   current_round: CurrentRound | null;
   decisions: AdminDecisionItem[];

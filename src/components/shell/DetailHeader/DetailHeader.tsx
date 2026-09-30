@@ -12,14 +12,20 @@ type DetailHeaderProps = Omit<AppHeaderProps, "backHref"> & {
    * competição em que o jogador não está inscrito cai no Explorar. Sem ela, vale a rota.
    */
   arrivalTab?: MainTab;
+  /**
+   * Tela pai direta, quando o "Voltar" não deve ir à raiz da aba: a área
+   * "Administrar" volta à página da competição (N31). Sem ela, vale a N10.
+   */
+  parentHref?: string;
 };
 
 /**
  * Cabeçalho das telas de detalhe (partida, jogador, competição): o "Voltar" leva à
  * raiz da aba marcada, a de origem ou a da N28, como ela estava (NAVIGATION.md, N10).
  * @example <DetailHeader title="Ranking Arena Mangaba" arrivalTab={competitionArrivalTab(isEnrolled)} />
+ * @example <DetailHeader title="Administrar" parentHref="/competicoes/liga-vila" />
  */
-export function DetailHeader({ arrivalTab, ...props }: DetailHeaderProps) {
+export function DetailHeader({ arrivalTab, parentHref, ...props }: DetailHeaderProps) {
   const { backHref, declareArrivalTab } = useShellNavigation();
   const pathname = usePathname();
 
@@ -29,5 +35,5 @@ export function DetailHeader({ arrivalTab, ...props }: DetailHeaderProps) {
     if (arrivalTab) declareArrivalTab(pathname, arrivalTab);
   }, [arrivalTab, declareArrivalTab, pathname]);
 
-  return <AppHeader {...props} backHref={backHref} />;
+  return <AppHeader {...props} backHref={parentHref ?? backHref} />;
 }
