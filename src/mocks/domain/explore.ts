@@ -16,12 +16,13 @@ import { RANKING_VENUE } from './scheduling';
 // são fictícios (EX36): os dados reais entram pela carga no Supabase.
 //
 // Com as duas arenas do `mockDomain`, o cenário cobre:
-// | Organização       | Tipo  | Contato | Competição                         |
-// | Arena Mangaba     | arena | link    | ranking com temporada em andamento |
-// | Arena Tucum       | arena | texto   | torneio em andamento               |
-// | Arena Jenipapo    | arena | link    | torneio passado (nenhuma aberta)   |
-// | Clube Cajuí       | clube | texto   | ranking entre temporadas           |
-// | Grupo Saque Curto | grupo | —       | torneio futuro                     |
+// | Organização         | Tipo      | Contato | Competição                         |
+// | Arena Mangaba       | arena     | link    | ranking com temporada em andamento |
+// | Arena Tucum         | arena     | texto   | torneio em andamento               |
+// | Arena Jenipapo      | arena     | link    | torneio passado (nenhuma aberta)   |
+// | Clube Cajuí         | clube     | texto   | ranking entre temporadas           |
+// | Grupo Saque Curto   | grupo     | —       | torneio futuro                     |
+// | Federação Vale Azul | federação | link    | torneio futuro, mais distante      |
 
 export const exploreOrganizations = {
   arenaJenipapo: {
@@ -50,6 +51,15 @@ export const exploreOrganizations = {
     kind: 'group',
     city: 'Belo Horizonte',
     contact: null,
+  },
+  federacaoValeAzul: {
+    id: 'org-federacao-vale-azul',
+    name: 'Federação Vale Azul de Beach Tennis',
+    username: 'federacaovaleazul',
+    avatar_url: null,
+    kind: 'federation',
+    city: 'Belo Horizonte',
+    contact: 'https://federacaovaleazul.com.br/inscricoes',
   },
 } satisfies Record<string, Organization>;
 
@@ -112,4 +122,16 @@ export const jenipapoTournament: TournamentCompetition = {
   starts_on: onTheHour(daysAgo(46)),
   ends_on: onTheHour(daysAgo(45)),
   venue: 'Arena Jenipapo · Sete Lagoas/MG',
+};
+
+/** Etapa de circuito de uma federação, depois do torneio do grupo (EX8: pela data). */
+export const valeAzulTournament: TournamentCompetition = {
+  id: 'comp-etapa-vale-azul',
+  organization_id: exploreOrganizations.federacaoValeAzul.id,
+  name: 'Etapa Vale Azul',
+  type: 'tournament',
+  default_match_format: 'two_sets_of_6_stb',
+  starts_on: onTheHour(daysFromNow(40)),
+  ends_on: onTheHour(daysFromNow(41)),
+  venue: 'Arena Tucum · Carandaí/MG',
 };

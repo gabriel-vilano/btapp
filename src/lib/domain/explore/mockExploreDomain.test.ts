@@ -8,7 +8,8 @@ import { competitionSituation, openCompetitionsText, organizationCompetitions, s
 // ao momento em que o módulo carrega.
 
 const now = new Date().toISOString();
-const { organizations: orgs, cajuiRanking, saqueCurtoTournament, jenipapoTournament } = exploreEntities;
+const { organizations: orgs, cajuiRanking, saqueCurtoTournament, valeAzulTournament, jenipapoTournament } =
+  exploreEntities;
 const { ranking, tournament, organizations } = mockEntities;
 
 describe('mockExploreDomain', () => {
@@ -19,9 +20,9 @@ describe('mockExploreDomain', () => {
     expect(mockExploreDomain.competitions.slice(0, mockDomain.competitions.length)).toEqual(mockDomain.competitions);
   });
 
-  it('tem arena, clube e grupo, e uma organização sem contato', () => {
+  it('tem os quatro tipos (arena, clube, federação e grupo) e uma organização sem contato', () => {
     const kinds = new Set(mockExploreDomain.organizations.map((org) => org.kind));
-    expect([...kinds]).toEqual(expect.arrayContaining(['arena', 'club', 'group']));
+    expect([...kinds].sort()).toEqual(['arena', 'club', 'federation', 'group']);
     expect(mockExploreDomain.organizations.filter((org) => org.contact === null)).toEqual([orgs.grupoSaqueCurto]);
   });
 
@@ -31,7 +32,13 @@ describe('mockExploreDomain', () => {
   });
 
   it('vitrine: torneios abertos, ranking em andamento e ranking entre temporadas; o passado fica de fora', () => {
-    expect(showcaseCompetitions(mockExploreDomain, now)).toEqual([tournament, saqueCurtoTournament, ranking, cajuiRanking]);
+    expect(showcaseCompetitions(mockExploreDomain, now)).toEqual([
+      tournament,
+      saqueCurtoTournament,
+      valeAzulTournament,
+      ranking,
+      cajuiRanking,
+    ]);
   });
 
   it('situação de cada tipo de competição', () => {

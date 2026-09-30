@@ -24,6 +24,7 @@ import {
   exploreOrganizations,
   jenipapoTournament,
   saqueCurtoTournament,
+  valeAzulTournament,
 } from './explore';
 import { feedEvents } from './feedEvents';
 import { friendlyMatches } from './friendlies';
@@ -143,14 +144,14 @@ export const mockProfileDomain: DomainMocks = {
 /**
  * O `mockDomain` com as organizações e competições da vitrine do Explorar
  * (docs/EXPLORE.md, EX8 a EX11 e EX22): um ranking entre temporadas, um
- * torneio futuro, um passado e os tipos arena, clube e grupo. Separado para
+ * torneio futuro, um passado e os tipos arena, clube, federação e grupo. Separado para
  * que as contagens dos outros testes não mudem.
  * Ex.: `showcaseCompetitions(mockExploreDomain, now)`.
  */
 export const mockExploreDomain: DomainMocks = {
   ...mockDomain,
   organizations: [...mockDomain.organizations, ...Object.values(exploreOrganizations)],
-  competitions: [...mockDomain.competitions, cajuiRanking, saqueCurtoTournament, jenipapoTournament],
+  competitions: [...mockDomain.competitions, cajuiRanking, saqueCurtoTournament, valeAzulTournament, jenipapoTournament],
   seasons: [...mockDomain.seasons, ...Object.values(cajuiSeasons)],
   rounds: [...mockDomain.rounds, ...cajuiRounds],
 };
@@ -160,6 +161,7 @@ export const exploreEntities = {
   cajuiRanking,
   cajuiSeasons,
   saqueCurtoTournament,
+  valeAzulTournament,
   jenipapoTournament,
 };
 

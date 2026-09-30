@@ -6,7 +6,7 @@ import { exploreEntities, mockEntities } from './domain';
 // @username, que já é único (EX22).
 
 const { ranking, tournament } = mockEntities;
-const { cajuiRanking, saqueCurtoTournament, jenipapoTournament } = exploreEntities;
+const { cajuiRanking, saqueCurtoTournament, valeAzulTournament, jenipapoTournament } = exploreEntities;
 
 // Os mesmos slugs de `rankingRoutes.ts` e de `competitionsTab.ts`, para a
 // vitrine e a aba Competições levarem à mesma página
@@ -15,6 +15,7 @@ const COMPETITION_SLUG: Record<string, string> = {
   [tournament.id]: 'copa-tucum',
   [cajuiRanking.id]: 'ranking-clube-cajui',
   [saqueCurtoTournament.id]: 'desafio-saque-curto',
+  [valeAzulTournament.id]: 'etapa-vale-azul',
   [jenipapoTournament.id]: 'torneio-inverno-jenipapo',
 };
 
