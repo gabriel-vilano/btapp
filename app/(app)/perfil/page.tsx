@@ -1,5 +1,5 @@
 import { connection } from "next/server";
-import { ProfilePage } from "@/src/components/profile/ProfilePage";
+import { OwnProfileHeader, ProfilePage } from "@/src/components/profile/ProfilePage";
 import { MOCK_VIEWER, mockProfilePage } from "@/src/mocks/profilePage";
 
 // Próprio perfil (docs/PROFILE.md), com os mocks até a integração com o
@@ -11,8 +11,11 @@ export default async function OwnProfilePage() {
   const data = mockProfilePage(MOCK_VIEWER.username);
   if (data === null) throw new Error(`Perfil: o jogador dos mocks @${MOCK_VIEWER.username} não existe`);
   return (
-    <main>
-      <ProfilePage data={data} />
-    </main>
+    <>
+      <OwnProfileHeader username={data.player.username} />
+      <main>
+        <ProfilePage data={data} />
+      </main>
+    </>
   );
 }

@@ -8,11 +8,12 @@ import {
   UserIcon,
 } from "@phosphor-icons/react";
 import { usePathname } from "next/navigation";
-import { createContext, useContext, type ElementType, type ReactNode } from "react";
+import { createContext, Suspense, useContext, type ElementType, type ReactNode } from "react";
 import type { CountBadgeInfo } from "@/src/components/ui/CountBadge";
 import { NavigationRail, TabBar, type NavigationItem } from "@/src/components/ui/TabBar";
 import { MAIN_TABS, mainTabHref, type MainTab } from "@/src/lib/navigation/mainTabs";
-import { useCurrentTab } from "./useCurrentTab";
+import { TabRootTracker } from "./TabRootTracker";
+import { useShellNavigationState, type ShellNavigation } from "./useShellNavigationState";
 import styles from "./AppShell.module.css";
 
 const TAB_ICONS: Record<MainTab, ElementType> = {
@@ -33,12 +34,6 @@ type AppShellProps = {
   children: ReactNode;
 };
 
-type ShellNavigation = {
-  currentTab: MainTab;
-  /** Destino do "Voltar" num detalhe: a raiz da aba marcada (N10 e N28). */
-  backHref: string;
-};
-
 const ShellNavigationContext = createContext<ShellNavigation | null>(null);
 
 /**
@@ -47,11 +42,15 @@ const ShellNavigationContext = createContext<ShellNavigation | null>(null);
  * @example <AppShell badges={{ jogos: { count: 2, description: "2 pendências" } }} profileAvatar={null}>…</AppShell>
  */
 export function AppShell({ badges, profileAvatar, children }: AppShellProps) {
-  const tab = useCurrentTab(usePathname());
+  const { navigation, rememberVisit } = useShellNavigationState(usePathname());
+  const tab = navigation.currentTab;
   const items = navigationItems(badges, profileAvatar);
 
   return (
-    <ShellNavigationContext.Provider value={{ currentTab: tab, backHref: mainTabHref(tab) }}>
+    <ShellNavigationContext.Provider value={navigation}>
+      <Suspense fallback={null}>
+        <TabRootTracker onVisit={rememberVisit} />
+      </Suspense>
       <div className={styles.shell}>
         <NavigationRail items={items} currentValue={tab} className={styles.shell__rail} />
         <div className={styles.shell__content}>{children}</div>
@@ -62,7 +61,7 @@ export function AppShell({ badges, profileAvatar, children }: AppShellProps) {
 }
 
 /**
- * A aba marcada e o destino do "Voltar", para as telas de detalhe.
+ * A aba marcada, o destino do "Voltar" e a declaração da aba de chegada, para as telas de detalhe.
  * @example const { backHref } = useShellNavigation();
  */
 export function useShellNavigation(): ShellNavigation {

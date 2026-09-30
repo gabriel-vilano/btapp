@@ -1,7 +1,6 @@
 "use client";
 
 import { CaretRightIcon, GearSixIcon } from "@phosphor-icons/react";
-import { AppHeader } from "@/src/components/ui/AppHeader";
 import { Avatar } from "@/src/components/ui/Avatar";
 import { Icon } from "@/src/components/ui/Icon";
 import { List, ListItem } from "@/src/components/ui/ListItem";
@@ -21,8 +20,8 @@ interface CompetitionPageProps {
 }
 
 /**
- * Página da competição de ranking (docs/RANKING.md, RK17): cabeçalho,
- * categorias, temporada e regras. Abaixo do cabeçalho, conforme quem vê, a
+ * Página da competição de ranking (docs/RANKING.md, RK17): organizador,
+ * categorias, temporada e regras. O cabeçalho da tela, com o nome, é da página. Abaixo do cabeçalho, conforme quem vê, a
  * entrada da área "Administrar" (N31) e "Como se inscrever" (N33).
  * @example <CompetitionPage data={mockCompetitionPage.enrolled} now={new Date().toISOString()} />
  */
@@ -30,7 +29,6 @@ export function CompetitionPage({ data, now }: CompetitionPageProps) {
   const blocks = competitionPageBlocks(data);
   return (
     <div className={styles["competition-page"]}>
-      <AppHeader title={data.name} backHref={COMPETITIONS_HREF} />
       <OrganizerLine organizer={data.organizer} />
       {blocks.admin && <AdminEntry slug={data.slug} />}
       {blocks.enrollment && <EnrollmentBlock organizer={data.organizer} interested={data.viewer.interested} />}
