@@ -59,6 +59,8 @@ export const NoDate: Story = {
   play: async ({ canvas, canvasElement }) => {
     await expect(canvas.getByRole("heading", { name: "Jogo sem data" })).toBeInTheDocument();
     await expect(canvas.getByText(/A rodada fecha em 5 dias/)).toBeInTheDocument();
+    // Selo em caixa normal, como os outros do app: o DS não tem escala para caixa alta
+    await expect(canvas.getByText("Você")).toBeInTheDocument();
     // Regra do DS: cada ação tem pelo menos 48px de área tocável
     for (const name of ["Propor horários", "Informar data combinada"]) {
       const button = canvas.getByRole("button", { name });

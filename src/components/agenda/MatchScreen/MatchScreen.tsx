@@ -83,7 +83,7 @@ function MatchHeading({ data, viewerSide }: MatchHeadingProps) {
         {(["a", "b"] as const).map((side) => (
           <li key={side} className={styles["match-screen__side"]}>
             <span className={styles["match-screen__side-name"]}>{data.sideNames[side]}</span>
-            {side === viewerSide && <Badge tone="neutral">VOCÊ</Badge>}
+            {side === viewerSide && <Badge tone="neutral">Você</Badge>}
           </li>
         ))}
       </ul>
