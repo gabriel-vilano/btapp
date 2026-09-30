@@ -68,7 +68,7 @@ function reportedDate(startsAt: string): ReportedScheduleDate {
     reported_by: PLAYER.b2,
     reported_at: '2026-09-06T12:00:00.000Z',
     starts_at: startsAt,
-    venue: 'Arena Sunset',
+    venue: 'Arena Tucum',
   };
 }
 
@@ -114,7 +114,7 @@ describe('rankingAgendaEntry: confronto definido', () => {
     const history = withHistory([], [reportedDate(FUTURE)]);
     const result = rankingAgendaEntry(unscheduled(), ctx({ history }));
     expect(result?.section).toBe('upcoming');
-    expect(result?.situation).toEqual({ kind: 'scheduled', startsAt: FUTURE, venue: 'Arena Sunset' });
+    expect(result?.situation).toEqual({ kind: 'scheduled', startsAt: FUTURE, venue: 'Arena Tucum' });
   });
 
   it('sem histórico, usa a data gravada na partida', () => {

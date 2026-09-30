@@ -30,7 +30,7 @@ import { RANKING_VENUE } from './scheduling';
 // | Caio e Diego     | 4º (42)  | 4º (82)  | 4º    | —                |
 
 export const pastSeason: Season = {
-  id: 'season-arena-rm-2026-1',
+  id: 'season-arena-mangaba-2026-1',
   ranking_id: ranking.id,
   name: '1º semestre de 2026',
   starts_on: daysAgo(240),
@@ -39,7 +39,7 @@ export const pastSeason: Season = {
 };
 
 function round(number: number, startsAt: string, deadline: string): Round {
-  return { id: `round-arena-rm-2026-1-${number}`, season_id: pastSeason.id, number, starts_at: startsAt, deadline };
+  return { id: `round-arena-mangaba-2026-1-${number}`, season_id: pastSeason.id, number, starts_at: startsAt, deadline };
 }
 
 export const pastRounds = {
@@ -51,7 +51,7 @@ type UnitKey = keyof typeof units;
 
 function pastEnrollment(unit: UnitKey): Enrollment {
   return {
-    id: `enr-arena-rm-2026-1-${units[unit].id.replace('unit-', '')}`,
+    id: `enr-arena-mangaba-2026-1-${units[unit].id.replace('unit-', '')}`,
     unit_id: units[unit].id,
     category_id: rankingCategories.masculinoB.id,
     season_id: pastSeason.id,
@@ -82,7 +82,7 @@ function pastMatch(
   const playedAt = onTheHour(daysAgo(playedDaysAgo));
   const report = reportBy(result, p[reporter], hoursAfter(playedAt, 2));
   return {
-    id: `match-arena-rm-2026-1-${slug}`,
+    id: `match-arena-mangaba-2026-1-${slug}`,
     kind: 'ranking',
     competition_id: ranking.id,
     category_id: rankingCategories.masculinoB.id,

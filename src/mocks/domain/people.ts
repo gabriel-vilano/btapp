@@ -66,17 +66,23 @@ export const players = {
 } satisfies Record<string, Player>;
 
 export const organizations = {
-  arenaRM: {
-    id: 'org-arena-rm',
-    name: 'Arena RM',
-    username: 'arenarm',
+  arenaMangaba: {
+    id: 'org-arena-mangaba',
+    name: 'Arena Mangaba',
+    username: 'arenamangaba',
     avatar_url: null,
+    kind: 'arena',
+    city: 'Nova Lima',
+    contact: 'https://wa.me/5531900000001',
   },
-  arenaSunset: {
-    id: 'org-arena-sunset',
-    name: 'Arena Sunset',
-    username: 'arenasunset',
+  arenaTucum: {
+    id: 'org-arena-tucum',
+    name: 'Arena Tucum',
+    username: 'arenatucum',
     avatar_url: null,
+    kind: 'arena',
+    city: 'Carandaí',
+    contact: 'WhatsApp da recepção: (32) 90000-0002',
   },
 } satisfies Record<string, Organization>;
 

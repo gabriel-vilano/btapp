@@ -14,7 +14,7 @@ export const MOCK_VIEWER_ID = players.lucas.id;
 /**
  * Dados da tela do confronto, ou `null` quando a partida não existe ou não é
  * do ranking (torneio e amistoso não têm marcação, M1).
- * @example matchScreenDataOf('match-arena-rm-mb-r3-1')?.sideNames.a // "Lucas e Rafael"
+ * @example matchScreenDataOf('match-arena-mangaba-mb-r3-1')?.sideNames.a // "Lucas e Rafael"
  */
 export function matchScreenDataOf(matchId: string, viewerId: string = MOCK_VIEWER_ID): MatchScreenData | null {
   const match = mockDomain.matches.find((candidate) => candidate.id === matchId);

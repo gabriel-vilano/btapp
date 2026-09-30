@@ -7,7 +7,7 @@ const NOW = new Date().toISOString();
 
 describe('dados da tela do confronto nos mocks', () => {
   it('resolve os lados, os nomes e a rodada do confronto', () => {
-    const data = matchScreenDataOf('match-arena-rm-mb-r3-1');
+    const data = matchScreenDataOf('match-arena-mangaba-mb-r3-1');
     expect(data?.sideNames).toEqual({ a: 'Lucas e Rafael', b: 'Caio e Diego' });
     expect(data?.categoryName).toBe('Masculino B');
     expect(data?.roundNumber).toBe(3);
@@ -16,7 +16,7 @@ describe('dados da tela do confronto nos mocks', () => {
   });
 
   it('o confronto sem data do Lucas é "sem data": a última proposta foi retirada (M10)', () => {
-    const data = matchScreenDataOf('match-arena-rm-mb-r3-1');
+    const data = matchScreenDataOf('match-arena-mangaba-mb-r3-1');
     if (data === null) throw new Error('mock da r3-1 ausente');
     expect(scheduleViewOf({ ...data, now: NOW }).kind).toBe('no_date');
   });

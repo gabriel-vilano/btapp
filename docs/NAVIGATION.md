@@ -152,7 +152,7 @@ Do ponto de vista de um jogador da partida, cruzando a máquina de estados (DOMA
 | Ranking | Confronto definido | Sem data e sem proposta pendente | Sua vez | "Marcar jogo · rodada fecha em 5 dias" |
 | Ranking | Confronto definido | Proposta do outro lado pendente | Sua vez | "Responder proposta · 3 horários" |
 | Ranking | Confronto definido | Proposta do próprio lado pendente | Aguardando | "Proposta enviada · aguardando Lucas e Rafael" |
-| Ranking | Confronto definido | Data acordada no futuro | Próximos jogos | "Sáb, 14h · Arena Sunset" |
+| Ranking | Confronto definido | Data acordada no futuro | Próximos jogos | "Sáb, 14h · Arena Tucum" |
 | Ranking | Confronto definido | Data acordada já passou | Sua vez | "Lançar resultado" |
 | Ranking | Aguardando confirmação | Lançado pelo outro lado | Sua vez | "Confirmar resultado · confirma sozinho em 31h" |
 | Ranking | Aguardando confirmação | Lançado pelo próprio lado | Aguardando | "Aguardando confirmação · confirma sozinho em 31h" |
