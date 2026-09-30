@@ -71,12 +71,18 @@ export const organizations = {
     name: 'Arena Mangaba',
     username: 'arenamangaba',
     avatar_url: null,
+    kind: 'arena',
+    city: 'Nova Lima',
+    contact: 'https://wa.me/5531900000001',
   },
   arenaTucum: {
     id: 'org-arena-tucum',
     name: 'Arena Tucum',
     username: 'arenatucum',
     avatar_url: null,
+    kind: 'arena',
+    city: 'Carandaí',
+    contact: 'WhatsApp da recepção: (32) 90000-0002',
   },
 } satisfies Record<string, Organization>;
 
