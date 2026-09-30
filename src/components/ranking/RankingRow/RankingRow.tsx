@@ -1,12 +1,13 @@
 import type { ReactNode } from "react";
+import { joinFullName } from "@/src/lib/names";
 import { Avatar, AvatarStack } from "@/src/components/ui/Avatar";
 import { Badge } from "@/src/components/ui/Badge";
 import { DeltaIndicator } from "@/src/components/ui/DeltaIndicator";
 import { ListItem } from "@/src/components/ui/ListItem";
 import {
-  formatCompetitorName,
   formatMatchRecord,
   formatRankingRowLabel,
+  formatShortCompetitorName,
   orderPlayersForRow,
   type RankingRowPlayers,
 } from "./rankingRowText";
@@ -69,9 +70,9 @@ function RowLeading({ position, players }: Pick<RankingRowProps, "position" | "p
   const ordered = orderPlayersForRow(players);
   const avatars =
     ordered.length === 1 ? (
-      <Avatar url={ordered[0].avatarUrl} alt={ordered[0].name} size={32} />
+      <Avatar url={ordered[0].avatarUrl} alt={joinFullName(ordered[0])} size={32} />
     ) : (
-      <AvatarStack items={ordered.map(({ id, avatarUrl, name }) => ({ id, url: avatarUrl, alt: name }))} size={32} />
+      <AvatarStack items={ordered.map((player) => ({ id: player.id, url: player.avatarUrl, alt: joinFullName(player) }))} size={32} />
     );
   return (
     <span className={styles["ranking-row__leading"]}>
@@ -94,7 +95,7 @@ function RowTitle({ label, players, closed, awaitingAdmin }: RowTitleProps) {
     <>
       <span className={styles["ranking-row__label"]}>{label}</span>
       <span className={styles["ranking-row__title"]} aria-hidden>
-        <span className={styles["ranking-row__name"]}>{formatCompetitorName(players)}</span>
+        <span className={styles["ranking-row__name"]}>{formatShortCompetitorName(players)}</span>
         {closed && <Badge tone="neutral">Encerrada</Badge>}
         {awaitingAdmin && <Badge tone="neutral">Empate</Badge>}
       </span>

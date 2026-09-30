@@ -63,7 +63,8 @@
   color: var(--ranking-row-text);
 }
 
-/* Base de 8ch para decidir a quebra; cresce até o tamanho do texto, e o resto vira reticências */
+/* Base de 8ch para decidir a quebra; cresce até o tamanho do texto. O nome já vem
+   abreviado (RK8), então as reticências só aparecem em nome composto longo a 320px */
 .ranking-row__name {
   flex: 1 1 8ch;
   max-width: max-content;
