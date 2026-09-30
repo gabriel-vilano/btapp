@@ -214,7 +214,7 @@ export const NoSeason: Story = {
     await expect(canvas.getByRole("heading", { name: "Nenhuma temporada em andamento" })).toBeVisible();
     await expect(canvas.getByRole("link", { name: "Ver regras do ranking" })).toHaveAttribute(
       "href",
-      "/competicoes/ranking-bh#regras",
+      "/competicoes/ranking-bh#pontuacao",
     );
   },
 };

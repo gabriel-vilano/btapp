@@ -1,3 +1,4 @@
+import { SCORING_ANCHOR } from '@/src/lib/navigation/competitionAnchors';
 import { mockEntities, pastSeasonEntities } from './domain';
 
 // Slugs das rotas da classificação (docs/RANKING.md, RK1 e RK21) para o
@@ -39,7 +40,7 @@ export const mockRankingRoutes = {
     if (seasonId === undefined) return path;
     return `${path}?temporada=${slugOf(SEASON_BY_SLUG, seasonId) ?? seasonId}`;
   },
-  /** Regras da competição, na seção de pontuação (RK5, RK17). */
+  /** Regras da competição, na seção de pontuação (RK5, RK17): a mesma âncora da página. */
   rulesHref: (competitionId: string): string =>
-    `/competicoes/${COMPETITION_SLUG[competitionId] ?? competitionId}#regras`,
+    `/competicoes/${COMPETITION_SLUG[competitionId] ?? competitionId}#${SCORING_ANCHOR}`,
 };
