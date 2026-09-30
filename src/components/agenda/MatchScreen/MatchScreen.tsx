@@ -1,7 +1,6 @@
 "use client";
 
 import { Alert } from "@/src/components/ui/Alert";
-import { AppHeader } from "@/src/components/ui/AppHeader";
 import { Badge } from "@/src/components/ui/Badge";
 import { sideOfPlayer } from "@/src/lib/domain/schedule-state";
 import type { MatchSideKey } from "@/src/types/domain";
@@ -25,7 +24,7 @@ type MatchScreenProps = {
 
 /**
  * Tela do confronto do ranking com a marcação do jogo (docs/SCHEDULING.md §6,
- * NAVIGATION.md N10). Enquanto os dados são mocks, as ações mudam só o
+ * NAVIGATION.md N10), sem o cabeçalho: ele é da página. Enquanto os dados são mocks, as ações mudam só o
  * histórico em memória, pelas mesmas funções puras que o banco vai usar.
  * @example <MatchScreen data={matchScreenDataOf(matchId, viewerId)} now={new Date().toISOString()} />
  */
@@ -37,7 +36,6 @@ export function MatchScreen({ data, now: initialNow, clock = systemClock, create
 
   return (
     <div className={styles["match-screen"]}>
-      <AppHeader title="Confronto" backHref={AGENDA_HREF} />
       <div className={styles["match-screen__content"]}>
         <MatchHeading data={data} viewerSide={viewerSide} />
         {scheduling.error && <Alert status="attention" title={scheduling.error} />}

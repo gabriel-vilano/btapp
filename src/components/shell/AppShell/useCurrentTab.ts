@@ -16,12 +16,13 @@ const RESTORED_ORIGIN_TAB = typeof window === "undefined" ? null : restoredOrigi
  * A aba marcada na rota atual, lembrando a aba de origem entre navegações (NAVIGATION.md, N10).
  * A URL não carrega a aba, então a origem vive no estado do layout, que não
  * desmonta ao trocar de tela, e no `sessionStorage`, que sobrevive ao recarregar.
+ * `declaredArrival` é a aba da N28 que a tela atual declarou (a competição sem inscrição).
  */
-export function useCurrentTab(pathname: string): MainTab {
+export function useCurrentTab(pathname: string, declaredArrival: MainTab | null = null): MainTab {
   const [trail, setTrail] = useState<TabTrail>({ pathname, originTab: null });
   // No servidor e na hidratação vale `null`; logo depois, o valor do navegador
   const restoredOrigin = useSyncExternalStore(subscribeToNothing, () => RESTORED_ORIGIN_TAB, () => null);
-  const tab = currentTab(trail.pathname, trail.originTab ?? restoredOrigin);
+  const tab = currentTab(trail.pathname, trail.originTab ?? restoredOrigin, declaredArrival);
 
   // Ajuste de estado durante a renderização, em vez de efeito: a aba certa já
   // sai na primeira pintura da tela nova (react.dev, "You Might Not Need an Effect")
