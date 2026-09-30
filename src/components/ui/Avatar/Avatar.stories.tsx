@@ -8,7 +8,7 @@ const meta = {
   component: Avatar,
   args: { url: STORY_AVATAR_URL, alt: "Lucas Silva", size: 40 },
   argTypes: {
-    size: { control: "inline-radio", options: [32, 40, 48, 96] },
+    size: { control: "inline-radio", options: [24, 32, 40, 48, 96] },
   },
 } satisfies Meta<typeof Avatar>;
 
@@ -45,12 +45,14 @@ export const Sizes: Story = {
   render: (args) => (
     <div className="sb-stack">
       <div className="sb-row">
+        <Avatar {...args} size={24} />
         <Avatar {...args} size={32} />
         <Avatar {...args} size={40} />
         <Avatar {...args} size={48} />
         <Avatar {...args} size={96} />
       </div>
       <div className="sb-row">
+        <Avatar {...args} url={null} size={24} />
         <Avatar {...args} url={null} size={32} />
         <Avatar {...args} url={null} size={40} />
         <Avatar {...args} url={null} size={48} />

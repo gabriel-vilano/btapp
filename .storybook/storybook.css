@@ -31,6 +31,11 @@
   width: 320px;
 }
 
+/* Largura do mobile base, sem margem: barras que ocupam a tela de borda a borda (TabBar, AppHeader) */
+.sb-width-393 {
+  width: 393px;
+}
+
 .sb-color-accent {
   color: var(--color-foreground-accent);
 }
@@ -64,4 +69,9 @@
   width: 361px;
   background-color: var(--color-background-secondary);
   padding: var(--spacing-200) 0;
+}
+
+/* Mobile base (393px) sem margem: stories de linhas de ponta a ponta, ao lado da de 320px */
+.sb-width-393 {
+  width: 393px;
 }

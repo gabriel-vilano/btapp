@@ -1,0 +1,9 @@
+.ranking-load-error {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-200);
+  max-width: var(--dimension-layout-max);
+  margin-inline: auto;
+  padding: var(--spacing-200) var(--spacing-page-margin);
+}

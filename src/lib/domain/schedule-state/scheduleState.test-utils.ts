@@ -23,6 +23,7 @@ export const MATCH: RankingMatch = {
   id: 'match-test',
   kind: 'ranking',
   round_id: 'round-test',
+  undone_reports: [],
   competition_id: 'competition-test',
   category_id: 'category-test',
   side_a_enrollment_id: 'enrollment-a',

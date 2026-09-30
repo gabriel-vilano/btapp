@@ -1,0 +1,90 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as CountBadgeStories from "./CountBadge.stories";
+
+<Meta of={CountBadgeStories} />
+
+<Subtitle>
+  Contador ou ponto sobre um ícone de navegação: pendências na aba, notificações
+  no sino.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/CountBadge/CountBadge.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/CountBadge/CountBadge.tsx)
+
+## Visão geral
+
+`CountBadge` avisa que há algo esperando atrás de um destino. É só visual: não tem texto para o leitor de tela. Quem o carrega (a aba da `TabBar`, o `IconButton`) põe a contagem no próprio nome acessível, e o componente pai já faz isso a partir da prop `badge`.
+
+<Canvas of={CountBadgeStories.Count} />
+
+## Variantes
+
+Duas formas, escolhidas pela presença de `count`. O número diz quanto há; o ponto só diz que há.
+
+<Canvas of={CountBadgeStories.OnIcon} />
+
+### Número
+
+Com `count`, o badge mostra a quantidade. É a forma das abas Jogos (pendências "Sua vez") e Competições (pendências de admin), `docs/NAVIGATION.md` N3.
+
+<Canvas of={CountBadgeStories.Count} />
+
+### Ponto
+
+Sem `count`, o badge é um ponto de 8px. É a forma do sino (N7): notificação não lida não precisa de contagem, e um número no sino viraria cobrança.
+
+<Canvas of={CountBadgeStories.Dot} />
+
+## Estados
+
+Os limites da contagem, que a produção raramente mostra.
+
+### Acima do máximo
+
+Acima de `max` (9 por padrão), o número vira "9+". Com 2 a 8 jogos por mês, mais de 9 pendências é exceção, e o badge não cresce além de dois caracteres.
+
+<Canvas of={CountBadgeStories.Overflow} />
+
+### Zero
+
+Com `count={0}`, nada aparece. O consumidor pode passar a contagem sem testar antes.
+
+<Canvas of={CountBadgeStories.Zero} />
+
+## Quando usar
+
+- Pendências que pedem ação do jogador, sobre a aba que as resolve
+- Notificações não lidas, como ponto no sino
+
+## Componentes relacionados
+
+- Para **rótulo de status com texto** ("Hoje", "Encerrada"), use [`Badge`](?path=/docs/ui-badge--docs)
+- O `CountBadge` quase nunca aparece sozinho: ele entra pela prop `badge` da [`TabBar`](?path=/docs/ui-tabbar--docs), do [`NavigationRail`](?path=/docs/ui-navigationrail--docs) e do [`IconButton`](?path=/docs/ui-iconbutton--docs)
+
+## Acessibilidade
+
+- O badge tem `aria-hidden`. O leitor de tela ouve a contagem no nome do controle: "Jogos, 2 pendências", "Notificações, há novas" (`docs/NAVIGATION.md` §10.3)
+- Fora dos componentes do DS, monte o nome com `badgeAccessibleName(label, badge)`, que só acrescenta a descrição quando o badge aparece
+- O número em branco sobre `--color-background-accent` dá 4,96:1 (WCAG 1.4.3). O ponto é um objeto gráfico e passa nos 3:1 da WCAG 1.4.11
+
+## Evitar
+
+- ❌ **Badge para o que não é crítico** — curtida, amizade e evento novo no feed não ganham badge (N3). Badge em tudo ensina o jogador a ignorar badge
+- ❌ **Descrição genérica** — "2 novidades" não diz nada. Diga o que espera: "2 pendências", "1 pendência de admin"
+- ❌ **Badge fora de controle** — sem um link ou botão em volta, a contagem não chega ao leitor de tela
+
+## API
+
+<ArgTypes of={CountBadgeStories} />
+
+## Decisões de design
+
+**Por que coral e não vermelho?** O vermelho (`attention`) é a cor de erro do DS. A pendência não é um erro: é a vez do jogador agir, e ação no DS é coral. O coral-600 também é a cor de ação dos botões, então o badge liga a aba à ação que ela guarda.
+
+**Por que o badge não tem texto próprio para leitor de tela?** Texto oculto dentro do link se soma ao rótulo com um espaço a mais ("Jogos , 2 pendências"), porque o texto oculto é posicionado fora do fluxo. O `aria-label` do controle monta o nome inteiro de uma vez, começando pelo rótulo visível (WCAG 2.5.3).
+
+## Referências
+
+- [Apple HIG — Tab bars (badges)](https://developer.apple.com/design/human-interface-guidelines/tab-bars)
+- [Material Design 3 — Badges](https://m3.material.io/components/badges/overview)
+- [WCAG 2.5.3 — Label in Name](https://www.w3.org/WAI/WCAG21/Understanding/label-in-name.html)
+- `docs/NAVIGATION.md` (N3, N7, §10.3) e `docs/TOKENS.md` (`--color-background-accent`, `--text-label-md-*`)

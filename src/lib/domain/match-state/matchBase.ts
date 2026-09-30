@@ -35,7 +35,12 @@ function competitionFields(match: CompetitionMatch) {
 }
 
 export function rankingBase(match: RankingMatch): Omit<RankingMatch, 'status'> {
-  return { ...competitionFields(match), kind: 'ranking', round_id: match.round_id };
+  return {
+    ...competitionFields(match),
+    kind: 'ranking',
+    round_id: match.round_id,
+    undone_reports: match.undone_reports,
+  };
 }
 
 export function tournamentBase(match: TournamentMatch): Omit<TournamentMatch, 'status'> {

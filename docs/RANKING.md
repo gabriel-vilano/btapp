@@ -105,7 +105,7 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
   Assim, "jogos" e "vitórias" têm uma só definição no app inteiro, e vitórias nunca passam de jogos. **A diferença para o desempate é explícita:** o critério "vitórias" da R37 conta o W.O. vencido; a linha, não. A página de regras diz isso na ordem de desempate (RK17), e a linha de uma dupla com W.O. vencido explica os pontos pelas regras, não pela contagem.
 
   **Por que jogos e vitórias:** no meio da rodada, duas duplas com pontos diferentes podem ter jogado números diferentes de partidas. Os dois explicam a ordem na maioria dos casos sem abrir outra tela. Saldo de games fica fora da linha: é o último critério antes do admin e aparece nas regras (RK5).
-- **Nome em duplas:** o jogador logado aparece como "Você" ("Você e Pedro Alves"), como na tela do confronto (RES, RG3). Nomes longos truncam o sobrenome antes do primeiro nome; o nome completo fica no nome acessível.
+- **Nome na linha:** sempre abreviado — o nome inteiro mais a inicial da última palavra do sobrenome, ignorando partículas ("João Pedro S.", "Maria Eduarda A."). A regra mora no `abbreviateName` (`src/lib/names.ts`), usado também fora do ranking. Em duplas, os dois vêm abreviados ("Lucas S. e Rafael C."), e o jogador logado aparece como "Você" ("Você e Pedro A."), como na tela do confronto (RES, RG3). Abreviado, o nome cabe na linha na maioria dos casos; o corte com reticências no fim fica só como proteção do caso extremo (nome composto longo a 320px), e "Você" nunca é cortado, porque vem na frente. O nome completo fica no nome acessível.
 - **Pontos** em `label-lg` bold, alinhados à direita com algarismos tabulares (`font-variant-numeric: tabular-nums`), para a coluna não dançar entre 98 e 610.
 - **Posição** em `title-sm` bold, largura fixa para 2 dígitos. Sem medalha, troféu ou pódio no top 3 (seção 4.3).
 
@@ -180,11 +180,11 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
 A página da competição existe e não é aba (NAV N9); o conteúdo, no ranking, é desta spec. Rota proposta `/competicoes/[competicao]`.
 
-- **RK17. A página tem quatro blocos, nesta ordem:** cabeçalho, categorias, temporada e regras. Dois blocos entram logo abaixo do cabeçalho conforme quem vê: para quem **não** está inscrito, "Como se inscrever" e "Tenho interesse" (NAV N33); para o admin da competição, a entrada da área "Administrar" (NAV N31). [NAV N9, N31, N33; DEC-RANK RL9]
+- **RK17. A página tem quatro blocos, nesta ordem:** cabeçalho, categorias, temporada e regras. Dois blocos entram logo abaixo do cabeçalho conforme quem vê: para quem ainda pode se inscrever, "Como se inscrever" e "Tenho interesse" (NAV N33; quando cada um aparece está em `EXPLORE.md`, EX26 e EX27); para o admin da competição, a entrada da área "Administrar" (NAV N31). [NAV N9, N31, N33; DEC-RANK RL9]
 
 | Bloco | Conteúdo |
 | --- | --- |
-| **Cabeçalho** | Organização (avatar e nome) e nome da competição |
+| **Cabeçalho** | Organização (avatar e nome, que levam à página da organização, NAV N34) e nome da competição |
 | **Categorias** | Uma linha por categoria (ListItem): nome da categoria, "16 duplas", e, quando o jogador está inscrito, a posição dele (StandingSummaryItem). Toque → classificação |
 | **Temporada** | Nome e datas, rodada atual com o prazo, número de jogos por rodada; final: nome, vagas e data de corte |
 | **Regras** | Formato da partida (R29, texto do formato); a tabela de pontos do ranking (R9–R11, R36) em linguagem de jogador ("Vitória: 100 pontos, mais 2 por game vencido e menos 2 por game perdido"), com o exemplo do 6/4 6/3 calculado pela regra do próprio ranking; a ordem de desempate (R37), com a nota de que ali a vitória por W.O. conta, diferente da linha da tabela (RK8); o prazo para confirmar (R14); o que acontece sem jogo no prazo da rodada (R40) |
@@ -252,13 +252,13 @@ Usa o `EmptyState` do DS (ícone opcional, título, apoio e uma ação).
 Para a issue de ENG do RankingRow e do ZoneDivider.
 
 - [ ] Recebe posição, unidade competidora (simples: 1 jogador; duplas: 2), pontos, jogos, vitórias, delta opcional e flags `isOwn`, `status` (`active` / `closed`) e `awaitingAdmin`.
-- [ ] Mostra, da esquerda para a direita: posição (`title-sm` bold, largura para 2 dígitos), avatar (simples) ou dois avatares sobrepostos (duplas), nome ("Nome1 e Nome2" em duplas; "Você" no lugar do nome do jogador logado), pontos à direita (`label-lg` bold, `tabular-nums`) e, abaixo dos pontos, o DeltaIndicator quando há delta diferente de zero.
+- [ ] Mostra, da esquerda para a direita: posição (`title-sm` bold, largura para 2 dígitos), avatar (simples) ou dois avatares sobrepostos (duplas), nome abreviado ("Nome1 S. e Nome2 C." em duplas; "Você" no lugar do nome do jogador logado), pontos à direita (`label-lg` bold, `tabular-nums`) e, abaixo dos pontos, o DeltaIndicator quando há delta diferente de zero.
 - [ ] Linha de apoio: "N jogos · N vitórias", com singular ("1 jogo", "1 vitória").
 - [ ] `isOwn`: fundo `--color-background-secondary`. Nenhuma outra variação de cor na linha.
 - [ ] `status = closed`: texto em `--color-foreground-secondary` e Badge neutro "Encerrada". Os pontos continuam visíveis.
 - [ ] `awaitingAdmin`: Badge neutro "Empate".
 - [ ] Slot opcional abaixo da linha de apoio para a distância da vaga ("Faltam 12 pts para o 8º"), em `label-md`, `--color-foreground-secondary`. A tela decide quando preencher (RK11).
-- [ ] Nome longo: trunca com reticências numa linha; o nome completo fica no nome acessível.
+- [ ] Nome sempre abreviado, pelo `abbreviateName` ("Lucas S. e Rafael C.", "Você e Pedro A."). Nome longo fica numa linha, e o corte com reticências no fim é só proteção do caso extremo; "Você" nunca é cortado. O nome completo fica no nome acessível.
 - [ ] Altura mínima de 48px; a linha inteira é o alvo de toque (RK14). Sem toque, é estática (o ListItem já tem as três formas).
 - [ ] Nome acessível: "9º, Você e Pedro Alves, 390 pontos, subiu 2 posições, 5 jogos, 3 vitórias". Os avatares são decorativos.
 - [ ] Semântica: a classificação é uma lista ordenada (`<ol>`); cada linha, um item. Não é `<table>`: são poucas colunas e a linha é um card (REF, "Acessibilidade").

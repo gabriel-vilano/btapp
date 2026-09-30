@@ -1,0 +1,92 @@
+/*
+ * Link de uma aba, compartilhado pela TabBar e pelo NavigationRail.
+ * Seleção em grafite, ação em coral (docs/TOKENS.md): a aba atual fica em
+ * --color-foreground-primary com o ícone preenchido, e as outras em
+ * --color-foreground-secondary. O coral fica só no CountBadge.
+ */
+
+.link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-50);
+  min-height: var(--dimension-tap-target-minimum);
+  padding: var(--spacing-100) 0;
+  color: var(--color-foreground-secondary);
+  text-decoration: none;
+  position: relative;
+  transition: color var(--motion-duration-short-3) var(--motion-easing-standard);
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-state-layer-neutral);
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .link:hover::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.link:active::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+/* Ring para dentro: as abas são vizinhas e o ring de fora seria cortado pela aba ao lado */
+.link:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: calc(var(--border-width-thick) * -1);
+}
+
+.link:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.link--current {
+  color: var(--color-foreground-primary);
+}
+
+/* Caixa do ícone: referência de posição do badge */
+.link__indicator {
+  display: inline-flex;
+  position: relative;
+}
+
+.link__badge {
+  position: absolute;
+  top: calc(var(--spacing-50) * -1);
+  left: calc(100% - var(--spacing-100));
+}
+
+/* Na aba Perfil ativa, o avatar ganha um anel grafite no lugar do ícone preenchido */
+.link__avatar {
+  display: inline-flex;
+  border-radius: var(--radius-full);
+}
+
+.link--current .link__avatar {
+  box-shadow: 0 0 0 var(--border-width-thick) var(--color-border-strong);
+}
+
+/*
+ * "Competições" é o rótulo mais longo e precisa caber inteiro a 393px, em
+ * negrito quando ativo (NAVIGATION.md, N25). Sem reticências e sem quebra:
+ * as duas esconderiam o problema em vez de mostrá-lo. A story da TabBar mede.
+ */
+.link__label {
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-regular);
+  white-space: nowrap;
+}
+
+.link--current .link__label {
+  font-weight: var(--font-weight-bold);
+}

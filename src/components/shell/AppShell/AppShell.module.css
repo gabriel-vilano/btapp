@@ -1,0 +1,77 @@
+/*
+ * Uma coluna no mobile, com a TabBar no rodapé; a partir de 600px, o
+ * NavigationRail à esquerda e o conteúdo numa coluna central (NAVIGATION.md,
+ * N27). Só uma das duas navegações fica visível: `display: none` tira a outra
+ * da árvore de acessibilidade, e sobra um só <nav aria-label="Principal">.
+ */
+
+/*
+ * O que fica fixo na tela e precisa desviar da navegação lê estas duas
+ * custom properties, em vez de importar da casca (grupos de área não
+ * importam de shell/). Hoje, a cópia fixa da própria linha do ranking.
+ * - --shell-bottom-offset: altura da TabBar no rodapé. É a soma da aba
+ *   (padding 8 + ícone 24 + gap 4 + rótulo 16 + padding 8, ver
+ *   NavigationLink.module.css), da borda e da área segura do iOS. Mudou a
+ *   aba, muda aqui.
+ * - --shell-rail-width: largura do NavigationRail, que empurra a coluna do
+ *   conteúdo para a direita a partir de 600px.
+ */
+.shell {
+  --shell-bottom-offset: calc(
+    var(--spacing-100) * 2 + var(--dimension-icon-md) + var(--spacing-50) +
+      var(--text-label-md-line-height) + var(--border-width-medium) + env(safe-area-inset-bottom, 0px)
+  );
+  --shell-rail-width: 0px;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: var(--color-background-primary);
+}
+
+.shell__rail {
+  display: none;
+}
+
+/* Largura máxima: feed, agenda, competições e classificação são listas de uma coluna */
+.shell__content {
+  flex: 1;
+  width: 100%;
+  max-width: var(--dimension-layout-max);
+  margin-inline: auto;
+}
+
+/*
+ * Sticky em vez de fixed: a barra fica no fluxo, colada no fim da tela
+ * enquanto a página rola, e o fim da lista nunca some atrás dela sem
+ * precisar de um padding com a altura da barra calculada à mão.
+ */
+.shell__tabbar {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--z-sticky);
+}
+
+/* 600px = --breakpoint-md: custom property não funciona em @media */
+@media (min-width: 600px) {
+  /* Mesma largura do .rail (NavigationRail.module.css); sem TabBar, nada a desviar embaixo */
+  .shell {
+    --shell-bottom-offset: env(safe-area-inset-bottom, 0px);
+    --shell-rail-width: calc(var(--spacing-800) + var(--spacing-300) + env(safe-area-inset-left, 0px));
+
+    flex-direction: row;
+  }
+
+  .shell__rail {
+    display: block;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    z-index: var(--z-sticky);
+  }
+
+  .shell__tabbar {
+    display: none;
+  }
+}

@@ -40,6 +40,7 @@ Documentamos o que é estável. Decisões, padrões, princípios, hurdles, conve
 - `docs/SCHEDULING.md` — marcação de jogos: regras da proposta de horário (M1…), prazos, notificações, telefone para o WhatsApp e métricas
 - `docs/RESULTS.md` — registro de resultado: telas e fluxos de lançar, confirmar ou contestar, fila do admin e amistoso (RG1…), notificações e métricas
 - `docs/NAVIGATION.md` — navegação do app e agenda do jogador (aba Jogos): abas, rotas por entidade, seções da agenda, relação com o feed (N1…)
+- `docs/EXPLORE.md` — aba Explorar: vitrine de competições e arenas, busca com três escopos, página da organização, "Como se inscrever" e "Tenho interesse" (EX1…)
 - `docs/RANKING.md` — tela de ranking: classificação por categoria, troca de categoria, própria linha fixada, delta, linha de corte da final, página da competição, estados e critérios de aceite do RankingRow e do ZoneDivider (RK1…)
 - `docs/TOKENS.md` — design system
 - `docs/GIT_WORKFLOW.md` — workflow de branches, PR, versionamento
@@ -138,6 +139,7 @@ Restrições mensuráveis, otimizadas para que o agente raciocine sobre o códig
 - **`ui/`** guarda os Tier 1 e os Tier 2 genéricos: primitivos e compostos sem regra de negócio (Button, FormInput, Avatar, Badge, EmptyState).
 - **Grupos de área** (`auth/`, `feed/` e os próximos, como `agenda/`, `ranking/` e `profile/`) guardam os Tier 3 e Tier 4 daquela área, e os Tier 2 que só fazem sentido nela (OtpInput, PasswordChecklist).
 - **`icons/`** guarda os SVGs próprios da marca (fora do Phosphor).
+- **`shell/`** guarda a casca das telas logadas: o `AppShell` (TabBar, NavigationRail e a aba marcada, `docs/NAVIGATION.md` N10 e N28), montado no `app/(app)/layout.tsx`, e o `DetailHeader`, o cabeçalho de toda tela de detalhe, cujo "Voltar" leva à aba marcada. Quem usa o `shell/` são as páginas em `app/`; os grupos de área não importam dele.
 
 **Componente usado por duas ou mais áreas sobe para `ui/`.** Um grupo de área não importa de outro grupo de área: se `ranking/` precisa de algo que está em `feed/`, esse algo vai para `ui/`. Assim cada área depende só de `ui/`, e mover ou apagar uma área não quebra as outras.
 
@@ -427,6 +429,8 @@ Daí acessar `http://<IP-do-dev>:3000` do celular. Em prod tudo funciona.
 
 ProfileMiniCard, H2HButton, botões Torcer e "+ Adicionar" foram implementados como <button> sem onClick.
 Quando resolver: plugar handlers e <Link> ao integrar esses componentes com o feed real.
+
+No perfil, os botões de amizade do `ProfileAction` (Adicionar, Pedido enviado, Aceitar, Recusar, Amigos) também não agem ainda: os handlers e as confirmações entram com as ações de amizade (PF7).
 
 ## Regras gerais
 

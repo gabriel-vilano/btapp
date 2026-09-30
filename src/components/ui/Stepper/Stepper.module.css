@@ -1,0 +1,116 @@
+/* =============================================================
+   Stepper — APG Spinbutton: rótulo à esquerda, − valor + à direita.
+   O foco de teclado fica no valor (role="spinbutton"); os botões
+   ficam fora do Tab porque as setas já fazem o trabalho deles.
+   ============================================================= */
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-200);
+  min-height: var(--dimension-tap-target-minimum);
+}
+
+.stepper__label {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-primary);
+}
+
+.stepper__controls {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+/* Área tocável de 48×48; o círculo visível de 32px fica no centro */
+.stepper__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dimension-tap-target-minimum);
+  height: var(--dimension-tap-target-minimum);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-foreground-primary);
+  cursor: pointer;
+}
+
+.stepper__circle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dimension-action-height-sm);
+  height: var(--dimension-action-height-sm);
+  border: var(--border-width-medium) solid var(--color-border-medium);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  transition: border-color var(--motion-duration-short-3) var(--motion-easing-standard);
+}
+
+/* State layer via ::after (docs/TOKENS.md) */
+.stepper__circle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-state-layer-neutral);
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .stepper__button:hover:not(:disabled) .stepper__circle::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.stepper__button:active:not(:disabled) .stepper__circle::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+/* Desabilitado mantém a forma: borda clara e ícone cinza, sem fundo */
+.stepper__button:disabled {
+  color: var(--color-foreground-disabled);
+  cursor: not-allowed;
+}
+
+.stepper__button:disabled .stepper__circle {
+  border-color: var(--color-border-subtle);
+}
+
+/* Largura para dois dígitos sem o layout pular entre 9 e 10 */
+.stepper__value {
+  min-width: var(--spacing-500);
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-foreground-primary);
+  user-select: none;
+}
+
+.stepper__value:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.stepper__value:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.stepper__value[aria-disabled="true"] {
+  color: var(--color-foreground-disabled);
+}
+
+.stepper:has(.stepper__value[aria-disabled="true"]) .stepper__label {
+  color: var(--color-foreground-disabled);
+}
