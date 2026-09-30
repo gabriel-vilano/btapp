@@ -1,6 +1,6 @@
 "use client";
 
-import { GearIcon } from "@phosphor-icons/react";
+import { GearSixIcon } from "@phosphor-icons/react";
 import { AppHeader } from "@/src/components/ui/AppHeader";
 import { IconButtonLink } from "@/src/components/ui/IconButton";
 import { Skeleton } from "@/src/components/ui/Skeleton";
@@ -67,6 +67,7 @@ export function ProfilePage({ data }: ProfilePageProps) {
   );
 }
 
+// O h1 da tela é o nome, no ProfileHeader (PROFILE.md §7): o @username do topo vai como `p`.
 // No próprio perfil, a engrenagem das configurações (N8); no de outro, "Voltar" e o menu ⋯ (PF8).
 // O "Voltar" leva ao Feed, a aba dona do jogador (N28), até a aba de origem (N10) existir.
 function ProfileTopBar({ data }: ProfilePageProps) {
@@ -75,11 +76,19 @@ function ProfileTopBar({ data }: ProfilePageProps) {
     return (
       <AppHeader
         title={`@${username}`}
-        actions={<IconButtonLink href={SETTINGS_PATH} icon={GearIcon} label="Configurações" />}
+        titleAs="p"
+        actions={<IconButtonLink href={SETTINGS_PATH} icon={GearSixIcon} label="Configurações" />}
       />
     );
   }
-  return <AppHeader title={`@${username}`} backHref={FEED_PATH} actions={<ProfileMenu username={username} name={name} />} />;
+  return (
+    <AppHeader
+      title={`@${username}`}
+      titleAs="p"
+      backHref={FEED_PATH}
+      actions={<ProfileMenu username={username} name={name} />}
+    />
+  );
 }
 
 /**

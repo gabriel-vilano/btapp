@@ -40,6 +40,6 @@ export const mockProfilePages = {
   requestSent: { ...pageOf(players.thiago.username), relation: 'request_sent' },
   requestReceived: { ...pageOf(players.thiago.username), relation: 'request_received' },
   newPlayer: pageOf(players.marina.username),
-  ownNew: { ...pageOf(players.marina.username), relation: 'self', player: { ...players.marina, total_matches: 0 } },
+  ownNew: { ...pageOf(players.marina.username), relation: 'self' },
   sectionError: { ...own, rankings: { status: 'error' }, recent_matches: { status: 'error' } },
 } satisfies Record<string, ProfilePageData>;

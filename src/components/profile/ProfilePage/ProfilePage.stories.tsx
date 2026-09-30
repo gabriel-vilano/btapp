@@ -35,6 +35,9 @@ function sectionTitles(canvasElement: HTMLElement): string[] {
 // Próprio perfil: engrenagem, "Editar perfil", "Melhor: 1º" e sem o bloco "Vocês" (PF3)
 export const Own: Story = {
   play: async ({ canvas, canvasElement }) => {
+    // Um só h1, o nome (PROFILE.md §7); jogos sai da conta do cartel (PF6)
+    await expect(canvas.getAllByRole("heading", { level: 1 }).map((h) => h.textContent)).toEqual(["Lucas Silva"]);
+    await expect(canvas.getByText("9 jogos")).toBeInTheDocument();
     await expect(canvas.getByRole("link", { name: "Configurações" })).toHaveAttribute("href", "/perfil/configuracoes");
     await expect(canvas.getByRole("link", { name: "Editar perfil" })).toBeVisible();
     await expect(sectionTitles(canvasElement)).toEqual(["Rankings", "Partidas recentes", "Temporadas"]);

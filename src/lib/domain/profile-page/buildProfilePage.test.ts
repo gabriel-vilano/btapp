@@ -32,10 +32,11 @@ describe('buildProfilePage', () => {
     expect(dataOf(page.rankings)[0]).toMatchObject({ position: 3, best_position: 1, partner_name: 'Rafael' });
   });
 
-  it('cabeçalho: jogos do total_matches e cartel sem W.O. (PF5, PF6)', () => {
+  it('cabeçalho: jogos = vitórias + derrotas do cartel, sem W.O. (PF5, PF6)', () => {
     const page = pageOf(players.lucas.username);
-    expect(page.player.total_matches).toBe(players.lucas.total_matches);
     expect(page.record).toEqual({ wins: 7, losses: 2 });
+    // O mock guarda 274 (com o legado): o cabeçalho não pode contradizer o cartel
+    expect(page.player.total_matches).toBe(9);
     expect(page.friends_count).toBe(1);
   });
 

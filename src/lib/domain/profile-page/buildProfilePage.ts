@@ -29,12 +29,15 @@ export function buildProfilePage(domain: ProfilePageDomain, request: ProfilePage
   if (player === undefined) return null;
   const names = nameResolver(domain);
   const view: ProfileViewer = { playerId: player.id, viewerId: request.viewerId, now: request.now };
-  const { wins, losses } = playerRecord(domain, player.id);
+  const record = playerRecord(domain, player.id);
   return {
     relation: profileRelation(domain.friendships, request.viewerId, player.id),
-    player: { id: player.id, name: player.name, username: player.username, avatar_url: player.avatar_url, total_matches: player.total_matches },
+    // "jogos" sai da mesma conta do cartel (PF6): vitórias + derrotas = jogos, e os dois
+    // números nunca se contradizem. O `total_matches` guardado pode trazer partidas de fora
+    // das tabelas (nos mocks, o histórico do legado)
+    player: { id: player.id, name: player.name, username: player.username, avatar_url: player.avatar_url, total_matches: record.matches },
     friends_count: friendsCount(domain.friendships, player.id),
-    record: { wins, losses },
+    record: { wins: record.wins, losses: record.losses },
     versus: ready(versusView(domain, names, view)),
     rankings: ready(rankingItems(domain, names, view)),
     recent_matches: ready(matchItems(domain, names, player.id)),
