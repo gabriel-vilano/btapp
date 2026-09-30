@@ -1,0 +1,1 @@
+export { RankingTableSkeleton } from "./RankingTableSkeleton";

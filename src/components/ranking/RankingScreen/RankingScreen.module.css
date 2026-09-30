@@ -1,0 +1,98 @@
+/* Coluna única com largura máxima: no desktop a tabela não estica (RANKING.md §10) */
+.ranking-screen {
+  width: 100%;
+  max-width: var(--dimension-layout-max);
+  margin-inline: auto;
+  /* Espaço para a cópia fixa no rodapé não cobrir a última linha */
+  padding-bottom: calc(var(--dimension-tap-target-minimum) + var(--spacing-400));
+}
+
+/* --- Cabeçalho da temporada (RK4, RK5) --- */
+
+.ranking-screen__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-50);
+  padding: var(--spacing-200) var(--spacing-page-margin);
+}
+
+.ranking-screen__title {
+  margin: 0 0 var(--spacing-50);
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.ranking-screen__context {
+  margin: 0;
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+}
+
+/* Links soltos, com alvo de 48px cada (TextLink block): sem espaço extra entre as linhas */
+.ranking-screen__links {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--spacing-300);
+}
+
+/* Texto e chevron lado a lado: o TextLink block é flex, mas sem espaço entre os filhos */
+.ranking-screen__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-50);
+}
+
+/* --- "Ir para a minha posição": fora da vista até receber foco --- */
+
+.ranking-screen__skip {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ranking-screen__skip:focus-visible {
+  position: static;
+  width: auto;
+  height: auto;
+  min-height: var(--dimension-tap-target-minimum);
+  margin: 0 var(--spacing-page-margin) var(--spacing-100);
+  padding: 0 var(--spacing-200);
+  overflow: visible;
+  clip-path: none;
+  border-radius: var(--radius-md);
+  background-color: var(--color-background-secondary);
+  color: var(--color-foreground-primary);
+  font-family: inherit;
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+  font-weight: var(--font-weight-bold);
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+/* --- Tabela e notas --- */
+
+.ranking-screen__table {
+  border-top: var(--border-width-medium) solid var(--color-border-subtle);
+}
+
+.ranking-screen__note {
+  margin: 0;
+  padding: var(--spacing-150) var(--spacing-page-margin);
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+}
