@@ -11,7 +11,7 @@ import { MOCK_VIEWER_ID } from './matchScreen';
 /**
  * Dados do fluxo de lançar, ou `null` quando a partida não existe ou é amistoso
  * (o amistoso nasce do lançamento e tem fluxo próprio, RESULTS.md §6).
- * @example reportResultDataOf('match-arena-rm-mb-r3-1')?.sideNames.a // "Lucas e Rafael"
+ * @example reportResultDataOf('match-arena-mangaba-mb-r3-1')?.sideNames.a // "Lucas e Rafael"
  */
 export function reportResultDataOf(matchId: string, viewerId: string = MOCK_VIEWER_ID): ReportResultData | null {
   const match = mockDomain.matches.find((candidate) => candidate.id === matchId);
