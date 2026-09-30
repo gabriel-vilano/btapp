@@ -2,7 +2,7 @@
 
 Spec do head-to-head (H2H): o que a página compara, como ela trata simples e duplas, de onde se chega a ela, os estados e os critérios de aceite dos blocos novos do design system.
 
-> Este doc decide **o conteúdo e a hierarquia da página de H2H** e os pontos de entrada. As regras do que conta como confronto estão em `docs/DOMAIN.md` (R19, R18, R12) e **não são reabertas aqui**, exceto onde a pergunta HQ1 propõe uma emenda à R19. A contagem já existe no código: `playerHeadToHead` e `unitHeadToHead`, em `src/lib/domain/match-count/headToHead.ts`. Onde a página mora segue a spec de navegação (`docs/NAVIGATION.md`, N10 e N28). As regras daqui são numeradas **HH1, HH2…**, para não colidir com as R do domínio nem com as H das hipóteses do discovery. Rotas são propostas: o nome final é decisão de implementação.
+> Este doc decide **o conteúdo e a hierarquia da página de H2H** e os pontos de entrada. As regras do que conta como confronto estão em `docs/DOMAIN.md` (R19, R18, R12) e **não são reabertas aqui**, exceto a R19, emendada pela decisão HQ1 (dois tipos de página). A contagem já existe no código: `playerHeadToHead` e `unitHeadToHead`, em `src/lib/domain/match-count/headToHead.ts`. Onde a página mora segue a spec de navegação (`docs/NAVIGATION.md`, N10 e N28). As regras daqui são numeradas **HH1, HH2…**, para não colidir com as R do domínio nem com as H das hipóteses do discovery. Rotas são propostas: o nome final é decisão de implementação.
 
 ---
 
@@ -21,7 +21,8 @@ As siglas de decisão são as do `docs/DOMAIN.md` > "Fontes". As que esta spec u
 | **REF-H2H** | `docs/discovery/referencias/04-head-to-head.md`: 18 telas de 13 apps. Placar-resumo com barra (Premier League), lista de confrontos (FotMob, DAZN), forma recente em V/D com letra e cor (Fixtured), barra espelhada com números nas pontas (8 de 13 apps) |
 | **PESQ-BT** | Entrega da issue de pesquisa de rankings e circuitos de BT (Linear, 25/09/2026), seção 6: StudyPadel e Sofascore tratam a dupla como entidade; a imprensa de padel mostra os dois recortes lado a lado, com números muito diferentes (dupla 26–13 × jogador 23–29); ATP e UTR tiram o W.O. do H2H; Match! Tennis mostra adversários em comum |
 | **DSC** | `docs/DISCOVERY.md`: oportunidades 3.2 (H2H com os dois recortes, evidência média) e 3.3 (contexto: adversários em comum, ranking na época, W.O. separado, evidência média); H2H é table stakes no BT (`MATRIZ_FEATURES.md`, `07-kano.md`) |
-| **LEIT** | Leitura do agente desta spec, derivada das fontes acima. Precisa da confirmação do Gabriel; a lista está na seção 11 |
+| **DEC-H2H** | Respostas do Gabriel às perguntas HQ1–HQ4 desta spec e confirmação das leituras HL1–HL10 (issue desta spec, 30/09/2026), todas com a recomendação do agente |
+| **LEIT** | Leitura do agente desta spec, derivada das fontes acima e confirmada pelo Gabriel na DEC-H2H. A lista está na seção 11 |
 
 ---
 
@@ -51,12 +52,12 @@ Em duplas, "quem enfrentou quem" tem duas respostas, e elas divergem muito: no p
 
 **O problema que a R19, lida ao pé da letra, cria:** o botão do card de duplas diz "Já jogaram 2 vezes" contando a dupla exata, e leva a uma página jogador × jogador. Mas o card tem **quatro** jogadores, então existem quatro pares possíveis (Lucas × Pedro, Lucas × Thiago, Rafael × Pedro, Rafael × Thiago), e nenhum deles precisa dar 2. O jogador toca em "2 vezes" e cai num número diferente, ou numa escolha que o botão não anunciou.
 
-A pergunta **HQ1** (seção 11) propõe resolver isso com **uma página para cada recorte, e a de duplas com os pares individuais embaixo**. As regras HH1 a HH4 estão escritas com a recomendação; se o Gabriel escolher outra opção, elas mudam antes da aprovação.
+A decisão **HQ1** (seção 11) resolve isso com **uma página para cada recorte, e a de duplas com os pares individuais embaixo**. A R19 do `DOMAIN.md` foi emendada para dizer isso.
 
-- **HH1. Existem dois tipos de página de H2H, com a mesma estrutura:** jogador × jogador e dupla × dupla. O **tipo é dado pelos lados**, não por um controle na tela: dois jogadores abrem a de jogadores; duas duplas abrem a de duplas. [R19, DEC-CARDS; **HQ1**]
+- **HH1. Existem dois tipos de página de H2H, com a mesma estrutura:** jogador × jogador e dupla × dupla. O **tipo é dado pelos lados**, não por um controle na tela: dois jogadores abrem a de jogadores; duas duplas abrem a de duplas. [R19, DEC-CARDS; DEC-H2H HQ1]
 
   **Por que não um SegmentedControl "Duplas · Jogadores"** (caminho 1 da REF-H2H): com quatro jogadores, o segmento "Jogadores" ainda precisaria de uma segunda escolha (qual dos quatro pares?). O controle esconderia o problema em vez de resolver.
-- **HH2. A página de duplas mostra, abaixo dos confrontos, a seção "Jogador contra jogador"**, com uma linha por par cruzado que já se enfrentou ("Lucas × Pedro · 3 × 1"), de 0 a 4 linhas. Cada linha abre a página jogador × jogador daquele par. Par sem confronto não aparece; sem nenhum par, a seção some. [PESQ-BT (os dois recortes lado a lado); REF-H2H, recorte 2; **HQ1**]
+- **HH2. A página de duplas mostra, abaixo dos confrontos, a seção "Jogador contra jogador"**, com uma linha por par cruzado que já se enfrentou ("Lucas × Pedro · 3 × 1"), de 0 a 4 linhas. Cada linha abre a página jogador × jogador daquele par. Par sem confronto não aparece; sem nenhum par, a seção some. [PESQ-BT (os dois recortes lado a lado); REF-H2H, recorte 2; DEC-H2H HQ1]
 - **HH3. A página de jogadores não tem seção de duplas.** Ela já soma todas as duplas; uma lista "com quem cada um jogou" seria estatística do perfil, não do confronto. [LEIT]
 - **HH4. Em simples, os dois recortes são o mesmo.** A unidade competidora tem um membro só (DOMAIN, "Como ler o diagrama"), então o card de simples e o bloco "Vocês" abrem a página de jogadores. [R3, R19]
 
@@ -87,7 +88,7 @@ A pergunta **HQ1** (seção 11) propõe resolver isso com **uma página para cad
 │   ███████████████████████████░░░░░░░░░      │  barra proporcional (decorativa)
 │   Vocês venceram 3 · Último: 12/09/2026     │
 │                                             │
-│  Forma recente                    (HQ2)     │
+│  Forma recente                              │
 │   V V D V D                  D V V V V      │  FormGuide × 2
 │                                             │
 │  No ranking                                 │
@@ -124,13 +125,13 @@ A pergunta **HQ1** (seção 11) propõe resolver isso com **uma página para cad
 
   **Por que não mostrar o W.O. à parte** (oportunidade 3.3, "W.O. separado"): o perfil já decidiu não expor ausências no MVP (PF6), e o H2H é mais pessoal que o perfil. Uma linha "e 1 W.O." diria publicamente quem faltou contra quem. A regra de separar W.O. de jogo real já está cumprida pela exclusão.
 
-### 4.3 Forma recente (depende da HQ2)
+### 4.3 Forma recente
 
-- **HH12. Cada lado mostra os resultados das 5 últimas partidas jogadas dele, contra qualquer adversário**, como círculos com a letra e a cor: V ou D, o mais recente à direita. Na página de duplas, é a forma **da dupla** (a unidade); na de jogadores, a do jogador, com qualquer parceiro. Com menos de 5 partidas, mostra as que houver; sem nenhuma, a linha daquele lado diz "Sem partidas". [REF-H2H (Fixtured); WCAG 1.4.1; **HQ2**]
+- **HH12. Cada lado mostra os resultados das 5 últimas partidas jogadas dele, contra qualquer adversário**, como círculos com a letra e a cor: V ou D, o mais recente à direita. Na página de duplas, é a forma **da dupla** (a unidade); na de jogadores, a do jogador, com qualquer parceiro. Com menos de 5 partidas, mostra as que houver; sem nenhuma, a linha daquele lado diz "Sem partidas". [REF-H2H (Fixtured); WCAG 1.4.1; DEC-H2H HQ2]
 
   **Por quê:** é o único dado da página que ajuda quando os dois lados se enfrentaram uma vez só, e é o complemento mais usado quando o confronto direto é curto (REF-H2H, "Resumo"). A issue pede "sequência recente", e esta é a leitura que serve ao JTBD 3: como cada um chega ao jogo.
 
-  A cor aqui é a exceção ao "sem verde nem vermelho" do resumo: a forma é um padrão de mercado com letra **e** cor, e a letra carrega o significado (WCAG 1.4.1). A HQ2 pergunta também isso.
+  A cor aqui é a exceção ao "sem verde nem vermelho" do resumo: a forma é um padrão de mercado com letra **e** cor, e a letra carrega o significado (WCAG 1.4.1). A DEC-H2H (HQ2) confirmou a cor.
 
 ### 4.4 No ranking
 
@@ -169,9 +170,9 @@ Ver HH2. Cada linha: os dois nomes ("Lucas × Pedro"), o resumo ("3 × 1", do la
 | **Botão H2H no card de confronto definido** (CARDS §5) | Dupla × dupla (em simples, jogador × jogador) | Os dois lados têm pelo menos 1 confronto jogado |
 | **Botão H2H no card de resultado** (CARDS §4.2) | Idem | Os dois lados têm **pelo menos 2** confrontos jogados, contando o do card (HH17). Nunca no W.O. |
 | **Bloco "Vocês" do perfil** (PF17) | Jogador × jogador, quem vê × o jogador | Pelo menos 1 confronto entre os dois |
-| **Tela da partida em confronto definido**, para os jogadores da partida | Dupla × dupla | Pelo menos 1 confronto jogado entre os lados (**HQ3**) |
+| **Tela da partida em confronto definido**, para os jogadores da partida | Dupla × dupla | Pelo menos 1 confronto jogado entre os lados (DEC-H2H HQ3) |
 
-- **HH17. O número do botão é o total de confrontos jogados entre os lados, e é o mesmo que o resumo da página mostra.** No card de resultado, esse total inclui a partida do card; por isso o botão só aparece a partir de 2: com 1, a página mostraria só a partida que o jogador acabou de ver. No card de confronto, a partida ainda não foi jogada, e 1 basta. O número é derivado na hora (não é uma foto do momento do card), para nunca divergir da página. [CARDS §4.2 ("quando é o primeiro confronto, o botão não existe"); **HQ1**; LEIT]
+- **HH17. O número do botão é o total de confrontos jogados entre os lados, e é o mesmo que o resumo da página mostra.** No card de resultado, esse total inclui a partida do card; por isso o botão só aparece a partir de 2: com 1, a página mostraria só a partida que o jogador acabou de ver. No card de confronto, a partida ainda não foi jogada, e 1 basta. O número é derivado na hora (não é uma foto do momento do card), para nunca divergir da página. [CARDS §4.2 ("quando é o primeiro confronto, o botão não existe"); DEC-H2H HQ1; LEIT]
 
   **Muda o código:** hoje o `ResultCard` mostra o botão com `h2h_count >= 1` (`src/components/feed/ResultCard/ResultCard.tsx`). A `FEED_CARDS.md` §4.2 diz "Quando é o primeiro confronto, o botão não existe", o que só fica verdade se o card de resultado exigir 2.
 - **HH18. O `H2HButton` vira link.** Hoje ele é um `<button>` sem `onClick`, stub registrado no `CLAUDE.md` > "Componentes com stubs sem comportamento". Passa a ser um `<a>` (via `next/link`) com o `href` da HH5: navegação é link, não botão (WCAG 4.1.2; o leitor de tela anuncia "link" e o jogador pode abrir em outra aba). [CLAUDE.md; LEIT]
@@ -186,7 +187,7 @@ Ver HH2. Cada linha: os dois nomes ("Lucas × Pedro"), o resumo ("3 × 1", do la
 
 | Situação | O que a página mostra |
 | --- | --- |
-| **Os lados nunca se enfrentaram** (URL digitada ou link antigo; nenhuma porta leva aqui com zero) | Lados, e o EmptyState "Vocês ainda não se enfrentaram." (ou "Lucas e Pedro ainda não se enfrentaram."). Com a HQ2 aprovada, a forma recente continua aparecendo, porque é o que ajuda a preparar o jogo. Sem CTA (**HQ4**, adversários em comum) |
+| **Os lados nunca se enfrentaram** (URL digitada ou link antigo; nenhuma porta leva aqui com zero) | Lados, e o EmptyState "Vocês ainda não se enfrentaram." (ou "Lucas e Pedro ainda não se enfrentaram."). A forma recente continua aparecendo, porque é o que ajuda a preparar o jogo. Sem CTA e sem adversários em comum (DEC-H2H HQ4) |
 | **Um confronto só** | Resumo "1 jogo", linha "Você venceu 1 · Último: 12/09/2026" e a lista com uma linha. Sem barra: com um confronto, a barra é 100% de um lado e só repete o número |
 | **Empate** | "Empate em 2 a 2"; a barra fica dividida ao meio |
 | **Só amistosos** | Normal. O contexto de cada linha diz "Amistoso"; "No ranking" some se não houver categoria em comum |
@@ -221,16 +222,16 @@ Os blocos novos moram em `src/components/h2h/` (grupo de área, `CLAUDE.md` > "O
 | Componente | Tier | Situação | Uso nesta spec |
 | --- | --- | --- | --- |
 | **H2HSummary** | 3 | Novo | Resumo (HH10) |
-| **FormGuide** | 2 | Novo, se a HQ2 for aprovada | Forma recente (HH12) |
+| **FormGuide** | 2 | Novo | Forma recente (HH12) |
 | **H2HMatchItem** | 3 | Novo, composição do ListItem | Linha de confronto (HH14) |
 | **H2HSides** | 3 | Novo, ou `MatchVsBlock` subindo para `ui/` com variante (HH9) | Lados |
-| H2HButton | 3 | No `master` (`feed/`), vira link (HH18) | Portas no feed e na partida |
+| H2HButton | 3 | No `master` (`feed/`); sobe para `ui/` e vira link (HH18) | Portas no feed e na partida |
 | ScoreBlock compacto | 3 | No `master` (`ui/`) | Placar em cada confronto |
 | Badge, ListItem, Avatar, AvatarStack, EmptyState, Skeleton | 1–2 | No `master` | Resultado, listas, lados, vazio, carregando |
 | StandingSummaryItem | 3 | No `master` (`ui/`) | No ranking (HH13) |
 | DetailHeader | — | No `master` (`shell/`) | Cabeçalho da tela |
 
-**O H2HButton sai de `feed/`** se a HQ3 for aprovada: a tela da partida é da área `agenda/`, e um grupo de área não importa de outro. Nesse caso ele sobe para `ui/`.
+**O H2HButton sobe de `feed/` para `ui/`** (DEC-H2H HQ3): a tela da partida é da área `agenda/`, e um grupo de área não importa de outro.
 
 ### 8.1 H2HSummary
 
@@ -245,7 +246,7 @@ O placar do confronto entre dois lados.
 - [ ] Nome acessível como uma frase (seção 7).
 - [ ] Story com: vantagem da esquerda, da direita, empate, um confronto só, números de dois dígitos, "Você" e nomes.
 
-### 8.2 FormGuide (se a HQ2 for aprovada)
+### 8.2 FormGuide
 
 Os últimos resultados de um lado, em sequência.
 
@@ -281,73 +282,38 @@ Uma linha da lista de confrontos.
 | **"Jogaram juntos N vezes"** | É dado de parceria, não de confronto. Pertence ao perfil, se um dia entrar |
 | **Compartilhar o H2H como imagem** | A rota já é compartilhável (HH5); a imagem é crescimento, não JTBD 3 |
 
-A pergunta **HQ4** decide se "adversários em comum" também entra nesta tabela.
+| **Adversários em comum** (DSC 3.3) | Nenhuma porta leva à página com zero confrontos (HH16), então o caso só aparece por URL digitada; e, com duas categorias no beta, a lista seria curta ou vazia. Rever se o H2H ganhar uma porta com zero confrontos (DEC-H2H HQ4) |
 
 ---
 
 ## 10. Relação com as outras specs
 
-Se a spec for aprovada como está, estas mudanças acompanham o PR de aprovação (ou issues de ENG, no caso do código):
+Emendas feitas no mesmo PR desta spec, depois da DEC-H2H:
 
-- **`docs/DOMAIN.md`, R19:** "na página de H2H, jogador × jogador" passa a "a página tem dois tipos, jogador × jogador e dupla × dupla (HH1); o card de duplas abre a de duplas". Só com a HQ1 aprovada.
+- **`docs/DOMAIN.md`, R19 e glossário:** a página de H2H tem dois tipos, jogador × jogador e dupla × dupla (HH1); o card de duplas abre a de duplas.
 - **`docs/NAVIGATION.md`, tabela de rotas:** a linha "H2H" ganha `/h2h/[ladoA]/[ladoB]` (HH5).
 - **`docs/FEED_CARDS.md`, §4.2:** o botão do card de resultado aparece a partir de 2 confrontos, contando o do card (HH17).
-- **Código:** `headToHeadPath` do perfil (HH5), `ResultCard` (HH17), `H2HButton` como link (HH18) e a linha do `H2HButton` sai de "Componentes com stubs sem comportamento" no `CLAUDE.md` quando ele ganhar `href`.
+
+**Fica para as issues de ENG (código):** `headToHeadPath` do perfil (HH5), `ResultCard` (HH17), `H2HButton` em `ui/` e como link (HH18), e a linha do `H2HButton` sai de "Componentes com stubs sem comportamento" no `CLAUDE.md` quando ele ganhar `href`.
 
 ---
 
-## 11. Perguntas e leituras
+## 11. Decisões
 
-### Perguntas para o Gabriel
+### Perguntas respondidas
 
-**HQ1. O card de duplas abre a página de duplas, com os pares individuais embaixo?**
+Não há pergunta aberta. As perguntas levantadas pela spec foram respondidas pelo Gabriel (DEC-H2H), todas com a recomendação do agente, e viraram regras:
 
-- **Contexto:** a R19 põe a dupla exata no card e o jogador × jogador na página. O botão do card de duplas diz "Já jogaram 2 vezes" (dupla exata) e leva a uma página que, com quatro jogadores, tem quatro pares possíveis, nenhum obrigado a dar 2 (seção 2).
-- **Opções:**
-  1. **Dois tipos de página; a de duplas tem "Jogador contra jogador" embaixo** (HH1, HH2). O número do botão é o número da página, e o recorte individual continua a um toque. Custo: emenda a R19 e cria uma segunda rota.
-  2. **Só a página de jogadores (R19 literal); o card de duplas abre uma folha com os pares** (como a folha da RK14), cada um com o próprio número. Custo: um toque a mais, e o "2 vezes" do botão não aparece em lugar nenhum depois do toque.
-  3. **Só a página de jogadores; o card de duplas abre o par de quem vê** (quando quem vê está na partida) ou o dos primeiros jogadores listados. Custo: escolha arbitrária, e o número diverge do botão sem explicação.
-- **Recomendação:** 1. É o que o padel faz quando mostra os dois recortes lado a lado (PESQ-BT), mantém a promessa do botão e não inventa uma escolha que o jogador não pediu. A R19 separava os recortes por lugar; a opção 1 mantém a separação, só que por página.
+- **HQ1** (o card de duplas abre uma página de duplas, com os pares individuais embaixo) → HH1, HH2, HH17 e a emenda da R19. Alternativas descartadas: só a página de jogadores com uma folha de pares (um toque a mais, e o número do botão some) e o par de quem vê (escolha arbitrária, número diferente do botão).
+- **HQ2** (forma recente, últimas 5 de cada lado, V verde e D vermelho, sempre com a letra) → HH12, FormGuide.
+- **HQ3** (botão H2H na tela da partida em confronto definido, para os jogadores da partida) → HH16; o H2HButton sobe para `ui/`.
+- **HQ4** (sem adversários em comum no MVP) → seção 6.1 e seção 9.
 
-**HQ2. A forma recente (últimas 5 de cada lado, V/D) entra no MVP?**
+### Leituras confirmadas
 
-- **Contexto:** a issue pede "sequência recente". O confronto direto do beta vai ser curto (1 a 3 jogos por par), e a forma é o dado que ajuda a preparar o jogo mesmo assim (HH12).
-- **Opções:**
-  1. **Sim, com letra e cor verde/vermelha** (padrão Fixtured). Custo: o componente FormGuide, e verde e vermelho aparecem num lugar em que o cartel do perfil decidiu não usá-los.
-  2. **Sim, com letra e cor neutra** (grafite para V, contorno para D). Custo: a leitura rápida pela cor se perde.
-  3. **Não:** a sequência recente é a própria lista de confrontos, do mais recente ao mais antigo. Custo: com 1 confronto, a página diz pouco.
-- **Recomendação:** 1. A forma é leitura de relance, e o padrão de mercado usa as duas cores; a letra garante o WCAG 1.4.1. O cartel é outra coisa: um número que resume uma carreira não é julgamento, e 5 bolinhas são exatamente um julgamento de fase.
+As leituras do agente foram confirmadas na DEC-H2H e já estão nas regras: HL1 → HH3; HL2 → HH5; HL3 → HH6; HL4 → HH7; HL5 → HH8, HH10; HL6 → HH11; HL7 → HH13; HL8 → HH14, HH15; HL9 → HH17; HL10 → HH18, HH19, HH20.
 
-**HQ3. A tela da partida em confronto definido mostra o botão H2H para os jogadores da partida?**
-
-- **Contexto:** o momento mais forte do JTBD 3 é a semana do jogo (PF16). Hoje o H2H aparece no card do feed (público) e no perfil, mas não na tela da partida, que é a casa do confronto (N17) e onde o jogador marca o horário.
-- **Opções:**
-  1. **Sim, o mesmo botão do card, abaixo dos lados**, quando há confronto anterior. Custo: o `H2HButton` sobe de `feed/` para `ui/`.
-  2. **Não:** o jogador chega pelo feed ou pelo perfil do adversário. Custo: dois toques a mais no momento que mais importa.
-- **Recomendação:** 1. É uma linha, só aparece com histórico, e coloca o H2H onde o jogador já está (REF-H2H, caminho C: "entrega a informação no momento em que ela importa").
-
-**HQ4. Quando os lados nunca se enfrentaram, a página mostra adversários em comum?**
-
-- **Contexto:** oportunidade 3.3 (Match! Tennis). Nenhuma porta leva à página com zero confrontos (HH16), então o caso só aparece por URL digitada ou link antigo.
-- **Opções:**
-  1. **Não no MVP:** EmptyState, e a forma recente se a HQ2 for aprovada. Custo: nenhum no uso normal.
-  2. **Sim:** "Contra quem os dois já jogaram", com o resultado de cada um. Custo: uma consulta e uma seção nova para um caso que as portas não produzem; e, com duas categorias no beta, a lista seria curta ou vazia.
-- **Recomendação:** 1. Rever se o H2H ganhar uma porta com zero confrontos (por exemplo, o confronto definido da primeira rodada).
-
-### Leituras do agente
-
-Derivadas das fontes, sem decisão nova de produto. Precisam só da confirmação do Gabriel:
-
-- **HL1** → HH3: a página de jogadores não tem seção de duplas.
-- **HL2** → HH5: rota `/h2h/[ladoA]/[ladoB]`, com `+` na dupla e troca da rota do perfil.
-- **HL3** → HH6: o lado de quem vê à esquerda, textos com "você".
-- **HL4** → HH7: página visível a qualquer jogador com conta.
-- **HL5** → HH8, HH10: estrutura em rolagem única e resumo com barra neutra.
-- **HL6** → HH11: W.O. fora da página inteira, nem contado à parte.
-- **HL7** → HH13: "No ranking" só na página de duplas, com categoria em comum.
-- **HL8** → HH14, HH15: lista completa, sem filtro, com parceiros na página de jogadores.
-- **HL9** → HH17: o botão do card de resultado aparece a partir de 2 confrontos, contando o do card.
-- **HL10** → HH18, HH19, HH20: `H2HButton` como link; sem H2H na folha da classificação; sem H2H livre.
+Pergunta nova entra aqui com opções, trade-offs e recomendação, e sai quando vira regra.
 
 ---
 
@@ -358,7 +324,7 @@ Medidas no beta com Rankin e Vila. Sem meta fixa: a primeira rodada define a lin
 | Métrica | Definição | Por que importa |
 | --- | --- | --- |
 | **H2H antes do jogo** | % dos confrontos definidos com histórico em que um dos jogadores abriu o H2H antes da data acordada | Mede se o H2H serve ao JTBD 3, e não só à curiosidade |
-| **Porta de entrada do H2H** | Aberturas por porta: card de confronto, card de resultado, perfil ("Vocês"), tela da partida | Mostra qual porta funciona; decide a HH19 e confirma a HQ3 |
+| **Porta de entrada do H2H** | Aberturas por porta: card de confronto, card de resultado, perfil ("Vocês"), tela da partida | Mostra qual porta funciona; decide a HH19 e testa a porta da tela da partida (HQ3) |
 | **H2H de terceiros** | % das aberturas em que quem vê não está em nenhum dos lados | Mede o JTBD 4 (rivalidade como conteúdo entre amigos). Alto indica que o H2H é também conteúdo social |
 | **Descida para o individual** | Na página de duplas, % das visitas que tocam em "Jogador contra jogador" | Testa a HQ1: se ninguém desce, o recorte individual pode ficar só no perfil |
 | **Retorno ao mesmo H2H** | Jogadores que abrem o mesmo H2H em rodadas diferentes | Rivalidade recorrente; o ponto de partida para um "Rivais" no perfil, fora do MVP |

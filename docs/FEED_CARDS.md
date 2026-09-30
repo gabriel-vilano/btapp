@@ -235,9 +235,9 @@ Nas listas (partidas recentes do perfil, H2H, prévia do registro) o placar vira
 - Ícone: `Scales` Phosphor — 16px
 - Texto: `--text-label-lg`, `--color-foreground-accent`
 - Alinhamento: centralizado
-- **Exibição condicional:** aparece apenas quando `h2h_count >= 1`. Quando é o primeiro confronto, o botão não existe — sem placeholder, sem "0 partidas anteriores"
+- **Exibição condicional:** `h2h_count` é o total de confrontos jogados entre as duas duplas exatas (R19), **contando a partida do card**, e é o mesmo número que a página de H2H mostra. No card de resultado, o botão aparece a partir de `h2h_count >= 2`: quando é o primeiro confronto, o botão não existe — sem placeholder, sem "0 partidas anteriores" (`docs/HEAD_TO_HEAD.md`, HH17)
 - **Ausente no card de WO:** WO não exibe H2H
-- Tap: navega para página de H2H entre os dois lados
+- Tap: navega para a página de H2H entre os dois lados: a de duplas no card de duplas, a de jogadores no de simples (`docs/HEAD_TO_HEAD.md`, HH1). É um link, não um botão (HH18)
 
 ### 4.3 Variação — WO
 
@@ -732,7 +732,7 @@ Antes de marcar qualquer card como implementado, verificar:
 - [ ] Labels de coluna presentes apenas em 2+ sets
 
 **H2H**
-- [ ] Botão ausente quando `h2h_count === 0`
+- [ ] Botão ausente quando `h2h_count === 0` (confronto definido) ou `h2h_count < 2` (resultado, que conta a própria partida)
 - [ ] Botão ausente no card de WO
 - [ ] Estilo ghost button centralizado
 
