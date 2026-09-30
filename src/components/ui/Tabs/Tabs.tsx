@@ -8,15 +8,24 @@ type TabItem = {
   label: ReactNode;
   panel: ReactNode;
   disabled?: boolean;
+  /** Contagem ao lado do nome, como o número de resultados de um escopo da busca. */
+  count?: number;
 };
+
+type CountNoun = { one: string; other: string };
 
 type TabsProps = {
   label: string;
   items: TabItem[];
   value: string;
   onValueChange: (value: string) => void;
+  /** O que a contagem conta, no singular e no plural. Entra só no nome acessível. */
+  countNoun?: CountNoun;
   className?: string;
 };
+
+const DEFAULT_COUNT_NOUN: CountNoun = { one: "resultado", other: "resultados" };
+const MAX_VISIBLE_COUNT = 99;
 
 type KeyMove = (index: number, count: number) => { start: number; step: number };
 
@@ -38,11 +47,49 @@ function findEnabledIndex(items: TabItem[], start: number, step: number): number
   return null;
 }
 
+/** Número visível na aba: acima de 99, "99+", para a aba não crescer sem limite. */
+function formatVisibleCount(count: number): string {
+  return count > MAX_VISIBLE_COUNT ? `${MAX_VISIBLE_COUNT}+` : String(count);
+}
+
+/** Contagem falada, que completa o nome da aba: "1 resultado", "mais de 99 resultados". */
+function formatSpokenCount(count: number, noun: CountNoun): string {
+  if (count > MAX_VISIBLE_COUNT) return `mais de ${MAX_VISIBLE_COUNT} ${noun.other}`;
+  return `${count} ${count === 1 ? noun.one : noun.other}`;
+}
+
+type TabContentProps = { item: TabItem; countNoun: CountNoun };
+
+// O nome falado inteiro fica num só texto oculto, e a versão visível sai da árvore de
+// acessibilidade. Com o número num elemento à parte, o cálculo do nome põe espaço entre
+// os pedaços ("Competições , 1 resultado") ou cola o número ("Competições1").
+function TabContent({ item, countNoun }: TabContentProps) {
+  if (item.count === undefined) return <>{item.label}</>;
+  return (
+    <>
+      <span className={styles["tabs__sr-only"]}>
+        {item.label}, {formatSpokenCount(item.count, countNoun)}
+      </span>
+      <span aria-hidden="true">
+        {item.label}
+        <span className={styles.tabs__count}>{formatVisibleCount(item.count)}</span>
+      </span>
+    </>
+  );
+}
+
 /**
  * Abas de página (padrão Tabs do APG): troca o painel de conteúdo, com setas, Home e End.
  * @example <Tabs label="Perfil" items={sections} value={section} onValueChange={setSection} />
  */
-export function Tabs({ label, items, value, onValueChange, className }: TabsProps) {
+export function Tabs({
+  label,
+  items,
+  value,
+  onValueChange,
+  countNoun = DEFAULT_COUNT_NOUN,
+  className,
+}: TabsProps) {
   const baseId = useId();
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const tabId = (index: number) => `${baseId}-tab-${index}`;
@@ -86,7 +133,7 @@ export function Tabs({ label, items, value, onValueChange, className }: TabsProp
               onClick={() => onValueChange(item.value)}
               onKeyDown={(event) => handleKeyDown(event, index)}
             >
-              {item.label}
+              <TabContent item={item} countNoun={countNoun} />
             </button>
           );
         })}
@@ -108,4 +155,4 @@ export function Tabs({ label, items, value, onValueChange, className }: TabsProp
   );
 }
 
-export type { TabItem };
+export type { TabItem, CountNoun };
