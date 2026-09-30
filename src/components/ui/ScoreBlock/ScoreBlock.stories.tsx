@@ -149,7 +149,7 @@ export const CompactWin: CompactStory = {
   parameters: {
     layout: "fullscreen",
     inList: true,
-    row: { opponents: "vs. Pedro Henrique e Bruno Lima", context: "Ranking Arena RM · Masculino B · há 2 dias", badge: win },
+    row: { opponents: "vs. Pedro Henrique e Bruno Lima", context: "Ranking Arena Mangaba · Masculino B · há 2 dias", badge: win },
   },
   play: async ({ canvasElement }) => expectScoreText(canvasElement, "6/4 6/3"),
 };
@@ -160,7 +160,7 @@ export const CompactLoss: CompactStory = {
   args: { ...CompactWin.args, perspective: "loser" },
   parameters: {
     ...CompactWin.parameters,
-    row: { opponents: "vs. Lucas Silva e Rafael Costa", context: "Ranking Arena RM · Masculino B · há 2 dias", badge: loss },
+    row: { opponents: "vs. Lucas Silva e Rafael Costa", context: "Ranking Arena Mangaba · Masculino B · há 2 dias", badge: loss },
   },
   play: async ({ canvasElement }) => expectScoreText(canvasElement, "4/6 3/6"),
 };

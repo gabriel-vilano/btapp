@@ -6,7 +6,7 @@ import { mockProfileDomain, pastSeasonEntities } from './index';
 // são o fechamento de cada rodada, e os ids não colidem com a temporada atual.
 
 const { season, rounds } = pastSeasonEntities;
-const scope = { season_id: season.id, category_id: 'cat-arena-rm-masculino-b', ...mockProfileDomain };
+const scope = { season_id: season.id, category_id: 'cat-arena-mangaba-masculino-b', ...mockProfileDomain };
 
 describe('mocks: temporada encerrada (PF19)', () => {
   it.each(Object.values(rounds))('foto de $id = fechamento da rodada (R46)', (round) => {

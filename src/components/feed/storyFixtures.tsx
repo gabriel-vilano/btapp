@@ -33,16 +33,16 @@ export const storyLongPlayer: PlayerInfo = {
 };
 
 export const storyOrg: OrgInfo = {
-  id: "story-org-arena-rm",
-  name: "Arena RM",
-  username: "arenarm",
+  id: "story-org-arena-mangaba",
+  name: "Arena Mangaba",
+  username: "arenamangaba",
   avatar_url: null,
 };
 
 export const storyLongOrg: OrgInfo = {
   id: "story-org-long",
-  name: "Arena Sunset Beach Club Belo Horizonte",
-  username: "arenasunsetbeachclubbelohorizonte",
+  name: "Arena Tucum Beach Club Belo Horizonte",
+  username: "arenatucumbeachclubbelohorizonte",
   avatar_url: null,
 };
 

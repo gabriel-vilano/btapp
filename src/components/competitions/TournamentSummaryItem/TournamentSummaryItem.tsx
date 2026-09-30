@@ -23,7 +23,7 @@ interface TournamentSummaryItemProps {
 /**
  * Sua inscrição num torneio: competição · categoria, parceiro e a data do evento ou o próximo jogo.
  * Renderiza um `<li>`: use dentro de `<List>`.
- * @example <TournamentSummaryItem competitionName="Copa Sunset" categoryName="Masculino B" partnerName="Rafael" startsOn="2026-10-10T11:00:00Z" endsOn="2026-10-11T21:00:00Z" href="/competicoes/copa-sunset" />
+ * @example <TournamentSummaryItem competitionName="Copa Tucum" categoryName="Masculino B" partnerName="Rafael" startsOn="2026-10-10T11:00:00Z" endsOn="2026-10-11T21:00:00Z" href="/competicoes/copa-tucum" />
  */
 export function TournamentSummaryItem({
   competitionName,

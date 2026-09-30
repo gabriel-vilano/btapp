@@ -23,14 +23,14 @@ import { players as p } from './people';
 // - r3-5 (em arbitragem): a data foi combinada no WhatsApp e informada pelo
 //   Diego (M14), o que substituiu a proposta do André (M15).
 
-export const RANKING_VENUE = 'Arena RM – Beach · Nova Lima/MG';
+export const RANKING_VENUE = 'Arena Mangaba – Beach · Nova Lima/MG';
 
 const at = (iso: string, venue: string | null = RANKING_VENUE): ScheduleOption => ({
   starts_at: onTheHour(iso),
   venue,
 });
 
-const matchId = (slug: string): string => `match-arena-rm-mb-${slug}`;
+const matchId = (slug: string): string => `match-arena-mangaba-mb-${slug}`;
 
 /** Encerramento da proposta expirada: o horário da última opção (M12). */
 const lastStart = (options: ScheduleOption[]): string =>
@@ -109,7 +109,7 @@ const noDateR3: ScheduleProposal[] = [
     side: 'a',
     proposed_by: p.rafael.id,
     created_at: R3_1_COUNTER_AT,
-    options: [at(daysFromNow(1.5)), at(daysFromNow(2.5), 'Arena Sunset · Belo Horizonte/MG')],
+    options: [at(daysFromNow(1.5)), at(daysFromNow(2.5), 'Arena Tucum · Belo Horizonte/MG')],
     status: 'withdrawn',
     withdrawal: { by: 'player', player_id: p.lucas.id },
     closed_at: daysAgo(2),
@@ -211,7 +211,7 @@ export const playerPhones: PlayerPhone[] = [
   { player_id: p.diego.id, number: '+5531999990003', consented_at: daysAgo(8) },
 ];
 
-/** Histórico da marcação de um confronto. Ex.: `scheduleHistoryOf('match-arena-rm-mb-r2-4')`. */
+/** Histórico da marcação de um confronto. Ex.: `scheduleHistoryOf('match-arena-mangaba-mb-r2-4')`. */
 export function scheduleHistoryOf(matchId: string): ScheduleHistory {
   return {
     match_id: matchId,

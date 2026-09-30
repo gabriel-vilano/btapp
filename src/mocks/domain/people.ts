@@ -66,16 +66,16 @@ export const players = {
 } satisfies Record<string, Player>;
 
 export const organizations = {
-  arenaRM: {
-    id: 'org-arena-rm',
-    name: 'Arena RM',
-    username: 'arenarm',
+  arenaMangaba: {
+    id: 'org-arena-mangaba',
+    name: 'Arena Mangaba',
+    username: 'arenamangaba',
     avatar_url: null,
   },
-  arenaSunset: {
-    id: 'org-arena-sunset',
-    name: 'Arena Sunset',
-    username: 'arenasunset',
+  arenaTucum: {
+    id: 'org-arena-tucum',
+    name: 'Arena Tucum',
+    username: 'arenatucum',
     avatar_url: null,
   },
 } satisfies Record<string, Organization>;

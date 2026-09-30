@@ -106,7 +106,7 @@ describe('as duas exceções da movimentação sobre os mocks', () => {
 
   it('o T3 subiu de 3º para 1º na 2ª rodada, mas o marco de Líder substitui o "subiu" (R47)', () => {
     expect(movementOf(mb.t3.id)).toEqual([]);
-    expect(events.some((event) => event.id === 'event-milestone-leader-arena-rm-andre-bruno')).toBe(true);
+    expect(events.some((event) => event.id === 'event-milestone-leader-arena-mangaba-andre-bruno')).toBe(true);
   });
 
   it('a M4, encerrada, caiu de 4º para 5º na 2ª rodada sem gerar o "caiu" (R45)', () => {
