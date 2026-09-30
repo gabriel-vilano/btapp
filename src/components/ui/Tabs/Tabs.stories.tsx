@@ -23,6 +23,34 @@ const RANKING_CATEGORIES: TabItem[] = [
   { value: "iniciante", label: "Iniciante", panel: panelText("Ranking da categoria Iniciante.") },
 ];
 
+// Escopos da busca do Explorar (EX5): contagem de 1 dígito, 2 dígitos e acima de 99
+const SEARCH_SCOPES: TabItem[] = [
+  { value: "players", label: "Jogadores", count: 7, panel: panelText("Jogadores encontrados.") },
+  { value: "competitions", label: "Competições", count: 12, panel: panelText("Competições encontradas.") },
+  { value: "arenas", label: "Arenas", count: 150, panel: panelText("Arenas encontradas.") },
+];
+
+const SEARCH_SCOPE_NAMES = [
+  "Jogadores, 7 resultados",
+  "Competições, 12 resultados",
+  "Arenas, mais de 99 resultados",
+];
+
+/** Nenhuma aba corta o próprio texto: o conteúdo cabe na largura da aba. */
+function expectNoClippedTab(tabs: HTMLElement[]) {
+  for (const tab of tabs) {
+    expect(tab.scrollWidth).toBeLessThanOrEqual(tab.clientWidth);
+  }
+}
+
+/**
+ * Largura só vale medida com a Arimo: a fonte de fallback é mais larga. O `fonts.ready`
+ * sozinho resolve antes de a fonte ser pedida, e a story falhava às vezes na rodada completa.
+ */
+async function loadArimo() {
+  await Promise.all([document.fonts.load("700 14px Arimo"), document.fonts.load("400 12px Arimo")]);
+}
+
 type StatefulTabsProps = Omit<ComponentProps<typeof Tabs>, "value" | "onValueChange"> & {
   initialValue: string;
 };
@@ -142,6 +170,125 @@ export const WithDisabledTab: Story = {
     docs: {
       description: {
         story: "Aba desabilitada: não recebe foco, e as setas pulam por ela.",
+      },
+    },
+  },
+};
+
+export const WithCount: Story = {
+  args: {
+    label: "Escopo da busca",
+    items: SEARCH_SCOPES,
+    value: "players",
+  },
+  render: (args) => (
+    <div className="sb-width-393">
+      <StatefulTabs {...args} initialValue={args.value} />
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    await loadArimo();
+    const tabs = SEARCH_SCOPE_NAMES.map((name) => canvas.getByRole("tab", { name }));
+    // Acima de 99, a aba mostra "99+"; o número visível fica fora do nome acessível
+    await expect(tabs[2]).toHaveTextContent("99+");
+    await expect(canvas.getByRole("tabpanel", { name: "Jogadores, 7 resultados" })).toBeVisible();
+
+    // As três cabem a 393px: a lista não rola e nenhuma aba corta o texto
+    const tablist = canvas.getByRole("tablist");
+    await expect(tablist.scrollWidth).toBeLessThanOrEqual(tablist.clientWidth);
+    expectNoClippedTab(tabs);
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Escopos da busca do Explorar a 393px, com contagem de 1 dígito, 2 dígitos e acima de 99.",
+      },
+    },
+  },
+};
+
+export const WithCountSingular: Story = {
+  args: {
+    label: "Escopo da busca",
+    items: SEARCH_SCOPES.map((item, index) => ({ ...item, count: [0, 1, 99][index] })),
+    value: "players",
+  },
+  render: (args) => (
+    <div className="sb-width-393">
+      <StatefulTabs {...args} initialValue={args.value} />
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    // Singular só no 1; zero vai no plural, e 99 ainda é o número exato
+    await expect(canvas.getByRole("tab", { name: "Jogadores, 0 resultados" })).toBeInTheDocument();
+    await expect(canvas.getByRole("tab", { name: "Competições, 1 resultado" })).toBeInTheDocument();
+    await expect(canvas.getByRole("tab", { name: "Arenas, 99 resultados" })).toHaveTextContent("99");
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Zero, um e 99: o nome acessível troca para o singular só no 1.",
+      },
+    },
+  },
+};
+
+export const WithCountWidest: Story = {
+  args: {
+    label: "Escopo da busca",
+    items: SEARCH_SCOPES.map((item) => ({ ...item, count: 100 })),
+    value: "competitions",
+  },
+  render: (args) => (
+    <div className="sb-width-393">
+      <StatefulTabs {...args} initialValue={args.value} />
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    await loadArimo();
+    const tablist = canvas.getByRole("tablist");
+    await expect(tablist.scrollWidth).toBeLessThanOrEqual(tablist.clientWidth);
+    expectNoClippedTab(canvas.getAllByRole("tab"));
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Pior caso de largura: as três abas com \"99+\" ainda cabem a 393px.",
+      },
+    },
+  },
+};
+
+export const WithCountLargeText: Story = {
+  args: {
+    label: "Escopo da busca",
+    items: SEARCH_SCOPES,
+    value: "players",
+  },
+  render: (args) => (
+    <div className="sb-width-393 sb-text-200">
+      <StatefulTabs {...args} initialValue={args.value} />
+    </div>
+  ),
+  play: async ({ canvas, userEvent }) => {
+    await loadArimo();
+    const tabs = SEARCH_SCOPE_NAMES.map((name) => canvas.getByRole("tab", { name }));
+    const tablist = canvas.getByRole("tablist");
+    // Texto a 200% (WCAG 1.4.4): a lista rola, e cada aba mantém o texto inteiro
+    await expect(tablist.scrollWidth).toBeGreaterThan(tablist.clientWidth);
+    expectNoClippedTab(tabs);
+
+    // A última aba, fora da vista, rola para dentro dela ao receber foco
+    await userEvent.click(tabs[0]);
+    await userEvent.keyboard("{End}");
+    await expect(tabs[2]).toHaveFocus();
+    const listBox = tablist.getBoundingClientRect();
+    await expect(tabs[2].getBoundingClientRect().right).toBeLessThanOrEqual(listBox.right + 1);
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Texto ampliado a 200%: as abas com contagem rolam na horizontal, sem cortar texto.",
       },
     },
   },

@@ -2,7 +2,7 @@
 
 import { useActionState, useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { createProfile, checkUsername } from "@/app/(auth)/actions";
+import { createProfile, checkUsername, suggestUsername } from "@/app/(auth)/actions";
 import { createClient } from "@/src/lib/supabase/client";
 import { AuthFormContainer } from "@/src/components/auth/AuthFormContainer";
 import { AuthFormHeader } from "@/src/components/auth/AuthFormHeader";
@@ -12,7 +12,7 @@ import { Button } from "@/src/components/ui/Button";
 import { Alert } from "@/src/components/ui/Alert";
 import { TextLink } from "@/src/components/ui/TextLink";
 import { Spinner } from "@/src/components/ui/Spinner";
-import { slugifyName, validateUsername } from "@/src/lib/validations";
+import { validateUsername } from "@/src/lib/validations";
 import authStyles from "@/app/(auth)/auth-page.module.css";
 import styles from "./page.module.css";
 
@@ -52,10 +52,11 @@ export default function ProfilePage() {
         return;
       }
 
-      const fullName = (user.user_metadata?.full_name as string) ?? "";
-      if (fullName) {
-        const slug = slugifyName(fullName);
-        setUsername(slug);
+      // A sugestão já vem checada contra o banco, então nasce como disponível
+      const suggested = await suggestUsername();
+      if (suggested) {
+        setUsername(suggested);
+        setUsernameStatus("available");
       }
       setInitialized(true);
     }
@@ -129,6 +130,7 @@ export default function ProfilePage() {
     formAction(formData);
   }
 
+  // Pular grava a sugestão do servidor: todo jogador sai do cadastro com @username
   function handleSkip() {
     if (isPending) return;
     const formData = new FormData();
