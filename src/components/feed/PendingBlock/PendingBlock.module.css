@@ -1,0 +1,23 @@
+/* O divisor separa as tarefas do jogador do activity stream que vem abaixo */
+.pending-block {
+  display: flex;
+  flex-direction: column;
+  border-bottom: var(--border-width-medium) solid var(--color-border-subtle);
+}
+
+.pending-block__title {
+  margin: 0;
+  padding: var(--spacing-200) var(--spacing-page-margin) var(--spacing-50);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground-primary);
+}
+
+.pending-block__see-all {
+  padding: var(--spacing-100) var(--spacing-page-margin) var(--spacing-200);
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+}

@@ -1,5 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { arrivalTab, currentTab, isMainTab, mainTabHref, tabAtRoot } from "./mainTabs";
+import {
+  arrivalTab,
+  competitionArrivalTab,
+  currentTab,
+  isMainTab,
+  mainTabHref,
+  rememberTabRoot,
+  tabAtRoot,
+  tabBackHref,
+} from "./mainTabs";
 
 describe("tabAtRoot", () => {
   it.each([
@@ -26,7 +35,7 @@ describe("arrivalTab (N28)", () => {
     ["/jogos/p-123", "jogos"],
     ["/ranking/masculino-b", "competicoes"],
     ["/competicoes/copa-tucum", "competicoes"],
-    ["/arenas/arena-mangaba", "explorar"],
+    ["/organizacoes/arena-mangaba", "explorar"],
     ["/jogadores/lucas", "feed"],
     ["/notificacoes", "feed"],
     ["/perfil/configuracoes", "perfil"],
@@ -49,6 +58,55 @@ describe("currentTab (N10)", () => {
   it("num detalhe sem origem, usa a aba dona da entidade", () => {
     expect(currentTab("/jogos/p-123", null)).toBe("jogos");
     expect(currentTab("/jogadores/lucas", null)).toBe("feed");
+  });
+
+  it("num detalhe sem origem, a aba que a tela declarou vence a da rota (N28)", () => {
+    expect(currentTab("/competicoes/copa-tucum", null, "explorar")).toBe("explorar");
+  });
+
+  it("a aba de origem vence a declarada: de dentro do app, vale a N10", () => {
+    expect(currentTab("/competicoes/copa-tucum", "feed", "explorar")).toBe("feed");
+  });
+
+  it("na raiz de uma aba, a declarada não muda nada", () => {
+    expect(currentTab("/competicoes", null, "explorar")).toBe("competicoes");
+  });
+});
+
+describe("competitionArrivalTab (N28)", () => {
+  it("inscrito cai em Competições; quem não está inscrito, no Explorar", () => {
+    expect(competitionArrivalTab(true)).toBe("competicoes");
+    expect(competitionArrivalTab(false)).toBe("explorar");
+  });
+});
+
+describe("rememberTabRoot e tabBackHref (N10, pilha por aba)", () => {
+  it("guarda a raiz da aba com a query", () => {
+    expect(rememberTabRoot({}, "/explorar", "q=ana&escopo=jogadores")).toEqual({
+      explorar: "/explorar?q=ana&escopo=jogadores",
+    });
+  });
+
+  it("a visita mais recente à raiz substitui a anterior, e a raiz limpa também conta", () => {
+    const roots = rememberTabRoot({ explorar: "/explorar?q=ana" }, "/explorar", "");
+    expect(roots).toEqual({ explorar: "/explorar" });
+  });
+
+  it("num detalhe, não muda nada", () => {
+    const roots = { explorar: "/explorar?q=ana" };
+    expect(rememberTabRoot(roots, "/jogadores/ana", "")).toBe(roots);
+    expect(rememberTabRoot(roots, "/competicoes/copa-tucum", "aba=regras")).toBe(roots);
+  });
+
+  it("a mesma URL devolve o mesmo objeto, sem render a mais", () => {
+    const roots = { feed: "/feed" };
+    expect(rememberTabRoot(roots, "/feed", "")).toBe(roots);
+  });
+
+  it("\"Voltar\" leva à raiz como ela estava; sem visita, à raiz limpa", () => {
+    const roots = { explorar: "/explorar?q=ana" };
+    expect(tabBackHref(roots, "explorar")).toBe("/explorar?q=ana");
+    expect(tabBackHref(roots, "competicoes")).toBe("/competicoes");
   });
 });
 

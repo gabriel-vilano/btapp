@@ -2,7 +2,6 @@
 
 import { CaretRightIcon } from "@phosphor-icons/react";
 import { useState } from "react";
-import { AppHeader } from "@/src/components/ui/AppHeader";
 import { ButtonLink } from "@/src/components/ui/Button";
 import { EmptyState } from "@/src/components/ui/EmptyState";
 import { Icon } from "@/src/components/ui/Icon";
@@ -16,7 +15,6 @@ import styles from "./RankingScreen.module.css";
 
 /** Destinos da tela, resolvidos pela rota (os slugs são dela). */
 export interface RankingScreenLinks {
-  back: string;
   /** Regras da competição, na seção de pontuação (RK5). */
   rules: string;
   /** Classificação da temporada anterior (RK15); null quando não há. */
@@ -36,6 +34,7 @@ interface RankingScreenProps {
 /**
  * Classificação de uma categoria numa temporada (docs/RANKING.md): cabeçalho da
  * temporada, tabela com a linha de corte e a própria linha fixada, e os vazios.
+ * O cabeçalho da tela ("Classificação" e "Voltar") é da página.
  * Ex.: `<RankingScreen model={model} viewerId={lucas.id} now={now} links={links} />`
  */
 export function RankingScreen({ model, viewerId, now, links, scrollToOwnOnOpen = false }: RankingScreenProps) {
@@ -43,7 +42,6 @@ export function RankingScreen({ model, viewerId, now, links, scrollToOwnOnOpen =
   const { content } = model;
   return (
     <>
-      <AppHeader title="Classificação" backHref={links.back} />
       <main className={styles["ranking-screen"]}>
         <header className={styles["ranking-screen__header"]}>
           {/* Vira o seletor de categoria (RK6) na issue dele */}
