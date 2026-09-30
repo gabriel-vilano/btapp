@@ -68,8 +68,16 @@ export const OwnInsideZone: Story = {
   play: async ({ canvas, canvasElement }) => {
     await expect(canvas.queryByText(/^Faltam/)).toBeNull();
     const view = canvasElement.ownerDocument.defaultView as Window;
-    view.scrollTo({ top: view.document.body.scrollHeight, behavior: "instant" });
-    await waitFor(() => expect(ownPinned(canvasElement)?.className).toMatch(/pinned--top/));
+    // Rola de novo a cada tentativa: um scroll só falhava na CI quando a
+    // página era reposicionada depois dele (a rolagem suave da story anterior
+    // ou o ajuste do Storybook ao montar) e a linha voltava à vista
+    await waitFor(
+      () => {
+        view.scrollTo({ top: view.document.documentElement.scrollHeight, behavior: "instant" });
+        expect(ownPinned(canvasElement)?.className).toMatch(/pinned--top/);
+      },
+      { timeout: 3000 },
+    );
   },
 };
 
