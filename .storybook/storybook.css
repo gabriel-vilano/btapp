@@ -71,6 +71,17 @@
   padding: var(--spacing-200) 0;
 }
 
+/* Texto ampliado a 200% (WCAG 1.4.4), como o zoom só de texto do navegador:
+   dobra as escalas tipográficas dentro do wrapper, sem mexer no resto da página */
+.sb-text-200 {
+  --text-label-lg-size: calc(var(--font-size-087) * 2);
+  --text-label-lg-line-height: calc(var(--line-height-125) * 2);
+  --text-label-md-size: calc(var(--font-size-075) * 2);
+  --text-label-md-line-height: calc(var(--line-height-100) * 2);
+  --text-body-md-size: calc(var(--font-size-087) * 2);
+  --text-body-md-line-height: calc(var(--line-height-125) * 2);
+}
+
 /* Mobile base (393px) sem margem: stories de linhas de ponta a ponta, ao lado da de 320px */
 .sb-width-393 {
   width: 393px;

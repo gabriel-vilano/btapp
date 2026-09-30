@@ -13,6 +13,30 @@ Uma fileira de abas de 48px sobre uma linha de base, e o painel da aba ativa log
 
 <Canvas of={TabsStories.Default} />
 
+## Com contagem
+
+Cada aba aceita uma contagem opcional (`items[].count`), mostrada ao lado do nome em `label-md` regular. É o número de resultados de cada escopo da busca do Explorar (`docs/EXPLORE.md`, EX5): "Jogadores 7 · Competições 12 · Arenas 99+". Sem `count`, a aba mostra só o nome.
+
+<Canvas of={TabsStories.WithCount} />
+
+### Nome acessível
+
+O leitor de tela ouve o nome e a contagem, no singular só no 1: "Jogadores, 0 resultados", "Competições, 1 resultado", "Arenas, 12 resultados". O substantivo vem da prop `countNoun` (padrão `resultado` / `resultados`), para uma contagem que não seja de resultados.
+
+<Canvas of={TabsStories.WithCountSingular} />
+
+### Acima de 99
+
+A aba mostra "99+", e o nome acessível diz "mais de 99 resultados", o mesmo que a tela mostra. O limite segura a largura: com as três abas em "99+", elas ainda cabem a 393px.
+
+<Canvas of={TabsStories.WithCountWidest} />
+
+### Texto ampliado
+
+Com o texto a 200% (WCAG 1.4.4), as abas com contagem deixam de caber e a lista rola na horizontal, com cada aba inteira. É a mesma rede de segurança do texto longo, abaixo.
+
+<Canvas of={TabsStories.WithCountLargeText} />
+
 ## Estados
 
 A aba tem quatro estados visíveis, além do texto longo, que muda o comportamento da lista.
@@ -42,6 +66,7 @@ A aba desabilitada (`items[].disabled`) fica em `--color-foreground-disabled`, n
 - Separar as leituras de uma página em seções do mesmo nível, como o perfil (visão geral, partidas, estatísticas)
 - Alternar entre conjuntos de conteúdo paralelos, como as categorias do ranking
 - Quando cada seção tem conteúdo próprio, que não cabe junto na tela
+- Os escopos da busca do Explorar (Jogadores, Competições, Arenas), com a contagem de resultados em cada um. Cada escopo tem a própria lista de resultados, então é troca de painel, não filtro
 
 ## Componentes relacionados
 
@@ -56,6 +81,7 @@ A aba desabilitada (`items[].disabled`) fica em `--color-foreground-disabled`, n
 - **Ativação automática:** a seta já troca o painel. O APG recomenda esse modo quando o painel aparece sem espera, como aqui, onde todos os painéis estão renderizados
 - O painel recebe foco (`tabIndex={0}`), para quem usa teclado chegar ao conteúdo mesmo quando ele não tem nada focável
 - **Área tocável de 48px** na própria aba (`--dimension-tap-target-minimum`)
+- **Contagem no nome da aba:** o número visível fica fora da árvore de acessibilidade (`aria-hidden`), e um texto oculto diz o nome completo, "Competições, 1 resultado". Sem isso, o leitor leria "Competições1"
 - **Seleção por contraste, não só por cor** (WCAG 1.4.1 e 1.4.11): o indicador grafite dá cerca de 12:1 com o branco, e o texto da aba ativa escurece
 
 ## Evitar
@@ -65,6 +91,7 @@ A aba desabilitada (`items[].disabled`) fica em `--color-foreground-disabled`, n
 - ❌ **Uma aba só.** Sem alternativa, é um título de seção
 - ❌ **Abas aninhadas.** Duas fileiras de abas empilhadas confundem o que cada uma controla
 - ❌ **Coral na aba ativa.** Coral é a cor de ação do app; seleção é grafite
+- ❌ **Contagem que não é número de itens.** A contagem diz quantos itens o painel tem. Status ("novo", "pendente") é o `Badge`
 - ❌ **Abas que não cabem em 393px.** A pista de rolagem horizontal passa despercebida, até com setas, e o jogador não descobre as abas escondidas ([NN/g](https://www.nngroup.com/articles/horizontal-scrolling/)). Lista longa, como as categorias do ranking, usa outro padrão: um botão que abre uma folha com as opções
 
 ## API
@@ -78,6 +105,10 @@ A aba desabilitada (`items[].disabled`) fica em `--color-foreground-disabled`, n
 **Por que a lista rola em vez de quebrar o texto ou cortar com reticências?** Num nome como "Duplas Femininas C", cortar esconde justo a parte que diferencia uma aba da outra. A rolagem mantém cada nome inteiro e a altura fixa de 48px. Ela só existe como rede de segurança (um texto traduzido, uma fonte maior): o uso esperado são abas que cabem na tela, porque a rolagem horizontal quase não é percebida.
 
 **Por que um componente só com `items`, e não peças (`Tabs.List`, `Tabs.Tab`, `Tabs.Panel`)?** Com a lista de itens, os ids que ligam aba e painel e a navegação por teclado ficam num lugar só, e o consumidor não consegue montar uma aba sem painel. Se aparecer um caso que precise de aba com conteúdo customizado, a API cresce a partir daí.
+
+**Por que as Tabs, e não o `SegmentedControl`, nos escopos da busca?** Decisão do Gabriel de 30/09. As Tabs não pedem variante nova e, com o texto ampliado, rolam em vez de cortar. Medido com a Arimo a 393px: as três abas com contagem ocupam 120, 131 e 110px, e no `SegmentedControl` cada segmento igual tem 93px para o texto, onde "Competições 1" (99,6px) sairia cortado.
+
+**Por que a contagem em regular e menor, e não em negrito como o nome?** O nome é o que o jogador procura; o número é apoio. O peso e o tamanho menores fazem a hierarquia sem outra cor, e a contagem acompanha a cor da aba (selecionada ou não).
 
 ## Referências
 
