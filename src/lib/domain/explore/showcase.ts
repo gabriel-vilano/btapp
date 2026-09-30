@@ -45,6 +45,15 @@ export function showcaseCompetitions(domain: ExploreDomain, now: string): Compet
   return [...groups.openTournaments, ...groups.runningRankings, ...groups.rankingsBetweenSeasons];
 }
 
+/**
+ * Ordem da busca de competições (EX16): a da vitrine, com os torneios
+ * encerrados no fim, do mais recente ao mais antigo.
+ */
+export function searchCompetitionOrder(competitions: Competition[], domain: StatusTables, now: string): Competition[] {
+  const groups = groupCompetitions(competitions, domain, now);
+  return [...groups.openTournaments, ...groups.runningRankings, ...groups.rankingsBetweenSeasons, ...groups.pastTournaments];
+}
+
 /** Competições da página da organização (EX22): abertas na ordem da EX8; encerradas atrás de "Ver encerradas (N)". */
 export interface OrganizationCompetitions {
   open: Competition[];
