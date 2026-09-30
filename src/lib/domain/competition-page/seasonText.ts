@@ -45,13 +45,21 @@ export function formatRoundDeadline(deadline: string, now: string): string {
 }
 
 /**
+ * Rodada atual, sem o prazo (RK4; a situação do ranking na vitrine, EX10).
+ * Sem total fixo, só o número. Ex.: "Rodada 3 de 4"; sem rodada: "Primeira rodada ainda não sorteada".
+ */
+export function formatRoundName(round: Pick<CurrentRound, 'number' | 'total'> | null): string {
+  if (round === null) return 'Primeira rodada ainda não sorteada';
+  return round.total === null ? `Rodada ${round.number}` : `Rodada ${round.number} de ${round.total}`;
+}
+
+/**
  * Rodada atual com o prazo (RK4). Sem total fixo, só o número.
  * Ex.: "Rodada 3 de 4 · fecha em 5 dias"; sem rodada: "Primeira rodada ainda não sorteada".
  */
 export function formatRoundLine(round: CurrentRound | null, now: string): string {
-  if (round === null) return 'Primeira rodada ainda não sorteada';
-  const name = round.total === null ? `Rodada ${round.number}` : `Rodada ${round.number} de ${round.total}`;
-  return `${name} · ${formatRoundDeadline(round.deadline, now)}`;
+  if (round === null) return formatRoundName(null);
+  return `${formatRoundName(round)} · ${formatRoundDeadline(round.deadline, now)}`;
 }
 
 /**
