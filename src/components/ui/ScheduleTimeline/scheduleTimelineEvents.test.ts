@@ -41,7 +41,7 @@ describe("histórico da marcação em eventos da linha do tempo", () => {
     expect(events[1]).toMatchObject({
       actor: "Diego",
       action: "informou a data combinada fora do app",
-      detail: "seg, 14/09, 19h · Arena RM – Beach · Nova Lima/MG",
+      detail: "seg, 14/09, 19h · Arena Mangaba – Beach · Nova Lima/MG",
     });
   });
 
@@ -74,18 +74,18 @@ describe("histórico da marcação em eventos da linha do tempo", () => {
 describe("formatOptions", () => {
   it("arena comum a todas as opções vai uma vez no fim", () => {
     const options = [
-      { starts_at: "2026-09-09T22:00:00Z", venue: "Arena Sunset" },
-      { starts_at: "2026-09-10T22:00:00Z", venue: "Arena Sunset" },
+      { starts_at: "2026-09-09T22:00:00Z", venue: "Arena Tucum" },
+      { starts_at: "2026-09-10T22:00:00Z", venue: "Arena Tucum" },
     ];
-    expect(formatOptions(options)).toBe("qua, 09/09, 19h ou qui, 10/09, 19h · Arena Sunset");
+    expect(formatOptions(options)).toBe("qua, 09/09, 19h ou qui, 10/09, 19h · Arena Tucum");
   });
 
   it("arenas diferentes ficam em cada opção; opção sem arena fica sem parênteses", () => {
     const options = [
-      { starts_at: "2026-09-09T22:00:00Z", venue: "Arena Sunset" },
+      { starts_at: "2026-09-09T22:00:00Z", venue: "Arena Tucum" },
       { starts_at: "2026-09-10T22:00:00Z", venue: null },
     ];
-    expect(formatOptions(options)).toBe("qua, 09/09, 19h (Arena Sunset) ou qui, 10/09, 19h");
+    expect(formatOptions(options)).toBe("qua, 09/09, 19h (Arena Tucum) ou qui, 10/09, 19h");
   });
 
   it("sem arena em nenhuma opção, só os horários", () => {

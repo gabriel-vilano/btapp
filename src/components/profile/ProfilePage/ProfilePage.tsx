@@ -6,7 +6,6 @@ import { IconButtonLink } from "@/src/components/ui/IconButton";
 import { Skeleton } from "@/src/components/ui/Skeleton";
 import { ProfileHeader, ProfileHeaderSkeleton } from "@/src/components/profile/ProfileHeader";
 import {
-  FEED_PATH,
   OWN_HISTORY_PATH,
   SETTINGS_PATH,
   firstName,
@@ -14,7 +13,6 @@ import {
   type ProfilePageData,
 } from "@/src/lib/domain/profile-page";
 import { ProfileAction } from "./ProfileAction";
-import { ProfileMenu } from "./ProfileMenu";
 import { ProfileSection } from "./ProfileSection";
 import { RankingList, RecentMatches, SeasonList, VersusList } from "./ProfileSections";
 import styles from "./ProfilePage.module.css";
@@ -25,7 +23,8 @@ interface ProfilePageProps {
 
 /**
  * Perfil do jogador (PROFILE.md): rolagem única, na ordem da PF1. O próprio perfil e o de
- * outro jogador são a mesma tela; muda quem vê (PF3).
+ * outro jogador são a mesma tela; muda quem vê (PF3). O cabeçalho é da página: o
+ * `OwnProfileHeader` na aba Perfil; o de detalhe, com o `ProfileMenu`, no de outro jogador.
  * @example <ProfilePage data={buildProfilePage(mockProfileDomain, request)} />
  */
 export function ProfilePage({ data }: ProfilePageProps) {
@@ -34,7 +33,6 @@ export function ProfilePage({ data }: ProfilePageProps) {
   const name = firstName(player.name);
   return (
     <div className={styles.profile}>
-      <ProfileTopBar data={data} />
       <div className={styles.profile__header}>
         <ProfileHeader
           player={player}
@@ -67,38 +65,29 @@ export function ProfilePage({ data }: ProfilePageProps) {
   );
 }
 
-// O h1 da tela é o nome, no ProfileHeader (PROFILE.md §7): o @username do topo vai como `p`.
-// No próprio perfil, a engrenagem das configurações (N8); no de outro, "Voltar" e o menu ⋯ (PF8).
-// O "Voltar" leva ao Feed, a aba dona do jogador (N28), até a aba de origem (N10) existir.
-function ProfileTopBar({ data }: ProfilePageProps) {
-  const { username, name } = data.player;
-  if (data.relation === "self") {
-    return (
-      <AppHeader
-        title={`@${username}`}
-        titleAs="p"
-        actions={<IconButtonLink href={SETTINGS_PATH} icon={GearSixIcon} label="Configurações" />}
-      />
-    );
-  }
+/**
+ * Cabeçalho da aba Perfil, a raiz da aba: sem "Voltar", com a engrenagem das configurações (N8).
+ * O h1 da tela é o nome, no ProfileHeader (PROFILE.md §7): o @username do topo vai como `p`.
+ * No perfil de outro jogador, "Voltar" e o menu ⋯ (PF8) vêm do cabeçalho de detalhe da página.
+ * @example <OwnProfileHeader username="lucassilva" />
+ */
+export function OwnProfileHeader({ username }: { username: string }) {
   return (
     <AppHeader
       title={`@${username}`}
       titleAs="p"
-      backHref={FEED_PATH}
-      actions={<ProfileMenu username={username} name={name} />}
+      actions={<IconButtonLink href={SETTINGS_PATH} icon={GearSixIcon} label="Configurações" />}
     />
   );
 }
 
 /**
- * Carregando (PF21, N23): o cabeçalho da tela na hora e o esqueleto do cabeçalho do perfil
- * e de 3 linhas de lista.
+ * Carregando (PF21, N23): o esqueleto do cabeçalho do perfil e de 3 linhas de lista. O
+ * cabeçalho da tela, que aparece na hora, é da página.
  */
-export function ProfilePageSkeleton({ title = "Perfil" }: { title?: string }) {
+export function ProfilePageSkeleton() {
   return (
     <div className={styles.profile}>
-      <AppHeader title={title} />
       <div className={styles.profile__header}>
         <ProfileHeaderSkeleton />
       </div>

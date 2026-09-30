@@ -12,7 +12,7 @@ const diego = { id: "p-diego", name: "Diego Martins", avatarUrl: null };
 const andre = { id: "p-andre", name: "André Lima", avatarUrl: null };
 const bruno = { id: "p-bruno", name: "Bruno Araújo", avatarUrl: null };
 
-const RANKING = "Ranking Arena RM 2026 · Masculino B";
+const RANKING = "Ranking Arena Mangaba 2026 · Masculino B";
 
 function item(slug: string, overrides: Partial<AgendaItemModel>): AgendaItemModel {
   return {
@@ -43,7 +43,7 @@ export const yourTurnItems: AgendaItemModel[] = [
 export const upcomingItems: AgendaItemModel[] = [
   item("final", {
     opponentSide: [andre, bruno],
-    context: "Copa Sunset de Beach Tennis · Masculino B · Final",
+    context: "Copa Tucum de Beach Tennis · Masculino B · Final",
     situation: "Sáb, 9h · Quadra 3",
     badge: "Hoje",
   }),

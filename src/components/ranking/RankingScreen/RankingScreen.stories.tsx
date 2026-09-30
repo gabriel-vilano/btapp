@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Decorator, Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, screen, waitFor, within } from "storybook/test";
 import type { RankingScreenContent } from "@/src/lib/domain/ranking-screen";
+import { AppHeader } from "@/src/components/ui/AppHeader";
 import { RankingScreen } from "./RankingScreen";
 import {
   STORY_HEADER,
@@ -15,9 +16,19 @@ import {
 // Tier 4: uma story por caso do mapa de estados (docs/RANKING.md 8.4), para ver
 // a tela inteira; o detalhe de cada peça está na story dela (RankingRow,
 // ZoneDivider, PinnedStandingRow)
+// O cabeçalho é da página (DetailHeader). A story não tem a casca: mostra o
+// AppHeader com o "Voltar" fixo, para a tela aparecer inteira
+const pageHeader: Decorator = (Story) => (
+  <>
+    <AppHeader title="Classificação" backHref="/competicoes" />
+    <Story />
+  </>
+);
+
 const meta = {
   title: "Ranking/RankingScreen",
   component: RankingScreen,
+  decorators: [pageHeader],
   parameters: {
     layout: "fullscreen",
     docs: {

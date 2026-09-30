@@ -98,7 +98,7 @@ function reportedDateEvent(reported: ReportedScheduleDate, names: PlayerNames): 
 /**
  * Horários separados por "ou". A arena comum a todos vai uma vez no fim; se
  * variar, cada horário leva a sua entre parênteses.
- * Ex.: "sáb, 05/09, 11h ou dom, 06/09, 7h · Arena Sunset".
+ * Ex.: "sáb, 05/09, 11h ou dom, 06/09, 7h · Arena Tucum".
  */
 export function formatOptions(options: readonly ScheduleOption[]): string {
   const venues = new Set(options.map((option) => option.venue));

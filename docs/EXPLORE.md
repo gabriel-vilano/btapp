@@ -44,7 +44,7 @@ A busca tem outro papel: é a porta mais curta para um perfil (JTBD 3, avaliar o
 - **Competição aberta:** ranking com temporada em andamento, ou torneio cuja data de fim é hoje ou depois. É a que ainda admite jogo. O resto é **encerrada**: ranking entre temporadas (a última terminou e a próxima não começou) e torneio que já aconteceu.
 - **"Arena" tem três sentidos no app**, e esta spec usa sempre o qualificado:
   1. **Organização do tipo arena** (DOMAIN, glossário): uma entidade, com página (seção 5). É o que o escopo "Arenas" e a seção "Arenas" da vitrine listam.
-  2. **Local do torneio**: texto guardado no torneio (`TournamentCompetition.venue` no código; o `DOMAIN.md` ainda não o descreve). Aparece no item do torneio ("Sáb, 12/10 · Arena Sunset").
+  2. **Local do torneio**: texto guardado no torneio (`TournamentCompetition.venue` no código; o `DOMAIN.md` ainda não o descreve). Aparece no item do torneio ("Sáb, 12/10 · Arena Tucum").
   3. **Arena da partida**: texto opcional da data acordada (R34, M18).
 
   Os dois textos não apontam para a organização. **Limite aceito no MVP:** um torneio de outra organização jogado numa arena não aparece na página dessa arena, e tocar no local do torneio ou da partida não abre nada.
@@ -85,7 +85,7 @@ A vitrine é o Explorar sem termo digitado. Responde "o que existe para eu jogar
 - **EX10. O item de competição** (CompetitionListItem, seção 8):
   - avatar da organização e nome da competição;
   - linha de apoio: tipo · organização · cidade ("Ranking · Vila do Tênis · Belo Horizonte");
-  - situação: no ranking, "Temporada 2026/2 · rodada 3" ou "Entre temporadas"; no torneio, a data e o local ("Sáb, 12/10 · Arena Sunset") ou "Encerrado";
+  - situação: no ranking, "Temporada 2026/2 · rodada 3" ou "Entre temporadas"; no torneio, a data e o local ("Sáb, 12/10 · Arena Tucum") ou "Encerrado";
   - Badge "Você participa" quando há inscrição ativa (EX9).
 
   Toque → a página da competição (`/competicoes/[competicao]`, NAV N9). [RANK RK17; NAV N33]

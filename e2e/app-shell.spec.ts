@@ -95,3 +95,50 @@ test.describe("Casca do app", () => {
     expect(railBox.width).toBeLessThan(200);
   });
 });
+
+function backLink(page: Page) {
+  return page.getByRole("banner").getByRole("link", { name: "Voltar", exact: true });
+}
+
+test.describe("Voltar das telas de detalhe (N10 e N28)", () => {
+  test("N10: a partida aberta pelo Perfil mantém o Perfil marcado, e o Voltar leva a ele", async ({ page }) => {
+    await loginToFeed(page, "voltar-perfil");
+    const nav = mainNavigation(page);
+
+    await nav.getByRole("link", { name: "Perfil", exact: true }).click();
+    await expect(page).toHaveURL(/\/perfil$/);
+    // Uma partida de ranking do Lucas em "Partidas recentes": o nome do link é o dos adversários
+    await page.getByRole("main").locator('a[href="/jogos/match-arena-mangaba-mb-r2-1"]').first().click();
+
+    await expect(page).toHaveURL(/\/jogos\/match-arena-mangaba-mb-r2-1$/);
+    await expect(nav.getByRole("link", { name: "Perfil", exact: true })).toHaveAttribute("aria-current", "page");
+    await expect(backLink(page)).toHaveAttribute("href", "/perfil");
+
+    await backLink(page).click();
+    await expect(page).toHaveURL(/\/perfil$/);
+  });
+
+  test("N10: o Voltar leva à raiz da aba como ela estava, com a query", async ({ page }) => {
+    await loginToFeed(page, "voltar-query");
+    await page.goto("/competicoes?origem=teste");
+    await page.getByRole("main").locator('a[href="/ranking/masculino-b"]').first().click();
+
+    await expect(page).toHaveURL(/\/ranking\/masculino-b$/);
+    await expect(backLink(page)).toHaveAttribute("href", "/competicoes?origem=teste");
+  });
+
+  test("N28: a competição aberta por link marca Competições para o inscrito e Explorar para quem não está", async ({
+    page,
+  }) => {
+    await loginToFeed(page, "voltar-competicao");
+    const nav = mainNavigation(page);
+
+    await page.goto("/competicoes/ranking-arena-mangaba");
+    await expect(nav.getByRole("link", { name: /^Competições/ })).toHaveAttribute("aria-current", "page");
+    await expect(backLink(page)).toHaveAttribute("href", "/competicoes");
+
+    await page.goto("/competicoes/circuito-praia-norte");
+    await expect(nav.getByRole("link", { name: "Explorar", exact: true })).toHaveAttribute("aria-current", "page");
+    await expect(backLink(page)).toHaveAttribute("href", "/explorar");
+  });
+});

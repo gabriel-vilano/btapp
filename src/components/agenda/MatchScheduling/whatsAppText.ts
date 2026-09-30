@@ -16,7 +16,7 @@ export type WhatsAppSubject =
 
 /**
  * Mensagem para colar na conversa.
- * @example scheduleWhatsAppText({ kind: "agreed", option }) // "Jogo marcado: sáb, 3 out, 14h, na Arena Sunset."
+ * @example scheduleWhatsAppText({ kind: "agreed", option }) // "Jogo marcado: sáb, 3 out, 14h, na Arena Tucum."
  */
 export function scheduleWhatsAppText(subject: WhatsAppSubject): string {
   switch (subject.kind) {

@@ -111,7 +111,6 @@ export function storyModel(content: RankingScreenContent): RankingScreenModel {
 }
 
 export const STORY_LINKS: RankingScreenLinks = {
-  back: "/competicoes",
   rules: "/competicoes/ranking-bh#pontuacao",
   previousSeason: "/ranking/masculino-b?temporada=2026-1",
 };

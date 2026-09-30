@@ -13,9 +13,9 @@ describe('agendaItemModel', () => {
     const item = agendaItemModel(mockDomain, agenda.your_turn[0], NOW);
     expect(item.ownSide.map((person) => person.name)).toEqual(['Lucas Silva', 'Rafael Costa']);
     expect(item.opponentSide.map((person) => person.name)).toEqual(['Caio Ferreira', 'Diego Martins']);
-    expect(item.context).toBe('Ranking Arena RM 2026 · Masculino B · Rodada 3');
+    expect(item.context).toBe('Ranking Arena Mangaba 2026 · Masculino B · Rodada 3');
     expect(item.situation).toMatch(/^Marcar jogo · rodada fecha em /);
-    expect(item.action).toEqual({ label: 'Propor horários', href: '/jogos/match-arena-rm-mb-r3-1' });
+    expect(item.action).toEqual({ label: 'Propor horários', href: '/jogos/match-arena-mangaba-mb-r3-1' });
   });
 
   it('fora de "Sua vez" não há botão', () => {
@@ -26,7 +26,7 @@ describe('agendaItemModel', () => {
 
   it('torneio: competição · categoria · fase', () => {
     const item = agendaItemModel(mockDomain, agenda.upcoming[0], NOW);
-    expect(item.context).toBe('Copa Sunset de Beach Tennis · Masculino B · Final');
+    expect(item.context).toBe('Copa Tucum de Beach Tennis · Masculino B · Final');
   });
 
   it('amistoso: o contexto é "Amistoso"', () => {

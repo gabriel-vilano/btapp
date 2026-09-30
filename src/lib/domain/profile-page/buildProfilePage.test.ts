@@ -66,7 +66,7 @@ describe('buildProfilePage', () => {
 
   it('bloco "Vocês" com confronto definido: rodada e data acordada (PF16)', () => {
     const versus = dataOf(pageOf(players.caio.username).versus);
-    expect(versus?.next_match).toEqual({ href: '/jogos/match-arena-rm-mb-r3-1', stage: 'Rodada 3', scheduled_at: null });
+    expect(versus?.next_match).toEqual({ href: '/jogos/match-arena-mangaba-mb-r3-1', stage: 'Rodada 3', scheduled_at: null });
     expect(versus?.head_to_head).toBeNull();
   });
 
@@ -92,7 +92,7 @@ describe('buildProfilePage', () => {
         final_position: 2,
         milestones: [{ type: 'top_n', n: 2 }],
         final_name: 'Saideira',
-        href: expect.stringContaining('?temporada=season-arena-rm-2026-1'),
+        href: expect.stringContaining('?temporada=season-arena-mangaba-2026-1'),
       }),
     ]);
   });
