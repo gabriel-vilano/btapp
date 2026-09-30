@@ -11,6 +11,8 @@ export interface ScorePerspective {
   sideNames: Record<MatchSideKey, string>;
   /** Simples: "você" no lugar de "vocês". */
   isSingles: boolean;
+  /** Quem lança não fala por um lado (admin do torneio): a prévia usa o nome dos dois. */
+  neutral?: boolean;
 }
 
 export function otherSide(side: MatchSideKey): MatchSideKey {
@@ -19,7 +21,7 @@ export function otherSide(side: MatchSideKey): MatchSideKey {
 
 /** Como a frase se refere a um lado: "vocês" (ou "você") para quem lança, o nome para o outro. */
 export function sideReference(side: MatchSideKey, perspective: ScorePerspective): string {
-  if (side !== perspective.userSide) return perspective.sideNames[side];
+  if (side !== perspective.userSide || perspective.neutral) return perspective.sideNames[side];
   return perspective.isSingles ? "você" : "vocês";
 }
 
