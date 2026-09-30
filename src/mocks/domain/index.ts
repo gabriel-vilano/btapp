@@ -17,6 +17,14 @@ import type {
   Season,
   StandingSnapshot,
 } from '@/src/types/domain';
+import {
+  cajuiRanking,
+  cajuiRounds,
+  cajuiSeasons,
+  exploreOrganizations,
+  jenipapoTournament,
+  saqueCurtoTournament,
+} from './explore';
 import { feedEvents } from './feedEvents';
 import { friendlyMatches } from './friendlies';
 import { friendships, organizations, players, units } from './people';
@@ -130,6 +138,29 @@ export const mockProfileDomain: DomainMocks = {
   matches: [...pastMatches, ...mockDomain.matches],
   standingSnapshots: [...pastSnapshots, ...mockDomain.standingSnapshots],
   milestones: [...pastMilestones, ...mockDomain.milestones],
+};
+
+/**
+ * O `mockDomain` com as organizações e competições da vitrine do Explorar
+ * (docs/EXPLORE.md, EX8 a EX11 e EX22): um ranking entre temporadas, um
+ * torneio futuro, um passado e os tipos arena, clube e grupo. Separado para
+ * que as contagens dos outros testes não mudem.
+ * Ex.: `showcaseCompetitions(mockExploreDomain, now)`.
+ */
+export const mockExploreDomain: DomainMocks = {
+  ...mockDomain,
+  organizations: [...mockDomain.organizations, ...Object.values(exploreOrganizations)],
+  competitions: [...mockDomain.competitions, cajuiRanking, saqueCurtoTournament, jenipapoTournament],
+  seasons: [...mockDomain.seasons, ...Object.values(cajuiSeasons)],
+  rounds: [...mockDomain.rounds, ...cajuiRounds],
+};
+
+export const exploreEntities = {
+  organizations: exploreOrganizations,
+  cajuiRanking,
+  cajuiSeasons,
+  saqueCurtoTournament,
+  jenipapoTournament,
 };
 
 export const pastSeasonEntities = { season: pastSeason, rounds: pastRounds, masculinoB: pastMasculinoB };
