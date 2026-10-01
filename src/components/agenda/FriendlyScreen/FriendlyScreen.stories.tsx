@@ -41,6 +41,10 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+export const Pending: Story = {
+  name: "Outro lado: pendente",
+};
+
 export const Confirm: Story = {
   name: "Outro lado: confirmar",
   play: async ({ canvas }) => {
