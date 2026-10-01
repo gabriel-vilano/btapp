@@ -4,7 +4,6 @@ import { pendingBlockModel } from "@/src/lib/agenda/pendingBlockModel";
 import { MOCK_AGENDA_VIEWER_ID } from "@/src/mocks/agendaViewer";
 import { mockDomain } from "@/src/mocks/domain";
 import { ClearSignupPersistence } from "./ClearSignupPersistence";
-import { LogoutForm } from "./LogoutForm";
 
 export default async function FeedPage() {
   // Os prazos de "Sua vez" dependem do momento do acesso: nada de pré-render no build
@@ -16,7 +15,6 @@ export default async function FeedPage() {
       <h1>Feed</h1>
       <PendingBlock {...pending} />
       <p>Placeholder — feed será implementado na Fase 4.</p>
-      <LogoutForm />
     </main>
   );
 }

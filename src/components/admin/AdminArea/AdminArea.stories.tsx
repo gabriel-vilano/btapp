@@ -39,7 +39,7 @@ type Story = StoryObj<typeof meta>;
 export const WithDecisions: Story = {
   play: async ({ canvas, args }) => {
     await expect(canvas.getByText(args.data.competition_name)).toBeVisible();
-    await expect(canvas.getByRole("link", { name: "Voltar" })).toHaveAttribute("href", "/competicoes/liga-vila");
+    await expect(canvas.getByRole("link", { name: "Voltar" })).toHaveAttribute("href", "/competicoes/liga-pitanga");
     const decisions = within(canvas.getByRole("region", { name: "Decisões pendentes 2" }));
     const items = decisions.getAllByRole("listitem");
     // A contestação espera há 2 dias, a partida não realizada há 1: a contestação vem antes
@@ -51,7 +51,7 @@ export const WithDecisions: Story = {
     const roundFour = within(matches.getByRole("list", { name: "Partidas da Rodada 4" }));
     await expect(roundFour.getByRole("link", { name: /Bruno e Caio x Diego e Felipe.*Em arbitragem/ })).toHaveAttribute(
       "href",
-      "/jogos/match-liga-vila-mc-r4-1",
+      "/jogos/match-liga-pitanga-mc-r4-1",
     );
     await expect(matches.getByText("Corrigido")).toBeVisible();
     await expect(canvas.getByRole("button", { name: "Lançar sorteio da rodada" })).toBeVisible();
