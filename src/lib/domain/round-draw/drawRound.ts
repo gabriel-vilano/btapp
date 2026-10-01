@@ -11,7 +11,9 @@ import { countPairs, type Pairing } from './pairHistory';
 import type { RandomSource } from './seededRandom';
 
 // Sorteio da rodada do ranking (docs/DOMAIN.md, R7 e R30). O sorteio não é
-// guardado como entidade: ele cria as partidas, todas em "Confronto definido".
+// guardado como entidade: ele cria as partidas, todas em "Confronto definido",
+// e cada partida guarda quem sorteou e quando (R51). Quem sorteou entra na
+// camada que grava; aqui, o "quando" é o `drawnAt`.
 
 export type DrawnMatch = Extract<RankingMatch, DefinedState>;
 
