@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Alert } from "@/src/components/ui/Alert";
 import { Badge } from "@/src/components/ui/Badge";
+import { H2HButton } from "@/src/components/ui/H2HButton";
 import { sideOfPlayer } from "@/src/lib/domain/schedule-state";
 import type { MatchSideKey } from "@/src/types/domain";
 import { MatchResult } from "../MatchResult";
@@ -45,7 +46,7 @@ export function MatchScreen({ data, now: initialNow, clock = systemClock, create
   return (
     <div className={styles["match-screen"]}>
       <div className={styles["match-screen__content"]}>
-        <MatchHeading data={data} viewerSide={viewerSide} />
+        <MatchHeading data={data} viewerSide={viewerSide} showH2H={match.status === "defined"} />
         <MatchResult match={match} context={data} actions={result} now={scheduling.now} />
         {scheduling.error && <Alert status="attention" title={scheduling.error} />}
         <MatchScheduling
@@ -78,9 +79,11 @@ export function MatchScreen({ data, now: initialNow, clock = systemClock, create
   );
 }
 
-type MatchHeadingProps = { data: MatchScreenData; viewerSide: MatchSideKey | null };
+type MatchHeadingProps = { data: MatchScreenData; viewerSide: MatchSideKey | null; showH2H: boolean };
 
-function MatchHeading({ data, viewerSide }: MatchHeadingProps) {
+// O H2H é porta do confronto definido, para quem joga a partida (HH16). A
+// partida volta a "definido" quando o lançamento é desfeito (RG16), e o botão volta junto.
+function MatchHeading({ data, viewerSide, showH2H }: MatchHeadingProps) {
   return (
     <div className={styles["match-screen__heading"]}>
       <p className={styles["match-screen__context"]}>
@@ -94,6 +97,7 @@ function MatchHeading({ data, viewerSide }: MatchHeadingProps) {
           </li>
         ))}
       </ul>
+      {showH2H && viewerSide !== null && data.h2h !== null && <H2HButton count={data.h2h.count} href={data.h2h.href} />}
     </div>
   );
 }

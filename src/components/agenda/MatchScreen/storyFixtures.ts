@@ -107,6 +107,7 @@ export function storyData(history: ScheduleHistory, overrides: Partial<MatchScre
     // Sem tabela: as stories do impacto no ranking passam a delas (`storyStandings`)
     standings: { season_id: "story-season-2026-2", category_id: MATCH.category_id, rounds: [], enrollments: [], matches: [] },
     rankingHref: "/ranking/story-masculino-b?temporada=story-season-2026-2#minha-posicao",
+    h2h: null,
     ...overrides,
   };
 }
@@ -115,3 +116,6 @@ export function storyData(history: ScheduleHistory, overrides: Partial<MatchScre
 export const NOT_PLAYED_MATCH: RankingMatch = { ...MATCH, status: "not_played" };
 
 export const OUTSIDER_ID = "story-outsider";
+
+/** As duplas já se enfrentaram duas vezes: o botão H2H abaixo dos lados (HH16). */
+export const STORY_H2H = { count: 2, href: "/h2h/pedrohenrique+thiagomendes/caioferreira+diegomartins" };

@@ -64,7 +64,7 @@ describe('buildProfilePage', () => {
   it('bloco "Vocês" com H2H: partidas e vitórias de quem vê (PF17)', () => {
     expect(dataOf(pageOf(players.pedro.username).versus)).toEqual({
       next_match: null,
-      head_to_head: { href: '/jogadores/pedrohenrique/h2h', matches: 3, viewer_wins: 3 },
+      head_to_head: { href: '/h2h/lucassilva/pedrohenrique', matches: 3, viewer_wins: 3 },
     });
   });
 

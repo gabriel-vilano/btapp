@@ -114,9 +114,13 @@ export function versusView(domain: ProfilePageDomain, names: NameResolver, view:
   const versus = profileVersus(domain, view.playerId, view.viewerId);
   if (versus === null) return null;
   const { next_match_id: nextId, head_to_head: h2h } = versus;
-  const username = names.player(view.playerId).username;
+  const [viewer, player] = [names.player(view.viewerId), names.player(view.playerId)];
   return {
     next_match: nextId === null ? null : nextMatchView(domain, names, nextId),
-    head_to_head: h2h && { href: headToHeadPath(username), matches: h2h.match_ids.length, viewer_wins: h2h.wins },
+    head_to_head: h2h && {
+      href: headToHeadPath(viewer.username, player.username),
+      matches: h2h.match_ids.length,
+      viewer_wins: h2h.wins,
+    },
   };
 }
