@@ -31,4 +31,14 @@ export interface MatchScreenData {
   standings: StandingsScope;
   /** Classificação da categoria, aberta na própria linha (RK3). */
   rankingHref: string;
+  /**
+   * H2H das duas duplas (docs/HEAD_TO_HEAD.md, HH16): o total de confrontos
+   * jogados e a página. `null` sem confronto jogado entre elas.
+   */
+  h2h: MatchScreenH2H | null;
+}
+
+export interface MatchScreenH2H {
+  count: number;
+  href: string;
 }

@@ -1,5 +1,6 @@
 import { STORY_AVATAR_URL } from "@/src/components/ui/Avatar/storyFixtures";
 import type {
+  CategorySwitcher,
   RankingLine,
   RankingPlayer,
   RankingScreenContent,
@@ -126,3 +127,55 @@ export function storyUnranked(): Extract<RankingScreenContent, { kind: "unranked
     entries: players.map((pair, index) => ({ enrollment_id: `enr-${index}`, players: pair, is_own: pair[0].id === STORY_VIEWER_ID })),
   };
 }
+
+function storyCategory(
+  id: string,
+  gender: CompetitionCategory["gender"],
+  level: string,
+  minAge: number | null = null,
+): CompetitionCategory {
+  return { ...STORY_CATEGORY, id, gender, level_min: level, level_max: level, min_age: minAge };
+}
+
+/**
+ * Folha do seletor (RK6): a categoria aberta e a de outro ranking em "Suas
+ * categorias"; três categorias do Ranking Bacuri em "Outras categorias".
+ */
+export const STORY_CATEGORIES: CategorySwitcher = {
+  own: [
+    {
+      enrollment_id: "enr-17",
+      competition_name: "Ranking Bacuri",
+      category: STORY_CATEGORY,
+      // O mesmo parceiro da própria linha da tabela (storyTable)
+      partner: pairFor(17, 17)[1],
+      position: 18,
+      delta: -3,
+      href: "/ranking/masculino-b",
+      is_current: true,
+    },
+    {
+      enrollment_id: "enr-sul",
+      competition_name: "Ranking Arena Sul",
+      category: storyCategory("cat-sul-mista-c", "mixed", "C"),
+      partner: player("p-ana", "Ana Paula Ribeiro"),
+      position: 3,
+      delta: 1,
+      href: "/ranking/mista-c",
+      is_current: false,
+    },
+  ],
+  others: [
+    { category: storyCategory("cat-feminino-b", "F", "B"), unit_count: 12, href: "/ranking/feminino-b", is_current: false },
+    { category: storyCategory("cat-masculino-c", "M", "C"), unit_count: 16, href: "/ranking/masculino-c", is_current: false },
+    { category: storyCategory("cat-masculino-b-40", "M", "B", 40), unit_count: 1, href: "/ranking/masculino-b-40", is_current: false },
+  ],
+  can_switch: true,
+};
+
+/** Uma inscrição só, numa competição de uma categoria: o seletor é só o título (RK6). */
+export const STORY_SINGLE_CATEGORY: CategorySwitcher = {
+  own: STORY_CATEGORIES.own.slice(0, 1),
+  others: [],
+  can_switch: false,
+};

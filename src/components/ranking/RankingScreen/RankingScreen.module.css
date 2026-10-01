@@ -16,15 +16,6 @@
   padding: var(--spacing-200) var(--spacing-page-margin);
 }
 
-.ranking-screen__title {
-  margin: 0 0 var(--spacing-50);
-  color: var(--color-foreground-primary);
-  font-size: var(--text-title-sm-size);
-  line-height: var(--text-title-sm-line-height);
-  letter-spacing: var(--text-title-sm-tracking);
-  font-weight: var(--font-weight-bold);
-}
-
 .ranking-screen__context {
   margin: 0;
   color: var(--color-foreground-secondary);

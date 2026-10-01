@@ -1,8 +1,10 @@
-import type { MatchScreenData } from '@/src/components/agenda/MatchScreen';
+import type { MatchScreenData, MatchScreenH2H } from '@/src/components/agenda/MatchScreen';
+import { h2hPath } from '@/src/lib/domain/h2h';
+import { unitHeadToHead } from '@/src/lib/domain/match-count';
 import type { StandingsScope } from '@/src/lib/domain/standingsStats';
 import { formatCategoryLabel } from '@/src/lib/formatters';
-import type { CompetitionCategory, Player, RankingMatch } from '@/src/types/domain';
-import { mockDomain } from './domain';
+import type { CompetitionCategory, CompetitorUnit, Player, RankingMatch } from '@/src/types/domain';
+import { mockDomain, mockH2HDomain } from './domain';
 import { players } from './domain/people';
 import { mockRankingRoutes } from './rankingRoutes';
 import { scheduleHistoryOf } from './domain/scheduling';
@@ -30,7 +32,25 @@ export function matchScreenDataOf(matchId: string, viewerId: string = MOCK_VIEWE
     playerNames: Object.fromEntries([...sides.a, ...sides.b].map((id) => [id, firstName(playerOf(id))])),
     viewerId,
     ...competitionContextOf(match),
+    h2h: h2hOf(match),
   };
+}
+
+// Conta no mesmo cenário da página de H2H, para o número do botão ser o do resumo (HH17)
+function h2hOf(match: RankingMatch): MatchScreenH2H | null {
+  const [unitA, unitB] = [unitOfEnrollment(match.side_a_enrollment_id), unitOfEnrollment(match.side_b_enrollment_id)];
+  const count = unitHeadToHead(mockH2HDomain, unitA.id, unitB.id).match_ids.length;
+  if (count === 0) return null;
+  return { count, href: h2hPath(usernamesOf(unitA.player_ids), usernamesOf(unitB.player_ids)) };
+}
+
+function unitOfEnrollment(enrollmentId: string): CompetitorUnit {
+  const enrollment = findOrThrow(mockDomain.enrollments, enrollmentId, 'inscrição');
+  return findOrThrow(mockDomain.units, enrollment.unit_id, 'unidade');
+}
+
+function usernamesOf(playerIds: readonly string[]): string[] {
+  return playerIds.map((id) => playerOf(id).username);
 }
 
 type CompetitionContext = Pick<
@@ -82,8 +102,7 @@ function standingsOf(categoryId: string, seasonId: string): StandingsScope {
 }
 
 function playersOfEnrollment(enrollmentId: string): string[] {
-  const enrollment = findOrThrow(mockDomain.enrollments, enrollmentId, 'inscrição');
-  return [...findOrThrow(mockDomain.units, enrollment.unit_id, 'unidade').player_ids];
+  return [...unitOfEnrollment(enrollmentId).player_ids];
 }
 
 function playerOf(playerId: string): Player {

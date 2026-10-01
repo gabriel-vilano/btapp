@@ -3,6 +3,7 @@ import { connection } from "next/server";
 import { FriendlyScreen } from "@/src/components/agenda/FriendlyScreen";
 import { MatchScreen } from "@/src/components/agenda/MatchScreen";
 import { DetailHeader } from "@/src/components/shell/DetailHeader";
+import { loadOwnPhone } from "@/src/lib/supabase/ownPhone";
 import { friendlyScreenDataOf } from "@/src/mocks/friendlyScreen";
 import { matchScreenDataOf } from "@/src/mocks/matchScreen";
 
@@ -30,11 +31,16 @@ export default async function MatchPage({ params }: { params: Promise<{ partida:
   }
   const data = matchScreenDataOf(matchId);
   if (data === null) notFound();
+  // O amistoso não tem marcação nem WhatsApp: o telefone só é lido aqui.
+  // O confronto ainda é dos mocks, mas o telefone é do jogador logado, lido do
+  // Supabase: só ele decide se o "Abrir no WhatsApp" pergunta pelo número (M20).
+  // Na falha da leitura, não pergunta: o pedido é opcional
+  const ownPhone = await loadOwnPhone();
   return (
     <>
       <DetailHeader title="Confronto" />
       <main>
-        <MatchScreen data={data} now={now} />
+        <MatchScreen data={data} now={now} askForPhone={ownPhone === null} />
       </main>
     </>
   );

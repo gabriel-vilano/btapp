@@ -114,7 +114,8 @@ export interface ScheduleHistory {
  * Telefone do jogador para o "Abrir no WhatsApp" (SCHEDULING.md §7). Fica fora
  * do `Player` de propósito: o perfil é público, e o telefone só aparece para
  * adversários e parceiro de um confronto ativo (M23). Separado, a regra de
- * acesso vale para o registro inteiro, e apagar é remover o registro (M25).
+ * acesso vale para o registro inteiro. No banco, mora em `profile_private`
+ * (`phone` e `phone_consented_at`), e apagar grava `null` nos dois (M25).
  * Não existe telefone sem consentimento (M21).
  */
 export interface PlayerPhone {
