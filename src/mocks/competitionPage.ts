@@ -1,24 +1,29 @@
-import type { CompetitionPageData } from '@/src/lib/domain/competition-page';
+import type { CompetitionOrganizer, CompetitionPageData } from '@/src/lib/domain/competition-page';
 import { DEFAULT_RESPONSE_DEADLINE_HOURS, DEFAULT_SCORING_RULE } from '@/src/types/domain';
-import { mockEntities } from './domain';
+import { mockEntities, mockExploreDomain } from './domain';
 import { daysAgo, daysFromNow } from './relativeTime';
 
 // Página da competição (docs/RANKING.md §7) vista pelo Lucas, em cada relação
 // dele com a competição. Os nomes e as posições são os da aba Competições
 // (`src/mocks/competitionsTab.ts`), para as duas telas contarem a mesma
-// história. As datas são relativas ao carregamento.
+// história. As organizações são as do `mockExploreDomain`, com o contato de
+// cada uma (EXPLORE.md, EX28). As datas são relativas ao carregamento.
 
-const { ranking, season, rounds, organizations } = mockEntities;
+const { ranking, season, rounds } = mockEntities;
 
-/** Inscrito em duas categorias, sem ser admin. Regra e temporada vêm do cenário do domínio. */
+function organizer(username: string): CompetitionOrganizer {
+  const organization = mockExploreDomain.organizations.find((candidate) => candidate.username === username);
+  if (!organization) throw new Error(`Organização '${username}' não existe no mockExploreDomain`);
+  const { name, avatar_url, contact } = organization;
+  return { name, username, avatar_url, contact };
+}
+
+/** Inscrito nas duas categorias, sem ser admin. Regra e temporada vêm do cenário do domínio. */
 const arenaMangaba: CompetitionPageData = {
   slug: 'ranking-arena-mangaba',
   name: 'Ranking Arena Mangaba',
-  organizer: {
-    name: organizations.arenaMangaba.name,
-    avatar_url: organizations.arenaMangaba.avatar_url,
-    contact: { text: 'WhatsApp da recepção da Arena Mangaba', href: 'https://wa.me/5531900000000' },
-  },
+  type: 'ranking',
+  organizer: organizer('arenamangaba'), // contato em link
   categories: [
     {
       category_id: mockEntities.rankingCategories.masculinoB.id,
@@ -58,11 +63,8 @@ const arenaMangaba: CompetitionPageData = {
 const ligaPitanga: CompetitionPageData = {
   slug: 'liga-pitanga',
   name: 'Liga Pitanga',
-  organizer: {
-    name: 'Arena Mangaba',
-    avatar_url: null,
-    contact: { text: 'Instagram @arenamangaba', href: 'https://instagram.com/arenamangaba' },
-  },
+  type: 'ranking',
+  organizer: organizer('arenamangaba'),
   categories: [
     { category_id: 'cat-liga-pitanga-masculino-c', name: 'Masculino C', modality: 'doubles', unit_count: 10, href: '/ranking/masculino-c', standing: null },
     { category_id: 'cat-liga-pitanga-feminino-b', name: 'Feminino B', modality: 'doubles', unit_count: 8, href: '/ranking/feminino-b', standing: null },
@@ -94,11 +96,8 @@ const ligaPitanga: CompetitionPageData = {
 const praiaNorte: CompetitionPageData = {
   slug: 'circuito-praia-norte',
   name: 'Circuito Praia Norte',
-  organizer: {
-    name: 'Praia Norte Beach Club',
-    avatar_url: null,
-    contact: { text: 'Procure o Carlos na recepção do clube, de terça a domingo.', href: null },
-  },
+  type: 'ranking',
+  organizer: organizer('clubecajui'), // contato em texto
   categories: [
     { category_id: 'cat-praia-norte-masculino-a', name: 'Masculino A', modality: 'doubles', unit_count: 12, href: '/ranking/masculino-a', standing: null },
     { category_id: 'cat-praia-norte-feminino-c', name: 'Feminino C', modality: 'doubles', unit_count: 1, href: '/ranking/feminino-c', standing: null },
@@ -119,24 +118,50 @@ const praiaNorte: CompetitionPageData = {
 };
 
 /**
- * Situações da página. Ex.: `<CompetitionPage data={mockCompetitionPage.praiaNorte} now={…} />`.
- * - `enrolled`: inscrito, com a posição em cada categoria;
+ * Inscrito numa das categorias, com outra livre (EX26): vê o "Como se
+ * inscrever" compacto, sem "Tenho interesse" (EX27). O interesse marcado
+ * antes da inscrição continua guardado (EX31).
+ */
+const mistaPequi: CompetitionPageData = {
+  ...praiaNorte,
+  slug: 'mista-pequi',
+  name: 'Mista Pequi',
+  organizer: organizer('federacaovaleazul'), // contato em link
+  categories: [
+    {
+      category_id: 'cat-mista-pequi-mista-b',
+      name: 'Mista B',
+      modality: 'doubles',
+      unit_count: 14,
+      href: '/ranking/mista-b',
+      standing: { position: null, delta: null, partner_name: 'Ana' },
+    },
+    { category_id: 'cat-mista-pequi-masculino-b', name: 'Masculino B', modality: 'doubles', unit_count: 9, href: '/ranking/masculino-b-pequi', standing: null },
+  ],
+  viewer: { is_admin: false, interested: true },
+};
+
+/**
+ * Situações da página. Ex.: `<CompetitionPage data={mockCompetitionPage.notEnrolled} now={…} />`.
+ * - `enrolled`: inscrito em todas as categorias, com a posição em cada uma;
+ * - `partiallyEnrolled`: inscrito numa categoria, com outra livre (EX26);
  * - `admin`: admin da competição, sem jogar nela;
  * - `notEnrolled`: não inscrito, vê "Como se inscrever" e "Tenho interesse";
  * - `interested`: o mesmo, já com o interesse marcado;
  * - `withoutSeason`: competição sem temporada em andamento (RK19);
- * - `withoutContact`: organizador sem contato cadastrado.
+ * - `withoutContact`: organização sem contato cadastrado.
  */
 export const mockCompetitionPage = {
   enrolled: arenaMangaba,
+  partiallyEnrolled: mistaPequi,
   admin: ligaPitanga,
   notEnrolled: praiaNorte,
   interested: { ...praiaNorte, viewer: { is_admin: false, interested: true } },
   withoutSeason: { ...praiaNorte, season: null },
-  withoutContact: { ...praiaNorte, organizer: { ...praiaNorte.organizer, contact: null } },
+  withoutContact: { ...praiaNorte, organizer: organizer('gruposaquecurto') },
 } satisfies Record<string, CompetitionPageData>;
 
-const bySlug = new Map([arenaMangaba, ligaPitanga, praiaNorte].map((page) => [page.slug, page]));
+const bySlug = new Map([arenaMangaba, mistaPequi, ligaPitanga, praiaNorte].map((page) => [page.slug, page]));
 
 /** A página mockada de uma rota, ou undefined quando o slug não existe. */
 export function mockCompetitionPageBySlug(slug: string): CompetitionPageData | undefined {

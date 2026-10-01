@@ -25,4 +25,10 @@ export {
   formatRoundName,
   formatSeasonDates,
 } from './seasonText';
-export { competitionPageBlocks, isEnrolledInCompetition, type CompetitionPageBlocks } from './viewerBlocks';
+export {
+  competitionPageBlocks,
+  isEnrolledInCompetition,
+  type CompetitionPageBlocks,
+  type EnrollmentBlockPlacement,
+} from './viewerBlocks';
+export { organizationHref } from './routes';
