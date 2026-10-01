@@ -108,7 +108,8 @@ function backLink(page: Page) {
 }
 
 test.describe("Voltar das telas de detalhe (N10 e N28)", () => {
-  test("N10: a partida aberta pelo Perfil mantém o Perfil marcado, e o Voltar leva a ele", async ({ page }) => {
+  // TEMPORÁRIO (ENG-139): repetir para capturar a falha instável na CI
+  for (const round of Array.from({ length: 15 }, (_, index) => index + 1)) test(`N10: a partida aberta pelo Perfil mantém o Perfil marcado, e o Voltar leva a ele #${round}`, async ({ page }) => {
     await loginToFeed(page, "voltar-perfil");
     const nav = mainNavigation(page);
 
