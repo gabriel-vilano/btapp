@@ -1,0 +1,13 @@
+.settings-list {
+  padding-top: var(--spacing-300);
+}
+
+.settings-list__title {
+  margin: 0;
+  padding-inline: var(--spacing-page-margin);
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+}

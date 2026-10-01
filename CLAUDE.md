@@ -449,8 +449,6 @@ Quando resolver: plugar handlers e <Link> ao integrar esses componentes com o fe
 
 Na área "Administrar" (`src/components/admin/AdminArea`), o botão "Lançar sorteio da rodada" não age e os itens de "Decisões pendentes" não abrem a decisão: o sorteio entra com a spec do fluxo do sorteio, e as decisões com a issue "Decisões do admin".
 
-No perfil, os botões de amizade do `ProfileAction` (Adicionar, Pedido enviado, Aceitar, Recusar, Amigos) também não agem ainda: os handlers e as confirmações entram com as ações de amizade (PF7).
-
 ## Regras gerais
 
 - Não instalar dependências sem justificativa clara

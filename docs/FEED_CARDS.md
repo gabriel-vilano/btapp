@@ -195,7 +195,7 @@ Nas listas (partidas recentes do perfil, H2H, prévia do registro) o placar vira
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│ [Logo org]  Rodada 3 · Ranking BH — Masculino B ·…  │
+│ [Logo org]  Rodada 3 · Ranking Bacuri — Masculino…  │
 │             @arenaMangaba · há 2h · Seguir          │
 ├─────────────────────────────────────────────────────┤
 │                                                     │
@@ -243,7 +243,7 @@ Nas listas (partidas recentes do perfil, H2H, prévia do registro) o placar vira
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│ [Logo org]  Rodada 3 · Ranking BH — Masculino B ·…  │
+│ [Logo org]  Rodada 3 · Ranking Bacuri — Masculino…  │
 │             @arenaMangaba · há 2h                   │
 ├─────────────────────────────────────────────────────┤
 │                                                     │
@@ -431,7 +431,7 @@ Exemplo da R11, 2 sets de 6: Pedro vence o 1º set por 6/4 e desiste perdendo o 
 │              @lucas · há 18h                        │
 │                                                     │
 │  ┌───────────────────────────────────────────────┐  │
-│  │ [Logo  │  Copa BH de Beach Tennis             │  │
+│  │ [Logo  │  Copa Araçá de Beach Tennis          │  │
 │  │  48px] │  Masculino B · Simples               │  │
 │  │        │  📅 20 e 21 de maio de 2026          │  │
 │  │        │  📍 Arena Tucum · Carandaí/MG        │  │
@@ -452,7 +452,7 @@ Exemplo da R11, 2 sets de 6: Pedro vence o 1º set por 6/4 e desiste perdendo o 
 │              @lucas · há 18h                        │
 │                                                     │
 │  ┌───────────────────────────────────────────────┐  │
-│  │ [Logo  │  Copa BH de Beach Tennis             │  │
+│  │ [Logo  │  Copa Araçá de Beach Tennis          │  │
 │  │  48px] │  Mista C                             │  │
 │  │        │  📅 20 e 21 de maio de 2026          │  │
 │  │        │  📍 Arena Tucum · Carandaí/MG        │  │
@@ -576,7 +576,7 @@ Derivados da análise de referências (Strava, Bump, Zigzag, Revolut, Azar):
 │              @lucas · há 2h                         │
 │                                                     │
 │  ┌─────────────────────────────────────────────┐   │
-│  │  Ranking BH — Masculino B                  │   │
+│  │  Ranking Bacuri — Masculino B              │   │
 │  │                                             │   │
 │  │               3ª                            │   │
 │  │                                             │   │
@@ -609,7 +609,7 @@ Mesma estrutura. Diferenças:
 │  ┌─────────────────────────────────────────────┐   │
 │  │  fundo: --color-background-accent-subtle    │   │
 │  │                                             │   │
-│  │  Ranking BH — Masculino B                  │   │
+│  │  Ranking Bacuri — Masculino B              │   │
 │  │                                             │   │
 │  │               1ª                            │   │
 │  │                                             │   │

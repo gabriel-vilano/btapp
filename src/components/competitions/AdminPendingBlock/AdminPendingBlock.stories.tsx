@@ -6,31 +6,31 @@ import { AdminPendingBlock } from "./AdminPendingBlock";
 const contested: AdminPendingItem = {
   id: "pend-contested",
   kind: "contested",
-  competition_name: "Liga Vila",
+  competition_name: "Liga Pitanga",
   category_name: "Masculino C",
   sides: "Bruno e Caio x Diego e Felipe",
   since: "2026-09-27T12:00:00.000Z",
-  href: "/competicoes/liga-vila/administrar",
+  href: "/competicoes/liga-pitanga/administrar",
 };
 
 const notPlayed: AdminPendingItem = {
   id: "pend-not-played",
   kind: "not_played",
-  competition_name: "Liga Vila",
+  competition_name: "Liga Pitanga",
   category_name: "Feminino B",
   sides: "Carla e Júlia x Marina e Paula",
   since: "2026-09-28T12:00:00.000Z",
-  href: "/competicoes/liga-vila/administrar",
+  href: "/competicoes/liga-pitanga/administrar",
 };
 
 const tournamentNoResult: AdminPendingItem = {
   id: "pend-tournament",
   kind: "tournament_no_result",
-  competition_name: "Desafio Vila",
+  competition_name: "Desafio Pitanga",
   category_name: "Masculino B",
   sides: "Gustavo e Heitor x Igor e João",
   since: "2026-09-29T12:00:00.000Z",
-  href: "/competicoes/desafio-vila/administrar",
+  href: "/competicoes/desafio-pitanga/administrar",
 };
 
 const meta = {
@@ -57,9 +57,9 @@ export const AllKinds: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.getByRole("region", { name: "Pendências de admin 3" })).toBeVisible();
     const link = canvas.getByRole("link", {
-      name: "Contestação para arbitrar Liga Vila · Masculino C · Bruno e Caio x Diego e Felipe",
+      name: "Contestação para arbitrar Liga Pitanga · Masculino C · Bruno e Caio x Diego e Felipe",
     });
-    await expect(link).toHaveAttribute("href", "/competicoes/liga-vila/administrar");
+    await expect(link).toHaveAttribute("href", "/competicoes/liga-pitanga/administrar");
     await expect(canvas.getByRole("link", { name: /^Partida não realizada/ })).toBeVisible();
     await expect(canvas.getByRole("link", { name: /^Confronto sem resultado/ })).toBeVisible();
   },

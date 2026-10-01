@@ -1,0 +1,72 @@
+/* Coluna única com largura máxima: no desktop a página não estica (N27) */
+.organization-page {
+  width: 100%;
+  max-width: var(--dimension-layout-max);
+  margin-inline: auto;
+  padding-bottom: var(--spacing-400);
+}
+
+/* --- Cabeçalho: avatar, nome, tipo e cidade (EX22) --- */
+
+.organization-page__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-150);
+  padding: var(--spacing-200) var(--spacing-page-margin) 0;
+}
+
+.organization-page__name {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+  overflow-wrap: anywhere;
+}
+
+.organization-page__meta {
+  margin: 0;
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+}
+
+/* --- Seções --- */
+
+.organization-page__section {
+  padding-top: var(--spacing-300);
+}
+
+.organization-page__section-title {
+  margin: 0 0 var(--spacing-100);
+  padding-inline: var(--spacing-page-margin);
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.organization-page__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-inline: var(--spacing-page-margin);
+}
+
+.organization-page__text {
+  margin: 0;
+  padding: var(--spacing-100) var(--spacing-page-margin);
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+}
+
+.organization-page__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-50);
+}

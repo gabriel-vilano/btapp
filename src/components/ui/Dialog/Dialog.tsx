@@ -81,10 +81,14 @@ function DialogPanel({
         onClose={onClose}
       />
       {/* tabIndex 0: com conteúdo só de texto, é o único jeito de rolar o
-          corpo pelo teclado (axe: scrollable-region-focusable) */}
-      <div className={styles.dialog__body} tabIndex={0}>
-        {children}
-      </div>
+          corpo pelo teclado (axe: scrollable-region-focusable). Sem conteúdo
+          (confirmação só com título e descrição), o corpo não existe: seria
+          uma parada de Tab vazia */}
+      {children && (
+        <div className={styles.dialog__body} tabIndex={0}>
+          {children}
+        </div>
+      )}
       {footer && <div className={styles.dialog__footer}>{footer}</div>}
     </div>
   );

@@ -56,7 +56,7 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 ┌──────────────────────────────────────────────┐
 │ ‹ Voltar                                     │  ← cabeçalho de tela de detalhe (NAV seção 3)
 │ ┌──────────────────────────────────────────┐ │
-│ │ Ranking BH · Masculino B            ⌄    │ │  ← seletor de categoria (RK6)
+│ │ Ranking Bacuri · Masculino B        ⌄    │ │  ← seletor de categoria (RK6)
 │ └──────────────────────────────────────────┘ │
 │ 1º semestre 2026 · Rodada 3 de 4             │  ← contexto da temporada (RK4)
 │ Rodada fecha em 5 dias · Corte em 30/11      │

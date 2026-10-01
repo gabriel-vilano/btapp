@@ -185,7 +185,7 @@ Lucas lançou o resultado · ter, 21h10
 
 ### 4.2 Contestar
 
-Contestar abre uma folha com o que acontece depois: "O resultado vai para o admin do Ranking BH, que define o placar. Até lá, a partida não pontua."
+Contestar abre uma folha com o que acontece depois: "O resultado vai para o admin do Ranking Bacuri, que define o placar. Até lá, a partida não pontua."
 
 - **RG15. A contestação pede um motivo, obrigatório, numa lista curta:** placar diferente · outro vencedor · o jogo não aconteceu · outro. Com "placar diferente", o jogador pode informar o placar que lembra, com a mesma entrada da §3.3 (opcional). O admin vê os dois na arbitragem (§5.1). O modelo guarda o motivo e o placar lembrado junto de quem contestou e quando (`ResultContest`, R49). [DEC-RES P2]
 
@@ -292,7 +292,7 @@ Entrada para a spec de notificações básicas, que decide canal e política, co
 | Lançamento desfeito (RG16) | Os 2 do lado adversário | "Pedro desfez o resultado lançado. O jogo volta a esperar o resultado." |
 | Resultado contestado | O lado de quem lançou | "Lucas contestou o resultado. O admin vai decidir." |
 | Admin decidiu, corrigiu ou anulou | Os 4 | "Ana (admin) corrigiu o placar para 6/3." |
-| Item novo na fila do admin | Os admins da competição | "1 contestação no Ranking BH · Masculino B." |
+| Item novo na fila do admin | Os admins da competição | "1 contestação no Ranking Bacuri · Masculino B." |
 | Amistoso lançado | O outro lado | "Pedro registrou um amistoso contra você: 6/4." |
 | Amistoso contestado | Quem lançou e o parceiro | "Lucas não confirmou o amistoso. O resultado foi descartado." |
 
