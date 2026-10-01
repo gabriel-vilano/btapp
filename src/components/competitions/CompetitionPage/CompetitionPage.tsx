@@ -9,12 +9,14 @@ import {
   competitionPageBlocks,
   organizationHref,
   type CompetitionPageData,
+  type RankingPageData,
   type RegisterInterest,
 } from "@/src/lib/domain/competition-page";
 import { CompetitionCategories } from "./CompetitionCategories";
 import { CompetitionRules } from "./CompetitionRules";
 import { CompetitionSeason } from "./CompetitionSeason";
 import { EnrollmentBlock } from "./EnrollmentBlock";
+import { TournamentInfo } from "./TournamentInfo";
 import styles from "./CompetitionPage.module.css";
 
 const COMPETITIONS_HREF = "/competicoes";
@@ -26,23 +28,24 @@ const COMPETITION_TYPE_LABEL: Record<CompetitionPageData["type"], string> = {
 
 interface CompetitionPageProps {
   data: CompetitionPageData;
-  /** Momento da leitura (ISO 8601), para o prazo da rodada e o corte da final. */
+  /** Momento da leitura (ISO 8601): prazo da rodada, corte da final e torneio que já aconteceu. */
   now: string;
   /** Registra o "Tenho interesse" desta competição (EX29). */
   registerInterest: RegisterInterest;
 }
 
 /**
- * Página da competição de ranking (docs/RANKING.md, RK17): organizador,
- * categorias, temporada e regras. O cabeçalho da tela, com o nome, é da página.
- * Conforme quem vê, a entrada da área "Administrar" (N31) e o "Como se
- * inscrever": completo logo abaixo do cabeçalho, para quem não tem inscrição
- * na competição, ou compacto abaixo das categorias, para quem já joga uma
- * delas e tem outra livre (EXPLORE.md, EX26 e EX27).
+ * Página da competição. No ranking (docs/RANKING.md, RK17): organizador,
+ * categorias, temporada e regras. No torneio, o mínimo do Explorar (EXPLORE.md,
+ * EX34): organizador, data e local e categorias. O cabeçalho da tela, com o
+ * nome, é da página. Conforme quem vê, a entrada da área "Administrar" (N31) e
+ * o "Como se inscrever": completo logo abaixo do cabeçalho, para quem não tem
+ * inscrição na competição, ou compacto abaixo das categorias, para quem já
+ * joga uma delas e tem outra livre (EX26 e EX27).
  * @example <CompetitionPage data={mockCompetitionPage.enrolled} now={new Date().toISOString()} registerInterest={…} />
  */
 export function CompetitionPage({ data, now, registerInterest }: CompetitionPageProps) {
-  const blocks = competitionPageBlocks(data);
+  const blocks = competitionPageBlocks(data, now);
   const enrollment = (placement: "full" | "compact") => (
     <EnrollmentBlock
       organizer={data.organizer}
@@ -56,8 +59,18 @@ export function CompetitionPage({ data, now, registerInterest }: CompetitionPage
       <OrganizerLine organizer={data.organizer} type={data.type} />
       {blocks.admin && <AdminEntry slug={data.slug} />}
       {blocks.enrollment === "full" && enrollment("full")}
+      {data.type === "tournament" && <TournamentInfo tournament={data} now={now} />}
       <CompetitionCategories competitionName={data.name} categories={data.categories} />
       {blocks.enrollment === "compact" && enrollment("compact")}
+      {data.type === "ranking" && <RankingDetails data={data} now={now} />}
+    </div>
+  );
+}
+
+// Temporada e regras: o torneio não tem temporada, e as regras dele são da spec do torneio
+function RankingDetails({ data, now }: { data: RankingPageData; now: string }) {
+  return (
+    <>
       <CompetitionSeason
         competitionName={data.name}
         season={data.season}
@@ -65,7 +78,7 @@ export function CompetitionPage({ data, now, registerInterest }: CompetitionPage
         now={now}
       />
       <CompetitionRules data={data} />
-    </div>
+    </>
   );
 }
 

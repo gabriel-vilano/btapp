@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, fn, userEvent, within } from "storybook/test";
-import { mockCompetitionPage } from "@/src/mocks/competitionPage";
+import { mockCompetitionPage, mockTournamentPage } from "@/src/mocks/competitionPage";
 import { AppHeader } from "@/src/components/ui/AppHeader";
 import { ToastProvider } from "@/src/components/ui/Toast";
 import { CompetitionPage } from "./CompetitionPage";
@@ -26,7 +26,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Página da competição de ranking: cabeçalho, categorias, temporada e regras, com a entrada de admin (N31) e o \"Como se inscrever\" por categoria (EX26 a EX28).",
+          "Página da competição. Ranking: cabeçalho, categorias, temporada e regras. Torneio: cabeçalho, data e local e categorias (EX34). Nos dois, a entrada de admin (N31) e o \"Como se inscrever\" por categoria (EX26 a EX28).",
       },
     },
   },
@@ -166,5 +166,53 @@ export const WithoutSeason: Story = {
   play: async ({ canvas }) => {
     await expect(await canvas.findByText("Nenhuma temporada em andamento.")).toBeVisible();
     await expect(canvas.getByRole("region", { name: "Regras" })).toBeVisible();
+  },
+};
+
+// Torneio em andamento, inscrito numa categoria: data e local, a dupla na categoria e o
+// "Como se inscrever" compacto para o simples, que está livre (EX26, EX34)
+export const TournamentEnrolled: Story = {
+  args: { data: mockTournamentPage.enrolled },
+  play: async ({ canvas }) => {
+    const info = within(await canvas.findByRole("region", { name: "Data e local" }));
+    await expect(info.getByText("Arena Tucum · Carandaí/MG")).toBeVisible();
+    await expect(canvas.getByText("Torneio")).toBeVisible();
+    const categories = within(canvas.getByRole("region", { name: "Categorias" }));
+    await expect(categories.getByText("4 duplas · você joga com Rafael")).toBeVisible();
+    // A chave é da spec do torneio: a categoria ainda não leva a lugar nenhum
+    await expect(categories.queryByRole("link")).toBeNull();
+    const enrollment = canvas.getByRole("region", { name: "Como se inscrever" });
+    await expect(categories.getByText("4 jogadores")).toBeVisible();
+    await expect(canvas.getByRole("region", { name: "Categorias" }).compareDocumentPosition(enrollment) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    await expect(canvas.queryByRole("button", { name: /interesse/i })).toBeNull();
+    await expect(canvas.queryByRole("region", { name: "Regras" })).toBeNull();
+  },
+};
+
+// Torneio futuro, não inscrito: o bloco completo no topo, com "Tenho interesse" (EX26, EX27)
+export const TournamentNotEnrolled: Story = {
+  args: { data: mockTournamentPage.notEnrolled },
+  play: async ({ canvas }) => {
+    const enrollment = await canvas.findByRole("region", { name: "Como se inscrever" });
+    const info = canvas.getByRole("region", { name: "Data e local" });
+    await expect(enrollment.compareDocumentPosition(info) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    await expect(within(enrollment).getByRole("link", { name: "Falar com o organizador" })).toBeVisible();
+    await expect(within(enrollment).getByRole("button", { name: "Tenho interesse" })).toBeEnabled();
+    await expect(canvas.getByRole("link", { name: "Federação Vale Azul de Beach Tennis" })).toHaveAttribute(
+      "href",
+      "/organizacoes/federacaovaleazul",
+    );
+    await expect(canvas.getByText("20 jogadores")).toBeVisible();
+  },
+};
+
+// Torneio que já aconteceu: sem "Como se inscrever" nem "Tenho interesse" (EX34)
+export const TournamentPast: Story = {
+  args: { data: mockTournamentPage.past },
+  play: async ({ canvas }) => {
+    await expect(await canvas.findByText("Este torneio já aconteceu.")).toBeVisible();
+    await expect(canvas.queryByRole("region", { name: "Como se inscrever" })).toBeNull();
+    await expect(canvas.queryByRole("button", { name: /interesse/i })).toBeNull();
+    await expect(canvas.getByText("12 duplas")).toBeVisible();
   },
 };

@@ -1,5 +1,6 @@
 import type { Competition, Organization, RankingCompetition, Round, Season } from '@/src/types/domain';
 import { isoToBrasiliaLocal } from '@/src/lib/brasiliaDateTime';
+import { hasTournamentEnded } from '@/src/lib/tournamentDates';
 
 // Competição aberta ou encerrada (docs/EXPLORE.md §1, "Termos"): ranking com
 // temporada em andamento, ou torneio cuja data de fim é hoje ou depois. O
@@ -34,5 +35,5 @@ export function currentSeason(ranking: RankingCompetition, domain: SeasonTables,
 /** Aberta: ranking com temporada em andamento, ou torneio que termina hoje ou depois. */
 export function isCompetitionOpen(competition: Competition, domain: SeasonTables, now: string): boolean {
   if (competition.type === 'ranking') return currentSeason(competition, domain, now) !== null;
-  return brasiliaDay(competition.ends_on) >= brasiliaDay(now);
+  return !hasTournamentEnded(competition.ends_on, now);
 }
