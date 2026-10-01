@@ -12,7 +12,7 @@ import * as AvatarUploadStories from "./AvatarUpload.stories";
   Upload de avatar com preview inline e validação de formato/tamanho.
 </Subtitle>
 
-**Código-fonte:** [`src/components/auth/AvatarUpload/AvatarUpload.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/auth/AvatarUpload/AvatarUpload.tsx)
+**Código-fonte:** [`src/components/ui/AvatarUpload/AvatarUpload.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/AvatarUpload/AvatarUpload.tsx)
 
 ## Visão geral
 
@@ -37,13 +37,19 @@ import * as AvatarUploadStories from "./AvatarUpload.stories";
 
 ## Estados
 
-`preview` e `error` são gerenciados internamente via `useState` — não aceita props pra forçar visualmente.
+`preview` e `error` são gerenciados internamente via `useState`. A única prop de estado é `initialUrl`, a foto que o jogador já tem.
 
 ### Empty
 
 Estado inicial. Sem imagem, sem erro. Clique abre o file picker do browser.
 
 <Canvas of={AvatarUploadStories.Empty} />
+
+### Com foto atual
+
+Na edição do perfil, `initialUrl` traz a foto atual como preview, com o badge de câmera e "Trocar foto". `onFileSelect` só é chamado se o jogador escolher outra: sem troca, a foto atual continua.
+
+<Canvas of={AvatarUploadStories.WithInitialPhoto} />
 
 ### Foto grande
 

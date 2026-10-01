@@ -74,7 +74,8 @@
   -webkit-appearance: none;
 }
 
-/* Âncora do indicador nativo do calendário, esticado logo abaixo */
+/* Âncora do indicador nativo do calendário, esticado logo abaixo.
+   O modificador vale para date e datetime-local. */
 .form-input__field--datetime {
   position: relative;
 }
@@ -219,4 +220,12 @@
   letter-spacing: var(--text-label-md-tracking);
   font-weight: var(--font-weight-regular);
   color: var(--color-foreground-attention);
+}
+
+.form-input__hint {
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-secondary);
 }

@@ -6,7 +6,7 @@ import { createProfile, checkUsername, suggestUsername } from "@/app/(auth)/acti
 import { createClient } from "@/src/lib/supabase/client";
 import { AuthFormContainer } from "@/src/components/auth/AuthFormContainer";
 import { AuthFormHeader } from "@/src/components/auth/AuthFormHeader";
-import { AvatarUpload } from "@/src/components/auth/AvatarUpload";
+import { AvatarUpload } from "@/src/components/ui/AvatarUpload";
 import { FormInput } from "@/src/components/ui/FormInput";
 import { Button } from "@/src/components/ui/Button";
 import { Alert } from "@/src/components/ui/Alert";

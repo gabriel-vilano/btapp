@@ -8,7 +8,13 @@ describe("isTaskRoute", () => {
     expect(isTaskRoute("/jogos/match-1/resultado/")).toBe(true);
   });
 
+  it("reconhece o fluxo de editar perfil (PF9)", () => {
+    expect(isTaskRoute("/perfil/editar")).toBe(true);
+  });
+
   it("não esconde a navegação na partida nem nas abas (N4)", () => {
+    expect(isTaskRoute("/perfil")).toBe(false);
+    expect(isTaskRoute("/perfil/configuracoes")).toBe(false);
     expect(isTaskRoute("/jogos/match-1")).toBe(false);
     expect(isTaskRoute("/jogos")).toBe(false);
     expect(isTaskRoute("/feed")).toBe(false);
