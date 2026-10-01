@@ -20,7 +20,7 @@ interface H2HMatchItemProps {
   score: Score;
   /** Data da partida, em ISO 8601. */
   playedAt: string;
-  /** De onde veio a partida: "Ranking Rankin · Masculino B · Rodada 3", "Open de Verão · Mista C" ou "Amistoso". */
+  /** De onde veio a partida: "Ranking Arena Mangaba · Masculino B · Rodada 3", "Open de Verão · Mista C" ou "Amistoso". */
   context: string;
   /** Só na página de jogadores, quando a partida foi em duplas. */
   lineup?: H2HMatchLineup;
