@@ -127,6 +127,19 @@ export interface Round {
   deadline: string; // ISO 8601
 }
 
+/**
+ * Sorteio desfeito de uma categoria numa rodada (R51). As partidas são
+ * apagadas, então é este registro que conta aos jogadores que o sorteio foi
+ * refeito ("Sorteio refeito por Ana · 01/10, 10h40", ROUND_DRAW.md SR12).
+ */
+export interface UndoneRoundDraw {
+  round_id: string;
+  category_id: string;
+  drawn_at: string; // ISO 8601: o created_at das partidas apagadas
+  undone_by: string; // player_id do admin
+  undone_at: string; // ISO 8601
+}
+
 export type CategoryGender = 'M' | 'F' | 'mixed';
 
 export type Modality = 'singles' | 'doubles';

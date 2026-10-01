@@ -12,6 +12,7 @@ import { createSeededRandom } from './seededRandom';
 
 const { ranking, rounds, rankingCategories, masculinoB, mistaC40, tournamentCategories } = mockEntities;
 const DRAWN_AT = '2026-09-26T12:00:00.000Z';
+const DRAWN_BY = mockEntities.players.marina.id; // a admin do ranking nos mocks
 const rankingMatches = mockDomain.matches.filter((m): m is RankingMatch => m.kind === 'ranking');
 
 function idSequence(): () => string {
@@ -26,6 +27,7 @@ function input(overrides: Partial<RoundDrawInput> = {}): RoundDrawInput {
     category: rankingCategories.mistaC40,
     enrollments: mockDomain.enrollments,
     seasonMatches: rankingMatches,
+    drawnBy: DRAWN_BY,
     drawnAt: DRAWN_AT,
     random: createSeededRandom(1),
     createMatchId: idSequence(),
@@ -38,7 +40,7 @@ function pairingsOf(matches: RankingMatch[]): Pairing[] {
 }
 
 describe('drawRound: partidas criadas', () => {
-  it('cria as partidas em "Confronto definido", na rodada, com o formato do ranking', () => {
+  it('cria as partidas em "Confronto definido", na rodada, com o formato do ranking e quem sorteou (R51)', () => {
     const matches = drawRound(input());
     expect(matches).toHaveLength(4);
     for (const match of matches) {
@@ -52,6 +54,7 @@ describe('drawRound: partidas criadas', () => {
         scheduled_at: null,
         venue: null,
         created_at: DRAWN_AT,
+        drawn_by: DRAWN_BY,
         undone_reports: [],
       });
     }
