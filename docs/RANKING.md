@@ -14,6 +14,7 @@ As siglas de decisão são as do `docs/DOMAIN.md` > "Fontes". As que esta spec u
 | --- | --- |
 | **DEC-FINAL** | Linha de corte só na tela de ranking, sem badge de "zona" (R23); vaga por posição na data de corte (R28) |
 | **DEC-RESP** | Tabela ao vivo e evento "subiu N" por fim de rodada (R46); desempate fixo (R37); inscrição encerrada congelada (R45) |
+| **DEC-EMPATE** | Empate total como posição compartilhada (R52) e desempate do admin só na última vaga, na data de corte (R53). Substitui a "ordem provisória" da primeira versão desta spec |
 | **DEC-RANK** | Decisões do Gabriel na issue desta spec (27/09/2026): aprovação com as recomendações de RQ1 a RQ7 e as leituras RL1 a RL9, e confirmação da RL10 e da RL11 em 28/09/2026; a queda aparece na tabela, e a R22 passa a valer só para o feed e as notificações |
 | **DEC-NAV** | Decisão do Gabriel (26/09), registrada no `docs/NAVIGATION.md`: **ranking como lista completa, com a linha da própria dupla fixada** |
 | **NAV** | `docs/NAVIGATION.md`: aba Competições com a lista "Minhas competições" (N1, N29), rota da classificação e da competição (N9, N10), área "Administrar" da competição (N31), toque do card de movimentação rolando até a linha da dupla, vazio, carregando e erro (N22–N24). As perguntas Q1–Q5 de lá foram respondidas pelo Gabriel em 29/09/2026 |
@@ -104,10 +105,10 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
   Assim, "jogos" e "vitórias" têm uma só definição no app inteiro, e vitórias nunca passam de jogos. **A diferença para o desempate é explícita:** o critério "vitórias" da R37 conta o W.O. vencido; a linha, não. A página de regras diz isso na ordem de desempate (RK17), e a linha de uma dupla com W.O. vencido explica os pontos pelas regras, não pela contagem.
 
-  **Por que jogos e vitórias:** no meio da rodada, duas duplas com pontos diferentes podem ter jogado números diferentes de partidas. Os dois explicam a ordem na maioria dos casos sem abrir outra tela. Saldo de games fica fora da linha: é o último critério antes do admin e aparece nas regras (RK5).
+  **Por que jogos e vitórias:** no meio da rodada, duas duplas com pontos diferentes podem ter jogado números diferentes de partidas. Os dois explicam a ordem na maioria dos casos sem abrir outra tela. Saldo de games fica fora da linha: é o último critério da R37 e aparece nas regras (RK5).
 - **Nome na linha:** sempre abreviado — o nome inteiro mais a inicial da última palavra do sobrenome, ignorando partículas ("João Pedro S.", "Maria Eduarda A."). A regra mora no `abbreviateName` (`src/lib/names.ts`), usado também fora do ranking. Em duplas, os dois vêm abreviados ("Lucas S. e Rafael C."), e o jogador logado aparece como "Você" ("Você e Pedro A."), como na tela do confronto (RES, RG3). Abreviado, o nome cabe na linha na maioria dos casos; o corte com reticências no fim fica só como proteção do caso extremo (nome composto longo a 320px), e "Você" nunca é cortado, porque vem na frente. O nome completo fica no nome acessível.
 - **Pontos** em `label-lg` bold, alinhados à direita com algarismos tabulares (`font-variant-numeric: tabular-nums`), para a coluna não dançar entre 98 e 610.
-- **Posição** em `title-sm` bold, largura fixa para 2 dígitos. Sem medalha, troféu ou pódio no top 3 (seção 4.3).
+- **Posição** em `title-sm` bold, largura fixa para 2 dígitos. Sem medalha, troféu ou pódio no top 3 (seção 4.3). No empate total, as linhas empatadas repetem a posição (4.4, R52).
 
 ### 4.1 A própria linha
 
@@ -119,7 +120,7 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
 ### 4.2 Distância até a vaga
 
-- **RK11. Quando a dupla está abaixo da linha de corte, a própria linha mostra quantos pontos faltam para a última vaga:** "Faltam 12 pts para o 8º". Dentro da zona, nada: o ZoneDivider já diz que ela está dentro. Some depois da data de corte. [DSC 2.3, R28; DEC-RANK RQ4]
+- **RK11. Quando a dupla está abaixo da linha de corte, a própria linha mostra quantos pontos faltam para a última vaga:** "Faltam 12 pts para o 8º". Dentro da zona, nada: o ZoneDivider já diz que ela está dentro. Some depois da data de corte. A dupla do empate que atravessa a linha (4.5) também não mostra distância: ela está empatada com a vaga, e o divisor explica. [DSC 2.3, R28, R53; DEC-RANK RQ4]
 
   **Por quê:** é a informação que decide como agir ("preciso ganhar os dois jogos da rodada") e cabe na regra do domínio: é distância em pontos para a posição, não garantia matemática de vaga (R28). Mostrar "12 pts acima do 9º" para quem está dentro transformaria a folga em ameaça a cada rodada.
 
@@ -144,14 +145,15 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 | Situação | Como a linha aparece | Origem |
 | --- | --- | --- |
 | **Inscrição encerrada** (troca de parceiro) | Continua na posição dela, com o texto em `--color-foreground-secondary` e um Badge neutro "Encerrada". Não conta para a linha de corte: a vaga passa para a próxima ativa (4.5) | R45, `cutoffLine` |
-| **Empate em todos os critérios** (`awaiting_admin`) | Badge neutro "Empate" nas linhas empatadas, e uma nota abaixo da tabela: "Ordem provisória até a decisão do admin (critério final de desempate)" | R37, `computeStandings` |
+| **Empate em todos os critérios** | As linhas empatadas mostram a mesma posição, em ordem alfabética entre elas, com Badge neutro "Empate". A linha seguinte pula as posições divididas (duas em 3º: a próxima é 5º). Sem nota abaixo da tabela: a ordem não é provisória, é um empate | R37, R52 |
+| **Desempate do admin** (empate na última vaga, depois da decisão) | As linhas do empate passam a ter posições distintas, na ordem escolhida pelo admin, com Badge neutro "Desempate do admin" no lugar de "Empate". Ao tocar na linha, a folha (RK14) diz quem decidiu e quando | R53, R39 |
 | **Nenhum jogo confirmado na temporada** | Seção 8.2: sem posição, em ordem alfabética | DEC-RANK RL6 |
 
 ### 4.5 Linha de corte da final
 
 - **RK13. Com final na temporada, um ZoneDivider separa a última vaga da primeira fora dela**, com texto: "Classificam para a [nome da final] · N vagas" antes da data de corte e "Classificados para a [nome da final]" depois dela. É a única marca de zona da tela: nenhuma linha ganha badge de "zona" (R23). [R23, R27, R28, DEC-FINAL; REF, divisor com texto]
 - **A linha fica depois da N-ésima inscrição ativa**, não depois da posição N: uma encerrada dentro da zona não ocupa vaga (R45). Com 8 vagas e uma encerrada em 5º, o divisor fica depois do 9º.
-- **Empate atravessando a linha** (`cutoffLine` devolve `awaiting_admin`): o divisor ganha uma segunda linha, "Empate na última vaga: decisão do admin".
+- **Empate atravessando a linha** (posição compartilhada com duplas dos dois lados da última vaga, R53): o divisor fica **depois de todas as linhas do empate**, para não separar duplas com a mesma posição pela ordem alfabética, e ganha uma segunda linha. Antes da data de corte: "Empate na última vaga: se continuar no corte, o admin decide". Depois da data de corte, até a decisão: "Empate na última vaga: aguardando a decisão do admin". Depois da decisão, o divisor volta ao lugar normal, depois da N-ésima ativa na ordem do admin, sem a segunda linha: as linhas mostram "Desempate do admin" (4.4).
 - **Temporada sem final:** sem divisor. O Top N dos marcos (N = 10, R47) é evento do feed, não zona da tabela.
 - **Categoria com menos inscrições ativas que vagas:** sem divisor, e o cabeçalho diz "Todas as duplas se classificam para a [nome da final]".
 
@@ -187,7 +189,7 @@ A página da competição existe e não é aba (NAV N9); o conteúdo, no ranking
 | **Cabeçalho** | Organização (avatar e nome, que levam à página da organização, NAV N34) e nome da competição |
 | **Categorias** | Uma linha por categoria (ListItem): nome da categoria, "16 duplas", e, quando o jogador está inscrito, a posição dele (StandingSummaryItem). Toque → classificação |
 | **Temporada** | Nome e datas, rodada atual com o prazo, número de jogos por rodada; final: nome, vagas e data de corte |
-| **Regras** | Formato da partida (R29, texto do formato); a tabela de pontos do ranking (R9–R11, R36) em linguagem de jogador ("Vitória: 100 pontos, mais 2 por game vencido e menos 2 por game perdido"), com o exemplo do 6/4 6/3 calculado pela regra do próprio ranking; a ordem de desempate (R37), com a nota de que ali a vitória por W.O. conta, diferente da linha da tabela (RK8); o prazo para confirmar (R14); o que acontece sem jogo no prazo da rodada (R40) |
+| **Regras** | Formato da partida (R29, texto do formato); a tabela de pontos do ranking (R9–R11, R36) em linguagem de jogador ("Vitória: 100 pontos, mais 2 por game vencido e menos 2 por game perdido"), com o exemplo do 6/4 6/3 calculado pela regra do próprio ranking; a ordem de desempate (R37), com a nota de que ali a vitória por W.O. conta, diferente da linha da tabela (RK8), e o que acontece quando tudo empata: posição dividida, e o admin decide só a última vaga da final (R52, R53); o prazo para confirmar (R14); o que acontece sem jogo no prazo da rodada (R40) |
 
 - **RK18. As regras mostram os valores do ranking, não os padrões do app.** Cada ranking guarda a própria tabela (R9); a página lê a `ScoringRule` da competição. O exemplo usa `matchPoints` com a regra dela.
 - **Ações do admin na página:** ficam na área "Administrar" da competição (NAV N31), visível só para o admin dela. Entre elas, "Sortear a rodada N", disponível quando a rodada anterior fechou ou quando a temporada ainda não teve sorteio (R7, R15). O nome do botão era "Lançar sorteio da rodada N" e mudou com a spec do sorteio. **O fluxo do sorteio não é desta spec:** está em `docs/ROUND_DRAW.md` (SR3).
@@ -210,7 +212,7 @@ Usa o `EmptyState` do DS (ícone opcional, título, apoio e uma ação).
 
 - **RK20. Temporada aberta sem nenhuma partida confirmada:** a tabela lista as inscrições em ordem alfabética, **sem posição e sem pontos**, com a nota "A classificação começa com o primeiro resultado confirmado." Sem ZoneDivider. [DEC-RANK RL6]
 
-  **Por quê:** o `computeStandings` devolve todas as linhas empatadas com `awaiting_admin`, porque 0 a 0 é empate em todos os critérios. Mostrar "1º a 16º" com 0 ponto sugeriria uma ordem que não existe, e o Badge "Empate" em todas as linhas seria ruído.
+  **Por quê:** 0 a 0 é empate em todos os critérios, e pela R52 todas as inscrições dividiriam o 1º. Dezesseis linhas com "1º", 0 ponto e o Badge "Empate" seriam ruído, e não dizem nada que a lista alfabética não diga.
 - **Categoria com uma inscrição só:** a tabela mostra a linha, sem divisor.
 
 ### 8.3 Carregando e erro
@@ -228,6 +230,7 @@ Usa o `EmptyState` do DS (ícone opcional, título, apoio e uma ação).
 | Aberta, rodada ≥ 2 | Inscrito | Tabela com delta, própria linha fixada, distância da vaga se fora da zona |
 | Aberta | Não inscrito na categoria | Tabela sem linha destacada |
 | Depois da data de corte, antes do fim | Qualquer | Divisor "Classificados para…", sem distância da vaga |
+| Depois da data de corte, empate na última vaga sem decisão | Qualquer | Divisor depois do empate, com "aguardando a decisão do admin" (4.5) |
 | Encerrada | Qualquer | RK15 |
 | Sem temporada | Qualquer | RK19 |
 
@@ -244,26 +247,26 @@ Usa o `EmptyState` do DS (ícone opcional, título, apoio e uma ação).
 | **StandingSummaryItem** | 3 | "Sua posição em uma categoria": posição, delta, competição · categoria, parceiro. Na lista "Minhas competições" da aba Competições (NAV N29), na folha do seletor (RK6), na página da competição (RK17) e no perfil | Novo. Parte do ListItem |
 | **PinnedStandingRow** | 3 | A cópia fixa da própria linha (RK9) | Novo. Compõe o RankingRow; o comportamento de fixar é da tela |
 | **DeltaIndicator** | 1 | Delta da linha e do item | Em PR aberto |
-| **ListItem**, **Badge**, **EmptyState**, **Skeleton**, **Dialog**, **Alert** | 1–2 | Base da linha, "Encerrada"/"Empate", vazios, carregando, folhas, erro | No `master` |
+| **ListItem**, **Badge**, **EmptyState**, **Skeleton**, **Dialog**, **Alert** | 1–2 | Base da linha, "Encerrada"/"Empate"/"Desempate do admin", vazios, carregando, folhas, erro | No `master` |
 | **AvatarStack** | 1 | Dois avatares sobrepostos da dupla | No `master` (`ui/Avatar`) |
 
 ### 9.1 Critérios de aceite: RankingRow
 
 Para a issue de ENG do RankingRow e do ZoneDivider.
 
-- [ ] Recebe posição, unidade competidora (simples: 1 jogador; duplas: 2), pontos, jogos, vitórias, delta opcional e flags `isOwn`, `status` (`active` / `closed`) e `awaitingAdmin`.
+- [ ] Recebe posição, unidade competidora (simples: 1 jogador; duplas: 2), pontos, jogos, vitórias, delta opcional e flags `isOwn`, `status` (`active` / `closed`) e `tie` (`none` / `shared` / `adminDecided`).
 - [ ] Mostra, da esquerda para a direita: posição (`title-sm` bold, largura para 2 dígitos), avatar (simples) ou dois avatares sobrepostos (duplas), nome abreviado ("Nome1 S. e Nome2 C." em duplas; "Você" no lugar do nome do jogador logado), pontos à direita (`label-lg` bold, `tabular-nums`) e, abaixo dos pontos, o DeltaIndicator quando há delta diferente de zero.
 - [ ] Linha de apoio: "N jogos · N vitórias", com singular ("1 jogo", "1 vitória").
 - [ ] `isOwn`: fundo `--color-background-secondary`. Nenhuma outra variação de cor na linha.
 - [ ] `status = closed`: texto em `--color-foreground-secondary` e Badge neutro "Encerrada". Os pontos continuam visíveis.
-- [ ] `awaitingAdmin`: Badge neutro "Empate".
+- [ ] `tie = shared`: Badge neutro "Empate"; a posição recebida pode repetir a de outra linha (R52). `tie = adminDecided`: Badge neutro "Desempate do admin" (R53).
 - [ ] Slot opcional abaixo da linha de apoio para a distância da vaga ("Faltam 12 pts para o 8º"), em `label-md`, `--color-foreground-secondary`. A tela decide quando preencher (RK11).
 - [ ] Nome sempre abreviado, pelo `abbreviateName` ("Lucas S. e Rafael C.", "Você e Pedro A."). Nome longo fica numa linha, e o corte com reticências no fim é só proteção do caso extremo; "Você" nunca é cortado. O nome completo fica no nome acessível.
 - [ ] Altura mínima de 48px; a linha inteira é o alvo de toque (RK14). Sem toque, é estática (o ListItem já tem as três formas).
-- [ ] Nome acessível: "9º, Você e Pedro Alves, 390 pontos, subiu 2 posições, 5 jogos, 3 vitórias". Os avatares são decorativos.
+- [ ] Nome acessível: "9º, Você e Pedro Alves, 390 pontos, subiu 2 posições, 5 jogos, 3 vitórias". No empate, a situação entra logo depois da posição: "3º, empatado, …" ou "8º, por desempate do admin, …". Os avatares são decorativos.
 - [ ] Semântica: a classificação é uma lista ordenada (`<ol>`); cada linha, um item. Não é `<table>`: são poucas colunas e a linha é um card (REF, "Acessibilidade").
 - [ ] Funciona de 320 a 430px sem rolagem horizontal.
-- [ ] Stories: simples, duplas, própria linha, subiu, caiu, sem delta, encerrada, empate, com distância da vaga, nome longo, posição de 2 dígitos. Story-galeria com uma tabela de 10 linhas e o ZoneDivider.
+- [ ] Stories: simples, duplas, própria linha, subiu, caiu, sem delta, encerrada, empate, desempate do admin, com distância da vaga, nome longo, posição de 2 dígitos. Story-galeria com uma tabela de 10 linhas e o ZoneDivider.
 
 ### 9.2 Critérios de aceite: ZoneDivider
 
@@ -272,7 +275,7 @@ Para a issue de ENG do RankingRow e do ZoneDivider.
 - [ ] O texto não depende de cor para ser entendido: diz o que a linha significa.
 - [ ] Semântica: é um separador **dentro** da lista ordenada, sem quebrar a numeração lida pelo leitor de tela: `<li role="separator" aria-label="…">` ou equivalente, conferido com axe no addon de a11y.
 - [ ] Não é focável.
-- [ ] Stories: antes do corte, depois do corte, com empate na linha, texto longo (nome de final comprido).
+- [ ] Stories: antes do corte, depois do corte, com empate na linha antes do corte, com empate aguardando o admin, texto longo (nome de final comprido).
 
 ### 9.3 Critérios de aceite da tela (para a issue da tela, depois)
 
@@ -322,6 +325,11 @@ Confirmadas pelo Gabriel em 28/09/2026 (saíram das correções de consistência
 - **RL10.** A base do delta só avança para a foto da rodada que acabou de fechar no primeiro resultado confirmado da rodada seguinte; até lá, a tabela mostra o mesmo delta do card de fechamento (RK12).
 - **RL11.** Temporadas mais antigas que a anterior chegam pelo perfil, e o toque abre a classificação daquela temporada, rolada até a linha da dupla (RK21).
 
+Da decisão do empate total (DEC-EMPATE, 01/10/2026), para confirmar com a aprovação do PR:
+
+- **RL12.** Com empate na última vaga, o divisor fica depois de todas as linhas do empate até a decisão do admin, para a ordem alfabética não parecer dar a vaga (4.5).
+- **RL13.** A dupla do empate que atravessa a linha não mostra "Faltam N pts" (RK11).
+
 ---
 
 ## 12. Fora desta spec
@@ -329,7 +337,7 @@ Confirmadas pelo Gabriel em 28/09/2026 (saíram das correções de consistência
 | Item | Para onde vai |
 | --- | --- |
 | Fluxo do sorteio da rodada (o que o admin vê, confirmação, erro) | `docs/ROUND_DRAW.md` |
-| Decisão do admin no empate total (R37, último critério) | O domínio não guarda essa decisão hoje (`computeStandings` só marca `awaiting_admin`). Issue própria de domínio e tela |
+| Tela do admin para desempatar a última vaga | `docs/RESULTS.md` §5.5. A regra é a R53 do `DOMAIN.md` |
 | Descoberta de competições com filtros de nível e região | JTBD 1. No MVP, o Explorar tem a busca e a vitrine dos organizadores do beta, sem filtros (NAV N32, N33; `PRODUCT.md`) |
 | Recorte social ("só amigos" na tabela) | Futuro. Com 6 a 40 duplas por categoria, o ganho é pequeno no MVP (REF, padrão 4) |
 | Histórico de temporadas e evolução da posição | Spec de perfil (JTBD 5) |
@@ -356,5 +364,5 @@ Medidas no beta com Rankin e Vila. Sem meta fixa: a primeira rodada define a lin
 
 - **A distância da vaga vira pressão.** "Faltam 12 pts" pode motivar ou frustrar. Ouvir os jogadores do beta; se frustrar, a RK11 some sem mexer no resto.
 - **Delta de meio de rodada confunde.** No meio da rodada, a tabela diz ▲ 2 e o feed ainda não disse nada (o evento sai no fecho). Se aparecer como "o app errou", avaliar o delta desde a última partida da dupla.
-- **Empate total sem ferramenta do admin.** Com poucas partidas no início da temporada, empates em todos os critérios são comuns, e a nota "ordem provisória" pode ficar na tela por semanas enquanto a decisão do admin não tiver tela (seção 12).
+- **Posição compartilhada lida como erro.** No início da temporada, empates em todos os critérios são comuns, e duas linhas com "3º" ou duas duplas Líder no feed podem parecer falha do app. O Badge "Empate" e a ordem de desempate nas regras (RK17) são a explicação; ouvir os jogadores do beta, e se a dúvida aparecer, explicar o empate na folha da linha.
 - **Categoria grande.** Com 40+ duplas, a lista fica longa e a cópia fixa passa a ser o único jeito de achar a própria linha. Acompanhar o uso da cópia nas categorias maiores.
