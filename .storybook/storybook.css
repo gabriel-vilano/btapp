@@ -63,6 +63,16 @@
   padding: var(--spacing-200) var(--spacing-page-margin);
 }
 
+/* Frame de tela que acompanha a largura do viewport, até o maior celular (430px).
+   Com layout "fullscreen", a story mostra o bloco na largura real do aparelho,
+   e um bloco com largura fixa por dentro vira rolagem horizontal visível no play. */
+.sb-screen-fluid {
+  width: 100%;
+  max-width: 430px;
+  background-color: var(--color-background-primary);
+  padding: var(--spacing-200) var(--spacing-page-margin);
+}
+
 /* Largura útil do card no mobile base (393px − 2 × 16px de margem).
    Stories do feed usam este frame para reproduzir o layout real. */
 .sb-feed-frame {

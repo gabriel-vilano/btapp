@@ -6,11 +6,11 @@ import { H2HMatchItem } from "./H2HMatchItem";
 const meta = {
   title: "H2H/H2HMatchItem",
   component: H2HMatchItem,
-  // Linha de ponta a ponta na largura do mobile base: a margem lateral é do próprio item
+  // Linha de ponta a ponta na largura do viewport: a margem lateral é do próprio item
   parameters: { layout: "fullscreen" },
   decorators: [
     (Story, { parameters }) => (
-      <div className="sb-width-393">
+      <div className={parameters.narrow ? "sb-width-320" : undefined} data-testid="frame">
         {parameters.ownList ? (
           <Story />
         ) : (
@@ -25,7 +25,7 @@ const meta = {
     outcome: "win",
     score: { type: "normal", sets: [{ a: 6, b: 4 }, { a: 3, b: 6 }, { a: 10, b: 7 }] },
     playedAt: "2026-09-12T13:00:00Z",
-    context: "Ranking Rankin · Masculino B · Rodada 3",
+    context: "Ranking Arena Mangaba · Masculino B · Rodada 3",
     href: "/partidas/m1",
   },
   argTypes: {
@@ -46,7 +46,7 @@ export const Win: Story = {
   play: async ({ canvas }) => {
     const link = await canvas.findByRole("link", {
       name: new RegExp(
-        ["^Vitória", "6/4 3/6 10/7", "12 de setembro de 2026", "Ranking Rankin · Masculino B · Rodada 3$"].join(PAUSE),
+        ["^Vitória", "6/4 3/6 10/7", "12 de setembro de 2026", "Ranking Arena Mangaba · Masculino B · Rodada 3$"].join(PAUSE),
       ),
     });
     await expect(link).toHaveAttribute("href", "/partidas/m1");
@@ -132,4 +132,17 @@ export const AllVariants: Story = {
       />
     </List>
   ),
+};
+
+// Menor celular suportado (320px): o contexto quebra, a linha não rola para o lado
+export const Narrow: Story = {
+  parameters: { narrow: true },
+  args: { ...LongContext.args, outcome: "loss", score: { type: "retired", completed_sets: [{ a: 6, b: 4 }], interrupted_set: { a: 2, b: 3 } } },
+  play: async ({ canvas }) => {
+    const frame = await canvas.findByTestId("frame");
+    await expect(frame.scrollWidth).toBeLessThanOrEqual(frame.clientWidth);
+    await expect(canvas.getByText("12/09/2026").getBoundingClientRect().right).toBeLessThanOrEqual(
+      frame.getBoundingClientRect().right,
+    );
+  },
 };
