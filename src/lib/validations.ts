@@ -116,3 +116,32 @@ export function validateAvatar(file: File) {
   }
   return { valid: true };
 }
+
+const BIRTH_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+// Piso só contra erro de digitação no ano (ex.: 0198): ninguém em quadra nasceu antes disso
+export const BIRTH_DATE_MIN = "1900-01-01";
+
+// "2026-02-30" passa no padrão, mas o Date o empurra para março: a volta tem de bater
+function isRealCalendarDate(value: string): boolean {
+  const date = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
+}
+
+/**
+ * Data de nascimento do `<input type="date">` (AAAA-MM-DD). Opcional: vazio é válido.
+ * `today` vem de fora, no mesmo formato, para o "hoje" ser o de Brasília e o teste fixá-lo.
+ * @example validateBirthDate("1990-05-12", "2026-10-01") // { valid: true }
+ */
+export function validateBirthDate(value: string, today: string) {
+  if (!value) return { valid: true };
+  if (!BIRTH_DATE_PATTERN.test(value) || !isRealCalendarDate(value)) {
+    return { valid: false, error: "Data inválida. Use dia, mês e ano" };
+  }
+  if (value > today) {
+    return { valid: false, error: "A data de nascimento não pode ser no futuro" };
+  }
+  if (value < BIRTH_DATE_MIN) {
+    return { valid: false, error: "Confira o ano de nascimento" };
+  }
+  return { valid: true };
+}
