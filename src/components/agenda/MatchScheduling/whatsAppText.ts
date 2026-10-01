@@ -2,9 +2,10 @@ import { formatScheduleShort } from "@/src/lib/scheduleOptionFormat";
 import type { ScheduleOption } from "@/src/types/domain";
 
 // Texto pronto do "Abrir no WhatsApp" (docs/SCHEDULING.md §6, "Quando o outro
-// lado não usa o app"). Sem telefone, o link abre o WhatsApp para o jogador
-// escolher a conversa ou o grupo (M24). O atalho direto para a conversa de
-// quem informou o telefone é de outra issue, com o consentimento da M21.
+// lado não usa o app"). O link abre o WhatsApp para o jogador escolher a
+// conversa ou o grupo (M24). O atalho direto para a conversa de quem informou o
+// telefone espera as partidas no banco: só com elas a regra de quem pode ler o
+// número do outro (M23) vale numa política de acesso.
 
 const WHATSAPP_SHARE_URL = "https://wa.me/";
 

@@ -240,3 +240,32 @@ export const ReportFlow: Story = {
     await expect(canvas.getByText(/Informado por Pedro/)).toBeInTheDocument();
   },
 };
+
+const PHONE_ASKED_KEY = "letzplay:whatsapp-phone-asked";
+
+// Sem telefone salvo, o primeiro toque em "Abrir no WhatsApp" pergunta se o
+// jogador quer informar (M20). A story limpa a marca antes e depois, para o
+// pedido aparecer em toda rodada e não vazar para as outras stories
+export const AsksForPhoneOnFirstTap: Story = {
+  args: { askForPhone: true },
+  beforeEach: () => {
+    window.localStorage.removeItem(PHONE_ASKED_KEY);
+    return () => window.localStorage.removeItem(PHONE_ASKED_KEY);
+  },
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(await canvas.findByRole("link", { name: "Abrir no WhatsApp" }));
+    const dialog = within(await findDialog("Informar seu telefone?"));
+    await expect(dialog.getByRole("link", { name: "Informar telefone" })).toHaveAttribute(
+      "href",
+      "/perfil/configuracoes/telefone?volta=%2Fjogos%2Fstory-match-r3",
+    );
+    // A recusa ainda abre o WhatsApp, com a mesma mensagem (M24)
+    const skip = dialog.getByRole("link", { name: "Agora não, abrir o WhatsApp" });
+    await expect(skip.getAttribute("href")).toMatch(/^https:\/\/wa\.me\/\?text=/);
+    await expect(skip).toHaveAttribute("target", "_blank");
+    // Uma vez por aparelho: o próximo toque vai direto ao WhatsApp
+    await expect(window.localStorage.getItem(PHONE_ASKED_KEY)).not.toBeNull();
+    await userEvent.click(dialog.getByRole("button", { name: "Fechar" }));
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+  },
+};
