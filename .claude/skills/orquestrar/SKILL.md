@@ -100,7 +100,7 @@ Para cada PR entregue, nesta ordem:
 2. **O agente parou mesmo?** `needs_action` da sessão e o último comentário do agente na issue.
 3. **Leituras do agente.** A seção "Leituras para o Gabriel conferir", no corpo do PR e no comentário final. Elas vão ao Gabriel antes do merge, junto com os prints quando houver. Achado grave de agente: verificar antes de repassar.
 4. **Prints**, se o PR muda algo na tela (seção 8). PR com zero mudança visual, comprovada por comparação de pixels, dispensa.
-5. **Migration.** Ler o SQL no diff do PR e revisar as policies de RLS como código de produção: RLS ligada na tabela nova, quem lê e quem escreve cada linha, dado sensível fora de tabela com SELECT aberto. Comparar o timestamp com o `list_migrations` do remoto: a integração do Supabase recusa migration mais antiga que a última aplicada, então PRs com migration mergeiam na ordem do timestamp.
+5. **Migration ou dado sensível.** O corpo do PR precisa ter a seção "Revisão leve" (`/security-review` e `/code-review`, pela `/pegar-issue`); sem ela, pedir ao agente pelo relay. Ler o SQL no diff do PR e revisar as policies de RLS como código de produção: RLS ligada na tabela nova, quem lê e quem escreve cada linha, dado sensível fora de tabela com SELECT aberto. Comparar o timestamp com o `list_migrations` do remoto: a integração do Supabase recusa migration mais antiga que a última aplicada, então PRs com migration mergeiam na ordem do timestamp.
 6. **Validação combinada** de todos os PRs prontos do lote, de uma vez, na ordem de merge:
 
    ```bash

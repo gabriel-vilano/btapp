@@ -73,6 +73,14 @@ O E2E (`npm run test:e2e`) precisa de Docker e roda só na CI: acompanhar o job 
 
 Reler o próprio diff procurando o que a CI ou um revisor rejeitaria.
 
+**Revisão leve, só em diff sensível.** Quando o diff tem migration (`supabase/migrations/`), RLS ou policy, ou dado sensível (auth, telefone, dados privados do perfil):
+
+1. rodar `/security-review` e `/code-review` no diff;
+2. corrigir o que for real (achado que não se sustenta não vira mudança, mas fica registrado com o motivo);
+3. registrar no corpo do PR, na seção **Revisão leve**, o que a revisão apontou e o que foi feito com cada ponto.
+
+Nos outros PRs, a revisão não roda. A CI não muda.
+
 ## 5. Entregar
 
 **ENG:**

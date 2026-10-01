@@ -55,7 +55,7 @@ O passo a passo executável está na skill `/pegar-issue` (`.claude/skills/pegar
 2. **Branch.** `<tipo>/<id>-<descricao-curta>`, ex.: `fix/eng-6-placar-wo`. O ID na branch liga o PR à issue pela integração GitHub ↔ Linear. Base: `master`, salvo quando a issue diz outra base. **Se a base for uma branch de feature**, confirmar antes que ela tem o `master` mergeado (`git merge-base --is-ancestor origin/master origin/<feature>`). Sem isso ela pode não ter o `.github/workflows/ci.yml`, e o PR fica sem CI.
 3. **Trabalhar só no escopo.** O que aparecer fora do escopo vira comentário na issue afetada ou issue nova em Backlog. O PR não cresce.
 4. **Parar para decidir.** Ver "Needs Decision" abaixo.
-5. **Entregar.** PR seguindo o template, com `Closes ENG-6` na descrição. A integração move a issue para In Review ao abrir o PR e para Done no merge. O agente acompanha a CI até ficar verde.
+5. **Entregar.** PR seguindo o template, com `Closes ENG-6` na descrição. Diff com migration, RLS, policy ou dado sensível passa antes por uma revisão leve (`/security-review` e `/code-review`), registrada no corpo do PR. A integração move a issue para In Review ao abrir o PR e para Done no merge. O agente acompanha a CI até ficar verde.
 6. **Fechar o ciclo.** Último comentário na issue: o que foi feito, link do PR, qualquer descoberta que afete outra issue (também comentada lá) e as **Leituras para o Gabriel conferir**: as interpretações que o agente escolheu sem perguntar, numeradas, também no corpo do PR.
 
 Issues de PRD terminam de outro jeito: o resultado é um diagnóstico ou uma spec. Decisões estáveis vão para `docs/` via PR (o repo é a fonte da verdade do que é durável). A issue vai para **Ready** só com aprovação do Gabriel.
