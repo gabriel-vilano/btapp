@@ -16,8 +16,9 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  // Sem maximumScale nem userScalable: o Chrome do Android respeita o bloqueio e
+  // impede o pinch (WCAG 1.4.4). O auto-zoom do iOS ao focar um campo se evita
+  // com texto digitado de 16px (docs/TOKENS.md > "Texto digitado em campo").
   // Sem cover, os env(safe-area-inset-*) da TabBar, do NavigationRail e do
   // AppHeader valem 0 no iPhone e a barra fica sob o indicador de início (N26)
   viewportFit: "cover",

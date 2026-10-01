@@ -357,12 +357,18 @@ Cada escala define apenas **size + line-height + tracking**. **O peso é desacop
 | `title-lg`   | `--font-size-175` (28px) | `--line-height-225` (36px) | —                  | Headers de páginas de auth                    |
 | `title-md`   | `--font-size-150` (24px) | `--line-height-200` (32px) | —                  | Títulos de seção, OTP input                   |
 | `title-sm`   | `--font-size-125` (20px) | `--line-height-175` (28px) | —                  | Subtítulos, headings terciários               |
-| `body-lg`    | `--font-size-100` (16px) | `--line-height-150` (24px) | —                  | Descrições de página, corpo grande            |
-| `body-md`    | `--font-size-087` (14px) | `--line-height-125` (20px) | —                  | Prose, input text, texto secundário           |
+| `body-lg`    | `--font-size-100` (16px) | `--line-height-150` (24px) | —                  | Descrições de página, texto digitado em campo |
+| `body-md`    | `--font-size-087` (14px) | `--line-height-125` (20px) | —                  | Prose, texto secundário                       |
 | `label-lg`   | `--font-size-087` (14px) | `--line-height-125` (20px) | —                  | Texto de botão, rótulos de ação               |
 | `label-md`   | `--font-size-075` (12px) | `--line-height-100` (16px) | —                  | Form labels, helper, metadata, alerts, toasts |
 
 **Observação sobre `body-md` vs `label-lg`:** têm valores idênticos (14px/20lh) mas nomes diferentes. O nome comunica **papel**, não tamanho — `.button { font-size: var(--text-label-lg-size) }` deixa claro que é rótulo de ação, enquanto `.description { font-size: var(--text-body-md-size) }` indica prose. Podem evoluir separadamente.
+
+#### Texto digitado em campo
+
+**Texto digitado em campo usa `body-lg`, nunca menos de 16px.** Vale para o valor e o placeholder de todo `input`, `textarea` e `select` (FormInput, SearchField e os que vierem), em qualquer tela e qualquer ponteiro. Rótulo, texto de apoio e mensagem de erro continuam em `label-md` (12px). O campo continua com 48px de altura.
+
+**Por quê:** o Safari do iOS dá zoom na página ao focar um campo com texto menor que 16px. A saída antiga era travar o zoom no viewport (`maximumScale: 1, userScalable: false`), mas o Chrome do Android respeita a trava e impede o pinch, o que falha a [WCAG 1.4.4](https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html) e a auditoria `meta-viewport` do Lighthouse. Com 16px no campo o iOS não dá auto-zoom, e o viewport fica livre.
 
 #### Padrão de uso no componente
 
