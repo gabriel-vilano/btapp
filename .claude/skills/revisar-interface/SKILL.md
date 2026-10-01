@@ -15,7 +15,8 @@ A saída vai para a conversa, e de lá para o PR ou o comentário no Linear. Nad
 
 1. **Ler os arquivos inteiros**, o `.tsx` e o `.module.css` de cada componente ou tela do argumento. Quando o problema pode estar resolvido em outro lugar (o componente filho já tem `aria-label`, o token já tem o valor certo, o layout já trata a safe area), abrir esse lugar antes de apontar.
    - **Escopo:** os arquivos do argumento são os revisados e ganham seção na saída. Componentes do DS que uma tela usa, consumidores de um componente e o `reset.css` são lugares de consulta, não de revisão.
-   - **Onde o achado mora:** no arquivo onde a correção entra. Se a tela não consegue corrigir porque falta prop no componente do DS (ex.: o FormInput não repassa `spellCheck`), o achado aponta para o componente, citando o consumidor que sofre com isso.
+   - **Decisão já tomada:** o `.mdx` do componente (seção "Decisões de design") e os docs de `docs/` contam como fonte. Antes de apontar algo que parece escolha deliberada, conferir lá.
+   - **Onde o achado mora:** no arquivo onde a correção entra. Se a tela não consegue corrigir porque falta prop no componente do DS (ex.: o FormInput não repassa `spellCheck`), o achado aponta para o componente, citando o consumidor que sofre com isso. Arquivo fora do escopo que recebe a correção ganha seção própria na saída.
    - **Regra que vale para todo controle** (`-webkit-tap-highlight-color`, `touch-action`): se nenhum lugar global trata, um achado só, apontando para `styles/reset.css`, e não um por componente.
 2. **Passar o checklist abaixo** seção por seção. As regras de foco, tap target, cor e tipografia do DS moram no `docs/TOKENS.md`: ler as seções "Regras fundamentais", "Acessibilidade — tap target" e "Acessibilidade — foco" antes de julgar esses temas, em vez de confiar em valores de memória.
 3. **Aplicar a regra de prova** a cada candidato a achado (próxima seção).
