@@ -10,10 +10,12 @@ import styles from "./AvatarUpload.module.css";
 
 type AvatarUploadProps = {
   onFileSelect: (file: File | null) => void;
+  /** Foto atual do jogador, ao editar o perfil. Aparece como preview até a troca. */
+  initialUrl?: string | null;
 };
 
-export function AvatarUpload({ onFileSelect }: AvatarUploadProps) {
-  const [preview, setPreview] = useState<string | null>(null);
+export function AvatarUpload({ onFileSelect, initialUrl = null }: AvatarUploadProps) {
+  const [preview, setPreview] = useState<string | null>(initialUrl);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 

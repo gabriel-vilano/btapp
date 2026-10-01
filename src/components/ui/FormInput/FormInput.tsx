@@ -18,6 +18,7 @@ export type FormInputType =
   | "password"
   | "tel"
   | "search"
+  | "date"
   | "datetime-local";
 
 type FormInputProps = {
@@ -29,6 +30,8 @@ type FormInputProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: () => void;
   error?: string;
+  /** Texto de apoio abaixo do campo, lido junto com o rótulo. O erro toma o lugar dele. */
+  hint?: string;
   valid?: boolean;
   placeholder?: string;
   autoComplete?: string;
@@ -36,7 +39,7 @@ type FormInputProps = {
   disabled?: boolean;
   maxLength?: number;
   /**
-   * Limites do `datetime-local`, no formato `AAAA-MM-DDTHH:mm`.
+   * Limites do `date` (`AAAA-MM-DD`) e do `datetime-local` (`AAAA-MM-DDTHH:mm`).
    * O picker do iOS não respeita: validar também no código.
    */
   min?: string;
@@ -44,9 +47,10 @@ type FormInputProps = {
 };
 
 // Ícone à esquerda que diz o tipo do campo antes de qualquer valor
-// (o datetime-local vazio no iOS não mostra placeholder).
+// (o date e o datetime-local vazios no iOS não mostram placeholder).
 const LEADING_ICON: Partial<Record<FormInputType, ElementType>> = {
   search: MagnifyingGlassIcon,
+  date: CalendarBlankIcon,
   "datetime-local": CalendarBlankIcon,
 };
 
@@ -58,6 +62,8 @@ const DEFAULT_AUTOCOMPLETE: Partial<Record<FormInputType, string>> = {
   "datetime-local": "off",
 };
 
+const DATE_TYPES: ReadonlySet<FormInputType> = new Set(["date", "datetime-local"]);
+
 function buildFieldClasses(
   type: FormInputType,
   error?: string,
@@ -66,7 +72,7 @@ function buildFieldClasses(
   return [
     styles["form-input__field"],
     LEADING_ICON[type] && styles["form-input__field--with-leading"],
-    type === "datetime-local" && styles["form-input__field--datetime"],
+    DATE_TYPES.has(type) && styles["form-input__field--datetime"],
     error && styles["form-input__field--error"],
     valid && !error && styles["form-input__field--valid"],
   ]
@@ -105,6 +111,7 @@ export function FormInput({
   onChange,
   onBlur,
   error,
+  hint,
   valid,
   placeholder,
   autoComplete,
@@ -121,6 +128,8 @@ export function FormInput({
 
   const showStatus = value.length > 0 && (valid || error);
   const errorId = `${name}-error`;
+  const hintId = `${name}-hint`;
+  const describedBy = error ? errorId : hint ? hintId : undefined;
 
   return (
     <div className={styles["form-input"]}>
@@ -149,7 +158,7 @@ export function FormInput({
           max={max}
           className={buildFieldClasses(type, error, valid)}
           aria-invalid={error ? true : undefined}
-          aria-describedby={error ? errorId : undefined}
+          aria-describedby={describedBy}
         />
 
         {leadingIcon && (
@@ -183,6 +192,11 @@ export function FormInput({
           className={styles["form-input__error"]}
         >
           {error}
+        </span>
+      )}
+      {!error && hint && (
+        <span id={hintId} className={styles["form-input__hint"]}>
+          {hint}
         </span>
       )}
     </div>
