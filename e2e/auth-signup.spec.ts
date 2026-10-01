@@ -21,8 +21,8 @@ test("cadastro completo: dados, código do e-mail, perfil e feed", async ({ page
 
   await expect(page).toHaveURL(/\/cadastro\/perfil$/);
   // Sugestão gerada de "Jogador E2E"; outras rodadas já usaram a base, daí o número
-  await expect(page.getByLabel("Username", { exact: true })).toHaveValue(/^jogadore2e\d*$/);
-  await page.getByLabel("Username", { exact: true }).fill(username);
+  await expect(page.getByLabel("Nome de usuário", { exact: true })).toHaveValue(/^jogadore2e\d*$/);
+  await page.getByLabel("Nome de usuário", { exact: true }).fill(username);
   await expect(page.getByText("Usuário disponível")).toBeVisible();
   await page.getByRole("button", { name: "Concluir", exact: true }).click();
 

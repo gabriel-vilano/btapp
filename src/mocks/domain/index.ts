@@ -28,6 +28,7 @@ import {
 } from './explore';
 import { feedEvents } from './feedEvents';
 import { friendlyMatches } from './friendlies';
+import { h2hFriendlies, h2hUnits } from './h2h';
 import { friendships, organizations, players, units } from './people';
 import {
   masculinoB,
@@ -164,6 +165,21 @@ export const exploreEntities = {
   valeAzulTournament,
   jenipapoTournament,
 };
+
+/**
+ * O `mockProfileDomain` com amistosos antigos que dão ao H2H de Lucas e
+ * Rafael × Pedro e Thiago uma derrota e pares cruzados com números diferentes
+ * dos da dupla (docs/HEAD_TO_HEAD.md, HH2). Separado para que as contagens
+ * do feed e do perfil não mudem.
+ * Ex.: `buildH2HPage(mockH2HDomain, { sideA: 'lucassilva+rafaelcosta', sideB: 'pedrohenrique+thiagomendes', viewerId, now })`.
+ */
+export const mockH2HDomain: DomainMocks = {
+  ...mockProfileDomain,
+  units: [...mockProfileDomain.units, ...Object.values(h2hUnits)],
+  matches: [...mockProfileDomain.matches, ...h2hFriendlies],
+};
+
+export const h2hEntities = { units: h2hUnits };
 
 export const pastSeasonEntities = { season: pastSeason, rounds: pastRounds, masculinoB: pastMasculinoB };
 
