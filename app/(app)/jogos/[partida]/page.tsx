@@ -1,24 +1,40 @@
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
+import { FriendlyScreen } from "@/src/components/agenda/FriendlyScreen";
 import { MatchScreen } from "@/src/components/agenda/MatchScreen";
 import { DetailHeader } from "@/src/components/shell/DetailHeader";
+import { friendlyScreenDataOf } from "@/src/mocks/friendlyScreen";
 import { matchScreenDataOf } from "@/src/mocks/matchScreen";
 
 // Tela do confronto (docs/NAVIGATION.md N10, docs/SCHEDULING.md §6 e
-// docs/RESULTS.md §4) sobre os mocks, vista pelo Lucas. Por enquanto só a partida do ranking: torneio e
-// amistoso não têm marcação (M1), e as telas deles são de outras issues.
+// docs/RESULTS.md §4) sobre os mocks, vista pelo Lucas. O amistoso usa a mesma
+// rota, com a tela dele, sem marcação nem prazo (RESULTS.md §6.2). O torneio
+// não tem marcação (M1), e a tela dele é de outra issue.
 export default async function MatchPage({ params }: { params: Promise<{ partida: string }> }) {
   // Renderiza a cada acesso: prerenderizada no build, a página congelaria o
   // "agora" e as datas relativas dos mocks
   await connection();
   const { partida } = await params;
-  const data = matchScreenDataOf(decodeURIComponent(partida));
+  const matchId = decodeURIComponent(partida);
+  const now = new Date().toISOString();
+  const friendly = friendlyScreenDataOf(matchId);
+  if (friendly !== null) {
+    return (
+      <>
+        <DetailHeader title="Amistoso" />
+        <main>
+          <FriendlyScreen data={friendly} now={now} />
+        </main>
+      </>
+    );
+  }
+  const data = matchScreenDataOf(matchId);
   if (data === null) notFound();
   return (
     <>
       <DetailHeader title="Confronto" />
       <main>
-        <MatchScreen data={data} now={new Date().toISOString()} />
+        <MatchScreen data={data} now={now} />
       </main>
     </>
   );

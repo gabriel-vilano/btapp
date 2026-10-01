@@ -58,10 +58,24 @@ const singlesCancelled = base(
   onTheHour(daysAgo(3)), { type: 'normal', winner: 'a', sets: [gameSet(6, 3)] }, p.caio,
 );
 
+// Os dois pendentes do Lucas, que vê o app nos mocks: um para ele confirmar
+// e um que ele lançou e ainda pode cancelar (docs/RESULTS.md §6.2).
+const singlesAwaitingLucas = base(
+  'pedro-lucas', units.pedro, units.lucas, 'one_set_of_6',
+  onTheHour(daysAgo(3)), { type: 'normal', winner: 'a', sets: [gameSet(6, 3)] }, p.pedro,
+);
+
+const doublesAwaitingByLucas = base(
+  'lucas-rafael-andre-bruno', units.lucasRafael, units.andreBruno, 'one_set_of_8',
+  onTheHour(daysAgo(1)), { type: 'normal', winner: 'a', sets: [gameSet(8, 6)] }, p.lucas,
+);
+
 export const friendlyMatches: FriendlyMatch[] = [
   { ...doublesConfirmed, status: 'confirmed', response: responseBy(p.thiago, hoursAfter(doublesConfirmed.created_at, 3)) },
   { ...singlesRetired, status: 'confirmed', response: responseBy(p.thiago, hoursAfter(singlesRetired.created_at, 20)) },
   { ...singlesAwaiting, status: 'awaiting_confirmation' },
+  { ...singlesAwaitingLucas, status: 'awaiting_confirmation' },
+  { ...doublesAwaitingByLucas, status: 'awaiting_confirmation' },
   // A Ana contestou: sem admin no amistoso, o resultado é descartado (R43).
   { ...doublesDiscarded, status: 'discarded', response: responseBy(p.ana, hoursAfter(doublesDiscarded.created_at, 1)) },
   // O Caio lançou o jogo errado e cancelou antes de o Diego responder.
