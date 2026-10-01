@@ -135,7 +135,7 @@ O Gabriel escolhe o lote; uma sessão orquestradora abre uma sessão na nuvem po
 
 O passo a passo executável, com os scripts de validação combinada, espera da CI e prints, está na skill `/orquestrar` (`.claude/skills/orquestrar/SKILL.md`). O estado de cada lote fica no Linear.
 
-- **Máximo de 5 agentes simultâneos.** O gargalo é a revisão de PRs e as respostas a Needs Decision, não a quantidade de agentes.
+- **Máximo de 8 agentes simultâneos**, em issues sem arquivos em comum. Sessão com PR entregue e parada não conta. O gargalo é a revisão de PRs e as respostas a Needs Decision, não a quantidade de agentes.
 - **Relay para uma sessão na nuvem.** A orquestradora retoma uma sessão com uma Routine sem agenda, criada só para isso:
   1. `create_trigger` com o `persistent_session_id` da sessão e a mensagem no `prompt`, sem `cron_expression` nem `run_once_at`;
   2. `fire_trigger`;

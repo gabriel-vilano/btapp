@@ -41,7 +41,7 @@ Antes de levar uma pergunta ao Gabriel, ler os comentários recentes da issue: �
 
 1. Candidatas: issues em **Todo** sem `blocked by` aberto.
 2. Mapa de conflitos: um subagente lista os arquivos que cada candidata deve tocar (inclusive linhas vizinhas do mesmo doc) e aponta os pares em conflito. Issues que dividem arquivos entram em lotes diferentes ou com ordem de merge definida. Issue que renomeia mocks entra primeiro.
-3. Propor ao Gabriel com `AskUserQuestion`: a recomendação primeiro, o contraponto antes, em texto. No máximo 4 perguntas por rodada e o limite de agentes do `docs/AGENT_WORKFLOW.md` > "Orquestração".
+3. Propor ao Gabriel com `AskUserQuestion`: a recomendação primeiro, o contraponto antes, em texto. No máximo 4 perguntas por rodada e 8 agentes trabalhando ao mesmo tempo (`docs/AGENT_WORKFLOW.md` > "Orquestração"); sessão com PR entregue e parada não conta.
 4. Registrar no documento de estado: lote aprovado, horário e ordem de merge.
 
 ## 3. Abrir as sessões
