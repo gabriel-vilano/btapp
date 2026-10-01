@@ -1,0 +1,96 @@
+diff --git a/node_modules/next/dist/client/components/router-reducer/ppr-navigations.js b/node_modules/next/dist/client/components/router-reducer/ppr-navigations.js
+index a9c5ed8..2f1ff10 100644
+--- a/node_modules/next/dist/client/components/router-reducer/ppr-navigations.js
++++ b/node_modules/next/dist/client/components/router-reducer/ppr-navigations.js
+@@ -626,25 +626,9 @@ function createCacheNodeForSegment(now, tree, seedRsc, metadataVaryPath, seedHea
+                     break;
+                 }
+             case _cache.EntryStatus.Pending:
+-                {
+-                    // We haven't received data for this segment yet, but there's already
+-                    // an in-progress request. Since it's extremely likely to arrive
+-                    // before the dynamic data response, we might as well use it.
+-                    const promiseForFulfilledEntry = (0, _cache.waitForSegmentCacheEntry)(segmentEntry);
+-                    cachedRsc = promiseForFulfilledEntry.then((entry)=>entry !== null ? entry.rsc : null);
+-                    // Because the request is still pending, we typically don't know yet
+-                    // whether the response will be partial. We shouldn't skip this segment
+-                    // during the dynamic navigation request. Otherwise, we might need to
+-                    // do yet another request to fill in the remaining data, creating
+-                    // a waterfall.
+-                    //
+-                    // The one exception is if this segment is being fetched with via
+-                    // prefetch={true} (i.e. the "force stale" or "full" strategy). If so,
+-                    // we can assume the response will be full. This field is set to `false`
+-                    // for such segments.
+-                    isCachedRscPartial = segmentEntry.isPartial;
+-                    break;
+-                }
++                // patch LetzPlay (ENG-139, vercel/next.js#98684): entrada Pending tratada como cache miss.
++                // Usar a promise do prefetch em voo deixava o segmento vazio quando ela
++                // resolvia para null. Como miss, o roteador espera a resposta da navegação.
+             case _cache.EntryStatus.Empty:
+             case _cache.EntryStatus.Rejected:
+                 {
+@@ -724,11 +708,9 @@ function createCacheNodeForSegment(now, tree, seedRsc, metadataVaryPath, seedHea
+                             break;
+                         }
+                     case _cache.EntryStatus.Pending:
+-                        {
+-                            cachedHead = (0, _cache.waitForSegmentCacheEntry)(metadataEntry).then((entry)=>entry !== null ? entry.rsc : null);
+-                            isCachedHeadPartial = metadataEntry.isPartial;
+-                            break;
+-                        }
++                        // patch LetzPlay (ENG-139, vercel/next.js#98684): entrada Pending tratada como cache miss.
++                        // Usar a promise do prefetch em voo deixava o segmento vazio quando ela
++                        // resolvia para null. Como miss, o roteador espera a resposta da navegação.
+                     case _cache.EntryStatus.Empty:
+                     case _cache.EntryStatus.Rejected:
+                         {
+diff --git a/node_modules/next/dist/esm/client/components/router-reducer/ppr-navigations.js b/node_modules/next/dist/esm/client/components/router-reducer/ppr-navigations.js
+index 508f8a1..76a57a7 100644
+--- a/node_modules/next/dist/esm/client/components/router-reducer/ppr-navigations.js
++++ b/node_modules/next/dist/esm/client/components/router-reducer/ppr-navigations.js
+@@ -621,25 +621,9 @@ function createCacheNodeForSegment(now, tree, seedRsc, metadataVaryPath, seedHea
+                     break;
+                 }
+             case EntryStatus.Pending:
+-                {
+-                    // We haven't received data for this segment yet, but there's already
+-                    // an in-progress request. Since it's extremely likely to arrive
+-                    // before the dynamic data response, we might as well use it.
+-                    const promiseForFulfilledEntry = waitForSegmentCacheEntry(segmentEntry);
+-                    cachedRsc = promiseForFulfilledEntry.then((entry)=>entry !== null ? entry.rsc : null);
+-                    // Because the request is still pending, we typically don't know yet
+-                    // whether the response will be partial. We shouldn't skip this segment
+-                    // during the dynamic navigation request. Otherwise, we might need to
+-                    // do yet another request to fill in the remaining data, creating
+-                    // a waterfall.
+-                    //
+-                    // The one exception is if this segment is being fetched with via
+-                    // prefetch={true} (i.e. the "force stale" or "full" strategy). If so,
+-                    // we can assume the response will be full. This field is set to `false`
+-                    // for such segments.
+-                    isCachedRscPartial = segmentEntry.isPartial;
+-                    break;
+-                }
++                // patch LetzPlay (ENG-139, vercel/next.js#98684): entrada Pending tratada como cache miss.
++                // Usar a promise do prefetch em voo deixava o segmento vazio quando ela
++                // resolvia para null. Como miss, o roteador espera a resposta da navegação.
+             case EntryStatus.Empty:
+             case EntryStatus.Rejected:
+                 {
+@@ -719,11 +703,9 @@ function createCacheNodeForSegment(now, tree, seedRsc, metadataVaryPath, seedHea
+                             break;
+                         }
+                     case EntryStatus.Pending:
+-                        {
+-                            cachedHead = waitForSegmentCacheEntry(metadataEntry).then((entry)=>entry !== null ? entry.rsc : null);
+-                            isCachedHeadPartial = metadataEntry.isPartial;
+-                            break;
+-                        }
++                        // patch LetzPlay (ENG-139, vercel/next.js#98684): entrada Pending tratada como cache miss.
++                        // Usar a promise do prefetch em voo deixava o segmento vazio quando ela
++                        // resolvia para null. Como miss, o roteador espera a resposta da navegação.
+                     case EntryStatus.Empty:
+                     case EntryStatus.Rejected:
+                         {
