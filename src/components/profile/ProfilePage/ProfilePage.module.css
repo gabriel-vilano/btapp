@@ -53,14 +53,6 @@
   letter-spacing: var(--text-body-md-tracking);
 }
 
-/* Resultado e placar empilhados à direita da linha */
-.profile__result {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: var(--spacing-50);
-}
-
 .profile__milestones {
   display: flex;
   flex-direction: column;

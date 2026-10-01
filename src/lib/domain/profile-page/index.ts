@@ -4,5 +4,6 @@
 export type * from './types';
 export { buildProfilePage, type ProfilePageRequest } from './buildProfilePage';
 export { buildFriendsList, type FriendsListRequest } from './friendsList';
+export { buildPlayerMatches } from './playerMatches';
 export { categoryName, firstName } from './names';
 export * from './routes';

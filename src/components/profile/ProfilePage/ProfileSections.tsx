@@ -1,15 +1,14 @@
 "use client";
 
 import { StarIcon } from "@phosphor-icons/react";
-import type { ReactNode } from "react";
+import { ProfileMatchRow } from "@/src/components/profile/ProfileMatchRow";
 import { Badge } from "@/src/components/ui/Badge";
 import { ButtonLink } from "@/src/components/ui/Button";
 import { EmptyState } from "@/src/components/ui/EmptyState";
 import { List, ListItem } from "@/src/components/ui/ListItem";
-import { ScoreBlock } from "@/src/components/ui/ScoreBlock";
 import { StandingSummaryItem } from "@/src/components/ui/StandingSummaryItem";
 import { TextLink } from "@/src/components/ui/TextLink";
-import { formatCount, formatEventMoment, formatTimestamp } from "@/src/lib/formatters";
+import { formatCount, formatEventMoment } from "@/src/lib/formatters";
 import {
   FRIENDLY_PATH,
   type ProfileMatchItem,
@@ -66,28 +65,6 @@ export function RankingList({ items }: { items: ProfileRankingItem[] }) {
   );
 }
 
-// Como no card de resultado (FEED_CARDS.md §3.3): quem perdeu por desistência leva "Desistência"
-function outcomeBadge(item: ProfileMatchItem): ReactNode {
-  if (item.outcome === "win") return <Badge tone="success">Vitória</Badge>;
-  return <Badge tone="attention">{item.result_type === "retired" ? "Desistência" : "Derrota"}</Badge>;
-}
-
-function MatchRow({ item }: { item: ProfileMatchItem }) {
-  return (
-    <ListItem
-      href={item.href}
-      title={item.opponents}
-      supportingText={`${item.context} · ${formatTimestamp(item.played_at)}`}
-      trailing={
-        <span className={styles.profile__result}>
-          {outcomeBadge(item)}
-          <ScoreBlock score={item.score} variant="compact" perspective={item.outcome === "win" ? "winner" : "loser"} />
-        </span>
-      }
-    />
-  );
-}
-
 interface RecentMatchesProps {
   items: ProfileMatchItem[];
   isOwn: boolean;
@@ -103,7 +80,7 @@ export function RecentMatches({ items, isOwn, firstName, allMatchesHref }: Recen
     <>
       <List>
         {items.map((item) => (
-          <MatchRow key={item.match_id} item={item} />
+          <ProfileMatchRow key={item.match_id} item={item} />
         ))}
       </List>
       <div className={styles["profile__see-all"]}>

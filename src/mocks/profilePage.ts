@@ -1,8 +1,10 @@
 import type { Friendship } from '@/src/types/domain';
 import {
   buildFriendsList,
+  buildPlayerMatches,
   buildProfilePage,
   type FriendsListData,
+  type PlayerMatchesData,
   type ProfileLinks,
   type ProfilePageData,
 } from '@/src/lib/domain/profile-page';
@@ -103,3 +105,27 @@ export const mockFriendsLists = {
   empty: friendsListOf(players.marina.username),
   ownEmpty: friendsListOf(players.marina.username, players.marina.id),
 } satisfies Record<string, FriendsListData>;
+
+/**
+ * Partidas de `username` (`/jogadores/[username]/partidas`); null quando o @username não existe.
+ * Ex.: `mockPlayerMatches('pedrohenrique')`.
+ */
+export function mockPlayerMatches(username: string): PlayerMatchesData | null {
+  return buildPlayerMatches(mockProfileDomain, username);
+}
+
+function playerMatchesOf(username: string): PlayerMatchesData {
+  const list = mockPlayerMatches(username);
+  if (list === null) throw new Error(`Mocks das partidas do jogador: @${username} não existe no mockProfileDomain`);
+  return list;
+}
+
+/**
+ * Situações da lista de partidas de outro jogador, para as stories.
+ * - `other`: as 8 partidas do Pedro, mais que as 5 do perfil;
+ * - `empty`: a da Marina, sem partida.
+ */
+export const mockPlayerMatchesLists = {
+  other: playerMatchesOf(players.pedro.username),
+  empty: playerMatchesOf(players.marina.username),
+} satisfies Record<string, PlayerMatchesData>;
