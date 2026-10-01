@@ -166,6 +166,10 @@ interface CompetitionMatchBase {
 interface RankingMatchBase extends CompetitionMatchBase {
   kind: 'ranking';
   round_id: string; // a rodada cujo sorteio criou a partida
+  // player_id do admin que sorteou; o "quando" é o created_at (R51). Opcional
+  // porque as partidas dos mocks anteriores ao campo não o têm; toda partida
+  // que sai do `drawRound` vem com ele.
+  drawn_by?: string;
   // Atravessa os estados: a partida desfeita volta a Confronto definido, mas o
   // lançamento desfeito continua visível no histórico (R48).
   undone_reports: UndoneReport[];
