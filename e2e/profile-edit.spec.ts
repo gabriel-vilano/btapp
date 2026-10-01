@@ -59,7 +59,7 @@ test.describe("Dados privados do perfil (RLS de profile_private)", () => {
 });
 
 test.describe("Editar perfil", () => {
-  test("salva nome, @username e data de nascimento, e a tela reabre com os valores salvos", async ({ page }) => {
+  test("salva nome, @username e data de nascimento, mostra no perfil e a tela reabre com os valores salvos", async ({ page }) => {
     const email = uniqueEmail("editar-perfil");
     const username = uniqueUsername();
     await createConfirmedUser(email);
@@ -71,17 +71,21 @@ test.describe("Editar perfil", () => {
     // Fluxo modal de tarefa (N4): sem a navegação principal
     await expect(page.getByRole("navigation", { name: "Principal", exact: true })).toHaveCount(0);
 
-    await page.getByLabel("Nome", { exact: true }).fill("Lucas");
-    await page.getByLabel("Sobrenome", { exact: true }).fill("Silva");
+    await page.getByLabel("Nome", { exact: true }).fill("Beatriz");
+    await page.getByLabel("Sobrenome", { exact: true }).fill("Andrade");
     await page.getByLabel("Nome de usuário", { exact: true }).fill(username);
     await expect(page.getByText("Nome de usuário disponível", { exact: true })).toBeVisible();
     await page.getByLabel("Data de nascimento", { exact: true }).fill("1990-05-12");
     await page.getByRole("button", { name: "Salvar", exact: true }).click();
     await expect(page).toHaveURL(/\/perfil$/);
 
+    // O cabeçalho do /perfil lê o perfil salvo, e não o jogador dos mocks (Lucas Silva)
+    await expect(page.getByRole("heading", { level: 1, name: "Beatriz Andrade", exact: true })).toBeVisible();
+    await expect(page.getByRole("main").getByText(`@${username}`, { exact: true })).toBeVisible();
+
     await page.goto("/perfil/editar");
-    await expect(page.getByLabel("Nome", { exact: true })).toHaveValue("Lucas");
-    await expect(page.getByLabel("Sobrenome", { exact: true })).toHaveValue("Silva");
+    await expect(page.getByLabel("Nome", { exact: true })).toHaveValue("Beatriz");
+    await expect(page.getByLabel("Sobrenome", { exact: true })).toHaveValue("Andrade");
     await expect(page.getByLabel("Nome de usuário", { exact: true })).toHaveValue(username);
     await expect(page.getByLabel("Data de nascimento", { exact: true })).toHaveValue("1990-05-12");
   });

@@ -52,6 +52,8 @@ export function ScheduleStateCard(props: ScheduleStateCardProps) {
       return <FrozenCard matchStatus={props.matchStatus} agreed={view.agreed} playerNames={props.playerNames} />;
     case "public":
       return <PublicCard agreed={view.agreed} />;
+    case "public_frozen":
+      return view.agreed && <PublicFrozenCard agreed={view.agreed} />;
   }
 }
 
@@ -184,6 +186,16 @@ function PublicCard({ agreed }: { agreed: AgreedSchedule | null }) {
   }
   return (
     <StateCard title="Jogo marcado">
+      <AgreedDate agreed={agreed} />
+    </StateCard>
+  );
+}
+
+// Encerrada, quem é de fora vê só o registro da data e da arena (M18). Sem data
+// acordada, a MatchScheduling nem monta a seção: não há o que mostrar
+function PublicFrozenCard({ agreed }: { agreed: AgreedSchedule }) {
+  return (
+    <StateCard title="Marcação encerrada">
       <AgreedDate agreed={agreed} />
     </StateCard>
   );
