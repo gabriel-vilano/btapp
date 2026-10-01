@@ -1,0 +1,46 @@
+/* Tela cheia sem casca (N4), em coluna única com largura máxima (N27) */
+.edit-profile {
+  width: 100%;
+  max-width: var(--dimension-layout-max);
+  min-height: 100dvh;
+  margin-inline: auto;
+  background-color: var(--color-background-primary);
+}
+
+.edit-profile__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-300);
+  padding: var(--spacing-200) var(--spacing-page-margin) var(--spacing-400);
+}
+
+.edit-profile__avatar {
+  display: flex;
+  justify-content: center;
+}
+
+.edit-profile__username-status {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-50);
+  margin: var(--spacing-50) 0 0;
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-regular);
+}
+
+.edit-profile__username-status--checking {
+  color: var(--color-foreground-secondary);
+}
+
+.edit-profile__username-status--available {
+  color: var(--color-foreground-success);
+}
+
+.edit-profile__load-error {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+  padding: var(--spacing-200) var(--spacing-page-margin);
+}

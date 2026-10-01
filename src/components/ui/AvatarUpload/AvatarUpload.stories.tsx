@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, fn, userEvent, waitFor, within, type Mock } from "storybook/test";
+import { STORY_AVATAR_URL } from "@/src/components/ui/Avatar/storyFixtures";
 import { AVATAR_MAX_BYTES } from "@/src/lib/validations";
 import { AvatarUpload } from "./AvatarUpload";
 
 const meta = {
-  title: "Auth/AvatarUpload",
+  title: "UI/AvatarUpload",
   component: AvatarUpload,
   parameters: {
     docs: {
@@ -31,6 +32,21 @@ export const Empty: Story = {
           "Estado inicial — sem avatar. Mostra ícone `+` e label 'Adicionar foto'. Clique abre o file picker do browser.",
       },
     },
+  },
+};
+
+export const WithInitialPhoto: Story = {
+  args: { initialUrl: STORY_AVATAR_URL },
+  parameters: {
+    docs: {
+      description: {
+        story: "Ao editar o perfil: a foto atual aparece como preview, com 'Trocar foto', até o jogador escolher outra.",
+      },
+    },
+  },
+  play: async ({ canvas }) => {
+    await expect(await canvas.findByRole("button", { name: "Trocar foto de perfil" })).toBeInTheDocument();
+    await expect(canvas.getByText("Trocar foto")).toBeInTheDocument();
   },
 };
 

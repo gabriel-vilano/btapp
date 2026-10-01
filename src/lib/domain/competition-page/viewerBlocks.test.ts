@@ -3,18 +3,43 @@ import { mockCompetitionPage } from '@/src/mocks/competitionPage';
 import { competitionPageBlocks, isEnrolledInCompetition } from './viewerBlocks';
 
 describe('competitionPageBlocks', () => {
-  it('inscrito em alguma categoria não vê "Como se inscrever" (N33)', () => {
-    expect(competitionPageBlocks(mockCompetitionPage.enrolled)).toEqual({ enrollment: false, admin: false });
+  it('inscrito em todas as categorias não vê nenhum bloco de inscrição (EX26)', () => {
+    expect(competitionPageBlocks(mockCompetitionPage.enrolled)).toEqual({ enrollment: null, interest: false, admin: false });
   });
 
-  it('não inscrito vê "Como se inscrever" e "Tenho interesse" (N33)', () => {
-    expect(competitionPageBlocks(mockCompetitionPage.notEnrolled)).toEqual({ enrollment: true, admin: false });
+  it('inscrito em parte das categorias vê só o compacto, sem "Tenho interesse" (EX26, EX27)', () => {
+    expect(competitionPageBlocks(mockCompetitionPage.partiallyEnrolled)).toEqual({
+      enrollment: 'compact',
+      interest: false,
+      admin: false,
+    });
+  });
+
+  it('não inscrito vê o completo no topo, com "Tenho interesse" (EX26, EX27)', () => {
+    expect(competitionPageBlocks(mockCompetitionPage.notEnrolled)).toEqual({ enrollment: 'full', interest: true, admin: false });
   });
 
   it('o admin vê a entrada da área "Administrar" (N31), independente da inscrição', () => {
-    expect(competitionPageBlocks(mockCompetitionPage.admin)).toEqual({ enrollment: true, admin: true });
-    const enrolledAdmin = { ...mockCompetitionPage.enrolled, viewer: { is_admin: true, interested: false } };
-    expect(competitionPageBlocks(enrolledAdmin)).toEqual({ enrollment: false, admin: true });
+    const asAdmin = { is_admin: true, interested: false };
+    expect(competitionPageBlocks(mockCompetitionPage.admin)).toEqual({ enrollment: 'full', interest: true, admin: true });
+    expect(competitionPageBlocks({ ...mockCompetitionPage.enrolled, viewer: asAdmin })).toEqual({
+      enrollment: null,
+      interest: false,
+      admin: true,
+    });
+    expect(competitionPageBlocks({ ...mockCompetitionPage.partiallyEnrolled, viewer: asAdmin })).toEqual({
+      enrollment: 'compact',
+      interest: false,
+      admin: true,
+    });
+  });
+
+  it('competição sem categoria não tem onde se inscrever', () => {
+    expect(competitionPageBlocks({ ...mockCompetitionPage.notEnrolled, categories: [] })).toEqual({
+      enrollment: null,
+      interest: false,
+      admin: false,
+    });
   });
 });
 
