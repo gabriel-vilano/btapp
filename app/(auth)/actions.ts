@@ -318,7 +318,7 @@ export async function checkUsername(username: string): Promise<{
 
   // Falha na consulta não pode virar "disponível": na dúvida, bloqueia
   if (error) {
-    return { available: false, error: "Não foi possível verificar o username. Tente novamente." };
+    return { available: false, error: "Não foi possível verificar o nome de usuário. Tente novamente." };
   }
 
   return { available: !data };
@@ -423,7 +423,7 @@ async function resolveUsername(
   }
 
   const { available, error: checkError } = await checkUsername(typed);
-  return available ? { username: typed } : { error: checkError ?? "Username já está em uso." };
+  return available ? { username: typed } : { error: checkError ?? "Nome de usuário já está em uso." };
 }
 
 async function resolveAvatarUrl(
@@ -453,7 +453,7 @@ async function saveProfile(
   });
 
   if (!error) return null;
-  return error.message.includes("unique") ? "Username já está em uso." : "Erro ao salvar perfil. Tente novamente.";
+  return error.message.includes("unique") ? "Nome de usuário já está em uso." : "Erro ao salvar perfil. Tente novamente.";
 }
 
 export async function createProfile(

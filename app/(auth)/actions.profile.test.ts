@@ -44,7 +44,7 @@ function mockTakenUsernames(usernames: string[]) {
   });
 }
 
-const USERNAME_CHECK_FAILED = "Não foi possível verificar o username. Tente novamente.";
+const USERNAME_CHECK_FAILED = "Não foi possível verificar o nome de usuário. Tente novamente.";
 
 describe("checkUsername", () => {
   it("rejeita formato inválido sem consultar o banco", async () => {
@@ -120,7 +120,7 @@ describe("createProfile", () => {
   it("username inválido devolve erro no campo username e não salva", async () => {
     const result = await createProfile(null, buildFormData({ username: "an" }));
     expect(result).toEqual({
-      fieldErrors: { username: "Username precisa ter pelo menos 3 caracteres" },
+      fieldErrors: { username: "Nome de usuário precisa ter pelo menos 3 caracteres" },
     });
     expect(supabase.profilesQuery.upsert).not.toHaveBeenCalled();
   });
@@ -128,7 +128,7 @@ describe("createProfile", () => {
   it("username em uso: mensagem amigável e não salva", async () => {
     mockUsernameTaken();
     const result = await createProfile(null, buildFormData({ username: "ana.bt" }));
-    expect(result).toEqual({ error: "Username já está em uso." });
+    expect(result).toEqual({ error: "Nome de usuário já está em uso." });
     expect(supabase.profilesQuery.upsert).not.toHaveBeenCalled();
   });
 
@@ -257,7 +257,7 @@ describe("createProfile", () => {
       error: { message: 'duplicate key value violates unique constraint "profiles_username_key"' },
     });
     const result = await createProfile(null, buildFormData({ username: "ana.bt" }));
-    expect(result).toEqual({ error: "Username já está em uso." });
+    expect(result).toEqual({ error: "Nome de usuário já está em uso." });
   });
 
   it("erro desconhecido ao salvar: mensagem genérica, sem vazar o erro interno", async () => {
