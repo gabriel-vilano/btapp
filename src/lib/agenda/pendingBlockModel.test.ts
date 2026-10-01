@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { MOCK_AGENDA_LINKS } from '@/src/mocks/agendaViewer';
 import { mockDomain, mockEntities } from '@/src/mocks/domain';
 import { playerAgenda } from '@/src/lib/domain/agenda';
 import { agendaViewModel } from './agendaViewModel';
@@ -31,7 +32,7 @@ describe('pendingBlockModel', () => {
   it('mesmos itens e mesma ordem de "Sua vez" na aba Jogos', () => {
     const viewer = { playerId: players.lucas.id, now: NOW };
     const block = pendingBlockModel(mockDomain, viewer);
-    const yourTurn = agendaViewModel(mockDomain, viewer).yourTurn;
+    const yourTurn = agendaViewModel(mockDomain, viewer, MOCK_AGENDA_LINKS).yourTurn;
     expect(block.total).toBe(yourTurn.length);
     expect(block.items).toEqual(yourTurn.slice(0, PENDING_BLOCK_LIMIT));
     expect(block.items.length).toBeGreaterThan(0);

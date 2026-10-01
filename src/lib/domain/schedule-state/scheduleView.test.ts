@@ -86,4 +86,11 @@ describe('estado da marcação para quem vê o confronto (SCHEDULING.md §6)', (
     const view = viewOf(agreedOnSat(), PLAYER.outsider);
     expect(view.kind === 'public' && view.agreed?.starts_at).toBe(SAT);
   });
+
+  it('com a marcação congelada, quem não é do confronto vê o registro, não "sem data" (M1, M18)', () => {
+    const notPlayed: RankingMatch = { ...MATCH, status: 'not_played' };
+    expect(viewOf(withPending(), PLAYER.outsider, NOW, notPlayed)).toEqual({ kind: 'public_frozen', agreed: null });
+    const view = viewOf(agreedOnSat(), PLAYER.outsider, AFTER_SAT, notPlayed);
+    expect(view.kind === 'public_frozen' && view.agreed?.starts_at).toBe(SAT);
+  });
 });
