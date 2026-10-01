@@ -16,6 +16,7 @@ import { pickFreeUsername, usernameBaseFromName, usernameSearchPrefix } from "@/
 import type { User } from "@supabase/supabase-js";
 import { AVATAR_HEADER_LENGTH, detectAvatarFormat } from "@/src/lib/avatarFormat";
 import type { AuthActionState } from "@/src/types/auth";
+import { LOGIN_RETURN_PARAM, safeReturnPath } from "@/src/lib/navigation/loginReturn";
 
 // O Supabase devolve o mesmo erro para código errado e expirado ("Token has expired
 // or is invalid", code `otp_expired`), então não dá para dizer qual dos dois aconteceu.
@@ -43,7 +44,9 @@ export async function login(
     return { error: "E-mail ou senha incorretos" };
   }
 
-  redirect("/feed");
+  // O campo vem do formulário e o usuário pode trocá-lo: valida aqui, na fronteira
+  const returnPath = formData.get(LOGIN_RETURN_PARAM);
+  redirect(safeReturnPath(typeof returnPath === "string" ? returnPath : null));
 }
 
 export async function signup(

@@ -10,6 +10,7 @@ import { Button } from "@/src/components/ui/Button";
 import { Alert } from "@/src/components/ui/Alert";
 import { TextLink } from "@/src/components/ui/TextLink";
 import { validateEmail } from "@/src/lib/validations";
+import { LOGIN_RETURN_PARAM } from "@/src/lib/navigation/loginReturn";
 import { loginNoticeFor } from "./login-notice";
 import authStyles from "@/app/(auth)/auth-page.module.css";
 
@@ -24,6 +25,7 @@ export default function LoginPage() {
 function LoginContent() {
   const searchParams = useSearchParams();
   const notice = loginNoticeFor(searchParams);
+  const returnPath = searchParams.get(LOGIN_RETURN_PARAM);
   const [noticeDismissed, setNoticeDismissed] = useState(false);
 
   const [state, formAction, isPending] = useActionState(login, null);
@@ -73,6 +75,7 @@ function LoginContent() {
       />
 
       <form action={handleSubmit} className={authStyles["auth-page__form"]}>
+        {returnPath && <input type="hidden" name={LOGIN_RETURN_PARAM} value={returnPath} />}
         <FormInput
           label="E-mail"
           name="email"

@@ -1,0 +1,30 @@
+/* Coluna única com largura máxima: no desktop a vitrine não estica (N27) */
+.explore-showcase {
+  width: 100%;
+  max-width: var(--dimension-layout-max);
+  margin-inline: auto;
+  padding-bottom: var(--spacing-400);
+}
+
+.explore-showcase__section {
+  padding-top: var(--spacing-300);
+}
+
+.explore-showcase__section-title {
+  margin: 0 0 var(--spacing-100);
+  padding-inline: var(--spacing-page-margin);
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.explore-showcase__empty {
+  margin: 0;
+  padding: var(--spacing-100) var(--spacing-page-margin);
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+}

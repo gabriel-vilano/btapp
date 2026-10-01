@@ -2,41 +2,41 @@ import type { AdminAreaData, AdminMatchItem } from '@/src/lib/domain/admin-area'
 import { mockCompetitionPage, mockCompetitionPageBySlug } from './competitionPage';
 import { daysAgo } from './relativeTime';
 
-// Área "Administrar" (docs/NAVIGATION.md N31) da Liga Vila, a competição que o
+// Área "Administrar" (docs/NAVIGATION.md N31) da Liga Pitanga, a competição que o
 // Lucas administra sem jogar (`mockCompetitionPage.admin`). As duas decisões
 // são as mesmas do bloco "Pendências de admin" da aba Competições
 // (`src/mocks/competitionsTab.ts`), para as duas telas contarem a mesma fila.
-// As partidas da Liga Vila ainda não existem nas tabelas mockadas do domínio:
+// As partidas da Liga Pitanga ainda não existem nas tabelas mockadas do domínio:
 // o link de cada uma leva à rota da partida, que responde 404 até lá.
 
-const ligaVila = mockCompetitionPage.admin;
+const ligaPitanga = mockCompetitionPage.admin;
 
 function match(id: string, fields: Omit<AdminMatchItem, 'id' | 'href' | 'corrected'> & { corrected?: boolean }): AdminMatchItem {
   return { id, corrected: false, href: `/jogos/${id}`, ...fields };
 }
 
 const roundFour = [
-  match('match-liga-vila-mc-r4-1', { category_name: 'Masculino C', sides: 'Bruno e Caio x Diego e Felipe', status: 'in_arbitration' }),
-  match('match-liga-vila-mc-r4-2', { category_name: 'Masculino C', sides: 'Gabriel e Hugo x Otávio e Renato', status: 'defined' }),
-  match('match-liga-vila-fb-r4-1', { category_name: 'Feminino B', sides: 'Beatriz e Clara x Laura e Sofia', status: 'awaiting_confirmation' }),
-  match('match-liga-vila-fb-r4-2', { category_name: 'Feminino B', sides: 'Carla e Júlia x Helena e Luísa', status: 'confirmed' }),
+  match('match-liga-pitanga-mc-r4-1', { category_name: 'Masculino C', sides: 'Bruno e Caio x Diego e Felipe', status: 'in_arbitration' }),
+  match('match-liga-pitanga-mc-r4-2', { category_name: 'Masculino C', sides: 'Gabriel e Hugo x Otávio e Renato', status: 'defined' }),
+  match('match-liga-pitanga-fb-r4-1', { category_name: 'Feminino B', sides: 'Beatriz e Clara x Laura e Sofia', status: 'awaiting_confirmation' }),
+  match('match-liga-pitanga-fb-r4-2', { category_name: 'Feminino B', sides: 'Carla e Júlia x Helena e Luísa', status: 'confirmed' }),
 ];
 
 const roundThree = [
-  match('match-liga-vila-mc-r3-1', { category_name: 'Masculino C', sides: 'Bruno e Caio x Gabriel e Hugo', status: 'confirmed', corrected: true }),
-  match('match-liga-vila-mc-r3-2', { category_name: 'Masculino C', sides: 'Diego e Felipe x Otávio e Renato', status: 'confirmed' }),
-  match('match-liga-vila-fb-r3-1', { category_name: 'Feminino B', sides: 'Carla e Júlia x Marina e Paula', status: 'not_played' }),
+  match('match-liga-pitanga-mc-r3-1', { category_name: 'Masculino C', sides: 'Bruno e Caio x Gabriel e Hugo', status: 'confirmed', corrected: true }),
+  match('match-liga-pitanga-mc-r3-2', { category_name: 'Masculino C', sides: 'Diego e Felipe x Otávio e Renato', status: 'confirmed' }),
+  match('match-liga-pitanga-fb-r3-1', { category_name: 'Feminino B', sides: 'Carla e Júlia x Marina e Paula', status: 'not_played' }),
 ];
 
 const withDecisions: AdminAreaData = {
-  slug: ligaVila.slug,
-  competition_name: ligaVila.name,
-  competition_href: `/competicoes/${ligaVila.slug}`,
-  current_round: ligaVila.season?.current_round ?? null,
+  slug: ligaPitanga.slug,
+  competition_name: ligaPitanga.name,
+  competition_href: `/competicoes/${ligaPitanga.slug}`,
+  current_round: ligaPitanga.season?.current_round ?? null,
   // Fora de ordem de propósito: quem ordena a fila é a tela (RESULTS §5)
   decisions: [
     {
-      id: 'decision-liga-vila-fb-r3-1',
+      id: 'decision-liga-pitanga-fb-r3-1',
       kind: 'not_played',
       category_name: 'Feminino B',
       round_label: 'Rodada 3',
@@ -44,7 +44,7 @@ const withDecisions: AdminAreaData = {
       since: daysAgo(1),
     },
     {
-      id: 'decision-liga-vila-mc-r4-1',
+      id: 'decision-liga-pitanga-mc-r4-1',
       kind: 'contested',
       category_name: 'Masculino C',
       round_label: 'Rodada 4',

@@ -1,18 +1,19 @@
-import { CompassIcon } from "@phosphor-icons/react/ssr";
+import { connection } from "next/server";
+import { ExploreShowcase } from "@/src/components/explore/ExploreShowcase";
 import { AppHeader } from "@/src/components/ui/AppHeader";
-import { EmptyState } from "@/src/components/ui/EmptyState";
+import { mockExploreShowcase } from "@/src/mocks/explorePage";
 
-// Provisória até a vitrine e a busca do Explorar (docs/NAVIGATION.md §7)
-export default function ExplorePage() {
+// Vitrine do Explorar (docs/EXPLORE.md §3), com os mocks até a integração com
+// o Supabase. O campo de busca entra com a tela da busca (EX1).
+export default async function ExplorePage() {
+  // Renderiza a cada acesso: prerenderizada, a página congelaria no build o
+  // que está aberto e a rodada de cada ranking
+  await connection();
   return (
     <>
       <AppHeader title="Explorar" />
       <main>
-        <EmptyState
-          icon={CompassIcon}
-          title="Explorar chega em breve."
-          description="Aqui vão aparecer as competições e as arenas para você jogar, e a busca de jogadores."
-        />
+        <ExploreShowcase showcase={mockExploreShowcase(new Date().toISOString())} />
       </main>
     </>
   );

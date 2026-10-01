@@ -53,7 +53,7 @@ const rowsWith = (items: HTMLElement[], text: string) => items.filter((item) => 
 // enquanto a linha está abaixo da vista (RK9, RK11)
 export const OwnOutsideZone: Story = {
   play: async ({ canvas, canvasElement, userEvent }) => {
-    await expect(canvas.getByRole("heading", { level: 2 })).toHaveTextContent("Ranking BH · Masculino B");
+    await expect(canvas.getByRole("heading", { level: 2 })).toHaveTextContent("Ranking Bacuri · Masculino B");
     await expect(canvas.getByText("2º semestre de 2026 · Rodada 3 de 4")).toBeVisible();
     await expect(canvas.getByText("Rodada fecha em 5 dias · Corte em 30/11")).toBeVisible();
     await expect(canvas.getByRole("separator")).toHaveAccessibleName("Classificam para a Saideira · 8 vagas");
@@ -238,7 +238,7 @@ export const NoSeason: Story = {
     await expect(canvas.getByRole("heading", { name: "Nenhuma temporada em andamento" })).toBeVisible();
     await expect(canvas.getByRole("link", { name: "Ver regras do ranking" })).toHaveAttribute(
       "href",
-      "/competicoes/ranking-bh#pontuacao",
+      "/competicoes/ranking-bacuri#pontuacao",
     );
   },
 };
