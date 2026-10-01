@@ -1,19 +1,17 @@
 "use client";
 
-import { WhatsappLogoIcon } from "@phosphor-icons/react";
 import { ScheduleOptionPicker } from "../ScheduleOptionPicker";
 import { Button, ButtonLink } from "@/src/components/ui/Button";
-import { Icon } from "@/src/components/ui/Icon";
 import { nameOf, type PlayerNames } from "@/src/components/ui/ScheduleTimeline";
 import type { AgreedSchedule, ScheduleView } from "@/src/lib/domain/schedule-state";
 import { formatEventMoment } from "@/src/lib/formatters";
 import { formatScheduleDay, formatScheduleTime } from "@/src/lib/scheduleOptionFormat";
 import { formatTimeLeft } from "@/src/lib/timeLeft";
 import type { MatchStatus, PendingScheduleProposal, ScheduleOption } from "@/src/types/domain";
-import { scheduleWhatsAppHref, type WhatsAppSubject } from "./whatsAppText";
+import { WhatsAppButton } from "./WhatsAppButton";
 import styles from "./MatchScheduling.module.css";
 
-// "use client": o ícone do WhatsApp vem do Phosphor, e o seletor de opções guarda estado.
+// "use client": o seletor de opções guarda estado.
 
 /** O que cada estado precisa para montar texto e ações. */
 export interface ScheduleStateCardProps {
@@ -27,6 +25,8 @@ export interface ScheduleStateCardProps {
   matchStatus: MatchStatus;
   now: string; // ISO 8601
   resultHref: string;
+  /** Tela do próprio telefone, quando quem vê não informou o dele: o "Abrir no WhatsApp" pergunta no primeiro toque (M20). */
+  phoneSettingsHref?: string;
   onAccept: (optionIndex: number) => void;
   /** Abre o formulário de proposta: propor, "Nenhum serve", "Trocar horários" e "Remarcar". */
   onPropose: () => void;
@@ -57,7 +57,8 @@ export function ScheduleStateCard(props: ScheduleStateCardProps) {
   }
 }
 
-function NoDateCard({ roundNumber, roundDeadline, now, onPropose, onReport }: ScheduleStateCardProps) {
+function NoDateCard(props: ScheduleStateCardProps) {
+  const { roundNumber, roundDeadline, now, phoneSettingsHref, onPropose, onReport } = props;
   const deadlineLeft = formatTimeLeft(roundDeadline, now);
   return (
     <StateCard title="Jogo sem data">
@@ -72,7 +73,7 @@ function NoDateCard({ roundNumber, roundDeadline, now, onPropose, onReport }: Sc
         <Button variant="secondary" fullWidth onClick={onReport}>
           Informar data combinada
         </Button>
-        <WhatsAppLink subject={{ kind: "invite", roundNumber, deadlineLeft }} />
+        <WhatsAppButton subject={{ kind: "invite", roundNumber, deadlineLeft }} phoneSettingsHref={phoneSettingsHref} />
       </div>
     </StateCard>
   );
@@ -97,7 +98,7 @@ function AwaitingYouCard({ proposal, agreed, playerNames, now, onAccept, onPropo
 }
 
 function AwaitingOtherSideCard(props: ProposalCardProps) {
-  const { proposal, agreed, viewerId, playerNames, opponentsName, now, onPropose, onWithdraw } = props;
+  const { proposal, agreed, viewerId, playerNames, opponentsName, now, phoneSettingsHref, onPropose, onWithdraw } = props;
   const proposer = proposal.proposed_by === viewerId ? "Você" : nameOf(proposal.proposed_by, playerNames);
   return (
     <StateCard title={`Proposta enviada · aguardando ${opponentsName}`}>
@@ -113,7 +114,7 @@ function AwaitingOtherSideCard(props: ProposalCardProps) {
         <Button variant="ghost" fullWidth onClick={onWithdraw}>
           Retirar proposta
         </Button>
-        <WhatsAppLink subject={{ kind: "proposal", options: proposal.options }} />
+        <WhatsAppButton subject={{ kind: "proposal", options: proposal.options }} phoneSettingsHref={phoneSettingsHref} />
       </div>
     </StateCard>
   );
@@ -121,7 +122,7 @@ function AwaitingOtherSideCard(props: ProposalCardProps) {
 
 type AgreedCardProps = ScheduleStateCardProps & { agreed: AgreedSchedule };
 
-function AgreedCard({ agreed, playerNames, onPropose }: AgreedCardProps) {
+function AgreedCard({ agreed, playerNames, phoneSettingsHref, onPropose }: AgreedCardProps) {
   return (
     <StateCard title="Jogo marcado">
       <AgreedDate agreed={agreed} />
@@ -130,7 +131,7 @@ function AgreedCard({ agreed, playerNames, onPropose }: AgreedCardProps) {
         <Button variant="secondary" fullWidth onClick={onPropose}>
           Remarcar
         </Button>
-        <WhatsAppLink subject={{ kind: "agreed", option: agreed }} />
+        <WhatsAppButton subject={{ kind: "agreed", option: agreed }} phoneSettingsHref={phoneSettingsHref} />
       </div>
     </StateCard>
   );
@@ -243,16 +244,6 @@ function OptionList({ options }: { options: readonly ScheduleOption[] }) {
         </li>
       ))}
     </ul>
-  );
-}
-
-// O WhatsApp abre fora do app: nova aba, sem passar o `opener` para a página dele
-function WhatsAppLink({ subject }: { subject: WhatsAppSubject }) {
-  return (
-    <ButtonLink href={scheduleWhatsAppHref(subject)} variant="ghost" fullWidth target="_blank" rel="noopener noreferrer">
-      <Icon icon={WhatsappLogoIcon} size="sm" />
-      <span>Abrir no WhatsApp</span>
-    </ButtonLink>
   );
 }
 

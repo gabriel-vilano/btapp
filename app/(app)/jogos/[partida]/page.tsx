@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import { MatchScreen } from "@/src/components/agenda/MatchScreen";
 import { DetailHeader } from "@/src/components/shell/DetailHeader";
+import { loadOwnPhone } from "@/src/lib/supabase/ownPhone";
 import { matchScreenDataOf } from "@/src/mocks/matchScreen";
 
 // Tela do confronto (docs/NAVIGATION.md N10, docs/SCHEDULING.md §6 e
@@ -14,11 +15,15 @@ export default async function MatchPage({ params }: { params: Promise<{ partida:
   const { partida } = await params;
   const data = matchScreenDataOf(decodeURIComponent(partida));
   if (data === null) notFound();
+  // O confronto ainda é dos mocks, mas o telefone é do jogador logado, lido do
+  // Supabase: só ele decide se o "Abrir no WhatsApp" pergunta pelo número (M20).
+  // Na falha da leitura, não pergunta: o pedido é opcional
+  const ownPhone = await loadOwnPhone();
   return (
     <>
       <DetailHeader title="Confronto" />
       <main>
-        <MatchScreen data={data} now={new Date().toISOString()} />
+        <MatchScreen data={data} now={new Date().toISOString()} askForPhone={ownPhone === null} />
       </main>
     </>
   );

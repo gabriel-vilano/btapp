@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Alert } from "@/src/components/ui/Alert";
 import { Badge } from "@/src/components/ui/Badge";
 import { sideOfPlayer } from "@/src/lib/domain/schedule-state";
+import { phoneSettingsHref } from "@/src/lib/navigation/phoneSettings";
 import type { MatchSideKey } from "@/src/types/domain";
 import { MatchResult } from "../MatchResult";
 import { MatchScheduling } from "../MatchScheduling";
@@ -23,6 +24,11 @@ type MatchScreenProps = {
   clock?: () => string;
   /** Id da proposta ou da data nova. Com o Supabase, quem gera é o banco. */
   createId?: () => string;
+  /**
+   * Quem vê ainda não informou o telefone: o primeiro toque em "Abrir no WhatsApp"
+   * pergunta se ele quer informar (docs/SCHEDULING.md M20).
+   */
+  askForPhone?: boolean;
 };
 
 /**
@@ -33,7 +39,8 @@ type MatchScreenProps = {
  * funções puras que o banco vai usar.
  * @example <MatchScreen data={matchScreenDataOf(matchId, viewerId)} now={new Date().toISOString()} />
  */
-export function MatchScreen({ data, now: initialNow, clock = systemClock, createId = randomId }: MatchScreenProps) {
+export function MatchScreen(props: MatchScreenProps) {
+  const { data, now: initialNow, clock = systemClock, createId = randomId, askForPhone = false } = props;
   // A partida é das duas seções: desfeito o lançamento, a marcação volta a valer (RG16)
   const [match, setMatch] = useState(data.match);
   const scheduling = useMatchScheduling({ ...data, match }, { initialNow, clock, createId });
@@ -59,6 +66,7 @@ export function MatchScreen({ data, now: initialNow, clock = systemClock, create
           matchStatus={match.status}
           now={scheduling.now}
           resultHref={`${AGENDA_HREF}/${match.id}/resultado`}
+          phoneSettingsHref={askForPhone ? phoneSettingsHref(`${AGENDA_HREF}/${match.id}`) : undefined}
           onAccept={scheduling.accept}
           onPropose={() => scheduling.openForm("propose")}
           onReport={() => scheduling.openForm("report")}
