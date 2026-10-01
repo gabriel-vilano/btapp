@@ -5,7 +5,7 @@ import type { PastSeasonItem } from './types';
 
 const lastSeason: PastSeasonItem = {
   enrollment_id: 'past-1',
-  competition_name: 'Ranking BH',
+  competition_name: 'Ranking Bacuri',
   category_name: 'Masculino B',
   season_name: '1º semestre 2026',
   partner_name: 'Rafael',

@@ -26,7 +26,7 @@ interface StandingSummaryItemProps {
 /**
  * Sua posição numa categoria: posição, competição · categoria, parceiro e variação.
  * Renderiza um `<li>`: use dentro de `<List>`.
- * @example <StandingSummaryItem position={5} competitionName="Ranking BH" categoryName="Masculino B" partnerName="Rafael" delta={{ direction: "up", value: 2 }} href="/ranking/masculino-b" />
+ * @example <StandingSummaryItem position={5} competitionName="Ranking Bacuri" categoryName="Masculino B" partnerName="Rafael" delta={{ direction: "up", value: 2 }} href="/ranking/masculino-b" />
  */
 export function StandingSummaryItem({
   position,

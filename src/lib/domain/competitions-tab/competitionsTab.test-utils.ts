@@ -7,7 +7,7 @@ export function rankingItem(id: string, enrolledAt: string): MyRankingItem {
   return {
     kind: 'ranking',
     enrollment_id: id,
-    competition_name: 'Ranking BH',
+    competition_name: 'Ranking Bacuri',
     category_name: 'Masculino B',
     partner_name: 'Rafael',
     href: `/ranking/${id}`,
@@ -21,7 +21,7 @@ export function tournamentItem(id: string, startsOn: string, nextMatchAt?: strin
   return {
     kind: 'tournament',
     enrollment_id: id,
-    competition_name: 'Open Pampulha',
+    competition_name: 'Open Umbu',
     category_name: 'Masculino B',
     partner_name: 'Rafael',
     href: `/competicoes/${id}`,
@@ -35,11 +35,11 @@ export function pendingItem(id: string, since: string): AdminPendingItem {
   return {
     id,
     kind: 'contested',
-    competition_name: 'Ranking BH',
+    competition_name: 'Ranking Bacuri',
     category_name: 'Masculino B',
     sides: 'Lucas e Rafael x Pedro e Thiago',
     since,
-    href: '/competicoes/ranking-bh/administrar',
+    href: '/competicoes/ranking-bacuri/administrar',
   };
 }
 

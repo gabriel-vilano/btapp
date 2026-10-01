@@ -20,7 +20,7 @@ const meta = {
   ],
   args: {
     position: 5,
-    competitionName: "Ranking BH",
+    competitionName: "Ranking Bacuri",
     categoryName: "Masculino B",
     partnerName: "Rafael",
     delta: { direction: "up", value: 2 },
@@ -39,7 +39,7 @@ type Story = StoryObj<typeof meta>;
 export const Up: Story = {
   play: async ({ canvas }) => {
     const link = canvas.getByRole("link", {
-      name: "5º, Ranking BH · Masculino B com Rafael Subiu 2 posições",
+      name: "5º, Ranking Bacuri · Masculino B com Rafael Subiu 2 posições",
     });
     await expect(link).toHaveAttribute("href", "/ranking/masculino-b");
   },
@@ -56,7 +56,7 @@ export const Kept: Story = {
   play: async ({ canvas }) => {
     await expect(
       canvas.getByRole("link", {
-        name: "5º, Ranking BH · Masculino B com Rafael Manteve a posição",
+        name: "5º, Ranking Bacuri · Masculino B com Rafael Manteve a posição",
       }),
     ).toBeVisible();
     // Só o traço (16px) ocupa o trailing, sem a frase à vista
@@ -116,7 +116,7 @@ export const LongName: Story = {
 export const Pressable: Story = {
   args: { href: undefined, onClick: fn() },
   play: async ({ args, canvas, userEvent }) => {
-    await userEvent.click(canvas.getByRole("button", { name: /^5º, Ranking BH/ }));
+    await userEvent.click(canvas.getByRole("button", { name: /^5º, Ranking Bacuri/ }));
     await expect(args.onClick).toHaveBeenCalledOnce();
   },
 };
@@ -128,7 +128,7 @@ export const Uses: Story = {
     <List aria-label="Rankings" divided>
       <StandingSummaryItem
         position={5}
-        competitionName="Ranking BH"
+        competitionName="Ranking Bacuri"
         categoryName="Masculino B"
         partnerName="Rafael"
         delta={{ direction: "up", value: 2 }}
@@ -137,7 +137,7 @@ export const Uses: Story = {
       />
       <StandingSummaryItem
         position={12}
-        competitionName="Liga Vila"
+        competitionName="Liga Pitanga"
         categoryName="Mista C"
         partnerName="Ana"
         delta={{ direction: "down", value: 1 }}
@@ -145,7 +145,7 @@ export const Uses: Story = {
       />
       <StandingSummaryItem
         position={1}
-        competitionName="Ranking Pampulha"
+        competitionName="Ranking Umbu"
         categoryName="Masculino A"
         partnerName="Bruno"
         delta={{ direction: "none" }}
