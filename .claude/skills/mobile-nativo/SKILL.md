@@ -44,7 +44,7 @@ Começar aqui. Achar o sintoma e ler a seção.
 <tr><td>Toque longo seleciona o texto do botão</td><td><code>user-select: none</code> no controle</td><td>8</td></tr>
 <tr><td>Carrossel ou arraste rola no eixo errado</td><td><code>touch-action</code> ou <code>scroll-snap</code></td><td>9</td></tr>
 <tr><td>Barra de status com cor diferente do topo</td><td><code>themeColor</code> no <code>viewport</code></td><td>10</td></tr>
-<tr><td><code>sticky</code> não gruda, <code>fixed</code> fora do lugar, teclado cobre a barra</td><td>Armadilhas de layout</td><td>11</td></tr>
+<tr><td><code>sticky</code> não gruda, <code>fixed</code> fora do lugar, teclado cobre a barra, celular deitado com layout de desktop</td><td>Armadilhas de layout</td><td>11</td></tr>
 <tr><td>Certo no Chrome, errado no celular</td><td>Testar em aparelho</td><td>12</td></tr>
 </tbody>
 </table>
@@ -146,7 +146,7 @@ Sem `viewportFit: "cover"` o navegador põe a página só dentro da área segura
 }
 ```
 
-Quem precisa: o que é fixo ou grudado nas bordas (cabeçalho, TabBar, NavigationRail, sheet, toast, barra de ação no rodapé). Conteúdo comum ganha a margem pelo cabeçalho. Sempre com fallback `0px` dentro de `calc()`. No app logado, o deslocamento do rodapé já vem do `AppShell` (`--shell-bottom-offset`): barra fixa nova usa a variável em vez de somar a área segura de novo.
+Quem precisa: o que é fixo ou grudado nas bordas (cabeçalho, TabBar, NavigationRail, sheet, toast, barra de ação no rodapé). Conteúdo comum ganha a margem pelo cabeçalho. Sempre com fallback `0px` dentro de `calc()`. No app logado, o deslocamento do rodapé já vem do `AppShell` (`--shell-bottom-offset`): barra fixa nova usa a variável em vez de somar a área segura de novo. Na revisão, procurar todo `position: fixed` encostado no rodapé que aparece nas telas logadas, inclusive o que vem de provider (toast), e ver se ele desvia da TabBar.
 
 ### 8. Toque longo seleciona o texto do botão
 
@@ -187,12 +187,13 @@ A cor é a do topo da tela (o fundo do cabeçalho), não a da marca. **Um valor 
 
 ### 11. Armadilhas de layout
 
-Quatro defeitos que falham em silêncio, sem erro no console. Referência: `responsive-craft` (ver "Origem e licença").
+Defeitos que falham em silêncio, sem erro no console. As quatro primeiras têm como referência a `responsive-craft` (ver "Origem e licença").
 
 - **`overflow: hidden` num ancestral desliga o `sticky`.** Qualquer `overflow` diferente de `visible` (`hidden`, `auto`, `scroll`) faz daquele ancestral o rolável de referência, e o `sticky` passa a grudar nele, que não rola. Para só cortar o que vaza, usar `overflow: clip`, que corta sem virar rolável. Antes de pôr `overflow` num container de tela, procurar `position: sticky` abaixo dele (cabeçalho, linha fixada, barra de ação).
 - **`transform` num ancestral prende o `fixed`.** Um elemento `position: fixed` se posiciona pela tela, salvo quando algum ancestral tem `transform`, `filter`, `backdrop-filter`, `perspective`, `contain: paint` ou `will-change: transform`: aí ele passa a se posicionar por esse ancestral e rola junto. Uma animação de entrada com `transform` no container da página basta para o toast ou o sheet saírem do lugar. Elemento fixo fica fora de ancestrais animados ou vai para um portal.
 - **`sticky` dentro de flex ou grid estica e não gruda.** Item de flex ou grid estica até a altura da linha (`align-items: stretch`), então já ocupa todo o espaço e não tem para onde grudar. Pôr `align-self: start` no item `sticky`.
 - **Teclado cobrindo a barra fixa.** Quando o teclado abre, a área visível encolhe, mas o `bottom: 0` de um elemento fixo continua contando pela tela inteira em boa parte dos navegadores: a barra com o botão de enviar fica atrás do teclado ou flutua no meio. Verificar toda barra de ação no rodapé com o teclado aberto. A correção barata é a opção `interactiveWidget: "resizes-content"` no `viewport` do Next, que faz o teclado encolher o layout no Chrome do Android como já acontece no iOS (mudança global: regra 6). Só se não bastar, medir com `window.visualViewport` e expor a altura do teclado numa variável CSS.
+- **Celular deitado passa no breakpoint de desktop.** Deitado, o celular tem 700 a 950px de largura e só 320 a 430px de altura. Um `@media (min-width: …)` sozinho entrega a ele o layout de desktop (NavigationRail, Dialog centralizado) numa altura de celular: item cortado no fim de coluna que não rola, painel sem espaço útil. Conferir cada breakpoint de largura também com o aparelho deitado. A correção (rolagem no container, `min-height` ou `(pointer: coarse)` na consulta) muda o layout: se a spec não cobre o caso, é leitura para o Gabriel ou Needs Decision, não ajuste silencioso.
 
 ### 12. Testar em aparelho
 
@@ -244,6 +245,6 @@ Adaptada da skill `mobile-native` de [`emilkowalski/skills`](https://github.com/
 
 O que mudou em relação ao original: tradução para o português; sem o bloco "Initial Response" e sem a nota sobre Tailwind; zoom pela decisão D1 (16px em todo texto digitado); press pelo state layer, sem escala (D3); hover em `(hover: hover)`, com `(pointer: fine)` como proposta; `theme-color` sem variante escura; `overscroll-behavior: none` no `html` como pergunta de produto, não padrão; cruzamento com os hurdles do `CLAUDE.md` e os tokens do `docs/TOKENS.md`; a seção 11 é nova.
 
-A seção 11 foi escrita com palavras próprias, usando como referência a lista de armadilhas da [`kylezantos/responsive-craft`](https://github.com/kylezantos/responsive-craft/tree/4863701762d243d0517b38cb36473b9a70861b72), commit `4863701762d243d0517b38cb36473b9a70861b72`. Nenhum trecho foi copiado: o repositório declara MIT só no README, sem arquivo de licença.
+As quatro primeiras armadilhas da seção 11 foram escritas com palavras próprias, usando como referência a lista de armadilhas da [`kylezantos/responsive-craft`](https://github.com/kylezantos/responsive-craft/tree/4863701762d243d0517b38cb36473b9a70861b72), commit `4863701762d243d0517b38cb36473b9a70861b72`. Nenhum trecho foi copiado: o repositório declara MIT só no README, sem arquivo de licença.
 
 Decisões D1 e D3: documento "Avaliação de skills de mercado" no Linear, seção 10.
