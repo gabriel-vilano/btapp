@@ -11,7 +11,7 @@ const NOTHING_PENDING = "Nada pendente";
 /**
  * Conteúdo da aba Jogos: as 4 seções na ordem da N12, ou o vazio da 9.2
  * seguido do Histórico.
- * @example <AgendaView {...agendaViewModel(domain, { playerId, now })} />
+ * @example <AgendaView {...agendaViewModel(domain, { playerId, now }, links)} />
  */
 export function AgendaView({ yourTurn, upcoming, waiting, history, empty }: AgendaViewModel) {
   const historySection = (

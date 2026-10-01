@@ -5,7 +5,7 @@ import type { EditableProfile } from "@/src/lib/profileEdit";
 
 type SupabaseServerClient = Awaited<ReturnType<typeof createClient>>;
 
-type ProfileRow = {
+export type ProfileRow = {
   first_name: string | null;
   last_name: string | null;
   full_name: string;
@@ -16,7 +16,7 @@ type ProfileRow = {
 type ProfilePrivateRow = { birth_date: string | null };
 
 // Perfil antigo, de antes do nome e sobrenome separados, pode ter só o `full_name`
-function nameOf(row: ProfileRow): { firstName: string; lastName: string } {
+export function nameOf(row: ProfileRow): { firstName: string; lastName: string } {
   if (row.first_name) return { firstName: row.first_name, lastName: row.last_name ?? "" };
   return splitFullName(row.full_name);
 }

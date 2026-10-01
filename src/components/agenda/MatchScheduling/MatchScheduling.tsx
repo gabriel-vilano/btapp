@@ -21,6 +21,11 @@ type MatchSchedulingProps = ScheduleStateCardProps & {
  */
 export function MatchScheduling({ history, className, ...cardProps }: MatchSchedulingProps) {
   const headingId = useId();
+  const { view } = cardProps;
+  // Partida já fora de "Confronto definido" e sem data acordada: para quem é de
+  // fora, a marcação não tem nada público a mostrar (M18), e "Sem data marcada"
+  // contradiria o resultado logo acima
+  if (view.kind === "public_frozen" && view.agreed === null) return null;
   const rootClasses = [styles["match-scheduling"], className].filter(Boolean).join(" ");
   return (
     <section className={rootClasses} aria-labelledby={headingId}>
@@ -28,11 +33,11 @@ export function MatchScheduling({ history, className, ...cardProps }: MatchSched
         Marcação
       </h2>
       <ScheduleStateCard {...cardProps} />
-      {cardProps.view.kind !== "public" && (
+      {view.kind !== "public" && view.kind !== "public_frozen" && (
         <HistoryDisclosure
           history={history}
           playerNames={cardProps.playerNames}
-          open={cardProps.view.kind === "frozen"}
+          open={view.kind === "frozen"}
         />
       )}
     </section>
