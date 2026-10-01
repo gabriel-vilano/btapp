@@ -200,31 +200,47 @@ Valores absolutos (não relativos) para ritmo vertical consistente independente 
 
 ### Motion — durações
 
-| Token                        | Valor  | Uso                  |
-| ---------------------------- | ------ | -------------------- |
-| `--motion-duration-instant`  | 17ms   | sem percepção        |
-| `--motion-duration-short-1`  | 50ms   | micro-interações     |
-| `--motion-duration-short-2`  | 83ms   |                      |
-| `--motion-duration-short-3`  | 167ms  | transições rápidas   |
-| `--motion-duration-medium-1` | 250ms  | padrão de UI         |
-| `--motion-duration-medium-2` | 333ms  |                      |
-| `--motion-duration-medium-3` | 500ms  | transições longas    |
-| `--motion-duration-long-1`   | 667ms  | animações elaboradas |
-| `--motion-duration-long-2`   | 833ms  |                      |
-| `--motion-duration-long-3`   | 1000ms |                      |
+| Token                        | Valor  | Uso                                                  |
+| ---------------------------- | ------ | ---------------------------------------------------- |
+| `--motion-duration-instant`  | 17ms   | sem percepção                                        |
+| `--motion-duration-short-1`  | 50ms   | micro-interações                                     |
+| `--motion-duration-short-2`  | 83ms   | marcar e desmarcar (ícone do Checkbox)               |
+| `--motion-duration-short-3`  | 167ms  | state layer, cor e borda; saída do Toast             |
+| `--motion-duration-medium-1` | 250ms  | padrão de UI: entrada do Toast, do Dialog e do sheet |
+| `--motion-duration-medium-2` | 333ms  | teto para transição de UI maior                      |
+| `--motion-duration-medium-3` | 500ms  | loops (Spinner) e momentos raros; não é transição de UI |
+| `--motion-duration-long-1`   | 667ms  | loops e momentos raros; não é transição de UI        |
+| `--motion-duration-long-2`   | 833ms  | loops e momentos raros; não é transição de UI        |
+| `--motion-duration-long-3`   | 1000ms | loops (pulso do Skeleton) e momentos raros           |
 
 ### Motion — easings
 
-| Token                         | Valor                           | Uso                    |
-| ----------------------------- | ------------------------------- | ---------------------- |
-| `--motion-easing-linear`      | `cubic-bezier(0, 0, 1, 1)`      | progresso, loads       |
-| `--motion-easing-standard`    | `cubic-bezier(0.3, 0, 0, 1)`    | maioria das transições |
-| `--motion-easing-continuous`  | `cubic-bezier(0.3, 0, 0.7, 1)`  | loops                  |
-| `--motion-easing-quick-enter` | `cubic-bezier(0, 0, 0, 1)`      | elementos entrando     |
-| `--motion-easing-quick-exit`  | `cubic-bezier(1, 0, 1, 1)`      | elementos saindo       |
-| `--motion-easing-soft-enter`  | `cubic-bezier(0, 0, 0.7, 1)`    | entrada suave          |
-| `--motion-easing-soft-exit`   | `cubic-bezier(0.3, 0, 1, 1)`    | saída suave            |
-| `--motion-easing-bounce`      | `cubic-bezier(0.3, 0, 0, 1.25)` | feedback de ação       |
+| Token                         | Valor                           | Uso                                                        |
+| ----------------------------- | ------------------------------- | ---------------------------------------------------------- |
+| `--motion-easing-linear`      | `cubic-bezier(0, 0, 1, 1)`      | progresso, rotação contínua (Spinner)                      |
+| `--motion-easing-standard`    | `cubic-bezier(0.3, 0, 0, 1)`    | maioria das transições: cor, state layer, elemento que se move na tela |
+| `--motion-easing-continuous`  | `cubic-bezier(0.3, 0, 0.7, 1)`  | loops                                                      |
+| `--motion-easing-quick-enter` | `cubic-bezier(0, 0, 0, 1)`      | elementos entrando (ease-out)                              |
+| `--motion-easing-quick-exit`  | `cubic-bezier(0.23, 1, 0.32, 1)` | elementos saindo (ease-out)                               |
+| `--motion-easing-soft-enter`  | `cubic-bezier(0, 0, 0.7, 1)`    | entrada suave (ease-out)                                   |
+| `--motion-easing-bounce`      | `cubic-bezier(0.3, 0, 0, 1.25)` | só gesto com momento (soltar um arrasto) ou momento raro; nunca em ação utilitária |
+
+**Por que `quick-exit` é ease-out.** A curva antiga, `cubic-bezier(1, 0, 1, 1)`, era ease-in: o elemento ficava parado no começo da saída e só acelerava no fim, então a UI parecia demorar a responder ao toque. A saída agora usa a curva ease-out das regras do Emil Kowalski: começa rápida e assenta no fim, o que dá a resposta imediata. O `--motion-easing-soft-exit` (`cubic-bezier(0.3, 0, 1, 1)`), também ease-in e sem consumidor, foi removido. Se uma saída precisar de uma curva mais calma, usar `--motion-easing-soft-enter`, que já é ease-out.
+
+### Motion: regras
+
+Regras do DS para animação, adotadas das skills de motion do Emil Kowalski (`emilkowalski/skills`, `animate` e `review-animations`).
+
+- **Gate de frequência.** Ação de teclado, ou repetida mais de 100 vezes por dia, não anima. Ação de dezenas de vezes por dia anima de forma quase imperceptível (o state layer, em `short-3`). Ação ocasional (Dialog, sheet, Toast) usa a animação padrão. A rara (primeira vez, sucesso) é onde mora o deleite.
+- **Propósito nomeado.** Toda animação tem um: feedback, consistência espacial, indicar estado, evitar mudança brusca ou explicar. Sem propósito, não anima.
+- **Sem ease-in em UI**, na entrada nem na saída. Entrada usa `quick-enter` ou `soft-enter`; saída, `quick-exit`. O `standard` serve para o que muda sem entrar nem sair (cor, state layer, elemento que se move na tela).
+- **Transição de UI abaixo de 300ms** (`medium-1` como padrão). Dialog e sheet podem chegar a 500ms. Loops (Spinner, Skeleton) ficam fora da regra; `medium-3` e `long-*` são para eles e para momentos raros.
+- **Sem bounce em ação utilitária** (menu, toggle, Dialog). O `--motion-easing-bounce` fica para gesto com momento (soltar um arrasto) ou momento raro.
+- **Só `transform` e `opacity`** no que se move. Nunca `scale(0)`: o elemento parte de perto do tamanho final (o Dialog centralizado parte de `scale(0.96)`).
+- **Origem no gatilho.** Popover e menu crescem a partir do elemento que os abriu. Dialog centralizado e sheet são a exceção: entram do centro e da base.
+- **Transição em vez de keyframes no que se dispara rápido ou empilha** (Toast). A transição parte do estado em que o elemento está, então uma saída no meio da entrada não dá salto. Para animar a entrada no mount com transição, usar `@starting-style`.
+- **Movimento reduzido mais suave, e não zero.** Com `prefers-reduced-motion: reduce`, tirar o deslocamento e manter o esmaecimento (Toast), ou desacelerar o loop (Spinner). Cortar tudo faz o elemento surgir de golpe.
+- **Press é só state layer, sem escala.** O `:active` escurece o `::after` (ver "State layers"); o componente não encolhe ao toque.
 
 ### Breakpoints
 

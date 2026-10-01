@@ -227,10 +227,11 @@
   }
 }
 
+/* Movimento reduzido: o painel só esmaece, sem subir nem crescer. O scrim
+   já é só esmaecimento e continua. Cortar tudo faria o painel surgir de golpe. */
 @media (prefers-reduced-motion: reduce) {
-  .dialog__scrim,
   .dialog__panel {
-    animation: none;
+    animation-name: dialog-fade-in;
     transition: none;
   }
 }
@@ -251,5 +252,11 @@
   from {
     opacity: 0;
     transform: scale(0.96);
+  }
+}
+
+@keyframes dialog-fade-in {
+  from {
+    opacity: 0;
   }
 }
