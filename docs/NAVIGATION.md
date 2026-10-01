@@ -2,7 +2,7 @@
 
 Spec da navegação do app e da agenda do jogador (aba "Jogos"): quais abas existem, o que fica fora delas, como cada card do feed leva ao detalhe, como a agenda se organiza, como ela divide o trabalho com o bloco de pendências do feed, e o que mostram as abas Competições e Explorar.
 
-> Este doc decide **onde as coisas moram e como se chega a elas**. O conteúdo de cada tela é da spec dela: ranking (`docs/RANKING.md`), Explorar (`docs/EXPLORE.md`), perfil (`docs/PROFILE.md`), registro de partidas, H2H e feed com dados reais. As regras de domínio estão em `docs/DOMAIN.md` (R…) e as da marcação em `docs/SCHEDULING.md` (M…). As regras daqui são numeradas **N1, N2…** para não colidir com elas; os números já citados por outras specs não mudam, e as regras novas começam na N28. Rotas são propostas: o nome final é decisão de implementação, a estrutura (uma rota por entidade) não.
+> Este doc decide **onde as coisas moram e como se chega a elas**. O conteúdo de cada tela é da spec dela: ranking (`docs/RANKING.md`), Explorar (`docs/EXPLORE.md`), perfil (`docs/PROFILE.md`), registro de partidas, H2H (`docs/HEAD_TO_HEAD.md`) e feed com dados reais. As regras de domínio estão em `docs/DOMAIN.md` (R…) e as da marcação em `docs/SCHEDULING.md` (M…). As regras daqui são numeradas **N1, N2…** para não colidir com elas; os números já citados por outras specs não mudam, e as regras novas começam na N28. Rotas são propostas: o nome final é decisão de implementação, a estrutura (uma rota por entidade) não.
 
 ---
 
@@ -98,7 +98,7 @@ As telas de detalhe têm cabeçalho com "Voltar" e o título da entidade. O sele
 | --- | --- | --- | --- |
 | **Partida** (confronto, resultado, amistoso) | `/jogos/[partida]` | Marcação (SCHED §6), lançar, confirmar ou contestar, prazo, histórico da marcação. O admin da competição também vê o histórico da marcação (M18) e, na partida confirmada, o menu com "Corrigir placar" e "Anular resultado" (N31) | Lados, competição, data e arena acordadas (M18), placar confirmado, comentários |
 | **Jogador** | `/jogadores/[username]` (o próprio: `/perfil`) | — | Perfil público (`PROFILE.md`) |
-| **H2H** | Da spec de H2H | — | — |
+| **H2H** (jogador × jogador ou dupla × dupla) | `/h2h/[ladoA]/[ladoB]`, com os dois @username da dupla unidos por `+` (`docs/HEAD_TO_HEAD.md`, HH5) | O lado de quem vê à esquerda, com os textos em "você" (HH6) | Os confrontos entre os dois lados, na ordem da URL |
 | **Classificação de uma categoria** | `/ranking/[categoria]` | A linha da própria dupla fixada (RK9) | A tabela |
 | **Competição** | `/competicoes/[competicao]` | A posição em cada categoria (RK17); para o admin, a área "Administrar" (N31) | Categorias, temporada, regras; para quem não está inscrito, venha de onde vier, "Como se inscrever" e "Tenho interesse" (N33). A aba marcada segue a N10 e a N28 |
 | **Organização** (arena, clube, federação ou grupo) | `/organizacoes/[organizacao]` | — | Nome, tipo, cidade, contato e as competições que ela promove (N34) |

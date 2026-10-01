@@ -32,6 +32,7 @@ As decisões foram tomadas pelo Gabriel em 26/09/2026 e estão registradas como 
 | **ITF** | [Rules of Beach Tennis 2025](https://www.itftennis.com/media/13855/rules-of-beach-tennis-2025.pdf), da ITF | Regra do super tiebreak |
 | **PESQ-RV** | Regras públicas do Rankin e do Vila do Tênis (BH), que usam o LetzPlay legado com a mesma configuração: `letzplay.me/rankin/rankings/55513/about`, `letzplay.me/vila-tenis-bt/rankings/56068/about`, `viladotenis.com/area-do-atleta` | Referências reais de jogos por rodada, prazo para combinar a data, regra de desistência, regra de W.O. por oferta de datas |
 | **DSC** | `docs/DISCOVERY.md` e `docs/discovery/` | Evidência de mercado citada nas regras e nas perguntas |
+| **DEC-H2H** | Issue da spec de head-to-head (`docs/HEAD_TO_HEAD.md`), respostas do Gabriel às perguntas HQ1–HQ4 (30/09/2026) | A página de H2H tem dois tipos, jogador × jogador e dupla × dupla; o card de duplas abre a de duplas. Emenda a R19 |
 | **DEC-NAV-A** | Issue da spec de navegação, comentário "Decisões do Gabriel (29/09, ~19:00 UTC)" | Organização com tipo, cidade e contato (a arena do Explorar é a do tipo arena); "Tenho interesse" como relação entre jogador e competição |
 
 ---
@@ -91,7 +92,7 @@ As entidades estão agrupadas pelo papel que cumprem. Os nomes em **negrito** s�
 | --- | --- | --- |
 | **Evento do feed** | Registro automático de algo que aconteceu (resultado, confronto, inscrição, amizade, movimentação no ranking, marco, classificação para a final). Tem **ator**, **tipo**, **origem** (a entidade que o gerou) e **visibilidade**: público ou privado | R20–R24 |
 | **Marco** | Conquista permanente de uma unidade competidora, registrada uma única vez por temporada: **Líder** ou **Top N**. Nunca é revogada por uma rodada seguinte | R25, R47 |
-| **H2H** | Histórico de confrontos entre dois lados, derivado das partidas confirmadas, amistosos incluídos. No card, entre as duplas exatas; na página de H2H, jogador × jogador | R19 |
+| **H2H** | Histórico de confrontos entre dois lados, derivado das partidas confirmadas, amistosos incluídos. No card, entre as duplas exatas; a página tem dois tipos, jogador × jogador e dupla × dupla (`docs/HEAD_TO_HEAD.md`) | R19 |
 
 ### Relações
 
@@ -343,7 +344,7 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
 ### Contagens e H2H
 
 - **R18. `total_matches` conta toda partida confirmada do jogador**, em simples e duplas, torneio, ranking e **amistoso**, **exceto W.O. e W.O. duplo**. A desistência conta, porque houve jogo. [DEC-DOM, DEC-JOGOS, DEC-RESP P3, DEC-CARDS D4]
-- **R19. H2H: no card, a dupla exata; na página de H2H, jogador × jogador.** O card responde "esses dois lados já se enfrentaram?"; a página serve para avaliar o adversário (JTBD 3). O amistoso conta. **W.O. e W.O. duplo não contam** como confronto nos dois casos. [DEC-DOM, DEC-JOGOS, DEC-RESP P3, DEC-CARDS D1]
+- **R19. H2H: no card, a dupla exata; a página tem dois tipos, jogador × jogador e dupla × dupla.** O card responde "esses dois lados já se enfrentaram?"; a página serve para avaliar o adversário (JTBD 3). **O card de duplas abre a página de duplas**, com o mesmo número do botão, e ela lista embaixo os confrontos individuais entre os quatro jogadores; o perfil e o card de simples abrem a de jogadores (`docs/HEAD_TO_HEAD.md`, HH1 e HH2). O amistoso conta. **W.O. e W.O. duplo não contam** como confronto em nenhum dos casos. [DEC-DOM, DEC-JOGOS, DEC-RESP P3, DEC-CARDS D1, DEC-H2H HQ1]
 
 ### Classificação e feed
 
