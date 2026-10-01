@@ -64,9 +64,9 @@ export const Empty: Story = {
 };
 
 export const WithText: Story = {
-  args: { value: "Vila" },
+  args: { value: "Mangaba" },
   play: async ({ canvas }) => {
-    await expect(canvas.getByRole("searchbox", { name: "Buscar" })).toHaveValue("Vila");
+    await expect(canvas.getByRole("searchbox", { name: "Buscar" })).toHaveValue("Mangaba");
     await expect(canvas.getByRole("button", { name: "Limpar busca" })).toBeVisible();
   },
   parameters: {
@@ -79,7 +79,7 @@ export const WithText: Story = {
 };
 
 export const ClearReturnsFocus: Story = {
-  args: { value: "Vila" },
+  args: { value: "Mangaba" },
   play: async ({ canvas, args, userEvent }) => {
     const input = canvas.getByRole("searchbox", { name: "Buscar" });
     const clear = canvas.getByRole("button", { name: "Limpar busca" });

@@ -57,7 +57,7 @@ export const Admin: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.getByRole("link", { name: /Administrar/ })).toHaveAttribute(
       "href",
-      "/competicoes/liga-vila/administrar",
+      "/competicoes/liga-pitanga/administrar",
     );
     await expect(canvas.queryByRole("button", { name: /Lançar sorteio/ })).toBeNull();
     await expect(canvas.getByText("60 pontos, mais 1 por game vencido e menos 1 por game perdido")).toBeVisible();
