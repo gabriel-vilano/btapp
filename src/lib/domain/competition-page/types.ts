@@ -1,4 +1,4 @@
-import type { MatchFormat, ScoringRule } from '@/src/types/domain';
+import type { Competition, MatchFormat, Organization, ScoringRule } from '@/src/types/domain';
 import type { StandingDelta } from '../competitions-tab';
 
 // Página da competição de ranking (docs/RANKING.md §7, RK17 e RK18; NAV N9,
@@ -9,19 +9,12 @@ import type { StandingDelta } from '../competitions-tab';
 // domínio, porque a página calcula o exemplo com eles (RK18).
 
 /**
- * Contato que o organizador informou para a inscrição (N33). O texto aparece
- * como foi escrito; o link, quando há, vira o botão para falar com ele.
+ * A organização que promove a competição, como a página a mostra: avatar e
+ * nome levam à página dela (/organizacoes/[username], EX23), e o contato
+ * aparece em "Como se inscrever" (EXPLORE.md, EX28). O contato é o campo da
+ * `Organization`, texto ou link, lido por `readOrganizationContact`.
  */
-export interface OrganizerContact {
-  text: string; // 'WhatsApp da recepção: (31) 99999-0000'
-  href: string | null; // 'https://wa.me/…'; null quando o contato é só texto
-}
-
-export interface CompetitionOrganizer {
-  name: string;
-  avatar_url: string | null;
-  contact: OrganizerContact | null;
-}
+export type CompetitionOrganizer = Pick<Organization, 'name' | 'username' | 'avatar_url' | 'contact'>;
 
 /** A posição de quem vê numa categoria em que está inscrito (StandingSummaryItem). */
 export interface CategoryStanding {
@@ -73,6 +66,7 @@ export interface CompetitionViewer {
 export interface CompetitionPageData {
   slug: string; // o segmento da rota: /competicoes/[slug]
   name: string;
+  type: Competition['type']; // escrito no cabeçalho, abaixo da organização: "Ranking"
   organizer: CompetitionOrganizer;
   categories: CompetitionCategoryRow[];
   season: CompetitionSeasonInfo | null; // null: competição sem temporada (RK19)
@@ -82,3 +76,11 @@ export interface CompetitionPageData {
   response_deadline_hours: number; // R14
   viewer: CompetitionViewer;
 }
+
+/** Resposta do registro do "Tenho interesse" (EX33): sem `ok`, o botão volta ao estado anterior. */
+export interface InterestRegistration {
+  ok: boolean;
+}
+
+/** Registra (`true`) ou desfaz (`false`) o interesse de quem vê na competição da página. */
+export type RegisterInterest = (interested: boolean) => Promise<InterestRegistration>;
