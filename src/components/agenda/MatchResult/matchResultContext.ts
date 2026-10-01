@@ -1,5 +1,6 @@
 import type { MatchSidePlayers } from "@/src/lib/domain/match-state";
 import { sideOfPlayer } from "@/src/lib/domain/match-state/guards";
+import type { StandingsScope } from "@/src/lib/domain/standingsStats";
 import type { ContestDetails, MatchSideKey, ScoringRule } from "@/src/types/domain";
 import type { SideVoice } from "../ReportResult/reportSummary";
 
@@ -16,6 +17,11 @@ export interface MatchResultContext {
   competitionName: string;
   responseDeadlineHours: number;
   scoringRule: ScoringRule;
+  /** Ex.: "Masculino B". */
+  categoryName: string;
+  /** A categoria na temporada: a posição ao vivo depois da confirmação (RG18). */
+  standings: StandingsScope;
+  rankingHref: string;
 }
 
 /** Folha aberta na seção: contestar (RG15) ou o menu de desfazer (RG16). */

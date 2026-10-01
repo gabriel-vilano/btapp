@@ -3,12 +3,17 @@ import {
   buildFriendsList,
   buildProfilePage,
   type FriendsListData,
+  type ProfileLinks,
   type ProfilePageData,
 } from '@/src/lib/domain/profile-page';
 import { mockEntities, mockProfileDomain } from './domain';
+import { mockRankingRoutes } from './rankingRoutes';
 
 // Página do perfil sobre o `mockProfileDomain`, até a integração com o
 // Supabase. Quem vê é o Lucas, o mesmo jogador da aba Competições.
+
+// A mesma rota da classificação (RK1, RK21): o slug, não o id da categoria
+const PROFILE_LINKS: ProfileLinks = { rankingHref: mockRankingRoutes.categoryHref };
 
 /** O jogador "logado" dos mocks. */
 export const MOCK_VIEWER = mockEntities.players.lucas;
@@ -18,7 +23,7 @@ export const MOCK_VIEWER = mockEntities.players.lucas;
  * Ex.: `mockProfilePage('pedrohenrique')`.
  */
 export function mockProfilePage(username: string, now = new Date().toISOString()): ProfilePageData | null {
-  return buildProfilePage(mockProfileDomain, { username, viewerId: MOCK_VIEWER.id, now });
+  return buildProfilePage(mockProfileDomain, { username, viewerId: MOCK_VIEWER.id, now, links: PROFILE_LINKS });
 }
 
 function pageOf(username: string): ProfilePageData {

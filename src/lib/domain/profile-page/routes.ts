@@ -1,4 +1,6 @@
 // Rotas que o perfil abre (docs/NAVIGATION.md, N8, N10, N19; docs/PROFILE.md).
+// A da classificação não mora aqui: usa o slug da categoria, que o domínio não
+// guarda, e chega por `ProfileLinks`.
 // As rotas são propostas da spec de navegação: o nome final é da issue de
 // cada tela. Ficam num lugar só para a troca ser uma linha.
 
@@ -33,13 +35,4 @@ export function headToHeadPath(username: string): string {
 
 export function matchPath(matchId: string): string {
   return `/jogos/${segment(matchId)}`;
-}
-
-/**
- * Classificação da categoria (RK1); com a temporada, a encerrada (RK21).
- * Ex.: `rankingPath('cat-x', 'season-1')` → "/ranking/cat-x?temporada=season-1".
- */
-export function rankingPath(categoryId: string, seasonId?: string): string {
-  const base = `/ranking/${segment(categoryId)}`;
-  return seasonId === undefined ? base : `${base}?temporada=${segment(seasonId)}`;
 }
