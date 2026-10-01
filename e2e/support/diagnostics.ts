@@ -12,6 +12,10 @@ export function collectBrowserErrors(page: Page): string[] {
   page.on("console", (message) => {
     if (message.type() === "error") errors.push(`console.error: ${message.text()}`);
   });
+  page.on("requestfailed", (request) => errors.push(`requestfailed: ${request.url()} (${request.failure()?.errorText})`));
+  page.on("response", (response) => {
+    if (response.status() >= 400) errors.push(`HTTP ${response.status()}: ${response.url()}`);
+  });
   return errors;
 }
 
@@ -25,6 +29,9 @@ export async function reportPageOnFailure(page: Page, testInfo: TestInfo, errors
     .locator("body")
     .ariaSnapshot({ timeout: 2_000 })
     .catch((error: Error) => `(sem snapshot: ${error.message})`);
+  const contentHtml = await page
+    .evaluate(() => (document.querySelector("[class*='shell__content']") ?? document.body).outerHTML.slice(0, 3_000))
+    .catch((error: Error) => `(sem HTML: ${error.message})`);
   console.log(
     [
       `--- Página na falha de "${testInfo.title}" ---`,
@@ -33,6 +40,8 @@ export async function reportPageOnFailure(page: Page, testInfo: TestInfo, errors
       ...errors,
       "Árvore de acessibilidade:",
       snapshot,
+      "HTML da área de conteúdo (3.000 primeiros caracteres):",
+      contentHtml,
       "--- fim ---",
     ].join("\n"),
   );
