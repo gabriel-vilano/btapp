@@ -109,3 +109,23 @@ export function formatFormGuideLabel(results: readonly H2HOutcome[], label: stri
   const spoken = results.map((result) => SPOKEN_OUTCOME[result]).join(", ");
   return `Últimas ${results.length} de ${label}: ${spoken}, da mais antiga para a mais recente`;
 }
+
+/** Os lados de um H2H sem confronto, para o EmptyState (HEAD_TO_HEAD.md §6.1). */
+export interface H2HNeverMetText {
+  /** Quem vê está num dos lados: o texto fala com ele. */
+  viewerIsLeft: boolean;
+  sideKind: H2HSideKind;
+  leftName: string;
+  rightName: string;
+}
+
+/**
+ * Título do vazio quando os lados nunca se enfrentaram (§6.1).
+ * Ex.: "Vocês ainda não se enfrentaram.", "Lucas e Pedro ainda não se enfrentaram.".
+ */
+export function formatNeverMet({ viewerIsLeft, sideKind, leftName, rightName }: H2HNeverMetText): string {
+  if (viewerIsLeft) return "Vocês ainda não se enfrentaram.";
+  // "Lucas e Rafael e Pedro e Thiago" não se lê: em duplas, o texto fala das duplas
+  if (sideKind === "pair") return "As duplas ainda não se enfrentaram.";
+  return `${leftName} e ${rightName} ainda não se enfrentaram.`;
+}
