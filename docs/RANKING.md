@@ -328,7 +328,7 @@ Confirmadas pelo Gabriel em 28/09/2026 (saíram das correções de consistência
 
 | Item | Para onde vai |
 | --- | --- |
-| Fluxo do sorteio da rodada (o que o admin vê, confirmação, erro) | Issue própria, a criar depois da aprovação. O botão está na RK18 |
+| Fluxo do sorteio da rodada (o que o admin vê, confirmação, erro) | `docs/ROUND_DRAW.md` |
 | Decisão do admin no empate total (R37, último critério) | O domínio não guarda essa decisão hoje (`computeStandings` só marca `awaiting_admin`). Issue própria de domínio e tela |
 | Descoberta de competições com filtros de nível e região | JTBD 1. No MVP, o Explorar tem a busca e a vitrine dos organizadores do beta, sem filtros (NAV N32, N33; `PRODUCT.md`) |
 | Recorte social ("só amigos" na tabela) | Futuro. Com 6 a 40 duplas por categoria, o ganho é pequeno no MVP (REF, padrão 4) |
