@@ -8,6 +8,11 @@ describe("isTaskRoute", () => {
     expect(isTaskRoute("/jogos/match-1/resultado/")).toBe(true);
   });
 
+  it("reconhece o registro de amistoso (N19)", () => {
+    expect(isTaskRoute("/jogos/amistoso")).toBe(true);
+    expect(isTaskRoute("/jogos/amistoso/")).toBe(true);
+  });
+
   it("reconhece o fluxo de editar perfil (PF9)", () => {
     expect(isTaskRoute("/perfil/editar")).toBe(true);
   });
