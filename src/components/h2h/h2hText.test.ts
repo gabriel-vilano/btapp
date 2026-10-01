@@ -5,6 +5,7 @@ import {
   formatH2HDate,
   formatH2HSpokenDate,
   formatLeader,
+  formatNeverMet,
   formatSummaryLine,
   formatSummarySentence,
   type H2HSummaryText,
@@ -87,5 +88,23 @@ describe("formatFormGuideLabel", () => {
   it("usa o singular com uma partida e avisa quando não há nenhuma", () => {
     expect(formatFormGuideLabel(["loss"], "Lucas")).toBe("Última partida de Lucas: derrota");
     expect(formatFormGuideLabel([], "Lucas")).toBe("Lucas: sem partidas");
+  });
+});
+
+describe("formatNeverMet", () => {
+  const names = { leftName: "Lucas", rightName: "Pedro" };
+
+  it("fala com quem vê quando ele está num dos lados", () => {
+    expect(formatNeverMet({ ...names, viewerIsLeft: true, sideKind: "player" })).toBe("Vocês ainda não se enfrentaram.");
+    expect(formatNeverMet({ ...names, viewerIsLeft: true, sideKind: "pair" })).toBe("Vocês ainda não se enfrentaram.");
+  });
+
+  it("de fora, usa os nomes em simples e fala das duplas em duplas", () => {
+    expect(formatNeverMet({ ...names, viewerIsLeft: false, sideKind: "player" })).toBe(
+      "Lucas e Pedro ainda não se enfrentaram.",
+    );
+    expect(formatNeverMet({ leftName: "Lucas e Rafael", rightName: "Pedro e Thiago", viewerIsLeft: false, sideKind: "pair" })).toBe(
+      "As duplas ainda não se enfrentaram.",
+    );
   });
 });

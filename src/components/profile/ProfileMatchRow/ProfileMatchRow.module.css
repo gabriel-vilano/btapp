@@ -1,0 +1,7 @@
+/* Resultado e placar empilhados à direita da linha */
+.match-row__result {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-50);
+}
