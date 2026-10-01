@@ -189,13 +189,16 @@ export const TournamentEnrolled: Story = {
   },
 };
 
-// Torneio futuro, não inscrito: o bloco completo no topo, com "Tenho interesse" (EX26, EX27)
+// Torneio futuro, não inscrito: "Data e local" logo abaixo do cabeçalho e, depois dele, o
+// bloco completo, com "Tenho interesse" (EX26, EX27, DEC-EXP-7)
 export const TournamentNotEnrolled: Story = {
   args: { data: mockTournamentPage.notEnrolled },
   play: async ({ canvas }) => {
     const enrollment = await canvas.findByRole("region", { name: "Como se inscrever" });
     const info = canvas.getByRole("region", { name: "Data e local" });
-    await expect(enrollment.compareDocumentPosition(info) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    const categories = canvas.getByRole("region", { name: "Categorias" });
+    await expect(info.compareDocumentPosition(enrollment) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    await expect(enrollment.compareDocumentPosition(categories) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     await expect(within(enrollment).getByRole("link", { name: "Falar com o organizador" })).toBeVisible();
     await expect(within(enrollment).getByRole("button", { name: "Tenho interesse" })).toBeEnabled();
     await expect(canvas.getByRole("link", { name: "Federação Vale Azul de Beach Tennis" })).toHaveAttribute(

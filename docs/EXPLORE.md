@@ -30,6 +30,7 @@ As siglas são as mesmas do `docs/DOMAIN.md` > "Fontes" e da `docs/NAVIGATION.md
 | **DEC-EXP-4** | Decisão do Gabriel na issue da vitrine e da página da organização (30/09): na página da organização, o ranking entre temporadas aparece na lista, no fim, na ordem da EX8; "Ver encerradas (N)" fica só com os torneios passados |
 | **DEC-EXP-5** | Decisão do Gabriel na issue do contato e dos blocos por categoria da página da competição (30/09): quem ainda não tem inscrição na competição vê o "Como se inscrever" completo, no topo, logo abaixo do cabeçalho; quem já tem inscrição numa categoria e ainda tem categoria livre vê uma versão compacta, abaixo da lista de categorias |
 | **DEC-EXP-6** | Decisão do Gabriel na issue da página mínima do torneio (30/09): o torneio que já aconteceu não mostra os blocos de inscrição ("Como se inscrever" e "Tenho interesse"), pelo mesmo motivo que o tira da vitrine (EX8) |
+| **DEC-EXP-7** | Decisão do Gabriel na issue da página mínima do torneio (01/10), sobre os prints: no torneio, "Data e local" vem logo abaixo do cabeçalho, antes do "Como se inscrever", porque a data decide se dá para ir; o ranking segue a DEC-EXP-5. O torneio encerrado mantém a linha "Este torneio já aconteceu." |
 | **WCAG-253** | WCAG 2.2, critério 2.5.3 "Label in Name": o nome acessível contém o rótulo visível |
 | **APG-BUTTON** | WAI-ARIA Authoring Practices, padrão "Button": num botão de alternar, o rótulo não muda com o estado; se o rótulo muda, não se usa `aria-pressed` |
 | **LEIT** | Leitura do agente desta spec. Todas foram confirmadas pelo Gabriel: EL1 a EL14 na DEC-EXP, EL15 e a junção da EX27 na DEC-EXP-2. O mapa está na seção 10 |
@@ -180,6 +181,8 @@ A página é da `RANKING.md` (RK17). A NAVIGATION (N33) decidiu que a página te
 - **EX34. A página do torneio não tem spec ainda** (NAV N9). Para o Explorar funcionar com um torneio na vitrine, o mínimo é: cabeçalho (organização e nome), data e local, categorias e os dois blocos desta seção. O resto (confrontos, resultados) é da spec do torneio. [NAV N9; DEC-EXP EL14]
 
   **Torneio que já aconteceu não mostra "Como se inscrever" nem "Tenho interesse":** não há mais em que se inscrever, o mesmo motivo que o tira da vitrine (EX8). "Já aconteceu" segue os "Termos" (seção 1): o dia do fim, em Brasília, ficou para trás. A entrada da área "Administrar" continua, para o admin. [DEC-EXP-6]
+
+  **No torneio, "Data e local" vem antes do "Como se inscrever":** logo abaixo do cabeçalho, porque a data decide se dá para ir. O bloco completo fica logo abaixo dele; o compacto continua abaixo das categorias. É a exceção do torneio à posição da EX26, que vale para o ranking. No torneio que já aconteceu, "Data e local" diz "Este torneio já aconteceu.", porque os blocos de inscrição somem. [DEC-EXP-7]
 
 ---
 

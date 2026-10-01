@@ -39,9 +39,10 @@ interface CompetitionPageProps {
  * categorias, temporada e regras. No torneio, o mínimo do Explorar (EXPLORE.md,
  * EX34): organizador, data e local e categorias. O cabeçalho da tela, com o
  * nome, é da página. Conforme quem vê, a entrada da área "Administrar" (N31) e
- * o "Como se inscrever": completo logo abaixo do cabeçalho, para quem não tem
- * inscrição na competição, ou compacto abaixo das categorias, para quem já
- * joga uma delas e tem outra livre (EX26 e EX27).
+ * o "Como se inscrever": completo logo abaixo do cabeçalho (no torneio, logo
+ * abaixo de "Data e local"), para quem não tem inscrição na competição, ou
+ * compacto abaixo das categorias, para quem já joga uma delas e tem outra
+ * livre (EX26 e EX27).
  * @example <CompetitionPage data={mockCompetitionPage.enrolled} now={new Date().toISOString()} registerInterest={…} />
  */
 export function CompetitionPage({ data, now, registerInterest }: CompetitionPageProps) {
@@ -57,9 +58,10 @@ export function CompetitionPage({ data, now, registerInterest }: CompetitionPage
   return (
     <div className={styles["competition-page"]}>
       <OrganizerLine organizer={data.organizer} type={data.type} />
+      {/* No torneio, a data vem antes da inscrição: é ela que decide se dá para ir (DEC-EXP-7) */}
+      {data.type === "tournament" && <TournamentInfo tournament={data} now={now} />}
       {blocks.admin && <AdminEntry slug={data.slug} />}
       {blocks.enrollment === "full" && enrollment("full")}
-      {data.type === "tournament" && <TournamentInfo tournament={data} now={now} />}
       <CompetitionCategories competitionName={data.name} categories={data.categories} />
       {blocks.enrollment === "compact" && enrollment("compact")}
       {data.type === "ranking" && <RankingDetails data={data} now={now} />}
