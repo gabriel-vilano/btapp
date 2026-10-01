@@ -1,10 +1,10 @@
 import type { MatchScreenData } from '@/src/components/agenda/MatchScreen';
-import { rankingPath } from '@/src/lib/domain/profile-page/routes';
 import type { StandingsScope } from '@/src/lib/domain/standingsStats';
 import { formatCategoryLabel } from '@/src/lib/formatters';
 import type { CompetitionCategory, Player, RankingMatch } from '@/src/types/domain';
 import { mockDomain } from './domain';
 import { players } from './domain/people';
+import { mockRankingRoutes } from './rankingRoutes';
 import { scheduleHistoryOf } from './domain/scheduling';
 
 // Tela do confronto (docs/SCHEDULING.md §6) montada das tabelas mockadas, do
@@ -66,7 +66,7 @@ function competitionContextOf(match: RankingMatch): CompetitionContext {
     scoringRule: competition.scoring_rule,
     adminNames: Object.fromEntries(adminIds.map((id) => [id, firstName(playerOf(id))])),
     standings: standingsOf(match.category_id, round.season_id),
-    rankingHref: `${rankingPath(match.category_id, round.season_id)}${OWN_ROW_HASH}`,
+    rankingHref: `${mockRankingRoutes.categoryHref(match.category_id, round.season_id)}${OWN_ROW_HASH}`,
   };
 }
 

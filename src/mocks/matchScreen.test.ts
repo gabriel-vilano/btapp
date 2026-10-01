@@ -34,7 +34,8 @@ describe('dados da tela do confronto nos mocks', () => {
     const data = matchScreenDataOf('match-arena-mangaba-mb-r3-6');
     if (data === null || data.match.status !== 'confirmed') throw new Error('mock da r3-6 confirmada ausente');
     const { standings, match } = data;
-    expect(data.rankingHref).toBe(`/ranking/${match.category_id}?temporada=${standings.season_id}#minha-posicao`);
+    // A rota da classificação é pelo slug, como a da aba Competições (RK1, RK21)
+    expect(data.rankingHref).toBe('/ranking/masculino-b?temporada=2026-2#minha-posicao');
     // A mesma tabela da tela de ranking: a posição do impacto é a da classificação ao vivo
     const live = computeStandings({ ...mockDomain, season_id: standings.season_id, category_id: match.category_id });
     const own = live.find((row) => row.enrollment_id === match.side_a_enrollment_id);
