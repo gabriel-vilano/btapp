@@ -4,11 +4,17 @@ import { submitLogin } from "./support/auth";
 import { createConfirmedUser, TEST_PASSWORD, uniqueEmail } from "./support/users";
 
 test.describe("Sair da conta", () => {
-  test("sair leva ao login e o /feed volta a exigir login", async ({ page }) => {
+  test("sair pelas configurações leva ao login e o /feed volta a exigir login", async ({ page }) => {
     const email = uniqueEmail("logout");
     await createConfirmedUser(email);
     await submitLogin(page, email, TEST_PASSWORD);
     await expect(page).toHaveURL(/\/feed$/);
+
+    // Entrada pela engrenagem do Perfil (NAVIGATION.md, N8)
+    await page.goto("/perfil");
+    await page.getByRole("link", { name: "Configurações", exact: true }).click();
+    await expect(page).toHaveURL(/\/perfil\/configuracoes$/);
+    await expect(page.getByText(email, { exact: true })).toBeVisible();
 
     await page.getByRole("button", { name: "Sair", exact: true }).click();
 
