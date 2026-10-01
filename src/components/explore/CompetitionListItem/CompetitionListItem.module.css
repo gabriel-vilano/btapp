@@ -1,0 +1,4 @@
+/* A linha de apoio tem duas linhas (EX10): "tipo · organização · cidade" e a situação */
+.competition-list-item__line {
+  display: block;
+}

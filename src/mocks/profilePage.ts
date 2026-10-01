@@ -1,4 +1,10 @@
-import { buildProfilePage, type ProfilePageData } from '@/src/lib/domain/profile-page';
+import type { Friendship } from '@/src/types/domain';
+import {
+  buildFriendsList,
+  buildProfilePage,
+  type FriendsListData,
+  type ProfilePageData,
+} from '@/src/lib/domain/profile-page';
 import { mockEntities, mockProfileDomain } from './domain';
 
 // Página do perfil sobre o `mockProfileDomain`, até a integração com o
@@ -43,3 +49,52 @@ export const mockProfilePages = {
   ownNew: { ...pageOf(players.marina.username), relation: 'self' },
   sectionError: { ...own, rankings: { status: 'error' }, recent_matches: { status: 'error' } },
 } satisfies Record<string, ProfilePageData>;
+
+/**
+ * Lista de amigos de `username` vista pelo Lucas; null quando o @username não existe.
+ * Ex.: `mockFriendsList('lucassilva')`.
+ */
+export function mockFriendsList(username: string): FriendsListData | null {
+  return buildFriendsList(mockProfileDomain, { username, viewerId: MOCK_VIEWER.id });
+}
+
+function friendsListOf(username: string, viewerId = MOCK_VIEWER.id, domain = mockProfileDomain): FriendsListData {
+  const list = buildFriendsList(domain, { username, viewerId });
+  if (list === null) throw new Error(`Mocks da lista de amigos: @${username} não existe no mockProfileDomain`);
+  return list;
+}
+
+// Só para a story da lista longa: amizades a mais no domínio mudariam o feed dos mocks,
+// que gera um evento por amizade aceita (R24)
+const LONG_LIST_FRIENDS = [players.rafael, players.thiago, players.ana, players.bruno, players.carla, players.eduardo];
+const longListDomain = {
+  ...mockProfileDomain,
+  friendships: [
+    ...mockProfileDomain.friendships,
+    ...LONG_LIST_FRIENDS.map(
+      (friend): Friendship => ({
+        id: `friendship-lucas-${friend.id}`,
+        requester_id: players.lucas.id,
+        addressee_id: friend.id,
+        requested_at: '2026-08-01T12:00:00Z',
+        status: 'accepted',
+        accepted_at: '2026-08-02T12:00:00Z',
+      }),
+    ),
+  ],
+};
+
+/**
+ * Situações da lista de amigos, para as stories. Ex.: `<FriendsList data={mockFriendsLists.own} />`.
+ * - `own`: a do Lucas, com um amigo;
+ * - `longList`: a do Lucas com sete amigos;
+ * - `other`: a do Pedro, em que a linha do Lucas leva a /perfil;
+ * - `empty` e `ownEmpty`: a da Marina, sem amigos, vista pelo Lucas e por ela mesma.
+ */
+export const mockFriendsLists = {
+  own: friendsListOf(players.lucas.username),
+  longList: friendsListOf(players.lucas.username, MOCK_VIEWER.id, longListDomain),
+  other: friendsListOf(players.pedro.username),
+  empty: friendsListOf(players.marina.username),
+  ownEmpty: friendsListOf(players.marina.username, players.marina.id),
+} satisfies Record<string, FriendsListData>;

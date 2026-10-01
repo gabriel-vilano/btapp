@@ -36,20 +36,22 @@ describe('showcaseCompetitions (EX8)', () => {
 });
 
 describe('organizationCompetitions (EX22)', () => {
-  it('só as da organização: abertas na ordem da EX8, encerradas separadas', () => {
-    const { open, closed } = organizationCompetitions('org-a', domain, NOW);
+  it('só as da organização: abertas na ordem da EX8, torneios passados do mais recente', () => {
+    const { open, betweenSeasons, closed } = organizationCompetitions('org-a', domain, NOW);
     expect(ids(open)).toEqual(['soon', 'alfa', 'zeta']);
+    expect(betweenSeasons).toEqual([]);
     expect(ids(closed)).toEqual(['past', 'older']);
   });
 
-  it('o ranking entre temporadas vai para as encerradas, antes dos torneios passados', () => {
-    const { open, closed } = organizationCompetitions('org-b', domain, NOW);
+  it('o ranking entre temporadas fica na lista, fora de "Ver encerradas" (decisão de 30/09)', () => {
+    const { open, betweenSeasons, closed } = organizationCompetitions('org-b', domain, NOW);
     expect(ids(open)).toEqual(['later']);
-    expect(ids(closed)).toEqual(['pausa']);
+    expect(ids(betweenSeasons)).toEqual(['pausa']);
+    expect(closed).toEqual([]);
   });
 
-  it('organização sem competição: as duas listas vazias', () => {
-    expect(organizationCompetitions('org-c', domain, NOW)).toEqual({ open: [], closed: [] });
+  it('organização sem competição: as três listas vazias', () => {
+    expect(organizationCompetitions('org-c', domain, NOW)).toEqual({ open: [], betweenSeasons: [], closed: [] });
   });
 });
 

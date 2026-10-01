@@ -11,7 +11,7 @@ import {
 import { daysAgo, daysFromNow } from '../relativeTime';
 import { organizations, players, units } from './people';
 
-// Ranking no modelo do Vila do Tênis (docs/DOMAIN.md, PESQ-RV): 2 jogos por
+// Ranking no modelo do Vila (docs/DOMAIN.md, PESQ-RV): 2 jogos por
 // rodada, 4 rodadas no semestre e final para os primeiros de cada categoria.
 // Hoje a temporada está na rodada 3: as rodadas 1 e 2 fecharam e a 4 ainda
 // não começou.

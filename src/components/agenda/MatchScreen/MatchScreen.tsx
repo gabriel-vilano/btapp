@@ -1,12 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import { Alert } from "@/src/components/ui/Alert";
 import { Badge } from "@/src/components/ui/Badge";
 import { sideOfPlayer } from "@/src/lib/domain/schedule-state";
 import type { MatchSideKey } from "@/src/types/domain";
+import { MatchResult } from "../MatchResult";
 import { MatchScheduling } from "../MatchScheduling";
 import { ScheduleForm } from "../ScheduleForm";
 import type { MatchScreenData } from "./matchScreenData";
+import { useMatchResult } from "./useMatchResult";
 import { useMatchScheduling } from "./useMatchScheduling";
 import styles from "./MatchScreen.module.css";
 
@@ -23,13 +26,18 @@ type MatchScreenProps = {
 };
 
 /**
- * Tela do confronto do ranking com a marcação do jogo (docs/SCHEDULING.md §6,
- * NAVIGATION.md N10), sem o cabeçalho: ele é da página. Enquanto os dados são mocks, as ações mudam só o
- * histórico em memória, pelas mesmas funções puras que o banco vai usar.
+ * Tela do confronto do ranking: o resultado, quando já foi lançado
+ * (docs/RESULTS.md §4), e a marcação do jogo (docs/SCHEDULING.md §6,
+ * NAVIGATION.md N10), sem o cabeçalho: ele é da página. Enquanto os dados são
+ * mocks, as ações mudam só a partida e o histórico em memória, pelas mesmas
+ * funções puras que o banco vai usar.
  * @example <MatchScreen data={matchScreenDataOf(matchId, viewerId)} now={new Date().toISOString()} />
  */
 export function MatchScreen({ data, now: initialNow, clock = systemClock, createId = randomId }: MatchScreenProps) {
-  const scheduling = useMatchScheduling(data, { initialNow, clock, createId });
+  // A partida é das duas seções: desfeito o lançamento, a marcação volta a valer (RG16)
+  const [match, setMatch] = useState(data.match);
+  const scheduling = useMatchScheduling({ ...data, match }, { initialNow, clock, createId });
+  const result = useMatchResult({ match, setMatch, data, clock });
   const { view, form } = scheduling;
   const pendingOptions = view.kind === "awaiting_other_side" ? view.proposal.options : undefined;
   const viewerSide = sideOfPlayer(data.sides, data.viewerId);
@@ -38,6 +46,7 @@ export function MatchScreen({ data, now: initialNow, clock = systemClock, create
     <div className={styles["match-screen"]}>
       <div className={styles["match-screen__content"]}>
         <MatchHeading data={data} viewerSide={viewerSide} />
+        <MatchResult match={match} context={data} actions={result} now={scheduling.now} />
         {scheduling.error && <Alert status="attention" title={scheduling.error} />}
         <MatchScheduling
           view={view}
@@ -47,9 +56,9 @@ export function MatchScreen({ data, now: initialNow, clock = systemClock, create
           opponentsName={viewerSide === null ? "" : data.sideNames[otherSide(viewerSide)]}
           roundNumber={data.roundNumber}
           roundDeadline={data.roundDeadline}
-          matchStatus={data.match.status}
+          matchStatus={match.status}
           now={scheduling.now}
-          resultHref={`${AGENDA_HREF}/${data.match.id}/resultado`}
+          resultHref={`${AGENDA_HREF}/${match.id}/resultado`}
           onAccept={scheduling.accept}
           onPropose={() => scheduling.openForm("propose")}
           onReport={() => scheduling.openForm("report")}

@@ -50,4 +50,20 @@ test.describe("Login e rota protegida", () => {
     await page.getByLabel("E-mail", { exact: true }).fill("a");
     await expect(expiredAlert).toHaveCount(0);
   });
+
+  // EX21 e PF20: o login que veio de um link volta para a tela do link, não para o feed
+  test("sem sessão, /explorar leva ao login e, depois de entrar, volta ao Explorar", async ({ page }) => {
+    const email = uniqueEmail("login-volta");
+    await createConfirmedUser(email);
+
+    await page.goto("/explorar");
+    await expect(page).toHaveURL(/\/entrar\?next=%2Fexplorar$/);
+
+    await page.getByLabel("E-mail", { exact: true }).fill(email);
+    await page.getByLabel("Senha", { exact: true }).fill(TEST_PASSWORD);
+    await page.getByRole("button", { name: "Entrar", exact: true }).click();
+
+    await expect(page).toHaveURL(/\/explorar$/);
+    await expect(page.getByRole("heading", { name: "Explorar", exact: true })).toBeVisible();
+  });
 });

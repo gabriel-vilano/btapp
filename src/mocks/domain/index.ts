@@ -79,9 +79,9 @@ export interface DomainMocks {
 }
 
 /**
- * Cenário completo: um ranking no modelo do Vila do Tênis (temporada na
- * rodada 3, duas categorias, partidas em todos os estados), um torneio em
- * andamento e amistosos. Ex.: `mockDomain.matches.filter((m) => m.kind === 'friendly')`.
+ * Cenário completo: um ranking no modelo do Vila (docs/DOMAIN.md, PESQ-RV),
+ * com a temporada na rodada 3, duas categorias e partidas em todos os
+ * estados; um torneio em andamento; e amistosos. Ex.: `mockDomain.matches.filter((m) => m.kind === 'friendly')`.
  */
 export const mockDomain: DomainMocks = {
   players: Object.values(players),

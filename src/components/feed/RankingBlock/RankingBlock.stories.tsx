@@ -18,7 +18,7 @@ const movedUp: RankingUpCard = {
   created_at: new Date().toISOString(),
   competitor: storyDoubles,
   visibility: "public",
-  ranking_name: "Ranking BH — Masculino B",
+  ranking_name: "Ranking Bacuri — Masculino B",
   position: 3,
   delta: 2,
   points: 520,
@@ -65,7 +65,7 @@ export const MilestoneLeaderSingles: Story = {
     data: {
       ...movedUp,
       competitor: { format: "singles", player: storyPlayer },
-      ranking_name: "Ranking BH — Masculino B · Simples",
+      ranking_name: "Ranking Bacuri — Masculino B · Simples",
       position: 1,
       delta: 2,
       points: 580,

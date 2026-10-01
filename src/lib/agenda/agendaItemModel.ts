@@ -58,6 +58,7 @@ export function matchHref(matchId: string): string {
 /**
  * O botão de cada pendência (5.3). "Lançar resultado" abre direto o fluxo de
  * lançar (N16); os outros abrem a partida, onde o jogador vê antes de decidir.
+ * "Confirmar" abre a partida já no resultado (docs/RESULTS.md §4.1).
  */
 export function agendaActionOf(situation: AgendaSituation, matchId: string): AgendaItemAction | null {
   switch (situation.kind) {
@@ -68,6 +69,7 @@ export function agendaActionOf(situation: AgendaSituation, matchId: string): Age
     case 'report_result':
       return { label: 'Lançar resultado', href: `${matchHref(matchId)}/resultado` };
     case 'confirm_result':
+      return { label: 'Confirmar', href: `${matchHref(matchId)}#resultado` };
     case 'confirm_friendly':
       return { label: 'Confirmar', href: matchHref(matchId) };
     default:

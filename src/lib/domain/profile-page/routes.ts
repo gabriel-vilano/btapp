@@ -6,6 +6,8 @@ export const OWN_PROFILE_PATH = '/perfil';
 export const EDIT_PROFILE_PATH = '/perfil/editar'; // fluxo modal (PF9, N4)
 export const SETTINGS_PATH = '/perfil/configuracoes'; // engrenagem (N8)
 export const FEED_PATH = '/feed';
+// A busca do Explorar abre no escopo Jogadores (N32): o vazio da própria lista de amigos leva a ela
+export const EXPLORE_PATH = '/explorar';
 export const FRIENDLY_PATH = '/jogos/amistoso'; // "Registrar amistoso" (N19)
 // "Ver todas" do próprio perfil: o Histórico da aba Jogos, a mesma lista (PF18)
 export const OWN_HISTORY_PATH = '/jogos#historico';
