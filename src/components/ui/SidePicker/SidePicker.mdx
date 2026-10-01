@@ -1,0 +1,115 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as SidePickerStories from "./SidePicker.stories";
+
+<Meta of={SidePickerStories} />
+
+<Subtitle>Monta os dois lados de uma partida, vaga a vaga, com quem escolhe já no lado dele.</Subtitle>
+
+**Código-fonte:** [`src/components/ui/SidePicker/SidePicker.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/SidePicker/SidePicker.tsx)
+
+## Visão geral
+
+Quem escolhe aparece como "Você" no próprio lado e não sai dele. O resto são vagas: o parceiro, em duplas, e o adversário ou os adversários. A vaga vazia é um botão; tocar nela abre uma busca por nome ou @username, e o jogador escolhido ocupa a vaga (`docs/RESULTS.md` §6.1).
+
+<Canvas of={SidePickerStories.Doubles} />
+
+O SidePicker é controlado e não conhece a partida. O consumidor guarda as vagas (`SideSlots`, começando em `EMPTY_SIDE_SLOTS`), diz a modalidade e passa a lista de quem pode ser escolhido, com os amigos marcados. Ao trocar de duplas para simples, `slotsForModality` solta as vagas que a modalidade não tem; `areSlotsComplete` diz se todas estão preenchidas.
+
+## Modalidades
+
+A modalidade decide quantas vagas existem.
+
+### Duplas
+
+Três vagas: o parceiro e dois adversários. Os botões dos adversários levam número ("Escolher adversário 1"), para o leitor de tela distinguir os dois.
+
+<Canvas of={SidePickerStories.Filled} />
+
+### Simples
+
+Uma vaga só, a do adversário.
+
+<Canvas of={SidePickerStories.SinglesFilled} />
+
+## Estados
+
+A busca tem três estados: a sugestão dos amigos, os resultados e a busca sem resultado.
+
+### Amigos primeiro
+
+Sem termo, a busca sugere os amigos, que são quem mais joga junto. Com termo, os amigos vêm primeiro, com o selo "Amigo", e depois os outros jogadores com conta, cada grupo em ordem alfabética (RG17). Quem já está numa vaga sai da lista.
+
+<Canvas of={SidePickerStories.FriendsFirst} />
+
+### Busca
+
+A busca ignora acento e caixa, e "@thiago" procura pelo username. A lista mostra no máximo 20 jogadores: quem não achou refina o termo.
+
+<Canvas of={SidePickerStories.PickBySearch} />
+
+### Sem resultado
+
+O texto repete o termo, para o jogador ver o que digitou.
+
+<Canvas of={SidePickerStories.NoResults} />
+
+### Remover
+
+O X de uma vaga preenchida esvazia a vaga, que volta a ser o botão de escolher.
+
+<Canvas of={SidePickerStories.RemovePlayer} />
+
+## Anatomia
+
+1. **Grupo do lado:** "Seu lado" e "Adversário" ou "Adversários", com o rótulo dos campos do formulário
+2. **Você:** avatar, "Você" e o nome, sem ação
+3. **Vaga vazia:** botão de borda tracejada com o "+" e o que escolher
+4. **Vaga preenchida:** avatar, nome, @username e o X de remover
+5. **Busca:** folha com o campo de busca e a lista de jogadores
+
+## Quando usar
+
+- Registrar um amistoso, em que o jogador monta a partida
+- Qualquer fluxo em que quem usa o app escolhe com quem e contra quem jogou
+
+## Componentes relacionados
+
+- [`SearchField`](?path=/docs/ui-searchfield--docs): o campo da busca
+- [`ListItem`](?path=/docs/ui-listitem--docs): cada jogador da lista
+- [`Dialog`](?path=/docs/ui-dialog--docs): a folha da busca, que vira BottomSheet no celular
+- [`SegmentedControl`](?path=/docs/ui-segmentedcontrol--docs): a escolha entre simples e duplas, que fica com o consumidor
+
+## Acessibilidade
+
+- **Cada lado é um `role="group"`** nomeado pelo título ("Seu lado"), e as vagas são uma lista
+- **Os botões dizem a vaga**: "Escolher parceiro", "Escolher adversário 2". O X diz quem sai: "Remover Thiago Mendes"
+- **A busca sem resultado** é um `role="status"`, anunciado sem tirar o foco do campo
+- **O foco não se perde:** a folha fechada sem escolha devolve o foco ao botão da vaga, pelo comportamento do `Dialog`; com escolha, o botão some, e o foco vai para o jogador que entrou na vaga
+- **Área tocável de 48px** nas vagas, no X e nas linhas da lista
+
+## Evitar
+
+- ❌ **Seletor de lados na partida do ranking ou do torneio.** Lá o sorteio ou o cadastro já montou os lados, e um seletor só criaria a chance de trocar dois jogadores de time (RG3)
+- ❌ **Lista de todos os jogadores sem busca.** Com os jogadores de todas as arenas, a lista não termina; a sugestão é só dos amigos
+- ❌ **Deixar escolher a mesma pessoa em duas vagas.** Quem já está numa vaga sai da busca
+
+## API
+
+<ArgTypes of={SidePickerStories} />
+
+## Decisões de design
+
+### Por que o X em vez de tocar na vaga para trocar?
+
+Com a vaga preenchida, a linha tem uma ação só e um alvo claro. Trocar é remover e escolher de novo, dois toques, e não há um toque na linha que o jogador faça sem querer.
+
+### Por que só os amigos sem termo?
+
+A RG17 deixa escolher qualquer jogador com conta, e o outro lado confirma de qualquer jeito (R43). Sem termo, a lista inteira seria longa demais para ser útil; os amigos são a sugestão mais provável e não precisam de digitação.
+
+## Referências
+
+- `docs/RESULTS.md` §6.1 (registrar o amistoso) e RG17 (quem pode ser escolhido)
+- [WAI-ARIA: role group](https://www.w3.org/TR/wai-aria-1.2/#group)
+- [WCAG 2.5.8: tamanho do alvo](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
+- `docs/TOKENS.md` > "Acessibilidade — tap target"

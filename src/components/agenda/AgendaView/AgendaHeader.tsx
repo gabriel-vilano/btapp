@@ -1,7 +1,7 @@
 import { AppHeader } from "@/src/components/ui/AppHeader";
 import { ButtonLink } from "@/src/components/ui/Button";
 
-/** Rota proposta do registro de amistoso (N19). O fluxo é de outra issue. */
+/** Rota do registro de amistoso (N19, docs/RESULTS.md §6.1). */
 export const FRIENDLY_HREF = "/jogos/amistoso";
 
 /**

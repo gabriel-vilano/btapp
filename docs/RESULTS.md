@@ -340,7 +340,7 @@ Lista para as issues de implementação. **Aqui não se desenha nenhum component
 | --- | --- | --- | --- |
 | **ScoreInput** (set a set, com set interrompido e STB) | 2 | §3.3, §3.4, §5, §6 | Não. É o de maior risco técnico (INV) |
 | **Stepper** (APG Spinbutton) | 1 | Set interrompido (§3.4) | Não |
-| **SidePicker** | 2 | Lados do amistoso (§6.1) | Não |
+| **SidePicker** | 2 | Lados do amistoso (§6.1) | Sim, `ui/SidePicker` |
 | **Chip** em grupo de escolha única (radio) | 1 | Games de quem perdeu o set (RG12), motivo da contestação (RG15) | Sim, `ui/Chip` |
 | **SegmentedControl** | 1 | "Como terminou" (§3.2), modalidade (§6.1) | Sim, `ui/SegmentedControl` |
 | **StatusTimeline** | 2 | Acompanhar (§4.3), atos do admin (RG11) | Sim, `ui/StatusTimeline` |
