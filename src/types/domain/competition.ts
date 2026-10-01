@@ -114,8 +114,10 @@ export interface Season {
 }
 
 /**
- * Etapa da temporada, com prazo. Cada rodada tem um sorteio por categoria, que
- * cria as partidas (R7, R30). A rodada fecha no prazo (R46).
+ * Etapa da temporada, com prazo. Os confrontos saem do sorteio da rodada, que
+ * cria as partidas (R7, R30). Uma categoria pode ter mais de um sorteio na
+ * rodada: o desfazer (R51) e a categoria sorteada depois (docs/ROUND_DRAW.md,
+ * SR14). A rodada fecha no prazo (R46).
  */
 export interface Round {
   id: string;

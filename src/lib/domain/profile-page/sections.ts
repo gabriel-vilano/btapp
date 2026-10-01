@@ -59,9 +59,12 @@ function matchContext(names: NameResolver, row: RecentMatchRow): string {
   return `${names.competition(row.competition_id)} · ${names.category(row.category_id)}`;
 }
 
-/** "Partidas recentes" (PF18), do lado do dono do perfil. */
-export function matchItems(domain: ProfilePageDomain, names: NameResolver, playerId: string): ProfileMatchItem[] {
-  return recentMatches(domain, playerId).map((row) => ({
+/**
+ * "Partidas recentes" (PF18), do lado do dono do perfil. Sem `limit`, as 5 da seção;
+ * a lista completa (`/jogadores/[username]/partidas`) passa `Infinity`.
+ */
+export function matchItems(domain: ProfilePageDomain, names: NameResolver, playerId: string, limit?: number): ProfileMatchItem[] {
+  return recentMatches(domain, playerId, limit).map((row) => ({
     match_id: row.match_id,
     outcome: row.result.winner === row.side ? 'win' : 'loss',
     result_type: row.result.type,

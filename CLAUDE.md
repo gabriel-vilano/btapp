@@ -43,6 +43,7 @@ Documentamos o que é estável. Decisões, padrões, princípios, hurdles, conve
 - `docs/EXPLORE.md` — aba Explorar: vitrine de competições e arenas, busca com três escopos, página da organização, "Como se inscrever" e "Tenho interesse" (EX1…)
 - `docs/HEAD_TO_HEAD.md` — head-to-head: páginas jogador × jogador e dupla × dupla, resumo, confrontos, forma recente, pontos de entrada, estados e critérios de aceite do H2HSummary e do FormGuide (HH1…)
 - `docs/RANKING.md` — tela de ranking: classificação por categoria, troca de categoria, própria linha fixada, delta, linha de corte da final, página da competição, estados e critérios de aceite do RankingRow e do ZoneDivider (RK1…)
+- `docs/ROUND_DRAW.md` — fluxo do sorteio da rodada: confirmação, casos que não fecham, resultado, desfazer e o que cada jogador recebe (SR1…)
 - `docs/TOKENS.md` — design system
 - `docs/GIT_WORKFLOW.md` — workflow de branches, PR, versionamento
 - `docs/AGENT_WORKFLOW.md` — estrutura do Linear e coordenação de agentes em paralelo
@@ -371,6 +372,7 @@ O Claude deve sinalizar proativamente quando:
 - **`play` das stories:** esperar a renderização com `findBy*`, não com `getBy*` logo no início. Não depender de rolagem suave, animação ou timer sem controle (rolar com `behavior: "instant"`). Antes de rolar numa tela que usa IntersectionObserver, esperar o primeiro aviso com `firstIntersectionDelivered` (`.storybook/playHelpers.ts`). Nunca espera fixa (`setTimeout`, `sleep`): o que se espera é uma condição, com `findBy*` ou `waitFor`. Story nova ou alterada com `play` passa pela prova de estabilidade da skill `/pegar-issue` (passo 4) antes do push, e a CI repete 5 vezes as stories alteradas pelo PR
 - **E2E:** Playwright em `e2e/`, contra o build de produção e um Supabase local (`supabase start`) com as migrations aplicadas do zero; o código de verificação dos e-mails vem do Mailpit. Roda no job E2E da CI. Sessões de agente não têm Docker: validam pelo resultado desse job no PR, não localmente. Cada teste cria usuário com e-mail único (`uniqueEmail`), e os helpers recusam qualquer Supabase que não seja local
 - **Seletores E2E:** preferir `getByLabel`/`getByRole` com `exact: true`. Alerta sempre filtrado pelo texto (`getByRole("alert").filter({ hasText })`): o anunciador de rota do Next também tem `role="alert"`
+- **Falha de E2E na CI:** o screenshot e o trace ficam no artefato, que os agentes não conseguem baixar. Por isso o `e2e/app-shell.spec.ts` usa o `e2e/support/diagnostics.ts`: na falha, escreve no log do job a URL, os erros do navegador e as respostas com erro, a árvore de acessibilidade e o HTML da área de conteúdo. Spec nova que navegue pelo app pode usar o mesmo `beforeEach`/`afterEach`
 - **Bug fix → teste de regressão.** Todo bug corrigido ganha um teste que reproduziria o bug, para evitar regressão futura
 
 ### Oferecer a versão simples primeiro
@@ -442,6 +444,14 @@ console.warn(prettyDOM(canvasElement, 100_000));
 ```
 
 Tirar a linha antes do commit.
+
+### Next com patch: tela em branco depois de clicar num link
+
+**Sintoma:** a URL muda, mas a área de conteúdo fica vazia: sem skeleton, sem erro e sem nada no console. Só um reload recupera. Acontece quando o clique (ou o toque, no celular) num `<Link>` pega o prefetch dele ainda em voo. No E2E, aparecia como teste instável que não achava o link ou o cabeçalho da tela seguinte.
+
+**Causa:** bug do roteador do Next 16 ([vercel/next.js#98684](https://github.com/vercel/next.js/issues/98684)). Em `createCacheNodeForSegment` (`ppr-navigations.js`), a entrada do cache em `Pending` vira uma promise comum que pode resolver para `null`, e o React renderiza o segmento vazio.
+
+**Solução:** `patches/next+16.2.2.patch`, aplicado pelo `patch-package` no `postinstall`, trata a entrada `Pending` como cache miss. O patch vale só para a versão exata do `next`: antes de qualquer upgrade, ver a issue "Remover o patch do Next quando a vercel/next.js#98684 for corrigida" no Linear (remover o patch quando o Next corrigir, ou refazê-lo para a versão nova).
 
 ### Componentes com stubs sem comportamento
 

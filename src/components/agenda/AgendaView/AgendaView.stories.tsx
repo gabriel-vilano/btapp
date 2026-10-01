@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, fn } from "storybook/test";
 import { agendaViewModel } from "@/src/lib/agenda/agendaViewModel";
+import { MOCK_AGENDA_LINKS } from "@/src/mocks/agendaViewer";
 import { mockDomain, mockEntities } from "@/src/mocks/domain";
 import { historyGroups, upcomingItems, waitingItems, yourTurnItems } from "../storyFixtures";
 import { AgendaError } from "./AgendaError";
@@ -47,7 +48,11 @@ export const Full: Story = {
 
 // A agenda do Lucas montada do mockDomain, como a página /jogos faz.
 export const FromMocks: Story = {
-  args: agendaViewModel(mockDomain, { playerId: mockEntities.players.lucas.id, now: new Date().toISOString() }),
+  args: agendaViewModel(
+    mockDomain,
+    { playerId: mockEntities.players.lucas.id, now: new Date().toISOString() },
+    MOCK_AGENDA_LINKS,
+  ),
   play: async ({ canvas }) => {
     await expect(canvas.getByRole("link", { name: "Propor horários" })).toBeVisible();
   },
@@ -94,7 +99,7 @@ export const SeasonEnded: Story = {
       position: 3,
       competitionName: "Ranking Arena Mangaba 2026",
       categoryName: "Masculino B",
-      href: "/ranking/cat-arena-mangaba-masculino-b?temporada=season-arena-mangaba-2026-2",
+      href: "/ranking/masculino-b?temporada=2026-2",
     },
   },
   play: async ({ canvas }) => {
