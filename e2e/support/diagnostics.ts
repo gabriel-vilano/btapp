@@ -16,6 +16,16 @@ export function collectBrowserErrors(page: Page): string[] {
   page.on("response", (response) => {
     if (response.status() >= 400) errors.push(`HTTP ${response.status()}: ${response.url()}`);
   });
+  // TEMPORÁRIO (ENG-139): todas as respostas RSC, com o tipo do pedido e o redirect
+  const startedAt = Date.now();
+  page.on("response", async (response) => {
+    const request = response.request();
+    if (!request.url().includes("_rsc=")) return;
+    const headers = await request.allHeaders();
+    const kind = headers["next-router-prefetch"] ? `prefetch(${headers["next-router-segment-prefetch"] ?? "full"})` : "nav";
+    const location = response.headers()["location"] ?? response.headers()["x-nextjs-redirect"] ?? "";
+    errors.push(`+${Date.now() - startedAt}ms RSC ${response.status()} ${kind} ${request.url()} ${location}`);
+  });
   return errors;
 }
 
