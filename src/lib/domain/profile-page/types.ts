@@ -122,3 +122,10 @@ export interface FriendsListData {
   profile_href: string; // o "Voltar" leva ao perfil do dono da lista
   friends: FriendListItem[];
 }
+
+/** Lista completa das partidas de outro jogador (`/jogadores/[username]/partidas`, PF18). */
+export interface PlayerMatchesData {
+  owner: Pick<Player, 'name' | 'username'>;
+  profile_href: string; // o "Voltar" leva ao perfil do dono da lista
+  matches: ProfileMatchItem[]; // a mais recente primeiro, sem agrupar por mês
+}
