@@ -20,7 +20,7 @@ Plataforma, usuário e DS já estão no `SKILL.md`. Falta uma coisa: **para que 
 
 ## 3. Ler as decisões da spec
 
-Antes de qualquer lente, liste as regras da spec que tocam esta tela (ex.: para a aba Jogos, N12 a N24 e N26 da `NAVIGATION.md`). Essa lista é o filtro do passo 5: tudo o que estiver nela é "Já decidido" ou "Observação com fonte", nunca fork.
+Antes de qualquer lente, liste as regras da spec que tocam esta tela (ex.: para a aba Jogos, N12 a N24 e N26 da `NAVIGATION.md`) e o que os MDX dos componentes principais fixam. Essa lista é o filtro do passo 5: tudo o que estiver nela é "Já decidido" ou "Observação com fonte", nunca fork.
 
 ## 4. Passar pelas lentes
 
@@ -45,8 +45,8 @@ A parte mais valiosa. Para cada escolha de design importante da tela, confira `r
 
 Classifique cada um:
 
-1. **Já decidido pela spec** (está na lista do passo 3) → vai para "Já decidido", com a regra. Se uma lente discorda, vai para "Observações com fonte".
-2. **Decidido só no código ou no DS, sem regra na spec** → fork. Nomeie a decisão tomada, mostre a alternativa e o trade-off, e o sinal de qual serve ao LetzPlay.
+1. **Já decidido por escrito** → vai para "Já decidido", com a fonte. Se uma lente discorda, vai para "Observações com fonte". Conta como decisão escrita: a regra da spec (lista do passo 3), o `docs/TOKENS.md` e o MDX do componente (a variante, o estado ou o uso que ele fixa, e a seção "Decisões de design").
+2. **Decidido só no código, sem nada escrito** → fork. Nomeie a decisão tomada, mostre a alternativa e o trade-off, e o sinal de qual serve ao LetzPlay.
 3. **Depende de algo que só o Gabriel sabe** (domínio de Beach Tennis, prioridade de produto) → fork, com a pergunta explícita.
 
 Fork decidido em silêncio não é automaticamente errado. Só deveria ter sido uma decisão.

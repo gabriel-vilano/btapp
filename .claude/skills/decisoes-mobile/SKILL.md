@@ -41,6 +41,8 @@ Não pergunte o que já está aqui:
 
 Antes de abrir qualquer fork, procure a decisão na spec da tela (e no `TOKENS.md` e no MDX do componente). Um `grep` pelo tema na pasta `docs/` costuma bastar.
 
+O MDX do componente e o `TOKENS.md` contam como decisão escrita, tanto quanto a spec.
+
 - **A spec decidiu e a skill concorda:** registre como "Já decidido" com a regra (ex.: "5 abas com rótulo, N1"). Não vira pergunta.
 - **A spec decidiu e uma lente discorda:** vira **observação com fonte**, não fork. Diga a regra, o argumento contrário com a lente, e o sinal que justificaria reabrir (dado do beta, métrica da spec). Quem reabre é o Gabriel.
 - **A spec não decidiu:** aí é fork.
