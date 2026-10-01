@@ -1,0 +1,80 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as SettingsListStories from "./SettingsList.stories";
+
+<Meta of={SettingsListStories} />
+
+<Subtitle>Grupo e linha da tela de configurações: rótulo, valor e navegação.</Subtitle>
+
+**Código-fonte:** [`src/components/profile/SettingsList/SettingsList.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/profile/SettingsList/SettingsList.tsx)
+
+## Visão geral
+
+A tela de configurações (`docs/NAVIGATION.md`, N8) é feita de grupos. `SettingsList` é o grupo, com título opcional e linhas separadas por um fio; `SettingsRow` é a linha. As duas compõem o `List` e o `ListItem` do DS.
+
+<Canvas of={SettingsListStories.Screen} />
+
+## Variantes
+
+A linha tem três formas, decididas pelas props: só exibe, abre outra tela ou age ali mesmo.
+
+### Só exibe
+
+Sem `href` nem `onClick`, a linha mostra o valor e não é tocável, como o e-mail da conta.
+
+<Canvas of={SettingsListStories.ValueOnly} />
+
+### Abre outra tela
+
+Com `href`, a linha inteira vira o link e ganha o chevron.
+
+<Canvas of={SettingsListStories.Navigates} />
+
+### Age na própria linha
+
+Com `onClick`, a linha é um botão, sem chevron: não há outra tela depois dela. É o "Sair".
+
+<Canvas of={SettingsListStories.Action} />
+
+## Estados
+
+Os estados que a produção raramente mostra: a ação em andamento e o valor longo.
+
+### Em andamento
+
+Com `pending`, o spinner ocupa o lugar do trailing e anuncia o `pendingLabel`. O botão continua no lugar, para não derrubar o foco, mas o toque repetido não refaz a ação.
+
+<Canvas of={SettingsListStories.Pending} />
+
+### Valor longo
+
+O valor fica embaixo do rótulo, não à direita: um e-mail longo quebra a linha em vez de vazar da tela a 393px.
+
+<Canvas of={SettingsListStories.LongValue} />
+
+## Quando usar
+
+- Na tela de configurações e em telas de conta que listam dados com um destino por linha.
+
+## Componentes relacionados
+
+- [`ListItem`](?path=/docs/ui-listitem--docs): a base. Use direto quando a linha tem avatar ou ícone, como nas listas de jogadores.
+
+## Acessibilidade
+
+- Cada grupo com título é uma `<section>` ligada ao `h2` do título.
+- A linha tocável tem 48px de altura mínima (WCAG 2.5.8 e a regra do DS).
+- O spinner de `pending` tem `role="status"`: o leitor de tela anuncia o `pendingLabel`.
+
+## Evitar
+
+- ❌ Linha com chevron que não leva a lugar nenhum. A linha entra junto com a tela que ela abre.
+- ❌ Pedir confirmação para o "Sair": é reversível com um login (N8).
+
+## API
+
+<ArgTypes of={SettingsListStories} />
+
+## Referências
+
+- `docs/NAVIGATION.md`, N8
+- [WCAG 2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
