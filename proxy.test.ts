@@ -54,6 +54,37 @@ describe("proxy — rota protegida sem usuário", () => {
   });
 });
 
+describe("proxy — volta para a tela do link depois do login (EX21, PF20)", () => {
+  beforeEach(() => {
+    getUser.mockReset();
+    loggedOut();
+  });
+
+  it.each([
+    ["/explorar?q=ana", "http://localhost:3000/entrar?next=%2Fexplorar%3Fq%3Dana"],
+    ["/jogadores/lucas", "http://localhost:3000/entrar?next=%2Fjogadores%2Flucas"],
+  ])("guarda o caminho pedido %s", async (path, expected) => {
+    const response = await proxy(requestTo(path));
+
+    expect(response.headers.get("location")).toBe(expected);
+  });
+
+  it("guarda o caminho junto com o aviso de sessão expirada", async () => {
+    const response = await proxy(requestTo("/jogadores/lucas", STALE_SESSION_COOKIE));
+
+    expect(response.headers.get("location")).toBe(
+      "http://localhost:3000/entrar?expired=true&next=%2Fjogadores%2Flucas"
+    );
+  });
+
+  // `//evil.com` no caminho da requisição viraria redirecionamento aberto depois do login
+  it("não guarda caminho que aponta para outra origem", async () => {
+    const response = await proxy(new NextRequest("http://localhost:3000//evil.com"));
+
+    expect(response.headers.get("location")).toBe("http://localhost:3000/entrar");
+  });
+});
+
 describe("proxy — usuário logado", () => {
   it("em rota de auth pública, vai para /feed", async () => {
     getUser.mockResolvedValue({ data: { user: { id: "u1" } } });
