@@ -5,9 +5,11 @@ import { firstIntersectionDelivered } from "@/.storybook/playHelpers";
 import { AppHeader } from "@/src/components/ui/AppHeader";
 import { RankingScreen } from "./RankingScreen";
 import {
+  STORY_CATEGORIES,
   STORY_HEADER,
   STORY_LINKS,
   STORY_NOW,
+  STORY_SINGLE_CATEGORY,
   STORY_VIEWER_ID,
   storyModel,
   storyTable,
@@ -39,8 +41,14 @@ const meta = {
       },
     },
   },
-  args: { model: storyModel(storyTable()), viewerId: STORY_VIEWER_ID, now: STORY_NOW, links: STORY_LINKS },
-  argTypes: { model: { control: false }, links: { control: false } },
+  args: {
+    model: storyModel(storyTable()),
+    viewerId: STORY_VIEWER_ID,
+    now: STORY_NOW,
+    links: STORY_LINKS,
+    categories: STORY_CATEGORIES,
+  },
+  argTypes: { model: { control: false }, links: { control: false }, categories: { control: false } },
 } satisfies Meta<typeof RankingScreen>;
 
 export default meta;
@@ -115,6 +123,36 @@ export const PairSheetOpen: Story = {
     const links = within(dialog).getAllByRole("link");
     await expect(links).toHaveLength(2);
     await expect(links[0].getAttribute("href")).toMatch(/^\/jogadores\//);
+  },
+};
+
+// Seletor de categoria: a folha com "Suas categorias", posição e delta de cada
+// inscrição, e "Outras categorias" da competição, com os inscritos (RK6)
+export const CategorySheetOpen: Story = {
+  play: async ({ canvas, userEvent }) => {
+    const selector = await canvas.findByRole("button", { name: /^Ranking Bacuri · Masculino B.*trocar categoria$/ });
+    await expect(selector).toHaveAttribute("aria-haspopup", "dialog");
+    await userEvent.click(selector);
+    const dialog = await screen.findByRole("dialog", { name: "Trocar categoria" });
+    const sheet = within(dialog);
+    const [own, others] = sheet.getAllByRole("list");
+    // A categoria aberta fica na lista, sem toque, marcada como a da tela
+    await expect(within(own).getAllByRole("listitem")[0]).toHaveTextContent("Aberta agora");
+    await expect(within(own).getAllByRole("link")).toHaveLength(1);
+    await expect(within(own).getByRole("link")).toHaveAttribute("href", "/ranking/mista-c");
+    await expect(within(others).getAllByRole("link")).toHaveLength(3);
+    await expect(sheet.getByText("16 duplas inscritas")).toBeVisible();
+    await expect(sheet.getByRole("heading", { name: "Suas categorias" })).toBeVisible();
+    await expect(sheet.getByRole("heading", { name: "Outras categorias" })).toBeVisible();
+  },
+};
+
+// Uma inscrição só e nenhuma outra categoria: o seletor vira texto, sem ⌄ (RK6)
+export const SingleCategory: Story = {
+  args: { categories: STORY_SINGLE_CATEGORY },
+  play: async ({ canvas }) => {
+    await expect(await canvas.findByRole("heading", { level: 2 })).toHaveTextContent("Ranking Bacuri · Masculino B");
+    await expect(canvas.queryByRole("button", { name: /trocar categoria/ })).toBeNull();
   },
 };
 
