@@ -190,7 +190,7 @@ A página da competição existe e não é aba (NAV N9); o conteúdo, no ranking
 | **Regras** | Formato da partida (R29, texto do formato); a tabela de pontos do ranking (R9–R11, R36) em linguagem de jogador ("Vitória: 100 pontos, mais 2 por game vencido e menos 2 por game perdido"), com o exemplo do 6/4 6/3 calculado pela regra do próprio ranking; a ordem de desempate (R37), com a nota de que ali a vitória por W.O. conta, diferente da linha da tabela (RK8); o prazo para confirmar (R14); o que acontece sem jogo no prazo da rodada (R40) |
 
 - **RK18. As regras mostram os valores do ranking, não os padrões do app.** Cada ranking guarda a própria tabela (R9); a página lê a `ScoringRule` da competição. O exemplo usa `matchPoints` com a regra dela.
-- **Ações do admin na página:** ficam na área "Administrar" da competição (NAV N31), visível só para o admin dela. Entre elas, "Lançar sorteio da rodada N", disponível só quando a rodada anterior fechou (R7, R15). **O fluxo do sorteio não é desta spec:** o botão existe, e o fluxo vira issue própria (seção 12).
+- **Ações do admin na página:** ficam na área "Administrar" da competição (NAV N31), visível só para o admin dela. Entre elas, "Sortear a rodada N", disponível quando a rodada anterior fechou ou quando a temporada ainda não teve sorteio (R7, R15). O nome do botão era "Lançar sorteio da rodada N" e mudou com a spec do sorteio. **O fluxo do sorteio não é desta spec:** está em `docs/ROUND_DRAW.md` (SR3).
 
 ---
 

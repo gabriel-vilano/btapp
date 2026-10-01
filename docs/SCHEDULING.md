@@ -134,7 +134,7 @@ Quem é avisado de quê. **O canal (push, e-mail, só no app) e a política de e
 
 | Gatilho | Quem recebe | Texto de referência |
 | --- | --- | --- |
-| Confronto sorteado sem data | Os 4 | "Confronto definido contra Lucas e Rafael. Proponha horários." |
+| Rodada sorteada: um aviso por categoria, com todos os jogos, e não um por confronto (`ROUND_DRAW.md` SR15) | Os jogadores sorteados | "Rodada 3 do Ranking Bacuri sorteada: 4 jogos até dom, 26/10. Marque seus jogos." |
 | Proposta recebida (inclui contraproposta) | Os 2 do outro lado | "Pedro propôs 3 horários para o jogo contra vocês." |
 | Proposta enviada pelo parceiro | O parceiro de quem enviou | "Pedro propôs 3 horários para Lucas e Rafael." |
 | Proposta aceita | Os 3 que não aceitaram | "Jogo marcado: sábado, 14h, Arena Tucum." |

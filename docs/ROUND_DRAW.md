@@ -4,7 +4,7 @@ Spec do fluxo do sorteio da rodada: o que o admin vê antes de sortear, o que ac
 
 > Este doc decide **a interação do sorteio**. As regras do sorteio em si (aleatório, sem repetir confronto na temporada, a partida cancelada não conta, cada dupla enfrenta cada outra uma vez quando faltam adversários) estão em `docs/DOMAIN.md` (R7, R30) e **não são reabertas aqui**. O cálculo já existe: `drawRound` (`src/lib/domain/round-draw/`). Onde o botão mora é do `docs/NAVIGATION.md` (N31) e do `docs/RANKING.md` (§7). As regras deste doc são numeradas **SR1, SR2…**, para não colidir com as R do domínio, as M da marcação, as N da navegação, as RG do registro de resultado e as RK do ranking. Rotas são propostas; nomes de componente são para a auditoria do DS.
 
-> **Rascunho em revisão.** As perguntas SQ1 a SQ5 (seção 9) esperam a decisão do Gabriel. As regras abaixo seguem a recomendação de cada uma e mudam junto com a resposta.
+> **Aprovada pelo Gabriel em 01/10/2026** (DEC-SORTEIO), com as recomendações de SQ1 a SQ5 e as leituras SL1 a SL5 (seção 9).
 
 ---
 
@@ -23,7 +23,8 @@ As siglas de decisão são as do `docs/DOMAIN.md` > "Fontes". As que esta spec u
 | **CODE** | `src/lib/domain/round-draw/`: `drawRound` sorteia uma categoria e recusa três casos (`category_mismatch`, `already_drawn`, `not_enough_units`); `drawPairings` documenta os limites da conta (menos adversários que jogos, vagas ímpares) |
 | **NNG** | Nielsen Norman Group, [Confirmation Dialogs Can Prevent User Errors](https://www.nngroup.com/articles/confirmation-dialog/): confirmação só antes de ação séria e difícil de desfazer, e o desfazer como parte do controle e da liberdade do usuário |
 | **FIDE** | FIDE Handbook, [C.04.2 General handling rules for Swiss Tournaments](https://handbook.fide.com/chapter/GeneralHandlingRulesForSwissTournaments202602): o emparceiramento publicado não muda, salvo erro ou caso previsto no regulamento, e nunca a favor de um jogador |
-| **LEIT** | Leitura do agente desta spec, a confirmar pelo Gabriel. A lista está na seção 9 |
+| **DEC-SORTEIO** | Decisões do Gabriel na issue desta spec (01/10/2026): SQ1 a SQ5 com as recomendações e SL1 a SL5 confirmadas; quem sorteou e quando ficam na partida, sem entidade nova; o desfazer apaga as partidas e fica registrado à parte (R51); prazo depois do corte da final permitido, com aviso |
+| **LEIT** | Leitura do agente desta spec, confirmada pelo Gabriel na DEC-SORTEIO. A lista está na seção 9 |
 
 ---
 
@@ -48,14 +49,14 @@ As siglas de decisão são as do `docs/DOMAIN.md` > "Fontes". As que esta spec u
 
 ### 3.1 Quando o botão aparece
 
-- **SR3. "Sortear a rodada N" fica disponível quando a rodada anterior fechou** (o prazo dela passou) ou quando a temporada ainda não teve sorteio. Pendências da rodada anterior na fila do admin não bloqueiam: a rodada fecha no prazo dela, e o que o admin decidir depois entra na seguinte (R46). [RANK §7, R46]
-- **SR4. Um sorteio cobre todas as categorias da temporada de uma vez**, porque a rodada é da temporada e o prazo é um só para todas (SQ1). Cada categoria é sorteada pelo `drawRound` em separado, com o mesmo prazo. [R7, CODE; SQ1]
+- **SR3. "Sortear a rodada N" fica disponível quando a rodada anterior fechou** (o prazo dela passou) ou quando a temporada ainda não teve sorteio. Pendências da rodada anterior na fila do admin não bloqueiam: a rodada fecha no prazo dela, e o que o admin decidir depois entra na seguinte (R46). O botão se chamava "Lançar sorteio da rodada N" no `RANKING.md` §7 e no stub atual; o nome novo diz a ação com o verbo do jogador, e o `RANKING.md` foi alinhado. [RANK §7, R46, DEC-SORTEIO]
+- **SR4. Um sorteio cobre todas as categorias da temporada de uma vez**, porque a rodada é da temporada e o prazo é um só para todas (SQ1). Cada categoria é sorteada pelo `drawRound` em separado, com o mesmo prazo. Cada partida criada guarda quem sorteou e quando (R51). [R7, CODE; DEC-SORTEIO SQ1]
 
 | Situação da seção "Sorteio da rodada" | O que o admin vê | Ação |
 | --- | --- | --- |
 | Rodada em andamento | "Rodada 3 · fecha em 5 dias" e "24 partidas sorteadas" | "Ver confrontos" (abre o resultado, §5) |
 | Rodada anterior fechou, ou temporada sem sorteio | "Rodada 2 fechou em 12/10" ou "A temporada começa no primeiro sorteio" | **"Sortear a rodada N"** (Button primary) |
-| Todas as rodadas sorteadas (ranking com total fixo) | "As 4 rodadas da temporada foram sorteadas" | Nenhuma |
+| Todas as rodadas sorteadas (ranking com total fixo) | "As 4 rodadas da temporada foram sorteadas" | Nenhuma. **Lacuna:** o domínio não guarda o total de rodadas da temporada (só o `CurrentRound.total` da página da competição, opcional). Até esse dado existir, este estado não aparece, e o botão continua até a temporada encerrar |
 | Temporada encerrada | "Temporada encerrada" | Nenhuma |
 
 O stub atual (`RoundDrawStub`, Button secondary sempre visível) dá lugar a esses estados. O botão vira primary quando está disponível, porque é a única ação daquele momento na área.
@@ -63,7 +64,7 @@ O stub atual (`RoundDrawStub`, Button secondary sempre visível) dá lugar a ess
 ### 3.2 A tela de confirmação
 
 - **SR5. A confirmação mostra o que vai acontecer, por categoria, e não os confrontos** (SQ3). Para cada categoria: quantas duplas ativas entram, quantos jogos cada uma faz e quantas partidas saem. Só entram as inscrições ativas da categoria na temporada (R17, R45). [CODE; SQ3]
-- **SR6. O prazo da rodada é informado aqui** (SQ2), já preenchido: a mesma duração da rodada anterior, contada a partir de hoje, terminando às 23h59 de Brasília. Na primeira rodada, o campo vem vazio e é obrigatório. O prazo precisa estar no futuro e dentro da temporada. Se cair depois da data de corte da final (R28), a tela avisa: "Depois do corte de 30/11: os jogos desta rodada não contam para a vaga na final." [R27, R28, R40; SQ2]
+- **SR6. O prazo da rodada é informado aqui** (SQ2), já preenchido: a mesma duração da rodada anterior, contada a partir de hoje, terminando às 23h59 de Brasília. Na primeira rodada, o campo vem vazio e é obrigatório. O prazo precisa estar no futuro e dentro da temporada. Prazo depois da data de corte da final é permitido, com aviso: "Jogos confirmados depois do corte de 30/11 não contam para a vaga na final." A vaga é pela posição na data de corte (R28), então o que pesa é a confirmação, não o prazo. [R27, R28, R40; DEC-SORTEIO SQ2]
 - **SR7. Os casos que não fecham aparecem como aviso na própria categoria, antes de sortear** (seção 4). Nenhum deles bloqueia o sorteio das outras categorias.
 
 ```
@@ -105,7 +106,7 @@ Os casos vêm dos limites do `drawRound` e das decisões da DEC-SORT-BORDA. A te
 | **Rodada já sorteada** (`already_drawn`), ex.: dois admins ao mesmo tempo | Ao tocar em "Sortear" | "A rodada 3 já foi sorteada por Ana às 10h12." | Nada é criado; a tela abre o resultado existente |
 | **Falha de rede ou de servidor** | Ao tocar em "Sortear" | Alert: "Não deu para sortear. Nada foi publicado. Tentar de novo" | Nada é criado (SR9) |
 
-- **SR9. O sorteio é tudo ou nada.** Ou todas as categorias que entram ganham as partidas, ou nenhuma. Tocar duas vezes em "Sortear" não cria duas rodadas: a segunda tentativa recebe `already_drawn`. [CODE; LEIT SL1]
+- **SR9. O sorteio é tudo ou nada.** Ou todas as categorias que entram ganham as partidas, ou nenhuma. Quem garante é a camada que grava, numa transação única para a rodada; o `drawRound` sorteia uma categoria por vez e não sabe das outras. Tocar duas vezes em "Sortear" não cria duas rodadas: a segunda tentativa recebe `already_drawn`. [CODE; DEC-SORTEIO SL1]
 - **SR10. A dupla com jogo a menos e o confronto repetido ficam visíveis também para os jogadores:** a dupla vê "2 jogos nesta rodada" na notificação (§6), e o confronto repetido mostra o mesmo selo na tela do confronto. Quem fica com menos jogos precisa saber que foi o sorteio, não um erro. [LEIT SL2]
 
 ---
@@ -137,8 +138,8 @@ Feminino C · 7 partidas                                       ⋯
 ### 5.1 Desfazer
 
 - **SR12. O admin desfaz o sorteio de uma categoria enquanto nenhum jogador agiu em nenhuma partida dela** (SQ4). Agir é propor horário, informar data ou lançar resultado. A ação fica no menu "⋯" da categoria, nunca como botão principal, e pede confirmação: "Desfazer o sorteio do Masculino B? As 12 partidas somem da agenda dos jogadores, e eles são avisados." [NNG, FIDE; SQ4]
-- **Desfazer apaga as partidas da categoria**, tira os cards "Confronto definido" do feed e **avisa todos os jogadores da categoria** que estavam no sorteio (§6). A categoria volta a "Sortear" na área "Administrar", com o mesmo prazo da rodada.
-- **O desfazer fica registrado**, com quem e quando, e aparece para os jogadores no novo sorteio: "Sorteio refeito por Ana · 01/10, 10h40". Assim desfazer para sortear de novo não passa despercebido. [RES RG11; LEIT SL3]
+- **Desfazer apaga as partidas da categoria**, sem cancelá-las (R51): o confronto nunca existiu, então não entra no histórico da R30, no H2H nem na agenda. Também tira os cards "Confronto definido" do feed e **avisa todos os jogadores da categoria** que estavam no sorteio (§6). A categoria volta a "Sortear" na área "Administrar", com o mesmo prazo da rodada.
+- **O desfazer fica registrado à parte** (o sorteio desfeito da R51), com rodada, categoria, quem e quando, e aparece para os jogadores no novo sorteio: "Sorteio refeito por Ana · 01/10, 10h40". Assim desfazer para sortear de novo não passa despercebido. [RES RG11; LEIT SL3]
 - Depois da primeira ação de um jogador, o menu mostra o item desabilitado com o motivo: "Não dá para desfazer: Pedro já propôs horários." Corrigir um confronto específico depois disso fica fora desta spec (seção 10).
 
 - **SR13. A tela do confronto mostra de onde ele veio:** "Sorteio da rodada 3 · por Ana, 01/10, 10h12", no histórico da partida. Vale também quando o admin joga a categoria. [R39, RES RG11]
@@ -152,8 +153,8 @@ Feminino C · 7 partidas                                       ⋯
 | --- | --- | --- |
 | **Jogadores sorteados** | Agenda (aba Jogos) | Cada confronto em "Sua vez" como "Marcar jogo · rodada fecha em 14 dias" (NAV 5.2). O badge da aba sobe |
 | **Jogadores sorteados** | Notificação (SR15) | Uma por jogador e categoria, não uma por confronto |
-| **Todos** | Feed | Um card "Confronto definido" por partida, público (R24, `FEED_CARDS.md` §5), no feed dos amigos dos jogadores |
-| **Todos** | Página da competição e classificação | O bloco Temporada passa a mostrar "Rodada 3 · fecha em 14 dias" (RK4). A tabela não muda: o sorteio não mexe em posição nem na base do delta (RK12) |
+| **Amigos dos jogadores** | Feed | Um card "Confronto definido" por partida, público (R21, R24, `FEED_CARDS.md` §5) |
+| **Todos** | Página da competição e classificação | O bloco Temporada passa a mostrar "Rodada 3 · fecha em 14 dias" (RK17). A tabela não muda: o sorteio não mexe em posição nem na base do delta (RK12) |
 | **Admins da competição** | Notificação | Quando a rodada fecha: "A rodada 2 do Ranking Bacuri fechou. Sorteie a rodada 3." Leva à seção "Sorteio da rodada" (SR1) |
 
 - **SR15. O jogador recebe uma notificação por categoria sorteada**, com o número de jogos e o prazo: "Rodada 3 do Ranking Bacuri sorteada: 4 jogos até dom, 26/10. Marque seus jogos." A notificação abre a aba Jogos. Ela substitui, no momento do sorteio, a "Confronto sorteado sem data" de cada confronto (SCHED §5), que daria 4 avisos iguais de uma vez (SQ5). [SCHED §5; SQ5]
@@ -198,41 +199,21 @@ As telas de confirmação e de resultado são Tier 4 (composições). Os estados
 
 ## 9. Decisões e leituras
 
-### Perguntas para o Gabriel
+### Perguntas respondidas
 
-Cada pergunta tem a recomendação do agente, que é o que as regras acima seguem.
+As perguntas foram respondidas pelo Gabriel em 01/10/2026 (DEC-SORTEIO), todas com a recomendação do agente, e viraram regras:
 
-- **SQ1. Um sorteio para todas as categorias, ou um por categoria?**
-  1. **Todas de uma vez** — um prazo, um aviso por jogador, um toque do admin. Uma categoria com erro de cadastro atrasa a decisão do admin sobre as outras, mas o desfazer é por categoria (SR12).
-  2. **Um por categoria** — mais controle, mas o admin repete o fluxo 4 ou 5 vezes, e as categorias podem ficar com prazos diferentes numa rodada que é da temporada.
+- **SQ1. Um sorteio para todas as categorias ou um por categoria:** todas de uma vez, com um prazo só → SR4. Alternativa descartada: um por categoria, que faria o admin repetir o fluxo e deixaria prazos diferentes numa rodada que é da temporada.
+- **SQ2. Quem define o prazo:** o admin, no sorteio, com a duração da rodada anterior já preenchida → SR6. Prazo depois do corte da final é permitido, com aviso.
+- **SQ3. Prévia dos confrontos:** sem prévia; a confirmação mostra o resumo e os avisos → SR5, SR8. Alternativas descartadas: prévia com "Sortear de novo" (o admin, que costuma jogar, poderia sortear até gostar; a FIDE proíbe alterar o emparceiramento a favor de alguém) e prévia com edição manual.
+- **SQ4. Desfazer:** por categoria, até a primeira ação de um jogador, com aviso e registro; as partidas são apagadas, não canceladas → SR12, R51. Alternativas descartadas: janela de 10 minutos antes de publicar e nenhum desfazer.
+- **SQ5. Notificação:** uma por jogador e categoria, no lugar da "Confronto sorteado sem data" de cada confronto → SR15.
 
-  **Recomendação:** 1. A rodada é da temporada (o `Round` não tem categoria), e o Vila e o Rankin sorteiam a rodada inteira.
-- **SQ2. Quem define o prazo da rodada?**
-  1. **O admin, no sorteio**, com a duração da rodada anterior já preenchida — o prazo nasce quando a rodada começa, e o admin ajusta para feriado ou evento.
-  2. **A carga do time**, com todas as rodadas da temporada criadas antes — sem campo no sorteio, mas cada atraso de sorteio come o prazo da rodada, e mudar exige o time.
-
-  **Recomendação:** 1. Combina com a SR3: a rodada começa quando o admin sorteia, não numa data fixa.
-- **SQ3. Prévia dos confrontos antes de publicar?**
-  1. **Sem prévia** — a confirmação mostra o resumo e os avisos (SR5), e o resultado já é público. Ninguém escolhe adversário.
-  2. **Prévia com "Sortear de novo"** — o admin vê os confrontos antes de publicar. Como o admin costuma jogar no ranking, ele poderia sortear até cair um adversário fácil (FIDE proíbe alterar o emparceiramento a favor de alguém).
-  3. **Prévia com edição manual** — resolve casos que o sorteio não prevê (dupla que só joga sábado), ao custo da confiança e de uma tela de edição.
-
-  **Recomendação:** 1. Se o beta mostrar casos que pedem edição, a correção vem por confronto, com rastro (seção 10).
-- **SQ4. Desfazer: existe e até quando?**
-  1. **Por categoria, até a primeira ação de um jogador, com aviso e registro** (SR12) — corrige erro de cadastro descoberto logo depois, e o rastro inibe o "sortear até gostar".
-  2. **Janela de 10 minutos antes de publicar** (como o "desfazer envio" do e-mail) — o desfazer não deixa rastro para os jogadores, mas atrasa a rodada de todos, e erro de cadastro costuma aparecer quando um jogador reclama, depois da janela.
-  3. **Sem desfazer** — o mais simples e o mais rígido; um erro de cadastro só se corrige confronto a confronto, e isso ainda não existe.
-
-  **Recomendação:** 1.
-- **SQ5. Uma notificação por categoria sorteada, em vez de uma por confronto?**
-  1. **Uma por categoria** (SR15) — "4 jogos até 26/10", e a agenda lista os confrontos. Muda a linha "Confronto sorteado sem data" da `SCHEDULING.md` §5, que passa a valer só para confronto criado fora do sorteio.
-  2. **Uma por confronto**, como a SCHED já diz — 4 avisos iguais de uma vez no Rankin, que tem 4 jogos por rodada.
-
-  **Recomendação:** 1.
+Decisão à parte, na mesma rodada: **quem sorteou e quando ficam guardados na própria partida**, sem entidade de sorteio (R51, `DOMAIN.md` glossário).
 
 ### Leituras do agente
 
-A confirmar pelo Gabriel junto com as perguntas:
+Confirmadas pelo Gabriel (DEC-SORTEIO):
 
 - **SL1.** O sorteio é tudo ou nada entre as categorias, e o segundo toque não cria uma segunda rodada (SR9).
 - **SL2.** A dupla com jogo a menos e o confronto repetido são mostrados aos jogadores, não só ao admin (SR10).

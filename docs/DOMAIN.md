@@ -33,6 +33,7 @@ As decisões foram tomadas pelo Gabriel em 26/09/2026 e estão registradas como 
 | **PESQ-RV** | Regras públicas do Rankin e do Vila do Tênis (BH), que usam o LetzPlay legado com a mesma configuração: `letzplay.me/rankin/rankings/55513/about`, `letzplay.me/vila-tenis-bt/rankings/56068/about`, `viladotenis.com/area-do-atleta` | Referências reais de jogos por rodada, prazo para combinar a data, regra de desistência, regra de W.O. por oferta de datas |
 | **DSC** | `docs/DISCOVERY.md` e `docs/discovery/` | Evidência de mercado citada nas regras e nas perguntas |
 | **DEC-H2H** | Issue da spec de head-to-head (`docs/HEAD_TO_HEAD.md`), respostas do Gabriel às perguntas HQ1–HQ4 (30/09/2026) | A página de H2H tem dois tipos, jogador × jogador e dupla × dupla; o card de duplas abre a de duplas. Emenda a R19 |
+| **DEC-SORTEIO** | Issue da spec do fluxo do sorteio (`docs/ROUND_DRAW.md`), comentário "Decisões do Gabriel" (01/10/2026) | Aprovação da spec com as recomendações de SQ1 a SQ5; quem sorteou e quando ficam na partida; o desfazer apaga as partidas e fica registrado à parte; prazo depois do corte da final permitido, com aviso |
 | **DEC-NAV-A** | Issue da spec de navegação, comentário "Decisões do Gabriel (29/09, ~19:00 UTC)" | Organização com tipo, cidade e contato (a arena do Explorar é a do tipo arena); "Tenho interesse" como relação entre jogador e competição |
 
 ---
@@ -59,7 +60,7 @@ As entidades estão agrupadas pelo papel que cumprem. Os nomes em **negrito** s�
 | **Ranking** | Competição contínua, dividida em temporadas. Os confrontos saem de sorteios por rodada; o jogador não escolhe o adversário. Guarda a **regra de pontuação**, o **formato da partida** (um só), o **prazo de resposta** (padrão 48h), o número de **jogos por rodada** e a **política de troca de parceiro** | R7, R9, R14, R17, R29 |
 | **Torneio** | Competição discreta, de 1 ou 2 dias. **No MVP, o app não gera a chave:** o torneio tem inscrição, confronto e resultado lançado pelo admin, e a chave vem de fora do app. Guarda um **formato padrão**, que o admin troca na partida que fugir dele. A final de uma temporada de ranking é um torneio comum | R27, R29, R31, R38 |
 | **Temporada** | Período de um ranking (em geral, um semestre). Guarda o **nome da final** (livre: "Saideira", "Finals"), a **quantidade de classificados** e a **data de corte**. Os pontos somam dentro da temporada | R8, R27, R28 |
-| **Rodada** | Etapa da temporada, com **prazo**. Cada rodada tem um sorteio, e cada unidade competidora joga nela o número de partidas definido pelo ranking (Rankin: 4; Vila: 2) | R7, R40, R46 |
+| **Rodada** | Etapa da temporada, com **prazo**. Os confrontos saem do sorteio da rodada, em geral um só para todas as categorias; o desfazer e a categoria sorteada depois podem somar outros sorteios na mesma rodada (`ROUND_DRAW.md`, SR12 e SR14). Cada unidade competidora joga nela o número de partidas definido pelo ranking (Rankin: 4; Vila: 2) | R7, R40, R46, R51 |
 | **Categoria** | Divisão de uma competição por **gênero + nível + idade** (ex.: "Masculino B", "Mista C 40+"), com a **modalidade** simples ou duplas. Uma competição tem várias categorias; a classificação é por categoria | R3, R4, R33 |
 | **Regra de pontuação** | Tabela de valores de um ranking: vitória, derrota, por game vencido, por game perdido, W.O. e desistência. Nasce com o padrão da R9 | R9–R11, R36 |
 | **Formato da partida** | Como a partida se decide: **1 set de 8**, **1 set de 6** ou **2 sets de 6 com super tiebreak**. É da competição: o ranking tem um só; o torneio tem um padrão, e a partida pode ter outro. No amistoso, quem lança escolhe. Valida o placar digitado e completa o placar na desistência | R11, R29 |
@@ -76,7 +77,7 @@ As entidades estão agrupadas pelo papel que cumprem. Os nomes em **negrito** s�
 
 | Termo | Definição | Regras |
 | --- | --- | --- |
-| **Sorteio** | Ato do admin que gera, no app e na hora, os confrontos de uma rodada do ranking. É aleatório e evita repetir confronto na temporada. O sorteio não é guardado como entidade: ele **cria as partidas** | R7, R30 |
+| **Sorteio** | Ato do admin que gera, no app e na hora, os confrontos de uma rodada do ranking. É aleatório e evita repetir confronto na temporada. O sorteio não é guardado como entidade: ele **cria as partidas**, e cada partida guarda **quem sorteou e quando**. O desfazer apaga as partidas e fica registrado à parte (R51). O fluxo está em `docs/ROUND_DRAW.md` | R7, R30, R51 |
 | **Confronto** | Uma partida definida e ainda sem resultado. Guarda a **data acordada** e a arena, quando existem. É o que o card "Confronto definido" mostra, no ranking e no torneio | R7, R34, R35 |
 | **Proposta de horário** | Oferta de um lado ao outro, ligada a um confronto: de **2 a 3 opções** de data e hora, cada uma com arena opcional. O outro lado aceita uma, e ela vira a data do confronto. Guarda autor, status e os momentos de criação e de resposta, e serve de evidência numa disputa de W.O. | R34, R40 |
 | **Partida** | Encontro entre duas unidades competidoras. Numa competição, é de uma categoria e nasce do sorteio (ranking) ou do cadastro do confronto (torneio). No amistoso, nasce do lançamento do resultado e pode ser cancelada por quem lançou enquanto está pendente. Segue a máquina de estados da seção 3 | R7, R12–R16, R42, R43 |
@@ -122,6 +123,8 @@ erDiagram
     JOGADOR ||--o{ PROPOSTA_HORARIO : "propõe"
     INSCRICAO ||--o{ MARCO : "conquista"
     RODADA ||--o{ FOTO_CLASSIFICACAO : "fim da rodada"
+    RODADA ||--o{ SORTEIO_DESFEITO : "histórico (R51)"
+    CATEGORIA ||--o{ SORTEIO_DESFEITO : "de"
     JOGADOR ||--o{ AMIZADE : "pede ou aceita"
     JOGADOR ||--o{ EVENTO_FEED : "é ator de"
     JOGADOR ||--o{ INTERESSE : "marca"
@@ -200,6 +203,7 @@ erDiagram
         string vencedor "lado A ou B"
         datetime data_acordada "opcional"
         string arena "opcional"
+        string sorteado_por "ranking: o admin que sorteou (R51)"
         string lancado_por
         string motivo_contestacao "R49"
         string placar_lembrado "opcional, só com placar diferente (R49)"
@@ -207,6 +211,11 @@ erDiagram
         string arbitrado_por
         int pontos_lado_a
         int pontos_lado_b
+    }
+    SORTEIO_DESFEITO {
+        string desfeito_por
+        datetime sorteado_em
+        datetime desfeito_em
     }
     LANCAMENTO_DESFEITO {
         string lancado_por
@@ -255,7 +264,7 @@ erDiagram
 - **Inscrição** é onde os pontos moram. A mesma dupla pode estar inscrita em dois rankings, com duas classificações independentes (R2).
 - **Os lados da partida** apontam para a inscrição quando a partida é de uma competição, e direto para a unidade competidora no amistoso, que não tem categoria nem inscrição. Numa partida, só uma das duas ligações existe.
 - **Classificação** não aparece como entidade: é a soma de `pontos_lado_*` das partidas confirmadas de cada inscrição, ordenada pela R37. A **foto da classificação** guarda a posição de cada inscrição no fim de cada rodada, para o evento "subiu N" e os marcos (R46, R47).
-- **Sorteio e confronto** também não aparecem: o sorteio cria partidas, e o confronto é a partida no estado "Confronto definido". A data acordada mora na partida, venha ela de uma proposta aceita ou de uma data informada (R35).
+- **Sorteio e confronto** também não aparecem: o sorteio cria partidas, cada uma com quem sorteou (`sorteado_por`) e quando (a criação da partida), e o confronto é a partida no estado "Confronto definido". Só o desfazer do sorteio vira registro próprio, o **sorteio desfeito**, porque as partidas dele são apagadas (R51). A data acordada mora na partida, venha ela de uma proposta aceita ou de uma data informada (R35).
 - **Temporada → competição (final)** é opcional: a temporada pode apontar para o torneio que é a final dela.
 - **A arena da partida** é texto, não entidade (R34). A arena do Explorar é outra coisa: a organização do tipo arena (NAV N34). As duas não precisam estar ligadas no MVP.
 - **Interesse** liga um jogador a uma competição em que ele não está inscrito ("Tenho interesse", NAV N33). É privado: serve para medir demanda, não avisa o organizador e não aparece para outros jogadores.
@@ -284,6 +293,7 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
 
   O app usa o formato para **validar o placar digitado** e para **completar o placar na desistência** (R11). [DEC-RESP, DEC-FIM P15, P18]
 - **R30. O sorteio é aleatório e não repete confronto na temporada.** O confronto só se repete quando não sobra combinação nova na categoria. **A partida cancelada (cancelamento ou anulação) não conta como confronto feito:** o jogo não aconteceu, e as duas duplas podem ser sorteadas de novo. Mesmo assim, o mesmo confronto não sai duas vezes na mesma rodada: com menos adversários que jogos na rodada, cada dupla enfrenta cada outra uma vez, e a rodada fica com menos jogos. [DEC-RESP, DEC-SORT, DEC-SORT-BORDA]
+- **R51. O admin desfaz o sorteio de uma categoria enquanto nenhum jogador agiu em nenhuma partida dela** (propor horário, informar data ou lançar resultado). As partidas são **apagadas**, não canceladas: o confronto nunca existiu, então não entra no histórico da R30, no H2H nem na agenda. O desfazer fica registrado à parte, com rodada, categoria, quem desfez e quando, e os jogadores da categoria são avisados. O novo sorteio mostra que o anterior foi desfeito. [DEC-SORTEIO; `ROUND_DRAW.md` SR12]
 - **R31. No MVP, o app não gera a chave do torneio.** O torneio tem inscrição, confronto e resultado lançado pelo admin (R38), e a chave vem de fora do app. O único sorteio feito no app é o da rodada do ranking. No primeiro beta, os confrontos do torneio entram por carga do time; quando entrar o primeiro torneio real, o admin passa a cadastrá-los. [DEC-RESP, DEC-FIM P14]
 - **R32. No primeiro beta, as inscrições entram por carga do time** (Rankin e Vila), a partir da lista do organizador. [DEC-RESP]
 - **R33. A idade da categoria conta pelo ano de nascimento.** "40+" admite quem faz 40 anos no ano da temporada, como na CBT. O jogador pode informar a data de nascimento no perfil (opcional), e o app a usa para validar a idade na inscrição. Sem a data, o jogador pode entrar numa categoria com idade no primeiro beta, e o organizador garante a elegibilidade, porque as inscrições vêm da lista dele (R32). Rever quando a inscrição tiver fluxo no app. [DEC-RESP, DEC-FIM P17]
@@ -385,6 +395,7 @@ stateDiagram-v2
     Definida --> Aguardando: jogador lança o resultado (ranking)
     Definida --> Confirmada: admin lança o resultado (torneio)
     Definida --> NaoRealizada: prazo da rodada sem resultado
+    Definida --> [*]: admin desfaz o sorteio, a partida é apagada (R51)
     Aguardando --> Confirmada: adversário confirma
     Aguardando --> Confirmada: prazo sem resposta
     Aguardando --> Arbitragem: adversário contesta, com motivo (R49)
@@ -434,6 +445,8 @@ stateDiagram-v2
 | Confirmada | Ranking: sim (R9–R11, R36). Torneio e amistoso: não | Sim, exceto W.O. e W.O. duplo (R18, R19) | "Resultado" (público); no ranking, pode gerar movimentação, marco e, depois do corte, classificação |
 | Cancelada | Não | Não | Nenhum. Se era confirmada, o card de resultado some (R41). No amistoso, só a pendente pode ser cancelada, por quem lançou (R43) |
 | Descartada (amistoso) | Não | Não | Nenhum |
+
+**Desfazer do sorteio** apaga a partida em "Confronto definido" antes de qualquer ação de jogador: ela sai sem estado final, e o que fica é o registro do sorteio desfeito (R51).
 
 **Correção pelo admin depois da confirmação** recalcula os pontos da partida e, com eles, a classificação. O card de resultado acompanha, e os marcos ficam (R41).
 
