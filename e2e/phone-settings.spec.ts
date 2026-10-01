@@ -92,7 +92,9 @@ test.describe("Telefone para o WhatsApp", () => {
     await expect(page).toHaveURL(/\/perfil\/configuracoes\/telefone\?volta=/);
     await expect(page.getByRole("heading", { name: "Telefone para o WhatsApp", exact: true })).toBeVisible();
     await page.getByLabel("Telefone", { exact: true }).fill("(31) 99999-0001");
-    await page.getByRole("checkbox").check();
+    // O input do Checkbox fica sob a caixa desenhada: o toque é no rótulo, como o do jogador
+    await page.locator("label", { hasText: "Mostrar meu telefone aos adversários" }).click();
+    await expect(page.getByRole("checkbox")).toBeChecked();
     await page.getByRole("button", { name: "Salvar telefone", exact: true }).click();
     await expect(page).toHaveURL(new RegExp(`${matchPath}$`));
 
