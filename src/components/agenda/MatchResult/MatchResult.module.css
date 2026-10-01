@@ -1,0 +1,183 @@
+/* =============================================================
+   MatchResult — estado do resultado num cartão, as respostas e
+   o histórico recolhido logo abaixo (docs/RESULTS.md §4)
+   ============================================================= */
+
+.match-result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+  /* A pendência abre a tela já aqui (§4.1): a âncora não fica sob o cabeçalho fixo */
+  scroll-margin-top: var(--spacing-800);
+}
+
+.match-result__title {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+/* --- Cartão do estado --- */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+  padding: var(--spacing-200);
+  border-radius: var(--radius-card);
+  background-color: var(--color-background-secondary);
+}
+
+.card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-100);
+}
+
+.card__heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-100);
+  min-width: 0;
+}
+
+.card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-50);
+}
+
+.card__title {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+  overflow-wrap: anywhere;
+}
+
+/* O título só recebe foco por código, depois de uma ação (tabIndex -1) */
+.card__title:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.card__title:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.card__text,
+.card__deadline {
+  margin: 0;
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-secondary);
+}
+
+.card__deadline {
+  color: var(--color-foreground-primary);
+}
+
+.card__countdown,
+.card__countdown--urgent {
+  font-weight: var(--font-weight-bold);
+}
+
+/* Últimas 24h: só a contagem muda de cor, a data absoluta continua neutra (RG9) */
+.card__countdown--urgent {
+  color: var(--color-foreground-attention);
+}
+
+.card__winner {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line-height);
+  letter-spacing: var(--text-body-lg-tracking);
+  font-weight: var(--font-weight-bold);
+  overflow-wrap: anywhere;
+}
+
+.card__actions,
+.dialog__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+}
+
+/* --- Folha de contestar --- */
+
+.contest,
+.contest__score {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+}
+
+.contest__hint {
+  margin: 0;
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+}
+
+/* --- Histórico recolhido, como o da marcação --- */
+
+.match-result__history {
+  display: flex;
+  flex-direction: column;
+}
+
+/* O flex tira o marcador nativo do <summary>: o caret o substitui */
+.match-result__summary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-100);
+  list-style: none;
+  min-height: var(--dimension-tap-target-minimum);
+  border-radius: var(--radius-md);
+  color: var(--color-foreground-primary);
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.match-result__summary:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.match-result__summary:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.match-result__summary::-webkit-details-marker {
+  display: none;
+}
+
+.match-result__caret {
+  display: inline-flex;
+  transition: transform var(--motion-duration-short-3) var(--motion-easing-standard);
+}
+
+.match-result__history[open] .match-result__caret {
+  transform: rotate(180deg);
+}
+
+.match-result__history[open] > .match-result__summary {
+  margin-bottom: var(--spacing-100);
+}

@@ -15,6 +15,13 @@ describe('dados da tela do confronto nos mocks', () => {
     expect(data?.playerNames['player-diego']).toBe('Diego');
   });
 
+  it('traz o prazo de resposta, a pontuação e os admins do ranking (R14, RG11)', () => {
+    const data = matchScreenDataOf('match-arena-mangaba-mb-r3-4');
+    expect(data?.match.status).toBe('awaiting_confirmation');
+    expect(data?.responseDeadlineHours).toBe(48);
+    expect(Object.values(data?.adminNames ?? {})).toContain('Marina');
+  });
+
   it('o confronto sem data do Lucas é "sem data": a última proposta foi retirada (M10)', () => {
     const data = matchScreenDataOf('match-arena-mangaba-mb-r3-1');
     if (data === null) throw new Error('mock da r3-1 ausente');
