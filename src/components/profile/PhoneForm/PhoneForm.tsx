@@ -29,7 +29,7 @@ type PhoneFormProps = {
 };
 
 const INTRO =
-  "Com o telefone, seus adversários e seu parceiro abrem a conversa com você direto pelo app. É opcional, e você apaga quando quiser.";
+  "Com o telefone, seus adversários e seu parceiro podem abrir a conversa com você direto pelo app. É opcional, e você apaga quando quiser.";
 const PHONE_HINT = "Só números do Brasil, com DDD.";
 const DELETE_HINT = "Apagar remove o número e o seu consentimento.";
 
