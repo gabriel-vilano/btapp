@@ -1,5 +1,6 @@
 import type { PlayerNames } from "@/src/components/ui/ScheduleTimeline";
 import type { ScheduleSides } from "@/src/lib/domain/schedule-state";
+import type { StandingsScope } from "@/src/lib/domain/standingsStats";
 import type { MatchSideKey, RankingMatch, ScheduleHistory, ScoringRule } from "@/src/types/domain";
 
 /**
@@ -26,4 +27,8 @@ export interface MatchScreenData {
   scoringRule: ScoringRule;
   /** Primeiro nome dos admins da competição, por player_id: os atos deles ficam visíveis (RG11). */
   adminNames: Record<string, string>;
+  /** A categoria na temporada da partida: a posição ao vivo depois da confirmação sai dela (RG18). */
+  standings: StandingsScope;
+  /** Classificação da categoria, aberta na própria linha (RK3). */
+  rankingHref: string;
 }

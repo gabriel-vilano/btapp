@@ -104,6 +104,9 @@ export function storyData(history: ScheduleHistory, overrides: Partial<MatchScre
     responseDeadlineHours: 48,
     scoringRule: DEFAULT_SCORING_RULE,
     adminNames: { [ADMIN_ID]: "Ana" },
+    // Sem tabela: as stories do impacto no ranking passam a delas (`storyStandings`)
+    standings: { season_id: "story-season-2026-2", category_id: MATCH.category_id, rounds: [], enrollments: [], matches: [] },
+    rankingHref: "/ranking/story-masculino-b?temporada=story-season-2026-2#minha-posicao",
     ...overrides,
   };
 }
