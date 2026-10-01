@@ -48,7 +48,7 @@ As entidades estão agrupadas pelo papel que cumprem. Os nomes em **negrito** s�
 | **Jogador** | Pessoa com conta no LetzPlay. Tem nome, @username, foto, **data de nascimento opcional**, **telefone opcional** (só para a marcação de jogos, ver `docs/SCHEDULING.md`) e o contador `total_matches`. O cadastro não coleta gênero | R18, R19, R26, R33 |
 | **Amizade** | Conexão bilateral entre dois jogadores: um pede, o outro aceita. Só a amizade aceita gera evento no feed | R24 |
 | **Admin da competição** | Jogador com permissões **numa competição específica** (ranking ou torneio): lançar o sorteio, lançar o resultado do torneio, arbitrar contestação, decidir a partida não realizada e corrigir ou anular placar. É um papel mínimo, não a visão do organizador | R15, R38–R41 |
-| **Interesse** | Marca privada de um jogador numa competição em que ele não está inscrito ("Tenho interesse"). Mede a demanda: não avisa o organizador nem aparece para outros jogadores | — |
+| **Interesse** | Marca privada de um jogador numa competição em que ele não está inscrito ("Tenho interesse"). Mede a demanda: não avisa o organizador nem aparece para outros jogadores. Quando o jogador se inscreve na competição, o botão some, mas o interesse fica guardado, para a métrica "Interesse que virou inscrição" (`EXPLORE.md`, EX31) | — |
 
 ### Competição
 

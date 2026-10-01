@@ -6,13 +6,43 @@
   padding-bottom: var(--spacing-400);
 }
 
-/* --- Cabeçalho: organização e tipo, abaixo do título --- */
+/* --- Cabeçalho: organização e tipo, abaixo do título. Avatar e nome são um
+   link só para a página da organização (EX23) --- */
 
 .competition-page__organizer {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--spacing-100) var(--spacing-page-margin) var(--spacing-200);
+}
+
+.competition-page__organizer-link {
+  display: flex;
   align-items: center;
   gap: var(--spacing-150);
-  padding: var(--spacing-100) var(--spacing-page-margin) var(--spacing-200);
+  min-height: var(--dimension-tap-target-minimum);
+  border-radius: var(--radius-sm);
+  color: inherit;
+  text-decoration: none;
+}
+
+.competition-page__organizer-link:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.competition-page__organizer-link:focus:not(:focus-visible) {
+  outline: none;
+}
+
+@media (hover: hover) {
+  .competition-page__organizer-link:hover .competition-page__organizer-name {
+    text-decoration: underline;
+  }
+}
+
+.competition-page__organizer-avatar {
+  display: flex;
 }
 
 .competition-page__organizer-name {
@@ -24,8 +54,9 @@
   font-weight: var(--font-weight-bold);
 }
 
+/* Alinhado ao nome, abaixo dele: o tipo não faz parte do link */
 .competition-page__organizer-kind {
-  margin: 0;
+  margin: calc(-1 * var(--spacing-100)) 0 0 calc(var(--dimension-avatar-40) + var(--spacing-150));
   color: var(--color-foreground-secondary);
   font-size: var(--text-label-md-size);
   line-height: var(--text-label-md-line-height);
@@ -90,12 +121,6 @@
   color: var(--color-foreground-secondary);
 }
 
-/* O contato aparece como o organizador escreveu, e dá para copiar (N33) */
-.competition-page__contact {
-  user-select: text;
-  overflow-wrap: anywhere;
-}
-
 /* O reset tira os marcadores; na ordem de desempate o número é a informação */
 .competition-page__list {
   padding-inline-start: var(--spacing-250);
@@ -136,20 +161,20 @@
   background-color: var(--color-background-secondary);
 }
 
-/* --- Tenho interesse --- */
+/* --- Como se inscrever compacto: abaixo das categorias, para quem já joga
+   outra categoria (EX26). Título menor, para não competir com Categorias --- */
 
-.competition-page__interest {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--spacing-100);
+.competition-page__section--compact {
+  padding-top: var(--spacing-300);
 }
 
-.competition-page__visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+.competition-page__compact-title {
+  margin: 0 0 var(--spacing-100);
+  padding-inline: var(--spacing-page-margin);
+  color: var(--color-foreground-primary);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line-height);
+  letter-spacing: var(--text-body-lg-tracking);
+  font-weight: var(--font-weight-bold);
 }
+

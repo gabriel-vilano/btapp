@@ -80,10 +80,10 @@ export function validateUsername(username: string) {
     return { valid: true };
   }
   if (username.length < USERNAME_MIN_LENGTH) {
-    return { valid: false, error: `Username precisa ter pelo menos ${USERNAME_MIN_LENGTH} caracteres` };
+    return { valid: false, error: `Nome de usuário precisa ter pelo menos ${USERNAME_MIN_LENGTH} caracteres` };
   }
   if (username.length > USERNAME_MAX_LENGTH) {
-    return { valid: false, error: `Username pode ter no máximo ${USERNAME_MAX_LENGTH} caracteres` };
+    return { valid: false, error: `Nome de usuário pode ter no máximo ${USERNAME_MAX_LENGTH} caracteres` };
   }
   if (!USERNAME_REGEX.test(username)) {
     return { valid: false, error: "Apenas letras minúsculas, números, pontos e underscores" };

@@ -28,6 +28,16 @@ export interface ProfilePageDomain extends ProfileDomain {
  */
 export type ProfileRelation = 'self' | FriendshipStatus;
 
+/**
+ * Rotas que o domínio não sabe montar sozinho: a classificação usa o slug da
+ * categoria e da temporada, e o domínio só guarda ids. Nos mocks, a tradução
+ * é o `mockRankingRoutes`; com a integração, a que ela trouxer.
+ */
+export interface ProfileLinks {
+  /** Classificação da categoria (RK1); com a temporada, a encerrada (RK21). */
+  rankingHref: (categoryId: string, seasonId?: string) => string;
+}
+
 /** Uma seção carregada ou com erro. O erro fica só nela (PF22, N24). */
 export type ProfileSection<T> = { status: 'ready'; data: T } | { status: 'error' };
 

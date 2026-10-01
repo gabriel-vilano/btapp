@@ -180,7 +180,7 @@ O ranking é o coração emocional do produto: subir motiva, descer frustra (`PR
 
 A página da competição existe e não é aba (NAV N9); o conteúdo, no ranking, é desta spec. Rota proposta `/competicoes/[competicao]`.
 
-- **RK17. A página tem quatro blocos, nesta ordem:** cabeçalho, categorias, temporada e regras. Dois blocos entram logo abaixo do cabeçalho conforme quem vê: para quem ainda pode se inscrever, "Como se inscrever" e "Tenho interesse" (NAV N33; quando cada um aparece está em `EXPLORE.md`, EX26 e EX27); para o admin da competição, a entrada da área "Administrar" (NAV N31). [NAV N9, N31, N33; DEC-RANK RL9]
+- **RK17. A página tem quatro blocos, nesta ordem:** cabeçalho, categorias, temporada e regras. Dois blocos entram conforme quem vê: para quem ainda pode se inscrever, "Como se inscrever" e "Tenho interesse" (NAV N33), completos logo abaixo do cabeçalho para quem não tem inscrição na competição, ou compactos, abaixo das categorias e sem o "Tenho interesse", para quem já joga uma categoria e tem outra livre (quando e onde cada um aparece está em `EXPLORE.md`, EX26 e EX27); para o admin da competição, a entrada da área "Administrar", logo abaixo do cabeçalho (NAV N31). [NAV N9, N31, N33; DEC-RANK RL9]
 
 | Bloco | Conteúdo |
 | --- | --- |

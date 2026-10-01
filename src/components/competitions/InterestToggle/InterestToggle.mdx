@@ -1,0 +1,67 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as InterestToggleStories from "./InterestToggle.stories";
+
+<Meta of={InterestToggleStories} />
+
+<Subtitle>"Tenho interesse": marca privada do jogador numa competição em que ainda não joga.</Subtitle>
+
+**Código-fonte:** [`src/components/competitions/InterestToggle/InterestToggle.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/competitions/InterestToggle/InterestToggle.tsx)
+
+## Visão geral
+
+Botão de alternar do "Como se inscrever" (`docs/EXPLORE.md`, EX29 a EX33). Mede a procura pela competição: o organizador não é avisado, e a linha abaixo do botão diz isso. Mora em `competitions/`, e não em `ui/`, porque só a página da competição o usa (EX32).
+
+<Canvas of={InterestToggleStories.Off} />
+
+## Estados
+
+São quatro. Os dois de repouso vêm do dado; os outros dois aparecem depois de um toque.
+
+### Desligado
+
+"Tenho interesse". Tocar registra o interesse.
+
+<Canvas of={InterestToggleStories.Off} />
+
+### Ligado
+
+"Interesse registrado", com check. Tocar de novo desfaz, sem confirmação.
+
+<Canvas of={InterestToggleStories.On} />
+
+### Enviando
+
+Enquanto o registro não volta, o botão mostra o spinner e não aceita outro toque. O rótulo só muda quando o registro dá certo: o botão nunca diz "registrado" antes de estar registrado.
+
+<Canvas of={InterestToggleStories.Sending} />
+
+### Erro
+
+Se o registro falha (resposta sem `ok` ou queda de rede), o botão fica como estava e um Toast diz "Não foi possível registrar. Tente de novo." O Toast precisa do `ToastProvider` acima, que o `app/(app)/layout.tsx` já monta.
+
+<Canvas of={InterestToggleStories.Failed} />
+
+## Acessibilidade
+
+- O nome acessível é o rótulo visível, que muda com o estado (WCAG 2.5.3). Por isso o botão **não** usa `aria-pressed`: os dois juntos fariam o leitor de tela dizer "Interesse registrado, pressionado".
+- A mudança é anunciada numa região `aria-live="polite"`: "Interesse registrado" ou "Interesse removido".
+- Enviando, o botão tem `aria-busy` (pelo `loading` do Button).
+
+## Evitar
+
+- ❌ Usar como inscrição ou como botão primário da página. É um botão secundário, e a inscrição é feita com o organizador (EX28).
+- ❌ Mostrar para quem já tem inscrição na competição. O interesse é por competição, e quem já joga uma categoria não mede procura nova (EX27). A regra está em `competitionPageBlocks`.
+
+## API
+
+<ArgTypes of={InterestToggleStories} />
+
+## Decisões de design
+
+**Por que o rótulo espera a resposta, em vez de mudar na hora?** Mudar na hora e voltar no erro faria o botão dizer "Interesse registrado" e depois desdizer. Esperando, a regra da EX33 ("o botão volta ao estado anterior") fica garantida sem o rótulo piscar. O custo é a espera de uma ida ao servidor, coberta pelo spinner.
+
+## Referências
+
+- `docs/EXPLORE.md`, EX27 e EX29 a EX33
+- [WCAG 2.5.3 — Label in Name](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html)
+- [WAI-ARIA APG — Button](https://www.w3.org/WAI/ARIA/apg/patterns/button/)

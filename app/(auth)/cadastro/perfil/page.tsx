@@ -87,7 +87,7 @@ export default function ProfilePage() {
       setUsernameError(undefined);
     } else {
       setUsernameStatus("taken");
-      setUsernameError(result.error ?? "Username já está em uso");
+      setUsernameError(result.error ?? "Nome de usuário já está em uso");
     }
   }, []);
 
@@ -161,7 +161,7 @@ export default function ProfilePage() {
 
         <div>
           <FormInput
-            label="Username"
+            label="Nome de usuário"
             name="username"
             type="text"
             value={username}

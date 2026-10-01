@@ -2,7 +2,7 @@ import { playerRecord, type ProfileViewer } from '../profile';
 import { nameResolver } from './names';
 import { friendsCount, profileRelation } from './relation';
 import { matchItems, rankingItems, seasonItems, versusView } from './sections';
-import type { ProfilePageData, ProfilePageDomain, ProfileSection } from './types';
+import type { ProfileLinks, ProfilePageData, ProfilePageDomain, ProfileSection } from './types';
 
 // Monta a página do perfil a partir das tabelas do domínio. Com mocks, as
 // tabelas são o `mockProfileDomain`; com o Supabase, cada seção vira uma
@@ -17,12 +17,13 @@ export interface ProfilePageRequest {
   username: string;
   viewerId: string;
   now: string; // ISO 8601
+  links: ProfileLinks;
 }
 
 /**
  * Dados da página do perfil de `username` visto por `viewerId`, ou null
  * quando o @username não existe ("Jogador não encontrado", PROFILE.md §6.2).
- * Ex.: `buildProfilePage(mockProfileDomain, { username: 'lucassilva', viewerId, now })`.
+ * Ex.: `buildProfilePage(mockProfileDomain, { username: 'lucassilva', viewerId, now, links })`.
  */
 export function buildProfilePage(domain: ProfilePageDomain, request: ProfilePageRequest): ProfilePageData | null {
   const player = domain.players.find((candidate) => candidate.username === request.username);
@@ -39,8 +40,8 @@ export function buildProfilePage(domain: ProfilePageDomain, request: ProfilePage
     friends_count: friendsCount(domain.friendships, player.id),
     record: { wins: record.wins, losses: record.losses },
     versus: ready(versusView(domain, names, view)),
-    rankings: ready(rankingItems(domain, names, view)),
+    rankings: ready(rankingItems(domain, names, view, request.links)),
     recent_matches: ready(matchItems(domain, names, player.id)),
-    seasons: ready(seasonItems(domain, names, player.id, request.now)),
+    seasons: ready(seasonItems(domain, names, player.id, request.now, request.links)),
   };
 }

@@ -11,9 +11,10 @@ import {
 } from '../profile';
 import { positionDeltas } from '../ranking-table';
 import { opponentsLabel, type NameResolver } from './names';
-import { headToHeadPath, matchPath, rankingPath } from './routes';
+import { headToHeadPath, matchPath } from './routes';
 import { toScore } from './score';
 import type {
+  ProfileLinks,
   ProfileMatchItem,
   ProfilePageDomain,
   ProfileRankingItem,
@@ -35,7 +36,12 @@ function rowDelta(domain: ProfilePageDomain, row: ProfileRankingRow, now: string
 }
 
 /** "Rankings" (PF10–PF15), na ordem da PF12. */
-export function rankingItems(domain: ProfilePageDomain, names: NameResolver, view: ProfileViewer): ProfileRankingItem[] {
+export function rankingItems(
+  domain: ProfilePageDomain,
+  names: NameResolver,
+  view: ProfileViewer,
+  links: ProfileLinks,
+): ProfileRankingItem[] {
   return profileRankings(domain, view).map((row) => ({
     enrollment_id: row.enrollment_id,
     position: row.position,
@@ -44,7 +50,7 @@ export function rankingItems(domain: ProfilePageDomain, names: NameResolver, vie
     competition_name: names.competition(row.competition_id),
     category_name: names.category(row.category_id),
     partner_name: names.partner(row.partner_id),
-    href: rankingPath(row.category_id),
+    href: links.rankingHref(row.category_id),
   }));
 }
 
@@ -68,7 +74,13 @@ export function matchItems(domain: ProfilePageDomain, names: NameResolver, playe
 }
 
 /** "Temporadas" (PF19), a mais recente primeiro. */
-export function seasonItems(domain: ProfilePageDomain, names: NameResolver, playerId: string, now: string): ProfileSeasonItem[] {
+export function seasonItems(
+  domain: ProfilePageDomain,
+  names: NameResolver,
+  playerId: string,
+  now: string,
+  links: ProfileLinks,
+): ProfileSeasonItem[] {
   return profileSeasons(domain, playerId, now).map((row) => ({
     enrollment_id: row.enrollment_id,
     season_name: names.season(row.season_id),
@@ -78,7 +90,7 @@ export function seasonItems(domain: ProfilePageDomain, names: NameResolver, play
     final_position: row.final_position,
     milestones: row.milestones,
     final_name: row.final_name,
-    href: rankingPath(row.category_id, row.season_id),
+    href: links.rankingHref(row.category_id, row.season_id),
   }));
 }
 
