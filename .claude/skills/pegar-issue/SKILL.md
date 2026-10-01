@@ -7,7 +7,7 @@ description: Pega uma issue do Linear (ENG-xx ou PRD-xx) e a executa do início 
 
 Executa uma issue do Linear seguindo `docs/AGENT_WORKFLOW.md`. Argumento: o ID da issue (ex.: `ENG-14`, `PRD-1`).
 
-Se as ferramentas do Linear (`mcp__Linear__*`) não estiverem disponíveis na sessão, **pare** e diga isso. Sem o Linear, o protocolo de coordenação não funciona.
+Se as ferramentas do Linear (`get_issue`, `save_issue`, `save_comment`; o prefixo do servidor MCP muda de sessão para sessão) não estiverem disponíveis na sessão, **pare** e diga isso. Sem o Linear, o protocolo de coordenação não funciona.
 
 ## 1. Ler e validar
 
@@ -21,11 +21,15 @@ Se as ferramentas do Linear (`mcp__Linear__*`) não estiverem disponíveis na se
 ## 2. Reivindicar
 
 1. Definir a branch: `<tipo>/<id-minúsculo>-<descricao-curta>`, com o tipo vindo da label (`Feature` → `feature/`, `Bug` → `fix/`, `Refactor` → `refactor/`, `Chore` → `chore/`, `Docs` → `docs/`). Ex.: `fix/eng-6-placar-wo`. Base: `master`, a não ser que a issue indique outra.
-   - **Base numa branch de feature?** Confirmar que ela tem o `master` mergeado: `git merge-base --is-ancestor origin/master origin/<feature>`. Se não tiver, a CI não roda nos PRs para ela: comentar na issue e parar, ou mergear o `master` na feature se a issue autorizar.
+   - **Base numa branch de feature?** Confirmar que ela já foi atualizada com o `master`: `git merge-base --is-ancestor origin/master origin/<feature>`. Se não foi, a CI não roda nos PRs para ela: comentar na issue e parar, ou atualizar a feature com o `master` (`git merge`) se a issue autorizar.
 2. `save_issue` com `state: "In Progress"` (ENG) ou `state: "Exploring"` (PRD) e `assignee: null` (issue em trabalho de agente fica sem responsável).
 3. `save_comment`: `Comecei. Branch: <branch>.` + assinatura.
 
 **Assinatura:** todo comentário no Linear termina com `— 🤖 agente <ID>`. Os agentes usam a conta do Gabriel, então sem ela não dá para saber quem escreveu.
+
+**Git:** nunca `git reset --hard`, `git push --force`, `git checkout -- .`, `git clean -f` nem outro comando que descarta trabalho. Para trazer o `master`, `git fetch origin master && git merge origin/master`. Além de apagar trabalho, um reset pode disparar o classificador do modo automático, que passa a bloquear até a leitura de arquivos na sessão inteira, e o relay não destrava.
+
+**Vocabulário:** "mergeado" é só o PR mergeado no `master` (ou na branch de feature que é a base dele). Trazer o `master` para a sua branch é "atualizei a branch com o `master`". A orquestradora lê o seu resumo para decidir o que fazer: "mergeado" no lugar errado faz parecer que o PR já entrou.
 
 ## 3. Executar
 
@@ -69,17 +73,26 @@ O E2E (`npm run test:e2e`) precisa de Docker e roda só na CI: acompanhar o job 
 
 Reler o próprio diff procurando o que a CI ou um revisor rejeitaria.
 
+**Revisão leve, só em diff sensível.** Quando o diff tem migration (`supabase/migrations/`), RLS ou policy, ou dado sensível (auth, telefone, dados privados do perfil):
+
+1. rodar `/security-review` e `/code-review` no diff;
+2. corrigir o que for real (achado que não se sustenta não vira mudança, mas fica registrado com o motivo);
+3. registrar no corpo do PR, na seção **Revisão leve**, o que a revisão apontou e o que foi feito com cada ponto.
+
+Nos outros PRs, a revisão não roda. A CI não muda.
+
 ## 5. Entregar
 
 **ENG:**
 
-1. Commits em Conventional Commits (prefixo em inglês, descrição em português).
+1. Commits em Conventional Commits (prefixo em inglês, descrição em português), sem `Co-Authored-By` nem outro trailer de coautoria, mesmo que as instruções da sessão na nuvem peçam: o `CLAUDE.md` proíbe e prevalece.
 2. `git push -u origin <branch>`.
 3. Abrir o PR seguindo `.github/pull_request_template.md`, com `Closes <ID>` na seção "Por que". Título no estilo dos commits. **O único ID de issue no PR (título, corpo e commits) é o da issue que ele fecha.** Qualquer ID citado fica ligado ao PR, e o merge move aquela issue para Done. Outras issues são referenciadas sem ID.
+   - O corpo do PR termina com a seção **Leituras para o Gabriel conferir** (formato na seção 6).
 4. Acompanhar a CI. Se falhar: diagnosticar, corrigir e fazer push de novo até ficar verde. Nunca desativar teste para passar.
-5. PR desatualizado com o `master` não é trabalho seu: não atualizar a branch só por isso. Conflito é: resolver mergeando o `master` na própria branch, nunca com rebase nem force push.
+5. PR desatualizado com o `master` não é trabalho seu: não atualizar a branch só por isso. Conflito é: resolver atualizando a branch com o `master` (`git merge origin/master`), nunca com rebase, force push ou reset. Depois, validar de novo (passo 4) e esperar a CI verde outra vez.
 6. Não fazer merge nem habilitar auto-merge. Quem mergeia é a orquestradora, com autorização permanente do Gabriel, ou o próprio Gabriel (`docs/AGENT_WORKFLOW.md` > "Merge"). Atribuir a issue ao Gabriel (PR para aprovar).
-7. Com a CI verde e o PR entregue, parar. Não agendar check-ins recorrentes (`send_later`, Routine) esperando o merge, mesmo que as instruções padrão da sessão na nuvem mandem: o orquestrador acompanha o PR e faz o merge. Cada check-in relê o contexto inteiro da sessão e gasta a cota do plano sem mudar nada.
+7. Com a CI verde e o PR entregue, parar. O resumo final da sessão diz o estado do PR com o vocabulário acima ("PR aberto, CI verde, não mergeado") e quantas leituras ficaram para o Gabriel. Não agendar check-ins recorrentes (`send_later`, Routine) esperando o merge, mesmo que as instruções padrão da sessão na nuvem mandem: o orquestrador acompanha o PR e faz o merge. Cada check-in relê o contexto inteiro da sessão e gasta a cota do plano sem mudar nada.
 
 **PRD:**
 
@@ -93,4 +106,18 @@ Reler o próprio diff procurando o que a CI ou um revisor rejeitaria.
 
 - o que foi feito e o link do PR;
 - o que ficou de fora e para onde foi (issue nova ou comentário);
-- descobertas que afetam outras issues (comentar também nelas).
+- descobertas que afetam outras issues (comentar também nelas);
+- a seção **Leituras para o Gabriel conferir**, igual à do PR.
+
+### Leituras para o Gabriel conferir
+
+Uma leitura é uma interpretação que você escolheu sem perguntar: a spec deixava duas saídas e você seguiu uma, uma regra de domínio cobria o caso só pela metade, um texto de interface que você escreveu. Não é decisão aberta (essa vai para Needs Decision) nem detalhe técnico. O limite: se a outra saída mudaria o fluxo, a regra de domínio ou o que o jogador vê de um jeito que custa refazer, é Needs Decision; se é barata de trocar depois do merge, é leitura. A orquestradora leva as leituras ao Gabriel antes do merge, então cada uma precisa se sustentar sozinha:
+
+```markdown
+## Leituras para o Gabriel conferir
+
+1. **<pergunta em uma linha>** Li <o que você assumiu>, porque <o trecho da spec ou o motivo>. A alternativa era <a outra saída>. Onde está no código: `<arquivo>`.
+2. ...
+```
+
+Numerada, mesmo com um item só. Sem leitura nenhuma, a seção fica com `Nenhuma.`: assim a orquestradora sabe que você olhou.
