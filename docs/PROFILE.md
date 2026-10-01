@@ -119,13 +119,13 @@ A seção responde "onde esse jogador está agora". É o elo entre o perfil e a 
 
 ```
 Rankings
-┌─────────────────────────────────────────────┐
-│ 5º   Ranking Rankin — Masculino B       ▲ 2 │
-│      [avt] com Rafael · Melhor: 3º          │
-├─────────────────────────────────────────────┤
-│ 12º  Liga Pitanga — Mista C             ▼ 1 │
-│      [avt] com Ana                          │
-└─────────────────────────────────────────────┘
+┌──────────────────────────────────────────────┐
+│ 5º   Ranking Arena Mangaba — Masculino B ▲ 2 │
+│      [avt] com Rafael · Melhor: 3º           │
+├──────────────────────────────────────────────┤
+│ 12º  Liga Pitanga — Mista C              ▼ 1 │
+│      [avt] com Ana                           │
+└──────────────────────────────────────────────┘
 ```
 
 - **PF11. A posição é da dupla, nunca do jogador** (R1). A linha diz "com Rafael" para deixar isso explícito: um jogador pode ser 5º numa categoria e 12º em outra, com parceiros diferentes. **A categoria é atributo da inscrição, não do jogador**, por isso o cabeçalho não tem selo de categoria. [R1, R2, R4; responde a pergunta 3 de `03-perfil.md`]
