@@ -1,0 +1,143 @@
+/* =============================================================
+   SidePicker — os dois lados da partida, vaga a vaga
+   ============================================================= */
+
+.side-picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+}
+
+.side-picker__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+}
+
+/* Mesmo rótulo dos grupos de escolha (ChoiceChipGroup): os lados leem como mais um campo do formulário */
+.side-picker__group-title {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.side-picker__slots {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.side-picker__player {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-150);
+  min-height: var(--dimension-tap-target-minimum);
+}
+
+.side-picker__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Recebe o foco depois da escolha (só por script, fora da ordem do Tab) */
+.side-picker__text:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.side-picker__text:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.side-picker__name {
+  color: var(--color-foreground-primary);
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+  font-weight: var(--font-weight-bold);
+  overflow-wrap: anywhere;
+}
+
+.side-picker__detail {
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-regular);
+  overflow-wrap: anywhere;
+}
+
+/* Vaga vazia: borda tracejada, como um lugar a preencher. É ação, então o texto é coral */
+.side-picker__add {
+  display: flex;
+  position: relative;
+  align-items: center;
+  gap: var(--spacing-100);
+  width: 100%;
+  min-height: var(--dimension-tap-target-minimum);
+  margin: 0;
+  padding: var(--spacing-100) var(--spacing-200);
+  overflow: hidden;
+  border: var(--border-width-medium) dashed var(--color-border-medium);
+  border-radius: var(--radius-md);
+  background: none;
+  color: var(--color-foreground-accent);
+  font-family: inherit;
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line-height);
+  letter-spacing: var(--text-label-lg-tracking);
+  font-weight: var(--font-weight-bold);
+  text-align: start;
+  cursor: pointer;
+}
+
+.side-picker__add::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-state-layer-neutral);
+  transition: background-color var(--motion-duration-short-3) var(--motion-easing-standard);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .side-picker__add:hover::after {
+    background-color: var(--color-state-layer-hover);
+  }
+}
+
+.side-picker__add:active::after {
+  background-color: var(--color-state-layer-pressed);
+}
+
+.side-picker__add:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-state-focus-ring);
+  outline-offset: var(--spacing-25);
+}
+
+.side-picker__add:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.side-picker__search {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-150);
+}
+
+.side-picker__hint {
+  margin: 0;
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+}
