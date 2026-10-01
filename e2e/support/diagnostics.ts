@@ -2,8 +2,8 @@ import type { Page, TestInfo } from "@playwright/test";
 
 // O screenshot e o trace de uma falha ficam no artefato da CI, que os agentes
 // não conseguem baixar (o host do blob fica fora da rede deles). Por isso a
-// falha também se descreve no log do job: URL, erros do navegador e a árvore
-// de acessibilidade da página no momento da falha.
+// falha também se descreve no log do job: URL, erros do navegador, a árvore
+// de acessibilidade e o HTML da área de conteúdo no momento da falha.
 
 /** Guarda os erros do navegador da página, para o relatório de falha. */
 export function collectBrowserErrors(page: Page): string[] {
