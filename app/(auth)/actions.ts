@@ -9,12 +9,11 @@ import {
   validateLastName,
   validateOtp,
   validateUsername,
-  validateAvatar,
 } from "@/src/lib/validations";
 import { joinFullName, splitFullName, type PersonName } from "@/src/lib/names";
 import { pickFreeUsername, usernameBaseFromName, usernameSearchPrefix } from "@/src/lib/username";
 import type { User } from "@supabase/supabase-js";
-import { AVATAR_HEADER_LENGTH, detectAvatarFormat } from "@/src/lib/avatarFormat";
+import { uploadAvatar } from "@/src/lib/supabase/uploadAvatar";
 import type { AuthActionState } from "@/src/types/auth";
 import { LOGIN_RETURN_PARAM, safeReturnPath } from "@/src/lib/navigation/loginReturn";
 
@@ -370,38 +369,6 @@ export async function suggestUsername(): Promise<string | null> {
   if (!user) return null;
 
   return findFreeUsername(supabase, user.id, nameFromMetadata(user));
-}
-
-// A action pode ser chamada direto (fora da tela), então o avatar é revalidado aqui:
-// tipo e tamanho declarados + formato real pelos bytes. Extensão e contentType vêm do
-// formato detectado, nunca do nome ou do `type` enviados pelo usuário.
-async function uploadAvatar(
-  supabase: SupabaseServerClient,
-  userId: string,
-  avatarFile: File
-): Promise<{ avatarUrl: string } | { error: string }> {
-  const validation = validateAvatar(avatarFile);
-  if (!validation.valid) {
-    return { error: validation.error ?? "Foto inválida." };
-  }
-
-  const header = new Uint8Array(await avatarFile.slice(0, AVATAR_HEADER_LENGTH).arrayBuffer());
-  const format = detectAvatarFormat(header);
-  if (!format) {
-    return { error: "Formato aceito: JPG, PNG ou WebP" };
-  }
-
-  const path = `${userId}/avatar.${format.extension}`;
-  const { error: uploadError } = await supabase.storage
-    .from("avatars")
-    .upload(path, avatarFile, { upsert: true, contentType: format.mimeType });
-
-  if (uploadError) {
-    return { error: "Erro ao enviar foto. Tente novamente." };
-  }
-
-  const { data: { publicUrl } } = supabase.storage.from("avatars").getPublicUrl(path);
-  return { avatarUrl: publicUrl };
 }
 
 // Username digitado passa pela validação e pela checagem de unicidade. Vazio (o
