@@ -14,6 +14,7 @@ import {
 } from "@/src/lib/domain/profile-page";
 import { ProfileAction } from "./ProfileAction";
 import { ProfileSection } from "./ProfileSection";
+import { useFriendship } from "./useFriendship";
 import { RankingList, RecentMatches, SeasonList, VersusList } from "./ProfileSections";
 import styles from "./ProfilePage.module.css";
 
@@ -28,19 +29,23 @@ interface ProfilePageProps {
  * @example <ProfilePage data={buildProfilePage(mockProfileDomain, request)} />
  */
 export function ProfilePage({ data }: ProfilePageProps) {
-  const { player, relation } = data;
-  const isOwn = relation === "self";
+  const { player } = data;
   const name = firstName(player.name);
+  const { relation, friendsCount, announcement, act } = useFriendship(data.relation, data.friends_count, name);
+  const isOwn = relation === "self";
   return (
     <div className={styles.profile}>
       <div className={styles.profile__header}>
         <ProfileHeader
           player={player}
-          friendsCount={data.friends_count}
+          friendsCount={friendsCount}
           wins={data.record.wins}
           losses={data.record.losses}
-          action={<ProfileAction relation={relation} firstName={name} />}
+          action={<ProfileAction relation={relation} firstName={name} onAction={act} />}
         />
+        <p className={styles["profile__sr-only"]} role="status">
+          {announcement}
+        </p>
       </div>
       <ProfileSection title="Vocês" section={data.versus}>
         {(versus) => versus && <VersusList versus={versus} />}

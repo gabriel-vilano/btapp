@@ -5,6 +5,7 @@ import type {
   Player,
 } from '@/src/types/domain';
 import type { Score } from '@/src/types/feed';
+import type { FriendshipStatus } from '../friendship';
 import type { StandingDelta } from '../competitions-tab';
 import type { ProfileDomain, SeasonMilestone } from '../profile';
 
@@ -25,7 +26,7 @@ export interface ProfilePageDomain extends ProfileDomain {
  * Quem vê em relação ao dono do perfil. Decide a ação do cabeçalho (PF7) e
  * o que muda entre o próprio perfil e o de outro jogador (PF3).
  */
-export type ProfileRelation = 'self' | 'none' | 'request_sent' | 'request_received' | 'friends';
+export type ProfileRelation = 'self' | FriendshipStatus;
 
 /** Uma seção carregada ou com erro. O erro fica só nela (PF22, N24). */
 export type ProfileSection<T> = { status: 'ready'; data: T } | { status: 'error' };
@@ -92,4 +93,22 @@ export interface ProfilePageData {
   rankings: ProfileSection<ProfileRankingItem[]>;
   recent_matches: ProfileSection<ProfileMatchItem[]>;
   seasons: ProfileSection<ProfileSeasonItem[]>;
+}
+
+/** Uma linha da lista de amigos (PF5): leva ao perfil do amigo. */
+export interface FriendListItem {
+  id: string;
+  name: string;
+  username: string;
+  avatar_url: string | null;
+  total_matches: number;
+  href: string;
+}
+
+/** Lista de amigos de um jogador (`/jogadores/[username]/amigos`), vista por `viewerId`. */
+export interface FriendsListData {
+  owner: Pick<Player, 'name' | 'username'>;
+  is_own: boolean; // a lista de quem vê: muda o título e o texto do vazio
+  profile_href: string; // o "Voltar" leva ao perfil do dono da lista
+  friends: FriendListItem[];
 }
