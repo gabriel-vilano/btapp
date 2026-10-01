@@ -30,7 +30,12 @@ export type ScheduleView =
    * Quem vê não é do confronto: só a data e a arena acordadas, como no card
    * público. As propostas e o histórico não aparecem (M18).
    */
-  | { kind: 'public'; agreed: AgreedSchedule | null };
+  | { kind: 'public'; agreed: AgreedSchedule | null }
+  /**
+   * Quem vê não é do confronto, e a marcação já congelou (M1): só a data e a
+   * arena acordadas, como registro (M18). Sem data acordada, não há o que mostrar.
+   */
+  | { kind: 'public_frozen'; agreed: AgreedSchedule | null };
 
 export type ScheduleViewKind = ScheduleView['kind'];
 
@@ -52,8 +57,9 @@ export function scheduleViewOf({ history, match, sides, viewerId, now }: Schedul
   const settled = expireProposals(history, now);
   const agreed = agreedScheduleOf(settled);
   const viewerSide = sideOfPlayer(sides, viewerId);
-  if (viewerSide === null) return { kind: 'public', agreed };
-  if (match.kind !== 'ranking' || match.status !== 'defined') return { kind: 'frozen', agreed };
+  const frozen = match.kind !== 'ranking' || match.status !== 'defined';
+  if (viewerSide === null) return { kind: frozen ? 'public_frozen' : 'public', agreed };
+  if (frozen) return { kind: 'frozen', agreed };
 
   const pending = pendingProposalOf(settled);
   if (pending !== null) {

@@ -250,6 +250,29 @@ export const ConfirmedPublicViewer: Story = {
     // O impacto é de quem jogou: quem é de fora vê o placar e vai ao ranking pela competição
     await expect(canvas.queryByText(/nesta partida/)).not.toBeInTheDocument();
     await expect(canvas.queryByRole("link", { name: "Ver ranking" })).not.toBeInTheDocument();
+    // Sem data acordada, a marcação encerrada não tem nada público: a seção some,
+    // em vez de dizer "Sem data marcada" abaixo do resultado (M18)
+    await expect(canvas.queryByRole("region", { name: "Marcação" })).not.toBeInTheDocument();
+    await expect(canvas.queryByText("Sem data marcada")).not.toBeInTheDocument();
+  },
+};
+
+export const ConfirmedPublicViewerWithDate: Story = {
+  args: {
+    data: storyData(STORY_HISTORIES.agreed, {
+      match: RESULT_MATCHES.confirmedByOpponent,
+      standings: storyStandings(RESULT_MATCHES.confirmedByOpponent),
+      viewerId: OUTSIDER_ID,
+    }),
+  },
+  play: async ({ canvas }) => {
+    await expect(await canvas.findByRole("heading", { name: "Resultado confirmado" })).toBeInTheDocument();
+    // A data e a arena ficam como registro, sem "Jogo marcado" nem histórico (M18)
+    const scheduling = within(canvas.getByRole("region", { name: "Marcação" }));
+    await expect(scheduling.getByRole("heading", { name: "Marcação encerrada" })).toBeInTheDocument();
+    await expect(scheduling.getByText("Sábado, 3 de outubro")).toBeInTheDocument();
+    await expect(scheduling.queryByText("Histórico da marcação")).not.toBeInTheDocument();
+    await expect(canvas.queryByRole("heading", { name: "Jogo marcado" })).not.toBeInTheDocument();
   },
 };
 
