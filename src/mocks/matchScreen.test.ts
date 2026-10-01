@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
+import { rankingImpactOf } from '@/src/lib/domain/rankingImpact';
 import { scheduleViewOf } from '@/src/lib/domain/schedule-state';
+import { computeStandings } from '@/src/lib/domain/standings';
 import { mockDomain } from './domain';
 import { MOCK_VIEWER_ID, matchScreenDataOf } from './matchScreen';
 
@@ -26,6 +28,17 @@ describe('dados da tela do confronto nos mocks', () => {
     const data = matchScreenDataOf('match-arena-mangaba-mb-r3-1');
     if (data === null) throw new Error('mock da r3-1 ausente');
     expect(scheduleViewOf({ ...data, now: NOW }).kind).toBe('no_date');
+  });
+
+  it('traz a categoria na temporada e o link do ranking para o impacto da confirmação (RG18)', () => {
+    const data = matchScreenDataOf('match-arena-mangaba-mb-r3-6');
+    if (data === null || data.match.status !== 'confirmed') throw new Error('mock da r3-6 confirmada ausente');
+    const { standings, match } = data;
+    expect(data.rankingHref).toBe(`/ranking/${match.category_id}?temporada=${standings.season_id}#minha-posicao`);
+    // A mesma tabela da tela de ranking: a posição do impacto é a da classificação ao vivo
+    const live = computeStandings({ ...mockDomain, season_id: standings.season_id, category_id: match.category_id });
+    const own = live.find((row) => row.enrollment_id === match.side_a_enrollment_id);
+    expect(rankingImpactOf(standings, match, match.side_a_enrollment_id)?.position).toBe(own?.position);
   });
 
   it('partida que não existe ou não é do ranking não tem tela de marcação (M1)', () => {

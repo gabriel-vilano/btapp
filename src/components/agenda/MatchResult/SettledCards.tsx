@@ -2,6 +2,7 @@ import type { Ref } from "react";
 import { formatEventMoment } from "@/src/lib/formatters";
 import type { RankingMatch } from "@/src/types/domain";
 import { peopleNamesOf, voiceOf, type MatchResultContext } from "./matchResultContext";
+import { RankingImpact } from "./RankingImpact";
 import { CardText, ResultCard, ResultScore, type ResultBadge } from "./ResultCard";
 import { actorName, confirmationText, confirmedAt, CONTEST_REASON_LABEL, resultLine } from "./resultTexts";
 
@@ -49,6 +50,7 @@ export function ConfirmedCard({ match, context, titleRef }: CardProps<"confirmed
           {formatEventMoment(match.correction.acted_at)}
         </CardText>
       )}
+      <RankingImpact match={match} context={context} />
     </ResultCard>
   );
 }

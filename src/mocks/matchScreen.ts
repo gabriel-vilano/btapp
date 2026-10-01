@@ -1,4 +1,6 @@
 import type { MatchScreenData } from '@/src/components/agenda/MatchScreen';
+import { rankingPath } from '@/src/lib/domain/profile-page/routes';
+import type { StandingsScope } from '@/src/lib/domain/standingsStats';
 import { formatCategoryLabel } from '@/src/lib/formatters';
 import type { CompetitionCategory, Player, RankingMatch } from '@/src/types/domain';
 import { mockDomain } from './domain';
@@ -33,8 +35,19 @@ export function matchScreenDataOf(matchId: string, viewerId: string = MOCK_VIEWE
 
 type CompetitionContext = Pick<
   MatchScreenData,
-  'competitionName' | 'categoryName' | 'roundNumber' | 'roundDeadline' | 'responseDeadlineHours' | 'scoringRule' | 'adminNames'
+  | 'competitionName'
+  | 'categoryName'
+  | 'roundNumber'
+  | 'roundDeadline'
+  | 'responseDeadlineHours'
+  | 'scoringRule'
+  | 'adminNames'
+  | 'standings'
+  | 'rankingHref'
 >;
+
+// O hash da própria linha na tela de ranking (RK3): o mesmo `OWN_ROW_HASH` do RankingScreen
+const OWN_ROW_HASH = '#minha-posicao';
 
 function competitionContextOf(match: RankingMatch): CompetitionContext {
   const competition = findOrThrow(mockDomain.competitions, match.competition_id, 'competição');
@@ -52,6 +65,19 @@ function competitionContextOf(match: RankingMatch): CompetitionContext {
     responseDeadlineHours: competition.response_deadline_hours,
     scoringRule: competition.scoring_rule,
     adminNames: Object.fromEntries(adminIds.map((id) => [id, firstName(playerOf(id))])),
+    standings: standingsOf(match.category_id, round.season_id),
+    rankingHref: `${rankingPath(match.category_id, round.season_id)}${OWN_ROW_HASH}`,
+  };
+}
+
+// Só a categoria na temporada: é o que a classificação lê, e vai inteiro para o cliente
+function standingsOf(categoryId: string, seasonId: string): StandingsScope {
+  return {
+    season_id: seasonId,
+    category_id: categoryId,
+    rounds: mockDomain.rounds.filter((round) => round.season_id === seasonId),
+    enrollments: mockDomain.enrollments.filter((e) => e.category_id === categoryId && e.season_id === seasonId),
+    matches: mockDomain.matches.filter((m) => m.kind === 'ranking' && m.category_id === categoryId),
   };
 }
 
