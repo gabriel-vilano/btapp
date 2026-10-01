@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { expect, fn } from "storybook/test";
+import { expect, fn, waitFor } from "storybook/test";
 import { List } from "@/src/components/ui/ListItem";
 import { StandingSummaryItem } from "@/src/components/ui/StandingSummaryItem";
 import { TournamentSummaryItem } from "./TournamentSummaryItem";
@@ -119,19 +119,23 @@ export const WithStandings: Story = {
       <TournamentSummaryItem {...args} nextMatch={{ startsAt: "2026-10-10T12:00:00.000Z", court: "Quadra 3" }} />
       <TournamentSummaryItem
         {...args}
-        competitionName="Open Pampulha"
+        competitionName="Open Umbu"
         categoryName="Mista C 40+"
         partnerName="Ana"
         startsOn="2026-10-31T11:00:00.000Z"
         endsOn="2026-11-01T21:00:00.000Z"
-        href="/competicoes/open-pampulha"
+        href="/competicoes/open-umbu"
       />
     </List>
   ),
   play: async ({ canvas }) => {
-    const [ranking, tournament] = canvas.getAllByRole("link");
+    const [ranking, tournament] = await canvas.findAllByRole("link");
     const titleLeft = (link: HTMLElement) =>
       (link.querySelector("span:nth-child(2)") as HTMLElement).getBoundingClientRect().left;
-    await expect(titleLeft(tournament)).toBe(titleLeft(ranking));
+    // A coluna da posição tem 3ch em Arimo bold, e a Arimo vem do Google Fonts:
+    // medida antes de a fonte chegar, o título do ranking sai deslocado e a story
+    // falhava às vezes (ENG-128). O fonts.load resolve vazio enquanto a folha da
+    // fonte não registrou o @font-face, então a espera é pela própria medida
+    await waitFor(() => expect(titleLeft(tournament)).toBe(titleLeft(ranking)), { timeout: 5000 });
   },
 };

@@ -55,17 +55,17 @@ const arenaMangaba: CompetitionPageData = {
  * Admin sem jogar (as pendências da aba apontam para cá). Regra própria, com
  * valores diferentes do padrão, para a página provar que lê a do ranking (RK18).
  */
-const ligaVila: CompetitionPageData = {
-  slug: 'liga-vila',
-  name: 'Liga Vila',
+const ligaPitanga: CompetitionPageData = {
+  slug: 'liga-pitanga',
+  name: 'Liga Pitanga',
   organizer: {
     name: 'Arena Mangaba',
     avatar_url: null,
     contact: { text: 'Instagram @arenamangaba', href: 'https://instagram.com/arenamangaba' },
   },
   categories: [
-    { category_id: 'cat-liga-vila-masculino-c', name: 'Masculino C', modality: 'doubles', unit_count: 10, href: '/ranking/masculino-c', standing: null },
-    { category_id: 'cat-liga-vila-feminino-b', name: 'Feminino B', modality: 'doubles', unit_count: 8, href: '/ranking/feminino-b', standing: null },
+    { category_id: 'cat-liga-pitanga-masculino-c', name: 'Masculino C', modality: 'doubles', unit_count: 10, href: '/ranking/masculino-c', standing: null },
+    { category_id: 'cat-liga-pitanga-feminino-b', name: 'Feminino B', modality: 'doubles', unit_count: 8, href: '/ranking/feminino-b', standing: null },
   ],
   season: {
     name: '2º semestre de 2026',
@@ -129,14 +129,14 @@ const praiaNorte: CompetitionPageData = {
  */
 export const mockCompetitionPage = {
   enrolled: arenaMangaba,
-  admin: ligaVila,
+  admin: ligaPitanga,
   notEnrolled: praiaNorte,
   interested: { ...praiaNorte, viewer: { is_admin: false, interested: true } },
   withoutSeason: { ...praiaNorte, season: null },
   withoutContact: { ...praiaNorte, organizer: { ...praiaNorte.organizer, contact: null } },
 } satisfies Record<string, CompetitionPageData>;
 
-const bySlug = new Map([arenaMangaba, ligaVila, praiaNorte].map((page) => [page.slug, page]));
+const bySlug = new Map([arenaMangaba, ligaPitanga, praiaNorte].map((page) => [page.slug, page]));
 
 /** A página mockada de uma rota, ou undefined quando o slug não existe. */
 export function mockCompetitionPageBySlug(slug: string): CompetitionPageData | undefined {

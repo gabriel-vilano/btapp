@@ -27,6 +27,7 @@ As siglas são as mesmas do `docs/DOMAIN.md` > "Fontes" e da `docs/NAVIGATION.md
 | **MOB** | Telas de busca no Mobbin (29/09/2026), 10 apps. Com uma visão "todos" antes dos escopos: 5 ([Givingli](https://mobbin.com/screens/af2aa6db-4042-441f-993b-8d7e12da1708), [Posh](https://mobbin.com/screens/fe24a89a-b184-4763-bc6c-4e1ff3146b76), [Substack](https://mobbin.com/screens/231a27f2-0cf7-4041-a275-f96bbdba0f28), [Hulu](https://mobbin.com/screens/6ee2fbb3-d7cf-4e42-99ee-8998c1ebc01d), [Hypelist](https://mobbin.com/screens/7ace65a4-e8e0-4799-a49b-f2081931bce4)). Só com escopos: 4 ([Strava](https://mobbin.com/screens/d9be8a1e-6e79-4bac-8741-e2bf33b81395), [Polarsteps](https://mobbin.com/screens/7fd17bf2-7230-4415-9eca-a2d0d1e01bf7), [Vestiaire](https://mobbin.com/screens/1a20b6c0-36fe-4a9f-a8c9-483703cb88ff), [pliability](https://mobbin.com/screens/83a41f1f-dc86-47ad-8055-ecd0df594f1a)). O Hulu mostra a contagem em cada escopo ("Movies (11)", "Episodes (12)"). Amostra pequena: serve de exemplo, não de estatística |
 | **DEC-EXP-2** | Resposta do Gabriel na issue desta spec (30/09): confirma a EX27 ("Tenho interesse" só enquanto há categoria livre e o jogador não tem inscrição na competição) e a EL15 |
 | **DEC-EXP-3** | Decisão do Gabriel na issue do SearchField e da contagem nas Tabs (30/09): os escopos da busca usam as **Tabs do DS**, e não o SegmentedControl. As Tabs não pedem variante nova e, com o texto ampliado (WCAG 1.4.4 e 1.4.10), rolam em vez de cortar. Medido com a Arimo a 393px: as três abas com contagem ocupam 120, 131 e 110px; no SegmentedControl, cada segmento igual tem 93px para o texto, e "Competições 1" (99,6px) sairia cortado |
+| **DEC-EXP-4** | Decisão do Gabriel na issue da vitrine e da página da organização (30/09): na página da organização, o ranking entre temporadas aparece na lista, no fim, na ordem da EX8; "Ver encerradas (N)" fica só com os torneios passados |
 | **WCAG-253** | WCAG 2.2, critério 2.5.3 "Label in Name": o nome acessível contém o rótulo visível |
 | **APG-BUTTON** | WAI-ARIA Authoring Practices, padrão "Button": num botão de alternar, o rótulo não muda com o estado; se o rótulo muda, não se usa `aria-pressed` |
 | **LEIT** | Leitura do agente desta spec. Todas foram confirmadas pelo Gabriel: EL1 a EL14 na DEC-EXP, EL15 e a junção da EX27 na DEC-EXP-2. O mapa está na seção 10 |
@@ -63,7 +64,7 @@ A busca tem outro papel: é a porta mais curta para um perfil (JTBD 3, avaliar o
   **Por quê voltar ao padrão:** a NN/g observa que quem troca de escopo esquece que trocou e faz a busca seguinte no escopo errado. Guardar o escopo só enquanto há termo evita isso sem apagar o trabalho de quem abriu um resultado e voltou.
 - **EX5. Cada aba de escopo mostra a contagem de resultados do termo atual:** "Jogadores 0 · Competições 1 · Arenas 1". A contagem aparece a partir da primeira busca (2 caracteres) e se atualiza com o termo; sem termo, as abas mostram só o nome. Acima de 99, a aba mostra "99+". O nome acessível de cada aba inclui a contagem ("Competições, 1 resultado"). Os escopos usam as Tabs do DS, e não o SegmentedControl (DEC-EXP-3). [DEC-EXP EQ1; DEC-EXP-3; NNG-SCOPE; MOB (Hulu)]
 
-  **Por quê:** a busca começa num escopo só, que é o caso que a NN/g aponta como o de maior risco: quem digita "Vila" em Jogadores não vê o Vila do Tênis e conclui que ele não está no app. O número na aba mostra onde está o resultado sem mudar o escopo inicial.
+  **Por quê:** a busca começa num escopo só, que é o caso que a NN/g aponta como o de maior risco: quem digita "Mangaba" em Jogadores não vê a Arena Mangaba e conclui que ela não está no app. O número na aba mostra onde está o resultado sem mudar o escopo inicial.
 
   **Limite de largura:** as três contagens precisam caber a 393px ao lado de "Competições" (NAV N25), sem truncar. A issue do SearchField testa com a fonte real e com contagens de 2 dígitos. Se não couber, a decisão volta ao Gabriel. Trocar para um escopo "Tudo" também precisa da aprovação dele. [DEC-EXP EQ1]
 
@@ -84,7 +85,7 @@ A vitrine é o Explorar sem termo digitado. Responde "o que existe para eu jogar
 - **EX9. As competições em que o jogador já está inscrito aparecem na vitrine**, no mesmo lugar da ordem, com o Badge "Você participa". Tirar da vitrine faria o jogador de um ranking do Vila achar que o Vila não está no app. [DEC-EXP EL4]
 - **EX10. O item de competição** (CompetitionListItem, seção 8):
   - avatar da organização e nome da competição;
-  - linha de apoio: tipo · organização · cidade ("Ranking · Vila do Tênis · Belo Horizonte");
+  - linha de apoio: tipo · organização · cidade ("Ranking · Arena Mangaba · Belo Horizonte");
   - situação: no ranking, "Temporada 2026/2 · rodada 3" ou "Entre temporadas"; no torneio, a data e o local ("Sáb, 12/10 · Arena Tucum") ou "Encerrado";
   - Badge "Você participa" quando há inscrição ativa (EX9).
 
@@ -137,7 +138,9 @@ Toda organização tem página, qualquer que seja o tipo (arena, clube, federaç
 | --- | --- |
 | **Cabeçalho** | Avatar, nome, o tipo escrito ("Arena", "Clube", "Federação", "Grupo") e a cidade |
 | **Contato** | O contato que a organização informou. Quando é um link (WhatsApp, Instagram, site), vira o botão "Falar com [nome]", que abre o link fora do app. Quando é só texto (um telefone, um e-mail, "procure o Carlos na recepção"), o bloco mostra o texto como foi escrito, selecionável, sem botão. Sem contato cadastrado, o bloco some |
-| **Competições** | As competições **que a organização promove**, com o item da vitrine (EX10) e a mesma ordem (EX8). As encerradas ficam atrás de "Ver encerradas (N)". Sem competição aberta: "Nenhuma competição aberta agora." |
+| **Competições** | As competições **que a organização promove**, com o item da vitrine (EX10) e a mesma ordem (EX8): o ranking entre temporadas fica na lista, no fim, como na vitrine. "Ver encerradas (N)" guarda só os torneios que já aconteceram, do mais recente ao mais antigo. Sem competição aberta: "Nenhuma competição aberta agora.", com os rankings entre temporadas abaixo, se houver (como na EX13) |
+
+  **O ranking entre temporadas na página da organização:** é encerrada pelos "Termos" (seção 1), mas fica na lista, no fim, na mesma ordem da vitrine (EX8), e não atrás de "Ver encerradas". [DEC-EXP-4]
 
 - **EX23. Chega-se à página pelo item da seção "Arenas" e do escopo "Arenas"** (EX11, EX14) e **pela organização no cabeçalho** da página da competição (RK17) e dos cards do feed (NAV, tabela de toques). As organizações de outros tipos não aparecem na vitrine nem na busca: chega-se a elas pelos cabeçalhos, e o nome delas é buscável no escopo "Competições" (EX14). [DEC-EXP EQ2]
 - **EX24. A página não tem endereço, mapa, quadras, horários nem reserva.** A organização guarda só tipo, cidade e contato (DOMAIN), e aulas e reserva de quadras estão fora do MVP (`PRODUCT.md`). [NAV N34; DEC-EXP EL13]

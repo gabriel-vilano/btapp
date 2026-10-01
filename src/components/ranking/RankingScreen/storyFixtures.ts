@@ -92,7 +92,7 @@ export function storyTable(options: TableOptions = {}): Extract<RankingScreenCon
 
 export const STORY_CATEGORY: CompetitionCategory = {
   id: "cat-masculino-b",
-  competition_id: "comp-ranking-bh",
+  competition_id: "comp-ranking-bacuri",
   gender: "M",
   modality: "doubles",
   level_min: "B",
@@ -102,8 +102,8 @@ export const STORY_CATEGORY: CompetitionCategory = {
 
 export function storyModel(content: RankingScreenContent): RankingScreenModel {
   return {
-    competition_id: "comp-ranking-bh",
-    competition_name: "Ranking BH",
+    competition_id: "comp-ranking-bacuri",
+    competition_name: "Ranking Bacuri",
     category: STORY_CATEGORY,
     season_id: content.kind === "no_season" ? null : "season-atual",
     content,
@@ -111,7 +111,7 @@ export function storyModel(content: RankingScreenContent): RankingScreenModel {
 }
 
 export const STORY_LINKS: RankingScreenLinks = {
-  rules: "/competicoes/ranking-bh#pontuacao",
+  rules: "/competicoes/ranking-bacuri#pontuacao",
   previousSeason: "/ranking/masculino-b?temporada=2026-1",
 };
 

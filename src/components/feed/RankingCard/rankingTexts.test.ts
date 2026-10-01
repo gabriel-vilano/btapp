@@ -27,7 +27,7 @@ function upCard(competitor: Side): RankingCard {
     created_at: "2026-09-01T12:00:00Z",
     competitor,
     visibility: "public",
-    ranking_name: "Ranking BH — Masculino B",
+    ranking_name: "Ranking Bacuri — Masculino B",
     position: 3,
     points: 520,
     movement: "up",

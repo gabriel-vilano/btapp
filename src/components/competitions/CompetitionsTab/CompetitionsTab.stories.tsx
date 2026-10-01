@@ -34,7 +34,7 @@ export const Player: Story = {
       "/ranking/mista-c-40",
       "/ranking/masculino-b",
       "/competicoes/copa-tucum",
-      "/competicoes/open-pampulha",
+      "/competicoes/open-umbu",
     ]);
   },
 };
