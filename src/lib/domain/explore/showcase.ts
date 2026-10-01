@@ -45,17 +45,18 @@ export function showcaseCompetitions(domain: ExploreDomain, now: string): Compet
   return [...groups.openTournaments, ...groups.runningRankings, ...groups.rankingsBetweenSeasons];
 }
 
-/** Competições da página da organização (EX22): abertas na ordem da EX8; encerradas atrás de "Ver encerradas (N)". */
+/** Competições da página da organização (EX22), em três grupos que a página junta na ordem da EX8. */
 export interface OrganizationCompetitions {
-  open: Competition[];
-  closed: Competition[]; // rankings entre temporadas por nome, depois torneios do mais recente
+  open: Competition[]; // torneios abertos pela data, depois rankings em andamento
+  betweenSeasons: RankingCompetition[]; // no fim da lista, por nome, como na vitrine
+  closed: TournamentCompetition[]; // torneios passados, do mais recente: atrás de "Ver encerradas (N)"
 }
 
 /**
- * As competições que a organização promove, separadas em abertas e encerradas.
- * Aqui o ranking entre temporadas é encerrada (§1, "Termos"): na vitrine ele
- * aparece no fim da lista (EX8), mas na página da organização vai para trás
- * de "Ver encerradas", e "Nenhuma competição aberta agora." vale quando só há ele.
+ * As competições que a organização promove. O ranking entre temporadas é
+ * encerrada (§1, "Termos"), mas fica na lista, no fim, como na vitrine (EX8):
+ * decisão do Gabriel de 30/09. "Ver encerradas" guarda só os torneios que já
+ * aconteceram, e "Nenhuma competição aberta agora." vale quando `open` é vazia.
  */
 export function organizationCompetitions(
   organizationId: string,
@@ -66,7 +67,8 @@ export function organizationCompetitions(
   const groups = groupCompetitions(own, domain, now);
   return {
     open: [...groups.openTournaments, ...groups.runningRankings],
-    closed: [...groups.rankingsBetweenSeasons, ...groups.pastTournaments],
+    betweenSeasons: groups.rankingsBetweenSeasons,
+    closed: groups.pastTournaments,
   };
 }
 
