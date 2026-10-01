@@ -2,7 +2,8 @@ import { Avatar, AvatarStack } from "@/src/components/ui/Avatar";
 import { Badge } from "@/src/components/ui/Badge";
 import { ScoreBlock, getInterruptedSetName, getOutcomeLabel } from "@/src/components/ui/ScoreBlock";
 import { MetaInfo } from "@/src/components/feed/MetaInfo";
-import { H2HButton } from "@/src/components/feed/H2HButton";
+import { H2HButton } from "@/src/components/ui/H2HButton";
+import { resultCardH2HHref } from "@/src/components/feed/h2hLink";
 import type { ResultCard as ResultCardData, Score, Side } from "@/src/types/feed";
 import styles from "./ResultCard.module.css";
 
@@ -12,7 +13,7 @@ interface ResultCardProps {
 
 export function ResultCard({ data }: ResultCardProps) {
   const { winner, loser, score, date, location, h2h_count } = data;
-  const showH2H = h2h_count >= 1 && score.type !== "wo";
+  const h2hHref = resultCardH2HHref(data);
 
   return (
     <>
@@ -24,7 +25,7 @@ export function ResultCard({ data }: ResultCardProps) {
 
       <MetaInfo date={date} location={location} note={getClosingNote(score)} />
 
-      {showH2H && <H2HButton count={h2h_count} />}
+      {h2hHref !== null && <H2HButton count={h2h_count} href={h2hHref} />}
     </>
   );
 }

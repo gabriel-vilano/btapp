@@ -455,7 +455,7 @@ Tirar a linha antes do commit.
 
 ### Componentes com stubs sem comportamento
 
-ProfileMiniCard, H2HButton, botões Torcer e "+ Adicionar" foram implementados como <button> sem onClick.
+ProfileMiniCard, botões Torcer e "+ Adicionar" foram implementados como <button> sem onClick.
 Quando resolver: plugar handlers e <Link> ao integrar esses componentes com o feed real.
 
 Na área "Administrar" (`src/components/admin/AdminArea`), o botão "Lançar sorteio da rodada" não age e os itens de "Decisões pendentes" não abrem a decisão: o sorteio entra com a spec do fluxo do sorteio, e as decisões com a issue "Decisões do admin".
