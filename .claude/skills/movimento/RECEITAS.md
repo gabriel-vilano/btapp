@@ -178,6 +178,7 @@ Já implementado em `src/components/ui/Toast`. Transição, e não keyframes, po
   transform: translateY(var(--spacing-100));
   transition-duration: var(--motion-duration-short-3);
   transition-timing-function: var(--motion-easing-quick-exit);
+  pointer-events: none; /* saindo, não recebe toque */
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -299,7 +300,7 @@ panel.style.transform = `translateY(${distance}px)`;
 ```
 
 - **Pointer capture** quando o arraste começa.
-- **Proteção multitoque:** ignorar toques novos durante o arraste.
+- **Proteção multitoque:** guardar o `pointerId` do início e ignorar os outros ponteiros no `move`, no `up` e no `cancel`.
 - **Amortecer além do limite**, com resistência crescente, em vez de parede.
 - **Durante o arraste, sem transição** (o painel segue o dedo); ao soltar, a transição volta e leva o painel ao lugar ou para fora. Se o retorno pedir mola, `--motion-easing-bounce`, que é exatamente o gesto com momento que o DS reserva para ele.
 

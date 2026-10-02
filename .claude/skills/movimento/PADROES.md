@@ -139,6 +139,8 @@ O Emil põe o toast em 400ms com `ease`, por personalidade (o Sonner). O DS esco
 ```
 
 - **Keyframes servem** para o que é predeterminado e não se interrompe no meio: loops, a entrada de algo ocasional que só sai desmontando. Keyframe em elemento ocasional não é achado só por ser keyframe; vira achado se o elemento pode ser interrompido no meio da animação.
+- **O que está saindo não recebe toque nem foco.** No estado de saída, `pointer-events: none`; no JS, ignorar um segundo pedido de fechar o que já está saindo. Senão, o botão de fechar de um toast que esmaece ainda dispara.
+- **Timer em JS que espera a animação lê a duração do token**, não de um número copiado: `getComputedStyle(el).getPropertyValue("--motion-duration-…")`, ou esperar a animação de fato com `Promise.all(el.getAnimations().map((a) => a.finished))`. Uma cópia à mão corta a saída no meio, ou deixa o elemento invisível ocupando lugar, quando o token muda.
 - **Sair pelo caminho de entrada.** O toast que sobe de baixo sai por baixo. Caminho simétrico é o que torna óbvio o arrastar para fechar.
 - **Tempo assimétrico onde o jogador decide.** Lento na fase deliberada (segurar para confirmar), rápido na resposta do sistema (soltar):
 
@@ -156,10 +158,10 @@ O `2s` não tem token: se a receita entrar no produto, ele nasce como token (reg
 
 ## 8. Gestos e arraste
 
-- **Dispensar pelo impulso**, não só pela distância: `velocidade = Math.abs(distancia) / tempoDecorrido`; dispensar acima de ~0,11 px/ms. Um peteleco basta.
+- **Dispensar pelo impulso**, não só pela distância: `velocidade = Math.abs(distancia) / tempoDecorrido`. O Emil usa ~0,11 px/ms no toast; o sheet do Dialog tem os próprios limites, registrados no MDX. Um peteleco basta.
 - **Amortecer além do limite:** arrastar além da borda natural move cada vez menos. Atrito, e não parede.
 - **Pointer capture** quando o arraste começa, para ele continuar quando o dedo sai do elemento.
-- **Proteção multitoque:** ignorar toques novos depois que o arraste começou (`if (isDragging) return`), ou trocar de dedo faz o elemento pular.
+- **Proteção multitoque:** guardar o `pointerId` de quem começou o arraste e ignorar os eventos de qualquer outro ponteiro no `move`, no `up` e no `cancel`, não só no `down`. No toque, cada dedo tem captura implícita no alvo, então os eventos de um segundo dedo chegam ao mesmo handler e o elemento pula.
 - **`transform` no próprio elemento arrastado**, nunca por variável no pai.
 - O arraste do sheet do Dialog já existe (`useSheetDrag`, `sheetDrag.ts`). Partir dele.
 
@@ -230,7 +232,7 @@ Apontar na hora. No modo criar, conferir antes de entregar; no modo revisar, cad
 | Entrada em `scale(0)` | `scale(0.95)` com `opacity: 0` |
 | Popover ou toast que só esmaece, sem ponto de partida espacial (o scrim e o movimento reduzido estão isentos) | Partir de um `translate` ou `scale` pequeno |
 | Ease-in (`ease-in` ou curva com início lento) em entrada ou saída | `quick-enter`, `soft-enter` ou `quick-exit` |
-| Curva ou duração escrita à mão, fora dos `--motion-*` | O token; se não existe, propor token novo |
+| Curva ou duração escrita à mão, fora dos `--motion-*`, inclusive num timer em JS que espera a animação | O token (no JS, pelo `getComputedStyle` ou pelo `getAnimations()`); se não existe, propor token novo |
 | Curva pronta do CSS (`ease`, `ease-out`) em animação deliberada | O token correspondente |
 | Animação em atalho de teclado ou ação de 100+ por dia | Nenhuma animação |
 | Transição de UI acima de 300ms sem motivo | `short-3` ou `medium-1` |
