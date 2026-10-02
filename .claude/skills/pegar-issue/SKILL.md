@@ -35,6 +35,8 @@ Se as ferramentas do Linear (`get_issue`, `save_issue`, `save_comment`; o prefix
 
 - Trabalhar **só no escopo** da issue. Descoberta fora do escopo: comentar na issue afetada ou criar issue nova em Backlog (com label `Tipo` e projeto). O PR não cresce.
 - Seguir o `CLAUDE.md`: explicar conceitos nos comentários quando útil, testes para fluxo crítico, stories quando o componente pede.
+- **Skills de UI sob demanda.** Fora do gatilho do piloto (passo 4), duas checagens ficam disponíveis, sem obrigação: a `polir-interface` para o acabamento de um componente (raio, alinhamento óptico, `tabular-nums`, `text-wrap`) e a `mobile-nativo` para layout de tela, toque, viewport e campo de entrada no celular. A `movimento` cria animação sempre que a tarefa é animar; o modo revisar dela só roda por comando.
+- **PRD com tela.** Antes de abrir perguntas de UX, conferir o que as specs de `docs/` já decidem para a tela. O que sobrar, rodar pela `decisoes-mobile` (modo plan para tela nova, audit para tela existente): cada fork que ela devolve vira uma pergunta no formato Needs Decision, com as opções e a lente que sustenta cada uma.
 - **Decisão de produto, UX ou domínio?** Comentar no formato da seção "Needs Decision" do `docs/AGENT_WORKFLOW.md`, mover para **Needs Decision**, atribuir ao Gabriel (`assignee: "me"`) e encerrar com um resumo. Não adivinhar a resposta. Se houver trabalho já feito, fazer push da branch antes de parar e citar isso no comentário.
 
 ## 4. Validar antes do push
@@ -80,6 +82,21 @@ Reler o próprio diff procurando o que a CI ou um revisor rejeitaria.
 3. registrar no corpo do PR, na seção **Revisão leve**, o que a revisão apontou e o que foi feito com cada ponto.
 
 Nos outros PRs, a revisão não roda. A CI não muda.
+
+**Revisão de interface (piloto), só em diff de UI de risco.** Regra de piloto, não permanente: vale até 5 PRs terem a seção **Revisão de interface (piloto)** no corpo. Aí a orquestradora junta os 5 registros para o Gabriel, que decide entre manter este gatilho, ampliar para todo diff de UI ou deixar a revisão só sob demanda. Até lá, o gatilho é estreito. Roda quando o diff:
+
+- cria ou altera componente em `src/components/ui/`;
+- cria ou altera formulário ou campo de entrada (`<input>`, `<textarea>`, `<select>`, `FormInput`, `OtpInput`…), em qualquer pasta;
+- cria uma tela nova em `app/` (um `page.tsx` novo).
+
+Nesses casos, antes do push:
+
+1. rodar a revisão de interface nos arquivos de UI alterados (`.tsx` e `.module.css`, sem stories e testes). A `revisar-interface` só roda por comando (`disable-model-invocation`): ler `.claude/skills/revisar-interface/SKILL.md` e seguir o processo e o formato de saída dela;
+2. se o diff mexe em animação ou transição (`transition`, `animation`, `@keyframes`, `@starting-style`, token `--motion-*`), rodar também o modo revisar da `movimento`: `/movimento revisar <arquivos>`;
+3. corrigir o que for real. Achado em arquivo fora do diff não entra no PR: vira comentário na issue afetada ou issue nova em Backlog;
+4. registrar no corpo do PR a seção **Revisão de interface (piloto)**, com: os achados reais e o que foi feito com cada um; os achados rejeitados e o motivo (a seção "Considerados e rejeitados" da skill); e uma estimativa do custo a mais (tempo ou tokens, e quantos arquivos foram lidos).
+
+Fora do gatilho, nada muda: a revisão não roda, e as skills de UI ficam sob demanda (passo 3). A CI não muda.
 
 ## 5. Entregar
 
