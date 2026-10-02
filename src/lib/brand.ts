@@ -10,7 +10,10 @@
 //   - .claude/         (skills, scripts e textos dos agentes)
 //   - patches/         (comentário de atribuição dentro do patch)
 //
+// `name` é o nome de exibição ("BT App", com espaço e maiúsculas). Os
+// identificadores técnicos (chaves, hosts, project_id) seguem "btapp".
+//
 // Sem `baseUrl` nem `supportEmail` de propósito: nenhum código os consome
 // hoje (o compartilhamento do perfil usa `window.location.origin`) e o
 // domínio ainda não existe. Entram quando houver o primeiro consumidor.
-export const brand = { name: "btapp", shortName: "btapp" } as const;
+export const brand = { name: "BT App", shortName: "BT App" } as const;
