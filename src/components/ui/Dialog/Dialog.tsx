@@ -10,6 +10,7 @@ import {
   useIsClient,
   useScrollLock,
 } from "./useDialogBehavior";
+import { useKeyboardInset } from "./useKeyboardInset";
 import { useSheetDrag } from "./useSheetDrag";
 import styles from "./Dialog.module.css";
 
@@ -61,6 +62,7 @@ function DialogPanel({
   useDialogKeyboard(panelRef, onClose);
   useDialogFocus(panelRef, initialFocusRef);
   useScrollLock();
+  useKeyboardInset(panelRef);
 
   return (
     <div
