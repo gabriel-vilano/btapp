@@ -129,7 +129,7 @@ function MyForm() {
 - Cada toast tem `role="alert"` — leitor de tela anuncia imediatamente
 - Botão de dismiss tem `aria-label="Fechar"`, `type="button"`, área tocável de 48×48 (maior que o ícone, sem aumentar o toast) e ring de foco branco, que contrasta com os três fundos do toast ([WCAG 1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)). Hover e press usam state layer claro, porque o toast sempre tem fundo escuro
 - Auto-dismiss em 4s pode ser curto pra leitores lentos — usar `persistent: true` quando o conteúdo for crítico
-- Animação de entrada/saída usa `transition` curtas (170ms) — não interfere com `prefers-reduced-motion` significativamente, mas vale validar
+- Entrada (250ms) e saída (170ms) são transições ease-out de esmaecimento com deslize de 8px. Com `prefers-reduced-motion`, o toast só esmaece, sem deslizar
 
 ## Evitar
 

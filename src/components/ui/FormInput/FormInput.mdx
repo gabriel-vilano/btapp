@@ -186,6 +186,7 @@ Slot `labelTrailing` à direita do label — útil pra ações relacionadas como
 - Foco visível via `:focus-visible` (ring azul) no input e no toggle de senha. O input nunca remove o outline no `:focus`
 - `type="search"` dá ao campo o papel `searchbox`. A lupa e o calendário são decorativos (`aria-hidden`): o label já diz o que o campo pede
 - `date` e `datetime-local` são operáveis pelo teclado (setas mudam o segmento) e anunciado pelo leitor de tela com o label. O picker nativo de cada sistema já é acessível ao VoiceOver e ao TalkBack
+- Texto digitado e placeholder em 16px (`body-lg`). Abaixo disso o Safari do iOS dá zoom ao focar o campo, e travar o zoom no viewport bloquearia o pinch no Android ([WCAG 1.4.4](https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html)). Ver `docs/TOKENS.md` > "Texto digitado em campo"
 - Tap target de 48px no input e no toggle de senha ([WCAG 2.5.8](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html) pede 24px; a regra do DS é 48px)
 
 ## Evitar
@@ -196,6 +197,7 @@ Slot `labelTrailing` à direita do label — útil pra ações relacionadas como
 - ❌ **Disabled sem feedback** — se o input está disabled por motivo não-óbvio, expor o motivo (ex: helper text ou Alert)
 - ❌ **Confiar em `min`/`max` do `datetime-local` como validação** — o iOS ignora. Validar no código e mostrar o erro
 - ❌ **`type="number"` para telefone** — tira o `+`, o zero à esquerda e os separadores, e mostra setas de incremento. Telefone é `tel`
+- ❌ **Texto do campo abaixo de 16px** — o iOS dá zoom na página ao focar. Não diminuir o `font-size` do campo para caber mais texto, nem travar o zoom no viewport para compensar
 - ❌ **`required` sem indicação visual** — campos obrigatórios devem ser visualmente diferenciáveis dos opcionais
 
 ## API
