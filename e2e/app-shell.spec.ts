@@ -1,6 +1,7 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
 import { submitLogin } from "./support/auth";
+import { collectBrowserErrors, reportPageOnFailure } from "./support/diagnostics";
 import { createConfirmedUser, TEST_PASSWORD, uniqueEmail } from "./support/users";
 
 async function loginToFeed(page: Page, flow: string): Promise<void> {
@@ -15,6 +16,12 @@ async function boxOf(locator: Locator): Promise<{ x: number; y: number; width: n
   if (!box) throw new Error(`boxOf: elemento sem caixa na tela (${locator}), esperado visível`);
   return box;
 }
+
+let browserErrors: string[] = [];
+test.beforeEach(({ page }) => {
+  browserErrors = collectBrowserErrors(page);
+});
+test.afterEach(({ page }, testInfo) => reportPageOnFailure(page, testInfo, browserErrors));
 
 function mainNavigation(page: Page) {
   return page.getByRole("navigation", { name: "Principal", exact: true });

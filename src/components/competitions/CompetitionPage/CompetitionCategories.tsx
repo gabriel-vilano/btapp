@@ -16,7 +16,8 @@ interface CompetitionCategoriesProps {
 
 /**
  * Bloco Categorias (docs/RANKING.md, RK17): uma linha por categoria, com a
- * posição de quem vê quando ele está inscrito nela. Toque → classificação.
+ * posição de quem vê quando ele está inscrito nela. No ranking, toque →
+ * classificação; no torneio a linha só informa (EXPLORE.md, EX34).
  */
 export function CompetitionCategories({ competitionName, categories }: CompetitionCategoriesProps) {
   const headingId = useId();
@@ -45,7 +46,7 @@ const chevron = <Icon icon={CaretRightIcon} size="sm" />;
 function CategoryRow({ competitionName, category }: { competitionName: string; category: CompetitionCategoryRow }) {
   const { standing } = category;
   const units = formatUnitCount(category);
-  if (standing?.position != null) {
+  if (standing?.position != null && category.href !== null) {
     return (
       <StandingSummaryItem
         position={standing.position}
@@ -60,12 +61,13 @@ function CategoryRow({ competitionName, category }: { competitionName: string; c
   }
   // Inscrito numa categoria ainda sem resultado confirmado: sem posição (RK20)
   const enrolledNote = standing && (standing.partner_name ? `você joga com ${standing.partner_name}` : "você está inscrito");
+  // Sem href (torneio), a linha não navega: sem chevron
   return (
     <ListItem
-      href={category.href}
+      href={category.href ?? undefined}
       title={category.name}
       supportingText={enrolledNote ? `${units} · ${enrolledNote}` : units}
-      trailing={chevron}
+      trailing={category.href === null ? undefined : chevron}
     />
   );
 }

@@ -6,19 +6,22 @@ import type {
   RankingMatch,
   Round,
 } from '@/src/types/domain';
+import { activeEnrollmentIds } from './activeUnits';
 import { drawPairings } from './drawPairings';
 import { countPairs, type Pairing } from './pairHistory';
 import type { RandomSource } from './seededRandom';
 
 // Sorteio da rodada do ranking (docs/DOMAIN.md, R7 e R30). O sorteio não é
-// guardado como entidade: ele cria as partidas, todas em "Confronto definido".
+// guardado como entidade: ele cria as partidas, todas em "Confronto definido",
+// e cada partida guarda quem sorteou (`drawnBy`) e quando (`drawnAt`) (R51).
 
-export type DrawnMatch = Extract<RankingMatch, DefinedState>;
+export type DrawnMatch = Extract<RankingMatch, DefinedState> & { drawn_by: string };
 
 export type RoundDrawErrorCode =
   | 'category_mismatch' // a categoria não é do ranking
   | 'already_drawn' // a rodada já tem partidas nesta categoria
-  | 'not_enough_units'; // menos de duas inscrições ativas
+  | 'not_enough_units' // menos de duas inscrições ativas
+  | 'nothing_to_draw'; // sorteio da rodada sem nenhuma categoria que entre (SR8)
 
 /** Recusa do sorteio. O `code` é para a interface; o texto, para quem depura. */
 export class RoundDrawError extends Error {
@@ -37,16 +40,10 @@ export interface RoundDrawInput {
   category: CompetitionCategory;
   enrollments: readonly Enrollment[]; // pode vir com as de outras categorias: o sorteio filtra
   seasonMatches: readonly RankingMatch[]; // partidas já sorteadas na temporada da rodada
+  drawnBy: string; // player_id do admin que sorteou
   drawnAt: string; // ISO 8601: vira o created_at das partidas
   random?: RandomSource; // padrão: Math.random; o teste passa createSeededRandom
   createMatchId?: () => string; // padrão: crypto.randomUUID
-}
-
-// A inscrição encerrada fica congelada na classificação e não joga mais (R17, R45).
-function drawableEnrollmentIds({ enrollments, category, round }: RoundDrawInput): string[] {
-  return enrollments
-    .filter((e) => e.status === 'active' && e.category_id === category.id && e.season_id === round.season_id)
-    .map((e) => e.id);
 }
 
 // A partida cancelada (cancelamento ou anulação) não conta como confronto:
@@ -86,6 +83,7 @@ function toMatch(input: RoundDrawInput, [sideA, sideB]: Pairing, id: string): Dr
     scheduled_at: null, // a data sai das propostas de horário (R34, R35)
     venue: null,
     created_at: input.drawnAt,
+    drawn_by: input.drawnBy,
     status: 'defined',
   };
 }
@@ -96,10 +94,10 @@ function toMatch(input: RoundDrawInput, [sideA, sideB]: Pairing, id: string): Dr
  * repetir confronto da temporada enquanto houver combinação nova (R30).
  *
  * @example
- * const matches = drawRound({ ranking, round, category, enrollments, seasonMatches, drawnAt: now });
+ * const matches = drawRound({ ranking, round, category, enrollments, seasonMatches, drawnBy: adminId, drawnAt: now });
  */
 export function drawRound(input: RoundDrawInput): DrawnMatch[] {
-  const unitIds = drawableEnrollmentIds(input);
+  const unitIds = activeEnrollmentIds(input.enrollments, input.category.id, input.round.season_id);
   assertDrawable(input, unitIds);
   const problem = {
     unitIds,

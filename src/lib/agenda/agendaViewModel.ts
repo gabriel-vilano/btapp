@@ -23,6 +23,16 @@ export type AgendaEmptyView =
   | { kind: 'season_ended'; position: number | null; competitionName: string; categoryName: string; href: string }
   | { kind: 'no_enrollment' };
 
+/**
+ * Rotas que o domínio não sabe montar sozinho: a classificação usa o slug da
+ * categoria e da temporada, e o domínio só guarda ids. Nos mocks, a tradução
+ * é o `mockRankingRoutes`; com a integração, a que ela trouxer.
+ */
+export interface AgendaLinks {
+  /** Classificação da categoria (RK1); com a temporada, a encerrada (RK21). */
+  rankingHref: (categoryId: string, seasonId?: string) => string;
+}
+
 export interface AgendaViewModel {
   yourTurn: AgendaItemModel[];
   upcoming: AgendaItemModel[];
@@ -34,9 +44,13 @@ export interface AgendaViewModel {
 
 /**
  * Props da aba Jogos para o jogador, no momento pedido.
- * @example agendaViewModel(mockDomain, { playerId: players.lucas.id, now: new Date().toISOString() })
+ * @example agendaViewModel(mockDomain, { playerId: players.lucas.id, now: new Date().toISOString() }, MOCK_AGENDA_LINKS)
  */
-export function agendaViewModel(domain: AgendaScreenDomain, viewer: AgendaViewer): AgendaViewModel {
+export function agendaViewModel(
+  domain: AgendaScreenDomain,
+  viewer: AgendaViewer,
+  links: AgendaLinks,
+): AgendaViewModel {
   const agenda = playerAgenda(domain, viewer);
   const toItem = (entry: AgendaEntry) => agendaItemModel(domain, entry, viewer.now);
   const reason = agendaEmptyReason(domain, agenda, viewer);
@@ -48,7 +62,7 @@ export function agendaViewModel(domain: AgendaScreenDomain, viewer: AgendaViewer
       label: month.label,
       items: month.entries.map(toItem),
     })),
-    empty: reason === null ? null : emptyView(domain, reason),
+    empty: reason === null ? null : emptyView(domain, reason, links),
   };
 }
 
@@ -56,7 +70,7 @@ function nameOf<T extends { id: string; name: string }>(items: T[], id: string):
   return items.find((item) => item.id === id)?.name ?? '';
 }
 
-function emptyView(domain: AgendaScreenDomain, reason: AgendaEmptyReason): AgendaEmptyView {
+function emptyView(domain: AgendaScreenDomain, reason: AgendaEmptyReason, links: AgendaLinks): AgendaEmptyView {
   switch (reason.kind) {
     case 'between_rounds':
       return { kind: 'between_rounds', competitionName: nameOf(domain.competitions, reason.competition_id) };
@@ -68,8 +82,8 @@ function emptyView(domain: AgendaScreenDomain, reason: AgendaEmptyReason): Agend
         position: season.final_position,
         competitionName: nameOf(domain.competitions, season.competition_id),
         categoryName: category === undefined ? '' : categoryName(category),
-        // A classificação da temporada encerrada (RK21); a rota é da issue do ranking
-        href: `/ranking/${season.category_id}?temporada=${season.season_id}`,
+        // A classificação da temporada encerrada (RK21)
+        href: links.rankingHref(season.category_id, season.season_id),
       };
     }
     default:

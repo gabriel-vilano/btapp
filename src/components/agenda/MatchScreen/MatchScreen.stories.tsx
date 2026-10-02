@@ -2,7 +2,7 @@ import type { Decorator, Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, screen, waitFor, within } from "storybook/test";
 import { AppHeader } from "@/src/components/ui/AppHeader";
 import { MatchScreen } from "./MatchScreen";
-import { NOT_PLAYED_MATCH, OUTSIDER_ID, STORY_HISTORIES, STORY_NOW, storyData } from "./storyFixtures";
+import { NOT_PLAYED_MATCH, OUTSIDER_ID, STORY_H2H, STORY_HISTORIES, STORY_NOW, storyData } from "./storyFixtures";
 
 // O cabeçalho é da página (DetailHeader). A story não tem a casca: mostra o
 // AppHeader com o "Voltar" fixo, para a tela aparecer inteira
@@ -78,6 +78,22 @@ export const NoDate: Story = {
   },
 };
 
+const H2H_LINK = { name: "Já jogaram 2 vezes, veja o H2H" };
+
+// Porta do H2H no confronto definido, para quem joga a partida (HH16)
+export const WithHeadToHead: Story = {
+  args: { data: storyData(STORY_HISTORIES.empty, { h2h: STORY_H2H }) },
+  play: async ({ canvas, canvasElement }) => {
+    const link = await canvas.findByRole("link", H2H_LINK);
+    await expect(link).toHaveAttribute("href", STORY_H2H.href);
+    await expect(link.getBoundingClientRect().height).toBeGreaterThanOrEqual(48);
+    // Abaixo dos lados, antes da marcação
+    const sides = canvas.getByRole("list", { name: "Lados do confronto" });
+    await expect(sides.compareDocumentPosition(link) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    await expectNoHorizontalOverflow(canvasElement);
+  },
+};
+
 export const ProposalAwaitingYou: Story = {
   args: { data: storyData(STORY_HISTORIES.awaitingYou) },
   play: async ({ canvas }) => {
@@ -136,7 +152,10 @@ export const DatePassed: Story = {
 };
 
 export const FrozenAfterRoundDeadline: Story = {
-  args: { data: storyData(STORY_HISTORIES.awaitingYou, { match: NOT_PLAYED_MATCH }), now: "2026-10-08T12:00:00.000Z" },
+  args: {
+    data: storyData(STORY_HISTORIES.awaitingYou, { match: NOT_PLAYED_MATCH, h2h: STORY_H2H }),
+    now: "2026-10-08T12:00:00.000Z",
+  },
   play: async ({ canvas }) => {
     await expect(canvas.getByRole("heading", { name: "Marcação encerrada" })).toBeInTheDocument();
     await expect(canvas.getByText(/O admin decide a partida com este histórico/)).toBeInTheDocument();
@@ -145,16 +164,20 @@ export const FrozenAfterRoundDeadline: Story = {
     await expect(canvas.getByRole("list", { name: "Histórico da marcação" })).toBeVisible();
     // A proposta sem aceite cujas opções passaram aparece expirada (M12)
     await expect(canvas.getByText("A proposta de Caio expirou sem aceite.")).toBeInTheDocument();
+    // O H2H é porta do confronto definido, não da partida que saiu dele (HH16)
+    await expect(canvas.queryByRole("link", H2H_LINK)).not.toBeInTheDocument();
   },
 };
 
 export const PublicViewer: Story = {
-  args: { data: storyData(STORY_HISTORIES.agreed, { viewerId: OUTSIDER_ID }) },
+  args: { data: storyData(STORY_HISTORIES.agreed, { viewerId: OUTSIDER_ID, h2h: STORY_H2H }) },
   play: async ({ canvas }) => {
     await expect(canvas.getByText("Sábado, 3 de outubro")).toBeInTheDocument();
     // Quem é de fora vê a data e a arena, nunca as propostas nem o histórico (M18)
     await expect(canvas.queryByText("Histórico da marcação")).not.toBeInTheDocument();
     await expect(canvas.queryByRole("button")).not.toBeInTheDocument();
+    // O botão H2H é dos jogadores da partida (HH16)
+    await expect(canvas.queryByRole("link", H2H_LINK)).not.toBeInTheDocument();
   },
 };
 
@@ -215,5 +238,34 @@ export const ReportFlow: Story = {
     await userEvent.click(dialog.getByRole("button", { name: "Informar data" }));
     await expect(await canvas.findByText("Sexta-feira, 2 de outubro")).toBeInTheDocument();
     await expect(canvas.getByText(/Informado por Pedro/)).toBeInTheDocument();
+  },
+};
+
+const PHONE_ASKED_KEY = "letzplay:whatsapp-phone-asked";
+
+// Sem telefone salvo, o primeiro toque em "Abrir no WhatsApp" pergunta se o
+// jogador quer informar (M20). A story limpa a marca antes e depois, para o
+// pedido aparecer em toda rodada e não vazar para as outras stories
+export const AsksForPhoneOnFirstTap: Story = {
+  args: { askForPhone: true },
+  beforeEach: () => {
+    window.localStorage.removeItem(PHONE_ASKED_KEY);
+    return () => window.localStorage.removeItem(PHONE_ASKED_KEY);
+  },
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(await canvas.findByRole("link", { name: "Abrir no WhatsApp" }));
+    const dialog = within(await findDialog("Informar seu telefone?"));
+    await expect(dialog.getByRole("link", { name: "Informar telefone" })).toHaveAttribute(
+      "href",
+      "/perfil/configuracoes/telefone?volta=%2Fjogos%2Fstory-match-r3",
+    );
+    // A recusa ainda abre o WhatsApp, com a mesma mensagem (M24)
+    const skip = dialog.getByRole("link", { name: "Agora não, abrir o WhatsApp" });
+    await expect(skip.getAttribute("href")).toMatch(/^https:\/\/wa\.me\/\?text=/);
+    await expect(skip).toHaveAttribute("target", "_blank");
+    // Uma vez por aparelho: o próximo toque vai direto ao WhatsApp
+    await expect(window.localStorage.getItem(PHONE_ASKED_KEY)).not.toBeNull();
+    await userEvent.click(dialog.getByRole("button", { name: "Fechar" }));
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
   },
 };

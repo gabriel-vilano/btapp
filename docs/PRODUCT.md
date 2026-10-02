@@ -8,7 +8,9 @@ Visão de produto e decisões duráveis. Para JTBDs, insights estratégicos sobr
 
 ## Visão
 
-LetzPlay é uma plataforma de gestão de rankings, torneios e comunidade de esportes de raquete. O redesign foca exclusivamente no **jogador competitivo de Beach Tennis** — reconstruindo a experiência com uma interface mais intuitiva e arquitetura moderna.
+Plataforma de gestão de rankings, torneios e comunidade de esportes de raquete, com foco exclusivo no **jogador competitivo de Beach Tennis**.
+
+O produto é pensado a partir do que as plataformas de ranking e torneio já existentes fazem, e propõe três coisas: otimizações nos fluxos do jogador, funcionalidades novas e, potencialmente, objetivos de mercado novos. A experiência é construída com uma interface mais intuitiva e uma arquitetura moderna.
 
 Três objetivos simultâneos: portfolio de Design Engineer, produto real para lançamento, aprendizado técnico prático.
 

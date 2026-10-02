@@ -113,6 +113,37 @@
   gap: var(--spacing-100);
 }
 
+/* --- Impacto no ranking (RG18): sem cor no bloco, só o DeltaIndicator tem --- */
+
+.impact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+  padding-top: var(--spacing-200);
+  border-top: var(--border-width-medium) solid var(--color-border-subtle);
+}
+
+.impact__points,
+.impact__position {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  overflow-wrap: anywhere;
+}
+
+.impact__points {
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line-height);
+  letter-spacing: var(--text-body-lg-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+.impact__position {
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+}
+
 /* --- Folha de contestar --- */
 
 .contest,

@@ -55,8 +55,10 @@ O passo a passo executável está na skill `/pegar-issue` (`.claude/skills/pegar
 2. **Branch.** `<tipo>/<id>-<descricao-curta>`, ex.: `fix/eng-6-placar-wo`. O ID na branch liga o PR à issue pela integração GitHub ↔ Linear. Base: `master`, salvo quando a issue diz outra base. **Se a base for uma branch de feature**, confirmar antes que ela tem o `master` mergeado (`git merge-base --is-ancestor origin/master origin/<feature>`). Sem isso ela pode não ter o `.github/workflows/ci.yml`, e o PR fica sem CI.
 3. **Trabalhar só no escopo.** O que aparecer fora do escopo vira comentário na issue afetada ou issue nova em Backlog. O PR não cresce.
 4. **Parar para decidir.** Ver "Needs Decision" abaixo.
-5. **Entregar.** PR seguindo o template, com `Closes ENG-6` na descrição. A integração move a issue para In Review ao abrir o PR e para Done no merge. O agente acompanha a CI até ficar verde.
-6. **Fechar o ciclo.** Último comentário na issue: o que foi feito, link do PR, e qualquer descoberta que afete outra issue (também comentada lá).
+5. **Entregar.** PR seguindo o template, com `Closes ENG-6` na descrição. Diff com migration, RLS, policy ou dado sensível passa antes por uma revisão leve (`/security-review` e `/code-review`), registrada no corpo do PR. Em piloto até 5 PRs, diff que cria ou altera componente em `src/components/ui/`, formulário ou campo, ou cria tela nova em `app/`, passa antes pela revisão de interface (skill `revisar-interface`, e o modo revisar da `movimento` se houver animação), também registrada no corpo do PR; no fim do piloto o Gabriel decide se o gatilho fica, cresce ou vira sob demanda. A integração move a issue para In Review ao abrir o PR e para Done no merge. O agente acompanha a CI até ficar verde.
+6. **Fechar o ciclo.** Último comentário na issue: o que foi feito, link do PR, qualquer descoberta que afete outra issue (também comentada lá) e as **Leituras para o Gabriel conferir**: as interpretações que o agente escolheu sem perguntar, numeradas, também no corpo do PR.
+
+Issue de PRD com tela abre as perguntas de UX pela skill `decisoes-mobile`, depois de conferir o que as specs já decidem: cada opção vem com a fonte que a sustenta.
 
 Issues de PRD terminam de outro jeito: o resultado é um diagnóstico ou uma spec. Decisões estáveis vão para `docs/` via PR (o repo é a fonte da verdade do que é durável). A issue vai para **Ready** só com aprovação do Gabriel.
 
@@ -99,7 +101,7 @@ Não usar Needs Decision para dúvida técnica que o próprio agente consegue re
 | Preciso de decisão do Gabriel | status Needs Decision + responsável Gabriel + comentário no formato acima |
 | Descobri algo que afeta outra issue | comentário **na outra issue** |
 | Achei trabalho novo fora do escopo | issue nova em Backlog, com label `Tipo` e projeto |
-| Terminei | PR aberto com `Closes <ID>` + comentário final + responsável Gabriel (PR para aprovar) |
+| Terminei | PR aberto com `Closes <ID>` + comentário final com as Leituras para o Gabriel conferir + responsável Gabriel (PR para aprovar) |
 
 **Regras:**
 
@@ -116,12 +118,14 @@ Não usar Needs Decision para dúvida técnica que o próprio agente consegue re
 O ruleset do `master` exige PR atualizado com a base e CI verde antes do merge (ver `docs/GIT_WORKFLOW.md` > "Proteção de branch"). Para os agentes, isso vira quatro regras:
 
 - **PR desatualizado não é trabalho do agente.** Não atualizar a branch só porque o `master` andou. Quem atualiza é quem vai mergear, na hora do merge (just-in-time).
-- **Conflito é do dono da branch.** Resolver mergeando o `master` na própria branch. Nunca rebase nem force push, e nunca atualizar a branch de outro agente, nem pelo botão nem pela API.
+- **Conflito é do dono da branch.** Resolver atualizando a própria branch com o `master` (`git merge`). Nunca rebase, force push nem `git reset --hard`, e nunca atualizar a branch de outro agente, nem pelo botão nem pela API.
 - **Auto-merge, nunca.** Habilitar auto-merge é mergear por procuração, e a opção fica desligada no repositório de propósito.
 - **Quem mergeia é a orquestradora, com autorização permanente do Gabriel.** Os agentes de issue nunca mergeiam. A orquestradora mergeia um PR quando:
   - a CI está verde no PR atualizado com a base;
-  - a combinação com o `master` e com os outros PRs do lote foi simulada: `git merge-tree`, depois lint, typecheck, testes, build e a varredura de variáveis CSS sem definição no resultado combinado;
+  - a combinação com o `master` e com os outros PRs do lote foi simulada num worktree local (`combo-validate.sh` da skill `/orquestrar`): lint, typecheck, testes, build e a varredura de variáveis CSS sem definição no resultado combinado;
   - o Gabriel viu os prints, se o PR muda algo na tela. PR com zero mudança visual, comprovada por comparação de pixels, dispensa print;
+  - o Gabriel viu as Leituras para o Gabriel conferir do agente, se houver;
+  - o PR tem a seção "Revisão de interface (piloto)", se o diff cai no gatilho do piloto;
   - o Gabriel aprovou a spec, se o PR é de spec.
 
   O merge usa `expectedHeadSha`, para não levar um push feito depois da validação.
@@ -132,7 +136,9 @@ O ruleset do `master` exige PR atualizado com a base e CI verde antes do merge (
 
 O Gabriel escolhe o lote; uma sessão orquestradora abre uma sessão na nuvem por issue, com o prompt `/pegar-issue <ID>`. O Gabriel conversa com a orquestradora pelo celular ou pelo computador: ela leva até ele as perguntas e os prints dos agentes e devolve as respostas às sessões.
 
-- **Máximo de 5 agentes simultâneos.** O gargalo é a revisão de PRs e as respostas a Needs Decision, não a quantidade de agentes.
+O passo a passo executável, com os scripts de validação combinada, espera da CI e prints, está na skill `/orquestrar` (`.claude/skills/orquestrar/SKILL.md`). O estado de cada lote fica no Linear.
+
+- **Máximo de 8 agentes simultâneos**, em issues sem arquivos em comum. Sessão com PR entregue e parada não conta. O gargalo é a revisão de PRs e as respostas a Needs Decision, não a quantidade de agentes.
 - **Relay para uma sessão na nuvem.** A orquestradora retoma uma sessão com uma Routine sem agenda, criada só para isso:
   1. `create_trigger` com o `persistent_session_id` da sessão e a mensagem no `prompt`, sem `cron_expression` nem `run_once_at`;
   2. `fire_trigger`;
@@ -146,7 +152,7 @@ O Gabriel escolhe o lote; uma sessão orquestradora abre uma sessão na nuvem po
   - `status` diferente de `allowed`;
   - uso excedente (`isUsingOverage`).
 
-  Parar é interromper todas as sessões, não disparar nenhuma nova e registrar o motivo. O estado e os detalhes operacionais ficam no documento de orquestração do Linear.
+  Parar é interromper todas as sessões, não disparar nenhuma nova e registrar o motivo. O estado fica no documento de orquestração do Linear; o procedimento, na skill `/orquestrar`.
 - **Ferramentas cobradas à parte ficam fora** (ex.: Firecrawl no modo Alexandria).
 
 ---

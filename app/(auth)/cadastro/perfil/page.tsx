@@ -6,7 +6,7 @@ import { createProfile, checkUsername, suggestUsername } from "@/app/(auth)/acti
 import { createClient } from "@/src/lib/supabase/client";
 import { AuthFormContainer } from "@/src/components/auth/AuthFormContainer";
 import { AuthFormHeader } from "@/src/components/auth/AuthFormHeader";
-import { AvatarUpload } from "@/src/components/auth/AvatarUpload";
+import { AvatarUpload } from "@/src/components/ui/AvatarUpload";
 import { FormInput } from "@/src/components/ui/FormInput";
 import { Button } from "@/src/components/ui/Button";
 import { Alert } from "@/src/components/ui/Alert";
@@ -87,7 +87,7 @@ export default function ProfilePage() {
       setUsernameError(undefined);
     } else {
       setUsernameStatus("taken");
-      setUsernameError(result.error ?? "Username já está em uso");
+      setUsernameError(result.error ?? "Nome de usuário já está em uso");
     }
   }, []);
 
@@ -161,7 +161,7 @@ export default function ProfilePage() {
 
         <div>
           <FormInput
-            label="Username"
+            label="Nome de usuário"
             name="username"
             type="text"
             value={username}

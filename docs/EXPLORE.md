@@ -28,6 +28,9 @@ As siglas são as mesmas do `docs/DOMAIN.md` > "Fontes" e da `docs/NAVIGATION.md
 | **DEC-EXP-2** | Resposta do Gabriel na issue desta spec (30/09): confirma a EX27 ("Tenho interesse" só enquanto há categoria livre e o jogador não tem inscrição na competição) e a EL15 |
 | **DEC-EXP-3** | Decisão do Gabriel na issue do SearchField e da contagem nas Tabs (30/09): os escopos da busca usam as **Tabs do DS**, e não o SegmentedControl. As Tabs não pedem variante nova e, com o texto ampliado (WCAG 1.4.4 e 1.4.10), rolam em vez de cortar. Medido com a Arimo a 393px: as três abas com contagem ocupam 120, 131 e 110px; no SegmentedControl, cada segmento igual tem 93px para o texto, e "Competições 1" (99,6px) sairia cortado |
 | **DEC-EXP-4** | Decisão do Gabriel na issue da vitrine e da página da organização (30/09): na página da organização, o ranking entre temporadas aparece na lista, no fim, na ordem da EX8; "Ver encerradas (N)" fica só com os torneios passados |
+| **DEC-EXP-5** | Decisão do Gabriel na issue do contato e dos blocos por categoria da página da competição (30/09): quem ainda não tem inscrição na competição vê o "Como se inscrever" completo, no topo, logo abaixo do cabeçalho; quem já tem inscrição numa categoria e ainda tem categoria livre vê uma versão compacta, abaixo da lista de categorias |
+| **DEC-EXP-6** | Decisão do Gabriel na issue da página mínima do torneio (30/09): o torneio que já aconteceu não mostra os blocos de inscrição ("Como se inscrever" e "Tenho interesse"), pelo mesmo motivo que o tira da vitrine (EX8) |
+| **DEC-EXP-7** | Decisão do Gabriel na issue da página mínima do torneio (01/10), sobre os prints: no torneio, "Data e local" vem logo abaixo do cabeçalho, antes do "Como se inscrever", porque a data decide se dá para ir; o ranking segue a DEC-EXP-5. O torneio encerrado mantém a linha "Este torneio já aconteceu." |
 | **WCAG-253** | WCAG 2.2, critério 2.5.3 "Label in Name": o nome acessível contém o rótulo visível |
 | **APG-BUTTON** | WAI-ARIA Authoring Practices, padrão "Button": num botão de alternar, o rótulo não muda com o estado; se o rótulo muda, não se usa `aria-pressed` |
 | **LEIT** | Leitura do agente desta spec. Todas foram confirmadas pelo Gabriel: EL1 a EL14 na DEC-EXP, EL15 e a junção da EX27 na DEC-EXP-2. O mapa está na seção 10 |
@@ -118,7 +121,7 @@ Os escopos, o que cada um busca e o escopo inicial são da N32. Esta seção def
   - **Arenas:** nome que começa pelo termo antes de cidade que começa pelo termo; empate em ordem alfabética.
 
   [DEC-EXP EL7]
-- **EX17. O item de jogador** (PlayerListItem): avatar, nome completo e @username; na linha de apoio, "Amigo", ou a competição em comum ("Rankin · Masculino B"), ou nada. O item de competição e o de arena são os da vitrine (EX10, EX11). [PROF PF4; DEC-EXP EL8]
+- **EX17. O item de jogador** (PlayerListItem): avatar, nome completo e @username; na linha de apoio, "Amigo", ou a competição em comum ("Ranking Arena Mangaba · Masculino B"), ou nada. O item de competição e o de arena são os da vitrine (EX10, EX11). [PROF PF4; DEC-EXP EL8]
 
   **Por quê a competição em comum:** dois "Lucas" no mesmo beta são prováveis. A competição separa o adversário do homônimo sem abrir o perfil.
 - **EX18. Até 20 resultados, com "Mostrar mais"** no fim da lista. A contagem total é anunciada ("12 jogadores encontrados") numa região `aria-live="polite"` (NAV 10.3; WCAG 4.1.3). [DEC-EXP-2 EL15]
@@ -150,9 +153,11 @@ Toda organização tem página, qualquer que seja o tipo (arena, clube, federaç
 
 ## 6. Página da competição: como se inscrever
 
-A página é da `RANKING.md` (RK17). A NAVIGATION (N33) decidiu que dois blocos entram logo abaixo do cabeçalho para quem ainda pode se inscrever. Esta seção define quando eles aparecem e o que mostram.
+A página é da `RANKING.md` (RK17). A NAVIGATION (N33) decidiu que a página tem dois blocos para quem ainda pode se inscrever. Esta seção define quando eles aparecem, onde e o que mostram.
 
 - **EX26. "Como se inscrever" aparece enquanto houver categoria da competição em que o jogador não tem inscrição ativa**, venha ele de onde vier (N33). Um jogador pode jogar mais de uma categoria (R2), então estar inscrito numa não esconde o bloco. Quem tem inscrição ativa em todas as categorias não vê o bloco. [NAV N33; R2; DEC-EXP EL9]
+
+  **Onde o bloco fica:** quem ainda não tem inscrição na competição vê o bloco completo, logo abaixo do cabeçalho, com o "Tenho interesse". Quem já tem inscrição numa categoria e ainda tem categoria livre vê uma versão compacta, abaixo da lista de categorias: o mesmo contato (EX28), sem o "Tenho interesse" (EX27). Para quem já joga a competição, a posição nas categorias vem antes do convite para outra. [DEC-EXP-5]
 - **EX27. "Tenho interesse" aparece nas mesmas condições da EX26, e só enquanto o jogador não tem nenhuma inscrição ativa na competição.** Depois da primeira inscrição, o botão some, e o interesse já marcado fica guardado para a métrica de conversão (EX31). [DEC-EXP EL9, EL12; DEC-EXP-2]
 
   **Por que o interesse some antes do "Como se inscrever":** o interesse é por competição (EX31), não por categoria. Quem já está inscrito numa categoria já é da competição; o interesse dele não mede procura nova. O "Como se inscrever" continua, porque ele ainda pode entrar em outra categoria.
@@ -174,6 +179,10 @@ A página é da `RANKING.md` (RK17). A NAVIGATION (N33) decidiu que dois blocos 
 ### 6.3 Torneio
 
 - **EX34. A página do torneio não tem spec ainda** (NAV N9). Para o Explorar funcionar com um torneio na vitrine, o mínimo é: cabeçalho (organização e nome), data e local, categorias e os dois blocos desta seção. O resto (confrontos, resultados) é da spec do torneio. [NAV N9; DEC-EXP EL14]
+
+  **Torneio que já aconteceu não mostra "Como se inscrever" nem "Tenho interesse":** não há mais em que se inscrever, o mesmo motivo que o tira da vitrine (EX8). "Já aconteceu" segue os "Termos" (seção 1): o dia do fim, em Brasília, ficou para trás. A entrada da área "Administrar" continua, para o admin. [DEC-EXP-6]
+
+  **No torneio, "Data e local" vem antes do "Como se inscrever":** logo abaixo do cabeçalho, porque a data decide se dá para ir. O bloco completo fica logo abaixo dele; o compacto continua abaixo das categorias. É a exceção do torneio à posição da EX26, que vale para o ranking. No torneio que já aconteceu, "Data e local" diz "Este torneio já aconteceu.", porque os blocos de inscrição somem. [DEC-EXP-7]
 
 ---
 

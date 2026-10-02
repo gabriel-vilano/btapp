@@ -3,6 +3,7 @@
 
 type E2eEnv = {
   supabaseUrl: string;
+  publishableKey: string;
   secretKey: string;
   mailpitUrl: string;
 };
@@ -16,6 +17,7 @@ export function getE2eEnv(): E2eEnv {
 
   return {
     supabaseUrl,
+    publishableKey: requireVar("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"),
     secretKey: requireVar("E2E_SUPABASE_SECRET_KEY"),
     mailpitUrl: requireVar("E2E_MAILPIT_URL"),
   };

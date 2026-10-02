@@ -30,7 +30,7 @@ const REASON_OPTIONS = CONTEST_REASONS.map((reason) => ({ value: reason, label: 
  * Folha de contestar (docs/RESULTS.md §4.2, RG15): diz o que acontece depois,
  * pede o motivo, obrigatório, e, com "placar diferente", o placar lembrado,
  * opcional. Montada só enquanto aberta, então sempre começa em branco.
- * @example {open && <ContestDialog format="one_set_of_6" voice={voice} userSide="b" competitionName="Ranking BH" … />}
+ * @example {open && <ContestDialog format="one_set_of_6" voice={voice} userSide="b" competitionName="Ranking Arena Mangaba" … />}
  */
 export function ContestDialog({ format, voice, userSide, competitionName, error, onClose, onContest }: ContestDialogProps) {
   const [reason, setReason] = useState<ContestReason | null>(null);

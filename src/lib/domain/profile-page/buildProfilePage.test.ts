@@ -1,16 +1,20 @@
 import { describe, expect, it } from 'vitest';
 import { mockDomain, mockEntities, mockProfileDomain } from '@/src/mocks/domain';
 import { buildProfilePage } from './buildProfilePage';
-import type { ProfilePageData, ProfileSection } from './types';
+import type { ProfileLinks, ProfilePageData, ProfileSection } from './types';
 
 // Página do perfil (docs/PROFILE.md) montada sobre os mocks do domínio, vista
 // pelo Lucas.
 
 const { players } = mockEntities;
 const NOW = new Date().toISOString();
+// Rota de teste com prefixo próprio: prova que o href vem de `links`, não de uma rota fixa
+const links: ProfileLinks = {
+  rankingHref: (categoryId, seasonId) => `/teste/${categoryId}${seasonId === undefined ? '' : `@${seasonId}`}`,
+};
 
 function pageOf(username: string, viewerId = players.lucas.id): ProfilePageData {
-  const page = buildProfilePage(mockProfileDomain, { username, viewerId, now: NOW });
+  const page = buildProfilePage(mockProfileDomain, { username, viewerId, now: NOW, links });
   if (page === null) throw new Error(`Teste: perfil '${username}' não montou`);
   return page;
 }
@@ -22,7 +26,7 @@ function dataOf<T>(section: ProfileSection<T>): T {
 
 describe('buildProfilePage', () => {
   it('@username inexistente: null, para a tela "Jogador não encontrado"', () => {
-    expect(buildProfilePage(mockProfileDomain, { username: 'ninguem', viewerId: players.lucas.id, now: NOW })).toBeNull();
+    expect(buildProfilePage(mockProfileDomain, { username: 'ninguem', viewerId: players.lucas.id, now: NOW, links })).toBeNull();
   });
 
   it('próprio perfil: relação "self", sem bloco "Vocês" e com a melhor posição (PF3, PF14)', () => {
@@ -53,14 +57,14 @@ describe('buildProfilePage', () => {
       competition_name: mockEntities.ranking.name,
       category_name: 'Masculino B',
       partner_name: 'Thiago',
-      href: `/ranking/${mockEntities.rankingCategories.masculinoB.id}`,
+      href: `/teste/${mockEntities.rankingCategories.masculinoB.id}`,
     });
   });
 
   it('bloco "Vocês" com H2H: partidas e vitórias de quem vê (PF17)', () => {
     expect(dataOf(pageOf(players.pedro.username).versus)).toEqual({
       next_match: null,
-      head_to_head: { href: '/jogadores/pedrohenrique/h2h', matches: 3, viewer_wins: 3 },
+      head_to_head: { href: '/h2h/lucassilva/pedrohenrique', matches: 3, viewer_wins: 3 },
     });
   });
 
@@ -92,7 +96,7 @@ describe('buildProfilePage', () => {
         final_position: 2,
         milestones: [{ type: 'top_n', n: 2 }],
         final_name: 'Saideira',
-        href: expect.stringContaining('?temporada=season-arena-mangaba-2026-1'),
+        href: `/teste/${mockEntities.rankingCategories.masculinoB.id}@season-arena-mangaba-2026-1`,
       }),
     ]);
   });
@@ -105,7 +109,7 @@ describe('buildProfilePage', () => {
   });
 
   it('sem a temporada encerrada nas tabelas, "Temporadas" fica vazia', () => {
-    const page = buildProfilePage(mockDomain, { username: players.lucas.username, viewerId: players.lucas.id, now: NOW });
+    const page = buildProfilePage(mockDomain, { username: players.lucas.username, viewerId: players.lucas.id, now: NOW, links });
     expect(page && dataOf(page.seasons)).toEqual([]);
   });
 });

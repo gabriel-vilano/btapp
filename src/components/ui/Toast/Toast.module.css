@@ -28,13 +28,39 @@
   font-weight: var(--font-weight-bold);
   box-shadow: var(--shadow-strong);
   pointer-events: auto;
-  animation: toast-in var(--motion-duration-medium-1)
-    var(--motion-easing-standard);
+  /* Transição, e não keyframes: toasts empilham e podem sair antes de
+     terminar de entrar. A transição parte do ponto em que o toast está;
+     o keyframe recomeçaria do início e o toast daria um salto. */
+  transition:
+    opacity var(--motion-duration-medium-1) var(--motion-easing-quick-enter),
+    transform var(--motion-duration-medium-1) var(--motion-easing-quick-enter);
+}
+
+/* Ponto de partida da entrada, aplicado só no primeiro estilo do toast */
+@starting-style {
+  .toast {
+    opacity: 0;
+    transform: translateY(var(--spacing-100));
+  }
 }
 
 .toast--exiting {
-  animation: toast-out var(--motion-duration-short-3)
-    var(--motion-easing-quick-exit) forwards;
+  opacity: 0;
+  transform: translateY(var(--spacing-100));
+  transition-duration: var(--motion-duration-short-3);
+  transition-timing-function: var(--motion-easing-quick-exit);
+}
+
+/* Movimento reduzido: o toast só esmaece, sem deslizar. Sem nenhuma
+   transição ele surgiria e sumiria de golpe. */
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    transition-property: opacity;
+  }
+
+  .toast--exiting {
+    transform: none;
+  }
 }
 
 .toast--error {
@@ -108,26 +134,4 @@
 
 .toast__dismiss:focus:not(:focus-visible) {
   outline: none;
-}
-
-@keyframes toast-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes toast-out {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(8px);
-  }
 }

@@ -9,8 +9,8 @@ import * as FormInputStories from "./FormInput.stories";
 <Meta of={FormInputStories} />
 
 <Subtitle>
-  Input de formulário com label, validação inline, senha, telefone, busca e
-  data e hora.
+  Input de formulário com label, validação inline, texto de apoio, senha,
+  telefone, busca, data e data e hora.
 </Subtitle>
 
 **Código-fonte:** [`src/components/ui/FormInput/FormInput.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/FormInput/FormInput.tsx)
@@ -30,20 +30,21 @@ import * as FormInputStories from "./FormInput.stories";
 │ ┌────────────────────────────┐   │
 │ │ lead  field           ico  │   │  ← wrapper (ícone do tipo + input + ícone status/toggle)
 │ └────────────────────────────┘   │
-│ Mensagem de erro                  │  ← error message (quando erro)
+│ Mensagem de erro ou de apoio      │  ← error message (quando erro) ou hint
 └──────────────────────────────────┘
 ```
 
 - **label-row** — label do campo + slot opcional `labelTrailing` à direita (ex: "Esqueci a senha")
 - **wrapper** — contém input + ícone trailing
-- **leading icon** — lupa (`search`) ou calendário (`datetime-local`). Decorativo, só nesses dois tipos
-- **field** — `<input>` com tipos text/email/password/tel/search/datetime-local
+- **leading icon** — lupa (`search`) ou calendário (`date` e `datetime-local`). Decorativo, só nesses tipos
+- **field** — `<input>` com tipos text/email/password/tel/search/date/datetime-local
 - **trailing icon** — check (válido), X (inválido) ou eye toggle (password)
 - **error message** — `role="alert"`, conectada via `aria-describedby`
+- **hint** — texto de apoio opcional, também ligado por `aria-describedby`. Com erro, a mensagem de erro toma o lugar dele
 
 ## Tipos
 
-`FormInput` aceita `text`, `email`, `password`, `tel`, `search` e `datetime-local`. O tipo afeta a validação nativa do browser, o teclado virtual no celular e o preenchimento automático.
+`FormInput` aceita `text`, `email`, `password`, `tel`, `search`, `date` e `datetime-local`. O tipo afeta a validação nativa do browser, o teclado virtual no celular e o preenchimento automático.
 
 <Canvas of={FormInputStories.AllTypes} />
 
@@ -88,6 +89,12 @@ Lupa à esquerda e tecla "Buscar" no teclado (`enterKeyHint="search"`). O leitor
 `min` e `max` limitam o calendário no Android e no desktop, mas o picker do iOS deixa escolher qualquer data. Por isso a regra (ex.: "no futuro e antes do prazo da rodada") é validada no código, e o erro vem pela prop `error`.
 
 <Canvas of={FormInputStories.DateTimeInvalid} />
+
+### Data
+
+`date`: só a data, com o mesmo calendário nativo e o mesmo ícone à esquerda do `datetime-local`. O valor chega como `AAAA-MM-DD`. Usado na data de nascimento do "Editar perfil" (PF9 do `docs/PROFILE.md`), com `autoComplete="bday"`. Como no `datetime-local`, o iOS ignora `min` e `max` no picker: a regra (ex.: "não pode ser no futuro") é validada no código.
+
+<Canvas of={FormInputStories.BirthDate} />
 
 ## Estados
 
@@ -147,6 +154,12 @@ Slot `labelTrailing` à direita do label — útil pra ações relacionadas como
 
 <Canvas of={FormInputStories.WithLabelTrailing} />
 
+### Com texto de apoio
+
+`hint` explica o campo sem esperar o erro, como o aviso de privacidade da data de nascimento. Quando há erro, ele some e a mensagem de erro aparece no lugar: o campo nunca tem duas linhas abaixo.
+
+<Canvas of={FormInputStories.HintReplacedByError} />
+
 ## Quando usar
 
 - Qualquer campo de formulário de texto, e-mail, senha ou telefone
@@ -158,7 +171,7 @@ Slot `labelTrailing` à direita do label — útil pra ações relacionadas como
 ## Componentes relacionados
 
 - Para **códigos OTP de N dígitos**, use [`OtpInput`](?path=/docs/auth-otpinput--docs) — UI dedicada pra códigos numéricos
-- Para **upload de avatar**, use [`AvatarUpload`](?path=/docs/auth-avatarupload--docs)
+- Para **upload de avatar**, use [`AvatarUpload`](?path=/docs/ui-avatarupload--docs)
 - Para **busca com limpar e carregando**, o SearchField (ainda não existe). Até lá, `type="search"`
 - Para **escolher entre poucas opções fixas de horário** (ex.: sábado ou domingo), [`Chip`](?path=/docs/ui-chip--docs) é mais rápido que abrir um calendário
 - Para **textareas longos**, criar componente próprio quando surgir necessidade — `FormInput` é só pra single-line
@@ -167,12 +180,13 @@ Slot `labelTrailing` à direita do label — útil pra ações relacionadas como
 
 - `<label htmlFor>` associado ao `<input id>` — clicar no label foca o input
 - `aria-invalid` aplicado quando `error` está presente
-- `aria-describedby` conecta input à mensagem de erro
+- `aria-describedby` conecta input à mensagem de erro ou, sem erro, ao texto de apoio (`hint`): o leitor de tela lê os dois com o label
 - Mensagem de erro tem `role="alert"` — leitor de tela anuncia imediatamente
 - Toggle de senha tem `aria-label` dinâmico ("Mostrar senha" / "Ocultar senha")
 - Foco visível via `:focus-visible` (ring azul) no input e no toggle de senha. O input nunca remove o outline no `:focus`
 - `type="search"` dá ao campo o papel `searchbox`. A lupa e o calendário são decorativos (`aria-hidden`): o label já diz o que o campo pede
-- `datetime-local` é operável pelo teclado (setas mudam o segmento) e anunciado pelo leitor de tela com o label. O picker nativo de cada sistema já é acessível ao VoiceOver e ao TalkBack
+- `date` e `datetime-local` são operáveis pelo teclado (setas mudam o segmento) e anunciado pelo leitor de tela com o label. O picker nativo de cada sistema já é acessível ao VoiceOver e ao TalkBack
+- Texto digitado e placeholder em 16px (`body-lg`). Abaixo disso o Safari do iOS dá zoom ao focar o campo, e travar o zoom no viewport bloquearia o pinch no Android ([WCAG 1.4.4](https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html)). Ver `docs/TOKENS.md` > "Texto digitado em campo"
 - Tap target de 48px no input e no toggle de senha ([WCAG 2.5.8](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html) pede 24px; a regra do DS é 48px)
 
 ## Evitar
@@ -183,6 +197,7 @@ Slot `labelTrailing` à direita do label — útil pra ações relacionadas como
 - ❌ **Disabled sem feedback** — se o input está disabled por motivo não-óbvio, expor o motivo (ex: helper text ou Alert)
 - ❌ **Confiar em `min`/`max` do `datetime-local` como validação** — o iOS ignora. Validar no código e mostrar o erro
 - ❌ **`type="number"` para telefone** — tira o `+`, o zero à esquerda e os separadores, e mostra setas de incremento. Telefone é `tel`
+- ❌ **Texto do campo abaixo de 16px** — o iOS dá zoom na página ao focar. Não diminuir o `font-size` do campo para caber mais texto, nem travar o zoom no viewport para compensar
 - ❌ **`required` sem indicação visual** — campos obrigatórios devem ser visualmente diferenciáveis dos opcionais
 
 ## API
@@ -209,6 +224,7 @@ Os ajustes de CSS cobrem o que o iOS e o Chrome fazem por conta própria: valor 
 - [WCAG 1.3.1 — Info and Relationships](https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships.html)
 - [WCAG 3.3.2 — Labels or Instructions](https://www.w3.org/WAI/WCAG21/Understanding/labels-or-instructions.html)
 - [WAI-ARIA — `aria-invalid`](https://www.w3.org/TR/wai-aria-1.1/#aria-invalid)
+- [MDN — `<input type="date">`](https://developer.mozilla.org/docs/Web/HTML/Reference/Elements/input/date)
 - [MDN — `<input type="datetime-local">`](https://developer.mozilla.org/docs/Web/HTML/Reference/Elements/input/datetime-local)
 - [MDN — `inputmode`](https://developer.mozilla.org/docs/Web/HTML/Global_attributes/inputmode) e [`enterkeyhint`](https://developer.mozilla.org/docs/Web/HTML/Global_attributes/enterkeyhint)
 - [HTML — valores de `autocomplete`](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill)

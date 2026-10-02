@@ -1,7 +1,8 @@
 import { MatchVsBlock } from "@/src/components/feed/MatchVsBlock";
 import { CheerBar } from "@/src/components/feed/CheerBar";
 import { MetaInfo } from "@/src/components/feed/MetaInfo";
-import { H2HButton } from "@/src/components/feed/H2HButton";
+import { H2HButton } from "@/src/components/ui/H2HButton";
+import { matchCardH2HHref } from "@/src/components/feed/h2hLink";
 import type { MatchCard as MatchCardData, MatchSide } from "@/src/types/feed";
 
 interface MatchCardProps {
@@ -10,7 +11,7 @@ interface MatchCardProps {
 
 export function MatchCard({ data }: MatchCardProps) {
   const { side_a, side_b, date, location, cheer_a, cheer_b, user_cheer, h2h_count } = data;
-  const showH2H = h2h_count >= 1;
+  const h2hHref = matchCardH2HHref(data);
 
   return (
     <>
@@ -26,7 +27,7 @@ export function MatchCard({ data }: MatchCardProps) {
 
       <MetaInfo date={date} location={location} />
 
-      {showH2H && <H2HButton count={h2h_count} />}
+      {h2hHref !== null && <H2HButton count={h2h_count} href={h2hHref} />}
     </>
   );
 }

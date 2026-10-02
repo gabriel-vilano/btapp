@@ -1,0 +1,74 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as H2HButtonStories from "./H2HButton.stories";
+
+<Meta of={H2HButtonStories} />
+
+<Subtitle>
+  Porta para a página de head-to-head: quantas vezes os lados já se enfrentaram,
+  com o link para o histórico.
+</Subtitle>
+
+**Código-fonte:** [`src/components/ui/H2HButton/H2HButton.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/H2HButton/H2HButton.tsx)
+
+## Visão geral
+
+`H2HButton` leva à página `/h2h/[ladoA]/[ladoB]` (`docs/HEAD_TO_HEAD.md`, HH5). O número é o total de confrontos jogados entre os lados, o mesmo que o resumo da página mostra (HH17). O `href` vem pronto de quem o usa, montado com `h2hPath`: dois @usernames abrem a página de jogadores; duas duplas, a de duplas.
+
+<Canvas of={H2HButtonStories.SeveralMatches} />
+
+## Estados
+
+O texto acompanha o total, no singular e no plural.
+
+### Um confronto
+
+Com 1, o texto fica no singular. Só o card de confronto e a tela da partida mostram o botão com 1: no card de resultado, esse 1 é a própria partida do card, e o botão não aparece.
+
+<Canvas of={H2HButtonStories.OneMatch} />
+
+### Página de jogadores
+
+O mesmo botão, com o `href` de jogador × jogador.
+
+<Canvas of={H2HButtonStories.PlayersPage} />
+
+## Quando usar
+
+Nas quatro portas da página de H2H (HH16):
+
+- Card de confronto definido, a partir de 1 confronto jogado
+- Card de resultado, a partir de 2, contando o do card, e nunca no W.O.
+- Tela da partida em confronto definido, para os jogadores da partida
+- O bloco "Vocês" do perfil tem desenho próprio e usa só a rota, não este componente
+
+## Componentes relacionados
+
+- Para link dentro de um texto, use [`TextLink`](?path=/docs/ui-textlink--docs)
+- Para ação que não navega, use [`Button`](?path=/docs/ui-button--docs)
+
+## Acessibilidade
+
+- É um `<a>` (via `next/link`), não um `<button>`: navegar é link (WCAG 4.1.2). O leitor de tela anuncia "link", e o jogador pode abrir em outra aba
+- O nome acessível é o texto visível, "Já jogaram 3 vezes, veja o H2H". O ícone é decorativo
+- Área tocável de 48px de altura (`--dimension-tap-target-minimum`), com o ring de foco do DS em `:focus-visible`
+
+## Evitar
+
+- ❌ **Botão com 0 confrontos** — "Já jogaram 0 vezes" abre uma página vazia. Quem usa decide se o botão aparece
+- ❌ **Número guardado no card** — o total é derivado na hora, para nunca divergir da página (HH17)
+- ❌ **Montar o `href` à mão** — use `h2hPath`, que põe a dupla em ordem alfabética e dá a cada dupla uma URL só
+
+## API
+
+<ArgTypes of={H2HButtonStories} />
+
+## Decisões de design
+
+**Por que "Button" no nome, se é link?** O nome descreve a forma: um botão de largura total com borda, como os outros do card. A semântica é de link porque o que ele faz é navegar (HH18). Renomear tocaria todos os cards sem mudar nada para o jogador.
+
+## Referências
+
+- `docs/HEAD_TO_HEAD.md`, seção 5 (HH16 a HH18)
+- [WCAG 4.1.2 — Name, Role, Value](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html)
+- [WCAG 2.5.8 — Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
+- `docs/TOKENS.md` > "Acessibilidade — tap target"

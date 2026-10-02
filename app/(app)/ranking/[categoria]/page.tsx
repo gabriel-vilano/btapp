@@ -2,7 +2,12 @@ import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import { RankingScreen, type RankingScreenLinks } from "@/src/components/ranking/RankingScreen";
 import { DetailHeader } from "@/src/components/shell/DetailHeader";
-import { rankingScreen, type RankingScreenModel } from "@/src/lib/domain/ranking-screen";
+import {
+  categorySwitcher,
+  rankingScreen,
+  type CategorySwitcher,
+  type RankingScreenModel,
+} from "@/src/lib/domain/ranking-screen";
 import { mockProfileDomain } from "@/src/mocks/domain";
 import { MOCK_VIEWER_ID, mockRankingRoutes } from "@/src/mocks/rankingRoutes";
 
@@ -17,6 +22,19 @@ function screenLinks(model: RankingScreenModel): RankingScreenLinks {
     rules: mockRankingRoutes.rulesHref(model.competition_id),
     previousSeason: previous && mockRankingRoutes.categoryHref(model.category.id, previous),
   };
+}
+
+// O item da folha leva à temporada padrão da categoria (RK6): sem `?temporada=`
+function switcherFor(model: RankingScreenModel, requestedSeason: string | null, now: string): CategorySwitcher {
+  const request = {
+    competition_id: model.competition_id,
+    category_id: model.category.id,
+    season_id: model.season_id,
+    is_default_season: requestedSeason === null,
+    viewer_id: MOCK_VIEWER_ID,
+    now,
+  };
+  return categorySwitcher(mockProfileDomain, request, (categoryId) => mockRankingRoutes.categoryHref(categoryId));
 }
 
 interface RankingPageProps {
@@ -48,6 +66,7 @@ export default async function RankingPage(props: RankingPageProps) {
         viewerId={MOCK_VIEWER_ID}
         now={now}
         links={screenLinks(model)}
+        categories={switcherFor(model, seasonId, now)}
         scrollToOwnOnOpen={seasonId !== null}
       />
     </>

@@ -4,6 +4,8 @@
 // área. O fuso é o de Brasília, como em `src/lib/formatters.ts`: o horário é
 // o da quadra, não o do aparelho de quem lê.
 
+import { isoToBrasiliaLocal } from "@/src/lib/brasiliaDateTime";
+
 const TIMEZONE = "America/Sao_Paulo";
 
 const weekdayFormatter = new Intl.DateTimeFormat("pt-BR", { weekday: "short", timeZone: TIMEZONE });
@@ -65,4 +67,18 @@ export function formatTournamentDates(startsOn: string, endsOn: string): string 
   }
   if (startMonth === endMonth) return `${day(start)} e ${day(end)} de ${startMonth}`;
   return `${day(start)} de ${startMonth} a ${day(end)} de ${endMonth}`;
+}
+
+// 'YYYY-MM-DD' em Brasília; strings nesse formato se comparam como datas
+function brasiliaDay(iso: string): string {
+  return isoToBrasiliaLocal(iso).slice(0, 10);
+}
+
+/**
+ * Torneio que já aconteceu: o dia do fim, em Brasília, ficou para trás
+ * (docs/EXPLORE.md §1, "Termos"). O que termina às 10h segue aberto até o fim do dia.
+ * @example hasTournamentEnded("2026-10-11T21:00:00.000Z", "2026-10-12T03:30:00.000Z") // true
+ */
+export function hasTournamentEnded(endsOn: string, now: string): boolean {
+  return brasiliaDay(endsOn) < brasiliaDay(now);
 }
