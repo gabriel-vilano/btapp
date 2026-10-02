@@ -409,9 +409,11 @@ Daí acessar `http://<IP-do-dev>:3000` do celular. Em prod tudo funciona.
 
 ### iOS: auto-zoom ao focar inputs
 
-**Sintoma:** iOS Safari/Chrome zoomava ao focar qualquer input porque o `font-size` efetivo era 14px (< 16px).
+**Sintoma:** iOS Safari/Chrome dá zoom na página ao focar um campo cujo `font-size` efetivo é menor que 16px (os campos tinham 14px).
 
-**Solução:** `export const viewport` em `app/layout.tsx` com `maximumScale: 1, userScalable: false`. iOS 10+ ignora `user-scalable: no` para gestos manuais de pinch, então zoom manual continua funcionando — só o auto-zoom no foco é bloqueado.
+**Solução:** texto digitado e placeholder de todo `input`, `textarea` e `select` em `body-lg` (16px), nunca menos (`docs/TOKENS.md` > "Texto digitado em campo"). O `viewport` do `app/layout.tsx` não usa `maximumScale` nem `userScalable: false`, e o `app/layout.test.ts` falha se voltarem.
+
+**Por que não travar o zoom:** era a solução antiga. O Safari do iOS 10+ ignora a trava no pinch, mas o Chrome do Android a respeita e bloqueia o zoom manual, o que falha a WCAG 1.4.4 (Resize Text) e a auditoria `meta-viewport` do Lighthouse.
 
 ### iOS: "sticky hover" em botões com `:hover`
 
