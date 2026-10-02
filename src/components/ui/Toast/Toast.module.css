@@ -1,6 +1,10 @@
 .toast-container {
   position: fixed;
-  bottom: var(--spacing-300);
+  /* A casca (AppShell) define --shell-bottom-offset com a altura da TabBar; fora dela
+     (telas de auth), sobra a área segura do iOS, para não cobrir o indicador de início */
+  bottom: calc(
+    var(--shell-bottom-offset, env(safe-area-inset-bottom, 0px)) + var(--spacing-300)
+  );
   left: 50%;
   transform: translateX(-50%);
   z-index: var(--z-toast);

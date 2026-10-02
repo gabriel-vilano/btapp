@@ -10,6 +10,7 @@ import {
 import { usePathname } from "next/navigation";
 import { createContext, Suspense, useContext, type ElementType, type ReactNode } from "react";
 import type { CountBadgeInfo } from "@/src/components/ui/CountBadge";
+import { ToastProvider } from "@/src/components/ui/Toast";
 import { NavigationRail, TabBar, type NavigationItem } from "@/src/components/ui/TabBar";
 import { MAIN_TABS, mainTabHref, type MainTab } from "@/src/lib/navigation/mainTabs";
 import { isTaskRoute } from "./taskRoutes";
@@ -56,7 +57,10 @@ export function AppShell({ badges, profileAvatar, children }: AppShellProps) {
       </Suspense>
       <div className={shellClass}>
         <NavigationRail items={items} currentValue={tab} className={styles.shell__rail} />
-        <div className={styles.shell__content}>{children}</div>
+        {/* Provider dentro do .shell: o container do toast é fixed e precisa herdar --shell-bottom-offset */}
+        <ToastProvider>
+          <div className={styles.shell__content}>{children}</div>
+        </ToastProvider>
         <TabBar items={items} currentValue={tab} className={styles.shell__tabbar} />
       </div>
     </ShellNavigationContext.Provider>
