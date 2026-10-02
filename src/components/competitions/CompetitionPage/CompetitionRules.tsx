@@ -11,14 +11,14 @@ import {
   superTiebreakNote,
   TIEBREAK_ORDER,
   TIEBREAK_WO_NOTE,
-  type CompetitionPageData,
+  type RankingPageData,
 } from "@/src/lib/domain/competition-page";
 import { SCORING_ANCHOR } from "@/src/lib/navigation/competitionAnchors";
 import styles from "./CompetitionPage.module.css";
 
 export { SCORING_ANCHOR };
 
-type RulesData = Pick<CompetitionPageData, "match_format" | "scoring_rule" | "response_deadline_hours">;
+type RulesData = Pick<RankingPageData, "match_format" | "scoring_rule" | "response_deadline_hours">;
 
 /**
  * Bloco Regras (docs/RANKING.md, RK17 e RK18): formato, pontuação com o

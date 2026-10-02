@@ -1,0 +1,78 @@
+/* Coluna única com largura máxima, como a tela do confronto (N27) */
+.friendly-screen {
+  width: 100%;
+  max-width: var(--dimension-layout-max);
+  margin-inline: auto;
+  padding-bottom: var(--spacing-400);
+}
+
+.friendly-screen__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-300);
+  padding: var(--spacing-200) var(--spacing-page-margin) 0;
+}
+
+.friendly-screen__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+}
+
+.friendly-screen__context {
+  margin: 0;
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-regular);
+}
+
+.friendly-screen__sides {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-50);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.friendly-screen__side {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-100);
+}
+
+.friendly-screen__side-name {
+  min-width: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+  overflow-wrap: anywhere;
+}
+
+.friendly-screen__result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+  /* "Confirmar amistoso" abre a tela já aqui: a âncora não fica sob o cabeçalho fixo */
+  scroll-margin-top: var(--spacing-800);
+}
+
+.friendly-screen__title {
+  margin: 0;
+  color: var(--color-foreground-primary);
+  font-size: var(--text-title-sm-size);
+  line-height: var(--text-title-sm-line-height);
+  letter-spacing: var(--text-title-sm-tracking);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Empilhadas, como as respostas do ranking: a primária em cima (RG10) */
+.friendly-screen__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+}

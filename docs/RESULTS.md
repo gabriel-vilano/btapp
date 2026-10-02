@@ -12,7 +12,7 @@ As siglas de decisão são as do `docs/DOMAIN.md` > "Fontes". As que esta spec u
 
 | Sigla | Conteúdo usado aqui |
 | --- | --- |
-| **DOMAIN** | Regras R9–R16, R29, R36, R38–R44 e a máquina de estados (§3). Agenda do jogador e registro contextual (§4) |
+| **DOMAIN** | Regras R9–R16, R29, R36, R38–R44, R53 e a máquina de estados (§3). Agenda do jogador e registro contextual (§4) |
 | **SCHED** | `docs/SCHEDULING.md`: estados da marcação no confronto, "Data passou sem resultado", tela do admin na partida não realizada (M17) |
 | **CARDS** | `docs/FEED_CARDS.md`: sistema de placar (§3), card de resultado e variações de W.O. e desistência (§4; na desistência, o placar real com o set interrompido rotulado, §4.4), bloco de posição (§8) |
 | **REF-PLACAR** | `docs/discovery/referencias/05-registro-placar.md`: Playtomic (fluxo e validação de set, documentados), cartões de aprovação com prazo (Instacart, Fiverr, Retro, Revolut Business), padrões de entrada numérica, APG Spinbutton |
@@ -219,6 +219,7 @@ A fila do admin reúne o que só ele resolve (R15). Ela mora na **área "Adminis
 | **Contestação** | Em arbitragem (R14) | Arbitrar (§5.1) |
 | **Partida não realizada** | Prazo da rodada sem resultado (R40) ou dupla desfeita (R45) | Decidir (§5.2) |
 | **Confronto de torneio sem resultado** | Confronto definido no torneio cujo horário passou sem resultado (R38, N30) | Lançar (§5.3) |
+| **Empate na última vaga** | Na data de corte, empate em todos os critérios com duplas dos dois lados da última vaga da final (R53). No máximo um por categoria e temporada | Desempatar (§5.5) |
 
 A fila é ordenada pela idade do item, mais antigo primeiro, e cada item mostra a competição, a categoria, a rodada e os lados. **Corrigir e anular** não são itens da fila: partem da tela de uma partida confirmada (§5.4), à qual a área "Administrar" também leva, pela lista de partidas da competição (N31).
 
@@ -249,6 +250,10 @@ Na tela de uma partida confirmada, o admin tem **Corrigir placar** e **Anular re
 
 - **Corrigir** abre o formulário da §3 preenchido. A revisão mostra o antes e o depois e, no ranking, a diferença de pontos de cada lado. O W.O. duplo só aparece quando a partida não teve lançamento (regra do código em `correctResult`).
 - **Anular** pede confirmação com a consequência escrita: "A partida sai da classificação e o card some do feed. Os marcos já conquistados ficam." (R41).
+
+### 5.5 Desempatar a última vaga
+
+A tela lista as duplas empatadas, com os números de cada critério da R37 (iguais, por definição) e quantas vagas sobram para elas. O admin escolhe a ordem das duplas, e a revisão diz quem fica com a vaga. A confirmação escreve a consequência: "A decisão é definitiva e aparece para todos na classificação." Fica registrado quem decidiu e quando; se o admin é de uma das duplas, a tela avisa como na arbitragem (R39). Depois da decisão, as duplas do empate que ficaram com vaga recebem o evento de classificação para a final (R28), e a tabela mostra "Desempate do admin" nas linhas (`RANKING.md` §4.4). Uma correção de placar depois do corte que desfaça o empate tira o efeito da decisão, que fica no registro (R53).
 
 ---
 
@@ -292,6 +297,7 @@ Entrada para a spec de notificações básicas, que decide canal e política, co
 | Lançamento desfeito (RG16) | Os 2 do lado adversário | "Pedro desfez o resultado lançado. O jogo volta a esperar o resultado." |
 | Resultado contestado | O lado de quem lançou | "Lucas contestou o resultado. O admin vai decidir." |
 | Admin decidiu, corrigiu ou anulou | Os 4 | "Ana (admin) corrigiu o placar para 6/3." |
+| Admin desempatou a última vaga (R53) | Os jogadores das duplas empatadas | "Ana (admin) decidiu o empate na última vaga: vocês estão classificados para a Saideira." |
 | Item novo na fila do admin | Os admins da competição | "1 contestação no Ranking Bacuri · Masculino B." |
 | Amistoso lançado | O outro lado | "Pedro registrou um amistoso contra você: 6/4." |
 | Amistoso contestado | Quem lançou e o parceiro | "Lucas não confirmou o amistoso. O resultado foi descartado." |
@@ -340,7 +346,7 @@ Lista para as issues de implementação. **Aqui não se desenha nenhum component
 | --- | --- | --- | --- |
 | **ScoreInput** (set a set, com set interrompido e STB) | 2 | §3.3, §3.4, §5, §6 | Não. É o de maior risco técnico (INV) |
 | **Stepper** (APG Spinbutton) | 1 | Set interrompido (§3.4) | Não |
-| **SidePicker** | 2 | Lados do amistoso (§6.1) | Não |
+| **SidePicker** | 2 | Lados do amistoso (§6.1) | Sim, `ui/SidePicker` |
 | **Chip** em grupo de escolha única (radio) | 1 | Games de quem perdeu o set (RG12), motivo da contestação (RG15) | Sim, `ui/Chip` |
 | **SegmentedControl** | 1 | "Como terminou" (§3.2), modalidade (§6.1) | Sim, `ui/SegmentedControl` |
 | **StatusTimeline** | 2 | Acompanhar (§4.3), atos do admin (RG11) | Sim, `ui/StatusTimeline` |

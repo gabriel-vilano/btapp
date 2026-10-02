@@ -21,6 +21,8 @@ type TextLinkAsButtonProps = TextLinkBaseProps & {
 
 type TextLinkProps = TextLinkAsLinkProps | TextLinkAsButtonProps;
 
+// `className` e `children` saem do `rest`: espalhado depois de `className={classNames}`,
+// o `className` cru do consumidor apagava as classes do link (ENG-113).
 export function TextLink(props: TextLinkProps) {
   const { children, className, block } = props;
 
@@ -33,9 +35,15 @@ export function TextLink(props: TextLinkProps) {
     .join(" ");
 
   if ("href" in props && props.href !== undefined) {
-    const { href, onClick: _onClick, block: _block, ...rest } = props;
-    void _onClick;
-    void _block;
+    const {
+      href,
+      onClick: _onClick,
+      block: _block,
+      className: _className,
+      children: _children,
+      ...rest
+    } = props;
+    void [_onClick, _block, _className, _children];
     return (
       <Link href={href} className={classNames} {...rest}>
         {children}
@@ -43,9 +51,16 @@ export function TextLink(props: TextLinkProps) {
     );
   }
 
-  const { onClick, type = "button", href: _href, block: _block, ...rest } = props;
-  void _href;
-  void _block;
+  const {
+    onClick,
+    type = "button",
+    href: _href,
+    block: _block,
+    className: _className,
+    children: _children,
+    ...rest
+  } = props;
+  void [_href, _block, _className, _children];
   return (
     <button type={type} onClick={onClick} className={classNames} {...rest}>
       {children}

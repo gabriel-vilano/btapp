@@ -114,8 +114,10 @@ export interface Season {
 }
 
 /**
- * Etapa da temporada, com prazo. Cada rodada tem um sorteio por categoria, que
- * cria as partidas (R7, R30). A rodada fecha no prazo (R46).
+ * Etapa da temporada, com prazo. Os confrontos saem do sorteio da rodada, que
+ * cria as partidas (R7, R30). Uma categoria pode ter mais de um sorteio na
+ * rodada: o desfazer (R51) e a categoria sorteada depois (docs/ROUND_DRAW.md,
+ * SR14). A rodada fecha no prazo (R46).
  */
 export interface Round {
   id: string;
@@ -123,6 +125,19 @@ export interface Round {
   number: number; // começa em 1
   starts_at: string; // ISO 8601
   deadline: string; // ISO 8601
+}
+
+/**
+ * Sorteio desfeito de uma categoria numa rodada (R51). As partidas são
+ * apagadas, então é este registro que conta aos jogadores que o sorteio foi
+ * refeito ("Sorteio refeito por Ana · 01/10, 10h40", ROUND_DRAW.md SR12).
+ */
+export interface UndoneRoundDraw {
+  round_id: string;
+  category_id: string;
+  drawn_at: string; // ISO 8601: o created_at das partidas apagadas
+  undone_by: string; // player_id do admin
+  undone_at: string; // ISO 8601
 }
 
 export type CategoryGender = 'M' | 'F' | 'mixed';

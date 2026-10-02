@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { brasiliaLocalToIso, isoToBrasiliaLocal } from "./brasiliaDateTime";
+import { brasiliaLocalToIso, brasiliaToday, isoToBrasiliaLocal } from "./brasiliaDateTime";
 
 describe("brasiliaLocalToIso", () => {
   it("lê o horário digitado como o de Brasília", () => {
@@ -25,5 +25,13 @@ describe("isoToBrasiliaLocal", () => {
 
   it("recusa data inválida dizendo o que recebeu", () => {
     expect(() => isoToBrasiliaLocal("sábado")).toThrow(/sábado/);
+  });
+});
+
+describe("brasiliaToday", () => {
+  // 02h em UTC ainda é o dia anterior em Brasília (UTC-3)
+  it("usa o dia de Brasília, não o de UTC", () => {
+    expect(brasiliaToday(new Date("2026-10-01T02:00:00Z"))).toBe("2026-09-30");
+    expect(brasiliaToday(new Date("2026-10-01T03:00:00Z"))).toBe("2026-10-01");
   });
 });

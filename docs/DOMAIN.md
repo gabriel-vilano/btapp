@@ -33,7 +33,9 @@ As decisões foram tomadas pelo Gabriel em 26/09/2026 e estão registradas como 
 | **PESQ-RV** | Regras públicas do Rankin e do Vila do Tênis (BH), que usam o LetzPlay legado com a mesma configuração: `letzplay.me/rankin/rankings/55513/about`, `letzplay.me/vila-tenis-bt/rankings/56068/about`, `viladotenis.com/area-do-atleta` | Referências reais de jogos por rodada, prazo para combinar a data, regra de desistência, regra de W.O. por oferta de datas |
 | **DSC** | `docs/DISCOVERY.md` e `docs/discovery/` | Evidência de mercado citada nas regras e nas perguntas |
 | **DEC-H2H** | Issue da spec de head-to-head (`docs/HEAD_TO_HEAD.md`), respostas do Gabriel às perguntas HQ1–HQ4 (30/09/2026) | A página de H2H tem dois tipos, jogador × jogador e dupla × dupla; o card de duplas abre a de duplas. Emenda a R19 |
+| **DEC-SORTEIO** | Issue da spec do fluxo do sorteio (`docs/ROUND_DRAW.md`), comentário "Decisões do Gabriel" (01/10/2026) | Aprovação da spec com as recomendações de SQ1 a SQ5; quem sorteou e quando ficam na partida; o desfazer apaga as partidas e fica registrado à parte; prazo depois do corte da final permitido, com aviso |
 | **DEC-NAV-A** | Issue da spec de navegação, comentário "Decisões do Gabriel (29/09, ~19:00 UTC)" | Organização com tipo, cidade e contato (a arena do Explorar é a do tipo arena); "Tenho interesse" como relação entre jogador e competição |
+| **DEC-EMPATE** | Issue da decisão do admin no empate total, comentário "Decisão do Gabriel (01/10, ~06:45 UTC)" | Empate em todos os critérios vira posição compartilhada; o admin desempata só a última vaga da final, na data de corte, e a decisão é definitiva. Substitui a DEC-RESP P4 no último critério da R37 |
 
 ---
 
@@ -47,8 +49,8 @@ As entidades estão agrupadas pelo papel que cumprem. Os nomes em **negrito** s�
 | --- | --- | --- |
 | **Jogador** | Pessoa com conta no LetzPlay. Tem nome, @username, foto, **data de nascimento opcional**, **telefone opcional** (só para a marcação de jogos, ver `docs/SCHEDULING.md`) e o contador `total_matches`. O cadastro não coleta gênero | R18, R19, R26, R33 |
 | **Amizade** | Conexão bilateral entre dois jogadores: um pede, o outro aceita. Só a amizade aceita gera evento no feed | R24 |
-| **Admin da competição** | Jogador com permissões **numa competição específica** (ranking ou torneio): lançar o sorteio, lançar o resultado do torneio, arbitrar contestação, decidir a partida não realizada e corrigir ou anular placar. É um papel mínimo, não a visão do organizador | R15, R38–R41 |
-| **Interesse** | Marca privada de um jogador numa competição em que ele não está inscrito ("Tenho interesse"). Mede a demanda: não avisa o organizador nem aparece para outros jogadores | — |
+| **Admin da competição** | Jogador com permissões **numa competição específica** (ranking ou torneio): lançar o sorteio, lançar o resultado do torneio, arbitrar contestação, decidir a partida não realizada, corrigir ou anular placar e desempatar a última vaga da final. É um papel mínimo, não a visão do organizador | R15, R38–R41, R53 |
+| **Interesse** | Marca privada de um jogador numa competição em que ele não está inscrito ("Tenho interesse"). Mede a demanda: não avisa o organizador nem aparece para outros jogadores. Quando o jogador se inscreve na competição, o botão some, mas o interesse fica guardado, para a métrica "Interesse que virou inscrição" (`EXPLORE.md`, EX31) | — |
 
 ### Competição
 
@@ -59,7 +61,7 @@ As entidades estão agrupadas pelo papel que cumprem. Os nomes em **negrito** s�
 | **Ranking** | Competição contínua, dividida em temporadas. Os confrontos saem de sorteios por rodada; o jogador não escolhe o adversário. Guarda a **regra de pontuação**, o **formato da partida** (um só), o **prazo de resposta** (padrão 48h), o número de **jogos por rodada** e a **política de troca de parceiro** | R7, R9, R14, R17, R29 |
 | **Torneio** | Competição discreta, de 1 ou 2 dias. **No MVP, o app não gera a chave:** o torneio tem inscrição, confronto e resultado lançado pelo admin, e a chave vem de fora do app. Guarda um **formato padrão**, que o admin troca na partida que fugir dele. A final de uma temporada de ranking é um torneio comum | R27, R29, R31, R38 |
 | **Temporada** | Período de um ranking (em geral, um semestre). Guarda o **nome da final** (livre: "Saideira", "Finals"), a **quantidade de classificados** e a **data de corte**. Os pontos somam dentro da temporada | R8, R27, R28 |
-| **Rodada** | Etapa da temporada, com **prazo**. Cada rodada tem um sorteio, e cada unidade competidora joga nela o número de partidas definido pelo ranking (Rankin: 4; Vila: 2) | R7, R40, R46 |
+| **Rodada** | Etapa da temporada, com **prazo**. Os confrontos saem do sorteio da rodada, em geral um só para todas as categorias; o desfazer e a categoria sorteada depois podem somar outros sorteios na mesma rodada (`ROUND_DRAW.md`, SR12 e SR14). Cada unidade competidora joga nela o número de partidas definido pelo ranking (Rankin: 4; Vila: 2) | R7, R40, R46, R51 |
 | **Categoria** | Divisão de uma competição por **gênero + nível + idade** (ex.: "Masculino B", "Mista C 40+"), com a **modalidade** simples ou duplas. Uma competição tem várias categorias; a classificação é por categoria | R3, R4, R33 |
 | **Regra de pontuação** | Tabela de valores de um ranking: vitória, derrota, por game vencido, por game perdido, W.O. e desistência. Nasce com o padrão da R9 | R9–R11, R36 |
 | **Formato da partida** | Como a partida se decide: **1 set de 8**, **1 set de 6** ou **2 sets de 6 com super tiebreak**. É da competição: o ranking tem um só; o torneio tem um padrão, e a partida pode ter outro. No amistoso, quem lança escolhe. Valida o placar digitado e completa o placar na desistência | R11, R29 |
@@ -76,7 +78,7 @@ As entidades estão agrupadas pelo papel que cumprem. Os nomes em **negrito** s�
 
 | Termo | Definição | Regras |
 | --- | --- | --- |
-| **Sorteio** | Ato do admin que gera, no app e na hora, os confrontos de uma rodada do ranking. É aleatório e evita repetir confronto na temporada. O sorteio não é guardado como entidade: ele **cria as partidas** | R7, R30 |
+| **Sorteio** | Ato do admin que gera, no app e na hora, os confrontos de uma rodada do ranking. É aleatório e evita repetir confronto na temporada. O sorteio não é guardado como entidade: ele **cria as partidas**, e cada partida guarda **quem sorteou e quando**. O desfazer apaga as partidas e fica registrado à parte (R51). O fluxo está em `docs/ROUND_DRAW.md` | R7, R30, R51 |
 | **Confronto** | Uma partida definida e ainda sem resultado. Guarda a **data acordada** e a arena, quando existem. É o que o card "Confronto definido" mostra, no ranking e no torneio | R7, R34, R35 |
 | **Proposta de horário** | Oferta de um lado ao outro, ligada a um confronto: de **2 a 3 opções** de data e hora, cada uma com arena opcional. O outro lado aceita uma, e ela vira a data do confronto. Guarda autor, status e os momentos de criação e de resposta, e serve de evidência numa disputa de W.O. | R34, R40 |
 | **Partida** | Encontro entre duas unidades competidoras. Numa competição, é de uma categoria e nasce do sorteio (ranking) ou do cadastro do confronto (torneio). No amistoso, nasce do lançamento do resultado e pode ser cancelada por quem lançou enquanto está pendente. Segue a máquina de estados da seção 3 | R7, R12–R16, R42, R43 |
@@ -84,7 +86,7 @@ As entidades estão agrupadas pelo papel que cumprem. Os nomes em **negrito** s�
 | **Tipo de resultado** | **Normal**, **W.O.**, **W.O. duplo** ou **desistência**. Cada tipo pontua e conta de um jeito. O amistoso só termina em normal ou desistência | R9–R12, R36, R44 |
 | **Placar** | Sequência de sets, cada um com os games dos dois lados; no formato de 2 sets, o terceiro é um super tiebreak (STB). Na desistência, guarda os games jogados, incluindo o set interrompido, e o placar completado pelo formato é o que pontua. No W.O. e no W.O. duplo não há placar | R9, R11, R29 |
 | **Pontuação** | Pontos que cada lado ganha numa partida confirmada de ranking, calculados pela regra do ranking | R8–R11, R36 |
-| **Classificação** | Ordem das unidades competidoras de uma categoria numa temporada, pela soma dos pontos, com desempate fixo. Existe **só por unidade competidora**: não há tabela por jogador | R1, R8, R37, R46 |
+| **Classificação** | Ordem das unidades competidoras de uma categoria numa temporada, pela soma dos pontos, com desempate fixo. O empate em todos os critérios divide a posição. Existe **só por unidade competidora**: não há tabela por jogador | R1, R8, R37, R46, R52 |
 
 ### Feed
 
@@ -122,6 +124,10 @@ erDiagram
     JOGADOR ||--o{ PROPOSTA_HORARIO : "propõe"
     INSCRICAO ||--o{ MARCO : "conquista"
     RODADA ||--o{ FOTO_CLASSIFICACAO : "fim da rodada"
+    RODADA ||--o{ SORTEIO_DESFEITO : "histórico (R51)"
+    CATEGORIA ||--o{ SORTEIO_DESFEITO : "de"
+    TEMPORADA ||--o{ DESEMPATE_ADMIN : "última vaga (R53)"
+    CATEGORIA ||--o{ DESEMPATE_ADMIN : "de"
     JOGADOR ||--o{ AMIZADE : "pede ou aceita"
     JOGADOR ||--o{ EVENTO_FEED : "é ator de"
     JOGADOR ||--o{ INTERESSE : "marca"
@@ -174,7 +180,7 @@ erDiagram
         int desistencia_desistente "padrão 50"
     }
     ADMIN_COMPETICAO {
-        string papel "sortear, lançar, arbitrar, corrigir"
+        string papel "sortear, lançar, arbitrar, corrigir, desempatar"
     }
     JOGADOR {
         string nome
@@ -200,6 +206,7 @@ erDiagram
         string vencedor "lado A ou B"
         datetime data_acordada "opcional"
         string arena "opcional"
+        string sorteado_por "ranking: o admin que sorteou (R51)"
         string lancado_por
         string motivo_contestacao "R49"
         string placar_lembrado "opcional, só com placar diferente (R49)"
@@ -207,6 +214,16 @@ erDiagram
         string arbitrado_por
         int pontos_lado_a
         int pontos_lado_b
+    }
+    DESEMPATE_ADMIN {
+        string ordem "as inscrições empatadas, na ordem escolhida"
+        string decidido_por
+        datetime decidido_em
+    }
+    SORTEIO_DESFEITO {
+        string desfeito_por
+        datetime sorteado_em
+        datetime desfeito_em
     }
     LANCAMENTO_DESFEITO {
         string lancado_por
@@ -255,7 +272,8 @@ erDiagram
 - **Inscrição** é onde os pontos moram. A mesma dupla pode estar inscrita em dois rankings, com duas classificações independentes (R2).
 - **Os lados da partida** apontam para a inscrição quando a partida é de uma competição, e direto para a unidade competidora no amistoso, que não tem categoria nem inscrição. Numa partida, só uma das duas ligações existe.
 - **Classificação** não aparece como entidade: é a soma de `pontos_lado_*` das partidas confirmadas de cada inscrição, ordenada pela R37. A **foto da classificação** guarda a posição de cada inscrição no fim de cada rodada, para o evento "subiu N" e os marcos (R46, R47).
-- **Sorteio e confronto** também não aparecem: o sorteio cria partidas, e o confronto é a partida no estado "Confronto definido". A data acordada mora na partida, venha ela de uma proposta aceita ou de uma data informada (R35).
+- **Sorteio e confronto** também não aparecem: o sorteio cria partidas, cada uma com quem sorteou (`sorteado_por`) e quando (a criação da partida), e o confronto é a partida no estado "Confronto definido". Só o desfazer do sorteio vira registro próprio, o **sorteio desfeito**, porque as partidas dele são apagadas (R51). A data acordada mora na partida, venha ela de uma proposta aceita ou de uma data informada (R35).
+- **Desempate do admin** é o único registro de ordem escolhida à mão: existe só para o empate total que atravessa a linha de corte, na data de corte, com no máximo um por temporada e categoria (R53). Os outros empates totais não guardam nada: a posição é compartilhada (R52).
 - **Temporada → competição (final)** é opcional: a temporada pode apontar para o torneio que é a final dela.
 - **A arena da partida** é texto, não entidade (R34). A arena do Explorar é outra coisa: a organização do tipo arena (NAV N34). As duas não precisam estar ligadas no MVP.
 - **Interesse** liga um jogador a uma competição em que ele não está inscrito ("Tenho interesse", NAV N33). É privado: serve para medir demanda, não avisa o organizador e não aparece para outros jogadores.
@@ -284,6 +302,7 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
 
   O app usa o formato para **validar o placar digitado** e para **completar o placar na desistência** (R11). [DEC-RESP, DEC-FIM P15, P18]
 - **R30. O sorteio é aleatório e não repete confronto na temporada.** O confronto só se repete quando não sobra combinação nova na categoria. **A partida cancelada (cancelamento ou anulação) não conta como confronto feito:** o jogo não aconteceu, e as duas duplas podem ser sorteadas de novo. Mesmo assim, o mesmo confronto não sai duas vezes na mesma rodada: com menos adversários que jogos na rodada, cada dupla enfrenta cada outra uma vez, e a rodada fica com menos jogos. [DEC-RESP, DEC-SORT, DEC-SORT-BORDA]
+- **R51. O admin desfaz o sorteio de uma categoria enquanto nenhum jogador agiu em nenhuma partida dela** (propor horário, informar data ou lançar resultado). As partidas são **apagadas**, não canceladas: o confronto nunca existiu, então não entra no histórico da R30, no H2H nem na agenda. O desfazer fica registrado à parte, com rodada, categoria, quem desfez e quando, e os jogadores da categoria são avisados. O novo sorteio mostra que o anterior foi desfeito. [DEC-SORTEIO; `ROUND_DRAW.md` SR12]
 - **R31. No MVP, o app não gera a chave do torneio.** O torneio tem inscrição, confronto e resultado lançado pelo admin (R38), e a chave vem de fora do app. O único sorteio feito no app é o da rodada do ranking. No primeiro beta, os confrontos do torneio entram por carga do time; quando entrar o primeiro torneio real, o admin passa a cadastrá-los. [DEC-RESP, DEC-FIM P14]
 - **R32. No primeiro beta, as inscrições entram por carga do time** (Rankin e Vila), a partir da lista do organizador. [DEC-RESP]
 - **R33. A idade da categoria conta pelo ano de nascimento.** "40+" admite quem faz 40 anos no ano da temporada, como na CBT. O jogador pode informar a data de nascimento no perfil (opcional), e o app a usa para validar a idade na inscrição. Sem a data, o jogador pode entrar numa categoria com idade no primeiro beta, e o organizador garante a elegibilidade, porque as inscrições vêm da lista dele (R32). Rever quando a inscrição tiver fluxo no app. [DEC-RESP, DEC-FIM P17]
@@ -309,18 +328,21 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
   Exemplo, 2 sets de 6: o desistente venceu o 1º set por 6/4 e desistiu perdendo o 2º por 2/3. O vencedor completa o 2º set em 6/2, e a partida chega a 1 set a 1, então o STB vai para ele (1/0). O vencedor fez 4 + 6 + 1 = 11 games e perdeu 6 + 2 = 8, e leva 100 + 22 − 16 = **106**. O desistente fez 8 e perdeu 11, e leva 50 + 16 − 22 = **44**.
 - **R12. Toda partida com resultado tem um tipo: normal, W.O., W.O. duplo ou desistência.** O tipo define a pontuação (R9–R11, R36), a contagem (R18) e o H2H (R19). [DEC-PESQ, DEC-RESP P3]
 - **R36. W.O. duplo vale 0 e 0** e não conta como jogo nem no H2H. Só o admin aplica, numa partida não realizada (R40). [DEC-RESP P3]
-- **R37. Desempate, nesta ordem:** pontos → confronto direto (só quando exatamente duas unidades empatam e já se enfrentaram) → vitórias → saldo de games → decisão do admin. A lista é fixa no MVP. [DEC-RESP P4]
+- **R37. Desempate, nesta ordem:** pontos → confronto direto (só quando exatamente duas unidades empatam e já se enfrentaram) → vitórias → saldo de games. A lista é fixa no MVP. Se todos os critérios empatam, as unidades dividem a posição (R52), e só o empate na última vaga da final vai para o admin (R53). A versão anterior terminava em "decisão do admin" para todo empate total. [DEC-RESP P4, DEC-EMPATE]
 
   Como cada critério se lê: [DEC-DESEMP]
   - **O W.O. não vale como confronto direto** (como no H2H, R19), **mas conta no critério "vitórias"**.
   - **Com mais de um jogo entre as duas unidades, o confronto direto vai para quem venceu mais.** No empate (ex.: 1 a 1), a decisão passa para "vitórias".
   - **O confronto direto só vale no empate em pontos entre exatamente duas unidades.** Um empate de três que se reduz a duas por outro critério não volta ao confronto direto: segue na ordem da lista.
+- **R52. O empate em todos os critérios da R37 divide a posição.** As unidades empatadas ficam com a mesma posição, em ordem alfabética entre elas, e a seguinte pula as posições divididas (duas empatadas em 3º: a próxima é a 5ª). A posição compartilhada vale em todo lugar que usa posição: a tabela, a foto do fim da rodada (R46), o "subiu N" e os marcos (R47). Duas duplas empatadas em 1º no fechamento da rodada viram Líder, as duas. Nenhum critério escondido (ordem de inscrição, sorteio) decide a ordem, porque o marco é permanente (R25). [DEC-EMPATE]
+
+  **Por quê:** o empate total ("mesmo V, mesmo D, mesmo saldo", pela R9) é comum no começo da temporada, e o próximo resultado de qualquer das unidades o desfaz. Uma decisão do admin para cada um caducaria em dias e encheria a fila. A ordem dentro do empate só muda algo de fato na vaga da final (R53).
 
 ### Ciclo do resultado
 
 - **R13. No ranking, qualquer jogador da partida lança o resultado, e qualquer jogador do lado adversário confirma ou contesta.** Em duplas, qualquer um dos 4 lança, e responde qualquer um dos 2 adversários: vale a primeira resposta. [DEC-DOM, DEC-RESP P2]
 - **R14. Sem resposta no prazo, o resultado é confirmado sozinho. Só a contestação vai para o admin.** O prazo é configurável por ranking, com padrão de **48h**. Quem cala consente, e o admin continua podendo corrigir depois (R15). Revê a DEC-SORT, em que a falta de resposta também ia para o admin. [DEC-DOM, DEC-RESP P1]
-- **R15. O admin é um jogador com permissões numa competição, ranking ou torneio:** lança o sorteio (ranking), lança o resultado (torneio), arbitra contestação, decide a partida não realizada e corrige ou anula placar, inclusive depois da confirmação. Não é a visão do organizador. [DEC-DOM, DEC-SORT, DEC-RESP P2]
+- **R15. O admin é um jogador com permissões numa competição, ranking ou torneio:** lança o sorteio (ranking), lança o resultado (torneio), arbitra contestação, decide a partida não realizada, corrige ou anula placar, inclusive depois da confirmação, e desempata a última vaga da final (R53). Não é a visão do organizador. [DEC-DOM, DEC-SORT, DEC-RESP P2]
 - **R16. Só partida confirmada pontua, conta e vira evento de resultado.** A partida é confirmada pelo adversário, pelo prazo (R14), pelo admin ou, no torneio, pelo lançamento do admin. [DEC-DOM, DEC-RESP; gatilho do card em `FEED_CARDS.md` §4]
 - **R38. No torneio, o admin lança o resultado, sem confirmação.** O resultado lançado já nasce confirmado. [DEC-RESP P2]
 - **R39. O admin pode arbitrar a própria partida**, e fica registrado, visível para os envolvidos, quem arbitrou. [DEC-RESP P11]
@@ -356,12 +378,13 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
 - **R25. Marcos são eventos permanentes de primeira vez.** Nada no feed pode ser desmentido na rodada seguinte, nem por uma correção de placar (R41). Quais marcos existem e em que escopo estão na R47. [DEC-FINAL, DEC-FEED]
 - **R26. Textos do feed são neutros em gênero** ("agora são amigos", "Liderança"), porque o cadastro não coleta gênero. [DEC-CARDS D7]
 - **R46. A tabela atualiza ao vivo; o evento "subiu N" compara o fim da rodada com o fim da anterior.** A tela de ranking reflete cada confirmação, e a posição de cada inscrição no fim de cada rodada fica guardada para a comparação. **A rodada fecha no prazo dela:** o que o admin decidir depois (R40) entra na comparação da rodada seguinte, e o feed não espera a fila do admin. [DEC-RESP P8, DEC-FIM P19]
-- **R47. Os marcos são Líder e Top N, contados pela primeira vez em cada temporada.** N é a quantidade de classificados da final, ou 10 quando a temporada não tem final. Se os dois acontecem na mesma rodada, sai um evento só, o de Líder. Do mesmo jeito, o marco substitui o "subiu" da mesma inscrição na mesma rodada: o card de marco já mostra a posição e quanto subiu. Em rodada sem marco, o "subiu" sai normalmente. Como a classificação é da dupla (R1), o marco é da dupla, e o card precisa mostrar os dois jogadores. [DEC-RESP P9; o marco no lugar do "subiu": decisão do Gabriel na ENG-48]
+- **R47. Os marcos são Líder e Top N, contados pela primeira vez em cada temporada.** N é a quantidade de classificados da final, ou 10 quando a temporada não tem final. Com posição compartilhada (R52), todas as unidades empatadas na posição contam. Se os dois acontecem na mesma rodada, sai um evento só, o de Líder. Do mesmo jeito, o marco substitui o "subiu" da mesma inscrição na mesma rodada: o card de marco já mostra a posição e quanto subiu. Em rodada sem marco, o "subiu" sai normalmente. Como a classificação é da dupla (R1), o marco é da dupla, e o card precisa mostrar os dois jogadores. [DEC-RESP P9; o marco no lugar do "subiu": decisão do Gabriel na ENG-48]
 
 ### Final da temporada
 
 - **R27. A temporada guarda nome da final, quantidade de classificados e data de corte.** A final é um torneio comum. [DEC-FINAL]
 - **R28. A vaga na final é por posição na data de corte**, nunca por garantia matemática. Depois do corte, cada classificado ganha o evento "Classificado para a [nome da final]". Inscrição encerrada não tem direito à vaga (R45). [DEC-FINAL, DEC-RESP P7; DSC, oportunidade 2.3]
+- **R53. O admin desempata só o empate total que atravessa a linha de corte, na data de corte.** Quando a posição compartilhada (R52) tem unidades dos dois lados da última vaga, o empate vira item da fila do admin ("Empate na última vaga"), e ele escolhe a ordem das unidades empatadas. A decisão é **definitiva**: vale até o fim da temporada, porque a classificação do corte já é congelada (R28). Fica registrada com quem decidiu e quando, e é visível para todos: as linhas empatadas passam a mostrar a ordem do admin, com a indicação de que veio de uma decisão dele (como a R39), e as unidades envolvidas são avisadas. Os classificados sem dúvida recebem o evento de classificação na hora (R28); as unidades do empate, só depois da decisão. Se uma correção de placar depois do corte (R41) desfizer o empate, a decisão perde efeito: fica registrada, mas não é aplicada. Antes da data de corte e fora da última vaga, o empate fica como posição compartilhada, sem item na fila. [DEC-EMPATE]
 
 ---
 
@@ -385,6 +408,7 @@ stateDiagram-v2
     Definida --> Aguardando: jogador lança o resultado (ranking)
     Definida --> Confirmada: admin lança o resultado (torneio)
     Definida --> NaoRealizada: prazo da rodada sem resultado
+    Definida --> [*]: admin desfaz o sorteio, a partida é apagada (R51)
     Aguardando --> Confirmada: adversário confirma
     Aguardando --> Confirmada: prazo sem resposta
     Aguardando --> Arbitragem: adversário contesta, com motivo (R49)
@@ -435,6 +459,8 @@ stateDiagram-v2
 | Cancelada | Não | Não | Nenhum. Se era confirmada, o card de resultado some (R41). No amistoso, só a pendente pode ser cancelada, por quem lançou (R43) |
 | Descartada (amistoso) | Não | Não | Nenhum |
 
+**Desfazer do sorteio** apaga a partida em "Confronto definido" antes de qualquer ação de jogador: ela sai sem estado final, e o que fica é o registro do sorteio desfeito (R51).
+
 **Correção pelo admin depois da confirmação** recalcula os pontos da partida e, com eles, a classificação. O card de resultado acompanha, e os marcos ficam (R41).
 
 ---
@@ -478,6 +504,7 @@ Não há pergunta aberta. As perguntas levantadas ao modelar foram respondidas p
 
 - **Primeira rodada** (DEC-RESP): P1 → R14; P2 → R13, R38; P3 → R36, R40; P4 → R37; P5 → R33; P6 → R9, R11; P7 → R45; P8 → R46; P9 → R47; P10 → R41; P11 → R39; P12 → R34, R35; P13 → R30, R32.
 - **Segunda rodada** (DEC-FIM): P14 → R31; P15 → R29; P16 → R43; P17 → R33; P18 → R29; P19 → R46.
+- **Empate total** (DEC-EMPATE): o último critério da R37 → R37, R52, R53.
 
 As leituras do agente que derivavam das decisões foram confirmadas na DEC-FIM: o W.O. lançado segue o ciclo normal (R10), o placar da desistência guarda os games jogados (R11), a contestação descarta o amistoso (R43), os marcos saem no fim da rodada (R47) e o estado "Cancelada" cobre cancelamento e anulação.
 
@@ -488,6 +515,6 @@ Pergunta nova de domínio entra aqui com opções, trade-offs e recomendação, 
 ## 7. Riscos para acompanhar no beta
 
 - **Confirmação automática.** A R14 resolve o resultado parado por meses, a queixa mais documentada do legado (DSC, oportunidade 2.1), mas deixa passar um lançamento errado quando o adversário não abre o app. Medir o percentual de resultados confirmados pelo adversário, pelo prazo e pelo admin, e quantas correções o admin faz depois da confirmação.
-- **Fila do admin.** Agora ela recebe só contestações, partidas não realizadas e pendentes de dupla desfeita. Medir o tamanho da fila por rodada e o tempo até a decisão.
+- **Fila do admin.** Agora ela recebe só contestações, partidas não realizadas, pendentes de dupla desfeita e o empate na última vaga da final (no máximo um por categoria e temporada, R53). Medir o tamanho da fila por rodada e o tempo até a decisão.
 - **Repetição no sorteio.** Em categorias pequenas, a R30 esgota as combinações rápido: com 6 duplas há 15 confrontos possíveis, e o Rankin sorteia 4 jogos por dupla por rodada (12 partidas). A partir da segunda rodada, repetir é inevitável, e a regra já prevê isso.
 - **Amistoso pendente sem prazo.** A R43 não confirma sozinha, então amistosos sem resposta podem acumular na agenda. Medir quantos ficam pendentes por mais de 7 dias.

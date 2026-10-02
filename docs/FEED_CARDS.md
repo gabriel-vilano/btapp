@@ -310,7 +310,8 @@ Exemplo da R11, 2 sets de 6: Pedro vence o 1º set por 6/4 e desiste perdendo o 
 ## 5. Card — Confronto definido
 
 **JTBD:** Job 3  
-**Gatilho:** chave sorteada pela organização e confrontos divulgados  
+**Gatilho:** sorteio da rodada (ranking, `ROUND_DRAW.md`) ou confronto cadastrado (torneio)  
+**Visibilidade:** público (`DOMAIN.md` R21, R24): vai para o feed dos amigos dos jogadores, um card por partida  
 **Variações:** simples, duplas
 
 ### 5.1 Anatomia — Simples

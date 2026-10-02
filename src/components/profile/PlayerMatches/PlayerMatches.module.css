@@ -1,0 +1,12 @@
+/* Coluna única com largura máxima, como o perfil de onde a lista abre (PF23, N27) */
+.matches {
+  width: 100%;
+  max-width: var(--dimension-layout-max);
+  margin-inline: auto;
+  padding-top: var(--spacing-100);
+  padding-bottom: var(--spacing-400);
+}
+
+.matches__row-skeleton {
+  padding: var(--spacing-200) var(--spacing-page-margin) 0;
+}

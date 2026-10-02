@@ -13,7 +13,8 @@
     "test:e2e": "playwright test",
     "test:all": "vitest run",
     "storybook": "storybook dev -p 6006 --host 0.0.0.0",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
@@ -39,6 +40,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.2",
     "eslint-plugin-storybook": "^10.3.6",
+    "patch-package": "8.0.1",
     "playwright": "^1.59.1",
     "storybook": "^10.3.6",
     "typescript": "^5",

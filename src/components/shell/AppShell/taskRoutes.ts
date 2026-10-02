@@ -3,6 +3,8 @@
 // desmonta, então a aba de origem e o "Voltar" continuam valendo (N10).
 const TASK_ROUTE_PATTERNS: readonly RegExp[] = [
   /^\/jogos\/[^/]+\/resultado\/?$/, // lançar o resultado (N18)
+  /^\/jogos\/amistoso\/?$/, // registrar amistoso (N19)
+  /^\/perfil\/editar\/?$/, // editar perfil (PROFILE.md PF9)
 ];
 
 /**

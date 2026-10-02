@@ -1,6 +1,10 @@
 // Rotas que o perfil abre (docs/NAVIGATION.md, N8, N10, N19; docs/PROFILE.md).
+// A da classificação não mora aqui: usa o slug da categoria, que o domínio não
+// guarda, e chega por `ProfileLinks`.
 // As rotas são propostas da spec de navegação: o nome final é da issue de
 // cada tela. Ficam num lugar só para a troca ser uma linha.
+
+import { h2hPath } from '../h2h/route';
 
 export const OWN_PROFILE_PATH = '/perfil';
 export const EDIT_PROFILE_PATH = '/perfil/editar'; // fluxo modal (PF9, N4)
@@ -26,20 +30,14 @@ export function playerMatchesPath(username: string): string {
   return `${playerPath(username)}/partidas`;
 }
 
-/** Página de H2H entre quem vê e o jogador (PF17). A rota final é da spec de H2H. */
-export function headToHeadPath(username: string): string {
-  return `${playerPath(username)}/h2h`;
+/**
+ * Página de H2H jogador × jogador, com quem vê à esquerda (PF17; docs/HEAD_TO_HEAD.md, HH5).
+ * Ex.: `headToHeadPath('lucassilva', 'pedrohenrique')` → "/h2h/lucassilva/pedrohenrique".
+ */
+export function headToHeadPath(viewerUsername: string, username: string): string {
+  return h2hPath([viewerUsername], [username]);
 }
 
 export function matchPath(matchId: string): string {
   return `/jogos/${segment(matchId)}`;
-}
-
-/**
- * Classificação da categoria (RK1); com a temporada, a encerrada (RK21).
- * Ex.: `rankingPath('cat-x', 'season-1')` → "/ranking/cat-x?temporada=season-1".
- */
-export function rankingPath(categoryId: string, seasonId?: string): string {
-  const base = `/ranking/${segment(categoryId)}`;
-  return seasonId === undefined ? base : `${base}?temporada=${segment(seasonId)}`;
 }

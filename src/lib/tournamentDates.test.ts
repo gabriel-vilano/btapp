@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatNextMatch, formatTournamentDates } from "./tournamentDates";
+import { formatNextMatch, formatTournamentDates, hasTournamentEnded } from "./tournamentDates";
 
 // Horários em UTC; Brasília é UTC−3 (sem horário de verão desde 2019)
 
@@ -34,5 +34,19 @@ describe("formatTournamentDates", () => {
     expect(formatTournamentDates("2026-10-31T11:00:00.000Z", "2026-11-01T21:00:00.000Z")).toBe(
       "31 de outubro a 1º de novembro",
     );
+  });
+});
+
+describe("hasTournamentEnded", () => {
+  it("no dia do fim o torneio continua aberto, mesmo depois do último jogo", () => {
+    expect(hasTournamentEnded("2026-10-11T13:00:00.000Z", "2026-10-12T02:00:00.000Z")).toBe(false);
+  });
+
+  it("no dia seguinte ao fim, em Brasília, já aconteceu", () => {
+    expect(hasTournamentEnded("2026-10-11T21:00:00.000Z", "2026-10-12T03:30:00.000Z")).toBe(true);
+  });
+
+  it("torneio futuro não aconteceu", () => {
+    expect(hasTournamentEnded("2026-10-11T21:00:00.000Z", "2026-10-01T12:00:00.000Z")).toBe(false);
   });
 });

@@ -21,9 +21,9 @@ function agendaOf(playerId: string, domain: AgendaDomain = mockDomain, now = NOW
 describe('playerAgenda', () => {
   it('distribui as partidas do Lucas pelas 4 seções, cada uma numa só (N13)', () => {
     const agenda = agendaOf(players.lucas.id);
-    expect(matchIds(agenda.your_turn)).toEqual(['match-arena-mangaba-mb-r3-1']);
+    expect(matchIds(agenda.your_turn)).toEqual(['match-arena-mangaba-mb-r3-1', 'match-friendly-pedro-lucas']);
     expect(matchIds(agenda.upcoming)).toEqual(['match-copa-tucum-mb-final']);
-    expect(matchIds(agenda.waiting)).toEqual(['match-arena-mangaba-mb-r3-4']);
+    expect(matchIds(agenda.waiting)).toEqual(['match-arena-mangaba-mb-r3-4', 'match-friendly-lucas-rafael-andre-bruno']);
     const all = [...agenda.your_turn, ...agenda.upcoming, ...agenda.waiting, ...agenda.history].map((e) => e.match_id);
     expect(new Set(all).size).toBe(all.length);
   });
@@ -41,7 +41,7 @@ describe('playerAgenda', () => {
 
   it('"Aguardando" deixa quem não tem prazo por último', () => {
     const agenda = agendaOf(players.pedro.id);
-    expect(agenda.waiting.map((entry) => entry.situation.kind)).toEqual(['with_admin']);
+    expect(agenda.waiting.map((entry) => entry.situation.kind)).toEqual(['with_admin', 'friendly_awaiting']);
   });
 
   it('jogo marcado que passou com remarcação do próprio lado pendente: lançar resultado vence (N13)', () => {

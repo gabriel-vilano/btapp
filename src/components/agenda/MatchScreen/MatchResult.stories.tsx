@@ -3,6 +3,7 @@ import { expect, screen, waitFor, within } from "storybook/test";
 import { AppHeader } from "@/src/components/ui/AppHeader";
 import { MatchScreen } from "./MatchScreen";
 import { RESULT_MATCHES } from "./resultStoryFixtures";
+import { storyStandings } from "./standingsStoryFixtures";
 import { OUTSIDER_ID, STORY_HISTORIES, STORY_NOW, storyData } from "./storyFixtures";
 
 // O resultado na tela do confronto (docs/RESULTS.md §4), vista pelo Pedro, do
@@ -37,7 +38,7 @@ const meta = {
     },
   },
   args: {
-    data: storyData(STORY_HISTORIES.empty, { match: RESULT_MATCHES.awaitingYou }),
+    data: storyData(STORY_HISTORIES.empty, { match: RESULT_MATCHES.awaitingYou, standings: storyStandings(RESULT_MATCHES.awaitingYou) }),
     now: STORY_NOW,
     clock,
     createId,
@@ -53,7 +54,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const withMatch = (match: (typeof RESULT_MATCHES)[keyof typeof RESULT_MATCHES], overrides = {}) => ({
-  data: storyData(STORY_HISTORIES.empty, { match, ...overrides }),
+  data: storyData(STORY_HISTORIES.empty, { match, standings: storyStandings(match), ...overrides }),
 });
 
 export const AwaitingYourAnswer: Story = {
@@ -102,6 +103,9 @@ export const ConfirmFlow: Story = {
     // O botão sumiu com o estado antigo: o foco vai para o estado novo
     await waitFor(() => expect(title).toHaveFocus());
     await expect(canvas.getByText(/^Confirmado por você · qui, 01\/10, 9h$/)).toBeInTheDocument();
+    // O impacto no ranking aparece já na confirmação (RG18). Na derrota, Pedro e Thiago caem de 3º para 4º
+    await expect(canvas.getByText("+46 pts nesta partida")).toBeInTheDocument();
+    await expect(canvas.getByText(/^Você e Thiago estão em 4º/)).toHaveTextContent("Você e Thiago estão em 4º no Masculino B Caiu 1 posição");
     await userEvent.click(canvas.getByText("Histórico do resultado"));
     await expect(canvas.getByText("confirmou o resultado")).toBeInTheDocument();
   },
@@ -189,6 +193,19 @@ export const ConfirmedByOpponent: Story = {
   },
 };
 
+export const RankingImpact: Story = {
+  args: withMatch(RESULT_MATCHES.confirmedByOpponent),
+  play: async ({ canvas }) => {
+    // Quem não confirmou vê o mesmo bloco ao abrir a partida (RG18): a vitória leva de 3º a 2º
+    await expect(await canvas.findByText("+106 pts nesta partida")).toBeInTheDocument();
+    const position = canvas.getByText(/^Você e Thiago estão em 2º/);
+    await expect(position).toHaveTextContent("Você e Thiago estão em 2º no Masculino B Subiu 1 posição");
+    const link = canvas.getByRole("link", { name: "Ver ranking" });
+    await expect(link).toHaveAttribute("href", "/ranking/story-masculino-b?temporada=story-season-2026-2#minha-posicao");
+    await expect(link.getBoundingClientRect().height).toBeGreaterThanOrEqual(48);
+  },
+};
+
 export const ConfirmedByDeadline: Story = {
   args: withMatch(RESULT_MATCHES.confirmedByDeadline),
   play: async ({ canvas }) => {
@@ -223,6 +240,39 @@ export const Undone: Story = {
   play: async ({ canvas }) => {
     await expect(await canvas.findByRole("heading", { name: "Lançamento desfeito" })).toBeInTheDocument();
     await expect(canvas.getByText(/^Você desfez o lançamento /)).toBeInTheDocument();
+  },
+};
+
+export const ConfirmedPublicViewer: Story = {
+  args: withMatch(RESULT_MATCHES.confirmedByOpponent, { viewerId: OUTSIDER_ID }),
+  play: async ({ canvas }) => {
+    await expect(await canvas.findByRole("heading", { name: "Resultado confirmado" })).toBeInTheDocument();
+    // O impacto é de quem jogou: quem é de fora vê o placar e vai ao ranking pela competição
+    await expect(canvas.queryByText(/nesta partida/)).not.toBeInTheDocument();
+    await expect(canvas.queryByRole("link", { name: "Ver ranking" })).not.toBeInTheDocument();
+    // Sem data acordada, a marcação encerrada não tem nada público: a seção some,
+    // em vez de dizer "Sem data marcada" abaixo do resultado (M18)
+    await expect(canvas.queryByRole("region", { name: "Marcação" })).not.toBeInTheDocument();
+    await expect(canvas.queryByText("Sem data marcada")).not.toBeInTheDocument();
+  },
+};
+
+export const ConfirmedPublicViewerWithDate: Story = {
+  args: {
+    data: storyData(STORY_HISTORIES.agreed, {
+      match: RESULT_MATCHES.confirmedByOpponent,
+      standings: storyStandings(RESULT_MATCHES.confirmedByOpponent),
+      viewerId: OUTSIDER_ID,
+    }),
+  },
+  play: async ({ canvas }) => {
+    await expect(await canvas.findByRole("heading", { name: "Resultado confirmado" })).toBeInTheDocument();
+    // A data e a arena ficam como registro, sem "Jogo marcado" nem histórico (M18)
+    const scheduling = within(canvas.getByRole("region", { name: "Marcação" }));
+    await expect(scheduling.getByRole("heading", { name: "Marcação encerrada" })).toBeInTheDocument();
+    await expect(scheduling.getByText("Sábado, 3 de outubro")).toBeInTheDocument();
+    await expect(scheduling.queryByText("Histórico da marcação")).not.toBeInTheDocument();
+    await expect(canvas.queryByRole("heading", { name: "Jogo marcado" })).not.toBeInTheDocument();
   },
 };
 

@@ -8,6 +8,7 @@ import {
   validateUsername,
   validateAvatar,
   validateAvatarType,
+  validateBirthDate,
   AVATAR_MAX_BYTES,
 } from "./validations";
 
@@ -203,5 +204,37 @@ describe("validateAvatarType", () => {
   it("rejeita HEIC", () => {
     const photo = new File(["x"], "foto.heic", { type: "image/heic" });
     expect(validateAvatarType(photo)).toEqual({ valid: false, error: "Formato aceito: JPG, PNG ou WebP" });
+  });
+});
+
+describe("validateBirthDate", () => {
+  const TODAY = "2026-10-01";
+
+  it("vazio é válido: a data é opcional", () => {
+    expect(validateBirthDate("", TODAY)).toEqual({ valid: true });
+  });
+
+  it("aceita uma data real no passado e o próprio dia de hoje", () => {
+    expect(validateBirthDate("1990-05-12", TODAY)).toEqual({ valid: true });
+    expect(validateBirthDate(TODAY, TODAY)).toEqual({ valid: true });
+  });
+
+  it("rejeita data que não existe no calendário", () => {
+    expect(validateBirthDate("1990-02-30", TODAY)).toEqual({ valid: false, error: "Data inválida. Use dia, mês e ano" });
+  });
+
+  it("rejeita formato fora de AAAA-MM-DD", () => {
+    expect(validateBirthDate("12/05/1990", TODAY).valid).toBe(false);
+  });
+
+  it("rejeita data no futuro", () => {
+    expect(validateBirthDate("2026-10-02", TODAY)).toEqual({
+      valid: false,
+      error: "A data de nascimento não pode ser no futuro",
+    });
+  });
+
+  it("rejeita ano antes de 1900, que é erro de digitação", () => {
+    expect(validateBirthDate("0198-05-12", TODAY)).toEqual({ valid: false, error: "Confira o ano de nascimento" });
   });
 });

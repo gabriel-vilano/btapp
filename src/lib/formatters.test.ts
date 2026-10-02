@@ -7,6 +7,7 @@ import {
   formatEnrollmentCount,
   formatEventMoment,
   formatInitials,
+  formatPlayedDay,
   formatTimestamp,
 } from "./formatters";
 
@@ -172,5 +173,21 @@ describe("formatTimestamp", () => {
 
   it("rejeita data inválida citando o valor recebido", () => {
     expect(() => formatTimestamp("ontem")).toThrow("recebi 'ontem'");
+  });
+
+  it("conta a partir do `now` recebido, sem olhar o relógio", () => {
+    const later = NOW + 3 * 86_400_000;
+    expect(formatTimestamp(days(0), later)).toBe("há 3 dias");
+  });
+});
+
+describe("formatPlayedDay", () => {
+  it("escreve dia da semana e data, sem hora, no fuso de São Paulo", () => {
+    expect(formatPlayedDay("2026-09-30T15:00:00Z")).toBe("qua, 30/09");
+    expect(formatPlayedDay("2026-10-01T02:00:00Z")).toBe("qua, 30/09");
+  });
+
+  it("recusa data inválida dizendo o valor recebido", () => {
+    expect(() => formatPlayedDay("ontem")).toThrow("recebi 'ontem'");
   });
 });

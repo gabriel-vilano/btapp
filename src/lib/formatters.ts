@@ -108,6 +108,27 @@ export function formatEventMoment(iso: string): string {
   return `${weekday}, ${part("day")}/${part("month")}, ${time}`;
 }
 
+const playedDayFormatter = new Intl.DateTimeFormat("pt-BR", {
+  weekday: "short",
+  day: "2-digit",
+  month: "2-digit",
+  timeZone: TIMEZONE,
+});
+
+/**
+ * Dia de um jogo sem hora, como o amistoso, que guarda só a data informada.
+ * Ex.: "2026-09-30T15:00:00Z" → "qua, 30/09".
+ */
+export function formatPlayedDay(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) {
+    throw new RangeError(`Dia inválido: recebi '${iso}', esperado data ISO 8601`);
+  }
+  const parts = playedDayFormatter.formatToParts(date);
+  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === type)?.value ?? "";
+  return `${part("weekday").replace(".", "")}, ${part("day")}/${part("month")}`;
+}
+
 const countFormatter = new Intl.NumberFormat('pt-BR');
 
 /**
@@ -132,13 +153,14 @@ const DAY_MS = 24 * HOUR_MS;
  * Semana a partir de 7 dias, mês (30 dias) a partir de 30, ano (365 dias) a partir de 365.
  * Os meses param em 11: de 330 a 364 dias ainda é "há 11 meses", nunca "há 12 meses".
  * Ex.: "há 5min", "há 3h", "há 6 dias", "há 2 semanas", "há 5 meses", "há 1 ano".
+ * `now` fixa o relógio, para o texto do servidor e o da hidratação concordarem.
  */
-export function formatTimestamp(iso: string): string {
+export function formatTimestamp(iso: string, now: number = Date.now()): string {
   const time = new Date(iso).getTime();
   if (Number.isNaN(time)) {
     throw new RangeError(`Timestamp inválido: recebi '${iso}', esperado data ISO 8601`);
   }
-  const diff = Date.now() - time;
+  const diff = now - time;
   if (diff < HOUR_MS) return `há ${Math.floor(diff / MINUTE_MS)}min`;
   if (diff < DAY_MS) return `há ${Math.floor(diff / HOUR_MS)}h`;
   return `há ${formatElapsedDays(Math.floor(diff / DAY_MS))}`;

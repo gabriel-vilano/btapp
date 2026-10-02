@@ -1,0 +1,30 @@
+.phone-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-300);
+  padding: var(--spacing-200) var(--spacing-page-margin) var(--spacing-400);
+}
+
+.phone-form__intro {
+  margin: 0;
+  color: var(--color-foreground-secondary);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+}
+
+.phone-form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-300);
+}
+
+/* Apagar fica separado do salvar: é outra ação, com a explicação dela */
+.phone-form__delete {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+  padding-top: var(--spacing-300);
+  border-top: var(--border-width-medium) solid var(--color-border-subtle);
+}

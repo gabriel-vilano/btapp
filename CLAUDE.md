@@ -43,6 +43,7 @@ Documentamos o que é estável. Decisões, padrões, princípios, hurdles, conve
 - `docs/EXPLORE.md` — aba Explorar: vitrine de competições e arenas, busca com três escopos, página da organização, "Como se inscrever" e "Tenho interesse" (EX1…)
 - `docs/HEAD_TO_HEAD.md` — head-to-head: páginas jogador × jogador e dupla × dupla, resumo, confrontos, forma recente, pontos de entrada, estados e critérios de aceite do H2HSummary e do FormGuide (HH1…)
 - `docs/RANKING.md` — tela de ranking: classificação por categoria, troca de categoria, própria linha fixada, delta, linha de corte da final, página da competição, estados e critérios de aceite do RankingRow e do ZoneDivider (RK1…)
+- `docs/ROUND_DRAW.md` — fluxo do sorteio da rodada: confirmação, casos que não fecham, resultado, desfazer e o que cada jogador recebe (SR1…)
 - `docs/TOKENS.md` — design system
 - `docs/GIT_WORKFLOW.md` — workflow de branches, PR, versionamento
 - `docs/AGENT_WORKFLOW.md` — estrutura do Linear e coordenação de agentes em paralelo
@@ -371,7 +372,17 @@ O Claude deve sinalizar proativamente quando:
 - **`play` das stories:** esperar a renderização com `findBy*`, não com `getBy*` logo no início. Não depender de rolagem suave, animação ou timer sem controle (rolar com `behavior: "instant"`). Antes de rolar numa tela que usa IntersectionObserver, esperar o primeiro aviso com `firstIntersectionDelivered` (`.storybook/playHelpers.ts`). Nunca espera fixa (`setTimeout`, `sleep`): o que se espera é uma condição, com `findBy*` ou `waitFor`. Story nova ou alterada com `play` passa pela prova de estabilidade da skill `/pegar-issue` (passo 4) antes do push, e a CI repete 5 vezes as stories alteradas pelo PR
 - **E2E:** Playwright em `e2e/`, contra o build de produção e um Supabase local (`supabase start`) com as migrations aplicadas do zero; o código de verificação dos e-mails vem do Mailpit. Roda no job E2E da CI. Sessões de agente não têm Docker: validam pelo resultado desse job no PR, não localmente. Cada teste cria usuário com e-mail único (`uniqueEmail`), e os helpers recusam qualquer Supabase que não seja local
 - **Seletores E2E:** preferir `getByLabel`/`getByRole` com `exact: true`. Alerta sempre filtrado pelo texto (`getByRole("alert").filter({ hasText })`): o anunciador de rota do Next também tem `role="alert"`
+- **Falha de E2E na CI:** o screenshot e o trace ficam no artefato, que os agentes não conseguem baixar. Por isso o `e2e/app-shell.spec.ts` usa o `e2e/support/diagnostics.ts`: na falha, escreve no log do job a URL, os erros do navegador e as respostas com erro, a árvore de acessibilidade e o HTML da área de conteúdo. Spec nova que navegue pelo app pode usar o mesmo `beforeEach`/`afterEach`
 - **Bug fix → teste de regressão.** Todo bug corrigido ganha um teste que reproduziria o bug, para evitar regressão futura
+
+### Skills de UI
+
+Cinco skills em `.claude/skills/` cuidam da interface. Quando rodam:
+
+- **`revisar-interface`** (checklist de acessibilidade, formulário, toque e copy, com achados em `file:line`): só por comando. Em piloto até 5 PRs, a `/pegar-issue` a roda antes do push quando o diff mexe em `src/components/ui/`, em formulário ou campo, ou cria tela nova em `app/`.
+- **`movimento`**: cria animação sempre que a tarefa é animar; o modo revisar (`/movimento revisar <alvo>`) só por comando, ou pelo piloto quando o diff mexe em animação.
+- **`polir-interface`** (acabamento de componente) e **`mobile-nativo`** (viewport, toque, safe area, teclado): sob demanda.
+- **`decisoes-mobile`** (opções de padrão mobile com fonte): em issue de PRD com tela, para abrir as perguntas no formato Needs Decision. Não escreve código.
 
 ### Oferecer a versão simples primeiro
 
@@ -407,9 +418,11 @@ Daí acessar `http://<IP-do-dev>:3000` do celular. Em prod tudo funciona.
 
 ### iOS: auto-zoom ao focar inputs
 
-**Sintoma:** iOS Safari/Chrome zoomava ao focar qualquer input porque o `font-size` efetivo era 14px (< 16px).
+**Sintoma:** iOS Safari/Chrome dá zoom na página ao focar um campo cujo `font-size` efetivo é menor que 16px (os campos tinham 14px).
 
-**Solução:** `export const viewport` em `app/layout.tsx` com `maximumScale: 1, userScalable: false`. iOS 10+ ignora `user-scalable: no` para gestos manuais de pinch, então zoom manual continua funcionando — só o auto-zoom no foco é bloqueado.
+**Solução:** texto digitado e placeholder de todo `input`, `textarea` e `select` em `body-lg` (16px), nunca menos (`docs/TOKENS.md` > "Texto digitado em campo"). O `viewport` do `app/layout.tsx` não usa `maximumScale` nem `userScalable: false`, e o `app/layout.test.ts` falha se voltarem.
+
+**Por que não travar o zoom:** era a solução antiga. O Safari do iOS 10+ ignora a trava no pinch, mas o Chrome do Android a respeita e bloqueia o zoom manual, o que falha a WCAG 1.4.4 (Resize Text) e a auditoria `meta-viewport` do Lighthouse.
 
 ### iOS: "sticky hover" em botões com `:hover`
 
@@ -443,9 +456,17 @@ console.warn(prettyDOM(canvasElement, 100_000));
 
 Tirar a linha antes do commit.
 
+### Next com patch: tela em branco depois de clicar num link
+
+**Sintoma:** a URL muda, mas a área de conteúdo fica vazia: sem skeleton, sem erro e sem nada no console. Só um reload recupera. Acontece quando o clique (ou o toque, no celular) num `<Link>` pega o prefetch dele ainda em voo. No E2E, aparecia como teste instável que não achava o link ou o cabeçalho da tela seguinte.
+
+**Causa:** bug do roteador do Next 16 ([vercel/next.js#98684](https://github.com/vercel/next.js/issues/98684)). Em `createCacheNodeForSegment` (`ppr-navigations.js`), a entrada do cache em `Pending` vira uma promise comum que pode resolver para `null`, e o React renderiza o segmento vazio.
+
+**Solução:** `patches/next+16.2.2.patch`, aplicado pelo `patch-package` no `postinstall`, trata a entrada `Pending` como cache miss. O patch vale só para a versão exata do `next`: antes de qualquer upgrade, ver a issue "Remover o patch do Next quando a vercel/next.js#98684 for corrigida" no Linear (remover o patch quando o Next corrigir, ou refazê-lo para a versão nova).
+
 ### Componentes com stubs sem comportamento
 
-ProfileMiniCard, H2HButton, botões Torcer e "+ Adicionar" foram implementados como <button> sem onClick.
+ProfileMiniCard, botões Torcer e "+ Adicionar" foram implementados como <button> sem onClick.
 Quando resolver: plugar handlers e <Link> ao integrar esses componentes com o feed real.
 
 Na área "Administrar" (`src/components/admin/AdminArea`), o botão "Lançar sorteio da rodada" não age e os itens de "Decisões pendentes" não abrem a decisão: o sorteio entra com a spec do fluxo do sorteio, e as decisões com a issue "Decisões do admin".

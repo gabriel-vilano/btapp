@@ -120,7 +120,7 @@ Cada um cobre um nível de interrupção diferente.
 - O corpo rolável recebe foco por Tab, com ring (WCAG 2.1.1; regra `scrollable-region-focusable` do axe).
 - Sem `children` (confirmação só com título e descrição), o corpo não é renderizado: seria uma parada de Tab vazia.
 - Botão de fechar só de ícone com `aria-label="Fechar"` e área de 48×48 (regra do DS; WCAG 2.5.8).
-- Com `prefers-reduced-motion`, o painel aparece sem animação.
+- Com `prefers-reduced-motion`, o painel aparece só esmaecendo, sem subir nem crescer.
 - Scroll da página travado enquanto o modal está aberto.
 - Arrastar a alça nunca é o único jeito de fechar: X, `Esc` e scrim fazem o mesmo sem arrastar (WCAG 2.5.7, Movimentos de arrastar). Por isso a alça fica fora da árvore de acessibilidade (`aria-hidden`) e fora da ordem de Tab.
 - Com `prefers-reduced-motion`, o painel não anima ao voltar nem ao sair depois do arrasto.

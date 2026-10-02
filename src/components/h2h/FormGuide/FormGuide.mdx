@@ -1,0 +1,94 @@
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as FormGuideStories from "./FormGuide.stories";
+
+<Meta of={FormGuideStories} />
+
+<Subtitle>
+  Forma recente de um lado: os resultados das últimas partidas jogadas, em
+  sequência.
+</Subtitle>
+
+**Código-fonte:** [`src/components/h2h/FormGuide/FormGuide.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/h2h/FormGuide/FormGuide.tsx)
+
+## Visão geral
+
+`FormGuide` mostra até 5 círculos de 24px, um por partida, com a letra "V" ou "D". A mais antiga fica à esquerda e a mais recente à direita. Responde "como esse lado chega ao jogo", a leitura que ajuda quando os dois lados se enfrentaram poucas vezes (`docs/HEAD_TO_HEAD.md`, HH12). Não é interativo.
+
+<Canvas of={FormGuideStories.Five} />
+
+## Variantes
+
+O componente tem uma forma só. O que muda é a sequência recebida em `results`.
+
+<Canvas of={FormGuideStories.AllVariants} />
+
+### Vitória e derrota
+
+Vitória em `--color-background-success` com a letra em `--color-foreground-on-success`; derrota em `--color-background-attention` com `--color-foreground-on-attention`. É a exceção ao "sem verde nem vermelho" do resto do H2H: a forma recente é um padrão de mercado com letra e cor, e a letra carrega o significado.
+
+<Canvas of={FormGuideStories.AllWins} />
+
+<Canvas of={FormGuideStories.AllLosses} />
+
+## Estados
+
+A quantidade de círculos acompanha as partidas que o lado jogou.
+
+### Menos de 5 partidas
+
+Mostra as que houver, sem círculos vazios no lugar das que faltam.
+
+<Canvas of={FormGuideStories.FewerThanFive} />
+
+### Sem partidas
+
+O texto "Sem partidas" em `--color-foreground-secondary` ocupa o lugar dos círculos, com a mesma altura da linha: a seção não pula quando só um dos lados tem partidas.
+
+<Canvas of={FormGuideStories.Empty} />
+
+### Mais de 5 resultados
+
+Ficam os 5 mais recentes. Quem chama já deveria mandar só 5, mas o componente não quebra a linha se vier mais.
+
+<Canvas of={FormGuideStories.MoreThanFive} />
+
+## Quando usar
+
+- Seção "Forma recente" da página de H2H, um `FormGuide` por lado
+- Qualquer lugar que precise de "como esse lado vem jogando", sempre com partidas jogadas: W.O. não entra
+
+## Componentes relacionados
+
+- Para o **placar do confronto direto** entre os dois lados, use o `H2HSummary`. O `FormGuide` fala dos jogos contra qualquer adversário.
+- Para o **resultado de uma partida** numa lista, use o [`Badge`](?path=/docs/ui-badge--docs) nos tons `success` e `attention`, com a palavra inteira.
+- Para o **cartel** (vitórias e derrotas somadas), use o `RecordLine` do perfil.
+
+## Acessibilidade
+
+- **Letra e cor, nunca só cor** (WCAG 1.4.1): quem não distingue verde de vermelho lê o "V" e o "D".
+- **O grupo tem um nome por extenso** (`role="img"` com `aria-label`): o leitor de tela ouve "Últimas 5 de Lucas: vitória, vitória, derrota, vitória, derrota, da mais antiga para a mais recente", e não "V, V, D, V, D". O `label` diz de quem é a forma.
+- **Sem partidas:** o leitor de tela ouve "Lucas: Sem partidas", com o nome visualmente oculto.
+- **Contraste:** o branco passa no AA de texto (4,5:1, WCAG 1.4.3) sobre o verde (kiwi-600, 4,97:1) e sobre o vermelho (red-600, 5,41:1).
+
+## Evitar
+
+- ❌ Círculos sem letra, só com a cor
+- ❌ Incluir W.O. na sequência: a forma conta partidas jogadas (HH11)
+- ❌ Ordenar da mais recente para a mais antiga: a mais recente fica à direita, como nos apps de referência
+- ❌ Tornar os círculos clicáveis. Para abrir uma partida, use a lista de confrontos (`H2HMatchItem`)
+
+## API
+
+<ArgTypes of={FormGuideStories} />
+
+## Decisões de design
+
+**Por que `role="img"` e não um texto oculto ao lado?** Com `role="img"`, os círculos viram uma peça só, com o nome por extenso, e o leitor de tela não para em cada letra. Um texto oculto ao lado obrigaria a esconder cada círculo com `aria-hidden` e deixaria o grupo sem nome próprio.
+
+## Referências
+
+- [WCAG 1.4.1 — Uso de cor](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)
+- [WCAG 1.4.3 — Contraste mínimo](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
+- [WAI-ARIA — role `img`](https://www.w3.org/TR/wai-aria-1.2/#img)
+- `docs/HEAD_TO_HEAD.md` > 4.3 "Forma recente" e 8.2 "FormGuide"
+- `docs/TOKENS.md` > "Cores — background"

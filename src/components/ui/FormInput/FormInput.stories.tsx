@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Input controlado com label, validação inline, toggle de senha e tipos de telefone, busca e data e hora. Estados de validação só aparecem quando há valor digitado.",
+          "Input controlado com label, validação inline, toggle de senha e tipos de telefone, busca, data e data e hora. Estados de validação só aparecem quando há valor digitado.",
       },
     },
   },
@@ -25,11 +25,12 @@ const meta = {
   argTypes: {
     type: {
       control: "inline-radio",
-      options: ["text", "email", "password", "tel", "search", "datetime-local"],
+      options: ["text", "email", "password", "tel", "search", "date", "datetime-local"],
     },
     label: { control: "text" },
     placeholder: { control: "text" },
     error: { control: "text" },
+    hint: { control: "text" },
     valid: { control: "boolean" },
     disabled: { control: "boolean" },
   },
@@ -275,6 +276,49 @@ export const DateTimeInvalid: Story = {
   },
 };
 
+const birthDateArgs = {
+  label: "Data de nascimento",
+  name: "birthDate",
+  type: "date",
+  placeholder: undefined,
+  autoComplete: "bday",
+  min: "1900-01-01",
+  max: "2026-10-01",
+  hint: "Não aparece no perfil. Serve para as categorias com idade.",
+} as const;
+
+export const BirthDate: Story = {
+  args: { ...birthDateArgs, value: "1990-05-12" },
+  play: async ({ canvas }) => {
+    const field = canvas.getByLabelText("Data de nascimento");
+    await expect(field).toHaveAttribute("type", "date");
+    await expect(field).toHaveAccessibleDescription("Não aparece no perfil. Serve para as categorias com idade.");
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Só a data, no formato `AAAA-MM-DD`, com o texto de apoio (`hint`) abaixo do campo.",
+      },
+    },
+  },
+};
+
+export const HintReplacedByError: Story = {
+  args: { ...birthDateArgs, value: "2027-01-01", error: "A data de nascimento não pode ser no futuro" },
+  play: async ({ canvas }) => {
+    const field = canvas.getByLabelText("Data de nascimento");
+    await expect(field).toHaveAccessibleDescription("A data de nascimento não pode ser no futuro");
+    await expect(canvas.queryByText(birthDateArgs.hint)).not.toBeInTheDocument();
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Com erro, a mensagem toma o lugar do texto de apoio: o campo nunca tem duas linhas abaixo.",
+      },
+    },
+  },
+};
+
 export const NewTypesFocused: Story = {
   render: (args) => (
     <div className="sb-stack">
@@ -309,6 +353,8 @@ export const AllTypes: Story = {
       />
       <FormInput {...args} {...searchArgs} value="" />
       <FormInput {...args} {...searchArgs} value="Ana Souza" />
+      <FormInput {...args} {...birthDateArgs} value="" />
+      <FormInput {...args} {...birthDateArgs} value="1990-05-12" />
       <FormInput {...args} {...dateTimeArgs} value="" />
       <FormInput {...args} {...dateTimeArgs} value="2026-10-02T19:30" />
       <FormInput

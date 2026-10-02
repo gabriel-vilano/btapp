@@ -1,0 +1,78 @@
+.summary {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary__visual {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+}
+
+/* --- Números nas pontas, total no meio --- */
+
+.summary__counts {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-200);
+}
+
+.summary__wins {
+  font-size: var(--text-display-sm-size);
+  line-height: var(--text-display-sm-line-height);
+  letter-spacing: var(--text-display-sm-tracking);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-foreground-primary);
+}
+
+.summary__total {
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line-height);
+  letter-spacing: var(--text-label-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-secondary);
+}
+
+/* --- Barra proporcional (SVG) ---
+   Grafite × cinza, sem verde nem vermelho: vitória não é sucesso, nem derrota é erro (HH10) */
+
+.bar {
+  display: block;
+  width: 100%;
+  height: 4px;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.bar__left {
+  fill: var(--color-background-inverse);
+}
+
+.bar__right {
+  fill: var(--color-background-tertiary);
+}
+
+/* --- Linha de apoio --- */
+
+.summary__line {
+  margin: 0;
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line-height);
+  letter-spacing: var(--text-body-md-tracking);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-foreground-secondary);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

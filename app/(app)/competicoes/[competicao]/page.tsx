@@ -5,6 +5,7 @@ import { DetailHeader } from "@/src/components/shell/DetailHeader";
 import { isEnrolledInCompetition } from "@/src/lib/domain/competition-page";
 import { competitionArrivalTab } from "@/src/lib/navigation/mainTabs";
 import { mockCompetitionPageBySlug } from "@/src/mocks/competitionPage";
+import { registerCompetitionInterest } from "./actions";
 
 // Dados mockados até a integração com o Supabase: cada slug é uma relação do
 // jogador com a competição (inscrito, admin, não inscrito)
@@ -20,7 +21,11 @@ export default async function CompetitionRoute({ params }: { params: Promise<{ c
     <>
       <DetailHeader title={data.name} arrivalTab={competitionArrivalTab(isEnrolledInCompetition(data))} />
       <main>
-        <CompetitionPage data={data} now={new Date().toISOString()} />
+        <CompetitionPage
+          data={data}
+          now={new Date().toISOString()}
+          registerInterest={registerCompetitionInterest.bind(null, data.slug)}
+        />
       </main>
     </>
   );

@@ -6,7 +6,13 @@ import { ButtonLink } from "@/src/components/ui/Button";
 import { EmptyState } from "@/src/components/ui/EmptyState";
 import { Icon } from "@/src/components/ui/Icon";
 import { TextLink } from "@/src/components/ui/TextLink";
-import type { RankingPlayer, RankingScreenModel, SeasonHeader } from "@/src/lib/domain/ranking-screen";
+import type {
+  CategorySwitcher,
+  RankingPlayer,
+  RankingScreenModel,
+  SeasonHeader,
+} from "@/src/lib/domain/ranking-screen";
+import { CategorySelector } from "./CategorySelector";
 import { categoryLabel, seasonContextLines } from "./rankingScreenText";
 import { PairSheet } from "./PairSheet";
 import { RankingTableView } from "./RankingTableView";
@@ -27,6 +33,8 @@ interface RankingScreenProps {
   /** Momento da carga, ISO 8601: o texto relativo ("fecha em 5 dias") sai igual no servidor e no cliente. */
   now: string;
   links: RankingScreenLinks;
+  /** A folha do seletor de categoria (RK6). */
+  categories: CategorySwitcher;
   /** Abre rolada até a própria linha: a temporada antiga vinda do perfil (RK21). */
   scrollToOwnOnOpen?: boolean;
 }
@@ -35,19 +43,23 @@ interface RankingScreenProps {
  * Classificação de uma categoria numa temporada (docs/RANKING.md): cabeçalho da
  * temporada, tabela com a linha de corte e a própria linha fixada, e os vazios.
  * O cabeçalho da tela ("Classificação" e "Voltar") é da página.
- * Ex.: `<RankingScreen model={model} viewerId={lucas.id} now={now} links={links} />`
+ * Ex.: `<RankingScreen model={model} viewerId={lucas.id} now={now} links={links} categories={switcher} />`
  */
-export function RankingScreen({ model, viewerId, now, links, scrollToOwnOnOpen = false }: RankingScreenProps) {
+export function RankingScreen({
+  model,
+  viewerId,
+  now,
+  links,
+  categories,
+  scrollToOwnOnOpen = false,
+}: RankingScreenProps) {
   const [pair, setPair] = useState<RankingPlayer[] | null>(null);
   const { content } = model;
   return (
     <>
       <main className={styles["ranking-screen"]}>
         <header className={styles["ranking-screen__header"]}>
-          {/* Vira o seletor de categoria (RK6) na issue dele */}
-          <h2 className={styles["ranking-screen__title"]}>
-            {model.competition_name} · {categoryLabel(model.category)}
-          </h2>
+          <CategorySelector title={`${model.competition_name} · ${categoryLabel(model.category)}`} switcher={categories} />
           {content.kind !== "no_season" && <SeasonContext header={content.header} model={model} now={now} links={links} />}
         </header>
         {content.kind === "no_season" && <NoSeason competitionName={model.competition_name} rulesHref={links.rules} />}

@@ -31,3 +31,11 @@ export function isoToBrasiliaLocal(iso: string): string {
   }
   return new Date(time + BRASILIA_OFFSET_MS).toISOString().slice(0, 16);
 }
+
+/**
+ * Dia de hoje em Brasília, no formato do `<input type="date">` (AAAA-MM-DD).
+ * @example brasiliaToday(new Date("2026-10-01T02:00:00Z")) // "2026-09-30"
+ */
+export function brasiliaToday(now: Date = new Date()): string {
+  return isoToBrasiliaLocal(now.toISOString()).slice(0, 10);
+}

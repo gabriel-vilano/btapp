@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { Alert } from "@/src/components/ui/Alert";
 import { Badge } from "@/src/components/ui/Badge";
+import { H2HButton } from "@/src/components/ui/H2HButton";
 import { sideOfPlayer } from "@/src/lib/domain/schedule-state";
+import { phoneSettingsHref } from "@/src/lib/navigation/phoneSettings";
 import type { MatchSideKey } from "@/src/types/domain";
 import { MatchResult } from "../MatchResult";
 import { MatchScheduling } from "../MatchScheduling";
@@ -23,6 +25,11 @@ type MatchScreenProps = {
   clock?: () => string;
   /** Id da proposta ou da data nova. Com o Supabase, quem gera é o banco. */
   createId?: () => string;
+  /**
+   * Quem vê ainda não informou o telefone: o primeiro toque em "Abrir no WhatsApp"
+   * pergunta se ele quer informar (docs/SCHEDULING.md M20).
+   */
+  askForPhone?: boolean;
 };
 
 /**
@@ -33,7 +40,8 @@ type MatchScreenProps = {
  * funções puras que o banco vai usar.
  * @example <MatchScreen data={matchScreenDataOf(matchId, viewerId)} now={new Date().toISOString()} />
  */
-export function MatchScreen({ data, now: initialNow, clock = systemClock, createId = randomId }: MatchScreenProps) {
+export function MatchScreen(props: MatchScreenProps) {
+  const { data, now: initialNow, clock = systemClock, createId = randomId, askForPhone = false } = props;
   // A partida é das duas seções: desfeito o lançamento, a marcação volta a valer (RG16)
   const [match, setMatch] = useState(data.match);
   const scheduling = useMatchScheduling({ ...data, match }, { initialNow, clock, createId });
@@ -45,7 +53,7 @@ export function MatchScreen({ data, now: initialNow, clock = systemClock, create
   return (
     <div className={styles["match-screen"]}>
       <div className={styles["match-screen__content"]}>
-        <MatchHeading data={data} viewerSide={viewerSide} />
+        <MatchHeading data={data} viewerSide={viewerSide} showH2H={match.status === "defined"} />
         <MatchResult match={match} context={data} actions={result} now={scheduling.now} />
         {scheduling.error && <Alert status="attention" title={scheduling.error} />}
         <MatchScheduling
@@ -59,6 +67,7 @@ export function MatchScreen({ data, now: initialNow, clock = systemClock, create
           matchStatus={match.status}
           now={scheduling.now}
           resultHref={`${AGENDA_HREF}/${match.id}/resultado`}
+          phoneSettingsHref={askForPhone ? phoneSettingsHref(`${AGENDA_HREF}/${match.id}`) : undefined}
           onAccept={scheduling.accept}
           onPropose={() => scheduling.openForm("propose")}
           onReport={() => scheduling.openForm("report")}
@@ -78,9 +87,11 @@ export function MatchScreen({ data, now: initialNow, clock = systemClock, create
   );
 }
 
-type MatchHeadingProps = { data: MatchScreenData; viewerSide: MatchSideKey | null };
+type MatchHeadingProps = { data: MatchScreenData; viewerSide: MatchSideKey | null; showH2H: boolean };
 
-function MatchHeading({ data, viewerSide }: MatchHeadingProps) {
+// O H2H é porta do confronto definido, para quem joga a partida (HH16). A
+// partida volta a "definido" quando o lançamento é desfeito (RG16), e o botão volta junto.
+function MatchHeading({ data, viewerSide, showH2H }: MatchHeadingProps) {
   return (
     <div className={styles["match-screen__heading"]}>
       <p className={styles["match-screen__context"]}>
@@ -94,6 +105,7 @@ function MatchHeading({ data, viewerSide }: MatchHeadingProps) {
           </li>
         ))}
       </ul>
+      {showH2H && viewerSide !== null && data.h2h !== null && <H2HButton count={data.h2h.count} href={data.h2h.href} />}
     </div>
   );
 }
