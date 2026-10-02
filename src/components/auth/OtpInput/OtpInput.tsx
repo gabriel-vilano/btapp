@@ -42,6 +42,7 @@ export function OtpInput({
         ref={inputRef}
         type="text"
         inputMode="numeric"
+        enterKeyHint="done"
         autoComplete="one-time-code"
         maxLength={length}
         pattern="[0-9]*"

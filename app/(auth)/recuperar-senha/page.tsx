@@ -53,6 +53,7 @@ export default function RecoveryPage() {
           error={showEmailError ?? undefined}
           placeholder="seu@email.com"
           autoComplete="email"
+          enterKeyHint="done"
           inputMode="email"
         />
 

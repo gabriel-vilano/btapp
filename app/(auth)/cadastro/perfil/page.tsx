@@ -170,6 +170,7 @@ export default function ProfilePage() {
             valid={usernameStatus === "available"}
             placeholder="seu.username"
             autoComplete="username"
+            enterKeyHint="done"
           />
 
           {usernameStatus === "checking" && (

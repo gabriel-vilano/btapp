@@ -86,6 +86,7 @@ function LoginContent() {
           error={showEmailError ?? undefined}
           placeholder="seu@email.com"
           autoComplete="email"
+          enterKeyHint="next"
           inputMode="email"
         />
 
@@ -102,6 +103,7 @@ function LoginContent() {
           error={showPasswordError ?? undefined}
           placeholder="Sua senha"
           autoComplete="current-password"
+          enterKeyHint="done"
         />
 
         {visibleNotice && (
