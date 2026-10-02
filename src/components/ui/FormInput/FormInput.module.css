@@ -36,9 +36,9 @@
   background-color: var(--color-background-primary);
   border: var(--border-width-medium) solid var(--color-border-subtle);
   border-radius: var(--radius-form-input);
-  font-size: var(--text-body-md-size);
-  line-height: var(--text-body-md-line-height);
-  letter-spacing: var(--text-body-md-tracking);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line-height);
+  letter-spacing: var(--text-body-lg-tracking);
   font-weight: var(--font-weight-regular);
   color: var(--color-foreground-primary);
   transition: border-color var(--motion-duration-short-3)
@@ -84,7 +84,7 @@
    vazio encolhe. Alinhar à esquerda e fixar a altura da linha. */
 .form-input__field--datetime::-webkit-date-and-time-value {
   margin: 0;
-  min-height: var(--text-body-md-line-height);
+  min-height: var(--text-body-lg-line-height);
   text-align: left;
 }
 
