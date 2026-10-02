@@ -154,14 +154,17 @@
   --motion-duration-long-2: 833ms;
   --motion-duration-long-3: 1000ms;
 
-  /* MOTION — easings */
+  /* MOTION — easings
+     Sem ease-in em UI: entrada e saída usam ease-out (regras em
+     docs/TOKENS.md > "Motion: regras"). A saída começa rápida e reage na
+     hora ao gesto; ease-in deixa o elemento parado no início e a UI
+     parece lenta. */
   --motion-easing-linear: cubic-bezier(0, 0, 1, 1);
   --motion-easing-standard: cubic-bezier(0.3, 0, 0, 1);
   --motion-easing-continuous: cubic-bezier(0.3, 0, 0.7, 1);
   --motion-easing-quick-enter: cubic-bezier(0, 0, 0, 1);
-  --motion-easing-quick-exit: cubic-bezier(1, 0, 1, 1);
+  --motion-easing-quick-exit: cubic-bezier(0.23, 1, 0.32, 1);
   --motion-easing-soft-enter: cubic-bezier(0, 0, 0.7, 1);
-  --motion-easing-soft-exit: cubic-bezier(0.3, 0, 1, 1);
   --motion-easing-bounce: cubic-bezier(0.3, 0, 0, 1.25);
 
   /* -----------------------------------------------------------
