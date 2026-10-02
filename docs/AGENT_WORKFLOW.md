@@ -55,8 +55,10 @@ O passo a passo executável está na skill `/pegar-issue` (`.claude/skills/pegar
 2. **Branch.** `<tipo>/<id>-<descricao-curta>`, ex.: `fix/eng-6-placar-wo`. O ID na branch liga o PR à issue pela integração GitHub ↔ Linear. Base: `master`, salvo quando a issue diz outra base. **Se a base for uma branch de feature**, confirmar antes que ela tem o `master` mergeado (`git merge-base --is-ancestor origin/master origin/<feature>`). Sem isso ela pode não ter o `.github/workflows/ci.yml`, e o PR fica sem CI.
 3. **Trabalhar só no escopo.** O que aparecer fora do escopo vira comentário na issue afetada ou issue nova em Backlog. O PR não cresce.
 4. **Parar para decidir.** Ver "Needs Decision" abaixo.
-5. **Entregar.** PR seguindo o template, com `Closes ENG-6` na descrição. Diff com migration, RLS, policy ou dado sensível passa antes por uma revisão leve (`/security-review` e `/code-review`), registrada no corpo do PR. A integração move a issue para In Review ao abrir o PR e para Done no merge. O agente acompanha a CI até ficar verde.
+5. **Entregar.** PR seguindo o template, com `Closes ENG-6` na descrição. Diff com migration, RLS, policy ou dado sensível passa antes por uma revisão leve (`/security-review` e `/code-review`), registrada no corpo do PR. Em piloto até 5 PRs, diff que cria ou altera componente em `src/components/ui/`, formulário ou campo, ou cria tela nova em `app/`, passa antes pela revisão de interface (skill `revisar-interface`, e o modo revisar da `movimento` se houver animação), também registrada no corpo do PR; no fim do piloto o Gabriel decide se o gatilho fica, cresce ou vira sob demanda. A integração move a issue para In Review ao abrir o PR e para Done no merge. O agente acompanha a CI até ficar verde.
 6. **Fechar o ciclo.** Último comentário na issue: o que foi feito, link do PR, qualquer descoberta que afete outra issue (também comentada lá) e as **Leituras para o Gabriel conferir**: as interpretações que o agente escolheu sem perguntar, numeradas, também no corpo do PR.
+
+Issue de PRD com tela abre as perguntas de UX pela skill `decisoes-mobile`, depois de conferir o que as specs já decidem: cada opção vem com a fonte que a sustenta.
 
 Issues de PRD terminam de outro jeito: o resultado é um diagnóstico ou uma spec. Decisões estáveis vão para `docs/` via PR (o repo é a fonte da verdade do que é durável). A issue vai para **Ready** só com aprovação do Gabriel.
 
@@ -123,6 +125,7 @@ O ruleset do `master` exige PR atualizado com a base e CI verde antes do merge (
   - a combinação com o `master` e com os outros PRs do lote foi simulada num worktree local (`combo-validate.sh` da skill `/orquestrar`): lint, typecheck, testes, build e a varredura de variáveis CSS sem definição no resultado combinado;
   - o Gabriel viu os prints, se o PR muda algo na tela. PR com zero mudança visual, comprovada por comparação de pixels, dispensa print;
   - o Gabriel viu as Leituras para o Gabriel conferir do agente, se houver;
+  - o PR tem a seção "Revisão de interface (piloto)", se o diff cai no gatilho do piloto;
   - o Gabriel aprovou a spec, se o PR é de spec.
 
   O merge usa `expectedHeadSha`, para não levar um push feito depois da validação.

@@ -375,6 +375,15 @@ O Claude deve sinalizar proativamente quando:
 - **Falha de E2E na CI:** o screenshot e o trace ficam no artefato, que os agentes não conseguem baixar. Por isso o `e2e/app-shell.spec.ts` usa o `e2e/support/diagnostics.ts`: na falha, escreve no log do job a URL, os erros do navegador e as respostas com erro, a árvore de acessibilidade e o HTML da área de conteúdo. Spec nova que navegue pelo app pode usar o mesmo `beforeEach`/`afterEach`
 - **Bug fix → teste de regressão.** Todo bug corrigido ganha um teste que reproduziria o bug, para evitar regressão futura
 
+### Skills de UI
+
+Cinco skills em `.claude/skills/` cuidam da interface. Quando rodam:
+
+- **`revisar-interface`** (checklist de acessibilidade, formulário, toque e copy, com achados em `file:line`): só por comando. Em piloto até 5 PRs, a `/pegar-issue` a roda antes do push quando o diff mexe em `src/components/ui/`, em formulário ou campo, ou cria tela nova em `app/`.
+- **`movimento`**: cria animação sempre que a tarefa é animar; o modo revisar (`/movimento revisar <alvo>`) só por comando, ou pelo piloto quando o diff mexe em animação.
+- **`polir-interface`** (acabamento de componente) e **`mobile-nativo`** (viewport, toque, safe area, teclado): sob demanda.
+- **`decisoes-mobile`** (opções de padrão mobile com fonte): em issue de PRD com tela, para abrir as perguntas no formato Needs Decision. Não escreve código.
+
 ### Oferecer a versão simples primeiro
 
 Quando propor uma solução, apresentar a versão mínima viável primeiro. Só adicionar complexidade se confirmado que é necessário. Sempre explicar os tradeoffs.
