@@ -246,11 +246,11 @@ otp_expiry = 3600
 # Cadastro e recuperação de senha pedem o código, não o link: os templates locais mostram
 # o `{{ .Token }}`, e os testes E2E leem esse código no Mailpit. Os de produção ficam no dashboard.
 [auth.email.template.confirmation]
-subject = "Seu código de verificação btapp"
+subject = "Seu código de verificação BT App"
 content_path = "./supabase/templates/confirmation.html"
 
 [auth.email.template.recovery]
-subject = "Código para redefinir sua senha btapp"
+subject = "Código para redefinir sua senha BT App"
 content_path = "./supabase/templates/recovery.html"
 
 # Uncomment to customize notification email template
