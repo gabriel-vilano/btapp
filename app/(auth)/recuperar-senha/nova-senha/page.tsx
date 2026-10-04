@@ -68,6 +68,7 @@ export default function NewPasswordPage() {
             onChange={handlePasswordChange}
             placeholder="Crie uma nova senha"
             autoComplete="new-password"
+            enterKeyHint="next"
           />
           {password.length > 0 && (
             <PasswordChecklist
@@ -87,6 +88,7 @@ export default function NewPasswordPage() {
           error={showConfirmError ?? undefined}
           placeholder="Repita a nova senha"
           autoComplete="new-password"
+          enterKeyHint="done"
         />
 
         {showServerError && (

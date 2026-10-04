@@ -78,6 +78,10 @@ Lupa à esquerda e tecla "Buscar" no teclado (`enterKeyHint="search"`). O leitor
 
 <Canvas of={FormInputStories.Search} />
 
+### Tecla Enter do teclado (`enterKeyHint`)
+
+No celular, a tecla Enter do teclado virtual mostra o rótulo que o campo pede. Em formulário com vários campos, os intermediários usam `enterKeyHint="next"` ("Seguinte") e o último, `"done"` ("Concluir"). Em `"next"`, o Enter passa o foco ao próximo campo de texto do formulário (pulando o toggle de senha, campos ocultos e desabilitados) em vez de enviar: o Enter de um formulário envia, então o componente cuida do avanço. Campo sozinho, ou o último, não precisa de `"next"`. A busca já vem com `"search"`; a prop sobrescreve o padrão.
+
 ### Data e hora
 
 `datetime-local`: data e hora num campo só, com o calendário nativo. O valor chega no `onChange` como `AAAA-MM-DDTHH:mm` (sem fuso), e o formato exibido segue o idioma do aparelho (`02/10/2026, 19:30` em português). O ícone de calendário à esquerda identifica o campo mesmo vazio: no iOS, o campo vazio não mostra placeholder. Usado nas opções de horário da marcação (M5 e M6 do `docs/SCHEDULING.md`).

@@ -10,6 +10,7 @@ import {
   XIcon,
 } from "@phosphor-icons/react";
 import { Icon } from "@/src/components/ui/Icon";
+import { focusNextField } from "./focusNextField";
 import styles from "./FormInput.module.css";
 
 export type FormInputType =
@@ -36,6 +37,12 @@ type FormInputProps = {
   placeholder?: string;
   autoComplete?: string;
   inputMode?: "text" | "email" | "numeric" | "tel" | "search";
+  /**
+   * Rótulo da tecla Enter do teclado virtual. Em `"next"`, o Enter passa o
+   * foco ao próximo campo em vez de enviar o formulário. No `search`, o
+   * padrão é `"search"`.
+   */
+  enterKeyHint?: "next" | "done" | "go" | "search" | "enter";
   disabled?: boolean;
   maxLength?: number;
   /**
@@ -116,6 +123,7 @@ export function FormInput({
   placeholder,
   autoComplete,
   inputMode,
+  enterKeyHint,
   disabled,
   maxLength,
   min,
@@ -128,6 +136,18 @@ export function FormInput({
 
   const showStatus = value.length > 0 && (valid || error);
   const errorId = `${name}-error`;
+  const resolvedEnterKeyHint =
+    enterKeyHint ?? (type === "search" ? "search" : undefined);
+
+  // O Enter de um formulário envia, não avança: sem isto, a tecla "Seguinte"
+  // dispararia o envio com o resto dos campos vazio.
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (resolvedEnterKeyHint !== "next" || e.key !== "Enter") return;
+    if (e.nativeEvent.isComposing) return;
+    const input = e.currentTarget;
+    if (focusNextField(input.form, input)) e.preventDefault();
+  }
+
   const hintId = `${name}-hint`;
   const describedBy = error ? errorId : hint ? hintId : undefined;
 
@@ -151,7 +171,8 @@ export function FormInput({
           placeholder={placeholder}
           autoComplete={autoComplete ?? DEFAULT_AUTOCOMPLETE[type]}
           inputMode={inputMode}
-          enterKeyHint={type === "search" ? "search" : undefined}
+          enterKeyHint={resolvedEnterKeyHint}
+          onKeyDown={handleKeyDown}
           disabled={disabled}
           maxLength={maxLength}
           min={min}

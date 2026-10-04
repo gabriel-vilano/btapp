@@ -101,6 +101,7 @@ export default function SignupPage() {
           error={showFirstNameError ?? undefined}
           placeholder="Seu nome"
           autoComplete="given-name"
+          enterKeyHint="next"
           maxLength={FIRST_NAME_MAX_LENGTH}
         />
 
@@ -114,6 +115,7 @@ export default function SignupPage() {
           error={showLastNameError ?? undefined}
           placeholder="Seu sobrenome"
           autoComplete="family-name"
+          enterKeyHint="next"
           maxLength={LAST_NAME_MAX_LENGTH}
         />
 
@@ -127,6 +129,7 @@ export default function SignupPage() {
           error={showEmailError ?? undefined}
           placeholder="seu@email.com"
           autoComplete="email"
+          enterKeyHint="next"
           inputMode="email"
         />
 
@@ -139,6 +142,7 @@ export default function SignupPage() {
             onChange={handlePasswordChange}
             placeholder="Crie uma senha"
             autoComplete="new-password"
+            enterKeyHint="done"
           />
           {password.length > 0 && (
             <PasswordChecklist
