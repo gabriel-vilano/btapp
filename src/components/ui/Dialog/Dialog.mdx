@@ -138,6 +138,12 @@ Cada um cobre um nível de interrupção diferente.
 
 <ArgTypes of={DialogStories} />
 
+### Teclado aberto
+
+Com um campo em foco, o teclado do celular abre por cima da página e o `dvh` não o acompanha. O Dialog mede o `window.visualViewport` e sobe o painel pela altura do teclado, para o botão do rodapé continuar visível. O corpo rola dentro do espaço que sobra.
+
+<Canvas of={DialogStories.KeyboardOpen} />
+
 ## Decisões de design
 
 Escolhas não óbvias, com a alternativa que parecia natural.
@@ -149,6 +155,10 @@ O `<dialog>` com `showModal()` dá foco preso e `Esc` de graça, mas abre na *to
 ### Por que um componente só, e não BottomSheet e Dialog separados?
 
 A tarefa é a mesma nas duas telas; muda só onde o painel aparece. Um componente evita que cada tela escolha o seu e garante o mesmo comportamento de teclado. A troca é por CSS, no mesmo corte de 800px do layout de auth.
+
+### Por que `visualViewport` e não `interactiveWidget: "resizes-content"`?
+
+O `interactiveWidget` no `viewport` do app só vale no Chrome do Android, e é global: a TabBar passaria a subir com o teclado em toda tela. O Safari do iOS não o aceita. O `visualViewport` encolhe com o teclado nos dois, então uma medida só, dentro do Dialog, cobre iOS e Android sem mexer na casca (`useKeyboardInset.ts`, com a conta numa função pura em `keyboardInset.ts`). Abaixo de 100px a diferença é barra do navegador, não teclado, e com zoom de pinça o valor é ignorado. Com o teclado aberto o painel não soma a área segura: o home indicator fica escondido atrás dele.
 
 ### Por que arrastar só pela alça, e não pelo painel inteiro?
 
