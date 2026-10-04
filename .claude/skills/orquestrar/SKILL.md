@@ -155,6 +155,8 @@ Para cada PR, na ordem do lote. Um PR sem pendência com o Gabriel (sem leitura,
    bash "$S/wait-ci.sh" <sha-completo>      # 0 verde, 1 falhou, 3 tempo esgotado
    ```
 
+   O script lê o repositório de `REPO_SLUG` (`owner/repo`) ou, sem ele, do `git remote get-url origin`; fora de um clone, defina `REPO_SLUG`.
+
 4. `merge_pull_request` com `merge_method: "merge"` e `expectedHeadSha` = o SHA completo validado. Nunca completar um SHA curto de cabeça: pegar do `git rev-parse` ou do `pull_request_read`.
 5. Conferir no GitHub que o PR está mergeado.
 

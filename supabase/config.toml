@@ -2,7 +2,7 @@
 # https://supabase.com/docs/guides/local-development/cli/config
 # A string used to distinguish different Supabase projects on the same host. Defaults to the
 # working directory name when running `supabase init`.
-project_id = "letzplay"
+project_id = "btapp"
 
 [api]
 enabled = true
@@ -246,11 +246,11 @@ otp_expiry = 3600
 # Cadastro e recuperação de senha pedem o código, não o link: os templates locais mostram
 # o `{{ .Token }}`, e os testes E2E leem esse código no Mailpit. Os de produção ficam no dashboard.
 [auth.email.template.confirmation]
-subject = "Seu código de verificação LetzPlay"
+subject = "Seu código de verificação BT App"
 content_path = "./supabase/templates/confirmation.html"
 
 [auth.email.template.recovery]
-subject = "Código para redefinir sua senha LetzPlay"
+subject = "Código para redefinir sua senha BT App"
 content_path = "./supabase/templates/recovery.html"
 
 # Uncomment to customize notification email template
