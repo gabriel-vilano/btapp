@@ -96,3 +96,8 @@
 .sb-width-393 {
   width: 393px;
 }
+
+/* Simula a casca logada: o Toast desvia da altura da TabBar (--shell-bottom-offset) */
+.sb-shell-offset {
+  --shell-bottom-offset: 62px;
+}
