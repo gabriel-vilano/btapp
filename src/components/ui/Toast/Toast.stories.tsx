@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { expect, fn } from "storybook/test";
+import { expect, fn, within } from "storybook/test";
 import { ToastVisual, ToastProvider, useToast } from "./Toast";
 import { Button } from "@/src/components/ui/Button";
 
@@ -184,6 +184,35 @@ export const ProviderPersistent: Story = {
       description: {
         story:
           "Toast persistente — passa options.persistent=true em showToast(). Não some sozinho; usuário precisa clicar no X.",
+      },
+    },
+  },
+};
+
+export const AboveTabBar: Story = {
+  name: "Provider · Acima da TabBar",
+  render: () => (
+    <div className="sb-shell-offset">
+      <ToastProvider>
+        <PersistentTrigger />
+      </ToastProvider>
+    </div>
+  ),
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(canvas.getByRole("button", { name: "Disparar persistente" }));
+    const toast = await within(document.body).findByRole("alert");
+    // O container (fixed), não o toast: o toast ainda está na animação de entrada
+    const containerBottom = toast.parentElement?.getBoundingClientRect().bottom ?? 0;
+    const gap = window.innerHeight - containerBottom;
+    // 62px da TabBar simulada + 24px de respiro (--spacing-300)
+    await expect(gap).toBeGreaterThanOrEqual(86);
+  },
+  parameters: {
+    layout: "padded",
+    docs: {
+      description: {
+        story:
+          "Com --shell-bottom-offset definida num ancestral (a casca logada), o toast sobe a altura da TabBar e não cobre as abas.",
       },
     },
   },

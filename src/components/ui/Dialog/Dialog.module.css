@@ -28,7 +28,12 @@
   max-width: var(--dimension-layout-max);
   /* Sobra uma faixa de scrim no topo: mostra que é uma camada sobre a tela
      e deixa área para tocar e fechar */
-  max-height: calc(100dvh - var(--spacing-800));
+  max-height: calc(
+    100dvh - var(--spacing-800) - var(--dialog-keyboard-inset, 0px)
+  );
+  /* --dialog-keyboard-inset vem do visualViewport (useKeyboardInset): sobe o
+     painel para a base dele ficar acima do teclado */
+  margin-bottom: var(--dialog-keyboard-inset, 0px);
   background-color: var(--color-background-elevated);
   color: var(--color-foreground-primary);
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
@@ -41,6 +46,12 @@
   transform: translateY(var(--dialog-drag-offset, 0px));
   transition: transform var(--motion-duration-medium-1)
     var(--motion-easing-standard);
+}
+
+/* Com o teclado aberto o home indicator fica escondido atrás dele: somar a
+   área segura deixaria uma folga em branco entre o rodapé e o teclado */
+.dialog__panel[data-keyboard] {
+  padding-bottom: 0;
 }
 
 /* Durante o arrasto o painel segue o dedo sem atraso */
@@ -207,6 +218,7 @@
 
   .dialog__panel {
     max-height: 100%;
+    margin-bottom: 0;
     padding-bottom: 0;
     border-radius: var(--radius-xl);
     animation-name: dialog-center-in;

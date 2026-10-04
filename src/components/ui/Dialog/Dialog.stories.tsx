@@ -1,6 +1,6 @@
 import { useRef, useState, type ComponentProps } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { expect, fireEvent, fn, screen, waitFor } from "storybook/test";
+import { expect, fireEvent, fn, screen, waitFor, within } from "storybook/test";
 import { Dialog } from "./Dialog";
 import { Button } from "@/src/components/ui/Button";
 
@@ -317,6 +317,64 @@ export const DragShortReturns: Story = {
       description: {
         story:
           "Arrasto curto e lento volta o sheet à posição. Arrastar para cima não move o painel.",
+      },
+    },
+  },
+};
+
+/** visualViewport falso: o teclado real não existe no Chromium dos testes. */
+function fakeVisualViewport(height: number) {
+  const target = new EventTarget();
+  const original = Object.getOwnPropertyDescriptor(window, "visualViewport");
+  const viewport = Object.assign(target, { height, offsetTop: 0, scale: 1 });
+  Object.defineProperty(window, "visualViewport", {
+    configurable: true,
+    value: viewport,
+  });
+  return {
+    openKeyboard(keyboardHeight: number) {
+      viewport.height = window.innerHeight - keyboardHeight;
+      target.dispatchEvent(new Event("resize"));
+    },
+    restore() {
+      if (original) Object.defineProperty(window, "visualViewport", original);
+    },
+  };
+}
+
+export const KeyboardOpen: Story = {
+  name: "Teclado aberto",
+  args: { footer: footerActions },
+  play: async () => {
+    const fake = fakeVisualViewport(window.innerHeight);
+    try {
+      const dialog = await openDialog();
+      await expect(dialog.style.getPropertyValue("--dialog-keyboard-inset")).toBe("0px");
+
+      fake.openKeyboard(300);
+      await waitFor(() =>
+        expect(dialog.style.getPropertyValue("--dialog-keyboard-inset")).toBe("300px")
+      );
+      const footer = within(dialog).getByRole("button", { name: "Enviar proposta" });
+      await waitFor(() =>
+        expect(footer.getBoundingClientRect().bottom).toBeLessThanOrEqual(
+          window.innerHeight - 300
+        )
+      );
+
+      fake.openKeyboard(0);
+      await waitFor(() =>
+        expect(dialog.style.getPropertyValue("--dialog-keyboard-inset")).toBe("0px")
+      );
+    } finally {
+      fake.restore();
+    }
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Simula o teclado encolhendo o `visualViewport`: o painel sobe e o botão do rodapé fica acima dele.",
       },
     },
   },
