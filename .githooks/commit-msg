@@ -1,5 +1,5 @@
 #!/bin/sh
-# Hook commit-msg do LetzPlay (ENG-181, decisão D8 da PRD-38).
+# Hook commit-msg do projeto (ENG-181, decisão D8 da PRD-38).
 # Vale para qualquer origem de commit local (terminal, VS Code, agente), por isso é
 # hook do git e não do Claude Code. Instalado por `git config core.hooksPath .githooks`
 # (postinstall do package.json e hook SessionStart de .claude/settings.json).
