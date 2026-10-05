@@ -1,6 +1,6 @@
-# TOKENS.md — LetzPlay
+# TOKENS.md
 
-Documento vivo do design system: arquitetura CSS, tokens primitivos e semânticos, escala tipográfica e padrões de implementação. A documentação de cada componente fica no MDX ao lado dele (ver `CLAUDE.md` > "Documentação de componentes").
+Documento vivo do design system: arquitetura CSS, tokens primitivos e semânticos, escala tipográfica e padrões de implementação. A documentação de cada componente fica no MDX ao lado dele (ver `.claude/rules/storybook.md` > "Documentação de componentes").
 
 Os valores vêm de `styles/tokens/`. Ao mudar um token no CSS, atualizar a tabela aqui no mesmo PR.
 

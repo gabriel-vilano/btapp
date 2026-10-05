@@ -1,9 +1,9 @@
-# FEED_CARDS.md — LetzPlay
+# FEED_CARDS.md
 **Escopo:** Especificação de produto e design dos cards do activity stream  
 **Versão:** 3.0  
 **Status:** Aprovado para implementação  
 **Gerado em:** Abril 2026  
-**Contexto:** Este documento consolida todas as decisões tomadas nas sessões de design review, análise de wireframes e iterações de componentes. Substitui `letzplay-feed-cards-prd.md` e `letzplay-feed-cards-prd-v2.md`.
+**Contexto:** Este documento consolida todas as decisões tomadas nas sessões de design review, análise de wireframes e iterações de componentes. Substitui as duas versões anteriores do PRD dos cards do feed.
 
 > Este documento é a fonte de verdade para implementação dos componentes React do feed. As decisões de dados que os cards assumem estão na seção 11. Os tipos que materializam o contrato estão em `src/types/feed.ts`.
 
@@ -12,7 +12,7 @@
 ## 1. Contexto de produto
 
 ### O feed como activity stream
-O feed do LetzPlay é um **activity stream** — modelo Strava, não Instagram. O conteúdo é gerado automaticamente por eventos do sistema (resultados, inscrições, amizades, movimentações de ranking), não por publicações manuais dos usuários. Não há UGC (user-generated content) no MVP.
+O feed do produto é um **activity stream** — modelo Strava, não Instagram. O conteúdo é gerado automaticamente por eventos do sistema (resultados, inscrições, amizades, movimentações de ranking), não por publicações manuais dos usuários. Não há UGC (user-generated content) no MVP.
 
 ### JTBD associados ao feed
 - **Job 1** — Encontrar competição: descoberta social via inscrições de amigos
@@ -553,7 +553,7 @@ Exemplo da R11, 2 sets de 6: Pedro vence o 1º set por 6/4 e desiste perdendo o 
 **JTBD:** Job 2  
 **Gatilho:** atualização de classificação após rodada processada  
 **Variações:** subiu, desceu, marco (Líder / Top N), classificado para a final  
-**Observação:** feature nova — não existe no LetzPlay atual
+**Observação:** feature nova — não existe no incumbente
 
 **A posição é da unidade competidora** (`DOMAIN.md` R1): em duplas, o card mostra os dois jogadores, com o cabeçalho de dupla da seção 6.2 (stack de avatares 40px e "[Nome1] e [Nome2] subiram no ranking"). O verbo concorda com a unidade: singular em simples, plural em duplas.
 

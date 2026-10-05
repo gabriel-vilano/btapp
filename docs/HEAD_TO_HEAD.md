@@ -1,4 +1,4 @@
-# HEAD_TO_HEAD.md — LetzPlay
+# HEAD_TO_HEAD.md
 
 Spec do head-to-head (H2H): o que a página compara, como ela trata simples e duplas, de onde se chega a ela, os estados e os critérios de aceite dos blocos novos do design system.
 
@@ -38,7 +38,7 @@ As siglas de decisão são as do `docs/DOMAIN.md` > "Fontes". As que esta spec u
 Por isso a página **não repete o perfil**. Ela não tem cartel geral, nem lista de títulos, nem estatística por jogador. Três razões:
 
 - **O MVP não tem estatística que sustente um duelo de números.** O caminho B da pesquisa (barras espelhadas de "% de sets", "tiebreaks vencidos") "exige estatísticas por jogador que ainda não existem" e arrisca "mostrar número sem significado" com 5 partidas (REF-H2H). O beta começa do zero (DSC, H1).
-- **O confronto direto é o dado que só o LetzPlay tem.** O cartel o jogador pode contar; o "3 × 1 contra o Pedro" ele não lembra direito. É a parte que resolve o JTBD 3 e que o perfil só resume numa linha (PF17).
+- **O confronto direto é o dado que só o produto tem.** O cartel o jogador pode contar; o "3 × 1 contra o Pedro" ele não lembra direito. É a parte que resolve o JTBD 3 e que o perfil só resume numa linha (PF17).
 - **A tela pequena é honesta.** Com um confronto, a página mostra um confronto. Nada de "0 · 0 · 0" nem seção vazia para parecer cheia (REF-H2H, "O que funciona e o que evitar").
 
 ---
@@ -113,7 +113,7 @@ A decisão **HQ1** (seção 11) resolve isso com **uma página para cada recorte
 
 - **HH9. Os lados mostram avatar e nome de cada jogador**, com o primeiro nome em duplas ("Lucas · Rafael"), como o `MatchVsBlock` do feed. Tocar num jogador abre o perfil dele. O título da tela (`h1`) é o confronto por extenso: "Lucas e Rafael × Pedro e Thiago". [CARDS §4.2; PF20]
 
-  O `MatchVsBlock` mora em `src/components/feed/` e mostra `total_matches` embaixo do nome. Reusar exige subir o bloco para `ui/` (a regra de grupos do `CLAUDE.md`) e tirar a contagem, que aqui não responde à pergunta da página. A issue de ENG decide entre subir o bloco com uma variante ou compor o `H2HSides` com o `Avatar` e o `AvatarStack`, que já estão em `ui/`.
+  O `MatchVsBlock` mora em `src/components/feed/` e mostra `total_matches` embaixo do nome. Reusar exige subir o bloco para `ui/` (a regra de grupos, `.claude/rules/componentes.md`) e tirar a contagem, que aqui não responde à pergunta da página. A issue de ENG decide entre subir o bloco com uma variante ou compor o `H2HSides` com o `Avatar` e o `AvatarStack`, que já estão em `ui/`.
 
 ### 4.2 Resumo
 
@@ -175,7 +175,7 @@ Ver HH2. Cada linha: os dois nomes ("Lucas × Pedro"), o resumo ("3 × 1", do la
 - **HH17. O número do botão é o total de confrontos jogados entre os lados, e é o mesmo que o resumo da página mostra.** No card de resultado, esse total inclui a partida do card; por isso o botão só aparece a partir de 2: com 1, a página mostraria só a partida que o jogador acabou de ver. No card de confronto, a partida ainda não foi jogada, e 1 basta. O número é derivado na hora (não é uma foto do momento do card), para nunca divergir da página. [CARDS §4.2 ("quando é o primeiro confronto, o botão não existe"); DEC-H2H HQ1; LEIT]
 
   **Muda o código:** hoje o `ResultCard` mostra o botão com `h2h_count >= 1` (`src/components/feed/ResultCard/ResultCard.tsx`). A `FEED_CARDS.md` §4.2 diz "Quando é o primeiro confronto, o botão não existe", o que só fica verdade se o card de resultado exigir 2.
-- **HH18. O `H2HButton` vira link.** Hoje ele é um `<button>` sem `onClick`, stub registrado no `CLAUDE.md` > "Componentes com stubs sem comportamento". Passa a ser um `<a>` (via `next/link`) com o `href` da HH5: navegação é link, não botão (WCAG 4.1.2; o leitor de tela anuncia "link" e o jogador pode abrir em outra aba). [CLAUDE.md; LEIT]
+- **HH18. O `H2HButton` vira link.** Hoje ele é um `<button>` sem `onClick`, um stub sem comportamento. Passa a ser um `<a>` (via `next/link`) com o `href` da HH5: navegação é link, não botão (WCAG 4.1.2; o leitor de tela anuncia "link" e o jogador pode abrir em outra aba). [CLAUDE.md; LEIT]
 - **HH19. A folha da linha de duplas da classificação (RK14) não ganha H2H no MVP.** A folha resolve "qual dos dois perfis abrir" e tem duas linhas. Uma terceira, "H2H com a sua dupla", só faria sentido para quem está na categoria e já enfrentou aquela dupla, e o perfil de cada jogador já tem o bloco "Vocês". Rever se a métrica "Porta de entrada do H2H" mostrar procura pela classificação. [RANK RK14; LEIT]
 - **HH20. Não existe H2H livre** ("escolha dois jogadores"), como o slot "+ Click to add player" do Premier League. O H2H sempre nasce de dois lados que o app já conhece: um card, uma partida ou um perfil. [REF-H2H; LEIT]
 
@@ -217,7 +217,7 @@ Ver HH2. Cada linha: os dois nomes ("Lucas × Pedro"), o resumo ("3 × 1", do la
 
 ## 8. Componentes e critérios de aceite
 
-Os blocos novos moram em `src/components/h2h/` (grupo de área, `CLAUDE.md` > "Onde mora cada componente"). O que outra área também usar sobe para `ui/`.
+Os blocos novos moram em `src/components/h2h/` (grupo de área, `.claude/rules/componentes.md`). O que outra área também usar sobe para `ui/`.
 
 | Componente | Tier | Situação | Uso nesta spec |
 | --- | --- | --- | --- |
@@ -294,7 +294,7 @@ Emendas feitas no mesmo PR desta spec, depois da DEC-H2H:
 - **`docs/NAVIGATION.md`, tabela de rotas:** a linha "H2H" ganha `/h2h/[ladoA]/[ladoB]` (HH5).
 - **`docs/FEED_CARDS.md`, §4.2:** o botão do card de resultado aparece a partir de 2 confrontos, contando o do card (HH17).
 
-**Fica para as issues de ENG (código):** `headToHeadPath` do perfil (HH5), `ResultCard` (HH17), `H2HButton` em `ui/` e como link (HH18), e a linha do `H2HButton` sai de "Componentes com stubs sem comportamento" no `CLAUDE.md` quando ele ganhar `href`.
+**Fica para as issues de ENG (código):** `headToHeadPath` do perfil (HH5), `ResultCard` (HH17), `H2HButton` em `ui/` e como link (HH18).
 
 ---
 
