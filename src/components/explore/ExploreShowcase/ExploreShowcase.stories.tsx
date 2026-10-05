@@ -72,6 +72,7 @@ export const NoArenas: Story = {
 export const Empty: Story = {
   args: { showcase: { competitions: [], hasOpenCompetition: false, arenas: [] } },
   play: async ({ canvas }) => {
-    await expect(await canvas.findByRole("heading", { name: `Ainda não há competições no ${brand.name}.` })).toBeVisible();
+    // O nome acessível mantém o espaço que não quebra: achar o título por ele confere que está lá
+    await expect(await canvas.findByRole("heading", { name: `Ainda não há competições no ${brand.nameNoBreak}.` })).toBeVisible();
   },
 };

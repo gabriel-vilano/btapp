@@ -52,7 +52,7 @@ function FriendsListEmpty({ data }: FriendsListProps) {
   if (!data.is_own) {
     return (
       <div className={styles.friends}>
-        <EmptyState icon={UsersThreeIcon} title={`${firstName(data.owner.name)} ainda não tem amigos no ${brand.name}.`} />
+        <EmptyState icon={UsersThreeIcon} title={`${firstName(data.owner.name)} ainda não tem amigos no ${brand.nameNoBreak}.`} />
       </div>
     );
   }
@@ -60,7 +60,7 @@ function FriendsListEmpty({ data }: FriendsListProps) {
     <div className={styles.friends}>
       <EmptyState
         icon={UsersThreeIcon}
-        title={`Você ainda não tem amigos no ${brand.name}.`}
+        title={`Você ainda não tem amigos no ${brand.nameNoBreak}.`}
         description="Adicione jogadores pelo perfil deles ou pela busca."
         action={<ButtonLink href={EXPLORE_PATH}>Buscar jogadores</ButtonLink>}
       />

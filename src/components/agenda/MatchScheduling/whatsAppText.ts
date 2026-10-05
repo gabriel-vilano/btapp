@@ -23,7 +23,7 @@ export type WhatsAppSubject =
 export function scheduleWhatsAppText(subject: WhatsAppSubject): string {
   switch (subject.kind) {
     case "proposal":
-      return `Proponho ${formatOptionList(subject.options)}. Responde no ${brand.name} ou aqui.`;
+      return `Proponho ${formatOptionList(subject.options)}. Responde no ${brand.nameNoBreak} ou aqui.`;
     case "agreed":
       return `Jogo marcado: ${formatOptionList([subject.option])}.`;
     case "invite":

@@ -19,7 +19,7 @@ type ShareState = "idle" | "copied" | "failed";
 // Sem o sheet nativo (desktop, alguns navegadores), o link vai para a área de transferência
 async function shareProfile(url: string, name: string): Promise<ShareState> {
   if (typeof navigator.share === "function") {
-    await navigator.share({ title: `${name} no ${brand.name}`, url }).catch(() => undefined);
+    await navigator.share({ title: `${name} no ${brand.nameNoBreak}`, url }).catch(() => undefined);
     return "idle";
   }
   try {

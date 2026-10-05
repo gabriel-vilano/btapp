@@ -26,7 +26,7 @@ export function ExploreShowcase({ showcase }: ExploreShowcaseProps) {
   const { competitions, hasOpenCompetition, arenas } = showcase;
   // Os dois vazios juntos só acontecem em desenvolvimento (EX13)
   if (competitions.length === 0 && arenas.length === 0) {
-    return <EmptyState icon={CompassIcon} title={`Ainda não há competições no ${brand.name}.`} />;
+    return <EmptyState icon={CompassIcon} title={`Ainda não há competições no ${brand.nameNoBreak}.`} />;
   }
   return (
     <div className={styles["explore-showcase"]}>

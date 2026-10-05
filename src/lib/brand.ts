@@ -16,4 +16,13 @@
 // Sem `baseUrl` nem `supportEmail` de propósito: nenhum código os consome
 // hoje (o compartilhamento do perfil usa `window.location.origin`) e o
 // domínio ainda não existe. Entram quando houver o primeiro consumidor.
-export const brand = { name: "BT App", shortName: "BT App" } as const;
+const name = "BT App";
+
+export const brand = {
+  name,
+  shortName: name,
+  // Para o meio de frase ("…amigos no BT App."): o espaço que não quebra
+  // (U+00A0) mantém o nome numa linha só, sem o "BT" no fim de uma e o "App"
+  // no começo da outra. Título e logo, que não quebram, usam `name`.
+  nameNoBreak: name.replaceAll(" ", "\u00A0"),
+} as const;

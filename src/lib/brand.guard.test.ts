@@ -30,9 +30,14 @@ function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+// Entre as palavras do nome vale qualquer espaço: o comum, o que não quebra
+// (U+00A0, cru ou escrito como `&nbsp;`, `&#160;` ou `\u00A0` no código)
+const NAME_SEPARATOR = "(?:\\s|&nbsp;|&#160;|\\\\u00[aA]0)";
+
 // Limite de palavra feito à mão: `\b` não trata letra acentuada como letra
 function literalPattern(value: string): RegExp {
-  return new RegExp(`(?<![\\p{L}\\p{N}_])${escapeRegExp(value)}(?![\\p{L}\\p{N}_])`, "u");
+  const words = value.split(/\s+/).map(escapeRegExp).join(NAME_SEPARATOR);
+  return new RegExp(`(?<![\\p{L}\\p{N}_])${words}(?![\\p{L}\\p{N}_])`, "u");
 }
 
 function scannedFiles(): string[] {
