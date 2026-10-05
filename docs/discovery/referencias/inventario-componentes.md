@@ -1,10 +1,10 @@
 # Inventário de componentes
 
-Consolida os componentes que as 7 superfícies pedem, com o tier da estratégia de Storybook (`CLAUDE.md`), o que já existe e o que falta.
+Consolida os componentes que as 7 superfícies pedem, com o tier da estratégia de Storybook (`.claude/rules/storybook.md`), o que já existe e o que falta.
 
 > **Não é backlog.** Nenhuma issue de implementação sai daqui antes de as specs das superfícies serem aprovadas. O inventário serve para enxergar **reuso** (o que aparece em várias superfícies) e **lacunas** (o que o DS ainda não tem) na hora de escrever essas specs.
 
-**Tiers (`CLAUDE.md` > Storybook > Estratégia de cobertura):**
+**Tiers (`.claude/rules/storybook.md` > Estratégia de cobertura):**
 1 = primitivo do DS · 2 = composto com estados ocultos · 3 = bloco reutilizável de feature · 4 = composição final (tela, card completo).
 
 **Onde está o que existe** (em 25/09/2026):
@@ -83,14 +83,14 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 
 | Componente | Superfícies | Existe? | O que falta |
 | --- | --- | --- | --- |
-| **CardShell / CardHeader / CardFooter** | F | Sim (branch do feed) | CardHeader com duas pessoas em duplas (hurdle registrado no `CLAUDE.md`) |
+| **CardShell / CardHeader / CardFooter** | F | Sim (branch do feed) | CardHeader com duas pessoas em duplas (registrado na época como hurdle) |
 | **ScoreBlock** | F, H, P, S | Sim (1, 2 e 3 sets; vencedor e perdedor por set) | Variante **compacta** para listas (confrontos no H2H, partidas recentes no perfil) e para pré-visualização no registro |
 | **RankingBlock** | F, R | Sim (subiu, desceu, marco) | Pode virar o hero do topo da tela de ranking (caminho B do ranking) |
 | **RankingRow** | R | Não | Posição, avatar(es), nome(s), pontos, DeltaIndicator, destaque "você". Variante de dupla |
 | **ZoneDivider** | R | Não | Linha de corte com texto ("Classificam para as Finals") |
 | **MetaInfo** | F, D | Sim (data, local, nota) | Prazo de inscrição |
 | **CompetitionBlock** | F, D | Sim | Status (inscrições abertas ou encerradas, adiado), prazo, categorias. Pode ser o item da lista de descoberta |
-| **MatchVsBlock / CheerBar / H2HButton** | F, H | Sim (H2HButton sem `onClick`, stub registrado no `CLAUDE.md`) | Ligar o H2HButton à página de H2H |
+| **MatchVsBlock / CheerBar / H2HButton** | F, H | Sim (H2HButton sem `onClick`, stub sem comportamento) | Ligar o H2HButton à página de H2H |
 | **ProfileMiniCard** | F | Sim (stub sem `onClick`) | — |
 | **ProfileHeader** | P | Não | Avatar, nome, categoria (Badge), posição clicável, RecordLine, Seguir |
 | **RecordLine** (cartel) | P, H | Não | "V 24 · D 7 · W.O. 1" em uma linha |
@@ -103,7 +103,7 @@ Os componentes que aparecem em **4 ou mais superfícies** são os de maior retor
 
 ## Tier 4 — Composições finais
 
-Geralmente sem story (`CLAUDE.md`); quando valer, uma story-galeria.
+Geralmente sem story (`.claude/rules/storybook.md`); quando valer, uma story-galeria.
 
 | Composição | Superfícies | Existe? | Observação |
 | --- | --- | --- | --- |
@@ -131,7 +131,7 @@ Geralmente sem story (`CLAUDE.md`); quando valer, uma story-galeria.
 | Ferramenta | Chamadas | Limite | Observação |
 | --- | --- | --- | --- |
 | **Mobbin** (`search_screens`, `search_flows`) | **25** | 70 | Ranking 5 · Feed 4 · Perfil 4 · H2H 2 · Placar 4 · Descoberta 4 · Navegação 2. Cerca de 230 telas vistas |
-| **Firecrawl** (`firecrawl_scrape`) | **5** | 30 | Playtomic Help (2), letzplay.me (1, redirecionou para a home), Material 3 e Apple HIG (2). Modo Alexandria não usado |
+| **Firecrawl** (`firecrawl_scrape`) | **5** | 30 | Playtomic Help (2), site do incumbente (1, redirecionou para a home), Material 3 e Apple HIG (2). Modo Alexandria não usado |
 | WebSearch | 2 | — | UTR e Playtomic |
 | WebFetch | 2 | — | Playtomic Manager e Material 3: bloqueados pelo proxy da sessão, refeitos com Firecrawl |
 

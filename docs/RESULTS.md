@@ -1,4 +1,4 @@
-# RESULTS.md — LetzPlay
+# RESULTS.md
 
 Spec das telas e dos fluxos do registro de resultado: lançar, confirmar ou contestar, acompanhar, a fila do admin, o amistoso e o que o jogador vê no ranking logo depois da confirmação.
 
@@ -340,7 +340,7 @@ Resultado confirmado
 
 ## 9. Componentes que a spec pede
 
-Lista para as issues de implementação. **Aqui não se desenha nenhum componente**: nome, onde a spec o usa e o que já existe no `master`. Componente usado por mais de uma área mora em `ui/` (`CLAUDE.md` > "Onde mora cada componente").
+Lista para as issues de implementação. **Aqui não se desenha nenhum componente**: nome, onde a spec o usa e o que já existe no `master`. Componente usado por mais de uma área mora em `ui/` (`.claude/rules/componentes.md`).
 
 | Componente | Tier | Onde aparece | Existe? |
 | --- | --- | --- | --- |

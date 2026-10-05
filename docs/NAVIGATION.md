@@ -1,4 +1,4 @@
-# NAVIGATION.md — LetzPlay
+# NAVIGATION.md
 
 Spec da navegação do app e da agenda do jogador (aba "Jogos"): quais abas existem, o que fica fora delas, como cada card do feed leva ao detalhe, como a agenda se organiza, como ela divide o trabalho com o bloco de pendências do feed, e o que mostram as abas Competições e Explorar.
 
@@ -33,7 +33,7 @@ As siglas de decisão são as mesmas do `docs/DOMAIN.md` > "Fontes". As que esta
 
 ## 1. Princípio
 
-**Cinco destinos, um lugar para cada coisa.** O problema 2 do audit do app atual é de arquitetura de informação: menu com 19+ itens, busca duplicada e perfil sobrecarregado (`CLAUDE.md`). A resposta desta spec é uma regra só, aplicada a tudo: **cada entidade tem uma rota, e cada ação tem uma casa**. Os atalhos (bloco de pendências, notificação, badge) levam até a casa; eles não viram uma segunda casa.
+**Cinco destinos, um lugar para cada coisa.** O problema 2 do incumbente é de arquitetura de informação: a mesma ação em vários lugares, busca duplicada e perfil sobrecarregado (`docs/PRODUCT.md` > "Problemas do incumbente que o produto resolve"). A resposta desta spec é uma regra só, aplicada a tudo: **cada entidade tem uma rota, e cada ação tem uma casa**. Os atalhos (bloco de pendências, notificação, badge) levam até a casa; eles não viram uma segunda casa.
 
 | Problema do audit | Como esta spec resolve |
 | --- | --- |
@@ -241,7 +241,7 @@ A aba responde "o que existe para eu jogar?" (JTBD 1). No MVP ela é **enxuta**:
 
 ### 9.1 Ritmo de uso
 
-O uso é alto durante a rodada e cai entre competições (`CLAUDE.md`, "Insights estratégicos"). A navegação acompanha esse ritmo sem inventar engajamento:
+O uso é alto durante a rodada e cai entre competições (`docs/PRODUCT.md`, "Contexto do esporte"). A navegação acompanha esse ritmo sem inventar engajamento:
 
 - **Durante a rodada:** o badge da aba Jogos, o bloco "Sua vez" do feed e as notificações trazem o jogador de volta à ação. A agenda abre com "Sua vez" no topo.
 - **Entre rodadas e entre temporadas:** o badge some e o bloco do feed some. A aba Jogos mostra o histórico e o que vem a seguir, a aba Competições mostra a posição final, e o Explorar é o caminho para a próxima competição (JTBD 1).
@@ -302,7 +302,7 @@ A classificação sem temporada em andamento e a tabela sem jogo confirmado são
 
 ## 11. Componentes
 
-Lista para a auditoria do design system. **Esta spec não desenha os componentes**: nome, papel e onde aparecem, para a auditoria decidir o que já existe, o que vira variante e o que é novo. Os tiers seguem a estratégia do Storybook (`CLAUDE.md`). "No `master`" quer dizer que o componente já existe em `src/components/`.
+Lista para a auditoria do design system. **Esta spec não desenha os componentes**: nome, papel e onde aparecem, para a auditoria decidir o que já existe, o que vira variante e o que é novo. Os tiers seguem a estratégia do Storybook (`.claude/rules/storybook.md`). "No `master`" quer dizer que o componente já existe em `src/components/`.
 
 | Componente | Tier | Papel nesta spec | Situação |
 | --- | --- | --- | --- |

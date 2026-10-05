@@ -1,6 +1,6 @@
 # 01 — Ranking
 
-A tela que carrega o "coração emocional" do produto (`CLAUDE.md`). Aqui o jogador lê a posição, a variação e a distância para as Finals.
+A tela que carrega o "coração emocional" do produto (`docs/PRODUCT.md`). Aqui o jogador lê a posição, a variação e a distância para as Finals.
 
 **JTBDs:** 2 (saber onde estou no ranking) principal; 5 (sentir que estou evoluindo) e 3 (avaliar adversário) secundários.
 **Oportunidades relacionadas (`DISCOVERY.md`):** 2.2 explicar a pontuação, 2.3 corrida às Finals com linha de corte, 2.4 ranking individual × dupla.
@@ -148,7 +148,7 @@ Para a queda, as referências não oferecem modelo. É uma lacuna de mercado e u
 - ✅ **Divisor com texto** para regras que o usuário não conhece ("Classificam para as Finals").
 - ✅ **Recorte social** (amigos) ao lado do recorte oficial: transforma a tabela em motivo de conversa (Beli, corner, Vivino).
 - ❌ **Tabela com muitas colunas no mobile.** NBA e MLS rolam na horizontal a 393px. O ranking de BT tem poucas métricas; usar tabela larga é importar um problema que não existe.
-- ❌ **Fundo de marca cheio na própria linha quando a marca é da mesma família do "subiu"/"desceu".** O coral do LetzPlay fica perto do vermelho de queda (`--color-red-600`). Tratamento a testar com cuidado (**inferência**).
+- ❌ **Fundo de marca cheio na própria linha quando a marca é da mesma família do "subiu"/"desceu".** O coral da marca fica perto do vermelho de queda (`--color-red-600`). Tratamento a testar com cuidado (**inferência**).
 - ❌ **Celebrar posição que não mudou.** O `FEED_CARDS.md` já diz: variação zero não gera card. Vale o mesmo para a tela.
 
 ## Acessibilidade

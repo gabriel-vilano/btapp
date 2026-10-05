@@ -1,6 +1,7 @@
 ---
 paths:
   - "src/**/*.stories.tsx"
+  - "src/**/*.mdx"
   - ".storybook/**"
 ---
 
@@ -49,6 +50,84 @@ Adotamos a estratégia **DS + componentes críticos** — não documentamos tudo
 **Regra do PR:** ao adicionar/evoluir um componente, perguntar antes do merge: *"Esse componente tem 3 ou mais variantes/estados que valem mostrar lado a lado?"* Se sim, story junto no mesmo PR. Se não, segue sem.
 
 
+## Documentação de componentes
+
+**Fonte única: arquivos `Component.mdx` ao lado de cada componente, renderizados no Storybook.** Não usamos `docs/components/` — foi deprecado e removido em favor de MDX como source of truth.
+
+```
+src/components/ui/Button/
+  Button.tsx             ← código
+  Button.module.css      ← estilo
+  Button.stories.tsx     ← stories interativas
+  Button.mdx             ← documentação (fonte canônica)
+  index.ts
+```
+
+Convenção completa de MDX (estrutura de seções, ordem de conteúdo, blocos do Storybook): ver "Padrão de documentação MDX" abaixo.
+
+## Padrão de documentação MDX
+
+Cada componente do Tier 1 e Tier 2 ganha um arquivo `Component.mdx` ao lado, **complementando** o `.stories.tsx`:
+
+```
+src/components/ui/Button/
+  Button.tsx
+  Button.module.css
+  Button.stories.tsx   ← stories interativas, controls, args
+  Button.mdx           ← documentação rica em prose
+  index.ts
+```
+
+**Por que MDX se já temos auto-docs:** o auto-docs (aba "Docs" gerada do meta) é raso — só descrição + tabela de props + stories embutidas. MDX permite explicar **decisões de design**, **componentes relacionados**, **acessibilidade**, **anti-padrões** — coisas que não cabem em uma description de story.
+
+**Idioma:** títulos de seções e prose em português. Termos técnicos sem tradução natural permanecem em inglês (ex: `Provider`, `hook`, `props`, nomes de tokens CSS, identificadores de código). Sigla `API` mantém. Convenções específicas de DS (`Don'ts`) traduzimos quando há equivalente claro em PT (`Evitar`).
+
+**Inspiração de estrutura:** [Carbon Design System](https://github.com/carbon-design-system/carbon/blob/main/packages/react/src/components/Button/Button.mdx) — adotamos a estrutura por seções (cada variante e cada estado com H2/H3 próprio), `<ArgTypes>` no fim como API, `## References` linkando padrões externos. Diferença: Carbon é DS multi-tenant, então é deliberadamente neutro; o nosso é DS de um produto único, então mantemos **opinião forte** ("uma primary por tela", Don'ts explícitos).
+
+**Imports padrão:**
+
+```mdx
+import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as ButtonStories from "./Button.stories";
+
+<Meta of={ButtonStories} />
+<Subtitle>Uma linha sobre o propósito do componente.</Subtitle>
+
+**Código-fonte:** [`src/components/ui/Button/Button.tsx`](https://github.com/gabriel-vilano/btapp/blob/master/src/components/ui/Button/Button.tsx)
+```
+
+Sempre incluir o link pro código-fonte no topo, logo após o Subtitle.
+
+**Tabelas em MDX:** usar HTML (`<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, `<td>`). Sintaxe markdown de pipes não funciona no Storybook 10 + nextjs-vite atual — `remark-gfm` foi tentado mas o `mdxLoaderOptions` hook não propaga remarkPlugins até o compile final do `@mdx-js/mdx` interno do addon-docs. Inline code em cells via `<code>...</code>`. Reavaliar quando upstream resolver.
+
+**Seções recomendadas (na ordem):**
+
+1. **Visão geral** — parágrafo curto descrevendo propósito + `<Canvas>` da story default. Mostra o componente funcionando antes de explicar.
+2. **Variantes** — parágrafo intro + `<Canvas of={Stories.AllVariants} />`, depois um **H3 por variante** com prose + Canvas próprio
+3. **Estados** — parágrafo intro + H3 por estado (Loading, Disabled, FullWidth, etc), cada um com prose + Canvas
+4. **Anatomia** *(opcional)* — partes visuais nomeadas. Só se o componente não for óbvio (FormInput sim, Button não)
+5. **Com ícone** *(quando aplicável)* — H3 separados pra leading e trailing
+6. **Quando usar** — bullets com casos de uso centrais
+7. **Componentes relacionados** — outros componentes próximos e quando preferir cada um (ex: Button vs ButtonLink vs TextLink), com link via `?path=/docs/ui-componente--docs`
+8. **Acessibilidade** — semântica HTML, ARIA, foco, tap target. Citar critérios WCAG quando aplicável
+9. **Evitar** — anti-padrões comuns com `❌`. Única seção negativa do MDX; é onde mora a opinião do nosso DS
+10. **API** — `<ArgTypes of={Stories} />` (não `<Controls>`; Controls é interativo, ArgTypes é documentação read-only)
+11. **Decisões de design** *(opcional)* — formato Q&A: por que essa abordagem em vez de alternativas? (ex: "Por que Phosphor em vez de Lucide?", "Por que wrapper em vez de import direto?"). **Critério estrito: só incluir quando há decisão não-óbvia que justificaria questionamento futuro.** Em componentes onde tudo é convencional, não criar a seção — boilerplate vazio polui mais do que ajuda
+12. **Referências** — links pra MDN, WAI-ARIA, WCAG, e referência cruzada com `docs/TOKENS.md`
+
+**Ordem de conteúdo dentro de qualquer seção/subseção: sempre Heading → Prose → Canvas.** O leitor precisa de contexto antes de processar o exemplo visual; mostrar o componente primeiro força o leitor a inferir o que está vendo. A regra vale tanto pro H2 quanto pro H3. **Nunca Canvas → Prose** — sem exceção.
+
+**Toda H2 que tem H3 abaixo deve ter prose intro de 1-2 linhas antes do primeiro H3** — orienta o leitor sobre o que vai encontrar. Se a H2 só tem prose+Canvas (sem H3), aplica direto a regra Heading → Prose → Canvas.
+
+**Não fazer:**
+
+- ❌ Duplicar prose do `parameters.docs.description` da story dentro do MDX — descrições curtas de story são legendas, MDX é a doc principal. Quando MDX existe, mantenha as descriptions curtas e factuais; o "porquê" mora no MDX.
+- ❌ Documentar implementação interna (estrutura de CSS, lógica de hook). Foco no consumidor: como usar, quando usar, quando não usar.
+- ❌ Criar MDX antes de ter stories — MDX referencia stories via `<Canvas of={...} />`. Stories primeiro, MDX depois.
+- ❌ TOC manual — Storybook 10 auto-gera TOC do lado direito a partir dos H2/H3 do MDX.
+
+**`docs/components/` foi deprecado.** MDX é a fonte única de documentação por componente. Decisões de design (rationale, alternativas consideradas) que antes ficavam em `docs/components/<nome>.md` agora vão na seção **Decisões de design** do próprio MDX (item 11 da lista acima), logo antes de Referências.
+
 ## Padrão de story
 
 - **Nunca nomear `export const X` igual ao componente importado.** `import { Button } from "./Button"` + `export const Button: Story = ...` quebra com "duplicate declaration". Use nomes das *variantes* — `Primary`, `Secondary`, `WithIcon`, `Loading`. (Boilerplate do Storybook 10.3.6 erra isso — não copiar.)
@@ -70,7 +149,7 @@ Usamos `@storybook/nextjs-vite` (não `nextjs` webpack). Vite roda mais rápido,
 
 ## Sobre RSC e `"use client"`
 
-Storybook + Vite não tem RSC. Stories rodam tudo client-side por default. A regra sobre Phosphor em Server Components (ver "Common hurdles" > "Phosphor em Server Components") vale para o app real, não para as stories — ali nada quebra.
+Storybook + Vite não tem RSC. Stories rodam tudo client-side por default. A regra sobre Phosphor em Server Components (ver `.claude/rules/icones.md` > "Phosphor em Server Components") vale para o app real, não para as stories — ali nada quebra.
 
 
 ## Regras do `play` e stories na nuvem
@@ -93,4 +172,6 @@ console.warn(prettyDOM(canvasElement, 100_000));
 ```
 
 Tirar a linha antes do commit.
+
+Origem: PR #125 (estabilidade das stories na CI).
 

@@ -1,6 +1,6 @@
-# DOMAIN.md — LetzPlay
+# DOMAIN.md
 
-Modelo de domínio do LetzPlay: as entidades do Beach Tennis competitivo, como se relacionam e as regras que valem entre elas. É a fonte para os tipos, os mocks e, quando a feature pedir, as tabelas.
+Modelo de domínio do produto: as entidades do Beach Tennis competitivo, como se relacionam e as regras que valem entre elas. É a fonte para os tipos, os mocks e, quando a feature pedir, as tabelas.
 
 > Este doc registra **o que foi decidido**. Cada regra cita a origem (seção "Fontes"). Pergunta nova vira regra só depois da decisão do Gabriel; as já respondidas estão mapeadas na seção 6. Nomes de tabela, colunas e tipos TS são decisão de implementação e não moram aqui.
 
@@ -30,7 +30,7 @@ As decisões foram tomadas pelo Gabriel em 26/09/2026 e estão registradas como 
 | **DEC-SORT-BORDA** | Issue do sorteio da rodada, comentário "Decisões do Gabriel sobre os casos de borda do sorteio" (27/09/2026) | A partida cancelada não conta como confronto feito na R30; com menos adversários que jogos na rodada, cada dupla enfrenta cada outra uma vez e a rodada tem menos jogos |
 | **DEC-RES** | Issue da spec de registro de partidas (`docs/RESULTS.md`), respostas do Gabriel às perguntas P1–P7 e aprovação da spec (29/09/2026) | Desfazer o lançamento, motivo da contestação e W.O. lançado só a favor de quem lança |
 | **ITF** | [Rules of Beach Tennis 2025](https://www.itftennis.com/media/13855/rules-of-beach-tennis-2025.pdf), da ITF | Regra do super tiebreak |
-| **PESQ-RV** | Regras públicas do Rankin e do Vila do Tênis (BH), que usam o LetzPlay legado com a mesma configuração: `letzplay.me/rankin/rankings/55513/about`, `letzplay.me/vila-tenis-bt/rankings/56068/about`, `viladotenis.com/area-do-atleta` | Referências reais de jogos por rodada, prazo para combinar a data, regra de desistência, regra de W.O. por oferta de datas |
+| **PESQ-RV** | Regras públicas do Rankin e do Vila do Tênis (BH), que rodam no incumbente com a mesma configuração, e a área do atleta do Vila (`viladotenis.com/area-do-atleta`). Links das páginas de regras no incumbente: evidência: documento D2 ("Evidência: concorrentes e incumbente (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear | Referências reais de jogos por rodada, prazo para combinar a data, regra de desistência, regra de W.O. por oferta de datas |
 | **DSC** | `docs/DISCOVERY.md` e `docs/discovery/` | Evidência de mercado citada nas regras e nas perguntas |
 | **DEC-H2H** | Issue da spec de head-to-head (`docs/HEAD_TO_HEAD.md`), respostas do Gabriel às perguntas HQ1–HQ4 (30/09/2026) | A página de H2H tem dois tipos, jogador × jogador e dupla × dupla; o card de duplas abre a de duplas. Emenda a R19 |
 | **DEC-SORTEIO** | Issue da spec do fluxo do sorteio (`docs/ROUND_DRAW.md`), comentário "Decisões do Gabriel" (01/10/2026) | Aprovação da spec com as recomendações de SQ1 a SQ5; quem sorteou e quando ficam na partida; o desfazer apaga as partidas e fica registrado à parte; prazo depois do corte da final permitido, com aviso |
@@ -47,7 +47,7 @@ As entidades estão agrupadas pelo papel que cumprem. Os nomes em **negrito** s�
 
 | Termo | Definição | Regras |
 | --- | --- | --- |
-| **Jogador** | Pessoa com conta no LetzPlay. Tem nome, @username, foto, **data de nascimento opcional**, **telefone opcional** (só para a marcação de jogos, ver `docs/SCHEDULING.md`) e o contador `total_matches`. O cadastro não coleta gênero | R18, R19, R26, R33 |
+| **Jogador** | Pessoa com conta no produto. Tem nome, @username, foto, **data de nascimento opcional**, **telefone opcional** (só para a marcação de jogos, ver `docs/SCHEDULING.md`) e o contador `total_matches`. O cadastro não coleta gênero | R18, R19, R26, R33 |
 | **Amizade** | Conexão bilateral entre dois jogadores: um pede, o outro aceita. Só a amizade aceita gera evento no feed | R24 |
 | **Admin da competição** | Jogador com permissões **numa competição específica** (ranking ou torneio): lançar o sorteio, lançar o resultado do torneio, arbitrar contestação, decidir a partida não realizada, corrigir ou anular placar e desempatar a última vaga da final. É um papel mínimo, não a visão do organizador | R15, R38–R41, R53 |
 | **Interesse** | Marca privada de um jogador numa competição em que ele não está inscrito ("Tenho interesse"). Mede a demanda: não avisa o organizador nem aparece para outros jogadores. Quando o jogador se inscreve na competição, o botão some, mas o interesse fica guardado, para a métrica "Interesse que virou inscrição" (`EXPLORE.md`, EX31) | — |
@@ -286,11 +286,11 @@ Regras numeradas para serem citadas em issues, testes e PRs (ex.: "implementa R1
 
 ### Unidade competidora e estrutura
 
-- **R1. A classificação é por unidade competidora.** Em duplas, a posição é da dupla, nunca de cada jogador. O LetzPlay não tem tabela por jogador, mesmo que o organizador tenha uma fora do app (o Rankin tem). [DEC-DOM, DEC-PESQ, DEC-CARDS D2]
+- **R1. A classificação é por unidade competidora.** Em duplas, a posição é da dupla, nunca de cada jogador. O produto não tem tabela por jogador, mesmo que o organizador tenha uma fora do app (o Rankin tem). [DEC-DOM, DEC-PESQ, DEC-CARDS D2]
 - **R2. Um jogador participa de vários rankings ao mesmo tempo**, com uma dupla por ranking ou categoria. [DEC-DOM]
 - **R3. Simples e duplas existem no ranking, no torneio e no amistoso.** O modelo trata a unidade competidora como dupla ou jogador, e na competição a modalidade é da categoria. [DEC-DOM, DEC-RESP]
 - **R4. A categoria é gênero + nível + idade.** O nome segue esse padrão ("Masculino B", "Mista C 40+"), e a modalidade só aparece quando é simples. A §11.5 do `FEED_CARDS.md`, que trata nível e idade como exclusivos, precisa ser corrigida para seguir esta regra. [DEC-DOM, DEC-CARDS D6]
-- **R5. Pontos de federação ficam fora do produto.** Torneios que valem ponto para federação existem, mas o LetzPlay não guarda nem calcula esses pontos. [DEC-DOM]
+- **R5. Pontos de federação ficam fora do produto.** Torneios que valem ponto para federação existem, mas o produto não guarda nem calcula esses pontos. [DEC-DOM]
 - **R6. Ranking de arena e torneio têm peso igual** como tipos de competição. [DEC-DOM, que retoma a síntese do discovery]
 - **R7. O ranking funciona em temporada → rodadas → sorteio → partidas.** O admin lança o sorteio no app, que gera os confrontos da rodada na hora (R30). O jogador não escolhe o adversário. A data é combinada pelas propostas de horário ou informada depois (R34, R35), e o resultado é lançado no app. Por isso o card "Confronto definido" existe também no ranking: ele nasce do sorteio. O número de partidas por rodada e de rodadas por temporada varia por ranking (Rankin: 4 jogos por rodada; Vila: 2 jogos por rodada, 4 rodadas por semestre, 72h para combinar a data). [DEC-PESQ, DEC-SORT, DEC-MARC, DEC-CARDS D3, PESQ-RV]
 - **R29. O formato da partida é da competição.** O ranking tem um formato só. O torneio guarda um formato padrão, e o admin troca o formato da partida que fugir dele (ex.: grupos em set de 6, final em 2 sets). No amistoso, quem lança escolhe um dos três. São eles:

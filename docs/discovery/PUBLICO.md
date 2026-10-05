@@ -84,7 +84,7 @@
 | Risco de lesão sobe com o tempo de exposição e lesão prévia | PMC10962065 | Resumo | Média |
 | Temporada estadual: ranking com as **7 melhores pontuações** do ano (FCTBT) | Regulamento FCTBT 2025 | Lido | Forte |
 | Amadores com "equipe multidisciplinar" (técnico, preparador, nutricionista, psicólogo) | Psicóloga da FCTBT, BBC via Terra | Lido | Fraca (anedota) |
-| Muitos atletas buscam psicólogo "para aprender a lidar com a frustração" | Idem | Lido | Fraca (anedota) |
+| Muitos atletas buscam psicólogo para aprender a lidar com a frustração | Idem | Lido | Fraca (anedota) |
 | **Nº de torneios por jogador por ano: não encontrado** | — | — | Lacuna |
 
 ### 2.3 Onde joga e com quem
@@ -114,7 +114,7 @@ Preços de 2023 a 2026, em reais. Grande variação regional.
 | **Aluguel de quadra** | R$ 70–120/h (estimativa geral); Casa BT (SP): R$ 65–96/h conforme horário | [Tecnofit](https://www.tecnofit.com.br/blog/quanto-lucra-uma-quadra-de-beach-tennis/); [Casa BT](https://www.casa-bt.com.br/service-page/aluguel-da-quadra) | Resumo | Média |
 | **Day use** | SP: R$ 35 (semana) e R$ 45 (fim de semana), 2024. Arena Mogi (Mogi Guaçu): R$ 30–40 | [Areia e Raquete](https://areiaeraquete.com.br/day-use-no-beach-tennis/); [Arena Mogi](https://arenamogibeachtennis.com.br/tabela-de-valores/) | Resumo | Média |
 | Agregadores de academia | Arenas aceitam Gympass/TotalPass/Gurupass (ex.: Arena Mogi) | [TotalPass](https://totalpass.com/br/academias/arena-mogi-beach-tennis/) | Resumo | Fraca |
-| **Inscrição em torneio amador de arena** | R$ 70 por atleta (Joog Arena PG); R$ 150 (1 categoria) e R$ 230 (2) no Vero BT | [Torneio Já](https://torneioja.com.br/torneio/1369); [LetzPlay](https://letzplay.me/verobt/tourneys/28340) | Resumo | Média |
+| **Inscrição em torneio amador de arena** | R$ 70 por atleta (Joog Arena PG); R$ 150 (1 categoria) e R$ 230 (2) no Vero BT | [Torneio Já](https://torneioja.com.br/torneio/1369); página do torneio no incumbente (link: evidência: documento D2 ("Evidência: concorrentes e incumbente (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear) | Resumo | Média |
 | **Inscrição federada estadual** (FCTBT 2025) | Amador, 1 categoria: R$ 145–185 (federado) ou R$ 190–230 (não federado). 2 categorias: R$ 195–280. Profissional: R$ 160–295. Interior: até 30% de variação | Regulamento FCTBT 2025 | Lido | Forte |
 | **Inscrição nacional** (CBT 2026) | R$ 157 (adimplente) ou R$ 247 | Regulamento CBT 2026 | Lido | Forte |
 | **Anuidade** | CBT 2026: R$ 300 (R$ 200 no 2º semestre). FCTBT 2025: R$ 160 | Regulamentos | Lido | Forte |
@@ -130,13 +130,13 @@ Preços de 2023 a 2026, em reais. Grande variação regional.
 
 | Achado | Fonte | Acesso | Força |
 | --- | --- | --- | --- |
-| Marcação de jogo de ranking acontece no WhatsApp | `CLAUDE.md` (insight do Gabriel); Nômades BT usa template no WhatsApp (`DISCOVERY.md`) | — | Média |
+| Marcação de jogo de ranking acontece no WhatsApp | `docs/PRODUCT.md`, "Contexto do esporte" (insight do Gabriel); Nômades BT usa template no WhatsApp (`DISCOVERY.md`) | — | Média |
 | Organizador cria grupo de WhatsApp por torneio | `DISCOVERY.md` | — | Média |
 | Inscrição em torneio federado só online (CBT: site oficial, boleto por atleta; FCTBT: Tênis Integrado) | Regulamentos | Lido | Forte |
 | Responsabilidade de acompanhar chave e horário é do atleta | FCTBT 2025, CBT 2026 (`DISCOVERY.md`) | Lido | Forte |
 | Arenas divulgam preço e novidades por Instagram (ex.: tabela de valores da Arena Mogi em post) | [Instagram Arena Mogi](https://www.instagram.com/p/DM-VIOLR3fT/) | Resumo | Fraca |
-| Pelo menos 6 plataformas de inscrição concorrem (LetzPlay, Tênis Integrado, Torneio Já, Tornfy, TennisUP, Super Oito) | `DISCOVERY.md` | — | Média |
-| App do LetzPlay atual: App Store 2,8★ (217 avaliações); Google Play 3,9★ (238 avaliações), 100 mil+ downloads. O `DISCOVERY.md` citava 2,8★ nas duas lojas e 250 mil+ | `CONCORRENTES.md`, `VOZ_DO_USUARIO.md` (lojas lidas em 25/09/2026) | Lido | Forte |
+| Pelo menos 6 plataformas de inscrição concorrem (o incumbente, Tênis Integrado, Torneio Já, Tornfy, TennisUP, Super Oito) | `DISCOVERY.md` | — | Média |
+| App do incumbente: mal avaliado nas duas lojas, um pouco melhor no Android, com base de instalações menor que a que o `DISCOVERY.md` citava (notas e números: D2) | `CONCORRENTES.md` e a voz do usuário (evidência: documento D1 ("Evidência: voz do usuário e reclamações"), projeto Discovery e estratégia no Linear), lojas lidas em 25/09/2026 | Lido | Forte |
 | **% de jogadores que usam app para ranking, reserva ou inscrição: não encontrado** | — | — | Lacuna |
 
 ---
@@ -147,11 +147,11 @@ Preços de 2023 a 2026, em reais. Grande variação regional.
 
 | Dimensão | Evidência | Fonte | Força |
 | --- | --- | --- | --- |
-| **Quem é** | Federações estaduais e nacionais, arenas, ligas, assessorias de evento (ex.: "ND Assessoria" no LetzPlay) | Regulamentos; [LetzPlay embed](https://embed.letzplay.me/ndassessoria/tourneys/13666) | Média |
+| **Quem é** | Federações estaduais e nacionais, arenas, ligas, assessorias de evento (ex.: "ND Assessoria" no incumbente) | Regulamentos; página da assessoria no incumbente (link: D2) | Média |
 | **Objetivos** | Encher categorias (mínimo de 2 duplas por categoria na FCTBT, senão devolve a inscrição), cumprir calendário, pontuar ranking, receber inscrição | Regulamento FCTBT 2025 (Lido) | Forte |
 | **Dores** | Planilhas, grupos de WhatsApp, listas desatualizadas, pagamentos dispersos, dúvidas sobre regra e chave; erro de inscrito duplicado e chave mal montada; repasse de valores "é a parte mais burocrática" | [NSC Total](https://www.nsctotal.com.br/noticias/descubra-como-organizar-torneios-esportivos-sem-planilhas); [Atletis](https://www.atletis.com.br/como-organizar-torneio-beach-tennis); [Lets Events](https://lets.events/blog/organizar-torneio-de-beach-tennis/) (Resumo; conteúdo de fornecedores de software) | Fraca a Média |
 | **Dores (regulatórias)** | Programação muda por clima e atraso; controle de categoria (quem pode descer, quem deve subir); cancelamento e reembolso | Regulamentos CBT 2026 e FCTBT 2025 (Lido) | Forte (regras existem); Fraca (dor inferida) |
-| **Ferramentas atuais** | LetzPlay, Tênis Integrado, Torneio Já, Tornfy, JumpAE, Copa Pro, Ranking Beach Tennis, DeuJogo, BT Match; WhatsApp; Pix direto | Sites dos produtos (Resumo); `DISCOVERY.md` | Média |
+| **Ferramentas atuais** | O incumbente, Tênis Integrado, Torneio Já, Tornfy, JumpAE, Copa Pro, Ranking Beach Tennis, DeuJogo, BT Match; WhatsApp; Pix direto | Sites dos produtos (Resumo); `DISCOVERY.md` | Média |
 | **O que ganha com uma plataforma** (o que os fornecedores prometem) | Inscrição e pagamento online, chaves e grupos automáticos, tabela de resultados atualizada, tudo "numa única plataforma" | Páginas de [Tornfy](https://tornfy.com/), [JumpAE](https://www.jumpae.com.br/), DeuJogo (Resumo) | Fraca (promessa de vendedor, não evidência de valor) |
 
 ### 5.2 Dono ou gestor de arena
@@ -163,7 +163,7 @@ Preços de 2023 a 2026, em reais. Grande variação regional.
 | **Dores** | Caderno, grupos de WhatsApp e planilha compartilhada; reservas conflitantes; no-show; mensalista esquecido; fechamento de mês; horário vazio porque a oferta não chega ao cliente; pacote de aulas pago que "só existe na memória do professor"; inadimplência | Páginas de [ArenaAi](https://arenai.com.br/), [Arena Manager](https://arenamanager.com.br/), [Effect Sports](https://effectsports.com/), [Tecnofit](https://www.tecnofit.com.br/blog/app-beach-tennis/) (Resumo; marketing de fornecedor) | Fraca a Média |
 | **Ferramentas atuais** | SaaS de arena: BT Match, ArenaAi, Arena Manager, Effect Sports, Atacante, Areio, Tecnofit, Arena Online, Partiu Play; agregadores de academia (TotalPass, Gurupass) | Sites (Resumo); `DISCOVERY.md` | Média |
 | **O que ganha com uma plataforma** (promessas) | Reserva automática, cobrança recorrente, lembrete de pagamento por WhatsApp ("−40% de inadimplência", número de fornecedor), comissão de professor visível | Idem | Fraca |
-| **Relação com ranking** | Muitas arenas rodam ranking interno próprio (no LetzPlay e outros) | `DISCOVERY.md` (Top Beach, Arena 12, Recanto…) | Média |
+| **Relação com ranking** | Muitas arenas rodam ranking interno próprio (no incumbente e outros) | `DISCOVERY.md` (Top Beach, Arena 12, Recanto…) | Média |
 
 ### 5.3 Professor
 
@@ -175,7 +175,7 @@ Preços de 2023 a 2026, em reais. Grande variação regional.
 | **Objetivos** | Encher turma, fidelizar aluno, subir o aluno de categoria (e levar a torneio) | Inferência a partir de H2R e regulamentos | Fraca |
 | **Dores** | Controle de pacote de aulas na memória; comissão com a arena definida sem transparência | Marketing de SaaS de arena (Resumo) | Fraca |
 | **Ferramentas atuais** | WhatsApp; sistema da arena quando existe; Instagram para divulgar | Inferência + fornecedores | Fraca |
-| **O que ganha com uma plataforma** | Agenda e cobrança; "monitoramento de desempenho dos professores" (feature listada pelo LetzPlay atual para gestores) | [LetzPlay home](https://letzplay.me/home) (Resumo) | Fraca |
+| **O que ganha com uma plataforma** | Agenda e cobrança; "monitoramento de desempenho dos professores" (feature listada pelo incumbente para gestores) | Site do incumbente (link: D2) (Resumo) | Fraca |
 | Formação | Existe pós-graduação EAD em BT | [Conhecimento Integrado](https://ead.conhecimentointegrado.com.br/plan/mensalidade-pos-graduacao-em-beach-tennis-66d75e72a2ba5) (Resumo) | Fraca |
 
 **Lacuna comum aos três atores:** não há entrevista, pesquisa ou review de organizador, gestor ou professor. As dores listadas vêm quase todas de **marketing de fornecedores de software**, que tem incentivo para exagerá-las.
@@ -202,7 +202,7 @@ Preços de 2023 a 2026, em reais. Grande variação regional.
 | --- | --- | --- | --- | --- |
 | HP1 | **O jogador competitivo amador típico é adulto de 30 a 45 anos, classe A/B, com ensino superior.** | Criciúma (renda, escolaridade), H2R (classe AB, 18–39), médias de 35–41 anos em estudos de lesão | Dado da CBT (44% com 10–19 anos); todas as amostras são locais | Média |
 | HP2 | **Mulheres são metade ou mais do público adulto amador.** | 4 estudos locais independentes com maioria feminina | CBT diz 54% homens; nenhum estudo nacional | Média |
-| HP3 | **O competidor formal é uma fração pequena dos praticantes.** Dezenas de milhares competem em circuitos, frente a 1 milhão ou mais que jogam | ~65 mil cadastros somando 8 páginas de federações e circuitos no LetzPlay × 1,1 mi estimados; 59% "recreação" em Criciúma | Contadores parciais; muitos rankings de arena fora da conta; CBT e Tênis Integrado fora da conta | Fraca |
+| HP3 | **O competidor formal é uma fração pequena dos praticantes.** Dezenas de milhares competem em circuitos, frente a 1 milhão ou mais que jogam | Dezenas de milhares de cadastros somando 8 páginas de federações e circuitos no incumbente (contagem: evidência: documento D4 ("Evidência: mercado e contadores do incumbente"), projeto Discovery e estratégia no Linear) × 1,1 mi estimados; 59% "recreação" em Criciúma | Contadores parciais; muitos rankings de arena fora da conta; CBT e Tênis Integrado fora da conta | Fraca |
 | HP4 | **Quem compete joga 3 a 4 vezes por semana e compete na maioria das semanas de temporada.** | H2R (4x/semana); estudo de lesões (3x/semana); ranking FCTBT com 7 melhores resultados/ano | Nenhum dado de torneios por jogador por ano | Fraca |
 | HP5 | **O gasto mensal recorrente de um competidor amador fica na casa de R$ 400 a R$ 600**, antes de raquete e viagem. | Soma de faixas de aula, quadra e inscrição da seção 3 | É estimativa com hipóteses de uso sem fonte; varia muito por cidade | Fraca |
 | HP6 | **O jogador entrou no esporte na pandemia (2020–2022) e já jogava outro esporte.** Tem 3 a 5 anos de BT em 2026 | H2R (70% começaram na pandemia; 60% já praticavam esporte); CBT sobre a "explosão" | Amostra de um evento em SP | Média |
@@ -219,4 +219,4 @@ Preços de 2023 a 2026, em reais. Grande variação regional.
 - **Entrevistas com 2–3 organizadores e 2–3 gestores de arena**, para separar dor real de marketing de fornecedor.
 - **Nº de torneios por jogador por ano** e **gasto com viagem**: nenhum dado.
 - **Uso de apps pelo jogador** (ranking, reserva, inscrição): nenhum dado quantitativo.
-- **Dados do próprio LetzPlay atual** (cadastros ativos, idade, gênero, categorias): seriam a fonte mais forte disponível.
+- **Dados do próprio incumbente** (cadastros ativos, idade, gênero, categorias): seriam a fonte mais forte disponível.

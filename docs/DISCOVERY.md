@@ -1,10 +1,10 @@
-# DISCOVERY.md — LetzPlay
+# DISCOVERY.md
 
 Mapa de oportunidades de produto e negócio para o jogador competitivo de Beach Tennis. Retoma a Fase 0 (discovery) do roadmap antigo.
 
 > Este doc registra **evidências e oportunidades ranqueadas por força de evidência**. Ele **não prioriza nem decide**: a priorização é do Gabriel e mora no Linear. Levantamento feito em setembro de 2026. Números de mercado e preços envelhecem, então confira a data da fonte antes de usar.
 
-Para visão, escopo do MVP e princípios, ver `docs/PRODUCT.md`. Para JTBDs, insights de BT e o audit do app atual, ver `CLAUDE.md`. A pesquisa de domínio detalhada (rankings, Finals, placar, W.O., categorias, confrontos, H2H) está no comentário de entrega da issue de pesquisa de domínio no Linear. Aqui entra só o que é necessário para o mapa.
+Para visão, escopo do MVP, princípios, JTBDs e contexto do esporte, ver `docs/PRODUCT.md`. Os problemas do incumbente estão no `docs/PRODUCT.md` (seção "Problemas do incumbente que o produto resolve"), e o audit completo é o documento "Auditoria do app atual" no projeto Discovery e estratégia do Linear. A pesquisa de domínio detalhada (rankings, Finals, placar, W.O., categorias, confrontos, H2H) está no comentário de entrega da issue de pesquisa de domínio no Linear. Aqui entra só o que é necessário para o mapa.
 
 ---
 
@@ -14,11 +14,11 @@ Para visão, escopo do MVP e princípios, ver `docs/PRODUCT.md`. Para JTBDs, ins
 
 | Nível | Critério |
 | --- | --- |
-| **Forte** | Várias fontes independentes concordam, e pelo menos uma foi lida na íntegra (regulamento em PDF) ou é dado público do próprio LetzPlay |
+| **Forte** | Várias fontes independentes concordam, e pelo menos uma foi lida na íntegra (regulamento em PDF) ou é dado público do próprio incumbente |
 | **Média** | Uma fonte específica e verificável, ou várias fontes concordantes vistas só pelo resumo de busca |
 | **Fraca** | Benchmark genérico fora do BT, opinião, ou inferência sem fonte direta |
 
-**Limitação do método:** o levantamento foi feito numa sessão com proxy de rede. A maioria dos sites (letzplay.me, lojas de apps, Reclame Aqui, ITF, CBBT) só pôde ser vista pelo resumo do mecanismo de busca. Os únicos documentos lidos na íntegra foram os regulamentos hospedados pela Tênis Integrado (CBT 2022, 2023, 2026 e versão antiga; FMT 2025; FCT 2025; FCTBT 2023/24; Interpoints RJ 2024). Por isso quase nada aqui chega a "Forte" só por pesquisa externa. A lacuna maior é a **voz do jogador**: não há entrevistas, e as respostas do Tally não foram encontradas.
+**Limitação do método:** o levantamento foi feito numa sessão com proxy de rede. A maioria dos sites (o do incumbente, lojas de apps, sites de reclamação pública, ITF, CBBT) só pôde ser vista pelo resumo do mecanismo de busca. Os únicos documentos lidos na íntegra foram os regulamentos hospedados pela Tênis Integrado (CBT 2022, 2023, 2026 e versão antiga; FMT 2025; FCT 2025; FCTBT 2023/24; Interpoints RJ 2024). Por isso quase nada aqui chega a "Forte" só por pesquisa externa. A lacuna maior é a **voz do jogador**: não há entrevistas, e as respostas do Tally não foram encontradas.
 
 ---
 
@@ -26,9 +26,9 @@ Para visão, escopo do MVP e princípios, ver `docs/PRODUCT.md`. Para JTBDs, ins
 
 | Artefato do roadmap antigo | Onde está | Situação |
 | --- | --- | --- |
-| Audit heurístico do app atual | Figma (presumido) | Não localizado. Os 4 problemas resumidos estão no `CLAUDE.md` |
-| Análise competitiva | Notion, página "Autenticação" do projeto LetzPlay | Encontrada. Cobre **só onboarding** (TikTok, Instagram, Lemon8, Meetup), não o mercado de BT |
-| Personas e JTBD | `CLAUDE.md` | 5 hipóteses, sem validação registrada |
+| Audit heurístico do app atual | Linear, documento "Auditoria do app atual" (projeto Discovery e estratégia) | O original (Figma, presumido) não foi localizado; o audit foi reconstruído no Linear. O resumo dos problemas está no `docs/PRODUCT.md` (seção "Problemas do incumbente que o produto resolve") |
+| Análise competitiva | Notion, página "Autenticação" do projeto | Encontrada. Cobre **só onboarding** (TikTok, Instagram, Lemon8, Meetup), não o mercado de BT |
+| Personas e JTBD | `docs/PRODUCT.md` | 5 hipóteses, sem validação registrada |
 | Pesquisa Tally (12 perguntas) | — | Não localizada no Notion nem no Dropbox |
 | Journey map e síntese de oportunidades | — | Não localizado. **Este doc cumpre a parte "síntese de oportunidades"** |
 
@@ -52,12 +52,12 @@ O jogador competitivo usa, ao mesmo tempo, quatro tipos de ferramenta. Nenhum co
 
 | Categoria | Exemplos | O que resolve bem | O que resolve mal | Força |
 | --- | --- | --- | --- | --- |
-| **Plataforma de ranking e torneio (B2B2C)** | **LetzPlay atual** (também hospeda CBBT, Circuito BT, Brasil Open, centenas de arenas); Tênis Integrado (federações); Meu Ranking / Ranking Beach Tennis; Torneio Já; Ranketes | Motor de regras flexível: desafio, sorteio, todos contra todos, escada, torneio com chave e pontuação configurável pelo organizador. Inscrição e pagamento | App do jogador mal avaliado: **2,8★ na App Store** (217 avaliações). No Google Play, **3,9★** (238 avaliações) e **100 mil+ downloads** (lojas lidas em 25/09/2026). Queixas de logout frequente, lentidão, notificações quebradas ("perde torneios") e resultados pendentes há meses por falta de ação do organizador. Perfis duplicados usados para sandbagging (Reclame Aqui) | Média |
+| **Plataforma de ranking e torneio (B2B2C)** | **O incumbente** (também hospeda CBBT, Circuito BT, Brasil Open, centenas de arenas); Tênis Integrado (federações); Meu Ranking / Ranking Beach Tennis; Torneio Já; Ranketes | Motor de regras flexível: desafio, sorteio, todos contra todos, escada, torneio com chave e pontuação configurável pelo organizador. Inscrição e pagamento | App do jogador mal avaliado nas duas lojas (notas e números: evidência: documento D2 ("Evidência: concorrentes e incumbente (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear). Queixas de logout frequente, lentidão, notificações quebradas (o jogador perde torneios) e resultados pendentes há meses por falta de ação do organizador. Perfis duplicados usados para sandbagging (reclamação pública; evidência: documento D1 ("Evidência: voz do usuário e reclamações"), projeto Discovery e estratégia no Linear) | Média |
 | **SaaS de arena (reserva, aulas, financeiro)** | BT Match, Arena Online, Partiu Play, Arena Manager, apps white-label sobre Matchpoint (TPC) | Operação da arena: quadra, Pix, aula. Alguns têm ranking interno | Ranking preso a uma arena. O jogador tem uma conta por arena | Média |
-| **Rating e comunidade de raquete (fora do BT)** | Playtomic (padel), UTR (tênis), Rivals (padel, grupo fixo), Match! Tennis | Rating por jogador que funciona em duplas (UTR e Playtomic ajustam cada parceiro). H2H, adversários em comum, gráfico de evolução como feature paga | Não cobrem BT no Brasil. O rating do Playtomic é criticado por "recompensar volume" e por punir o jogador pelo erro do parceiro | Média |
-| **Canais informais** | Grupos de WhatsApp, Instagram das arenas | Marcação de jogo (data e hora), avisos de torneio, divulgação. "O boca a boca do WhatsApp é a ferramenta mais forte de vendas" | Nada fica registrado: sem histórico, sem ranking, sem confirmação | Média (regulamentos e blogs citam, ex.: Nômades BT usa template no WhatsApp) |
+| **Rating e comunidade de raquete (fora do BT)** | Playtomic (padel), UTR (tênis), Rivals (padel, grupo fixo), Match! Tennis | Rating por jogador que funciona em duplas (UTR e Playtomic ajustam cada parceiro). H2H, adversários em comum, gráfico de evolução como feature paga | Não cobrem BT no Brasil. O rating do Playtomic é criticado por recompensar volume de jogos e por punir o jogador pelo erro do parceiro | Média |
+| **Canais informais** | Grupos de WhatsApp, Instagram das arenas | Marcação de jogo (data e hora), avisos de torneio, divulgação. O boca a boca do WhatsApp é apontado como a ferramenta de vendas mais forte | Nada fica registrado: sem histórico, sem ranking, sem confirmação | Média (regulamentos e blogs citam, ex.: Nômades BT usa template no WhatsApp) |
 
-**Observação estrutural (Forte):** o LetzPlay atual é ao mesmo tempo o incumbente e a base do redesign. A maior parte dos rankings de arena encontrados na pesquisa roda nele. O ativo do produto é o **motor de competição + a rede de organizadores**. A fraqueza é a **experiência do jogador**.
+**Observação estrutural (Forte):** o incumbente é ao mesmo tempo a referência do mercado e a base de comparação do redesign. A maior parte dos rankings de arena encontrados na pesquisa roda nele. O ativo dele é o **motor de competição + a rede de organizadores**. A fraqueza é a **experiência do jogador**.
 
 ---
 
@@ -71,25 +71,25 @@ A dor com mais evidência. Os regulamentos (lidos) mostram regras complexas, e o
 
 | # | Oportunidade | Evidência | Força |
 | --- | --- | --- | --- |
-| 2.1 | **Registro de resultado com confirmação e prazo.** Um lança, o outro confirma, e há auto-aprovação em 24h. Sem isso o ranking fica parado | Rankings no LetzPlay usam o fluxo "lança → adversário aprova → auto 24h". Reviews reclamam de resultados pendentes há mais de 2 meses porque o organizador não atualiza | Média |
+| 2.1 | **Registro de resultado com confirmação e prazo.** Um lança, o outro confirma, e há auto-aprovação em 24h. Sem isso o ranking fica parado | Rankings no incumbente usam o fluxo "lança → adversário aprova → auto 24h". Reviews reclamam de resultados pendentes há mais de 2 meses porque o organizador não atualiza | Média |
 | 2.2 | **Explicar a pontuação.** Por que subi ou desci, e quanto vale cada fase ou W.O. Cada organizador tem sua tabela (vitória 100/derrota 25; W.O. dado −100, −30 ou até +70) | Tabelas de pontos divergentes em rankings de arena. Regulamentos federativos com tabelas por grau (CBT 2026: GA+ a G3) | Forte (as regras existem e divergem); Média (a dor do jogador é inferida) |
-| 2.3 | **Corrida às Finals com linha de corte.** A vaga é sempre por posição numa data de corte (top 8 ou proporcional), nunca por "garantia matemática" | ITF Sand Series, Liga Alphaville, Arena 12, Aloha. Padrão visual análogo: "zona de promoção" do Duolingo | Forte (regra); Fraca (impacto emocional é hipótese do `CLAUDE.md`) |
+| 2.3 | **Corrida às Finals com linha de corte.** A vaga é sempre por posição numa data de corte (top 8 ou proporcional), nunca por "garantia matemática" | ITF Sand Series, Liga Alphaville, Arena 12, Aloha. Padrão visual análogo: "zona de promoção" do Duolingo | Forte (regra); Fraca (impacto emocional é hipótese do `docs/PRODUCT.md`) |
 | 2.4 | **Ranking individual que sobrevive à troca de parceiro**, com a dupla derivada da soma | Padrão dominante em CBT, federações, ITF, CBBT e na maioria das arenas. Dupla fixa só numa minoria (Nômades, Tennis Experience) | Forte |
 
 ### JTBD 3 — Preparar-me para um confronto
 
 | # | Oportunidade | Evidência | Força |
 | --- | --- | --- | --- |
-| 3.1 | **Confiança no nível do adversário.** Um perfil por pessoa e histórico de categoria visível. Sandbagging e perfis duplicados são dor pública | Reclamação no Reclame Aqui contra a empresa do LetzPlay. CBT 2026 proíbe jogar categoria inferior no mesmo ano, promove obrigatoriamente o top 8 nacional (ou por avaliação técnica) e só deixa descer a pedido, depois da virada do ano | Média |
-| 3.2 | **H2H com os dois recortes**: dupla × dupla (o confronto de hoje) e jogador × jogador (o histórico) | O padel mostra os dois lado a lado (StudyPadel, Padel Addict), e os números divergem muito. O LetzPlay atual usa confronto direto entre duplas como desempate | Média |
+| 3.1 | **Confiança no nível do adversário.** Um perfil por pessoa e histórico de categoria visível. Sandbagging e perfis duplicados são dor pública | Reclamação pública contra o incumbente (evidência: documento D1 ("Evidência: voz do usuário e reclamações"), projeto Discovery e estratégia no Linear). CBT 2026 proíbe jogar categoria inferior no mesmo ano, promove obrigatoriamente o top 8 nacional (ou por avaliação técnica) e só deixa descer a pedido, depois da virada do ano | Média |
+| 3.2 | **H2H com os dois recortes**: dupla × dupla (o confronto de hoje) e jogador × jogador (o histórico) | O padel mostra os dois lado a lado (StudyPadel, Padel Addict), e os números divergem muito. O incumbente usa confronto direto entre duplas como desempate | Média |
 | 3.3 | **Contexto no H2H**: adversários em comum quando nunca se enfrentaram, ranking na época, W.O. separado de jogo real | Match! Tennis (adversários em comum); Tennis Explorer (ranking na data); ATP e UTR (W.O. fora do V/D) | Média |
 
 ### JTBD 1 — Encontrar competição
 
 | # | Oportunidade | Evidência | Força |
 | --- | --- | --- | --- |
-| 1.1 | **Notificação confiável** de chave, horário e mudança de programação. Os regulamentos jogam a responsabilidade no atleta ("é de responsabilidade do atleta o monitoramento"), e a programação muda por clima e atraso | FCTBT 2023/24 e CBT 2026 (lidos). Review: sem notificação "perde torneios". Organizadores criam grupo de WhatsApp por torneio | Média |
-| 1.2 | **Descoberta por nível e região num lugar só.** Hoje a divulgação está espalhada entre Instagram, WhatsApp e ao menos 6 plataformas de inscrição | Lista de plataformas (LetzPlay, Tênis Integrado, Torneio Já, Tornfy, TennisUP, Super Oito). Não há dado da voz do jogador | Fraca |
+| 1.1 | **Notificação confiável** de chave, horário e mudança de programação. Os regulamentos jogam a responsabilidade no atleta ("é de responsabilidade do atleta o monitoramento"), e a programação muda por clima e atraso | FCTBT 2023/24 e CBT 2026 (lidos). Review: sem notificação, o jogador perde torneios. Organizadores criam grupo de WhatsApp por torneio | Média |
+| 1.2 | **Descoberta por nível e região num lugar só.** Hoje a divulgação está espalhada entre Instagram, WhatsApp e ao menos 6 plataformas de inscrição | Lista de plataformas (o incumbente, Tênis Integrado, Torneio Já, Tornfy, TennisUP, Super Oito). Não há dado da voz do jogador | Fraca |
 | 1.3 | **Categoria certa na inscrição.** A nomenclatura não tem padrão ("Masculino B", "MASC B", "C Mista", "Dupla Mista - Iniciante"; níveis de A a E, Iniciante, Pro, Open, cores) | Literais de páginas de torneio | Média (a variação é fato); Fraca (a dor é inferida) |
 
 ### JTBD 5 — Sentir que estou evoluindo
@@ -103,7 +103,7 @@ A dor com mais evidência. Os regulamentos (lidos) mostram regras complexas, e o
 
 | # | Oportunidade | Evidência | Força |
 | --- | --- | --- | --- |
-| 4.1 | **Feed de atividade automático** (resultados, inscrições) no modelo Strava | Strava: 14 bi de kudos em 2025; atividade em grupo associada a retenção em 12 meses. O LetzPlay atual já tem "seguir, torcer, comentar" e continua mal avaliado | Fraca (analogia fora do BT) |
+| 4.1 | **Feed de atividade automático** (resultados, inscrições) no modelo Strava | Strava: volume alto de kudos e atividade em grupo associada a retenção em 12 meses (números: evidência: documento D7 ("Referências internacionais: números de crescimento e monetização"), projeto Discovery e estratégia no Linear). O incumbente já tem seguir, torcer e comentar, e o jogador o avalia mal (D1) | Fraca (analogia fora do BT) |
 | 4.2 | **Notificação de resultado de amigo** como gatilho de volta ao app | Benchmarks de push de fornecedores (Airship, agregadores), antigos e genéricos | Fraca |
 
 ---
@@ -116,9 +116,9 @@ A dor com mais evidência. Os regulamentos (lidos) mostram regras complexas, e o
 | --- | --- | --- | --- |
 | **Taxa anual para pontuar no ranking** (federação como "assinatura") | CBT: R$ 300/ano (R$ 200 no 2º semestre); sem ela os pontos não contam. FCTBT: filiação R$ 160/ano | Sim | Forte (lido) |
 | **Inscrição de torneio** | Arenas e federações. Amador: ~R$ 70–150 por atleta por categoria. CBT nacional: R$ 157 (adimplente) ou R$ 247 | Sim | Forte (oficial), Média (amador) |
-| **Taxa de conveniência na inscrição** | Ticket Sports: 8–10% (evento não-BT). LetzPlay e Tênis Integrado: não encontrado; parte dos torneios no LetzPlay recebe por Pix direto | Parcial | Fraca |
-| **SaaS para organizador ou arena** | LetzPlay (perfil de gestão), BT Match, Arena Online, Playtomic Manager (US$ 119–349/mês) | Só Playtomic | Média |
-| **Assinatura do jogador** | UTR Power (US$ 10–12/mês), Strava (US$ 11,99/mês; ~90% da receita), Playtomic Premium (preço não encontrado) | Sim, fora do BT | Média |
+| **Taxa de conveniência na inscrição** | Ticket Sports (evento não-BT; percentual: D2). Não encontrado no incumbente nem no Tênis Integrado; parte dos torneios no incumbente recebe por Pix direto | Parcial | Fraca |
+| **SaaS para organizador ou arena** | O incumbente (perfil de gestão), BT Match, Arena Online, Playtomic Manager (preço: D2) | Só Playtomic | Média |
+| **Assinatura do jogador** | UTR Power, Strava (a assinatura é a maior parte da receita), Playtomic Premium (preços e participação na receita: D2) | Sim, fora do BT | Média |
 | **Taxa por transação** (reserva ou partida) | Playtomic; o Premium elimina a taxa | Parcial | Média |
 | **Patrocínio e marcas** | Heroe's, Kona, Mormaii, Head, Wilson, Drop Shot; marketplace SO Raquetes | Não | Fraca |
 
@@ -139,9 +139,9 @@ Ordenadas pela força da evidência. "Fora do escopo" se refere ao Must have do 
 
 | Feature | JTBD | Evidência | Força |
 | --- | --- | --- | --- |
-| **Notificações** (resultado a confirmar, chave publicada, mudança de horário, posição no ranking) | 1, 2 | Reviews do LetzPlay; regulamentos que responsabilizam o atleta; grupos de WhatsApp por torneio | Média |
-| **Confirmação de resultado pelo adversário** (com prazo e contestação) | 2 | Fluxo já usado em rankings no LetzPlay; resultados pendentes nas reviews | Média |
-| **Unicidade de perfil e histórico de categoria** (anti-sandbagging) | 3 | Reclame Aqui; regras CBT | Média |
+| **Notificações** (resultado a confirmar, chave publicada, mudança de horário, posição no ranking) | 1, 2 | Reviews do incumbente; regulamentos que responsabilizam o atleta; grupos de WhatsApp por torneio | Média |
+| **Confirmação de resultado pelo adversário** (com prazo e contestação) | 2 | Fluxo já usado em rankings no incumbente; resultados pendentes nas reviews | Média |
+| **Unicidade de perfil e histórico de categoria** (anti-sandbagging) | 3 | Reclamação pública (D1); regras CBT | Média |
 | **Busca de torneio por categoria e região** | 1 | Dispersão de canais; nenhuma voz do jogador | Fraca |
 | **Marcação de jogo de ranking dentro do app** (propor datas, aceitar) | 2 | O WhatsApp faz isso hoje (Nômades: template; desafiado propõe 3 datas). Não há evidência de que o jogador queira sair do WhatsApp | Fraca |
 | **Inscrição e pagamento de torneio** | 1 | Modelo de receita comprovado (seção 4); fora do MVP pelo `docs/PRODUCT.md` | Média (para negócio) |
@@ -155,11 +155,11 @@ Cada hipótese é algo que o beta pode confirmar ou derrubar.
 | # | Hipótese ou risco | Por que importa | Como o beta pode medir |
 | --- | --- | --- | --- |
 | H1 | **Cold start de dados.** O ranking só tem valor se os resultados entram. Em ranking de arena quem lança é o jogador. Em torneio é o organizador | Sem resultado, os JTBDs 2, 3 e 5 ficam vazios. As reviews mostram resultados parados há meses | % de partidas com resultado confirmado em 24h e em 7 dias |
-| H2 | **O jogador aceita registrar e confirmar no app o que hoje combina no WhatsApp** | A marcação vive no WhatsApp ("marcação de jogos de ranking acontece no WhatsApp", `CLAUDE.md`) | Taxa de partidas registradas × partidas jogadas (auto-relato) |
+| H2 | **O jogador aceita registrar e confirmar no app o que hoje combina no WhatsApp** | A marcação vive no WhatsApp ("marcação de jogos de ranking acontece no WhatsApp", `docs/PRODUCT.md`) | Taxa de partidas registradas × partidas jogadas (auto-relato) |
 | H3 | **Ranking individual cobre o público do beta** | Padrão dominante, mas há rankings por dupla fixa. Escolher errado muda o schema (pesquisa de domínio, pergunta D2 do feed) | Perguntar no onboarding do beta qual ranking a pessoa disputa e como funciona |
-| H4 | **Ranking é o motivo de abrir o app, e o feed é secundário** | Premissa do `CLAUDE.md`. A evidência do feed é só analógica (Strava) | Sessões iniciadas por notificação de ranking × de feed; telas mais visitadas |
-| H5 | **Frequência cai entre competições** (`CLAUDE.md`) | Afeta retenção e o valor do JTBD 5. As arenas indoor reduzem a sazonalidade de verão | Retenção semanal ao longo de um ciclo de ranking |
-| H6 | **A experiência ruim do app atual é a principal barreira**, mais do que falta de funcionalidade | Nota 2,8 na App Store (3,9 no Google Play) com queixas de sessão e lentidão, não de feature ausente | Comparar tarefas críticas (ver posição, confirmar resultado) no app atual × no novo |
+| H4 | **Ranking é o motivo de abrir o app, e o feed é secundário** | Premissa do `docs/PRODUCT.md`. A evidência do feed é só analógica (Strava) | Sessões iniciadas por notificação de ranking × de feed; telas mais visitadas |
+| H5 | **Frequência cai entre competições** (`docs/PRODUCT.md`) | Afeta retenção e o valor do JTBD 5. As arenas indoor reduzem a sazonalidade de verão | Retenção semanal ao longo de um ciclo de ranking |
+| H6 | **A experiência ruim do app atual é a principal barreira**, mais do que falta de funcionalidade | Nota baixa nas duas lojas (D2), com queixas de sessão e lentidão, não de feature ausente | Comparar tarefas críticas (ver posição, confirmar resultado) no app atual × no novo |
 | R1 | **Governança dupla (CBT × CBBT)** e regras que mudam todo ano (CBT trocou 52 semanas por ano civil entre versões) | Regra de domínio codificada fica velha | — (risco de modelagem) |
 | R2 | **Tamanho de mercado incerto.** O único número nacional é uma estimativa de 2023 sem metodologia | Afeta qualquer tese de negócio | — (buscar dado melhor antes de pitch) |
 | R3 | **Base demográfica pode diferir do "jogador competitivo" presumido** (os estudos locais apontam maioria feminina de alta renda) | Afeta tom, textos com gênero gramatical (pergunta D7 do feed) e categorias. Decidido em 26/09: o tom está coberto, por ora, pelos textos neutros e pela concordância com a categoria | Perfil dos usuários do beta |
@@ -172,12 +172,12 @@ Só o Gabriel responde. As respostas de 25 e 26/09 estão registradas abaixo de 
 
 1. **Qual formato de ranking o MVP representa:** escada de desafio, sorteio periódico, rodadas com grupos ou ranking de torneios? Condiciona H1–H3 e a spec de entidades do domínio.
    - **Decidido (25–26/09):** ranking de arena e torneio, com peso igual. O ranking segue **temporada → rodadas → sorteio dos confrontos lançado pelo admin do ranking**, e as partidas são marcadas pelos jogadores. Detalhe na spec de entidades e relações do domínio.
-2. **O redesign se posiciona como o mesmo produto** (herda organizadores e dados do LetzPlay atual) **ou como produto novo** (começa do zero no beta)? Muda o risco H1 inteiro.
-   - **Adiado (26/09)** para a issue de decisões estratégicas do time Product no Linear, junto com a relação com o LetzPlay atual. Até lá, o beta começa do zero, com as inscrições carregadas pelo time a partir da lista do organizador.
+2. **O redesign se posiciona como o mesmo produto** (herda organizadores e dados do incumbente) **ou como produto novo** (começa do zero no beta)? Muda o risco H1 inteiro.
+   - **Adiado (26/09)** para a issue de decisões estratégicas do time Product no Linear, junto com a relação com o incumbente. Até lá, o beta começa do zero, com as inscrições carregadas pelo time a partir da lista do organizador.
 3. **Quem é o cliente pagante de longo prazo:** o organizador (SaaS, inscrição) ou o jogador (assinatura)? Ou ainda nenhum, enquanto o projeto é portfolio?
    - **Adiado (26/09)** para a mesma issue de decisões estratégicas.
 4. **Onde estão o audit heurístico, as respostas do Tally e o journey map da Fase 0?** Se existirem, podem subir ou derrubar a força de várias linhas deste doc.
-   - **Não localizados (26/09).** O Gabriel não sabe onde estão. A referência disponível é o resumo do audit no `CLAUDE.md`.
+   - **Não localizados (26/09).** O Gabriel não sabe onde estão. O audit foi reconstruído depois no documento "Auditoria do app atual" (Linear, projeto Discovery e estratégia), com o resumo no `docs/PRODUCT.md` (seção "Problemas do incumbente que o produto resolve"). As respostas do Tally e o journey map seguem não localizados.
 5. **O beta vai incluir entrevistas com jogadores?** É a lacuna de evidência mais cara deste levantamento.
    - **Suspensa (26/09).** Não há pesquisa com usuários por agora: o app é construído a partir das decisões do Gabriel. Entrevistas e Tally ficam para um momento posterior.
 
@@ -199,9 +199,9 @@ Vistas só por resumo de busca (conferir antes de citar):
 
 - ITF Beach Tennis World Tour Regulations 2025/2026 e Sand Series Finals 2024/2025 — itftennis.com
 - CBBT Regulamento 2025 — cbbtennis.com.br
-- Rankings de arena no LetzPlay (Top Beach, Recanto, Arena 12, Tennis Experience, Liga Alphaville) — letzplay.me
+- Rankings de arena que rodam no incumbente (lista e links: D2)
 - Nômades BT — nomadesbt.com.br/ranking-regulamento
-- LetzPlay nas lojas — App Store id1262006308; Google Play com.lptennis.letzplay; Reclame Aqui (LPTENNIS)
+- O incumbente nas lojas e em reclamação pública (identificadores: D2)
 - Playtomic (níveis, Premium, pricing), UTR (algoritmo de duplas, Power), Strava (pricing), StudyPadel e Padel Addict (H2H de duplas)
 - Mercado: Máquina do Esporte, Terra, ND Mais, Jornal do Comércio (10/2023), RSD Journal
 

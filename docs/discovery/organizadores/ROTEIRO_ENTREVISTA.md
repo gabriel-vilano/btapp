@@ -2,7 +2,7 @@
 
 Instrumento de pesquisa para fechar a maior lacuna deste discovery: **nenhum organizador foi ouvido diretamente**. Pronto para usar em conversa de 45 a 60 minutos, presencial ou por vídeo.
 
-> **Isto não é uma decisão.** O roteiro não testa solução nem apresenta o LetzPlay. Serve para entender o trabalho de quem organiza, com perguntas abertas sobre o que a pessoa **já fez**, não sobre o que ela faria.
+> **Isto não é uma decisão.** O roteiro não testa solução nem apresenta o produto. Serve para entender o trabalho de quem organiza, com perguntas abertas sobre o que a pessoa **já fez**, não sobre o que ela faria.
 
 ---
 
@@ -35,7 +35,7 @@ Perfis vistos neste discovery. A proposta de amostra é um ponto de partida, e a
 2. Consegue lembrar um evento específico com detalhe.
 3. Mistura de porte: pelo menos uma arena com até 4 quadras e uma com 8 ou mais.
 4. Mistura de região: pelo menos uma fora de SP.
-5. Mistura de ferramenta: pelo menos um que usa sistema (LetzPlay, Tênis Integrado, outro) e um que usa principalmente WhatsApp e planilha.
+5. Mistura de ferramenta: pelo menos um que usa sistema (o incumbente, Tênis Integrado, outro) e um que usa principalmente WhatsApp e planilha.
 
 ---
 

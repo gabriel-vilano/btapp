@@ -257,7 +257,7 @@ O piloto não decide. Três pontos pedem escolha:
    - **a) Formulário único e longo** (a proposta como está): mais dado por respondente, mais desistência nas personas menos engajadas.
    - **b) Duas camadas:** o formulário atual, corrigido, termina com *"Tem mais 4 minutos para ajudar?"* e só quem aceita vê a matriz e o Kano. Menos desistência; a matriz e o Kano medem só os engajados, e isso precisa ficar explícito na análise.
    - **c) Blocos opcionais** no meio do formulário: sem abandono, com respostas parciais, como a própria proposta já aponta.
-2. **A abertura diz quem faz a pesquisa?** Dizer "LetzPlay" ganha confiança de quem desconfia (J4) e enviesa quem tem opinião sobre o app atual. Dizer "pesquisa independente de um designer" é verdadeiro e neutro. Não dizer nada mantém a desconfiança.
+2. **A abertura diz quem faz a pesquisa?** Dizer o nome do produto ganha confiança de quem desconfia (J4) e enviesa quem tem opinião sobre o app atual. Dizer "pesquisa independente de um designer" é verdadeiro e neutro. Não dizer nada mantém a desconfiança.
 3. **Quais correções da versão atual entram mesmo que a proposta não entre.** T1 a T4 não dependem da proposta.
 
 ---

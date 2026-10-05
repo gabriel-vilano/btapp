@@ -1,4 +1,4 @@
-# AGENT_WORKFLOW.md — LetzPlay
+# AGENT_WORKFLOW.md
 
 Como vários agentes trabalham ao mesmo tempo em issues diferentes sem se atropelar, e como se comunicam entre si e com o Gabriel.
 
@@ -157,9 +157,9 @@ O passo a passo executável, com os scripts de validação combinada, espera da 
 
 ---
 
-## Acesso ao LetzPlay atual
+## Acesso ao incumbente
 
-**Nenhum agente acessa `letzplay.me` nem seus subdomínios:** páginas públicas, área logada ou API, com qualquer ferramenta (WebFetch, Firecrawl, Playwright, curl). Os Termos de Uso do LetzPlay ([letzplay.me/about/tos](https://letzplay.me/about/tos), seção "Restrição de Acesso Automatizado") proíbem agentes automatizados, scrapers, IA extrativa e navegadores headless para acessar, mapear ou copiar a interface, as APIs ou os dados da plataforma, salvo autorização por escrito da LPTENNIS. Os mesmos Termos proíbem usar os dados da plataforma em aplicativos concorrentes.
+**Nenhum agente acessa site, app, área logada ou API do incumbente** (a plataforma de ranking e torneio que serve de referência ao produto), com qualquer ferramenta (WebFetch, Firecrawl, Playwright, curl). Os Termos de Uso dele proíbem acesso automatizado e o uso dos dados da plataforma em aplicativos concorrentes. O domínio, os subdomínios, a cláusula e a data da leitura estão no documento "Regra de acesso ao incumbente" do Linear (projeto Discovery e estratégia): **leia-o antes de qualquer pesquisa de concorrentes**.
 
-- Material do app atual entra só por prints ou gravações feitos pelo Gabriel, guardados em lugar privado (Linear, Figma ou Dropbox), nunca no repositório, que é público.
-- Precisa de algo do app atual? Peça os prints ao Gabriel, com a lista de telas, em vez de buscar.
+- Material do incumbente entra só por prints ou gravações feitos pelo Gabriel, guardados em lugar privado (Linear, Figma ou Dropbox), nunca no repositório, que é público.
+- Precisa de algo do incumbente? Peça os prints ao Gabriel, com a lista de telas, em vez de buscar.

@@ -1,4 +1,4 @@
-# EXPLORE.md — LetzPlay
+# EXPLORE.md
 
 Spec da aba Explorar: a vitrine de competições e arenas, a busca do app, a página da organização e os blocos "Como se inscrever" e "Tenho interesse" da página da competição.
 
@@ -95,7 +95,7 @@ A vitrine é o Explorar sem termo digitado. Responde "o que existe para eu jogar
   Toque → a página da competição (`/competicoes/[competicao]`, NAV N9). [RANK RK17; NAV N33]
 - **EX11. A seção "Arenas" lista as organizações do tipo arena, por nome.** O item (ArenaListItem): avatar, nome, cidade e "2 competições abertas" (ou "Nenhuma competição aberta"). Toque → a página da organização (seção 5). [NAV N34; DEC-EXP EQ2]
 - **EX12. Sem paginação na vitrine no MVP.** O beta tem poucas competições; a lista mostra todas. Rever quando uma seção passar de 20 itens (seção 11, "Riscos"). [DEC-EXP EL5]
-- **EX13. Vazios:** sem competição aberta, a seção "Competições" diz "Nenhuma competição aberta agora." e mostra só os rankings entre temporadas, se houver; sem organização do tipo arena, a seção "Arenas" some. Com as duas vazias (só em ambiente de desenvolvimento, porque os organizadores do beta já estão cadastrados), o EmptyState diz "Ainda não há competições no LetzPlay." [NAV N22, 9.2]
+- **EX13. Vazios:** sem competição aberta, a seção "Competições" diz "Nenhuma competição aberta agora." e mostra só os rankings entre temporadas, se houver; sem organização do tipo arena, a seção "Arenas" some. Com as duas vazias (só em ambiente de desenvolvimento, porque os organizadores do beta já estão cadastrados), o EmptyState diz "Ainda não há competições no <nome do produto>." [NAV N22, 9.2]
 
 ---
 
@@ -188,7 +188,7 @@ A página é da `RANKING.md` (RK17). A NAVIGATION (N33) decidiu que a página te
 
 ## 7. Dados do beta
 
-Segue o `CLAUDE.md` > "Supabase": dados mockados primeiro, tabela só quando a feature precisa do cenário real.
+Segue o `CLAUDE.md` > "Supabase: o que não pode falhar": dados mockados primeiro, tabela só quando a feature precisa do cenário real.
 
 - **EX35. No beta entram só as organizações que promovem competição**, cada uma com o tipo real. Arenas onde só se joga, sem competição própria, não entram: uma página sem competição não serve ao JTBD 1. [DEC-EXP EQ3]
 - **EX36. Os dados reais entram pela carga do time no Supabase (R32), nunca no repositório**, que é público. Isso vale para nome, tipo, cidade e contato das organizações, e para as competições. Os mocks do repositório usam organizações, competições e jogadores **fictícios**. [DEC-EXP EQ3; `GIT_WORKFLOW.md` > "Proteção de branch"]
@@ -196,7 +196,7 @@ Segue o `CLAUDE.md` > "Supabase": dados mockados primeiro, tabela só quando a f
   - **Organizações:** nome, @username, avatar, tipo, cidade e contato;
   - **Competições** de cada organização, com categorias e temporada: são as mesmas que o ranking já precisa (RK17);
   - **Jogadores:** já existem (tabela `profiles`), com nome, sobrenome, @username e avatar.
-- **EX38. O interesse nasce como tabela real antes do beta**, porque é a métrica da aba: um mock não mede nada. A política de RLS deixa cada jogador ler, criar e apagar só o próprio interesse; o time lê o agregado pelo painel do Supabase, sem tela no app. [DOMAIN; `CLAUDE.md` > "Supabase"]
+- **EX38. O interesse nasce como tabela real antes do beta**, porque é a métrica da aba: um mock não mede nada. A política de RLS deixa cada jogador ler, criar e apagar só o próprio interesse; o time lê o agregado pelo painel do Supabase, sem tela no app. [DOMAIN; `CLAUDE.md` > "Supabase: o que não pode falhar"]
 - **EX39. No desenvolvimento, vitrine, busca e página da organização começam com mocks tipados**, no formato do domínio. As tabelas de organização e competição entram quando a issue do ranking com dados reais as criar; o Explorar lê as mesmas.
 
 ### 7.1 Segurança

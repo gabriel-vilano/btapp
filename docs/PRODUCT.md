@@ -1,6 +1,6 @@
-# PRODUCT.md — LetzPlay
+# PRODUCT.md — BT App
 
-Visão de produto e decisões duráveis. Para JTBDs, insights estratégicos sobre Beach Tennis e problemas do app atual, ver `CLAUDE.md`.
+Visão de produto, contexto do esporte, JTBD e decisões duráveis. O nome do produto é provisório e mora em `src/lib/brand.ts`; os outros docs dizem "o produto".
 
 > Tracking de execução (status, próximos passos, priorização concreta) fica no Linear, não aqui.
 
@@ -19,10 +19,54 @@ Três objetivos simultâneos: portfolio de Design Engineer, produto real para la
 ## Princípios de design
 
 - **Mobile-first.** Largura base 393px ou 430px. Responsivo depois.
-- **Resolver os 4 problemas do audit:** consistência visual/semântica, arquitetura de informação, feedback de estados, qualidade de componentes.
+- **Resolver os 4 problemas do incumbente** (ver "Problemas do incumbente que o produto resolve").
 - **Perfil com duas leituras** — social (acompanhar amigo) e competitiva (avaliar adversário).
 - **Ranking como momento emocional**, não como tabela de dados. Subir motiva, descer frustra — a UI precisa sustentar essa carga.
 - **Feed é Activity Stream** (modelo Strava), não rede social. Conteúdo automático (resultados, inscrições, amizades) prevalece sobre UGC.
+
+---
+
+## Contexto do esporte
+
+**Ecossistema do Beach Tennis.**
+
+- Rankings são contínuos (semestre), culminando em "Finals" para as 8 melhores duplas.
+- Torneios são eventos discretos (1 a 2 dias de fim de semana).
+- A marcação de jogos de ranking acontece no WhatsApp, não no app.
+- O produto é um app de competição: quem não compete não tem motivo para usá-lo.
+
+**Feed.** Activity Stream (modelo Strava), não rede social. Conteúdo automático (resultados, inscrições, amizades) é o que engaja; publicação própria (UGC) é pouco usada; cards de resultado são o formato principal.
+
+**Jogador competitivo.**
+
+- Ranking é o coração emocional do produto: subir motiva, descer frustra.
+- Dois tipos de consulta a perfil: social (acompanhar amigos) e competitiva (avaliar adversário).
+- A frequência de uso é alta durante as competições e cai entre elas.
+
+---
+
+## Jobs-to-be-done (hipóteses)
+
+Foco: jogador competitivo de Beach Tennis. O `docs/DISCOVERY.md` ranqueia as oportunidades de cada um por evidência.
+
+1. **Encontrar competição:** "Quando estou sem torneio ou ranking no horizonte, quero encontrar competições compatíveis com meu nível e região, para manter uma agenda ativa."
+2. **Saber onde estou no ranking:** "Quando um resultado é registrado, quero ver imediatamente como minha posição foi afetada, para decidir como agir."
+3. **Preparar-me para um confronto:** "Quando descubro quem vou enfrentar, quero avaliar o nível e histórico desse jogador, para me preparar."
+4. **Acompanhar amigos no BT:** "Quando abro o app no dia a dia, quero ver o que meus amigos estão fazendo, para me manter conectado e descobrir oportunidades."
+5. **Sentir que estou evoluindo:** "Quando estou entre competições, quero ver evidências da minha evolução, para me manter motivado."
+
+---
+
+## Problemas do incumbente que o produto resolve
+
+O audit heurístico do app do incumbente (a plataforma de referência) agrupa os problemas em quatro categorias, que guiam o design:
+
+1. **Consistência visual e semântica:** cor sem lógica, tipografia irregular, componentes sem padrão.
+2. **Arquitetura de informação:** a mesma ação em vários lugares, busca duplicada, perfil sobrecarregado.
+3. **Feedback e estados:** mensagens que contradizem a ação, criação de conta sem retorno.
+4. **Componentes e interações:** filtros sem rótulo, seletores quebrados, modais sem fechar.
+
+O audit completo, com evidência por tela, é o documento "Auditoria do app atual" do Linear (projeto Discovery e estratégia).
 
 ---
 
@@ -66,6 +110,6 @@ Três objetivos simultâneos: portfolio de Design Engineer, produto real para la
 ## Métricas de sucesso (validação no beta)
 
 - Jogadores completam fluxos críticos sem ajuda?
-- Os 4 problemas do audit foram resolvidos?
-- Os JTBDs (ver `CLAUDE.md`) estão sendo atendidos?
+- Os 4 problemas do incumbente foram resolvidos?
+- Os JTBDs (ver "Jobs-to-be-done") estão sendo atendidos?
 - Quais bugs aparecem em campo que não apareceram em dev?
