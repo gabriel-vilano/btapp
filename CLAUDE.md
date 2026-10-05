@@ -1,481 +1,123 @@
-# CLAUDE.md — LetzPlay
+# CLAUDE.md
 
 @AGENTS.md
 @docs/PRODUCT.md
-@docs/GIT_WORKFLOW.md
-@docs/TOKENS.md
-@docs/AGENT_WORKFLOW.md
 
 ## Sobre o projeto
 
-Redesign focado em Beach Tennis do app LetzPlay, uma plataforma de gestão de rankings, torneios e comunidade de esportes de raquete. O objetivo é reconstruir a experiência do jogador competitivo de Beach Tennis com uma interface mais intuitiva e uma arquitetura moderna.
+Redesign de uma plataforma de rankings, torneios e comunidade de Beach Tennis, focado no jogador competitivo (visão, escopo e JTBD em `docs/PRODUCT.md`). Side project com três objetivos: portfolio de Design Engineer, produto real para lançamento e aprendizado técnico prático.
 
-Este é um side project com três objetivos simultâneos: portfolio de Design Engineer, produto real para lançamento, e aprendizado técnico prático. Portanto, o Claude deve agir de forma colaborativa e explicativa — como um professor ensina um aluno — para que o desenvolvedor possa não só executar, mas entender e absorver todos os conceitos.
+O desenvolvedor, Gabriel, é designer (~4 anos em branding e gráfico, ~2 em UX/UI) em transição para Design Engineer, com domínio de HTML/CSS e noções de JavaScript.
 
-## Como trabalhar neste projeto
+## Modo de trabalho
 
-O desenvolvedor é um designer (~4 anos em branding/marketing/gráfico, ~2 anos em UX/UI) em transição para Design Engineer, com domínio de HTML/CSS e noções de JavaScript.
+**Sessão autônoma.** Sessão aberta por `/pegar-issue` ou `/orquestrar` é autônoma: segue `docs/AGENT_WORKFLOW.md`, executa sem pedir permissão a cada passo e não explica conceito antes de agir. **Sessão interativa** (o Gabriel conversando) mantém o modo professor: explica o conceito antes de executar, nomeia o padrão (middleware, RLS policy, hook, JTBD), justifica a escolha, conecta com Figma e UX e não simplifica demais o que é complexo.
 
-- **Explique o conceito antes de executar.** O objetivo não é só entregar código ou decisões — é garantir que o desenvolvedor entenda cada passo e o porquê.
-- **Nomeie os conceitos.** Quando usar um padrão (middleware, server component, RLS policy, hook, JTBD, etc.), diga o nome e explique brevemente.
-- **Justifique as escolhas.** Quando houver alternativas, explique por que uma foi escolhida sobre a outra.
-- **Não simplifique demais.** Se algo é complexo, diga que é e quebre em partes menores.
-- **Conecte com o que já se sabe.** Use analogias com design, Figma e UX sempre que possível.
-- **Pergunte antes de assumir.** Se uma decisão impacta design ou experiência, pergunte antes de implementar.
-- **O Gabriel decide; o Claude questiona.** O Gabriel é o decisor de produto, negócio e tecnologia. O papel do Claude é de *sparring*: antes de acatar uma decisão, questionar as premissas, apresentar benefícios e riscos de cada abordagem e embasar a discussão em estudos de mercado, pesquisas e outras fontes confiáveis, sempre citadas. Discordar com argumento é esperado. Decidir no lugar do Gabriel, não.
+**Contexto antes de agir.** Antes de escrever, leia a issue, os comentários, o projeto e os docs que ela cita. Se faltar contexto para decidir, pergunte: não preencha a lacuna com palpite.
 
-## Filosofia de documentação
+**Inferência crítica é pergunta (Needs Decision).** Pare e pergunte, no formato de `docs/AGENT_WORKFLOW.md`, quando a decisão for: regra de domínio de Beach Tennis ou de ranking; mudança que o jogador vê na tela e custa refazer; RLS, segurança ou dado sensível; mudança do escopo da issue; nome, identidade ou questão jurídica; ação difícil de desfazer ou voltada para fora (merge, migration, publicar).
 
-Documentamos o que é estável. Decisões, padrões, princípios, hurdles, convenções — coisas que mudam raramente e que, quando mudarem, merecem PR e `git blame`. **Não documentamos estado.** Status de tarefa, progresso de fase, "o que vem depois" volúvel pertence ao tracker (Linear), não ao repo.
+**Inferência barata de trocar é Leitura.** O que se corrige depois do merge sem custo você decide e registra em "Leituras para o Gabriel conferir", no PR e no comentário final.
 
-**Teste antes de criar ou manter um doc:** "Se eu não atualizar isso por 3 meses, ele ainda estará correto?" Se a resposta é não, é estado disfarçado de documentação. Vai pro tracker.
+**O Gabriel decide produto, negócio e tecnologia; você questiona.** Antes de acatar, questione as premissas, mostre benefício e risco de cada caminho e cite a fonte. Discordar com argumento é esperado; decidir no lugar dele, não. Mantenha a posição em análise crítica, em vez de suavizar.
 
-**Mapa de docs:**
+**Onde a IA erra (questione-se):** over-engineering (antes de propor 4+ estados ou camadas, procure a versão mais simples); domínio de Beach Tennis (o Gabriel conhece, você não); segurança proativa (rate limit, validação no boundary, retry com backoff em feature que toca dado sensível ou rede); priorização (se o pedido desvia de algo mais importante, diga).
 
-- `CLAUDE.md` — convenções, padrões, hurdles, filosofia
-- `docs/PRODUCT.md` — visão, escopo MVP, princípios de design, métricas
-- `docs/DISCOVERY.md` — mercado, oportunidades por JTBD ranqueadas por evidência, modelos de negócio, hipóteses do beta
-- `docs/PROFILE.md` — perfil do jogador: leituras social e competitiva, seções, estados, critérios de aceite dos blocos (PF1…)
-- `docs/DOMAIN.md` — modelo de domínio: glossário, relações, regras numeradas (R1…), máquina de estados da partida
-- `docs/SCHEDULING.md` — marcação de jogos: regras da proposta de horário (M1…), prazos, notificações, telefone para o WhatsApp e métricas
-- `docs/RESULTS.md` — registro de resultado: telas e fluxos de lançar, confirmar ou contestar, fila do admin e amistoso (RG1…), notificações e métricas
-- `docs/NAVIGATION.md` — navegação do app e agenda do jogador (aba Jogos): abas, rotas por entidade, seções da agenda, relação com o feed (N1…)
-- `docs/EXPLORE.md` — aba Explorar: vitrine de competições e arenas, busca com três escopos, página da organização, "Como se inscrever" e "Tenho interesse" (EX1…)
-- `docs/HEAD_TO_HEAD.md` — head-to-head: páginas jogador × jogador e dupla × dupla, resumo, confrontos, forma recente, pontos de entrada, estados e critérios de aceite do H2HSummary e do FormGuide (HH1…)
-- `docs/RANKING.md` — tela de ranking: classificação por categoria, troca de categoria, própria linha fixada, delta, linha de corte da final, página da competição, estados e critérios de aceite do RankingRow e do ZoneDivider (RK1…)
-- `docs/ROUND_DRAW.md` — fluxo do sorteio da rodada: confirmação, casos que não fecham, resultado, desfazer e o que cada jogador recebe (SR1…)
-- `docs/TOKENS.md` — design system
-- `docs/GIT_WORKFLOW.md` — workflow de branches, PR, versionamento
-- `docs/AGENT_WORKFLOW.md` — estrutura do Linear e coordenação de agentes em paralelo
-- `src/components/.../Component.mdx` — **fonte única** de documentação por componente (renderizada no Storybook)
-- **Linear** (`linear.app/letzplay`) — tarefas, progresso, próximos passos
+## Stack e comandos
 
-## Stack técnica
+Next.js 16 (App Router, ler `node_modules/next/dist/docs/` antes de usar API nova), React 19, TypeScript 5, CSS Modules + CSS Custom Properties (tokens em `styles/tokens/`), Phosphor Icons via `<Icon />`, Supabase (Auth, Postgres, Storage, RLS; `@supabase/ssr`), Storybook 10 (`@storybook/nextjs-vite`), Vitest 4, Playwright. Deploy na Vercel; repositório público no GitHub, `master` protegida (toda mudança por PR com CI verde). Tracker: Linear (workspace privado).
 
-- **Framework:** Next.js 16 (App Router)
-- **Linguagem:** TypeScript 5
-- **UI:** React 19
-- **Estilização:** CSS customizado com CSS Modules (escopo de componente) + CSS Custom Properties (design tokens)
-- **Ícones:** Phosphor Icons (`@phosphor-icons/react`) — sempre via componente `<Icon />`
-- **Backend:** Supabase (Auth, PostgreSQL, Storage, Data API, RLS automático)
-  - `@supabase/supabase-js` ^2.101.1
-  - `@supabase/ssr` ^0.10.0
-- **Workshop de componentes:** Storybook 10 (`@storybook/nextjs-vite`) — rodar com `npm run storybook`
-- **Testes:** Vitest 4 — `npm test` (unit) e `npm run test:stories` (browser via Playwright); Playwright — `npm run test:e2e` (E2E contra Supabase local, roda na CI)
-- **Deploy:** Vercel (deploy automático via GitHub)
-- **Repositório:** GitHub (público, `gabriel-vilano/letzplay`) — `master` protegida por ruleset; toda mudança entra via PR com CI verde
-- **Tracker de execução:** Linear (`linear.app/letzplay`)
-- **IDE:** VS Code com Claude Code (plano Max)
+- `npm run dev` · `npm run build && npm start` (build de produção)
+- `npm run lint` · `npm run typecheck` · `npm test` (unit)
+- `npm run test:stories`: na nuvem, `CHROMIUM_EXECUTABLE_PATH=/opt/pw-browsers/chromium npm run test:stories`
+- `npm run test:e2e`: precisa de Docker (Supabase local), roda na CI
+- `npm run storybook` (porta 6006)
 
 ## Convenções de código
 
-### Commits
-
-- **Conventional Commits:** prefixos em inglês, descrição em português
-- Letra minúscula após o prefixo, sem ponto final, máximo ~72 caracteres
-- **Nunca** incluir `Co-Authored-By` ou trailers de coautoria nos commits
-- Exemplos:
-  - `feat: adicionar tela de login com autenticação Supabase`
-  - `fix: corrigir validação de email no cadastro`
-  - `chore: configurar variáveis de ambiente do Supabase`
-  - `style: ajustar espaçamento do card de ranking`
-  - `refactor: extrair componente de botão reutilizável`
-  - `docs: adicionar README com instruções de setup`
-
-### Nomenclatura
-
-- Componentes React: PascalCase (`PlayerCard.tsx`)
-- Utilidades: camelCase (`formatDate.ts`)
-- Tipos TypeScript: PascalCase (`PlayerProfile`, `TournamentData`)
-- Variáveis e funções: camelCase
-- Constantes globais: UPPER_SNAKE_CASE
-- Pastas: kebab-case
+**Nomes.** Componente em PascalCase (`PlayerCard.tsx`), utilidade em camelCase (`formatDate.ts`), tipo em PascalCase, variável e função em camelCase, constante global em UPPER_SNAKE_CASE, pasta em kebab-case. Código em inglês; comentário em português.
 
-### Regras numéricas
+**Regras numéricas** (o Read trunca em 2000 linhas e a atenção do agente cai com o tamanho):
 
-Restrições mensuráveis, otimizadas para que o agente raciocine sobre o código com atenção plena (Read trunca em 2000 linhas; atenção degrada com tamanho do arquivo).
+- Funções de 4 a 20 linhas; acima, dividir. Arquivos abaixo de 500 linhas, idealmente 200 a 300.
+- Indentação de no máximo 2 níveis por função; early return em vez de `else` aninhado.
+- Nunca `any`, nunca função sem assinatura tipada, nunca `Record<string, unknown>` quando o shape é conhecido.
+- Nomes específicos: se um `grep` pelo nome devolve 5+ resultados de ruído, refinar (evitar `data`, `handler`, `Manager`, `Service`).
+- Mensagem de exceção com o valor recebido e o formato esperado: `` `OTP inválido: recebi '${code}', esperado 8 dígitos numéricos` ``.
 
-- **Funções:** 4–20 linhas. Acima disso, dividir.
-- **Arquivos:** abaixo de 500 linhas, idealmente 200–300. Acima disso, extrair responsabilidades.
-- **Indentação:** máximo 2 níveis por função. Preferir early return sobre `else` aninhado.
-- **Tipos:** nunca `any`, nunca função sem assinatura tipada, nunca `Record<string, unknown>` quando o shape é conhecido.
-- **Nomes:** específicos e únicos. Evitar genéricos (`data`, `handler`, `Manager`, `Service`). Antes de aceitar um nome novo, mentalmente: `grep` por ele retorna < 5 resultados relevantes? Se retorna muito ruído, refinar.
-- **Mensagens de exceção:** incluir o valor que causou o problema e o formato esperado. Ex: `` `OTP inválido: recebi '${code}', esperado 8 dígitos numéricos` `` em vez de `"OTP inválido"`.
+**Estilo.** Functional components com hooks; imports com alias `@/`; cada componente com seu `ComponentName.module.css`, BEM dentro dele (`.card__header`, `.btn--primary`); nunca CSS inline (`style=`) nem CSS global para componente; mobile-first. Regras de CSS, tokens, ícones e componentes ficam nas regras de `.claude/rules/` (mapa abaixo).
 
-### Estilo
+**Comentários.** WHY, não WHAT: só para decisão não óbvia (workaround, constraint de negócio, ordem que importa, alternativa que não funciona). Não apague comentário em refactor, salvo quando ficou redundante ou errado. Docstring em função pública: intenção em uma linha e um exemplo quando o uso não é óbvio. Linha que existe por causa de um bug cita a issue, o PR ou o commit.
 
-- Código (variáveis, funções, tipos): inglês
-- Comentários: português quando necessário, preferir código autoexplicativo
-- Sempre functional components com hooks
-- Imports com alias `@/`
-- Estilização via CSS Modules: cada componente tem seu `ComponentName.module.css`
-- Nunca CSS inline (atributo `style=`), nunca CSS global para componentes
-- Design tokens definidos como CSS Custom Properties em `styles/tokens/`
-- Nomenclatura BEM dentro dos arquivos `.module.css`: `.card__header`, `.btn--primary`
-- Mobile-first, responsivo depois
+**Commits.** Conventional Commits: prefixo em inglês, descrição em português, minúscula depois do prefixo, sem ponto final, ~72 caracteres (ex.: `feat: adicionar tela de login com autenticação Supabase`). O hook `commit-msg` (`.githooks/`) valida o formato e remove a coautoria.
 
-### Comentários
+## Marca
 
-- **WHY, não WHAT.** Código bem nomeado já diz o que faz. Comentário existe para justificar decisão não óbvia: workaround para bug upstream, constraint de negócio, ordem específica que importa, alternativa que parecia óbvia mas não funciona.
-- **Não apagar comentários em refactor.** Se um comentário existe, presume-se que carrega proveniência ou intenção. Em refactor, preservar — só remover quando se confirma que ficou redundante ou errado. Comentário óbvio (`// increment counter`) é exceção e pode ir.
-- **Docstrings em funções públicas:** intenção em uma linha + um exemplo de uso quando o uso não for óbvio.
-- **Referenciar issues, PRs ou commits** quando uma linha existe por causa de um bug específico ou constraint de lib externa. Ex: `// workaround: supabase-js@2.101 não trata expired session em verifyOtp (#123)`.
-- **Não comentar o óbvio.** `i++ // increment i` desperdiça tokens e atenção do agente.
+O nome do produto só entra no código por `src/lib/brand.ts`. Em `src/`, `app/` e `e2e/` (TS, TSX e MDX), nenhum literal do nome: nem em UI, nem em texto que sai do app (mensagem do WhatsApp, título do compartilhamento), nem em teste, story ou MDX (`{brand.name}` funciona em MDX). Fora do TypeScript, onde não dá para importar, o literal é permitido, e a lista desses lugares fica no comentário de `brand.ts`. O teste `brand.guard.test.ts` reprova o PR que descumprir. Docs não repetem o nome: só `README.md` e `docs/PRODUCT.md` o dizem; os outros escrevem "o produto".
 
-### Ícones
+## Supabase: o que não pode falhar
 
-- Lib: `@phosphor-icons/react`
-- Sempre via wrapper: `<Icon icon={TrophyIcon} size="md" weight="regular" />`
-- **Sempre importar com sufixo `Icon`:** `import { TrophyIcon } from '@phosphor-icons/react'`. Os nomes legados (`Trophy`, `Heart`) ainda funcionam por compatibilidade, mas o padrão moderno da lib é com sufixo — use sempre o novo.
-- Cor sempre via `currentColor` — nunca definir cor dentro do componente `Icon`
-- Ícones decorativos: `aria-hidden={true}` (default — não precisa declarar)
-- Ícones com significado semântico: `aria-label="descrição"` + `aria-hidden={false}`
-- Botão com ícone sem texto: `aria-label` vai no `<button>`, não no `<Icon>`
-- Ícones customizados de marca: `src/components/icons/` (SVG próprio, fora do Phosphor)
-- Referência completa: ver `Icon.mdx` no Storybook (`UI/Icon > Docs`)
+- RLS ativo em toda tabela, com as policies definidas antes de usar a tabela. Dado que vem do Supabase é sempre tipado.
+- Nunca segredo no frontend (`service_role` nem `sb_secret_…`): toda `NEXT_PUBLIC_*` vira texto no JavaScript do navegador, e o `next.config.ts` bloqueia o build se achar segredo numa delas.
+- Schema, policy e bucket só por migration em `supabase/migrations/`, que entra por PR. Quem aplica no remoto é o merge na `master`; nunca aplicar à mão (`supabase db push`, `apply_migration` via MCP). O dashboard é só leitura.
+- Dados mockados primeiro: feature nasce com mocks tipados; tabela nova só quando a feature precisa do cenário real.
+- Detalhe (env vars, Vercel, como criar a migration) em `.claude/rules/supabase.md`.
 
-## Onde mora cada componente
+## Testes
 
-`src/components/` se divide por grupo, e o grupo segue o Tier (ver "Storybook > Estratégia de cobertura"):
+- Todo fluxo crítico ganha teste antes de ser "pronto", logo depois de implementar. Prioridade: auth, operações de banco, validação de input e fluxo com dado sensível.
+- Bug corrigido ganha teste de regressão que reproduziria o bug.
+- Arquivo `<nome>.test.ts(x)` ao lado do código. Sessão de agente não tem Docker: o E2E se valida pelo job E2E do PR.
+- Server actions, E2E e diagnóstico de falha em `.claude/rules/testes.md`; stories e `play` em `.claude/rules/storybook.md`.
 
-- **`ui/`** guarda os Tier 1 e os Tier 2 genéricos: primitivos e compostos sem regra de negócio (Button, FormInput, Avatar, Badge, EmptyState).
-- **Grupos de área** (`auth/`, `feed/` e os próximos, como `agenda/`, `ranking/` e `profile/`) guardam os Tier 3 e Tier 4 daquela área, e os Tier 2 que só fazem sentido nela (OtpInput, PasswordChecklist).
-- **`icons/`** guarda os SVGs próprios da marca (fora do Phosphor).
-- **`shell/`** guarda a casca das telas logadas: o `AppShell` (TabBar, NavigationRail e a aba marcada, `docs/NAVIGATION.md` N10 e N28), montado no `app/(app)/layout.tsx`, e o `DetailHeader`, o cabeçalho de toda tela de detalhe, cujo "Voltar" leva à aba marcada, ou à tela pai quando a página passa `parentHref` (a área "Administrar" volta à competição). Quem usa o `shell/` são as páginas em `app/`; os grupos de área não importam dele.
+## Guardrails
 
-**Componente usado por duas ou mais áreas sobe para `ui/`.** Um grupo de área não importa de outro grupo de área: se `ranking/` precisa de algo que está em `feed/`, esse algo vai para `ui/`. Assim cada área depende só de `ui/`, e mover ou apagar uma área não quebra as outras.
+Sinalize, sem esperar que peçam:
 
-## Documentação de componentes
+- feature sem teste ("Quer que eu crie testes básicos para esse fluxo?");
+- arquivo passando de ~200 linhas (sugerir extrair responsabilidades);
+- solução ficando complexa ("existe uma versão mais simples?"): ofereça a mínima primeiro, com os trade-offs;
+- RLS, segurança ou dado sensível ignorados;
+- vários commits de feature sem refactor (sugerir pausa para limpeza);
+- dependência nova sem justificativa clara: prefira o nativo do Next.js e do Supabase.
 
-**Fonte única: arquivos `Component.mdx` ao lado de cada componente, renderizados no Storybook.** Não usamos `docs/components/` — foi deprecado e removido em favor de MDX como source of truth.
+Checklist por feature:
 
-```
-src/components/ui/Button/
-  Button.tsx             ← código
-  Button.module.css      ← estilo
-  Button.stories.tsx     ← stories interativas
-  Button.mdx             ← documentação (fonte canônica)
-  index.ts
-```
+- funciona no mobile (testar no mobile antes do desktop) e trata erro com mensagem amigável ao usuário;
+- testes dos fluxos críticos; `npm run typecheck` limpo;
+- `CLAUDE.md` ou a regra da área atualizados se surgiu hurdle ou padrão novo; processo documentado para o portfolio.
 
-Convenção completa de MDX (estrutura de seções, ordem de conteúdo, blocos do Storybook): ver "Storybook > Padrão de documentação MDX" abaixo.
+Regras inegociáveis:
 
-## Storybook
+- **Não acesse o incumbente** (a plataforma que inspirou o produto): nem páginas, área logada ou API, com nenhuma ferramenta. Os Termos de Uso dela proíbem acesso automatizado; domínio, cláusula e data estão no documento "Regra de acesso ao incumbente" do Linear (projeto Discovery e estratégia). Precisa de algo dela? Peça prints ao Gabriel.
+- **Nunca** rebase, force push, `git reset --hard` nem auto-merge. Conflito se resolve com `git merge origin/master`; quem mergeia é a orquestradora ou o Gabriel (`docs/AGENT_WORKFLOW.md` > "Merge").
 
-Workshop pra desenvolver e testar componentes em isolamento. Cada componente do DS deve ter sua story conforme evolui.
+## Armadilhas que valem sempre
 
-### Comandos
+- **iOS não hidrata em `next dev`.** No iOS (Chrome e Safari), o React 19 + Turbopack em dev não hidrata: `onChange` e `onClick` não disparam, só `<a>` navega. Antes de achar que um handler está quebrado no iOS, testar com `npm run build && npm start` e abrir `http://<IP>:3000`. Bug upstream. Origem não localizada (anterior ao histórico do repo).
+- **Next com patch.** `patches/next+16.2.2.patch` (`patch-package` no `postinstall`) corrige a tela em branco depois de clicar num `<Link>` com prefetch em voo ([vercel/next.js#98684](https://github.com/vercel/next.js/issues/98684)). Não atualizar o `next` sem ler `.claude/rules/next-patch.md`. Origem: PR #142.
 
-- `npm run storybook` — sobe dev server em `http://localhost:6006` (o script já usa `--host 0.0.0.0`, então abre pela rede local)
-- `npm run build-storybook` — build estática em `storybook-static/`
-- `npm run test:stories` — roda cada story como teste no Chromium (Playwright + Vitest browser mode)
-- `npm run test:all` — unit + storybook
+## Mapa de docs e de regras
 
-### Onde ficam as stories
+Documentamos o que é estável (decisão, padrão, princípio, hurdle, convenção), que muda raramente e merece PR e `git blame`. **Estado não se documenta:** status, progresso e "o que vem depois" moram no Linear. Teste: "se eu não atualizar isso por 3 meses, ainda estará correto?" Se não, é estado.
 
-Ao lado do componente, sufixo `.stories.tsx`:
+- `docs/PRODUCT.md`: visão, escopo do MVP, princípios de design, JTBD, contexto do esporte, métricas
+- `docs/DISCOVERY.md` e `docs/discovery/`: mercado, oportunidades por JTBD ranqueadas por evidência, hipóteses do beta (a evidência bruta mora no Linear, projeto Discovery e estratégia)
+- `docs/DOMAIN.md`: glossário, relações, regras R1…, máquina de estados da partida
+- `docs/PROFILE.md` (PF1…), `docs/SCHEDULING.md` (M1…), `docs/RESULTS.md` (RG1…), `docs/NAVIGATION.md` (N1…), `docs/EXPLORE.md` (EX1…), `docs/HEAD_TO_HEAD.md` (HH1…), `docs/RANKING.md` (RK1…), `docs/ROUND_DRAW.md` (SR1…), `docs/FEED_CARDS.md`: specs de tela e fluxo
+- `docs/TOKENS.md`: design system (arquitetura CSS, tokens, escala tipográfica)
+- `docs/GIT_WORKFLOW.md`: branches, PR, CI, merge, versionamento
+- `docs/AGENT_WORKFLOW.md`: Linear, Needs Decision, coordenação de agentes, merge, acesso ao incumbente
+- `src/components/.../Component.mdx`: fonte única da documentação de cada componente (Storybook)
 
-```
-src/components/ui/Icon/
-  Icon.tsx
-  Icon.module.css
-  Icon.stories.tsx   ← aqui
-  index.ts
-```
+Regras com `paths` (`.claude/rules/`), carregadas ao mexer nos arquivos correspondentes:
 
-### Estratégia de cobertura
+- `storybook.md`: stories, estratégia de cobertura, `play`, padrão de MDX (`*.stories.tsx`, `*.mdx`, `.storybook/`). Um hook exige lê-la antes de escrever story ou MDX
+- `componentes.md`: onde mora cada componente e a regra dos grupos (`src/components/`)
+- `icones.md`: wrapper `<Icon />`, sufixo `Icon`, Phosphor em Server Component (`.tsx`)
+- `css.md`: regras do DS, state layers, foco, tap target, hurdles de CSS no iOS (`.css`)
+- `supabase.md`: migrations e env vars (`supabase/`, `src/lib/supabase/`, server actions)
+- `testes.md`: server actions, E2E e diagnóstico de falha na CI (testes, `e2e/`)
+- `next-patch.md`: o patch do Next e como atualizar (`patches/`, `package.json`, `next.config.ts`)
 
-Adotamos a estratégia **DS + componentes críticos** — não documentamos tudo, documentamos o que tem ROI real.
-
-**Tier 1 — DS primitivos (sempre).** Átomos reutilizáveis. Ex: Button, Icon, FormInput, Alert, Toast, Avatar, TextLink. Storybook é o catálogo do design system.
-
-**Tier 2 — Compostos com estados ocultos (sim).** Moléculas que têm múltiplos estados difíceis de reproduzir em produção (loading, empty, error, edge cases). Ex: PasswordChecklist, OtpInput, ResendTimer, AvatarUpload.
-
-**Tier 3 — Blocos reutilizáveis de feature (sim).** LEGO pieces recombinados em vários contextos. Ex: blocos do feed (CardShell, CardHeader, ScoreBlock).
-
-**Tier 4 — Composições finais (geralmente não).** Cards completos / telas. Quando vale, criar **uma story-galeria** mostrando todas as variantes lado a lado, em vez de uma story por composição.
-
-**Não documentar:** páginas (`app/**/page.tsx`), server components com data fetching, layouts puros sem variantes, componentes one-shot usados em um único lugar sem estados ocultos.
-
-**Heurísticas pra decidir caso a caso:**
-
-1. **Heurística do designer:** "Um designer entregaria um Figma frame só desse componente, com todas as variantes lado a lado, fora de qualquer tela?" Se sim → story.
-2. **Heurística dos estados invisíveis:** "Esse componente tem estados que produção raramente exibe — loading, empty, error, texto longo, dado faltando?" Se sim → Storybook é o melhor lugar pra surfar.
-
-**Regra do PR:** ao adicionar/evoluir um componente, perguntar antes do merge: *"Esse componente tem 3 ou mais variantes/estados que valem mostrar lado a lado?"* Se sim, story junto no mesmo PR. Se não, segue sem.
-
-### Padrão de documentação MDX
-
-Cada componente do Tier 1 e Tier 2 ganha um arquivo `Component.mdx` ao lado, **complementando** o `.stories.tsx`:
-
-```
-src/components/ui/Button/
-  Button.tsx
-  Button.module.css
-  Button.stories.tsx   ← stories interativas, controls, args
-  Button.mdx           ← documentação rica em prose
-  index.ts
-```
-
-**Por que MDX se já temos auto-docs:** o auto-docs (aba "Docs" gerada do meta) é raso — só descrição + tabela de props + stories embutidas. MDX permite explicar **decisões de design**, **componentes relacionados**, **acessibilidade**, **anti-padrões** — coisas que não cabem em uma description de story.
-
-**Idioma:** títulos de seções e prose em português. Termos técnicos sem tradução natural permanecem em inglês (ex: `Provider`, `hook`, `props`, nomes de tokens CSS, identificadores de código). Sigla `API` mantém. Convenções específicas de DS (`Don'ts`) traduzimos quando há equivalente claro em PT (`Evitar`).
-
-**Inspiração de estrutura:** [Carbon Design System](https://github.com/carbon-design-system/carbon/blob/main/packages/react/src/components/Button/Button.mdx) — adotamos a estrutura por seções (cada variante e cada estado com H2/H3 próprio), `<ArgTypes>` no fim como API, `## References` linkando padrões externos. Diferença: Carbon é DS multi-tenant, então é deliberadamente neutro; o nosso é DS de um produto único, então mantemos **opinião forte** ("uma primary por tela", Don'ts explícitos).
-
-**Imports padrão:**
-
-```mdx
-import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
-import * as ButtonStories from "./Button.stories";
-
-<Meta of={ButtonStories} />
-<Subtitle>Uma linha sobre o propósito do componente.</Subtitle>
-
-**Código-fonte:** [`src/components/ui/Button/Button.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/ui/Button/Button.tsx)
-```
-
-Sempre incluir o link pro código-fonte no topo, logo após o Subtitle.
-
-**Tabelas em MDX:** usar HTML (`<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, `<td>`). Sintaxe markdown de pipes não funciona no Storybook 10 + nextjs-vite atual — `remark-gfm` foi tentado mas o `mdxLoaderOptions` hook não propaga remarkPlugins até o compile final do `@mdx-js/mdx` interno do addon-docs. Inline code em cells via `<code>...</code>`. Reavaliar quando upstream resolver.
-
-**Seções recomendadas (na ordem):**
-
-1. **Visão geral** — parágrafo curto descrevendo propósito + `<Canvas>` da story default. Mostra o componente funcionando antes de explicar.
-2. **Variantes** — parágrafo intro + `<Canvas of={Stories.AllVariants} />`, depois um **H3 por variante** com prose + Canvas próprio
-3. **Estados** — parágrafo intro + H3 por estado (Loading, Disabled, FullWidth, etc), cada um com prose + Canvas
-4. **Anatomia** *(opcional)* — partes visuais nomeadas. Só se o componente não for óbvio (FormInput sim, Button não)
-5. **Com ícone** *(quando aplicável)* — H3 separados pra leading e trailing
-6. **Quando usar** — bullets com casos de uso centrais
-7. **Componentes relacionados** — outros componentes próximos e quando preferir cada um (ex: Button vs ButtonLink vs TextLink), com link via `?path=/docs/ui-componente--docs`
-8. **Acessibilidade** — semântica HTML, ARIA, foco, tap target. Citar critérios WCAG quando aplicável
-9. **Evitar** — anti-padrões comuns com `❌`. Única seção negativa do MDX; é onde mora a opinião do nosso DS
-10. **API** — `<ArgTypes of={Stories} />` (não `<Controls>`; Controls é interativo, ArgTypes é documentação read-only)
-11. **Decisões de design** *(opcional)* — formato Q&A: por que essa abordagem em vez de alternativas? (ex: "Por que Phosphor em vez de Lucide?", "Por que wrapper em vez de import direto?"). **Critério estrito: só incluir quando há decisão não-óbvia que justificaria questionamento futuro.** Em componentes onde tudo é convencional, não criar a seção — boilerplate vazio polui mais do que ajuda
-12. **Referências** — links pra MDN, WAI-ARIA, WCAG, e referência cruzada com `docs/TOKENS.md`
-
-**Ordem de conteúdo dentro de qualquer seção/subseção: sempre Heading → Prose → Canvas.** O leitor precisa de contexto antes de processar o exemplo visual; mostrar o componente primeiro força o leitor a inferir o que está vendo. A regra vale tanto pro H2 quanto pro H3. **Nunca Canvas → Prose** — sem exceção.
-
-**Toda H2 que tem H3 abaixo deve ter prose intro de 1-2 linhas antes do primeiro H3** — orienta o leitor sobre o que vai encontrar. Se a H2 só tem prose+Canvas (sem H3), aplica direto a regra Heading → Prose → Canvas.
-
-**Não fazer:**
-
-- ❌ Duplicar prose do `parameters.docs.description` da story dentro do MDX — descrições curtas de story são legendas, MDX é a doc principal. Quando MDX existe, mantenha as descriptions curtas e factuais; o "porquê" mora no MDX.
-- ❌ Documentar implementação interna (estrutura de CSS, lógica de hook). Foco no consumidor: como usar, quando usar, quando não usar.
-- ❌ Criar MDX antes de ter stories — MDX referencia stories via `<Canvas of={...} />`. Stories primeiro, MDX depois.
-- ❌ TOC manual — Storybook 10 auto-gera TOC do lado direito a partir dos H2/H3 do MDX.
-
-**`docs/components/` foi deprecado.** MDX é a fonte única de documentação por componente. Decisões de design (rationale, alternativas consideradas) que antes ficavam em `docs/components/<nome>.md` agora vão na seção **Decisões de design** do próprio MDX (item 11 da lista acima), logo antes de Referências.
-
-### Padrão de story
-
-- **Nunca nomear `export const X` igual ao componente importado.** `import { Button } from "./Button"` + `export const Button: Story = ...` quebra com "duplicate declaration". Use nomes das *variantes* — `Primary`, `Secondary`, `WithIcon`, `Loading`. (Boilerplate do Storybook 10.3.6 erra isso — não copiar.)
-- Use `satisfies Meta<typeof Component>` no meta pra inferência de tipos das stories
-- `args` no meta = defaults; cada story sobrescreve apenas o que precisa
-- `argTypes.icon: { control: false }` desabilita o control quando o tipo não é serializável (`React.ElementType`)
-- Para showcase de variantes lado a lado, use as utilities `.sb-row`, `.sb-stack`, `.sb-pad` do `.storybook/storybook.css` — não use `style=` inline
-
-### Addons ativos
-
-- **a11y** — cada story passa por axe-core; violações aparecem no painel "Accessibility"
-- **vitest** — stories viram testes via `npm run test:stories`
-- **docs** — auto-doc com MDX e descriptions de stories
-- **chromatic** — preparado pra visual regression (não conectado ainda)
-
-### Decisão de adapter
-
-Usamos `@storybook/nextjs-vite` (não `nextjs` webpack). Vite roda mais rápido, alinha com o pipeline do Vitest e é a direção declarada do time do Storybook. Trade aceito: regras webpack do `next.config.ts` não se aplicam — hoje irrelevante porque o `next.config.ts` não tem regras de webpack (só a guarda de segredos e o `allowedDevOrigins`).
-
-### Sobre RSC e `"use client"`
-
-Storybook + Vite não tem RSC. Stories rodam tudo client-side por default. A regra sobre Phosphor em Server Components (ver "Common hurdles" > "Phosphor em Server Components") vale para o app real, não para as stories — ali nada quebra.
-
-## Supabase
-
-- Row Level Security (RLS) ativo em todas as tabelas
-- Sempre definir policies antes de usar uma tabela
-- Nunca expor chave secreta no frontend — nem a `service_role` legada nem a secret key (`sb_secret_…`). Toda variável `NEXT_PUBLIC_*` vira texto no JavaScript enviado ao navegador; o `next.config.ts` bloqueia o build se detectar segredo numa delas
-- Variáveis de ambiente: `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (`sb_publishable_…`), lidas só via `getSupabasePublicEnv()` (`src/lib/supabase/env.ts`). A anon key legada (JWT) não é usada
-- **Env vars na Vercel:** a integração Supabase ↔ Vercel sincroniza só o ambiente Production, com os segredos marcados como *sensitive*. Preview e Development recebem apenas as variáveis públicas, cadastradas à mão — build de branch (o repo é público) nunca recebe segredo
-- **Schema versionado em `supabase/migrations/`.** Toda mudança de schema, policy ou bucket entra como migration — nunca editar direto pelo dashboard. O repo é a fonte de verdade do banco; o dashboard é só leitura
-- Migration nasce com `supabase migration new <descricao_em_snake_case>` (gera `<timestamp>_<descricao>.sql`) e entra por PR. **Quem aplica no remoto é o merge na `master`**, via integração GitHub do Supabase (*Deploy to production*). Nunca aplicar à mão (`supabase db push`, `apply_migration` via MCP): o `apply_migration` grava a hora da chamada como versão, diferente do timestamp do arquivo — no merge a integração roda o mesmo SQL de novo e o histórico do banco diverge do repo. Para testar antes do merge: `supabase db reset` local (Docker)
-- **Dados mockados primeiro.** O Supabase é ambiente de testes para ver o produto num cenário real, não banco de produção. Features nascem com mocks tipados; tabela nova só entra quando a feature precisa do cenário real
-
-## Insights estratégicos
-
-### Sobre o ecossistema de Beach Tennis
-
-- Rankings são contínuos (semestre), culminando em "Finals" para as 8 melhores duplas
-- Torneios são eventos discretos (1-2 dias de fim de semana)
-- Marcação de jogos de ranking acontece no WhatsApp, não no app
-- O LetzPlay é um app de competição — quem não compete não tem motivo para usá-lo
-
-### Sobre o feed
-
-- Activity Stream (modelo Strava), não rede social
-- Conteúdo automático (resultados, inscrições, amizades) é o que engaja
-- UGC (publicações próprias) é depreciado no uso
-- Cards de resultado são o formato principal
-
-### Sobre o jogador competitivo
-
-- Ranking é o coração emocional do produto — subir motiva, descer frustra
-- Dois tipos de consulta a perfil: social (acompanhar amigos) e competitivo (avaliar adversário)
-- Frequência de uso alta durante competições, cai entre elas
-
-## Jobs-to-be-done (hipóteses)
-
-Foco: jogador competitivo de Beach Tennis.
-
-1. **Encontrar competição** — "Quando estou sem torneio ou ranking no horizonte, quero encontrar competições compatíveis com meu nível e região, para manter uma agenda ativa."
-2. **Saber onde estou no ranking** — "Quando um resultado é registrado, quero ver imediatamente como minha posição foi afetada, para decidir como agir."
-3. **Preparar-me para um confronto** — "Quando descubro quem vou enfrentar, quero avaliar o nível e histórico desse jogador, para me preparar."
-4. **Acompanhar amigos no BT** — "Quando abro o app no dia a dia, quero ver o que meus amigos estão fazendo, para me manter conectado e descobrir oportunidades."
-5. **Sentir que estou evoluindo** — "Quando estou entre competições, quero ver evidências da minha evolução, para me manter motivado."
-
-## Problemas do app atual (audit heurístico)
-
-1. **Consistência visual/semântica** — cores sem lógica, tipografia irregular, componentes sem padrão
-2. **Arquitetura de informação** — menu com 19+ itens, busca duplicada, perfil sobrecarregado
-3. **Feedback e estados** — login mostra "sessão encerrada", criação de conta sem feedback
-4. **Componentes e interações** — filtros sem labels, seletores quebrados, modais sem fechar
-
-## Qualidade e disciplina
-
-### Calibração — onde IA tende a errar
-
-Áreas onde o Claude deve se questionar ativamente, em vez de seguir o impulso natural do modelo:
-
-- **Decisões de arquitetura.** Tendência ao over-engineering — mais camadas, mais abstrações, mais estados do que o problema pede. Antes de propor 4+ estados/camadas, perguntar: "existe versão mais simples?".
-- **Conhecimento de domínio.** Beach Tennis, ranking competitivo, JTBDs do jogador — são contextos que o Gabriel conhece e o Claude não. Em decisões com peso de domínio, perguntar antes de assumir.
-- **Manter opinião forte em texto.** Tendência a suavizar tudo, "balancear" demais. Quando o Gabriel pede análise crítica, manter a posição.
-- **Segurança proativa.** O Claude implementa o caminho feliz quando pedem. Raramente sugere proteções extras (rate limit, validação no boundary, retry com backoff). Se a feature toca dado sensível ou rede, sinalizar explicitamente quais proteções fazem sentido.
-- **Priorização.** O Claude executa qualquer pedido com igual entusiasmo, mesmo quando o pedido é secundário. Se o trabalho parece desviar de algo mais importante, perguntar.
-
-### Guardrails (intervenções proativas)
-
-O Claude deve sinalizar proativamente quando:
-
-- Uma feature está sendo implementada sem nenhum teste — perguntar: "Quer que eu crie testes básicos para esse fluxo?"
-- Um arquivo passa de ~200 linhas — sugerir extração de responsabilidades
-- Uma solução está ficando complexa demais — perguntar: "Existe uma versão mais simples?"
-- Houve vários commits de feature sem nenhum refactoring — sugerir pausa para limpeza
-- Uma decisão de segurança foi ignorada (ex: dados sensíveis, RLS policy faltando)
-
-### Testes
-
-- **Framework:** Vitest 4. `npm test` roda só o project `unit` (testes node). `npm run test:stories` roda as stories no Chromium. Arquivos `<nome>.test.ts(x)` ao lado do código testado
-- **Abordagem equilibrada:** não exige TDD rigoroso, mas todo fluxo crítico ganha teste antes de ser considerado "pronto". Testar imediatamente após implementar — não deixar acumular dívida de teste
-- **Prioridade de cobertura:** auth (login, signup, validações), operações de banco (criar perfil, registrar partida), validações de input, e qualquer fluxo que envolva dados sensíveis
-- **Server actions:** testar com `vi.mock` em `@/src/lib/supabase/server` (fake de `app/(auth)/actions.test-utils.ts`) e em `next/navigation`, com `redirect` lançando `NEXT_REDIRECT:<url>` como o real. Asserção de redirect: `rejects.toThrow(redirectSignal(url))`
-- **Stories nas sessões na nuvem:** o container traz um Chromium mais antigo que o pedido pelo `playwright` do projeto, e a doc do ambiente proíbe `playwright install`. Rodar com `CHROMIUM_EXECUTABLE_PATH=/opt/pw-browsers/chromium npm run test:stories`: o `vitest.config.ts` passa a variável como `executablePath` do provider. Sem ela (CI, máquina local), nada muda. É outra versão do browser, então o job Stories da CI continua sendo a referência
-- **`play` das stories:** esperar a renderização com `findBy*`, não com `getBy*` logo no início. Não depender de rolagem suave, animação ou timer sem controle (rolar com `behavior: "instant"`). Antes de rolar numa tela que usa IntersectionObserver, esperar o primeiro aviso com `firstIntersectionDelivered` (`.storybook/playHelpers.ts`). Nunca espera fixa (`setTimeout`, `sleep`): o que se espera é uma condição, com `findBy*` ou `waitFor`. Story nova ou alterada com `play` passa pela prova de estabilidade da skill `/pegar-issue` (passo 4) antes do push, e a CI repete 5 vezes as stories alteradas pelo PR
-- **E2E:** Playwright em `e2e/`, contra o build de produção e um Supabase local (`supabase start`) com as migrations aplicadas do zero; o código de verificação dos e-mails vem do Mailpit. Roda no job E2E da CI. Sessões de agente não têm Docker: validam pelo resultado desse job no PR, não localmente. Cada teste cria usuário com e-mail único (`uniqueEmail`), e os helpers recusam qualquer Supabase que não seja local
-- **Seletores E2E:** preferir `getByLabel`/`getByRole` com `exact: true`. Alerta sempre filtrado pelo texto (`getByRole("alert").filter({ hasText })`): o anunciador de rota do Next também tem `role="alert"`
-- **Falha de E2E na CI:** o screenshot e o trace ficam no artefato, que os agentes não conseguem baixar. Por isso o `e2e/app-shell.spec.ts` usa o `e2e/support/diagnostics.ts`: na falha, escreve no log do job a URL, os erros do navegador e as respostas com erro, a árvore de acessibilidade e o HTML da área de conteúdo. Spec nova que navegue pelo app pode usar o mesmo `beforeEach`/`afterEach`
-- **Bug fix → teste de regressão.** Todo bug corrigido ganha um teste que reproduziria o bug, para evitar regressão futura
-
-### Skills de UI
-
-Cinco skills em `.claude/skills/` cuidam da interface. Quando rodam:
-
-- **`revisar-interface`** (checklist de acessibilidade, formulário, toque e copy, com achados em `file:line`): só por comando. Em piloto até 5 PRs, a `/pegar-issue` a roda antes do push quando o diff mexe em `src/components/ui/`, em formulário ou campo, ou cria tela nova em `app/`.
-- **`movimento`**: cria animação sempre que a tarefa é animar; o modo revisar (`/movimento revisar <alvo>`) só por comando, ou pelo piloto quando o diff mexe em animação.
-- **`polir-interface`** (acabamento de componente) e **`mobile-nativo`** (viewport, toque, safe area, teclado): sob demanda.
-- **`decisoes-mobile`** (opções de padrão mobile com fonte): em issue de PRD com tela, para abrir as perguntas no formato Needs Decision. Não escreve código.
-
-### Oferecer a versão simples primeiro
-
-Quando propor uma solução, apresentar a versão mínima viável primeiro. Só adicionar complexidade se confirmado que é necessário. Sempre explicar os tradeoffs.
-
-### Checklist pós-implementação (por feature)
-
-- [ ] Feature funcionando em mobile
-- [ ] Testes dos fluxos críticos
-- [ ] Sem erros de TypeScript (`npm run typecheck`)
-- [ ] CLAUDE.md atualizado (se houve novo hurdle ou padrão)
-- [ ] Commit seguindo conventional commits
-
-## Common hurdles
-
-Problemas encontrados e suas soluções. Atualizar sempre que resolver algo não-óbvio.
-
-### iOS Chrome/Safari: React não hidrata em `next dev` (Turbopack)
-
-**Sintoma:** Em `npm run dev` acessado do iOS (Chrome/Safari), handlers React não disparam. `onChange` dos inputs não atualiza state (nada de validação inline, nada de `PasswordChecklist`), `onClick` dos botões nativos (`<button>`) não faz nada. `<a>` via `next/link` funciona porque é navegação do browser. Desktop dev funciona normal.
-
-**Causa:** Bug de hidratação do React 19 + Turbopack em dev, específico do WebKit do iOS. Upstream.
-
-**Workaround:** Testar qualquer fluxo sensível a interação no iOS via prod build:
-
-```bash
-npm run build && npm start
-```
-
-Daí acessar `http://<IP-do-dev>:3000` do celular. Em prod tudo funciona.
-
-**Quando aparecer novamente:** Antes de acreditar que um botão/handler novo está quebrado no iOS, rodar o build prod. Se funcionar lá, é o mesmo hurdle.
-
-### iOS: auto-zoom ao focar inputs
-
-**Sintoma:** iOS Safari/Chrome dá zoom na página ao focar um campo cujo `font-size` efetivo é menor que 16px (os campos tinham 14px).
-
-**Solução:** texto digitado e placeholder de todo `input`, `textarea` e `select` em `body-lg` (16px), nunca menos (`docs/TOKENS.md` > "Texto digitado em campo"). O `viewport` do `app/layout.tsx` não usa `maximumScale` nem `userScalable: false`, e o `app/layout.test.ts` falha se voltarem.
-
-**Por que não travar o zoom:** era a solução antiga. O Safari do iOS 10+ ignora a trava no pinch, mas o Chrome do Android a respeita e bloqueia o zoom manual, o que falha a WCAG 1.4.4 (Resize Text) e a auditoria `meta-viewport` do Lighthouse.
-
-### iOS: "sticky hover" em botões com `:hover`
-
-**Sintoma:** Primeiro tap em um elemento com regra `:hover` não dispara `click` no iOS — aplica o estado hover e espera o segundo tap.
-
-**Solução:** Envolver todas as regras `:hover` em `@media (hover: hover)` para que só apliquem em dispositivos com cursor real. Padrão seguido em todos os `.module.css` do DS.
-
-### Phosphor em Server Components
-
-**Sintoma:** `createContext only works in Client Components` ao renderizar um ícone do `@phosphor-icons/react` num Server Component.
-
-**Causa:** o import padrão do Phosphor usa React Context, que não existe em Server Components (README do pacote, seção "React Server Components and SSR"). Qualquer import de valor (ex: `import { HandshakeIcon } from "@phosphor-icons/react"`) num Server Component dispara o erro.
-
-**Solução:** o componente que importa o ícone roda no cliente. Ou ele tem `"use client"` (`Toast`, `FormInput`, `AvatarUpload`), ou só é usado dentro de componentes client (`Alert` e `PasswordChecklist`, usados só em páginas de auth com `"use client"`). Num Server Component, importar de `@phosphor-icons/react/ssr`. O wrapper `<Icon />` em si é seguro em Server Components: recebe o ícone como prop (`React.ElementType`) e não importa nada do Phosphor — o erro vem de quem importa o ícone.
-
-**Regra do feed:** todo componente de `src/components/feed/` que importa ícone Phosphor tem `"use client"` no próprio arquivo, em vez de depender de quem o renderiza. Assim ele funciona em qualquer página, inclusive num Server Component.
-
-### Dump do Testing Library nas stories parece vazio
-
-**Sintoma:** a story falha com `Unable to find an element…`, e o DOM impresso no erro só mostra os placeholders do Storybook. Parece que a story "não montou".
-
-**Causa:** o dump imprime o `document.body` inteiro e corta em 7.000 caracteres (`DEBUG_PRINT_LIMIT`). Os placeholders do Storybook vêm antes da raiz da story e enchem o limite antes do conteúdo. Aumentar o `DEBUG_PRINT_LIMIT` no shell não adianta: no modo browser do Vitest a variável não chega ao `process.env` da página.
-
-**Solução:** imprimir só a raiz da story, sem limite, com um `console.warn` temporário no `play` (o `console.log` do browser não aparece no terminal; o `console.warn` sim):
-
-```ts
-import { prettyDOM } from "storybook/test";
-// dentro do play, antes da linha que falha
-console.warn(prettyDOM(canvasElement, 100_000));
-```
-
-Tirar a linha antes do commit.
-
-### Next com patch: tela em branco depois de clicar num link
-
-**Sintoma:** a URL muda, mas a área de conteúdo fica vazia: sem skeleton, sem erro e sem nada no console. Só um reload recupera. Acontece quando o clique (ou o toque, no celular) num `<Link>` pega o prefetch dele ainda em voo. No E2E, aparecia como teste instável que não achava o link ou o cabeçalho da tela seguinte.
-
-**Causa:** bug do roteador do Next 16 ([vercel/next.js#98684](https://github.com/vercel/next.js/issues/98684)). Em `createCacheNodeForSegment` (`ppr-navigations.js`), a entrada do cache em `Pending` vira uma promise comum que pode resolver para `null`, e o React renderiza o segmento vazio.
-
-**Solução:** `patches/next+16.2.2.patch`, aplicado pelo `patch-package` no `postinstall`, trata a entrada `Pending` como cache miss. O patch vale só para a versão exata do `next`: antes de qualquer upgrade, ver a issue "Remover o patch do Next quando a vercel/next.js#98684 for corrigida" no Linear (remover o patch quando o Next corrigir, ou refazê-lo para a versão nova).
-
-### Componentes com stubs sem comportamento
-
-ProfileMiniCard, botões Torcer e "+ Adicionar" foram implementados como <button> sem onClick.
-Quando resolver: plugar handlers e <Link> ao integrar esses componentes com o feed real.
-
-Na área "Administrar" (`src/components/admin/AdminArea`), o botão "Lançar sorteio da rodada" não age e os itens de "Decisões pendentes" não abrem a decisão: o sorteio entra com a spec do fluxo do sorteio, e as decisões com a issue "Decisões do admin".
-
-## Regras gerais
-
-- Não instalar dependências sem justificativa clara
-- Preferir soluções nativas do Next.js e Supabase
-- Sempre tipar dados que vêm do Supabase
-- Tratar erros de forma amigável para o usuário
-- Testar fluxos em mobile antes de desktop
-- Documentar processo para portfolio
+Skills em `.claude/skills/`: `/pegar-issue` e `/orquestrar` (fluxo dos agentes); de UI, `revisar-interface`, `movimento`, `polir-interface`, `mobile-nativo` e `decisoes-mobile` (cada `description` diz quando roda).

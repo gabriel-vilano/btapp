@@ -10,7 +10,7 @@ Como o jogador lança o resultado (sets, tiebreak, super tiebreak, W.O., desist�
 ## Resumo
 
 - **O Mobbin não tem nenhum fluxo de entrada de placar de esporte de raquete.** Em 4 buscas (fluxo de placar, steppers, cartão de golfe, aprovação) apareceram só análogos: registro manual de treino (Strava, Peloton, Centr, Ladder), steppers de quantidade e cartões de aprovação. A referência de domínio vem da **documentação do Playtomic**, lida na íntegra.
-- **O Playtomic resolve a confirmação com a regra "valida sozinho em 24h, ou na hora se um adversário aceitar"** (**documentado**). É a mesma regra dos rankings no LetzPlay atual registrada no `DISCOVERY.md` (lança → adversário aprova → auto em 24h).
+- **O Playtomic resolve a confirmação com a regra "valida sozinho em 24h, ou na hora se um adversário aceitar"** (**documentado**). É a mesma regra dos rankings no incumbente registrada no `DISCOVERY.md` (lança → adversário aprova → auto em 24h).
 - **O Playtomic valida o set pelo placar** e classifica cada set como inválido, completo ou incompleto (**documentado**). É um modelo pronto de regra de validação inline.
 - **Cartões de aprovação com prazo explícito** são um padrão maduro fora do esporte (Instacart, Fiverr, Retro, Revolut Business): ação dupla (aprovar/recusar), **o que acontece se ninguém responder** escrito no card, e linha do tempo do pedido.
 
@@ -151,4 +151,4 @@ Primeira pergunta: **como terminou?** "Vitória · Derrota · W.O. · Desistênc
 2. A pontuação do ranking depende **só do resultado** ou do **placar** (games, sets)? Isso decide se o placar pode ser opcional (caminho C).
 3. Qual formato de set o MVP suporta: set único até 6, melhor de 3 com super tiebreak, pro set até 9? Um por ranking?
 4. Contestação no MVP: só "recusar" (volta para quem lançou) ou disputa com motivo e mediação do organizador?
-5. Prazo de auto-confirmação: 24h fixo (como o Playtomic e o LetzPlay atual) ou definido pelo organizador?
+5. Prazo de auto-confirmação: 24h fixo (como o Playtomic e o incumbente) ou definido pelo organizador?

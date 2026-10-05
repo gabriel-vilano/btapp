@@ -1,4 +1,4 @@
-# Síntese do discovery com técnicas de UX — LetzPlay
+# Síntese do discovery com técnicas de UX
 
 A pesquisa de mesa do discovery (mercado, aprofundamento, organizadores, referências visuais) reorganizada em 8 artefatos clássicos de UX, mais uma proposta de ajuste na pesquisa do Tally. O objetivo é **organizar a evidência e preparar a validação com pessoas reais**, não decidir o produto.
 
@@ -16,7 +16,7 @@ Síntese feita em 25/09/2026, sem pesquisa nova: todo o insumo já estava coleta
 | --- | --- | --- | --- |
 | 1 | [`01-mapa-suposicoes.md`](01-mapa-suposicoes.md) | Assumption mapping (David Bland) | Em que o produto está apostando sem saber, e o que é mais arriscado? **Comece por aqui** |
 | 2 | [`02-arvore-oportunidades.md`](02-arvore-oportunidades.md) | Opportunity Solution Tree (Teresa Torres) | Que resultado buscamos, que dores e desejos levam a ele, e que soluções o mercado já tentou? |
-| 3 | [`03-forcas-progresso.md`](03-forcas-progresso.md) | Forças do progresso (Bob Moesta, JTBD) | O que empurra o jogador e o organizador para longe do WhatsApp, da planilha e do LetzPlay atual, e o que os segura? |
+| 3 | [`03-forcas-progresso.md`](03-forcas-progresso.md) | Forças do progresso (Bob Moesta, JTBD) | O que empurra o jogador e o organizador para longe do WhatsApp, da planilha e do incumbente, e o que os segura? |
 | 4 | [`04-mapa-do-job.md`](04-mapa-do-job.md) | Job map (Tony Ulwick) | Quais são as etapas de "competir em Beach Tennis" e onde dói em cada uma? |
 | 5 | [`05-service-blueprint.md`](05-service-blueprint.md) | Service blueprint | Num fim de semana de torneio, o que o jogador vê, o que o organizador faz por trás, e onde quebra? |
 | 6 | [`06-proto-personas.md`](06-proto-personas.md) | Proto-personas comportamentais | Que arquétipos de comportamento aparecem na evidência, e o que falta validar em cada um? |
@@ -57,14 +57,14 @@ Os arquivos de origem estão em PRs abertos. Os links relativos destes artefatos
 | `DSC` | [`docs/DISCOVERY.md`](../../DISCOVERY.md) | `docs/prd-11-mapa-oportunidades` (#23) | Primeiro mapa de oportunidades; hipóteses H1–H6 e riscos R1–R3 |
 | `MER` | [`SINTESE.md`](../SINTESE.md) | `docs/prd-13-discovery-mercado` (#26) | Top 10 oportunidades do jogador (O1–O10) e riscos RS1–RS6 |
 | `MAT` | [`MATRIZ_FEATURES.md`](../MATRIZ_FEATURES.md) | idem | Matriz de features por JTBD, table stakes, lacunas L1–L12 |
-| `VOZ` | [`VOZ_DO_USUARIO.md`](../VOZ_DO_USUARIO.md) | idem | Reviews de loja, Reclame Aqui e Reddit por JTBD |
+| `VOZ` | voz do usuário (evidência: documento D1 ("Evidência: voz do usuário e reclamações"), projeto Discovery e estratégia no Linear) | idem | Reviews, reclamações públicas e Reddit por JTBD |
 | `PUB` | [`PUBLICO.md`](../PUBLICO.md) | idem | Perfil, gasto, atores; hipóteses de perfil HP1–HP10 |
 | `CON` | [`CONCORRENTES.md`](../CONCORRENTES.md) | idem | Concorrentes do jogador e do organizador |
-| `NEG` | [`NEGOCIO.md`](../NEGOCIO.md) | idem | Modelos de receita do segmento |
+| `NEG` | modelos de negócio (evidência: documento D3 ("Estratégia de negócio: modelos de monetização"), projeto Discovery e estratégia no Linear) | idem | Modelos de receita do segmento |
 | `APR` | [`aprofundamento/README.md`](../aprofundamento/README.md) | `docs/prd-15-discovery-aprofundamento` (#28) | O que muda no top 10; correções à pesquisa anterior |
-| `VZA` | [`aprofundamento/VOZ_AMPLIADA.md`](../aprofundamento/VOZ_AMPLIADA.md) | idem | Modo de falha da confirmação pelo adversário |
+| `VZA` | voz ampliada (evidência: documento D1 ("Evidência: voz do usuário e reclamações"), projeto Discovery e estratégia no Linear) | idem | Modo de falha da confirmação pelo adversário |
 | `RAT` | [`aprofundamento/RATING.md`](../aprofundamento/RATING.md) | idem | Rating × ranking por pontos; regras CBT |
-| `TDN` | [`aprofundamento/TEARDOWN.md`](../aprofundamento/TEARDOWN.md) | idem | Ranketes e LetzPlay v10 fluxo por fluxo |
+| `TDN` | teardown (evidência: documento D2 ("Evidência: concorrentes e incumbente (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear) | idem | Ranketes e o incumbente (v10) fluxo por fluxo |
 | `RIN` | [`aprofundamento/REFERENCIAS_INTERNACIONAIS.md`](../aprofundamento/REFERENCIAS_INTERNACIONAIS.md) | idem | Como DUPR, Playtomic, Strava e UTR cresceram |
 | `ORG` | [`organizadores/SINTESE.md`](../organizadores/SINTESE.md) | `docs/prd-16-dores-organizadores` (#30) | 5 dores fortes do organizador; riscos RO1–RO5 |
 | `DOR` | [`organizadores/DORES.md`](../organizadores/DORES.md) | idem | Dores D1–D9 com evidência e gambiarras |
@@ -74,7 +74,7 @@ Os arquivos de origem estão em PRs abertos. Os links relativos destes artefatos
 | `REF` | [`referencias/`](../referencias/README.md) | `docs/prd-14-referencias-visuais` (#27) | Padrões de UI por superfície (ranking, feed, navegação…) |
 | `TLY` | Formulário do Tally "Beach Tennis competitivo: como você joga e acompanha" (`q46Jk8`) | — | Rascunho com 24 perguntas e 0 respostas em 25/09/2026. Lido, não editado |
 
-Uma citação como `MER O3` quer dizer "oportunidade 3 do `SINTESE.md` de mercado"; `DOR D1` é a dor D1 do `DORES.md`; `DSC H2` é a hipótese H2 do `DISCOVERY.md`.
+Uma citação como `MER O3` quer dizer "oportunidade 3 do `SINTESE.md` de mercado"; `DOR D1` é a dor D1 do `DORES.md`; `DSC H2` é a hipótese H2 do `DISCOVERY.md`. Os códigos das fontes de organizadores (`RA1`, `YT1`, `REG1`, `AS1`…) resolvem no documento D5 ("Fontes e ferramentas dos organizadores"), projeto Discovery e estratégia no Linear.
 
 ### Escala de força
 
@@ -89,8 +89,8 @@ A mesma de todo o discovery, para que os números conversem:
 
 ### Limites que valem para todos os artefatos
 
-- **Não há entrevista com jogador nem com organizador.** A voz do BT brasileiro na amostra é pequena (o Reclame Aqui do LetzPlay tem 5 reclamações no total; o Reddit do BT fala de raquete). Toda persona, força e classificação de Kano aqui é hipótese.
-- **Não há dado de uso do LetzPlay atual.** É a fonte que mais mudaria estes artefatos.
+- **Não há entrevista com jogador nem com organizador.** A voz do BT brasileiro na amostra é pequena (as reclamações públicas contra o incumbente são poucas; o Reddit do BT fala de raquete). Toda persona, força e classificação de Kano aqui é hipótese.
+- **Não há dado de uso do incumbente.** É a fonte que mais mudaria estes artefatos.
 - **A voz de fora do BT pesa muito** (DUPR, UTR, Playtomic). Onde uma conclusão depende dela, o artefato marca.
 - **A síntese não acrescenta fatos.** Onde um artefato diz algo que não está nas fontes, está marcado como *inferência*.
 
@@ -103,12 +103,12 @@ Consolidadas dos 8 artefatos. As perguntas das pesquisas de origem não se repet
 O Gabriel respondeu em 25/09. Em 26/09, com a decisão de não fazer pesquisa com usuários por agora, as perguntas 3, 5, 6, 7 e 8 ficaram **suspensas**, não descartadas: as respostas já dadas valem quando a pesquisa voltar. As perguntas 1 e 2 continuam valendo como decisões de produto.
 
 1. **Qual formato de competição a síntese deve tomar como principal: ranking de arena ou torneio?** O mapa do job (4) e o blueprint (5) mostram que quem lança o resultado, quem avisa o horário e onde nasce a dor mudam por completo entre os dois. Refina a pergunta 1 do `DSC` e a 4 do `ORG`.
-   - **Decidido (25/09):** os dois, com peso igual. O ranking de arena do LetzPlay não é a escada de desafio descrita na evidência: segue **temporada → rodadas → sorteio dos confrontos lançado pelo admin do ranking**, como decidido na spec de entidades e relações do domínio.
+   - **Decidido (25/09):** os dois, com peso igual. O ranking de arena do produto não é a escada de desafio descrita na evidência: segue **temporada → rodadas → sorteio dos confrontos lançado pelo admin do ranking**, como decidido na spec de entidades e relações do domínio.
 2. **Qual é o resultado desejado (outcome) da árvore de oportunidades?** A árvore (2) propõe três candidatos: R1 resultado confiável, R2 retorno do jogador, R3 tarefa do dia sem atrito. Torres pede **um** outcome por árvore; escolher é decisão de produto.
    - **Decidido (25/09):** R3, tarefa do dia sem atrito (galhos A e G). R1 e R2 ficam fora desta árvore, não descartados.
 3. **A persona do organizador entra no escopo da pesquisa com pessoas reais, mesmo com a visão do organizador fora do MVP?** O blueprint (5) e as forças (3) mostram que a suposição mais arriscada do mapa (`S3`, alguém lança o resultado a tempo) depende do organizador, e duas das que a evidência já derrubou em parte (`S13` e `S22`) também. O roteiro de entrevista com organizador já existe (`RTE`).
    - **Respondida (25/09), suspensa (26/09):** não, por agora. O foco é o jogador; organizadores entram numa rodada futura. Sem eles, `S3` segue sem teste direto no formato torneio, e o R3 escolhido não depende dela.
-4. **O professor-organizador é uma persona à parte?** Aparece na evidência de arena (`ARE`) e no vídeo de organizadoras (`JOR`), e a proto-persona P5 (6) o descreve. Nenhum JTBD do `CLAUDE.md` o cobre.
+4. **O professor-organizador é uma persona à parte?** Aparece na evidência de arena (`ARE`) e no vídeo de organizadoras (`JOR`), e a proto-persona P5 (6) o descreve. Nenhum JTBD do `docs/PRODUCT.md` o cobre.
    - **Adiado (25/09):** fica como hipótese.
 5. **Quais suposições entram na primeira rodada de validação?** O plano (8) ordena pelo risco, mas quantas entrevistas cabem antes do beta, e com quem, é escolha de tempo e acesso.
    - **Suspensa (26/09)** sem resposta.

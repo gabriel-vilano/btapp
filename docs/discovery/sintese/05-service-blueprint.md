@@ -49,7 +49,7 @@ sequenceDiagram
   J->>P: Inscreve a dupla na categoria
   P->>F: Cobra os dois (gateway, boleto ou PIX)
   note over J,P: ⚠ F1 · um da dupla não paga em 48h
-  note over P,O: ⚠ F2 · "paguei e a arena não recebeu"
+  note over P,O: ⚠ F2 · pagou e a arena não recebeu
   O->>O: Confere pagamentos, remove inadimplente à mão
   O->>O: Checa categoria (foto no WhatsApp, outra plataforma)
   note over O: ⚠ F3 · categoria contestada
@@ -101,7 +101,7 @@ Cada coluna é uma fase. As células vêm das fontes indicadas; o que é inferê
 | *linha de visibilidade* | | | | |
 | **Bastidores** | Confere pagamentos; remove inadimplente à mão; verifica categoria com foto e outra plataforma; dimensiona quadras e equipe (`JOR` 1.1; `DOR D1`, `D2`) | Sorteia chave com cabeças de chave; monta programação; descobre tamanho de camisa no WhatsApp (`JOR` 1.1) | Monta quadras e kits; compra frutas; troca formato por clima; anota súmula em papel (`JOR` 1.2) | Lança resultado das súmulas; finaliza no sistema; emite nota fiscal; decide reembolso e impugnação (`JOR` 1.3) |
 | *linha de interação interna* | | | | |
-| **Suporte** | Plataforma de inscrição (LetzPlay, Tênis Integrado, app de circuito); gateway, boleto, PIX na chave do organizador; federação homologa (`APR`, achado 2) | Plataforma gera a chave; grupo de WhatsApp; planilha para formatos que a plataforma não cobre (`DOR D9`) | Sistema de som; rádio comunicador; WhatsApp; formulário de denúncia (`JOR` 1.2) | Plataforma; federação (repasse de 80%, multa se não divulgar patrocinador); Reclame Aqui como canal de fato (`JOR` 1.3) |
+| **Suporte** | Plataforma de inscrição (o incumbente, Tênis Integrado, app de circuito); gateway, boleto, PIX na chave do organizador; federação homologa (`APR`, achado 2) | Plataforma gera a chave; grupo de WhatsApp; planilha para formatos que a plataforma não cobre (`DOR D9`) | Sistema de som; rádio comunicador; WhatsApp; formulário de denúncia (`JOR` 1.2) | Plataforma; federação (repasse de 80%, multa se não divulgar patrocinador); reclamação pública como canal de fato (`JOR` 1.3) |
 | **Pontos de falha** | F1, F2, F3 | F4 | F5, F6, F7 | F8, F9, F10 |
 
 ---
@@ -113,17 +113,17 @@ Ordenados pela fase. "Custo para o jogador" é o que a evidência mostra acontec
 | # | Falha | Faixa onde nasce | Custo para o jogador | Evidência | Força |
 | --- | --- | --- | --- | --- | --- |
 | F1 | Um da dupla não paga no prazo | Suporte (dois pagamentos) | Inscrição cancelada; "deverá ser refeita pelos atletas sob suas inteiras responsabilidades" | `DOR D2` (REG1, RA3) | Forte |
-| F2 | Pagamento feito e não reconhecido | Suporte (gateway × PIX × comprovante) | Cobrança indevida; "Fiz o pagamento pelo App e a Arena não recebeu!" | `DOR D2` | Forte |
-| F3 | Categoria contestada, antes ou depois | Bastidores (checagem manual) | Jogo desequilibrado; desclassificação ("mais de 25 pessoas"); vaga em Finals perdida; processo | `DOR D1` | Forte |
+| F2 | Pagamento feito e não reconhecido | Suporte (gateway × PIX × comprovante) | Cobrança indevida; pagamento pelo app que não chega à arena | `DOR D2` | Forte |
+| F3 | Categoria contestada, antes ou depois | Bastidores (checagem manual) | Jogo desequilibrado; desclassificação de mais de 25 pessoas; vaga em Finals perdida; processo | `DOR D1` | Forte |
 | F4 | Pedido de troca de parceiro sem resposta | Palco (WhatsApp, e-mail) | Duas semanas sem resposta a 5 dias do torneio | `DOR D3` (RA6) | Forte |
 | F5 | Mudança de programação que não chega | Suporte (grupo, e-mail) | W.O., jogo perdido | `MER O3`; `DOR D4` | Forte |
 | F6 | Chamada por som não ouvida | Palco (som, voz) | W.O. em 15 min, mantido mesmo "que haja comum acordo" | `JOR` 1.2 (REG1); `MER O3` | Forte |
 | F7 | Atraso e clima empurram jogos para a noite | Bastidores (programação) | Jogo tarde da noite; formato trocado no meio | `JOR` 1.2 | Forte (regra); inferência (frequência) |
-| F8 | Resultado lançado tarde | Bastidores (súmula em papel → sistema) | Ranking parado; histórico incompleto; "2 meses e os jogos ainda estão pendentes" | `DOR D6`; `MER O1` | Forte (consequência); Fraca (causa) |
+| F8 | Resultado lançado tarde | Bastidores (súmula em papel → sistema) | Ranking parado; histórico incompleto; jogos pendentes há meses | `DOR D6`; `MER O1` | Forte (consequência); Fraca (causa) |
 | F9 | Posição muda depois do evento, sem explicação | Bastidores (impugnação, desclassificação, bônus) | Não entende a conta; perde vaga sem saber por quê | `ORG`, O4; `APR`, O4 | Média |
-| F10 | Protocolo sem resposta | Palco (canal de suporte) | "Cinco protocolos sem resposta em 7 dias"; o jogador vai ao Reclame Aqui ou à Justiça | `DOR D1`, `D4` (RA4) | Média |
+| F10 | Protocolo sem resposta | Palco (canal de suporte) | Vários protocolos sem resposta em uma semana; o jogador vai à reclamação pública ou à Justiça | `DOR D1`, `D4` (RA4) | Média |
 
-Um ponto de falha **transversal**, que atravessa as quatro fases: **não há responsável visível**. "Não havia nenhum responsável pelo evento no local" (`JOR` 1.2, RA3, relato único). E, fora do local, a cadeia de responsabilidade devolve a questão ao jogador (`DOR`, "a cadeia de responsabilidade").
+Um ponto de falha **transversal**, que atravessa as quatro fases: **não há responsável visível**. Um jogador relata que não havia responsável pelo evento no local (`JOR` 1.2, RA3, relato único). E, fora do local, a cadeia de responsabilidade devolve a questão ao jogador (`DOR`, "a cadeia de responsabilidade").
 
 ---
 
@@ -140,7 +140,7 @@ Um ponto de falha **transversal**, que atravessa as quatro fases: **não há res
 
 Mais simples, contínuo e com outro dono do resultado. Resumo a partir do `JOR` 2 (dois regulamentos lidos na íntegra).
 
-> Descreve o mercado, não o LetzPlay. O LetzPlay não modela a escada de desafio: o ranking dele segue temporada → rodadas → sorteio dos confrontos lançado pelo admin do ranking (spec de entidades e relações do domínio).
+> Descreve o mercado, não o produto. O produto não modela a escada de desafio: o ranking dele segue temporada → rodadas → sorteio dos confrontos lançado pelo admin do ranking (spec de entidades e relações do domínio).
 
 ```mermaid
 sequenceDiagram
@@ -156,7 +156,7 @@ sequenceDiagram
   note over A,B: ⚠ sem resposta em 1 semana, W.O.
   A->>B: Jogam na quadra reservada
   A->>W: Informa o placar com as parciais
-  note over W,G: ⚠ "o gestor não atualiza"
+  note over W,G: ⚠ gestor que não atualiza
   G->>G: Atualiza a página do ranking
 ```
 
@@ -167,5 +167,5 @@ sequenceDiagram
 ## Limites
 
 - **É o blueprint de um torneio federado estadual**, o de regra mais completa. O torneio amador de arena sem chancela tem menos passos no suporte (sem federação, sem repasse) e provavelmente mais WhatsApp. É inferência.
-- **Nenhum organizador foi entrevistado nem observado.** Os bastidores vêm de regulamento, de um vídeo de organizadoras e de respostas no Reclame Aqui. A observação num torneio (*contextual inquiry*) do [`08-plano-validacao.md`](08-plano-validacao.md) é a forma de conferir este blueprint.
+- **Nenhum organizador foi entrevistado nem observado.** Os bastidores vêm de regulamento, de um vídeo de organizadoras e de respostas a reclamações públicas. A observação num torneio (*contextual inquiry*) do [`08-plano-validacao.md`](08-plano-validacao.md) é a forma de conferir este blueprint.
 - **Tempos por etapa não foram medidos.** O único número é o dia de 12 a 15 horas das organizadoras do vídeo (`JOR`).

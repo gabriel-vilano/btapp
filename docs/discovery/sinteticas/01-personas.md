@@ -4,7 +4,7 @@
 
 > **[sintético]** Tudo neste arquivo é um perfil para ensaiar instrumentos. As personas não existem. O contexto concreto de cada uma (cidade, categoria, ferramenta, regra) vem de uma fonte do discovery, citada na linha; o que foi inventado para completar o perfil está na lista **Inferido**.
 
-Códigos de fonte: os da síntese (`PUB`, `MER`, `JOR`, `DOR`, `ARE` etc.) e os de organizadores (`REG1` a `REG4`, `YT1`, `RA3`, `ACAD1` etc.). A tabela completa está no `README.md` da síntese (`docs/discovery/sintese/README.md`, PR #31) e no `FONTES.md` de organizadores (PR #30).
+Códigos de fonte: os da síntese (`PUB`, `MER`, `JOR`, `DOR`, `ARE` etc.) e os de organizadores (`REG1` a `REG4`, `YT1`, `RA3`, `ACAD1` etc.). A tabela completa está no `README.md` da síntese (`docs/discovery/sintese/README.md`, PR #31) e, para os códigos de organizadores, no Linear (evidência: documento D5 ("Fontes e ferramentas dos organizadores"), projeto Discovery e estratégia no Linear).
 
 ---
 
@@ -131,7 +131,7 @@ Mapa das personas de jogador pelo caminho que devem seguir no Tally. Cobrir os q
 
 | | |
 | --- | --- |
-| **Base** | Não-público do `CLAUDE.md` ("quem não compete não tem motivo para usá-lo") |
+| **Base** | Não-público do `docs/PRODUCT.md` ("quem não compete não tem motivo para usá-lo") |
 | **Onde** | Porto Alegre (RS), aula em grupo num clube |
 | **Categoria** | Não sabe. "Intermediário", segundo o professor |
 | **Rotina** | Aula 2 vezes por semana; joga o "rei da quadra" de sexta na arena com a turma, com placar numa lousa |

@@ -1,6 +1,6 @@
-# LetzPlay
+# BT App
 
-Redesign focado em Beach Tennis do app LetzPlay — plataforma de gestão de rankings, torneios e comunidade de esportes de raquete.
+Plataforma de gestão de rankings, torneios e comunidade de esportes de raquete, com foco no jogador competitivo de Beach Tennis. Pensada a partir do que as plataformas existentes fazem, propõe otimizações nos fluxos do jogador, funcionalidades novas e, potencialmente, objetivos de mercado novos.
 
 > Side project com três objetivos simultâneos: portfolio de Design Engineer, produto real para lançamento, aprendizado técnico prático.
 
@@ -12,7 +12,7 @@ Next.js 16 (App Router) · TypeScript 5 · React 19 · CSS Modules + Custom Prop
 
 ```bash
 git clone <repo-url>
-cd letzplay
+cd <repo>
 npm install
 cp .env.example .env.local
 # preencher .env.local com as credenciais do Supabase
@@ -65,7 +65,8 @@ Nunca coloque a secret key (`sb_secret_…`) nem a `service_role` numa variável
 
 | Documento              | Conteúdo                                                                                |
 | ---------------------- | --------------------------------------------------------------------------------------- |
-| `CLAUDE.md`            | Convenções, padrões de código, hurdles, filosofia de documentação. Onboarding completo |
+| `CLAUDE.md`            | Modo de trabalho, convenções, guardrails, hurdles que valem sempre e o mapa de docs. Onboarding completo |
+| `.claude/rules/`       | Regras por área (Storybook e MDX, componentes, ícones, CSS, Supabase, testes, patch do Next), carregadas pelo agente ao mexer nos arquivos da área |
 | `docs/PRODUCT.md`      | Visão do produto, escopo do MVP, princípios de design, métricas de sucesso              |
 | `docs/TOKENS.md`       | Design system: tokens primitivos, semânticos, padrões de implementação                  |
 | `docs/GIT_WORKFLOW.md` | Estrutura de branches, fluxo de PR, versionamento                                       |
@@ -75,8 +76,8 @@ Nunca coloque a secret key (`sb_secret_…`) nem a `service_role` numa variável
 
 ## Planejamento
 
-Tracking de execução no **Linear** (`linear.app/letzplay`). Decisões duráveis ficam em markdown no repo (`CLAUDE.md`, `docs/`).
+Tracking de execução fica no **Linear** (workspace privado). Decisões duráveis ficam em markdown no repo (`CLAUDE.md`, `docs/`).
 
 ## Hurdles conhecidos
 
-Problemas resolvidos e seus workarounds estão no `CLAUDE.md`, seção "Common hurdles". Atualizar sempre que resolver algo não-óbvio.
+Problemas resolvidos e seus workarounds: os que valem sempre estão no `CLAUDE.md`, seção "Armadilhas que valem sempre"; os de uma área, na regra dela em `.claude/rules/`. Atualizar sempre que resolver algo não-óbvio.

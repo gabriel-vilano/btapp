@@ -1,8 +1,8 @@
-# GIT_WORKFLOW.md — LetzPlay
+# GIT_WORKFLOW.md
 
 Guia de workflow Git do projeto. Define estrutura de branches, fluxo de trabalho, versionamento e boas práticas.
 
-> Convenções de commits (prefixos, formato, idioma) estão no `CLAUDE.md`, seção "Commits".
+> Convenções de commits (prefixos, formato, idioma) estão no `CLAUDE.md`, seção "Convenções de código".
 
 ---
 
@@ -159,14 +159,20 @@ git push origin v0.1.0
 
 O repositório é **público** — requisito para que rulesets sejam aplicados sem plano pago do GitHub, e coerente com o objetivo de portfolio. Por ser público, **nunca commitar segredos**: `.env*` fica no `.gitignore`, só o `.env.example` (vazio) é versionado.
 
-Ruleset `master` (Settings → Rules → Rulesets), aplicado à branch padrão:
+Dois rulesets (Settings → Rules → Rulesets) protegem a branch padrão, e o bypass de um não vale para o outro.
+
+Ruleset `master`, o portão de qualidade:
 
 - **Require a pull request before merging** — sem push direto na `master`
 - **Require status checks to pass** — `Lint, testes e build`, `Stories (Storybook + a11y)` e `E2E (Playwright + Supabase local)`
-- **Block force pushes** e **Restrict deletions** — protegem o histórico
 - **Require branches to be up to date:** ativado. Com vários agentes em paralelo, cada PR passa na CI completa (E2E incluído) sobre o `master` atual antes do merge: o que foi testado é exatamente o que entra, e migrations de PRs diferentes são testadas juntas antes de chegar ao Supabase. O custo é que os merges viram fila: cada PR depois do primeiro espera uma rodada de CI (~3 min). O fluxo está em "Pull requests" > "Merge"
 - **Require reviews:** desativado (projeto solo — a CI é o portão de qualidade)
-- **Bypass list:** só o admin do repositório, para emergências
+- **Bypass list:** só o admin do repositório, para emergências. O bypass deste ruleset deixa o admin pular o PR e os checks, e nada mais
+
+Ruleset `project-master`, a proteção do histórico:
+
+- **Block force pushes** e **Restrict deletions**
+- **Sem bypass:** nem o admin faz force push nem apaga a `master`
 
 Se um check novo for adicionado à CI, incluí-lo também na lista de checks obrigatórios do ruleset.
 

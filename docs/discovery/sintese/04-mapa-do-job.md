@@ -4,7 +4,7 @@ As etapas do trabalho que o jogador competitivo tenta fazer, **independentes de 
 
 Técnica: *job map* do *Outcome-Driven Innovation*, de Tony Ulwick (*Jobs to Be Done: Theory to Practice*, 2016). Códigos de fonte no [`README.md`](README.md).
 
-> **Sem decisões de produto.** O mapa descreve o trabalho do jogador. Não diz em qual etapa o LetzPlay deve atuar.
+> **Sem decisões de produto.** O mapa descreve o trabalho do jogador. Não diz em qual etapa o produto deve atuar.
 
 ---
 
@@ -53,7 +53,7 @@ flowchart LR
 
 **Legenda:** vermelho = etapa com dor de evidência **Forte**; amarelo = **Média**. A cor fala da força da evidência da dor, não do tamanho dela.
 
-**Correspondência com os JTBDs do `CLAUDE.md`:**
+**Correspondência com os JTBDs do `docs/PRODUCT.md`:**
 
 | JTBD | Etapas do mapa |
 | --- | --- |
@@ -71,7 +71,7 @@ As etapas 4, 5 e 7 **não têm JTBD próprio** e são justamente três das cinco
 
 O mapa muda de dono conforme o formato. O [`05-service-blueprint.md`](05-service-blueprint.md) detalha o torneio.
 
-A coluna de ranking de arena descreve a **escada de desafio** observada na evidência (`JOR` 2). O LetzPlay não modela a escada de desafio: o ranking dele segue temporada → rodadas → sorteio dos confrontos lançado pelo admin do ranking (spec de entidades e relações do domínio).
+A coluna de ranking de arena descreve a **escada de desafio** observada na evidência (`JOR` 2). O produto não modela a escada de desafio: o ranking dele segue temporada → rodadas → sorteio dos confrontos lançado pelo admin do ranking (spec de entidades e relações do domínio).
 
 | Etapa | Ranking de arena (escada de desafio, na evidência) | Torneio |
 | --- | --- | --- |
@@ -122,7 +122,7 @@ O jogador decide o que disputar, em que categoria e com quem.
 | Dor | Evidência | Força |
 | --- | --- | --- |
 | A inscrição só vale quando os dois da dupla pagam; pendência vira cancelamento em 48h | `DOR D2`; `JOR` 1.1 | Forte |
-| "Fiz o pagamento pelo App e a Arena não recebeu!" | `DOR D2` (Reclame Aqui) | Forte |
+| Jogador paga pelo app e a arena não recebe | `DOR D2` (reclamação pública) | Forte |
 | Inscrição federada explicada em 10 passos | `DOR D2` (REG4) | Forte (regra) |
 | Não dá para confiar no nível do adversário; perfis duplicados | `MER O2`; `DOR D1` | Forte |
 | Jogadores olham os perfis dos inscritos antes de se inscrever | `DOR D1` (RA2) | Média |
@@ -140,7 +140,7 @@ O jogador decide o que disputar, em que categoria e com quem.
 | --- | --- | --- |
 | O regulamento põe no atleta a responsabilidade de acompanhar chave e horário | CBT 2026, FCTBT (`DSC` 1.1) | Forte (regra) |
 | A programação muda por clima e atraso; o aviso vai pelo grupo | `DOR D4`, `D5` | Forte |
-| "O app não notifica por push, somente por e-mail" | LetzPlay (`MER O3`) | Forte |
+| O app avisa só por e-mail, sem push | Incumbente (`MER O3`) | Forte |
 | No ranking de arena, marcar o jogo é uma negociação no WhatsApp com 3 opções de horário | `JOR` 2 (REG2) | Forte (regra); dor inferida |
 
 | ID | Resultado desejado |
@@ -170,7 +170,7 @@ O jogador decide o que disputar, em que categoria e com quem.
 | O perdedor recusa o placar, e ninguém arbitra | `VZA`, seção 1 | Forte (fora do BT) |
 | A conta está espalhada: tabela numa aba, total noutra, bônus comerciais | `APR`, O4 | Forte (oferta) |
 | Desclassificação e impugnação mudam a posição depois do evento | `ORG`, O4 (RA4) | Média |
-| "Mais que 3 cliques pra ver informação simples" | `MER O6` | Forte |
+| Informação simples exige cliques demais | `MER O6` | Forte |
 
 | ID | Resultado desejado |
 | --- | --- |

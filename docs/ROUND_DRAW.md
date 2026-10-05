@@ -1,4 +1,4 @@
-# ROUND_DRAW.md — LetzPlay
+# ROUND_DRAW.md
 
 Spec do fluxo do sorteio da rodada: o que o admin vê antes de sortear, o que acontece quando o sorteio não fecha, o resultado, o que cada jogador recebe e se o sorteio pode ser desfeito.
 

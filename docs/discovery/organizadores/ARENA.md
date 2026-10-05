@@ -1,6 +1,6 @@
 # ARENA.md — Como a competição se encaixa no negócio da arena
 
-Pergunta 5 da issue: ocupação de quadra, aulas, day use, eventos. Pesquisa feita em 25/09/2026. Códigos de fonte em [`FONTES.md`](FONTES.md).
+Pergunta 5 da issue: ocupação de quadra, aulas, day use, eventos. Pesquisa feita em 25/09/2026. Os códigos de fonte (`ACAD1`, `N1`, `REG2`…) resolvem fora do repo (evidência: documento D5 ("Fontes e ferramentas dos organizadores"), projeto Discovery e estratégia no Linear).
 
 > **Sem decisões de produto.** A evidência de arena é mais fraca que a de torneio: duas pesquisas acadêmicas com visitas e entrevistas (uma arena no interior do Ceará; dez arenas no Nordeste e em SP), uma reportagem de 2021 e o software de uma academia. Não houve relato direto de dono de arena sobre ranking interno.
 
@@ -26,7 +26,7 @@ Pergunta 5 da issue: ocupação de quadra, aulas, day use, eventos. Pesquisa fei
 | Planos | Trimestral com aula 2×/semana + day use no fim de semana; plano família; plano *kids*; preço menor para aluno | ACAD2 | Acadêmico |
 | Bar e restaurante | 70% do faturamento numa arena; "o mais caro não são as quadras, mas a infraestrutura do entorno" em outra | ACAD1, N1 | Acadêmico, N |
 | Publicidade nos eventos | Placas e *banners* nas laterais com "cobrança de mensalidades ... prática comum em todas as arenas visitadas" | ACAD2 | Acadêmico |
-| Inscrição de torneio | R$ 50–80 por categoria em arenas no LetzPlay; torneio de R$ 60 num sistema de academia | `NEGOCIO.md`; GH #69 | Resumo; PC |
+| Inscrição de torneio | R$ 50–80 por categoria em arenas que usam o incumbente; torneio de R$ 60 num sistema de academia | Evidência: documento D3 ("Estratégia de negócio: modelos de monetização"), projeto Discovery e estratégia no Linear; GH #69 | Resumo; PC |
 | Loja, fisioterapia, eventos corporativos | Citados em reportagens | N1; `MERCADO.md` | N |
 
 ---
@@ -56,7 +56,7 @@ Pergunta 5 da issue: ocupação de quadra, aulas, day use, eventos. Pesquisa fei
 | *Benchmarking* | Donos vão aos torneios de outras arenas para ver práticas | ACAD2 | Acadêmico |
 | Professor que compete | Professores que jogam campeonatos são estratégia de marketing da arena | ACAD2 | Acadêmico |
 | Ranking que soma o torneio da casa | Torneios da arena têm "selo" de pontos (100, 250, 500) e entram no mesmo ranking dos desafios | REG3 | REG |
-| Evento dentro de casa em vez de oficial | Gestora de arena com centro de treinamento deixou de organizar eventos oficiais em 2024: "Optei por organizar alguns eventos particulares apenas e eventos dentro da Arena" | N6 | N |
+| Evento dentro de casa em vez de oficial | Gestora de arena com centro de treinamento deixou de organizar eventos oficiais em 2024 e passou a fazer só eventos particulares e dentro da arena | N6 | N |
 | Posicionamento | 3 de 9 arenas concorrentes numa cidade eram "focadas em competição" | ACAD1 | Acadêmico |
 | Transparência do sorteio | Prefeitura transmitiu ao vivo a publicação das chaves de torneio municipal | N4 | N |
 
@@ -80,8 +80,8 @@ Pergunta 5 da issue: ocupação de quadra, aulas, day use, eventos. Pesquisa fei
 | Evidência | Fonte | Tipo |
 | --- | --- | --- |
 | Cidade de 23,7 mil habitantes com 10 arenas e 20 quadras em abril de 2024 | ACAD1 | Acadêmico |
-| Em 2021, um dono previu "seleção natural" das arenas: "só vão ficar as que oferecerem os melhores serviços e conseguirem reduzir custos" | N1 | N |
-| "Muitos empresários estão abrindo arenas e repassando para quem tem mais know-how. Eu mesmo já recebi duas propostas" (2021) | N1 | N |
+| Em 2021, um dono previu uma seleção natural das arenas: só ficariam as que oferecessem os melhores serviços e reduzissem custos | N1 | N |
+| Muitos empresários abrem arena e a repassam para quem tem mais know-how; o dono entrevistado já tinha recebido duas propostas (2021) | N1 | N |
 | Estabelecimentos com BT cresceram 43% em um ano (dado de jan/2026, sem método) | Resumo de busca | Fraca |
 
 ---
@@ -90,4 +90,4 @@ Pergunta 5 da issue: ocupação de quadra, aulas, day use, eventos. Pesquisa fei
 
 - **Para o dono de arena, a competição serve ao resto do negócio.** Torneio traz gente nova, fideliza aluno, vende placa e enche o bar. Isso muda o que ele espera de uma ferramenta de torneio: menos "ranking perfeito", mais "trazer gente e não dar trabalho" (inferência a confirmar nas entrevistas).
 - **O professor-organizador é um ator próprio.** Ele organiza torneio, dá aula, compete e é disputado entre arenas. As fontes o tratam às vezes como funcionário, às vezes como parceiro.
-- **A arena pequena e a de interior aparecem pouco nas outras fontes** (Reclame Aqui, regulamentos), mas é onde os dois estudos acadêmicos mostram mais pressão: preço caindo, capacidade ociosa, dono sobrecarregado.
+- **A arena pequena e a de interior aparecem pouco nas outras fontes** (reclamações públicas, regulamentos), mas é onde os dois estudos acadêmicos mostram mais pressão: preço caindo, capacidade ociosa, dono sobrecarregado.

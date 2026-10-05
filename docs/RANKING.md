@@ -1,4 +1,4 @@
-# RANKING.md — LetzPlay
+# RANKING.md
 
 Spec da tela de ranking: a classificação de uma categoria, como o jogador troca de categoria, como vê a própria posição e o quanto ela mudou, a linha de corte da final, a página da competição e os estados da classificação. Dá também os critérios de aceite do RankingRow e do ZoneDivider.
 
