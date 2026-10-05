@@ -2,9 +2,9 @@
 
 Perguntas 2 e 4 da issue: as dores e as gambiarras do organizador, e a relação dele com o jogador (o que o jogador cobra e ele não consegue entregar).
 
-Pesquisa feita em 25/09/2026. Códigos de fonte em [`FONTES.md`](FONTES.md); tipos e escala de força no [`README.md`](README.md).
+Pesquisa feita em 25/09/2026. Os códigos de fonte (`YT1`, `RA1`, `REG1`…) resolvem fora do repo (evidência: documento D5 ("Fontes e ferramentas dos organizadores"), projeto Discovery e estratégia no Linear), onde estão também os trechos originais das reclamações e dos depoimentos; aqui ficam paráfrases. Tipos e escala de força no [`README.md`](README.md). Os rótulos D1 a D9 deste arquivo são as dores, não os documentos do Linear.
 
-> **Sem decisões de produto.** Dores ranqueadas por força de evidência, não por prioridade. Uma dor forte pode não ser problema do LetzPlay resolver.
+> **Sem decisões de produto.** Dores ranqueadas por força de evidência, não por prioridade. Uma dor forte pode não ser problema do produto resolver.
 
 ---
 
@@ -18,7 +18,7 @@ Cada dor recebe os tipos de fonte que a sustentam. Tipos diferentes contam mais 
 | Pelo menos uma fonte 1P ou 2L **lida na íntegra** | Necessário para "Forte" |
 | Marketing (MKT) | Não conta para a força; aparece só como contexto |
 
-Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos grandes** (TF Sports) e da plataforma LetzPlay. O organizador pequeno de arena quase não aparece no Reclame Aqui. A dor dele vem de regulamento, de vídeo e do construtor de software (GH).
+Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos grandes** (TF Sports) e do incumbente. O organizador pequeno de arena quase não aparece nas reclamações públicas. A dor dele vem de regulamento, de vídeo e do construtor de software (GH).
 
 ---
 
@@ -44,23 +44,23 @@ Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos
 
 | Evidência | Tipo | Fonte |
 | --- | --- | --- |
-| "das categorias ... é o que também gera muito stress dentro dos torneios" | 1P | YT2 |
-| "essa questão de como avaliar o nível técnico de cada atleta amador ... sempre foi um desafio nosso" | 1P | YT2 |
-| Atleta que já jogou profissional aparece na B da Copa das Federações: "ele regrediu o ranking, ele jogou o regulamento correto. Como solucionar isso, essa é a grande questão ... eu ainda não consegui descobrir uma metodologia" | 1P | YT2 |
-| Verificação feita à mão: "tirei uma foto do rapaz, mandei no WhatsApp, liguei" | 1P | YT2 |
-| "são dados empíricos ... você não tem como fazer um controle específico nisso" | 1P | YT2 |
+| A categoria é o que mais gera estresse dentro dos torneios, segundo o diretor da federação | 1P | YT2 |
+| Avaliar o nível técnico de cada atleta amador sempre foi um desafio da federação | 1P | YT2 |
+| Atleta que já jogou profissional aparece na B da Copa das Federações, dentro do regulamento, porque o ranking dele regrediu; o diretor diz que ainda não achou um método para resolver isso | 1P | YT2 |
+| Verificação feita à mão: foto do atleta mandada no WhatsApp, seguida de ligação | 1P | YT2 |
+| Os dados são empíricos, e não há como fazer um controle específico | 1P | YT2 |
 | Regra anti-estratégia (top 4 sobe no ano seguinte) cria outra brecha: o atleta pode parar de jogar para não entrar no top 4 | 1P | YT2 |
 | Um torcedor acusou um professor de jogar fora da categoria, ofendeu, e foi retirado do torneio pela polícia a pedido da federação | 1P | YT2 |
-| Perfil duplicado para "driblar os organizadores de torneios nas inscrições em categorias abaixo do seu nível". Jogadores "analisam os perfis dos atletas já inscritos antes de se inscreverem" | 2L | RA2 |
-| Resposta da plataforma: a validação por CPF já existe, mas é **opção do gestor**; ficaria obrigatória num trimestre seguinte. "analisar apenas a quantidade de torneios ... não é um critério totalmente confiável" | 2L | RA2 |
-| Denúncia por link no grupo de WhatsApp, checada **em outra plataforma** (o LetzPlay) por um circuito que usa app próprio. "mais de 25 pessoas" desclassificadas como W.O. no mesmo torneio | 2L | RA3 |
-| Resposta do circuito: "a responsabilidade pela verificação do ranqueamento no momento da inscrição é do próprio atleta"; a dupla inteira cai se um dos dois está irregular | 2L | RA3 |
-| Impugnação 10 dias depois da etapa, com base em ranking ativo **em outra federação**. O título fica, a vaga nas Finals não. Atleta pede "direito à ampla defesa e ao contraditório" e vai à Justiça. Cinco protocolos sem resposta em 7 dias | 2L | RA4 |
+| Perfil duplicado para driblar os organizadores e se inscrever em categoria abaixo do próprio nível. Jogadores analisam os perfis dos inscritos antes de se inscrever | 2L | RA2 |
+| Resposta da plataforma: a validação por CPF já existe, mas é **opção do gestor**; ficaria obrigatória num trimestre seguinte. A própria plataforma admite que olhar só a quantidade de torneios não é critério confiável | 2L | RA2 |
+| Denúncia por link no grupo de WhatsApp, checada **em outra plataforma** (o incumbente) por um circuito que usa app próprio. Mais de 25 pessoas desclassificadas como W.O. no mesmo torneio | 2L | RA3 |
+| Resposta do circuito: verificar o ranqueamento na hora da inscrição é responsabilidade do atleta; a dupla inteira cai se um dos dois está irregular | 2L | RA3 |
+| Impugnação 10 dias depois da etapa, com base em ranking ativo **em outra federação**. O título fica, a vaga nas Finals não. Atleta pede direito de defesa e vai à Justiça. Cinco protocolos sem resposta em 7 dias | 2L | RA4 |
 | Atleta "em desacordo" com o regulamento "será automaticamente eliminado ... independente da fase da competição" | REG | REG1 |
 | Federação não conhece o nível de quem vem de outra federação: o atleta "deverá se inscrever nas categorias respectivas às federações de origem" | REG | REG4 |
 | Promoção obrigatória como remédio: FCTBT sobe o campeão da iniciante para a D; FPT sobe o top 4 | REG · 1P | REG4, YT2 |
 | Construtor de software trava o gênero na categoria ("Categoria masculino/feminino passa a travar o gênero na inscrição") e configura quais combinações de dupla o torneio aceita | PC | GH |
-| Lado do jogador: sandbagging e perfil duplicado em 4 apps; "compromete o equilíbrio dos torneios" | Voz (pesquisa de mercado) | `VOZ_DO_USUARIO.md` |
+| Lado do jogador: sandbagging e perfil duplicado em 4 apps, que desequilibram os torneios | Voz (pesquisa de mercado) | Evidência: documento D1 ("Evidência: voz do usuário e reclamações"), projeto Discovery e estratégia no Linear |
 
 **O que a evidência não diz:** quanto tempo o organizador gasta verificando nível antes do torneio. Nenhuma fonte mede.
 
@@ -72,18 +72,18 @@ Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos
 
 | Evidência | Tipo | Fonte |
 | --- | --- | --- |
-| "A inscrição só é confirmada quando os dois membros da dupla realizam o pagamento. Se houver irregularidade com um deles, a inscrição da dupla é comprometida" | 2L | RA3 |
+| A inscrição só se confirma quando os dois da dupla pagam; irregularidade com um deles compromete a inscrição da dupla | 2L | RA3 |
 | Inscrição lançada e não paga em 48h é cancelada e "deverá ser refeita pelos atletas sob suas inteiras responsabilidades" | REG | REG1 |
 | O regulamento precisa explicar a inscrição em 10 passos, incluindo "clique na lupa de busca de parceiro" e "imprimir boleto" | REG | REG4 |
 | Sistema de academia só cobrava quem fazia a inscrição: o parceiro "entrava de graça" em torneio pago | PC | GH #50 |
 | Torneio de R$ 60 com gateway conectado mas sem chave PIX virava **grátis** para todos; o mesmo erro já tinha acontecido no day use | PC | GH #69 |
 | Três caminhos de pagamento convivem: gateway, PIX na chave do torneio com **upload de comprovante**, e "pendente, o administrador confirma depois" | PC | GH #69 |
 | Mensagem de WhatsApp com a cobrança antes do link do torneio; comprovante recebido muda o status para "em análise" | PC | GH #72 |
-| Página de torneio no LetzPlay com inscrição de R$ 0,00 na plataforma (pagamento combinado por fora, inferência) | Página do organizador | LP1 |
-| Torneios que cobram por PIX direto na chave do organizador, fora da plataforma | Resumo (pesquisa de mercado) | `NEGOCIO.md` |
-| Central de ajuda do LetzPlay para gestores: "Os inadimplentes são removidos automaticamente?" Resposta: "Não, isso deve ser feito manualmente", na lista de inscritos | DOC | DOC1 |
-| Plataforma: taxa de R$ 9,00 por inscrição (Tênis Integrado); LetzPlay 1,5% no PIX com mínimo de R$ 3 | REG · lido (pesquisa de mercado) | REG1; `NEGOCIO.md` |
-| Lado do jogador: "Fiz o pagamento pelo App e a Arena não recebeu!"; cobrança indevida é 3 de 5 reclamações visíveis do LetzPlay | 2L · Voz | RA-L1; `VOZ_DO_USUARIO.md` |
+| Página de torneio no incumbente com inscrição de R$ 0,00 na plataforma (pagamento combinado por fora, inferência) | Página do organizador | LP1 |
+| Torneios que cobram por PIX direto na chave do organizador, fora da plataforma | Resumo (pesquisa de mercado) | Evidência: documento D3 ("Estratégia de negócio: modelos de monetização"), projeto Discovery e estratégia no Linear |
+| Central de ajuda do incumbente para gestores: o inadimplente não sai sozinho; o gestor o remove à mão, na lista de inscritos | DOC | DOC1 |
+| Plataforma: taxa fixa por inscrição (Tênis Integrado) e percentual no PIX, com mínimo (incumbente); valores no D5 | REG · lido (pesquisa de mercado) | REG1; D5 |
+| Lado do jogador: pagamento feito pelo app que não chegou à arena; cobrança indevida é a maioria das poucas reclamações públicas visíveis contra o incumbente | 2L · Voz | RA-L1; D1 |
 | Fornecedor recomenda "esquecer a planilha de Excel e o comprovante de PIX enviado por e-mail" | MKT | Blog de fornecedor (resumo) |
 
 ---
@@ -95,13 +95,13 @@ Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos
 | Evidência | Tipo | Fonte |
 | --- | --- | --- |
 | Duas semanas pedindo troca de parceiro (prevista no regulamento) por e-mail e WhatsApp, a 5 dias do torneio, sem resposta | 2L | RA6 |
-| Dupla perde R$ 438 por não poder jogar por saúde: o circuito "não cancela, não troca por produtos, não gera crédito" | 2L | RA7 |
-| Torneio tirado do LetzPlay sem aviso: "ficamos sem saber o que fazer" | 2L (sem resposta) | RA5 |
+| Dupla perde R$ 438 por não poder jogar por saúde: o circuito não cancela, não troca por produto nem gera crédito | 2L | RA7 |
+| Torneio tirado do incumbente sem aviso, e os jogadores sem saber o que fazer | 2L (sem resposta) | RA5 |
 | Reembolso só em 3 casos, "somente após o fim da etapa", por e-mail, **dentro de um número de cancelamentos definido para a etapa** | REG | REG1 |
 | Substituição só até 20h da véspera, com justificativa por e-mail; "caso o evento tenha iniciado, não será permitida em nenhuma hipótese" | REG | REG1 |
 | *Alternate* na 1ª rodada para evitar W.O., pagando PIX na hora para a conta da federação | REG | REG1 |
 | Ranking de desafio: trocar de parceiro tira a dupla do ranking | REG | REG2 |
-| Perguntas frequentes de gestores na central de ajuda do LetzPlay: substituir jogador **depois da chave publicada**, inscrever alguém depois de encerrar, reabrir inscrições, estorno pedido pelo jogador, W.O. duplo | DOC | DOC1 |
+| Perguntas frequentes de gestores na central de ajuda do incumbente: substituir jogador **depois da chave publicada**, inscrever alguém depois de encerrar, reabrir inscrições, estorno pedido pelo jogador, W.O. duplo | DOC | DOC1 |
 | Construtor cria uma área de "duplas incompletas" para trocar ou remover parceiro e promover o parceiro a titular quando quem pagou desiste | PC | GH #50 |
 | Estorno de day use: arena cancela, sempre devolve; aluno cancela, devolve dentro da janela; o aluno escolhe PIX ou crédito | PC | GH #64 |
 
@@ -113,10 +113,10 @@ Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos
 
 | Evidência | Tipo | Fonte |
 | --- | --- | --- |
-| Depois da inscrição, os atletas vão para "um grupo de WhatsApp, no qual foi enviado informações e link de denúncia"; "pelo contato via WhatsApp do suporte ... não são respondidas as informações" | 2L | RA3 |
-| Organizador responde "que vai ver mas não dá retorno" no WhatsApp | 2L | RA6 |
+| Depois da inscrição, os atletas vão para um grupo de WhatsApp com informações e link de denúncia; o suporte pelo WhatsApp não responde | 2L | RA3 |
+| Organizador diz no WhatsApp que vai ver e não dá retorno | 2L | RA6 |
 | Cinco protocolos abertos em 7 dias sem resposta | 2L | RA4 |
-| A plataforma pede o placar à atleta **pelo WhatsApp** para cobrar o organizador; o LetzPlay mantém "grupo de suporte no WhatsApp" com usuários | 2L | RA1, RA2 |
+| A plataforma pede o placar à atleta **pelo WhatsApp** para cobrar o organizador; o incumbente mantém um grupo de suporte no WhatsApp com usuários | 2L | RA1, RA2 |
 | Ranking de desafio: aviso de desafio e resultado no grupo "BT – Nômades Ranking", com *template* obrigatório | REG | REG2 |
 | Sem o WhatsApp do atleta no cadastro, a academia "não tinha como mandar senha, cobrança ou aviso de horário" | PC | GH #72 |
 | Tamanho da camisa descoberto "individualmente via WhatsApp depois de fechar inscrição" | PC | GH #70 |
@@ -131,10 +131,10 @@ Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos
 
 | Evidência | Tipo | Fonte |
 | --- | --- | --- |
-| "organização de torneio não é fácil, sempre tem aquela coisinha que dá erro" | 1P | YT1 |
-| "é isso que é organizar torneio: é chegar antes de todos os atletas, sair depois de todos os atletas" (fala perto das 23h) | 1P | YT1 |
+| Organizar torneio não é fácil: sempre tem um detalhe que dá errado | 1P | YT1 |
+| Organizar torneio é chegar antes de todos os atletas e sair depois de todos (fala perto das 23h) | 1P | YT1 |
 | Rádio comunicador para chamar jogo entre duas quadras, usado pela primeira vez | 1P | YT1 |
-| Sexta-feira "é um dia bem difícil, trânsito São Paulo ... sempre tem algumas coisinhas que a gente precisa correr atrás" | 1P | YT1 |
+| A sexta-feira é um dia difícil, com o trânsito de São Paulo e pendências para correr atrás | 1P | YT1 |
 | Quadras e equipe mínimas atreladas ao número de inscritos "para minimizar eventuais atrasos" | REG | REG1 |
 | Árbitro pode trocar o formato no meio da rodada por clima ou atraso; jogo entre meia-noite e 6h proibido | REG | REG1 |
 | W.O. após 15 min da chamada, "por meio de sistema de som"; se um da dupla falta, os dois perdem | REG | REG1, REG4 |
@@ -150,10 +150,10 @@ Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos
 
 | Evidência | Tipo | Fonte |
 | --- | --- | --- |
-| Mais de 10 dias sem o 3º lugar lançado. Resposta da plataforma: "a gestão e a operação do torneio, incluindo o lançamento dos placares e a atualização dos resultados, são de responsabilidade dos organizadores do evento" | 2L | RA1 |
+| Mais de 10 dias sem o 3º lugar lançado. Resposta da plataforma: a gestão do torneio, inclusive lançar placar e atualizar resultado, é responsabilidade dos organizadores | 2L | RA1 |
 | Árbitros fazem "uma súmula auxiliar para cada jogo" e depois lançam no sistema | REG | REG1 |
 | O repasse do dinheiro ao organizador só corre depois da "finalização do torneio no sistema" | REG | REG1 |
-| Lado do jogador: "2 meses e os jogos ainda estão pendentes"; "não força o gestor do torneio a atualizar os jogos!" | Voz (pesquisa de mercado) | `VOZ_DO_USUARIO.md` |
+| Lado do jogador: jogos pendentes meses depois do torneio, e o app não obriga o gestor a atualizar | Voz (pesquisa de mercado) | Evidência: documento D1 ("Evidência: voz do usuário e reclamações"), projeto Discovery e estratégia no Linear |
 
 **Por que a causa é Fraca:** nenhuma fonte ouviu o organizador sobre **por que** o lançamento atrasa (falta de tempo, súmula em papel, disputa de placar, ferramenta difícil). A consequência é bem documentada; a causa é inferência. É a primeira pergunta do roteiro de entrevista. Um dado que aponta para a mesma direção: na FET, o organizador tem incentivo financeiro para finalizar no sistema (o repasse depende disso), e mesmo assim a regra precisa estar escrita.
 
@@ -168,7 +168,7 @@ Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos
 | A mesma lista de tarefas da "comissão gestora" nos dois regulamentos: incluir e excluir atletas, resolver casos omissos, "manter a página web do ranking atualizada" | REG | REG2, REG3 |
 | Cada desafio passa por "aprovação da comissão gestora"; o resultado "deverá ser informado aos gestores" | REG | REG3 |
 | Prazo de 15 dias e W.O. se não houver resposta em 1 semana: a regra existe porque o jogo não sai | REG | REG2, REG3 |
-| Organizador elogia o app que simplificou: "quase 80 pessoas em nosso ranking e ... todos os clientes elogiam a praticidade" | 1P | AS1 |
+| Organizador elogia o app que simplificou: perto de 80 pessoas no ranking dele, e os clientes elogiam a praticidade | 1P | AS1 |
 
 ---
 
@@ -176,11 +176,11 @@ Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos
 
 | Evidência | Tipo | Fonte |
 | --- | --- | --- |
-| Organizador da etapa recebe 80% do líquido, depois de descontar R$ 9 por inscrição, em até 5 dias úteis **após finalizar no sistema e enviar nota fiscal**; multa de até 20% se não divulgar os patrocinadores da federação | REG | REG1 |
+| Organizador da etapa recebe 80% do líquido, depois de descontar a taxa da plataforma por inscrição, em até 5 dias úteis **após finalizar no sistema e enviar nota fiscal**; multa de até 20% se não divulgar os patrocinadores da federação | REG | REG1 |
 | "O valor de inscrição ... cobre parte do custo operacional" (a frase aparece duas vezes no regulamento) | REG | REG1 |
-| Patrocínio: "qual é a contrapartida disso, como que eu vou aparecer"; no começo, "comprava uma cota de patrocínio ... pelo brilho dos teus olhos" | 1P | YT3 |
+| Patrocínio: o patrocinador quer saber a contrapartida e como vai aparecer; no começo, comprava a cota só pela confiança no organizador | 1P | YT3 |
 | Organizadoras citam os patrocinadores locais e fazem transmissão ao vivo, item que a FET conta para pontuar a etapa | 1P · REG | YT1, REG1 |
-| Organizador de campeonatos (não BT) reclama que "coisas básicas são pagas" num app de torneio | 1P (outro esporte) | AS2 |
+| Organizador de campeonatos (não BT) reclama que o básico é pago num app de torneio | 1P (outro esporte) | AS2 |
 
 ---
 
@@ -191,9 +191,9 @@ Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos
 | Pedido público de uma planilha para 12 duplas em 4 grupos, com saldo de games e desempate; 65 propostas, valor mínimo R$ 30 | DEM | FL1 |
 | Planilhas de torneio de BT vendidas prontas ("Formato Rei da Quadra") | DEM | FL2 (resumo) |
 | Alguém que atende academia escreveu o próprio sistema (1.088 commits) e agora o oferece a outras arenas em campeonatos | PC | GH |
-| "Gostaria apenas que tivesse um jeito de sortear novamente os grupos, sem precisar excluir" | 1P (outro esporte) | AS2 |
+| Pedido de um jeito de sortear os grupos de novo sem excluir o que já foi feito | 1P (outro esporte) | AS2 |
 | Tabela em tempo real "através de um software e no Excel" num torneio de badminton | N (outro esporte) | N5 |
-| Fornecedores: "Antes era tudo em planilha e WhatsApp manual" (ArenaAi); "aulas, reservas e torneios viviam espalhados em cadernos, planilhas e grupos de WhatsApp" (BT Match) | MKT | Sites (resumo) |
+| Fornecedores (ArenaAi, BT Match) vendem com depoimentos de que antes tudo era planilha, caderno e WhatsApp manual | MKT | Sites (resumo) |
 
 ---
 
@@ -209,7 +209,7 @@ O que o organizador usa no lugar de uma ferramenta, ou em volta dela.
 | Formulário no site | Pedir desafio, informar resultado, pedir indisponibilidade | REG2, REG3 | REG |
 | E-mail para a federação | Troca de parceiro, reembolso | REG1 | REG |
 | Súmula em papel, lançada depois no sistema | Placar oficial | REG1 | REG |
-| PIX na chave do organizador + comprovante | Receber inscrição fora da plataforma | GH #69; `NEGOCIO.md` | PC |
+| PIX na chave do organizador + comprovante | Receber inscrição fora da plataforma | GH #69; D3 | PC |
 | PIX na hora para *alternate* | Preencher vaga de W.O. | REG1 | REG |
 | Planilha encomendada ou comprada | Grupos, saldo de games, desempate | FL1, FL2 | DEM |
 | Rádio comunicador, sistema de som | Chamada de jogo | YT1, REG1 | 1P, REG |
@@ -225,11 +225,11 @@ O que o organizador usa no lugar de uma ferramenta, ou em volta dela.
 
 | Cobrança do jogador | Evidência | O que a resposta do organizador ou da plataforma revela | Fonte |
 | --- | --- | --- | --- |
-| Resultado lançado logo | "os resultados registrados na plataforma são importantes para o meu histórico e para a ... classificação em outros torneios" | A plataforma devolve ao organizador e resolve pelo WhatsApp | RA1 |
+| Resultado lançado logo | O resultado na plataforma importa para o histórico e para a classificação em outros torneios | A plataforma devolve ao organizador e resolve pelo WhatsApp | RA1 |
 | Categoria justa | Perfil duplicado; torcedor que ofende; denúncia no grupo | Federação admite não ter método; plataforma diz que a validação é opção do gestor | RA2, YT2 |
-| Decisão fundamentada e com direito de defesa | "não recebi ... qualquer comunicação formal, por escrito" | Circuito responde com número de item do regulamento, 7 dias depois | RA4 |
-| Flexibilidade quando algo dá errado | "perderemos 438 reais"; troca de parceiro sem resposta | Regra fechada: sem crédito, sem troca | RA6, RA7 |
-| Presença e resposta | "não havia nenhum responsável pelo evento no local"; protocolos sem resposta | Relacionamento por protocolo e Reclame Aqui | RA3, RA4 |
+| Decisão fundamentada e com direito de defesa | Nenhuma comunicação formal, por escrito | Circuito responde com número de item do regulamento, 7 dias depois | RA4 |
+| Flexibilidade quando algo dá errado | Inscrição perdida; troca de parceiro sem resposta | Regra fechada: sem crédito, sem troca | RA6, RA7 |
+| Presença e resposta | Nenhum responsável pelo evento no local; protocolos sem resposta | Relacionamento por protocolo e reclamação pública | RA3, RA4 |
 | Saber o horário do próximo jogo | W.O. em quartas de final | "A programação ... é de inteira responsabilidade do árbitro geral"; W.O. mantido | REG1; `CONCORRENTES.md` |
 
 ### A cadeia de responsabilidade
@@ -240,8 +240,8 @@ As respostas lidas mostram um padrão: cada elo passa a responsabilidade para o 
 jogador ──reclama──▶ app/plataforma ──"é do organizador"──▶ organizador ──"é do atleta"──▶ jogador
 ```
 
-- A plataforma: "a gestão e a operação do torneio ... são de responsabilidade dos organizadores do evento" (RA1). Mesmo padrão nas respostas de lojas: "Basta pedir para o organizador mudar o formato" (`VOZ_DO_USUARIO.md`).
-- O organizador: "a responsabilidade pela verificação do ranqueamento no momento da inscrição é do próprio atleta" (RA3). "Todo jogador, ao fazer sua inscrição ... declara ter total conhecimento das regras" (REG1).
+- A plataforma: a gestão do torneio é responsabilidade dos organizadores (RA1). Mesmo padrão nas respostas de lojas, que mandam o jogador pedir ao organizador para mudar o formato (D1).
+- O organizador: verificar o ranqueamento na inscrição é responsabilidade do atleta (RA3). "Todo jogador, ao fazer sua inscrição ... declara ter total conhecimento das regras" (REG1).
 - O jogador fica com a conta: W.O., desclassificação, inscrição perdida.
 
 **Leitura descritiva, não recomendação:** as oportunidades mais fortes do jogador (resultado confiável, horário confiável, regra visível) estão exatamente nos pontos em que essa cadeia se fecha sobre ele. Ver `SINTESE.md`.

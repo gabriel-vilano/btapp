@@ -4,7 +4,7 @@ Arquétipos definidos por **comportamento e motivação**, não por idade, gêne
 
 Técnica: *proto-persona*, na forma de Jeff Gothelf (*Lean UX*, 2013), com o recorte comportamental de Indi Young (*Describing Personas*, 2016). Códigos de fonte no [`README.md`](README.md).
 
-> **Sem decisões de produto.** As personas não dizem para quem o LetzPlay é. Dizem que comportamentos aparecem na evidência. Escolher o público do beta é decisão do Gabriel (`MER`, pergunta 2).
+> **Sem decisões de produto.** As personas não dizem para quem o produto é. Dizem que comportamentos aparecem na evidência. Escolher o público do beta é decisão do Gabriel (`MER`, pergunta 2).
 
 ---
 
@@ -65,9 +65,9 @@ As posições são hipótese. A persona de organizador (P6) não entra no gráfi
 | --- | --- | --- |
 | Ranking estadual conta as 7 melhores pontuações do ano; promoção formal por posição | `PUB` 2.1, 2.2 (FCTBT, CBT) | Forte (regra) |
 | Joga 3 a 4 vezes por semana; amadores com "equipe multidisciplinar" | `PUB HP4`; `PUB` 2.2 | Fraca a Média |
-| W.O. em quartas de Brasileiro; "Não lançaram meu 3º lugar" | `MER O1`, `O3` | Forte |
+| W.O. em quartas de Brasileiro; colocação de torneio que não foi lançada | `MER O1`, `O3` | Forte |
 | Impugnação levada à Justiça para não perder a vaga nas Finals | `DOR D1` (RA4) | Média |
-| "Stuck at 2.5 DUPR … Now Playing at 4.0" | `MER O9` (fora do BT) | Fraca |
+| Reviews contam a saída de um rating estagnado | `MER O9` (fora do BT) | Fraca |
 
 **O que precisa validar:** se subir e descer de fato mexe com a pessoa (`S5`, `S15`); quantos torneios ela joga por ano (lacuna em `PUB`); se ela consulta o adversário antes do jogo (`S7`).
 
@@ -83,9 +83,9 @@ As posições são hipótese. A persona de organizador (P6) não entra no gráfi
 | --- | --- |
 | **Comportamento-chave** | Disputa a escada de desafio da arena onde tem aula; combina data e quadra no WhatsApp; tem dupla principal |
 | **Motivação** | Pertencimento com competição: jogar com a turma, e ter um motivo para jogar |
-| **Formato** | Ranking de arena (escada de desafio, na evidência), às vezes somado aos torneios da casa. O LetzPlay não modela a escada de desafio: o ranking dele segue temporada → rodadas → sorteio dos confrontos lançado pelo admin do ranking (spec de entidades e relações do domínio). |
+| **Formato** | Ranking de arena (escada de desafio, na evidência), às vezes somado aos torneios da casa. O produto não modela a escada de desafio: o ranking dele segue temporada → rodadas → sorteio dos confrontos lançado pelo admin do ranking (spec de entidades e relações do domínio). |
 | **Etapas do job em que mais dói** | 4 · confirmar (marcar o jogo), 6 · monitorar (o gestor não atualiza) |
-| **Forças dominantes** | Hábito: o grupo de WhatsApp já resolve. Empurrão: "2 meses e os jogos ainda estão pendentes" |
+| **Forças dominantes** | Hábito: o grupo de WhatsApp já resolve. Empurrão: jogos pendentes há meses |
 
 **Evidência que sustenta:**
 
@@ -93,9 +93,9 @@ As posições são hipótese. A persona de organizador (P6) não entra no gráfi
 | --- | --- | --- |
 | Regulamentos de escada de desafio com template de aviso no grupo e placar informado pelo jogador | `JOR` 2 (REG2, REG3) | Forte (regra) |
 | Mais de 3/4 preferem jogar em arena; prefere jogar com amigos; mora perto | `PUB` 2.3 | Média |
-| "quase 80 pessoas em nosso ranking" no 3º mês de um app | `DOR D7` (AS1) | Média |
+| Ranking de arena com dezenas de pessoas no 3º mês de um app | `DOR D7` (AS1) | Média |
 | O professor e a arena são a porta de entrada e o centro social | `PUB HP8` | Média |
-| "2 meses e os jogos ainda estão pendentes" porque "o gestor não atualiza" | `MER O1`; `JOR` 2 | Forte |
+| Jogos pendentes há meses porque o gestor não atualiza | `MER O1`; `JOR` 2 | Forte |
 
 **O que precisa validar:** se aceita registrar no app o que combina no grupo (`S2`, a suposição mais arriscada para esta persona); se o ranking é o motivo de abrir o app ou o grupo basta (`S1`); se o feed de amigos tem valor aqui, onde a turma já se vê todo dia (`S10`).
 
@@ -113,7 +113,7 @@ As posições são hipótese. A persona de organizador (P6) não entra no gráfi
 | **Motivação** | Competência: testar o próprio nível, evoluir rápido, não passar vergonha |
 | **Formato** | Torneios amadores de arena, rankings abertos a iniciantes |
 | **Etapas do job em que mais dói** | 1 · definir (qual categoria), 2 · localizar (onde tem competição), 3 · preparar (achar dupla) |
-| **Forças dominantes** | Atração: "achar jogo, torneio e gente do mesmo nível". Ansiedade: não estar no nível |
+| **Forças dominantes** | Atração: achar jogo, torneio e gente do mesmo nível. Ansiedade: não estar no nível |
 
 **Evidência que sustenta:**
 
@@ -125,7 +125,7 @@ As posições são hipótese. A persona de organizador (P6) não entra no gráfi
 | Nomenclatura de categorias sem padrão; a pessoa não sabe onde se encaixa | `DSC` 1.3 | Média (fato); Fraca (dor) |
 | Filtros de nível e região: 9 menções em 5 apps | `MER O8` | Média (fora do BT) |
 
-**O que precisa validar:** se o recém-chegado compete a ponto de ser público do produto, ou se é o "jogador por diversão" que o `CLAUDE.md` exclui ("quem não compete não tem motivo para usá-lo"); se descobrir competição é dor real para ele (`S14`); se o valor está na evolução (`S24`).
+**O que precisa validar:** se o recém-chegado compete a ponto de ser público do produto, ou se é o "jogador por diversão" que o `docs/PRODUCT.md` exclui ("quem não compete não tem motivo para usá-lo"); se descobrir competição é dor real para ele (`S14`); se o valor está na evolução (`S24`).
 
 **Como reconhecer no Tally:** joga há menos de 1 ano; categoria Iniciante ou D; no bloco "O que te afasta", marca "Ainda não me sinto no nível" ou "Não sei onde encontrar competições".
 
@@ -148,8 +148,8 @@ As posições são hipótese. A persona de organizador (P6) não entra no gráfi
 | Evidência | Fonte | Força |
 | --- | --- | --- |
 | 4 reviews em 3 apps dizem que usam o app porque a federação, o clube ou o circuito exige | `MER O5`, `RS4` | Forte |
-| Navegação é a dor mais citada: 15 menções em 5 apps; "Mais que 3 cliques pra ver informação simples" | `MER O6` | Forte |
-| Conta e login: 8 menções; "não reconhece meu login … no meio do torneio" | `MER O7` | Forte |
+| Navegação é a dor mais citada: 15 menções em 5 apps; informação simples exige cliques demais | `MER O6` | Forte |
+| Conta e login: 8 menções; app que não reconhece o login no meio do torneio | `MER O7` | Forte |
 | O organizador federado também não escolhe a ferramenta | `ORG RO2` | Forte |
 
 **O que precisa validar:** quanto do público é esta persona (`S13`); se, para ela, confiabilidade basta e o resto é indiferente (o que a hipótese de Kano chama de "obrigatório", [`07`](07-kano.md)).
@@ -174,13 +174,13 @@ As posições são hipótese. A persona de organizador (P6) não entra no gráfi
 
 | Evidência | Fonte | Força |
 | --- | --- | --- |
-| Dupla de organizadoras que também dão aula: "a gente organiza torneio dá aula toma cerveja faz churrasco" | `JOR` 3 (YT1) | Média (um vídeo) |
+| Dupla de organizadoras que também dão aula e contam que organizam, ensinam e fazem a parte social | `JOR` 3 (YT1) | Média (um vídeo) |
 | Arena fecha parceria com professor "com experiência em promover campeonatos" para fidelizar | `ARE` 3 (ACAD1) | Média |
 | Professores que competem são estratégia de marketing da arena | `ARE` 3 (ACAD2) | Média |
 | 3/4 dos jogadores de um evento já contrataram professor | `PUB` 5.3 | Média |
 | O professor é "peça central e disputada" entre arenas | `ARE`, resumo | Média |
 
-**O que precisa validar:** se é um público à parte ou um organizador que também joga (`ORG`, pergunta 6); quanto do ranking de arena passa pela mão dele. Nenhum JTBD do `CLAUDE.md` o descreve.
+**O que precisa validar:** se é um público à parte ou um organizador que também joga (`ORG`, pergunta 6); quanto do ranking de arena passa pela mão dele. Nenhum JTBD do `docs/PRODUCT.md` o descreve.
 
 **Como reconhecer no Tally:** não há pergunta que o identifique hoje. A proposta do [`09`](09-proposta-tally.md) sugere uma.
 

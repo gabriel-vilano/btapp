@@ -1,10 +1,10 @@
 # 03 — Forças do progresso
 
-O que faz o jogador e o organizador **trocarem** a solução atual (WhatsApp, planilha, LetzPlay atual, a plataforma da federação) por outra, e o que os segura onde estão.
+O que faz o jogador e o organizador **trocarem** a solução atual (WhatsApp, planilha, o incumbente, a plataforma da federação) por outra, e o que os segura onde estão.
 
 Técnica: *forces of progress* do Jobs to be Done, de Bob Moesta (*Demand-Side Sales 101*, 2020; *switch interview* com Chris Spiek). Códigos de fonte no [`README.md`](README.md).
 
-> **Sem decisões de produto.** As forças descrevem o que a evidência mostra sobre a troca. Não dizem se o LetzPlay deve disputar essa troca, nem como.
+> **Sem decisões de produto.** As forças descrevem o que a evidência mostra sobre a troca. Não dizem se o produto deve disputar essa troca, nem como.
 
 ---
 
@@ -23,7 +23,7 @@ A troca só acontece quando **empurrão + atração > ansiedade + hábito**. O e
 
 **Analogia com design:** é o motivo pelo qual uma pessoa continua no Sketch mesmo reclamando dele. O empurrão existe, o Figma atrai, mas os arquivos antigos, os plugins e o time que ainda usa o Sketch seguram. Quem desenha o Figma precisa pensar no import, não só no editor.
 
-**"Solução atual" aqui é um conjunto.** O jogador de BT não usa um app: usa o grupo de WhatsApp da arena, o app que a federação ou o circuito escolheu (muitas vezes o LetzPlay atual), o Instagram e a memória. O organizador soma a isso a planilha, a súmula em papel e o PIX na chave dele. As forças abaixo são sobre sair desse conjunto.
+**"Solução atual" aqui é um conjunto.** O jogador de BT não usa um app: usa o grupo de WhatsApp da arena, o app que a federação ou o circuito escolheu (muitas vezes o incumbente), o Instagram e a memória. O organizador soma a isso a planilha, a súmula em papel e o PIX na chave dele. As forças abaixo são sobre sair desse conjunto.
 
 ---
 
@@ -34,7 +34,7 @@ flowchart LR
   subgraph afavor["A favor da troca"]
     direction TB
     EJ["EMPURRÃO<br/>resultado pendente há meses<br/>horário que não chega, W.O.<br/>app lento e que desloga"]
-    AJ["ATRAÇÃO<br/>próximo jogo e posição num lugar<br/>adversário com nível confiável<br/>simplicidade ('as barragens fluem')"]
+    AJ["ATRAÇÃO<br/>próximo jogo e posição num lugar<br/>adversário com nível confiável<br/>simplicidade (barragens que fluem)"]
   end
   subgraph contra["Contra a troca"]
     direction TB
@@ -57,10 +57,10 @@ flowchart LR
 
 | Força | Evidência | Força da evidência |
 | --- | --- | --- |
-| **Resultado que não entra.** Jogo pendente por meses; 3º lugar sem lançar | "2 meses e os jogos ainda estão pendentes!" (LetzPlay); "Não lançaram meu 3º lugar" (Reclame Aqui) (`MER O1`) | Forte |
-| **Horário e mudança que não chegam.** Perda de jogo por W.O. | W.O. em quartas de Brasileiro; "perdemos torneios"; "O app não notifica por push, somente por e-mail" (`MER O3`) | Forte |
-| **App que atrapalha.** Lentidão, logout, informação escondida | Navegação: 15 menções em 5 apps. Lentidão: 13. "começou a deslogar os usuários depois de poucos minutos" (`MER O6`, `O7`) | Forte |
-| **Adversário fora da categoria.** *Sandbagging* e perfil duplicado | 6 menções em 4 apps; "compromete o equilíbrio dos torneios" (`MER O2`, `DOR D1`) | Forte |
+| **Resultado que não entra.** Jogo pendente por meses; 3º lugar sem lançar | Jogos pendentes há meses no incumbente; colocação de torneio que não foi lançada, em reclamação pública (`MER O1`) | Forte |
+| **Horário e mudança que não chegam.** Perda de jogo por W.O. | W.O. em quartas de Brasileiro; jogadores relatam torneios perdidos; app que avisa só por e-mail, sem push (`MER O3`) | Forte |
+| **App que atrapalha.** Lentidão, logout, informação escondida | Navegação: 15 menções em 5 apps. Lentidão: 13. Relatos de logout depois de poucos minutos de uso (`MER O6`, `O7`) | Forte |
+| **Adversário fora da categoria.** *Sandbagging* e perfil duplicado | 6 menções em 4 apps; jogadores dizem que isso desequilibra os torneios (`MER O2`, `DOR D1`) | Forte |
 | **Aviso espalhado.** Um grupo por torneio, por ranking, por arena | Grupo de WhatsApp é canal de programação, denúncia e cobrança (`DOR D4`) | Forte (lado do organizador); a voz do jogador sobre o excesso de grupos é inferência |
 | **Não entender a conta** | Voz vem de apps de rating; no BT, a conta está espalhada em abas (`MER O4`, `APR`) | Média |
 
@@ -68,20 +68,20 @@ flowchart LR
 
 | Força | Evidência | Força da evidência |
 | --- | --- | --- |
-| **Tudo do meu dia competitivo num lugar** | Elogio mais recorrente da amostra: "achar jogo, torneio e gente do mesmo nível" (6 em 3 apps, fora do BT) (`MER O8`) | Média |
-| **Simplicidade** | Meu Ranking, melhor nota do BT (4,5★), com reviews que elogiam que "as barragens fluem" (`MER O6`) | Média |
+| **Tudo do meu dia competitivo num lugar** | Elogio mais recorrente da amostra: achar jogo, torneio e gente do mesmo nível (6 em 3 apps, fora do BT) (`MER O8`) | Média |
+| **Simplicidade** | Meu Ranking, o app de BT mais bem avaliado da amostra, com reviews que elogiam a fluidez das barragens (`MER O6`; evidência: documento D2 ("Evidência: concorrentes e incumbente (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear) | Média |
 | **Nível em que dá para confiar** | Sistemas maduros mostram número + confiança; é o tema mais discutido fora das lojas (`MER O2`, `RAT`) | Média (fora do BT) |
-| **Ver a evolução** | Os concorrentes cobram por isso; "Stuck at 2.5 DUPR … Now Playing at 4.0" (`MER O9`, `MAT L9`) | Fraca no BT |
+| **Ver a evolução** | Os concorrentes cobram por isso; reviews contam a saída de um rating estagnado (`MER O9`, `MAT L9`) | Fraca no BT |
 
 ### Ansiedade: o que pode dar errado se trocar
 
 | Força | Evidência | Força da evidência |
 | --- | --- | --- |
-| **Perder o histórico.** Os resultados antigos ficam no app antigo | "os resultados registrados na plataforma são importantes para o meu histórico e para a ... classificação em outros torneios" (`DOR`, RA1) | Média (o valor do histórico é dito; o medo de perdê-lo é inferência) |
+| **Perder o histórico.** Os resultados antigos ficam no app antigo | Jogador diz que os resultados na plataforma importam para o histórico e para a classificação em outros torneios (`DOR`, RA1) | Média (o valor do histórico é dito; o medo de perdê-lo é inferência) |
 | **Mais uma conta.** O jogador já tem uma conta por arena e por federação | "O jogador tem uma conta por arena" (`DSC` 2.2); CPF preso numa conta cancelada (Tênis Integrado, `MER O7`) | Média |
 | **Placar recusado.** Confirmar pelo adversário abre espaço para o perdedor vetar | 8 threads em 2 apps (`VZA`, seção 1) | Forte (fora do BT) |
-| **Cobrança.** O app novo pode cobrar | MATCHi: 5 das 10 reviews visíveis reclamam da taxa ao jogador ("a gente se sente preso") (`VZA`) | Média (fora do BT) |
-| **O número me expor ou mentir** | "My rating is such a lie"; queda por causa do parceiro, em duplas (`RAT`, `APR`) | Média (fora do BT) |
+| **Cobrança.** O app novo pode cobrar | MATCHi: metade das reviews visíveis reclama da taxa ao jogador, com a sensação de estar preso (`VZA`) | Média (fora do BT) |
+| **O número me expor ou mentir** | Jogadores dizem que o rating não os representa; queda por causa do parceiro, em duplas (`RAT`, `APR`) | Média (fora do BT) |
 
 ### Hábito: o que prende ao jeito atual
 
@@ -89,7 +89,7 @@ flowchart LR
 | --- | --- | --- |
 | **O grupo de WhatsApp já resolve** o dia do torneio e a marcação | O Meu Ranking passou a apontar para o grupo; o regulamento de arena usa o grupo como canal oficial (`MER RS5`, `JOR` 2) | Média a Forte |
 | **Quem escolhe o app é a federação, a arena ou o circuito** | 4 reviews em 3 apps; white-label por arena (`MER RS4`) | Forte |
-| **O ranking oficial está no app atual.** Sem ele, os pontos não contam | CBT: sem anuidade, pontos não contam; CBBT roda no LetzPlay com 25.894 jogadores (`RAT` 6.2, 6.3) | Forte |
+| **O ranking oficial está no app atual.** Sem ele, os pontos não contam | CBT: sem anuidade, pontos não contam; o ranking da CBBT roda no incumbente, com uma base grande de jogadores (`RAT` 6.2, 6.3; evidência: documento D4 ("Evidência: mercado e contadores do incumbente"), projeto Discovery e estratégia no Linear) | Forte |
 | **A conversa social mora no grupo** | Prefere jogar com amigos; BT como "grupo de pertencimento" (`PUB` 1.2, 2.3) | Fraca |
 
 ### Leitura para o jogador
@@ -131,8 +131,8 @@ flowchart LR
 | Força | Evidência | Força da evidência |
 | --- | --- | --- |
 | **O dia do torneio é longo e físico** | Chegar 8h30, sair perto das 23h; rádio comunicador entre quadras (`DOR D5`, `JOR` 1.2) | Forte |
-| **Categoria certa e decisão contestada** | "é o que também gera muito stress"; impugnação levada à Justiça (`DOR D1`) | Forte |
-| **Pagamento por dupla** | Dois pagamentos por inscrição; "Os inadimplentes são removidos automaticamente? Não" (`DOR D2`) | Forte |
+| **Categoria certa e decisão contestada** | Diretor de federação aponta a categoria como grande fonte de stress; impugnação levada à Justiça (`DOR D1`) | Forte |
+| **Pagamento por dupla** | Dois pagamentos por inscrição; o inadimplente sai à mão, não automaticamente (`DOR D2`) | Forte |
 | **Mudança de última hora pelo WhatsApp** | Pedido de troca de parceiro sem resposta por duas semanas (`DOR D3`, `D4`) | Forte |
 | **A ferramenta não cobre o formato** | Planilha encomendada por R$ 30+; construtor que escreveu o próprio sistema (`DOR D9`) | Média |
 
@@ -140,9 +140,9 @@ flowchart LR
 
 | Força | Evidência | Força da evidência |
 | --- | --- | --- |
-| **Simples e fácil** | 8 de 10 reviews do Meu Ranking Organizador (4,9★) elogiam isso (`APR`, O6; `VZA`) | Média |
-| **Ranking que se mantém** | "quase 80 pessoas em nosso ranking e ... todos os clientes elogiam a praticidade" (`DOR D7`, AS1) | Média (uma fala) |
-| **Regras explicadas** | Organizadores elogiam o app que tem "bem explicado as regras" (`ORG`, O5) | Fraca (uma fala) |
+| **Simples e fácil** | A maioria das reviews do Meu Ranking Organizador, app bem avaliado, elogia isso (`APR`, O6; `VZA`; evidência: documento D2 ("Evidência: concorrentes e incumbente (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear) | Média |
+| **Ranking que se mantém** | Organizador de arena conta que os clientes do ranking elogiam a praticidade (`DOR D7`, AS1) | Média (uma fala) |
+| **Regras explicadas** | Organizadores elogiam o app que explica bem as regras (`ORG`, O5) | Fraca (uma fala) |
 | **Integridade como argumento** | *Sandbagging* custa a credibilidade do torneio (`DSC` 4.2) | Média |
 
 ### Ansiedade
@@ -150,7 +150,7 @@ flowchart LR
 | Força | Evidência | Força da evidência |
 | --- | --- | --- |
 | **Perder a chancela ou virar "paralelo"** | A CBT exige homologação de todo torneio de BT e veta "organizações paralelas" (`APR`, achado 2) | Forte (regra lida) |
-| **Custo numa conta que fecha no limite** | Inscrição "cobre parte do custo operacional"; "coisas básicas são pagas" (outro esporte) (`DOR D8`) | Média |
+| **Custo numa conta que fecha no limite** | A inscrição cobre só parte do custo operacional, e até o básico é pago (outro esporte) (`DOR D8`) | Média |
 | **Os atletas não migrarem** | Inferência: o organizador depende de todos os atletas estarem no mesmo canal (GH #72 precisou tornar o WhatsApp obrigatório) | Fraca (inferência) |
 | **Perder o ranking em curso** | Inferência a partir do ciclo de semestre (`JOR` 2) | Fraca (inferência) |
 
@@ -161,7 +161,7 @@ flowchart LR
 | **Todo atleta já está no WhatsApp** | Canal de programação, desafio, resultado, cobrança e suporte (`DOR D4`; `ORG RO3`) | Forte |
 | **O que já funciona à mão** | Súmula em papel, planilha, PIX com comprovante, formulário no site (`DOR`, gambiarras) | Forte |
 | **O sistema da federação amarra o dinheiro** | Repasse de 80% só depois de finalizar no sistema e enviar nota fiscal (`JOR` 1.3) | Forte (regra lida) |
-| **A federação escolhe a ferramenta** | Federação usa Tênis Integrado; CBBT usa LetzPlay; circuitos usam app próprio (`ORG RO2`) | Forte |
+| **A federação escolhe a ferramenta** | Federação usa Tênis Integrado; CBBT usa o incumbente; circuitos usam app próprio (`ORG RO2`) | Forte |
 
 ### Leitura para o organizador
 
@@ -190,5 +190,5 @@ O que a evidência sugere quando se olha os dois atores lado a lado. Descritivo.
 ## Limites
 
 - **Moesta tira as forças de entrevistas de troca**, com pessoas que acabaram de trocar de solução. Aqui não houve nenhuma. As forças vêm de reviews, regulamentos e vídeos, e a **atração e a ansiedade são as mais frágeis**, porque quase ninguém escreve publicamente o que imaginava ou temia antes de trocar.
-- **O "LetzPlay atual" aparece dos dois lados.** Para muitos jogadores ele é a solução atual; o redesign é outro LetzPlay. A relação entre os dois é pergunta aberta das pesquisas de origem (`MER`, pergunta 1).
+- **O incumbente aparece dos dois lados.** Para muitos jogadores ele é a solução atual, e o produto é o redesign que parte dele. A relação entre os dois é pergunta aberta das pesquisas de origem (`MER`, pergunta 1).
 - O roteiro de entrevista de troca para confirmar estas forças está no [`08-plano-validacao.md`](08-plano-validacao.md).

@@ -1,6 +1,6 @@
 # 07 — Navegação
 
-Tab bar × menu, e como apps de esporte organizam a arquitetura de informação. É a superfície que ataca o problema 2 do audit: **"menu com 19+ itens, busca duplicada, perfil sobrecarregado"** (`CLAUDE.md`).
+Tab bar × menu, e como apps de esporte organizam a arquitetura de informação. É a superfície que ataca o problema 2 do audit: **"menu com 19+ itens, busca duplicada, perfil sobrecarregado"** (`docs/PRODUCT.md`, seção "Problemas do incumbente que o produto resolve"; o audit completo é o documento "Auditoria do app atual", projeto Discovery e estratégia no Linear).
 
 **JTBDs:** todos, indiretamente. A navegação decide qual JTBD está a um toque e qual está a três.
 

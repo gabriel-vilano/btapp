@@ -1,4 +1,4 @@
-# RATING.md — LetzPlay
+# RATING.md
 
 Aprofundamento de pesquisa de mesa sobre sistemas de nível e rating (DUPR, UTR, Playtomic, WTN, Elo/Glicko-2/TrueSkill) e rankings por pontos do Beach Tennis.
 
@@ -8,7 +8,7 @@ Pesquisa feita em 25/09/2026.
 
 **Como ler.**
 - **Lido** = página aberta na íntegra via WebFetch. **Resumo** = visto só no snippet ou resumo da busca.
-- Na primeira passada, **nenhuma página pôde ser lida na íntegra**: o proxy bloqueou todos os domínios tentados (ver "Nota de método"). Depois, **4 fontes centrais foram lidas na íntegra via Firecrawl** (help center do DUPR, FAQ de duplas do UTR, help center da Playtomic e a página da CBBT no LetzPlay). As linhas confirmadas por essa leitura estão marcadas **Lido**. As demais seguem **Resumo**; onde o resumo vem de help center ou documento oficial, isso está indicado.
+- Na primeira passada, **nenhuma página pôde ser lida na íntegra**: o proxy bloqueou todos os domínios tentados (ver "Nota de método"). Depois, **4 fontes centrais foram lidas na íntegra via Firecrawl** (help center do DUPR, FAQ de duplas do UTR, help center da Playtomic e a página da CBBT no incumbente). As linhas confirmadas por essa leitura estão marcadas **Lido**. As demais seguem **Resumo**; onde o resumo vem de help center ou documento oficial, isso está indicado.
 - **Força:** **Forte** = várias fontes independentes concordam e pelo menos uma é doc oficial. **Média** = uma fonte específica verificável, ou várias concordantes só por resumo. **Fraca** = opinião, fonte única não oficial ou inferência.
 - Datas: quando a fonte não traz data visível, vale a data de acesso (25/09/2026).
 
@@ -41,7 +41,7 @@ Pesquisa feita em 25/09/2026.
 | Achado | Força | Fonte |
 | --- | --- | --- |
 | Tática comum: criar conta nova "NR" (sem rating) para entrar em chave mais baixa. | Média | [SoCal Senior Pickleball News](https://socalseniorpickleballnews.com/dupr-verified-the-answer-to-ending-sandbagging-in-pickleball), [Rallycard](https://rallycard.app/blog/pickleball-sandbagging-guide) |
-| Programa DUPR Verified (2026): mais de 300 clubes nos EUA como clubes verificados; exige DUPR+ ativo e telefone verificado, um telefone por conta. Resumo | Média | [SoCal Senior Pickleball News](https://socalseniorpickleballnews.com/dupr-verified-the-answer-to-ending-sandbagging-in-pickleball), [Pickleball Nation](https://pickleballnation.com/blogs/pickleball-nation/dupr-verified-the-end-of-sandbagging) |
+| Programa DUPR Verified (2026): clubes verificados nos EUA; exige DUPR+ ativo e telefone verificado, um telefone por conta. Resumo | Média | [SoCal Senior Pickleball News](https://socalseniorpickleballnews.com/dupr-verified-the-answer-to-ending-sandbagging-in-pickleball), [Pickleball Nation](https://pickleballnation.com/blogs/pickleball-nation/dupr-verified-the-end-of-sandbagging) |
 | Eventos e jogadores sujeitos a revisão de um "Fairplay Committee". Resumo | Fraca | [PickleballHQ](https://pickleballhq.co/dupr-verified-ending-pickleballs-sandbagging-crisis/) |
 | Torneios sancionados exigem DUPR verificado para inscrever e montar chaves; parceria com USA Pickleball faz do DUPR o rating exclusivo dos eventos da entidade. Resumo | Média | [Pickleball US](https://pickleballus.org/players/tips/dupr-rating/), [US Open Pickleball FAQ](https://www.usopenpickleball.com/usop-registration/usop-dupr-faq) |
 
@@ -57,9 +57,8 @@ Pesquisa feita em 25/09/2026.
 
 | Achado | Força | Fonte |
 | --- | --- | --- |
-| DUPR+ custa US$ 3,99/mês ou US$ 29,99/ano (acesso 25/09/2026). Resumo | Média | [DUPR+](https://www.dupr.com/duprplus) |
+| DUPR+ é a assinatura paga do jogador (preço: evidência: documento D7 ("Referências internacionais: números de crescimento e monetização"), projeto Discovery e estratégia no Linear). Resumo | Média | [DUPR+](https://www.dupr.com/duprplus) |
 | O selo "Verified" depende de DUPR+ ativo: a verificação anti-sandbagging é atrelada à assinatura. Resumo | Média | [SoCal Senior Pickleball News](https://socalseniorpickleballnews.com/dupr-verified-the-answer-to-ending-sandbagging-in-pickleball) |
-| ~2 milhões de jogadores com rating; em jan/2024 eram ~500 mil usuários e 35 parceiros de API, quando Agassi, David Kass e Raine Ventures investiram US$ 8 mi. Resumo | Média | [PR Newswire, 2024](https://www.prnewswire.com/news-releases/andre-agassi-david-kass-and-raine-ventures-acquire-controlling-interest-in-dupr-invest-8-million-302043277.html), [DUPR](https://www.dupr.com/) |
 
 ---
 
@@ -93,14 +92,14 @@ Pesquisa feita em 25/09/2026.
 
 | Achado | Força | Fonte |
 | --- | --- | --- |
-| Em juvenis de alto nível, o UTR "significa muito menos" e há discrepâncias estranhas; programas usam o número como atalho preguiçoso para agrupar crianças, e pais não questionam "porque é UTR". Resumo | Fraca | [Junior Tennis USA (Substack)](https://juniortennisusa.substack.com/p/utr-can-be-right-but-its-wrong-for) |
+| Em juvenis de alto nível, o UTR perde significado e há discrepâncias estranhas; programas usam o número como atalho para agrupar crianças, e os pais não o questionam. Resumo | Fraca | [Junior Tennis USA (Substack)](https://juniortennisusa.substack.com/p/utr-can-be-right-but-its-wrong-for) |
 | Não achei nesta rodada reclamação específica sobre UTR de duplas. | Fraca | Busca desta rodada |
 
 ### 2.5 Monetização
 
 | Achado | Força | Fonte |
 | --- | --- | --- |
-| Power: US$ 10/mês no plano anual; desconto de US$ 12 em cada evento verificado e isenção da "Verified Fee". Em maio/2026 virou pacote "3 em 1" (Play, Stay, Style) com parceria Fabletics nos EUA. Resumo | Média | [UTR, Power 3-in-1](https://www.utrsports.net/blogs/news/a-new-chapter-for-utr-sports-power-becomes-3-in-1-membership), [UTR Power](https://www.utrsports.net/pages/power-membership) |
+| Power: assinatura paga, com desconto em cada evento verificado e isenção da "Verified Fee" (preços: D7). Em maio/2026 virou pacote "3 em 1" (Play, Stay, Style) com parceria Fabletics nos EUA. Resumo | Média | [UTR, Power 3-in-1](https://www.utrsports.net/blogs/news/a-new-chapter-for-utr-sports-power-becomes-3-in-1-membership), [UTR Power](https://www.utrsports.net/pages/power-membership) |
 | Preço por país no plano anual (Colômbia, Canadá, Tchéquia, China e outros), valores não visíveis no resumo. Resumo | Média | [UTR Press](https://www.utrsports.net/blogs/press/utr-sports-expands-global-access-with-new-international-pricing) |
 | Modelo: a verificação é cobrada por evento ("Verified Fee"), e a assinatura isenta essa taxa. Resumo | Média | [UTR, Verified events](https://www.utrsports.net/blogs/news/utr-verified-events-play-tennis-tournaments-save-money) |
 
@@ -114,7 +113,7 @@ Pesquisa feita em 25/09/2026.
 | --- | --- | --- |
 | Nível inicial por **questionário único** (só pode ser feito uma vez). Depois, a cada partida competitiva, o nível muda por resultado, nível dos adversários, **nível do parceiro** e confiabilidade do próprio jogador. Empate também mexe no nível: o time de nível somado maior perde pontos. **Lido** | Forte | [Playtomic Help](https://playerhelp.playtomic.com/hc/en-gb/articles/43310980754193-How-the-Playtomic-level-system-works), [Playtomic Manager](https://helpmanager.playtomic.com/hc/en-gb/articles/20563641264145-The-Playtomic-Levels-Algorithm) |
 | Confiabilidade alta = variação pequena; baixa = variação rápida. Nem o jogador nem o suporte podem ajustar a confiabilidade à mão. Perder para nível menor derruba mais; ganhar de quem o sistema já esperava vencer sobe pouco. **Lido** | Forte |
-| O nível **não muda** se o resultado for **rejeitado por um ou mais jogadores**, se a partida for casual ou se o placar for inválido (regras de set válido: 6-4 vale, 6-5 não). Ou seja, o veto do adversário (ver `VOZ_AMPLIADA.md`, seção 1) anula o efeito da partida. **Lido** | Forte |
+| O nível **não muda** se o resultado for **rejeitado por um ou mais jogadores**, se a partida for casual ou se o placar for inválido (regras de set válido: 6-4 vale, 6-5 não). Ou seja, o veto do adversário (voz ampliada, seção 1; evidência: documento D1 ("Evidência: voz do usuário e reclamações"), projeto Discovery e estratégia no Linear) anula o efeito da partida. **Lido** | Forte |
 | Nos comentários do próprio artigo, um jogador reclama que perdeu 0,4 por derrota e ganhou 0,25 a 0,3 por vitória; o suporte responde com a regra de expectativa. **Lido** (comentário público, sem identificar autor) | Fraca | [Playtomic Help](https://playerhelp.playtomic.com/hc/en-gb/articles/43310980754193-How-the-Playtomic-level-system-works), [Padel Tonic](https://padel.tennistonic.com/padel-news/6658/understanding-the-reliability-factor-in-playtomic-app/) |
 | Partida amistosa não mexe no nível, mesmo com placar lançado. Partida competitiva sempre mexe. Resumo | Forte | [Playtomic Help](https://playerhelp.playtomic.com/hc/en-gb/articles/19831974052625-Friendly-vs-Competitive-Public-Matches), [Playtomic Manager](https://helpmanager.playtomic.com/hc/en-gb/articles/20535188135185-Friendly-vs-Competitive-Open-Matches) |
 | Faixa da partida aberta competitiva: −0,25 / +0,75 a partir do primeiro jogador. Quem está fora pode pedir para entrar, e os inscritos aprovam. Resumo | Forte | [Playtomic Manager](https://helpmanager.playtomic.com/hc/en-gb/articles/20535188135185-Friendly-vs-Competitive-Open-Matches) |
@@ -139,17 +138,17 @@ Pesquisa feita em 25/09/2026.
 
 | Achado | Força | Fonte |
 | --- | --- | --- |
-| "Players are starting to feel as though Playtomic's rating system is flawed or simply unreliable." Queixa central: o nível cai por erro do parceiro, sem olhar desempenho individual. Resumo | Média | [Proper Padel, 12/09/2025](https://properpadel.uk/2025/09/12/is-playtomics-rating-system-flawed/) |
-| No r/padel, relatos de que o sistema é "rigged" e de que o nível não bate com a quadra (citado pelo artigo acima). Resumo | Fraca | [Proper Padel](https://properpadel.uk/2025/09/12/is-playtomics-rating-system-flawed/) |
+| Artigo diz que os jogadores começam a ver o sistema de nível da Playtomic como falho ou pouco confiável. Queixa central: o nível cai por erro do parceiro, sem olhar desempenho individual. Resumo | Média | [Proper Padel, 12/09/2025](https://properpadel.uk/2025/09/12/is-playtomics-rating-system-flawed/) |
+| No r/padel, relatos de que o sistema é viciado e de que o nível não bate com a quadra (citado pelo artigo acima). Resumo | Fraca | [Proper Padel](https://properpadel.uk/2025/09/12/is-playtomics-rating-system-flawed/) |
 | Outro artigo pergunta se o nível é "referência real" ou "confiabilidade a relativizar". Resumo | Média | [Actu-Padel](https://actu-padel.com/en/playtomic-and-its-ranking-a-real-reference-for-your-matches-or-a-reliability-to-be-relativized/), [No Strings Padel](https://clubhouse.nostringspadel.com/the-playtomic-app-are-player-ratings-accurate-2/) |
-| Trustpilot de playtomic.io: nota 1,3/5 ("Bad"); queixas sobre suporte que decide só por "system logs". Mistura reserva, pagamento e nível. Resumo | Média | [Trustpilot](https://www.trustpilot.com/review/www.playtomic.io) |
+| Avaliação pública da Playtomic muito baixa; queixas sobre um suporte que decide só pelos registros do sistema. Mistura reserva, pagamento e nível (nota e fonte: D7). Resumo | Média | D7 |
 
 ### 3.5 Monetização
 
 | Achado | Força | Fonte |
 | --- | --- | --- |
 | Premium do jogador: zero taxa de reserva/partida, estatísticas detalhadas e comparação com jogadores do mesmo nível, alertas de vaga. **Preço ao jogador não encontrado** nos resumos (é vendido pelas lojas de app). Resumo | Média | [Playtomic Manager, Premium Plan](https://helpmanager.playtomic.com/hc/en-gb/articles/20534670300561-Playtomic-Premium-Plan-for-players), [Playtomic Help](https://playerhelp.playtomic.com/hc/en-gb/articles/19831696399633-Premium-Plan-Unlimited) |
-| Os valores de €59 e €119/mês que aparecem no Appvizer parecem ser do software de gestão para clubes, não do Premium do jogador. Não usar como preço de jogador. Resumo | Fraca | [Appvizer](https://www.appvizer.com/recreational-activities/gym-mgt/syltek), [Playtomic pricing (clubes)](https://playtomic.com/pricing) |
+| Os valores mensais que aparecem num agregador parecem ser do software de gestão para clubes, não do Premium do jogador. Não usar como preço de jogador (valores: D7). Resumo | Fraca | D7 |
 | Nível entra na monetização por dois lados: comparação por nível no Premium, e a sessão de nivelamento como serviço do clube certificado. Inferência | Fraca | Fontes de 3.3 e 3.5 |
 
 ---
@@ -212,7 +211,7 @@ Pesquisa feita em 25/09/2026.
 | Achado | Força | Fonte |
 | --- | --- | --- |
 | Existe a CBBT, Confederação Brasileira de Beach Tennis, reconhecida pela Secretaria Especial do Esporte em 12/05/2020. Ou seja, **duas confederações** disputam o BT no Brasil. Resumo. O regulamento da CBT 2026 (lido, ver 6.2) trata qualquer torneio não homologado por ela como irregular e veda material de "organizações paralelas": a disputa é **aberta e com sanção prevista** | Média (existência da CBBT); Forte (a regra da CBT) | [CBBT](https://cbbtennis.com.br/), [FSMBT](https://fsmbt.com/Publicacao.aspx?id=138543) |
-| A CBBT roda na própria LetzPlay, com perfil criado em abril de 2022: **25.894 jogadores, 50 rankings em andamento, 208 torneios e 138 lugares associados** (lido em 25/09/2026; um resumo de busca anterior mostrava 24.806 / 48 / 200). Os torneios têm **dupla chancela** (ex.: "CBBT 250 / FGBT500", "CBBT100 / FPEBT400"): o mesmo evento pontua em duas tabelas, a nacional e a estadual. **Lido** | Forte | [LetzPlay, CBBT](https://letzplay.me/CBBT), [LetzPlay, FPEBT](https://letzplay.me/CBBT-FPEBT/rankings) |
+| A CBBT roda no próprio incumbente, com uma base grande de jogadores, dezenas de rankings em andamento e centenas de torneios (contadores: evidência: documento D4 ("Evidência: mercado e contadores do incumbente"), projeto Discovery e estratégia no Linear). Os torneios têm **dupla chancela** (ex.: "CBBT 250 / FGBT500", "CBBT100 / FPEBT400"): o mesmo evento pontua em duas tabelas, a nacional e a estadual. **Lido** | Forte | D4 |
 | Outro sistema grande: Ranking Beach Tennis (derivado do rankingdetenis.com, desde 2016), app MeuRanking. Resumo | Média | [Ranking Beach Tennis](https://www.rankingbeachtennis.com/) |
 | Exemplo de ranking de arena (AVB, On The Beach): pontuação **individual** mesmo em duplas; selos OTB100, OTB250; categoria B vale 90%, C 80%, D 70%. Campeão de C num OTB250 faz 200, vice 160. Pontos cumulativos com bônus por vitória. Resumo | Média | [On The Beach, Regulamento AVB](https://onthebeach.com.br/regulamento-do-ranking-de-beach-tennis/) |
 | Regulamentos de torneio preveem desclassificação sem reembolso para quem se inscreve abaixo do nível técnico. Resumo | Média | [Pró Spin](https://blog.prospin.com.br/torneios/categorias-do-beach-tennis/), [Beach Tennis BRA](https://beachtennisbra.com.br/dicas/quais-sao-as-categorias-do-beach-tennis-disputadas-nos-torneios-oficiais/) |
@@ -239,7 +238,7 @@ Descritivo. "Resolve" e "dor" vêm das seções anteriores.
 | O que resolve | Clareza: o jogador entende de onde veio cada ponto; motiva participação | Comparar desconhecidos; montar partidas equilibradas; semear chaves |
 | Anti-manipulação | Regra administrativa: proibido descer de categoria, desclassificação (6.2, 6.3) | Regra estatística e de verificação: peso menor ao autodeclarado, eventos verificados, confiabilidade (1.3, 2.3, 3.3) |
 | Dor documentada | Categoria errada e autodeclarada; "bolha" local; tabelas diferentes por arena (6.3, 6.4) | "Caiu depois de ganhar"; "caí por culpa do parceiro"; número parado; opacidade (1.4, 3.4) |
-| Monetização vista | Filiação e inscrição | Assinatura (DUPR+ US$ 3,99/mês; UTR Power US$ 10/mês anual) e verificação como produto (1.5, 2.5) |
+| Monetização vista | Filiação e inscrição | Assinatura (DUPR+, UTR Power) e verificação como produto (1.5, 2.5) |
 
 Observação factual: nos três sistemas pagos que exigem verificação (DUPR Verified, UTR Verified), o **selo de confiança é o que se cobra**, não o número em si.
 
@@ -264,7 +263,7 @@ Leitura por evidência. Não é recomendação.
 **Ganha força.**
 - Fragmentação documentada: ITF, CBT, CBBT (duas confederações) e rankings de arena com tabelas próprias e pesos por categoria diferentes (6.1–6.3). Força **Média**.
 - UTR, DUPR e WTN existem exatamente para "atravessar" clubes e eventos, e UTR-P mostra que o formato foi portado de um esporte para outro (2.2). O WTN não cobre BT (4). Força **Média**.
-- A LetzPlay já hospeda rankings de CBBT e federações estaduais (6.3). Isso é fato; o que ele implica é pergunta aberta.
+- O incumbente já hospeda rankings de CBBT e federações estaduais (6.3). Isso é fato; o que ele implica é pergunta aberta.
 
 **Perde força.**
 - Os sistemas que atravessam fronteiras cresceram com **patrocínio institucional**: DUPR como rating exclusivo da USA Pickleball, UTR-P como parceiro exclusivo da APP, WTN via ITF e federações nacionais (1.3, 2.2, 4). No BT brasileiro, o poder de definir categoria está nas confederações, e a CBT usa regra administrativa (proibição de descer), não rating. Força **Média**.
@@ -277,18 +276,18 @@ Leitura por evidência. Não é recomendação.
 Só o que o dono do produto responde.
 
 1. No BT, o que o jogador competitivo quer do "nível do adversário": um número, a categoria (A–D), ou o histórico cru (H2H, resultados)?
-2. A LetzPlay quer ser neutra entre CBT, CBBT e arenas, ou se alinhar a uma delas? Há relação comercial ou institucional com alguma?
-3. Um nível próprio da LetzPlay entraria em conflito com a categoria oficial de alguma confederação ou regulamento de torneio?
+2. O produto quer ser neutro entre CBT, CBBT e arenas, ou se alinhar a uma delas? Há relação comercial ou institucional com alguma?
+3. Um nível próprio do produto entraria em conflito com a categoria oficial de alguma confederação ou regulamento de torneio?
 4. O quanto importa, para o jogador de BT, que o nível não caia por culpa do parceiro? É dor vista em campo ou só nos fóruns de outros esportes?
-5. Confiança/verificação seria algo que a LetzPlay oferece de graça, ou algo que se cobra (como DUPR e UTR fazem)?
-6. Os organizadores de ranking de arena que já usam a LetzPlay aceitariam um número que não depende da tabela de pontos deles?
+5. Confiança/verificação seria algo que o produto oferece de graça, ou algo que se cobra (como DUPR e UTR fazem)?
+6. Os organizadores de ranking de arena que já usam o incumbente aceitariam um número que não depende da tabela de pontos deles?
 
 ---
 
 ## Nota de método
 
 - **WebSearch:** 34 de 35 permitidas.
-- **Firecrawl (coordenador, depois da primeira passada):** 5 leituras na íntegra (help center do DUPR, FAQ de duplas do UTR, help center da Playtomic, página da CBBT no LetzPlay, regulamento de BT 2026 da CBT em PDF).
+- **Firecrawl (coordenador, depois da primeira passada):** 5 leituras na íntegra (help center do DUPR, FAQ de duplas do UTR, help center da Playtomic, página da CBBT no incumbente, regulamento de BT 2026 da CBT em PDF).
 - **WebFetch:** 6 tentativas, **6 falharam** (bloqueio de egress do proxy em pickleheads.com, support.universaltennis.com, playerhelp.playtomic.com, worldtennisnumber.com, en.wikipedia.org e dupr.com). Parei de tentar após a sexta falha, porque todos os domínios testados, inclusive Wikipedia, estavam bloqueados.
 - Consequência: na primeira passada, **todas as linhas eram Resumo**. As marcadas **Lido** foram confirmadas depois pelo Firecrawl. A classificação **Forte** foi usada só quando várias fontes concordam e ao menos uma é help center ou documento oficial (resumo de doc oficial).
 - Não usei Firecrawl, Mobbin, MCP nem curl.

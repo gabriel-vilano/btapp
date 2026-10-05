@@ -98,9 +98,9 @@ Não se valida com entrevista: é uma pergunta de dado.
 
 | | |
 | --- | --- |
-| **Para verificar, vamos** | Somar contadores públicos de federações e circuitos com método explícito (o `MER` somou 8 páginas, parcial); pedir dado de uso do LetzPlay atual, se houver acesso (`DSC`, pergunta 2) |
+| **Para verificar, vamos** | Somar contadores públicos de federações e circuitos com método explícito (o `MER` somou 8 páginas, parcial); pedir dado de uso do incumbente, se houver acesso (`DSC`, pergunta 2) |
 | **E medir** | Jogadores com pelo menos 1 resultado em competição nos últimos 12 meses, por estado |
-| **Fonte mais forte** | Dado interno do LetzPlay atual. Sem ele, a estimativa continua Fraca |
+| **Fonte mais forte** | Dado interno do incumbente. Sem ele, a estimativa continua Fraca |
 
 ### S5 · Subir no ranking motiva e descer frustra
 
@@ -214,11 +214,11 @@ Respostas: *Eu gostaria* · *Já espero isso* · *Tanto faz* · *Dá para conviv
 
 **O que é.** Um teste da **estrutura** da navegação sem nenhum visual: o participante vê só a árvore de menus em texto e recebe uma tarefa ("onde você confere o horário do seu próximo jogo?"). Mede se a pessoa acha o lugar certo e por qual caminho. Ferramentas: Treejack (Optimal Workshop), UXtweak, ou um protótipo de texto no Maze.
 
-**Por que aqui:** o problema 2 do audit é arquitetura de informação ("menu com 19+ itens, busca duplicada", `CLAUDE.md`), e a navegação é a dor mais citada nas lojas (`MER O6`). O *tree testing* mede isso antes de qualquer tela.
+**Por que aqui:** o problema 2 do audit do incumbente é arquitetura de informação ("menu com 19+ itens, busca duplicada"; `docs/PRODUCT.md`, seção "Problemas do incumbente que o produto resolve"; o audit completo é o documento "Auditoria do app atual", projeto Discovery e estratégia no Linear), e a navegação é a dor mais citada nas lojas (`MER O6`). O *tree testing* mede isso antes de qualquer tela.
 
 **O que testar:**
 
-1. **A árvore atual do LetzPlay** como linha de base: quanto as pessoas acertam hoje.
+1. **A árvore atual do incumbente** como linha de base: quanto as pessoas acertam hoje.
 2. **Uma ou mais árvores candidatas**, quando existirem. Desenhar a candidata é decisão de produto e fica fora deste plano. O `REF` 07 descreve os padrões do mercado (tab bar com 4 ou 5 destinos em 28 de 28 apps).
 
 **Tarefas**, tiradas das etapas do [`04-mapa-do-job.md`](04-mapa-do-job.md) com dor forte:

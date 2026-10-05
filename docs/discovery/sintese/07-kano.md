@@ -67,7 +67,7 @@ A coluna **Confiança** diz quão bem os sinais sustentam a classificação: Mé
 | --- | --- | --- | --- |
 | Lista ou busca de torneios | Obrigatória | Todos os apps de BT têm (`MAT`) | Média |
 | Inscrição com pagamento online | Obrigatória | Table stakes; queixa forte quando a cobrança falha (`DOR D2`) | Média |
-| Notificação de chave, horário e mudança | Obrigatória | Falha custa W.O. e "perdemos torneios"; quando funciona, ninguém elogia (`MER O3`) | Média |
+| Notificação de chave, horário e mudança | Obrigatória | Falha custa W.O. e torneios perdidos; quando funciona, ninguém elogia (`MER O3`) | Média |
 | Filtro por nível e região | Desempenho | "Filtros ruins" em 9 menções: a queixa é de grau (`MER O8`) | Fraca (fora do BT) |
 | Programação ao vivo no dia | Desempenho | O WhatsApp faz; quanto mais atual, melhor (`MAT`) | Fraca |
 | Agenda dos meus eventos inscritos | Desempenho | Parcial em quase todos; sem voz | Fraca |
@@ -78,7 +78,7 @@ A coluna **Confiança** diz quão bem os sinais sustentam a classificação: Mé
 | Feature | Tipo | Sinal | Confiança |
 | --- | --- | --- | --- |
 | Ranking por competição | Obrigatória | Todos têm; é a razão de estar no app (`MAT`, `DSC` 4.2) | Média |
-| Resultado de torneio lançado a tempo | Obrigatória | "2 meses e os jogos ainda estão pendentes"; ninguém elogia quando chega (`MER O1`) | Média |
+| Resultado de torneio lançado a tempo | Obrigatória | Jogos pendentes há meses; ninguém elogia quando chega (`MER O1`) | Média |
 | Jogador lança o resultado | Desempenho | Quanto mais rápido entra, melhor (`MER O1`) | Fraca |
 | Adversário confirma, com prazo | Desempenho, com risco de **Reversa** | Acelera o resultado, mas o veto do perdedor irrita (8 threads, `VZA`) | Fraca |
 | Explicação de por que a posição mudou | Encantamento | Ninguém mostra a conta; a queixa vem de apps de rating (`MAT L5`) | Fraca |
@@ -91,7 +91,7 @@ A coluna **Confiança** diz quão bem os sinais sustentam a classificação: Mé
 | Feature | Tipo | Sinal | Confiança |
 | --- | --- | --- | --- |
 | Perfil público com histórico | Obrigatória | Todos têm (`MAT`) | Média |
-| H2H entre jogadores | Obrigatória | Table stakes no BT (LetzPlay, Meu Ranking, Ranketes) (`MER`, abaixo do corte) | Média |
+| H2H entre jogadores | Obrigatória | Table stakes no BT (incumbente, Meu Ranking, Ranketes) (`MER`, abaixo do corte) | Média |
 | Perfil único e categoria verdadeira | Obrigatória | *Sandbagging* é queixa forte dos dois lados; ninguém elogia a ausência de fraude (`DOR D1`) | Média |
 | Nível comparável entre adversários | Desempenho | "Rating que não reflete o nível": queixa de grau (`MER O2`) | Fraca (fora do BT) |
 | Confiabilidade do nível (verificado, peso por origem) | Encantamento | Só UTR e DUPR; nenhum app de BT (`MAT L3`) | Fraca |
@@ -105,7 +105,7 @@ A coluna **Confiança** diz quão bem os sinais sustentam a classificação: Mé
 | Seguir jogadores | Indiferente | Oferta abundante, demanda quase nula (`MAT`, padrões) | Fraca |
 | Feed de atividade automático | Indiferente | Idem; 1 elogio e 1 queixa na amostra (`MER`, abaixo do corte) | Fraca |
 | Torcer, curtir, comentar | Indiferente | Idem | Fraca |
-| Gestão de parceiros frequentes | Desempenho | "não dá para remover" (LetzPlay): queixa de grau (`MAT`) | Fraca |
+| Gestão de parceiros frequentes | Desempenho | Parceiro que não se consegue remover (incumbente): queixa de grau (`MAT`) | Fraca |
 
 **Ressalva forte para este JTBD:** ausência de voz em review não prova indiferença. Reviews negativas falam do que quebrou, e ninguém escreve "adoro o feed" com a mesma frequência. É o JTBD em que a hipótese de Kano é mais frágil e o questionário mais útil (`S10`).
 
@@ -123,10 +123,10 @@ A coluna **Confiança** diz quão bem os sinais sustentam a classificação: Mé
 
 | Feature | Tipo | Sinal | Confiança |
 | --- | --- | --- | --- |
-| Sessão e login estáveis | Obrigatória | "deslogar ... depois de poucos minutos"; correções recorrentes desde 2022 (`MER O7`, `APR`) | Média |
+| Sessão e login estáveis | Obrigatória | Logout depois de poucos minutos de uso; correções recorrentes desde 2022 (`MER O7`, `APR`) | Média |
 | Suporte que responde | Obrigatória | 9 menções em 5 apps; protocolos sem resposta (`MER O7`, `DOR D4`) | Média |
 | App gratuito para o jogador | Obrigatória | Nenhum app de BT cobra o jogador (`MAT`, table stakes) | Média |
-| Navegação direta para a tarefa do dia | Desempenho | A dor mais citada, sempre em grau ("mais que 3 cliques") (`MER O6`) | Média |
+| Navegação direta para a tarefa do dia | Desempenho | A dor mais citada, sempre em grau (cliques demais até a informação) (`MER O6`) | Média |
 | Velocidade do app | Desempenho | Lentidão: 13 menções (`MER O7`) | Média |
 | Taxa ou assinatura cobrada do jogador | **Reversa** | MATCHi: 5 das 10 reviews visíveis reclamam; o Ranketes tenta com uso quase nulo (`VZA`, `TDN`) | Média (fora do BT) |
 
@@ -187,7 +187,7 @@ As setas indicam a ordem de leitura da pirâmide: o encantamento só aparece se 
 
 ## O que a hipótese mostra (leitura descritiva)
 
-- **As obrigatórias são as que o LetzPlay atual declara e que falham.** A matriz já mostrava que as queixas são de confiabilidade, não de ausência (`MAT`, padrões; `S9`). No vocabulário de Kano: o incumbente tem as obrigatórias no papel, e a falha delas gera a insatisfação que aparece nas lojas.
+- **As obrigatórias são as que o incumbente declara e que falham.** A matriz já mostrava que as queixas são de confiabilidade, não de ausência (`MAT`, padrões; `S9`). No vocabulário de Kano: o incumbente tem as obrigatórias no papel, e a falha delas gera a insatisfação que aparece nas lojas.
 - **Quase todo o encantamento está no JTBD 5 e na explicação do ranking.** São as features que os concorrentes de fora do BT cobram, e que ninguém no BT pediu. É onde a hipótese mais precisa do questionário.
 - **Duas features têm risco de Reversa que a matriz não mostrava:** a confirmação pelo adversário (o veto) e o rating transversal (o número que "mente"). Ambas são soluções vistas para oportunidades fortes (`B1`, `C3` do [`02`](02-arvore-oportunidades.md)).
 - **O JTBD 4 aparece como indiferente**, mas é o dado mais frágil da tabela.

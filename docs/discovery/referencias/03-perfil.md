@@ -9,7 +9,7 @@ O perfil tem **duas leituras** (`docs/PRODUCT.md`): a **social**, de quem acompa
 
 ## Resumo
 
-- **Apps de esporte profissional e apps de fitness social constroem o perfil de formas opostas.** Os de liga abrem com **cartel e estatística** (DAZN: "Wins 24 · KOs 15 · Losses 0" logo abaixo do nome). Os de fitness abrem com **seguidores e atividade** (Strava, Garmin, Peloton). O LetzPlay precisa das duas, e nenhum app observado faz as duas bem na mesma tela.
+- **Apps de esporte profissional e apps de fitness social constroem o perfil de formas opostas.** Os de liga abrem com **cartel e estatística** (DAZN: "Wins 24 · KOs 15 · Losses 0" logo abaixo do nome). Os de fitness abrem com **seguidores e atividade** (Strava, Garmin, Peloton). O produto precisa das duas, e nenhum app observado faz as duas bem na mesma tela.
 - **Tabs são a forma dominante de separar as leituras:** 7 de 14 apps (FotMob, theScore, Garmin, Peloton, MLS, adidas Running, Ladder).
 - **A posição no ranking aparece no cabeçalho** nos apps de esporte individual: theScore (golfe: "World Rank 176 · FedEx Cup Rank 77 >"), Box Box Club (F1: "01 POS · 204 PTS" em display).
 - **Nível como cor e trilha de progresso** (Nike Run Club: nível "Orange", "faltam 43 mi para o próximo marco") é o análogo mais próximo de **categoria de BT** (D, C, B) com promoção.

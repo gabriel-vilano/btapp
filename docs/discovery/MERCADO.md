@@ -61,20 +61,9 @@ Se a estimativa da CBT de 2023 estiver certa, o BT teria quase 3× os praticante
 
 ### 1.3 O que existe de "base contável" (atletas em plataformas)
 
-Contadores públicos das páginas de federações e circuitos no LetzPlay, vistos pelo resumo de busca. São cadastros acumulados, não praticantes ativos. Podem ter duplicatas (perfis duplicados são dor citada no `DISCOVERY.md`).
+As páginas de federações e circuitos de BT no incumbente exibem contadores públicos de jogadores, rankings e torneios (por página, vistos pelo resumo de busca: evidência: documento D4 ("Evidência: mercado e contadores do incumbente"), projeto Discovery e estratégia no Linear). São cadastros acumulados, não praticantes ativos. Podem ter duplicatas (perfis duplicados são dor citada no `DISCOVERY.md`).
 
-| Página no LetzPlay | Jogadores | Rankings | Torneios | Acesso | Força |
-| --- | --- | --- | --- | --- | --- |
-| [CBBT – Circuito Brasileiro de BT](https://letzplay.me/CBBT) | 24.806 | 48 | 200 | Resumo | Média |
-| [Circuito Beach Tennis](https://letzplay.me/circuitobeachtennis) | 19.756 | 186 | 109 | Resumo | Média |
-| [Federação Gaúcha de BT (FGBT)](https://letzplay.me/CBBT-FGBT) | 6.565 a 6.653 (dois snapshots) | 201 | 150 a 153 | Resumo | Média |
-| [Federação Pernambucana (FPEBT)](https://letzplay.me/CBBT-FPEBT/rankings) | 4.506 | 193 | 54 | Resumo | Média |
-| [Federação Mineira (FMBT)](https://letzplay.me/CBBT-FMinBT/rankings) | 3.479 | 198 | 49 | Resumo | Média |
-| [Federação Brasiliense – BT](https://letzplay.me/FBT) | 2.829 | 159 | 38 | Resumo | Média |
-| [Federação de BT de MS](https://letzplay.me/fbtms) | 1.379 | 63 | 21 | Resumo | Média |
-| [Federação Bahiana (FBBT)](https://letzplay.me/CBBT-FBBT/rankings) | 941 | 135 | 24 | Resumo | Média |
-
-**Leitura:** a soma das páginas acima dá ~65 mil cadastros, com sobreposição provável. É uma ordem de grandeza de **jogadores que já entraram num circuito formal** hospedado no LetzPlay. Fica duas ordens abaixo de 1,1 mi. Não inclui CBT e federações de tênis que usam a Tênis Integrado. O número de atletas ranqueados na CBT **não foi encontrado** (páginas de ranking bloqueadas).
+**Leitura:** somados, esses contadores dão uma ordem de grandeza de **jogadores que já entraram num circuito formal** hospedado no incumbente. Ficam ordens de grandeza abaixo da estimativa de praticantes da CBT. Não incluem CBT e federações de tênis que usam a Tênis Integrado. O número de atletas ranqueados na CBT **não foi encontrado** (páginas de ranking bloqueadas).
 
 ### 1.4 Uma referência estadual
 
@@ -109,7 +98,7 @@ Contadores públicos das páginas de federações e circuitos no LetzPlay, visto
 
 | Achado | Fonte | Acesso | Força |
 | --- | --- | --- | --- |
-| Quadra coberta leva o BT a cidades frias e chuvosas. Depoimento de jogadora de Curitiba: "mesmo sendo uma quadra coberta, eu já me sinto na praia" | BBC via Terra, 2023 | Lido | Média |
+| Quadra coberta leva o BT a cidades frias e chuvosas. Jogadora de Curitiba relata que a quadra coberta mantém a sensação de praia (depoimento: D4) | BBC via Terra, 2023 | Lido | Média |
 | Escola Vita Beach (Curitiba): **+6% de alunos no inverno** em relação a maio; nº de professores quase dobrou desde 2019 | BBC via Terra, 2023 | Lido | Média (um caso) |
 | Belém: arenas cobertas mantêm a prática no "inverno amazônico" (estação de chuva) | [O Liberal](https://www.oliberal.com/esportes/maisesportes/esporte-do-verao-beach-tennis-continua-em-alta-durante-o-inverno-em-belem-1.470738) | Resumo | Fraca |
 | Condomínios no litoral gaúcho misturam quadras cobertas e descobertas | [Costa Dorata](https://costadorata.com.br/blog/beach-tennis-condominio-litoral-norte/) | Resumo | Fraca |
@@ -127,9 +116,9 @@ Contadores públicos das páginas de federações e circuitos no LetzPlay, visto
 | **ITF** | Rege o BT internacional (ITF Beach Tennis World Tour, Sand Series, Mundial, Copa do Mundo) | Site ITF | [ITF Beach Tennis Tour](https://www.itftennis.com/en/tours/beach-tennis-tour/) | Resumo | Forte |
 | **IFBT** (International Federation of Beach Tennis) | Entidade internacional paralela, sediada na Itália. 24º Mundial IFBT em Rimini, 06/2025 | Próprio | [ifbt.eu](https://www.ifbt.eu/world-championships-2025/) | Resumo | Média |
 | **CBT** (Confederação Brasileira de Tênis) | Filiada à ITF. Ranking nacional de BT, torneios GA+ a G3, anuidade R$ 300 (R$ 200 no 2º semestre) em 2026 | Site CBT | Regulamento CBT 2026 | Lido | Forte |
-| **CBBT** (Confederação Brasileira de Beach Tennis) | Circuito Brasileiro de BT, federações estaduais "de BT" abaixo dela | LetzPlay | [cbbtennis.com.br](https://cbbtennis.com.br/); [Regulamento CBBT 2025](https://cbbtennis.com.br/wp-content/uploads/2025/01/Regulamento-Cbbt-2025.pdf) | Resumo | Forte |
+| **CBBT** (Confederação Brasileira de Beach Tennis) | Circuito Brasileiro de BT, federações estaduais "de BT" abaixo dela | Incumbente | [cbbtennis.com.br](https://cbbtennis.com.br/); [Regulamento CBBT 2025](https://cbbtennis.com.br/wp-content/uploads/2025/01/Regulamento-Cbbt-2025.pdf) | Resumo | Forte |
 | Federações **de tênis** com BT (FPT, FGT, FCTBT, FMT, FCT…) | Ranking estadual; FCTBT: filiação R$ 160/ano | Tênis Integrado | Regulamento FCTBT 2025 | Lido | Forte |
-| Federações **de BT** (FGBT, FPEBT, FMBT, FECBT, FBBT, FSMGBT…) | Ranking estadual sob a CBBT | LetzPlay | Contadores da seção 1.3 | Resumo | Média |
+| Federações **de BT** (FGBT, FPEBT, FMBT, FECBT, FBBT, FSMGBT…) | Ranking estadual sob a CBBT | Incumbente | Contadores da seção 1.3 | Resumo | Média |
 | **CBI-BT** | Primeiro Circuito Brasileiro Interclubes de BT (2025) | Próprio | [cbibt.com.br](https://cbibt.com.br/) | Resumo | Fraca |
 
 **Leitura:** em vários estados existem **duas federações paralelas** (uma de tênis via CBT, outra de BT via CBBT), cada uma numa plataforma diferente. No plano internacional também há duas (ITF e IFBT).
@@ -164,12 +153,12 @@ Página institucional da ITF ainda fala em "mais de 300 torneios em 37 países" 
 | Circuito | Volume | Fonte | Acesso | Força |
 | --- | --- | --- | --- | --- |
 | CBT nacional (GA+, GA, G1+, G1, G2, G3) | Nº de torneios em 2026 não encontrado. Inscrição R$ 157 (adimplente) ou R$ 247 | Regulamento CBT 2026 | Lido | Forte (regras); sem volume |
-| CBBT – Circuito Brasileiro | 25.894 jogadores, 208 torneios e 50 rankings acumulados na página (lido em 25/09/2026 no aprofundamento; o resumo dava 200 e 48) | LetzPlay | Lido | Forte |
+| CBBT – Circuito Brasileiro | Contadores acumulados de jogadores, torneios e rankings na página do circuito (lidos em 25/09/2026 no aprofundamento; números: D4) | Incumbente | Lido | Forte |
 | Campeonato Cearense (FCTBT) | Etapas FCTBT 1000/1500/2000; até 4 etapas no interior | Regulamento FCTBT 2025 | Lido | Forte |
-| Federações de BT (seção 1.3) | 21 a 153 torneios acumulados por federação | LetzPlay | Resumo | Média |
+| Federações de BT (seção 1.3) | Torneios acumulados por federação (números: D4) | Incumbente | Resumo | Média |
 | Brasil Open, Superliga, Brasil Beach Games | Existem; volume de atletas só no Brasil Beach Games (1.500 em 5 modalidades) | Ver seção 2.2; `DISCOVERY.md` | Resumo | Fraca |
 
-**Lacuna:** não existe contagem de torneios amadores de arena por ano. Pelos contadores do LetzPlay, só as páginas listadas somam centenas de torneios. Mas os contadores são acumulados, sem recorte por ano.
+**Lacuna:** não existe contagem de torneios amadores de arena por ano. Os contadores do incumbente (D4) mostram volume relevante de torneios nas páginas de federação e circuito. Mas são acumulados, sem recorte por ano.
 
 ---
 
@@ -237,12 +226,12 @@ O próprio relatório avisa: as conclusões são "direcionais", não censo. A pe
 | Sinal | Estados/cidades | Fonte | Força |
 | --- | --- | --- | --- |
 | Torneios ITF 2025 | SP (49) muito à frente; depois PR, MG, RS, SC | FPT (seção 4.2) | Média |
-| Cadastros em federações de BT no LetzPlay | RS (FGBT ~6,6 mil), PE (~4,5 mil), MG (~3,5 mil), DF (~2,8 mil) | Seção 1.3 | Média |
+| Cadastros em federações de BT no incumbente | RS (FGBT), PE, MG e DF no topo (contagens: D4) | Seção 1.3 | Média |
 | Cidades-sede ITF, inclusive longe do mar | SP, Brasília, BH, Teresina, Palmas, Cuiabá, Ribeirão Preto, Maringá, Londrina | BBC via Terra, 2023 (lido) | Média |
 | Oferta de espaços | Estado de SP (>900 em 2023), Rio (80 espaços licenciados), Florianópolis (>30 quadras públicas) | Seção 2 | Fraca a Média |
 | Origem | Chegou pelo Rio em 2008; 1º torneio em Florianópolis, 2010 (CBT) | BBC via Terra | Média |
 
-**Leitura:** o mapa por torneios internacionais (SP no topo) e o mapa por cadastros em federações de BT (RS, PE, MG no topo) não coincidem. Cada um mede uma coisa, e o segundo depende de quais federações usam o LetzPlay.
+**Leitura:** o mapa por torneios internacionais (SP no topo) e o mapa por cadastros em federações de BT (RS, PE, MG no topo) não coincidem. Cada um mede uma coisa, e o segundo depende de quais federações usam o incumbente.
 
 ---
 
@@ -251,7 +240,7 @@ O próprio relatório avisa: as conclusões são "direcionais", não censo. A pe
 | # | Tema | Versão A | Versão B | Comentário |
 | --- | --- | --- | --- | --- |
 | D1 | Praticantes BT no Brasil | 1,1 mi (CBT, 2023) | 1,5 mi (atribuído à CBT, "2024") | B sem primária localizada. Nenhuma das duas tem metodologia |
-| D2 | Base mensurável × estimativa | ~65 mil cadastros somando 8 páginas de federação/circuito no LetzPlay | 1,1 mi praticantes | Não são a mesma coisa (competidor cadastrado × praticante). A distância mostra que o "competidor formal" é uma fração pequena |
+| D2 | Base mensurável × estimativa | Cadastros somados das páginas de federação/circuito no incumbente (números: D4) | 1,1 mi praticantes | Não são a mesma coisa (competidor cadastrado × praticante). A distância mostra que o "competidor formal" é uma fração pequena |
 | D3 | Peso do Brasil no calendário ITF | ">65% dos torneios" (CBT, 2023) | 180 de pelo menos 540 em 2025 (no máximo ~1/3) (FPT sobre calendário ITF) | Só Brasil, Itália, Espanha, França e EUA já somam 540 torneios em 2025. A afirmação de 65% não fecha com a contagem da FPT |
 | D4 | Nº de torneios ITF no Brasil | 180 (FPT, 2025) | "~92 por ano" ([Manchete Esportiva](https://mancheteesportiva.com.br/estatisticas/beach-tennis-brasil-2026-espirito-santo/425/)); 59–62 "eventos" com 2–3 torneios cada (CBT, 2022–23) | Unidades diferentes (evento × torneio) e anos diferentes |
 | D5 | Tamanho do ITF Tour | 491 torneios em 32 países (2024) | "mais de 300 em 37 países" (página da ITF) | Texto institucional desatualizado ou contagem diferente |
@@ -266,7 +255,7 @@ O próprio relatório avisa: as conclusões são "direcionais", não censo. A pe
 ## 8. Lacunas
 
 - **Nenhuma medição independente** do número de praticantes de BT no Brasil (nem IBGE, nem consultoria, nem academia).
-- **Atletas ranqueados na CBT e na CBBT:** não encontrados (sites bloqueados; contadores do LetzPlay são acumulados).
+- **Atletas ranqueados na CBT e na CBBT:** não encontrados (sites bloqueados; contadores do incumbente são acumulados).
 - **Torneios amadores por ano:** sem contagem.
 - **Google Trends:** não acessado. Não há curva de interesse de busca para BT × padel.
 - **Sazonalidade:** só anedotas.

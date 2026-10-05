@@ -17,7 +17,7 @@ Uma **suposição** é algo que precisa ser verdade para o produto dar certo, ma
 
 Bland separa as suposições em três famílias, e a divisão ajuda a ver onde está o buraco:
 
-| Família | Pergunta | No LetzPlay |
+| Família | Pergunta | No produto |
 | --- | --- | --- |
 | **Desejabilidade** | As pessoas querem isso? | O jogador quer ver a conta do ranking, confirmar resultado, consultar o adversário? |
 | **Viabilidade** | Isso se sustenta como negócio? | O público é grande? Quem paga? Quem escolhe o app? |
@@ -33,7 +33,7 @@ Bland separa as suposições em três famílias, e a divisão ajuda a ver onde e
 
 ```mermaid
 quadrantChart
-    title Suposições do LetzPlay por importância e evidência
+    title Suposições do produto por importância e evidência
     x-axis Com evidência --> Sem evidência
     y-axis Menos importante --> Mais importante
     quadrant-1 Testar primeiro
@@ -78,21 +78,21 @@ quadrantChart
 
 | ID | Suposição | Origem | Evidência | Importância |
 | --- | --- | --- | --- | --- |
-| S1 | **O ranking é o principal motivo para abrir o app; o feed é secundário** | `CLAUDE.md` ("ranking é o coração emocional"); `DSC H4` | **Fraca, a favor.** Nenhum dado de uso. O único sinal indireto: o JTBD 4 é "o mais coberto pela oferta e o menos citado pela demanda" (`MAT`, padrões) | Alta |
-| S2 | **O jogador aceita registrar no app o jogo que combinou no WhatsApp** | `DSC H2`; `CLAUDE.md` ("marcação acontece no WhatsApp") | **Nenhuma a favor; Fraca contra.** Nenhuma review pede (`MAT L10`); o Meu Ranking passou a apontar para o grupo de WhatsApp (`CON`) | Alta |
+| S1 | **O ranking é o principal motivo para abrir o app; o feed é secundário** | `docs/PRODUCT.md` ("ranking é o coração emocional"); `DSC H4` | **Fraca, a favor.** Nenhum dado de uso. O único sinal indireto: o JTBD 4 é "o mais coberto pela oferta e o menos citado pela demanda" (`MAT`, padrões) | Alta |
+| S2 | **O jogador aceita registrar no app o jogo que combinou no WhatsApp** | `DSC H2`; `docs/PRODUCT.md` ("marcação acontece no WhatsApp") | **Nenhuma a favor; Fraca contra.** Nenhuma review pede (`MAT L10`); o Meu Ranking passou a apontar para o grupo de WhatsApp (`CON`) | Alta |
 | S4 | **Confirmação do resultado pelo adversário, com prazo, basta para o resultado ser confiável** | `DSC` 2.1; primeira leitura de `MER O1` | **Forte, contra.** 8 threads de disputa em 2 apps; nenhum produto arbitra o veto (`VZA`, seção 1; `APR`, achado 1) | Alta |
-| S5 | **Subir no ranking motiva e descer frustra: o ranking é um momento emocional** | `CLAUDE.md`; `docs/PRODUCT.md` (princípios) | **Fraca, a favor.** Só anedota de psicóloga do esporte ("aprender a lidar com a frustração", `PUB` 2.2). Nenhuma voz de jogador de BT sobre posição | Alta |
+| S5 | **Subir no ranking motiva e descer frustra: o ranking é um momento emocional** | `docs/PRODUCT.md` (contexto do esporte e princípios) | **Fraca, a favor.** Só anedota de psicóloga do esporte, sobre aprender a lidar com a frustração (`PUB` 2.2). Nenhuma voz de jogador de BT sobre posição | Alta |
 | S6 | **O jogador quer entender por que a posição mudou** | `MER O4`; `MAT L5` | **Média, a favor.** Na oferta, a conta está espalhada em abas (`APR`, O4). A voz vem de apps de *rating* (DUPR, UTR), não de ranking por pontos | Média |
-| S7 | **Antes de um confronto, o jogador consulta o nível e o histórico do adversário** | JTBD 3 (`CLAUDE.md`); "perfil com duas leituras" (`docs/PRODUCT.md`) | **Média, a favor.** No BT, jogadores "analisam os perfis dos atletas já inscritos antes de se inscreverem" (`DOR D1`, RA2). O resto vem de fora do BT (18 threads sobre rating) | Alta |
-| S8 | **Horário e aviso confiáveis no dia do torneio são uma dor de alto custo** | `MER O3`; `MAT L1` | **Forte, a favor.** W.O. em quartas de Brasileiro por falta de horário; "perdemos torneios"; o organizador confirma o lado dele (`DOR D4`, `D5`) | Alta |
-| S9 | **A barreira do LetzPlay atual é confiabilidade e navegação, não falta de feature** | `DSC H6`; `MAT`, padrões | **Forte, a favor.** Células ⚠️ concentradas em confiabilidade; navegação é a dor mais citada (15 menções em 5 apps). Falta dado de uso | Alta |
-| S10 | **Um feed automático de atividade traz o jogador de volta entre competições** | JTBD 4; `CLAUDE.md` ("conteúdo automático engaja") | **Fraca, a favor.** Analogia com o Strava (`DSC` 4.1, `RIN`). Demanda na amostra: 1 elogio e 1 queixa (`MER`, abaixo do corte) | Média |
-| S12 | **O uso cai entre competições** | `CLAUDE.md`; `DSC H5` | **Fraca, a favor.** Premissa. Arenas indoor reduzem a sazonalidade (`DSC` 2.1) | Média |
+| S7 | **Antes de um confronto, o jogador consulta o nível e o histórico do adversário** | JTBD 3 (`docs/PRODUCT.md`); "perfil com duas leituras" (`docs/PRODUCT.md`) | **Média, a favor.** No BT, jogadores analisam o perfil dos inscritos antes de se inscrever (`DOR D1`, RA2). O resto vem de fora do BT (18 threads sobre rating) | Alta |
+| S8 | **Horário e aviso confiáveis no dia do torneio são uma dor de alto custo** | `MER O3`; `MAT L1` | **Forte, a favor.** W.O. em quartas de Brasileiro por falta de horário; jogadores relatam torneios perdidos; o organizador confirma o lado dele (`DOR D4`, `D5`) | Alta |
+| S9 | **A barreira do incumbente é confiabilidade e navegação, não falta de feature** | `DSC H6`; `MAT`, padrões | **Forte, a favor.** Células ⚠️ concentradas em confiabilidade; navegação é a dor mais citada (15 menções em 5 apps). Falta dado de uso | Alta |
+| S10 | **Um feed automático de atividade traz o jogador de volta entre competições** | JTBD 4; `docs/PRODUCT.md` ("conteúdo automático engaja") | **Fraca, a favor.** Analogia com o Strava (`DSC` 4.1, `RIN`). Demanda na amostra: 1 elogio e 1 queixa (`MER`, abaixo do corte) | Média |
+| S12 | **O uso cai entre competições** | `docs/PRODUCT.md`; `DSC H5` | **Fraca, a favor.** Premissa. Arenas indoor reduzem a sazonalidade (`DSC` 2.1) | Média |
 | S14 | **O jogador quer descobrir competição por nível e região num lugar só** | `MER O8`; `MAT L7` | **Média, a favor.** 9 menções em 5 apps, quase todas fora do BT | Média |
 | S15 | **Subir de categoria (D → C → B → A) é o eixo emocional da carreira amadora** | `PUB HP7`; `MER O9` | **Misto.** A regra é Forte (promoção formal na CBT, FCTBT, FPT). O valor para o jogador é Fraco. Na CBT a promoção é às vezes **involuntária** (`RAT` 6.2) | Média |
 | S16 | **Um nível de BT que atravesse arenas e federações é desejado** | `MER O10` | **Fraca para o jogador** (1 pedido explícito, num app de padel); **Média para o organizador** (impugnação por ranking de outra federação, `ORG`, O10) | Média |
 | S19 | **O público competitivo é adulto de 25 a 45 anos, classe A/B, com mulheres metade ou mais** | `PUB HP1`, `HP2` | **Média, a favor.** 4 estudos locais independentes; o dado da CBT diz o contrário e não tem método | Baixa |
-| S20 | **Integridade de categoria (perfil único, sem *sandbagging*) importa ao jogador e ao organizador** | `MER O2`; `DOR D1` | **Forte, a favor.** Dor com mais tipos de fonte dos dois lados. Diretor de federação: "é o que também gera muito stress" | Alta |
+| S20 | **Integridade de categoria (perfil único, sem *sandbagging*) importa ao jogador e ao organizador** | `MER O2`; `DOR D1` | **Forte, a favor.** Dor com mais tipos de fonte dos dois lados. Um diretor de federação a aponta como grande fonte de stress | Alta |
 | S21 | **O jogador quer marcar o jogo de ranking dentro do app** | `MAT L10` (Ranketes oferece) | **Nenhuma a favor.** Nenhuma review pede; o Ranketes tem uso quase nulo (`TDN`) | Baixa |
 | S24 | **Entre competições, o jogador quer ver evidência de evolução** | JTBD 5 | **Média fora do BT, Fraca no BT.** Os concorrentes cobram por isso (`MAT L9`); no BT, 2 menções de "rating preso" | Média |
 
@@ -100,7 +100,7 @@ quadrantChart
 
 | ID | Suposição | Origem | Evidência | Importância |
 | --- | --- | --- | --- | --- |
-| S13 | **O jogador escolhe o app que usa** (implícita num app do jogador que conquista usuário direto) | Framing do redesign em `CLAUDE.md` e `docs/PRODUCT.md` | **Forte, contra.** 4 reviews em 3 apps dizem que usam porque a federação, a arena ou o circuito exige (`MER RS4`); o organizador federado também não escolhe (`ORG RO2`) | Alta |
+| S13 | **O jogador escolhe o app que usa** (implícita num app do jogador que conquista usuário direto) | Framing do redesign em `docs/PRODUCT.md` | **Forte, contra.** 4 reviews em 3 apps dizem que usam porque a federação, a arena ou o circuito exige (`MER RS4`); o organizador federado também não escolhe (`ORG RO2`) | Alta |
 | S17 | **O público competitivo é grande o bastante para sustentar o produto** | Premissa de lançamento em `docs/PRODUCT.md` | **Fraca, misto.** ~65 mil cadastros em circuitos × 1,1 mi praticantes estimados, sem metodologia (`PUB HP3`, `MER RS3`, `RS6`) | Alta |
 | S18 | **O jogador não paga pelo app; se houver receita, vem do organizador** | `DSC` 4.2; `NEG` | **Forte, a favor.** Nenhum app de BT cobra o jogador (`MAT`, table stakes). Cobrar gera revolta (MATCHi, `VZA`) e o Ranketes tenta com uso quase nulo | Média |
 | S22 | **O WhatsApp pode ser substituído como canal do dia do torneio e da marcação** | Implícita nas oportunidades O3 e O1 | **Média a Forte, contra.** Quem tentou substituir passou a apontar para ele (`MER RS5`); até quem tem sistema próprio depende dele (`ORG RO3`, GH #72) | Alta |
