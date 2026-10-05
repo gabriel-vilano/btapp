@@ -38,11 +38,6 @@
   white-space: nowrap;
 }
 
-/* O Logo é uma imagem: fica em bloco para o h1 não somar a linha de texto à altura dela */
-.header__title > img {
-  display: block;
-}
-
 .header--with-back .header__title {
   padding-left: 0;
 }

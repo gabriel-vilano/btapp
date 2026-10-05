@@ -4,17 +4,18 @@ import {
   Canvas,
   ArgTypes,
 } from "@storybook/addon-docs/blocks";
+import { brand } from "@/src/lib/brand";
 import * as LogoStories from "./Logo.stories";
 
 <Meta of={LogoStories} />
 
-<Subtitle>Logo da marca LetzPlay — único, fixo, otimizado.</Subtitle>
+<Subtitle>Wordmark provisório de {brand.name}, em texto, com caixa fixa.</Subtitle>
 
 **Código-fonte:** [`src/components/icons/Logo.tsx`](https://github.com/gabriel-vilano/letzplay/blob/master/src/components/icons/Logo.tsx)
 
 ## Visão geral
 
-`Logo` renderiza o logo da marca via `next/image` com `priority` (carregado fora da fila de lazy-loading porque costuma estar above-the-fold). Tamanho e cor são fixos por design — variantes não são expostas como props.
+`Logo` escreve o nome do produto (`brand.name`, de `src/lib/brand.ts`) em Arimo bold, numa caixa de 118,84 × 32 px. É provisório: a identidade definitiva só vem quando o nome final for decidido. Tamanho e tipografia são fixos por design; variantes não são expostas como props.
 
 <Canvas of={LogoStories.Default} />
 
@@ -24,28 +25,29 @@ O logo não tem estados interativos. O único caso a validar é o fundo onde ele
 
 ### Em fundo escuro
 
-Validação de contraste. O logo deve permanecer legível sobre `--color-background-strong`.
+O logo não tem cor própria: herda a do contêiner. Sobre fundo escuro, o contêiner declara `--color-foreground-on-inverse` (no painel do hero da tela de auth, o `.auth-layout__brand-panel-content`).
 
 <Canvas of={LogoStories.OnDarkBackground} />
 
 ## Quando usar
 
-- Header de páginas de auth (login, signup, recuperar senha)
-- Header global da app (quando existir)
+- Cabeçalho das telas de auth (login, signup, recuperar senha)
+- Título do Feed no `AppHeader`, no lugar do texto
 - Empty states de marca, splash screens
 
 ## Acessibilidade
 
-- `alt="LetzPlay"` aplicado automaticamente — leitor de tela anuncia o nome da marca
-- `priority` no `next/image` evita CLS (layout shift) ao carregar
-- Tamanho fixo (208×56) com aspect ratio preservado — sem squish/stretch
+- O nome acessível é o próprio texto: o leitor de tela lê "{brand.name}", sem `alt` nem `aria-label`
+- `translate="no"`: a tradução automática do navegador não troca o nome
+- Contraste de 17,6:1 nos dois usos: `--color-foreground-primary` sobre branco e branco sobre `--color-background-strong`
+- Caixa fixa (proporção 208×56, 32px de altura): a tela não se desloca quando a fonte carrega
 
 ## Evitar
 
-- ❌ **Distorcer aspect ratio** — width/height vêm definidos, não sobrescrever só uma das dimensões
-- ❌ **Mudar cor do logo** — a marca tem cor fixa; recolorir compromete identidade visual
-- ❌ **Usar `Logo` como ícone genérico** em listas ou placeholders — é elemento de marca, não decoração
-- ❌ **Substituir por SVG inline ad-hoc** — sempre via componente, garante consistência de tamanho e alt
+- ❌ **Pintar o logo de coral.** O coral dá 3,5:1 sobre o branco e não passa no contraste de texto. A cor vem do contêiner: `--color-foreground-primary` no claro, `--color-foreground-on-inverse` no escuro
+- ❌ **Escrever o nome à mão** em vez de usar `Logo` ou `brand.name`. O nome é provisório e muda num ponto só
+- ❌ **Distorcer a caixa** sobrescrevendo só largura ou altura
+- ❌ **Usar `Logo` como ícone genérico** em listas ou placeholders. É elemento de marca, não decoração
 
 ## API
 
@@ -53,13 +55,19 @@ Validação de contraste. O logo deve permanecer legível sobre `--color-backgro
 
 ## Decisões de design
 
-**Por que PNG em vez de SVG?**
-A marca tem detalhes de cor que ficam mais limpos como bitmap nessa dimensão fixa. Em redesigns futuros pra escalabilidade arbitrária (ex: logo gigante em landing page), considerar SVG — por ora, PNG cobre todos os casos atuais.
+**Por que texto em vez de PNG ou SVG?**
+O logo anterior era o wordmark de outra empresa e saiu do repositório. Enquanto o nome é provisório, um desenho próprio seria refeito no próximo rename. Texto não precisa de arquivo em `public/`, usa a fonte que o app já carrega e acompanha o `brand.name` sem custo.
+
+**Por que a caixa de 208×56?**
+É a proporção do logo anterior. Mantê-la deixa as telas de auth no mesmo lugar: a altura de 32px e os espaçamentos em volta não mudam.
+
+**Por que o tracking do papel `display`?**
+O `docs/TOKENS.md` põe o logo no papel `display`, dono do tracking negativo. A escala `display-sm` (40px) não cabe numa caixa de 32px, então o tamanho é o de `title-lg` (28px) e só o tracking vem do `display`.
 
 **Por que sem prop `size`?**
-Logo aparece em pouquíssimos lugares e sempre no mesmo contexto (cabeçalho). Adicionar `size` antes de ter caso de uso real seria over-engineering. Se surgir necessidade, expandir como prop com 2-3 tamanhos semânticos.
+O logo aparece em pouquíssimos lugares e sempre no mesmo contexto (cabeçalho). Adicionar `size` antes de ter caso de uso real seria over-engineering. Se surgir necessidade, expandir como prop com 2-3 tamanhos semânticos.
 
 ## Referências
 
-- Asset: `public/brand/letzplay.png` (208×56)
-- [next/image documentation](https://nextjs.org/docs/app/api-reference/components/image)
+- Nome do produto: `src/lib/brand.ts`
+- Tipografia e cores: `docs/TOKENS.md` > "Escala tipográfica semântica" e "Cores — foreground"

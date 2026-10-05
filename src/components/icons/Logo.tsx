@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { brand } from "@/src/lib/brand";
 import styles from "./Logo.module.css";
 
 type LogoProps = {
@@ -8,14 +8,10 @@ type LogoProps = {
 export function Logo({ className }: LogoProps) {
   const classNames = [styles.logo, className].filter(Boolean).join(" ");
 
+  // translate="no": a tradução automática do navegador trocaria o "App" do nome
   return (
-    <Image
-      src="/brand/letzplay.png"
-      alt="LetzPlay"
-      width={208}
-      height={56}
-      priority
-      className={classNames}
-    />
+    <span className={classNames} translate="no">
+      {brand.name}
+    </span>
   );
 }
