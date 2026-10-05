@@ -1,4 +1,5 @@
 import { Meta, Subtitle, Canvas, ArgTypes } from "@storybook/addon-docs/blocks";
+import { brand } from "@/src/lib/brand";
 import * as AppHeaderStories from "./AppHeader.stories";
 
 <Meta of={AppHeaderStories} />
@@ -21,7 +22,7 @@ Uma variante por tipo de tela. As das abas seguem a tabela "Cabeçalho de cada a
 
 ### Feed
 
-O `<Logo />` no lugar do título e o sino com o ponto de não lidas (N7). O `h1` continua lá: o nome acessível é o `alt` do logo, "LetzPlay".
+O `<Logo />` no lugar do título e o sino com o ponto de não lidas (N7). O `h1` continua lá: o nome acessível é o texto do próprio logo, "{brand.name}".
 
 <Canvas of={AppHeaderStories.Feed} />
 

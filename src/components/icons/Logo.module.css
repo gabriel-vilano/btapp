@@ -1,6 +1,24 @@
+/*
+ * Wordmark provisório em texto (PRD-35). A caixa mantém a proporção do PNG
+ * antigo (208×56 a 32px de altura, 118,84px de largura) para as telas de
+ * auth não se deslocarem. Tamanho, peso, tracking e line-height ficam
+ * declarados aqui para o logo não herdar a tipografia do contêiner (o h1 do
+ * AppHeader usa title-sm). O tracking vem do papel display, dono do logo
+ * no TOKENS.md; a escala display-sm não cabe em 32px, então só ele é
+ * emprestado. Sem cor própria: o texto herda a do contêiner, então vale em
+ * fundo claro e escuro sem variante.
+ */
 .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   aspect-ratio: 208 / 56;
   width: auto;
   height: 32px;
   max-width: 100%;
+  font-size: var(--text-title-lg-size);
+  line-height: var(--text-title-lg-line-height);
+  letter-spacing: var(--text-display-sm-tracking);
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
 }

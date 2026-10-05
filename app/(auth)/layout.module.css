@@ -39,6 +39,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* O Logo é texto sem cor própria: sobre o scrim, herda o branco daqui */
+  color: var(--color-foreground-on-inverse);
 }
 
 .auth-layout__brand-tagline {

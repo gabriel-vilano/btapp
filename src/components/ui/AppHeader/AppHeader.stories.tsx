@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { BellIcon, GearSixIcon, XIcon } from "@phosphor-icons/react";
 import { expect, within } from "storybook/test";
 import { Logo } from "@/src/components/icons/Logo";
+import { brand } from "@/src/lib/brand";
 import { Button } from "@/src/components/ui/Button";
 import { IconButton, IconButtonLink } from "@/src/components/ui/IconButton";
 import { AppHeader } from "./AppHeader";
@@ -60,7 +61,7 @@ export const Feed: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole("heading", { level: 1, name: "LetzPlay" })).toBeVisible();
+    await expect(canvas.getByRole("heading", { level: 1, name: brand.name })).toBeVisible();
     await expect(canvas.getByRole("link", { name: "Notificações, há novas" })).toBeVisible();
   },
 };

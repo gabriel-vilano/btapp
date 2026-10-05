@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { expect, within } from "storybook/test";
+import { brand } from "@/src/lib/brand";
 import { Logo } from "./Logo";
 
 const meta = {
@@ -7,8 +9,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
-          "Logo da marca LetzPlay. Carregado via next/image com priority. Tamanho fixo (208×56). Para variantes de tamanho, escalar via className do consumidor — o componente não expõe size por design.",
+        component: `Wordmark provisório de ${brand.name}, em texto. Caixa fixa de 118,84 × 32 px (proporção 208×56); a cor vem do contêiner.`,
       },
     },
   },
@@ -17,7 +18,19 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+// Aceite da caixa: 118,84 × 32 (±0,5px). A folga do texto (8px de cada lado)
+// não entra aqui: no Storybook o Arimo vem do Google Fonts com display=swap,
+// e até chegar (ou se a rede o bloquear) o texto sai no system-ui, mais largo.
+const BOX_WIDTH = (208 / 56) * 32;
+
+export const Default: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const box = (await canvas.findByText(brand.name)).getBoundingClientRect();
+    await expect(Math.abs(box.width - BOX_WIDTH)).toBeLessThanOrEqual(0.5);
+    await expect(Math.abs(box.height - 32)).toBeLessThanOrEqual(0.5);
+  },
+};
 
 export const OnDarkBackground: Story = {
   decorators: [
@@ -31,7 +44,7 @@ export const OnDarkBackground: Story = {
     docs: {
       description: {
         story:
-          "Validação de contraste sobre fundo escuro. Se o logo for monocromático coral, deve continuar legível.",
+          "Sobre fundo escuro, o contêiner define a cor clara e o logo a herda.",
       },
     },
   },
