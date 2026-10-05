@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Arimo } from "next/font/google";
+import { brand } from "@/src/lib/brand";
 import "./globals.css";
 
 const arimo = Arimo({
@@ -9,7 +10,7 @@ const arimo = Arimo({
 });
 
 export const metadata: Metadata = {
-  title: "LetzPlay",
+  title: brand.name,
   description: "Rankings, torneios e comunidade de Beach Tennis",
 };
 

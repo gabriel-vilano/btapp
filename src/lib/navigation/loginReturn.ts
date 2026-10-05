@@ -8,7 +8,7 @@ export const LOGIN_RETURN_PARAM = "next";
 export const DEFAULT_AFTER_LOGIN = "/feed";
 
 // Só serve para resolver caminhos relativos: o que resolve para outra origem é externo
-const INTERNAL_ORIGIN = "http://letzplay.internal";
+const INTERNAL_ORIGIN = "http://app.internal";
 
 /**
  * Caminho interno para onde ir depois do login; qualquer outro valor vira `/feed`.

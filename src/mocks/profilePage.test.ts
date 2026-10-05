@@ -13,7 +13,7 @@ function dataOf<T>(section: ProfileSection<T>): T {
 
 // O que a página `app/(app)/ranking/[categoria]` faz com o href: slug → id
 function resolves(href: string): boolean {
-  const url = new URL(href, 'https://letzplay.test');
+  const url = new URL(href, 'https://app.test');
   const [, root, slug] = url.pathname.split('/');
   const season = url.searchParams.get('temporada');
   const seasonOk = season === null || mockRankingRoutes.seasonId(season) !== undefined;

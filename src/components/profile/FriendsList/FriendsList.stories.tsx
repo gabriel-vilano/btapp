@@ -1,6 +1,7 @@
 import type { Decorator, Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, within } from "storybook/test";
 import { AppHeader } from "@/src/components/ui/AppHeader";
+import { brand } from "@/src/lib/brand";
 import { mockFriendsLists } from "@/src/mocks/profilePage";
 import { FriendsList, FriendsListSkeleton, friendsListTitle, type FriendsListProps } from "./FriendsList";
 
@@ -81,7 +82,10 @@ export const Other: Story = {
 export const Empty: Story = {
   args: { data: mockFriendsLists.empty },
   play: async ({ canvas }) => {
-    await expect(await canvas.findByText("Marina ainda não tem amigos no LetzPlay.")).toBeVisible();
+    const notice = await canvas.findByText(`Marina ainda não tem amigos no ${brand.name}.`);
+    await expect(notice).toBeVisible();
+    // O findByText trata o espaço que não quebra como espaço comum: o textContent confere que ele está lá
+    await expect(notice.textContent).toContain(brand.nameNoBreak);
     await expect(canvas.queryByRole("link", { name: "Buscar jogadores" })).toBeNull();
   },
 };
@@ -90,7 +94,9 @@ export const Empty: Story = {
 export const OwnEmpty: Story = {
   args: { data: mockFriendsLists.ownEmpty },
   play: async ({ canvas }) => {
-    await expect(await canvas.findByText("Você ainda não tem amigos no LetzPlay.")).toBeVisible();
+    const notice = await canvas.findByText(`Você ainda não tem amigos no ${brand.name}.`);
+    await expect(notice).toBeVisible();
+    await expect(notice.textContent).toContain(brand.nameNoBreak);
     await expect(canvas.getByRole("link", { name: "Buscar jogadores" })).toHaveAttribute("href", "/explorar");
   },
 };

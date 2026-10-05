@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, within } from "storybook/test";
 import { AppHeader } from "@/src/components/ui/AppHeader";
+import { brand } from "@/src/lib/brand";
 import { mockExploreShowcase } from "@/src/mocks/explorePage";
 import { ExploreShowcase } from "./ExploreShowcase";
 
@@ -71,6 +72,7 @@ export const NoArenas: Story = {
 export const Empty: Story = {
   args: { showcase: { competitions: [], hasOpenCompetition: false, arenas: [] } },
   play: async ({ canvas }) => {
-    await expect(await canvas.findByRole("heading", { name: "Ainda não há competições no LetzPlay." })).toBeVisible();
+    // O nome acessível mantém o espaço que não quebra: achar o título por ele confere que está lá
+    await expect(await canvas.findByRole("heading", { name: `Ainda não há competições no ${brand.nameNoBreak}.` })).toBeVisible();
   },
 };

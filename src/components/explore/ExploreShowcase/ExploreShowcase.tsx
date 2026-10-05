@@ -5,6 +5,7 @@ import { useId, type ReactNode } from "react";
 import { Avatar } from "@/src/components/ui/Avatar";
 import { EmptyState } from "@/src/components/ui/EmptyState";
 import { List, ListItem } from "@/src/components/ui/ListItem";
+import { brand } from "@/src/lib/brand";
 import type { ArenaListItemView, ExploreShowcaseView } from "@/src/lib/domain/explore";
 import { CompetitionListItem } from "../CompetitionListItem";
 import styles from "./ExploreShowcase.module.css";
@@ -25,7 +26,7 @@ export function ExploreShowcase({ showcase }: ExploreShowcaseProps) {
   const { competitions, hasOpenCompetition, arenas } = showcase;
   // Os dois vazios juntos só acontecem em desenvolvimento (EX13)
   if (competitions.length === 0 && arenas.length === 0) {
-    return <EmptyState icon={CompassIcon} title="Ainda não há competições no LetzPlay." />;
+    return <EmptyState icon={CompassIcon} title={`Ainda não há competições no ${brand.nameNoBreak}.`} />;
   }
   return (
     <div className={styles["explore-showcase"]}>

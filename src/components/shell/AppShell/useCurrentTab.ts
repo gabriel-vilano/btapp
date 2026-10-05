@@ -3,7 +3,7 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { currentTab, isMainTab, type MainTab } from "@/src/lib/navigation/mainTabs";
 
-const ORIGIN_STORAGE_KEY = "letzplay:aba-de-origem";
+const ORIGIN_STORAGE_KEY = "bt:aba-de-origem";
 
 /** A tela atual e a aba que estava marcada na tela anterior (`null` na primeira tela). */
 type TabTrail = { pathname: string; originTab: MainTab | null };
