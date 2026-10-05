@@ -1,5 +1,6 @@
 import type { Decorator, Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, screen, waitFor, within } from "storybook/test";
+import { PHONE_ASKED_KEY } from "@/src/components/agenda/MatchScheduling/WhatsAppButton";
 import { AppHeader } from "@/src/components/ui/AppHeader";
 import { MatchScreen } from "./MatchScreen";
 import { NOT_PLAYED_MATCH, OUTSIDER_ID, STORY_H2H, STORY_HISTORIES, STORY_NOW, storyData } from "./storyFixtures";
@@ -240,8 +241,6 @@ export const ReportFlow: Story = {
     await expect(canvas.getByText(/Informado por Pedro/)).toBeInTheDocument();
   },
 };
-
-const PHONE_ASKED_KEY = "letzplay:whatsapp-phone-asked";
 
 // Sem telefone salvo, o primeiro toque em "Abrir no WhatsApp" pergunta se o
 // jogador quer informar (M20). A story limpa a marca antes e depois, para o

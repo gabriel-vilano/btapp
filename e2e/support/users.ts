@@ -7,11 +7,11 @@ export const TEST_PASSWORD = "Senha1234";
 
 /**
  * E-mail único por teste, para os testes não dependerem de ordem nem de limpeza.
- * Ex: `uniqueEmail("login")` → `e2e-login-lx3k9a-4f2c@letzplay.test`
+ * Ex: `uniqueEmail("login")` → `e2e-login-lx3k9a-4f2c@e2e.test`
  */
 export function uniqueEmail(flow: string): string {
   const suffix = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
-  return `e2e-${flow}-${suffix}@letzplay.test`;
+  return `e2e-${flow}-${suffix}@e2e.test`;
 }
 
 /** Cria um usuário já confirmado pela API admin do Auth, sem passar pelo e-mail. */

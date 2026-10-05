@@ -43,13 +43,13 @@ export const Empty: Story = {};
 
 export const Filled: Story = {
   args: {
-    value: "gabriel@letzplay.com",
+    value: "gabriel@example.com",
   },
 };
 
 export const Valid: Story = {
   args: {
-    value: "gabriel@letzplay.com",
+    value: "gabriel@example.com",
     valid: true,
   },
   parameters: {
@@ -79,7 +79,7 @@ export const Invalid: Story = {
 
 export const Disabled: Story = {
   args: {
-    value: "gabriel@letzplay.com",
+    value: "gabriel@example.com",
     disabled: true,
   },
 };
@@ -104,7 +104,7 @@ export const Password: Story = {
 
 export const Focused: Story = {
   args: {
-    value: "gabriel@letzplay.com",
+    value: "gabriel@example.com",
   },
   play: async ({ canvas, userEvent }) => {
     await userEvent.tab();
@@ -175,13 +175,13 @@ export const AllStates: Story = {
   render: (args) => (
     <div className="sb-stack">
       <FormInput {...args} value="" />
-      <FormInput {...args} value="gabriel@letzplay.com" valid />
+      <FormInput {...args} value="gabriel@example.com" valid />
       <FormInput
         {...args}
         value="gabriel@"
         error="Email inválido — use o formato voce@exemplo.com"
       />
-      <FormInput {...args} value="gabriel@letzplay.com" disabled />
+      <FormInput {...args} value="gabriel@example.com" disabled />
     </div>
   ),
 };

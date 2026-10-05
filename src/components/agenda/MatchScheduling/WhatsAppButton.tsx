@@ -20,7 +20,7 @@ type WhatsAppButtonProps = {
 
 // O pedido aparece uma vez por aparelho: depois dele, o botão só abre o WhatsApp.
 // O telefone é opcional (M20), e perguntar a cada toque viraria obstáculo
-const PHONE_ASKED_KEY = "letzplay:whatsapp-phone-asked";
+export const PHONE_ASKED_KEY = "bt:whatsapp-phone-asked";
 
 /**
  * "Abrir no WhatsApp" da marcação (docs/SCHEDULING.md §6, M24): abre o WhatsApp com a

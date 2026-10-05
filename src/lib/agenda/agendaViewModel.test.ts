@@ -33,7 +33,7 @@ describe('agendaViewModel: temporada encerrada (9.2)', () => {
     if (empty?.kind !== 'season_ended') throw new Error(`Teste: esperado season_ended, recebi ${empty?.kind}`);
     expect(empty.href).toBe('/ranking/masculino-b?temporada=2026-2');
     // O que a página `app/(app)/ranking/[categoria]` faz com o href: slug → id
-    const url = new URL(empty.href, 'https://letzplay.test');
+    const url = new URL(empty.href, 'https://app.test');
     expect(mockRankingRoutes.categoryId(url.pathname.split('/')[2])).toBe(rankingCategories.masculinoB.id);
     expect(mockRankingRoutes.seasonId(url.searchParams.get('temporada') ?? '')).toBe(season.id);
   });
