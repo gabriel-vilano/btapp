@@ -1,6 +1,6 @@
 # Ícones
 
-Peso, estados, tamanho e direção. O DS usa o Phosphor (`@phosphor-icons/react`) sempre pelo wrapper `<Icon icon={…} size="…" weight="…" />` (`CLAUDE.md` > "Ícones"; doc completa no `Icon.mdx`).
+Peso, estados, tamanho e direção. O DS usa o Phosphor (`@phosphor-icons/react`) sempre pelo wrapper `<Icon icon={…} size="…" weight="…" />` (`.claude/rules/icones.md`; doc completa no `Icon.mdx`).
 
 ## Peso do ícone igual ao do texto
 

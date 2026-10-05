@@ -46,7 +46,7 @@ A parte mais valiosa. Para cada escolha de design importante da tela, confira `r
 Classifique cada um:
 
 1. **Já decidido por escrito** → vai para "Já decidido", com a fonte. Se uma lente discorda, vai para "Observações com fonte". Conta como decisão escrita: a regra da spec (lista do passo 3), o `docs/TOKENS.md` e o MDX do componente (a variante, o estado ou o uso que ele fixa, e a seção "Decisões de design").
-2. **Decidido só no código, sem nada escrito** → fork. Nomeie a decisão tomada, mostre a alternativa e o trade-off, e o sinal de qual serve ao LetzPlay.
+2. **Decidido só no código, sem nada escrito** → fork. Nomeie a decisão tomada, mostre a alternativa e o trade-off, e o sinal de qual serve ao BT App.
 3. **Depende de algo que só o Gabriel sabe** (domínio de Beach Tennis, prioridade de produto) → fork, com a pergunta explícita.
 
 Fork decidido em silêncio não é automaticamente errado. Só deveria ter sido uma decisão.

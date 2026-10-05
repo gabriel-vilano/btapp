@@ -7,7 +7,7 @@ argument-hint: <arquivo, pasta ou padrão>
 
 # /revisar-interface
 
-Revisão de interface com achados em `file:line`, adaptada das Web Interface Guidelines da Vercel para o LetzPlay (ver "Origem e licença" no fim). Argumento: os arquivos, a pasta ou o padrão a revisar (ex.: `src/components/ui/FormInput`, `app/(auth)/entrar/page.tsx`). Sem argumento, revisar os arquivos de UI do diff contra o `master` (`git diff --name-only origin/master...HEAD -- '*.tsx' '*.css'`).
+Revisão de interface com achados em `file:line`, adaptada das Web Interface Guidelines da Vercel para o BT App (ver "Origem e licença" no fim). Argumento: os arquivos, a pasta ou o padrão a revisar (ex.: `src/components/ui/FormInput`, `app/(auth)/entrar/page.tsx`). Sem argumento, revisar os arquivos de UI do diff contra o `master` (`git diff --name-only origin/master...HEAD -- '*.tsx' '*.css'`).
 
 A saída vai para a conversa, e de lá para o PR ou o comentário no Linear. Nada de arquivo de relatório gravado no repo, nada de abrir navegador, nada de buscar regras pela rede: o checklist é este arquivo, fixado numa versão revisada.
 
@@ -35,7 +35,7 @@ Na dúvida, o candidato vai para "Considerados e rejeitados", com o motivo. É m
 Também não são achados:
 
 - o que o DS decidiu de propósito (ver "Decisões do DS que valem aqui");
-- o que já está documentado como hurdle ou stub no `CLAUDE.md` (ex.: "Componentes com stubs sem comportamento");
+- o que já está documentado como hurdle (`CLAUDE.md` > "Armadilhas que valem sempre" e as regras de `.claude/rules/`) ou como stub sem comportamento (documento "Seções que saíram do CLAUDE.md (audit resumido e stubs)" do Linear);
 - os problemas conhecidos listados abaixo.
 
 **Fora do checklist.** Um problema real que nenhuma regra cobre (bug de estado, id duplicado, controle que continua ativo com o campo desabilitado) não vai para os rejeitados, onde ficaria escondido. Vai para "Fora do checklist", com a mesma exigência de prova: trecho, cenário concreto em que quebra e correção. Sem cenário concreto, é rejeitado.
@@ -67,7 +67,7 @@ As fontes de mercado divergem destas decisões; aqui vale o DS.
 - Ação é `<button>`; navegação é `<a>` ou `<Link>`. `<div onClick>` e `<span onClick>` são achado.
 - Elemento interativo que não é nativo (raro, e precisa de motivo) tem `role`, `tabIndex` e handler de teclado.
 - Imagem tem `alt` (`alt=""` se decorativa).
-- Ícone decorativo fica `aria-hidden` (o `<Icon />` já faz por padrão); ícone com significado tem `aria-label` e `aria-hidden={false}` (`CLAUDE.md` > "Ícones").
+- Ícone decorativo fica `aria-hidden` (o `<Icon />` já faz por padrão); ícone com significado tem `aria-label` e `aria-hidden={false}` (`.claude/rules/icones.md`).
 - Atualização assíncrona (toast, validação, contador) é anunciada: `aria-live="polite"` ou `role="status"`/`role="alert"`.
 - Erro de campo ligado ao campo por `aria-describedby`, com `aria-invalid` quando inválido.
 - HTML semântico antes de ARIA (`<button>`, `<a>`, `<label>`, `<table>`, `<nav>`, `<main>`).
@@ -137,7 +137,7 @@ As fontes de mercado divergem destas decisões; aqui vale o DS.
 
 ### Performance
 
-- Lista grande (mais de 50 itens) é virtualizada ou usa `content-visibility: auto`. Bibliotecas como `virtua` são exemplos, não recomendação: instalar dependência pede justificativa (`CLAUDE.md` > "Regras gerais").
+- Lista grande (mais de 50 itens) é virtualizada ou usa `content-visibility: auto`. Bibliotecas como `virtua` são exemplos, não recomendação: instalar dependência pede justificativa (`CLAUDE.md` > "Guardrails").
 - Nada de leitura de layout no render (`getBoundingClientRect`, `offsetHeight`, `offsetWidth`, `scrollTop`).
 - Leituras e escritas no DOM agrupadas, sem intercalar.
 - Campo controlado barato por tecla; sem trabalho pesado no `onChange`.
@@ -159,7 +159,7 @@ As fontes de mercado divergem destas decisões; aqui vale o DS.
 - Durante arraste: sem seleção de texto, `inert` no que está sendo arrastado.
 - Gesto (arrastar, deslizar, pinça) tem alternativa por toque/clique e por teclado.
 - `autoFocus` com parcimônia: só no desktop, num campo principal único; no celular, ele abre o teclado sem pedido.
-- Regra `:hover` dentro de `@media (hover: hover)` (`CLAUDE.md` > "iOS: sticky hover").
+- Regra `:hover` dentro de `@media (hover: hover)` (hurdle "iOS: sticky hover" de `.claude/rules/css.md`).
 - Hover, press e foco usam state layer e são mais visíveis que o repouso.
 
 ### Layout e safe areas

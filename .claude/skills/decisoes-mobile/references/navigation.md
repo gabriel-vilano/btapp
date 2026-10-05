@@ -2,7 +2,7 @@
 
 Escolher e revisar a navegação mobile, a maior fonte de forks. Lentes: **Rausch**, **HIG/M3**, **Budiu**.
 
-> **No LetzPlay, a navegação principal está decidida** em `docs/NAVIGATION.md`: 5 abas (N1), sem menu lateral nem "Mais" (N5), tab bar visível também nas telas de detalhe e escondida só nos fluxos modais de tarefa (N4), aba de origem marcada (N10), uma busca só, no Explorar (N6), e rail a partir de 600px (N27). Use este arquivo para julgar a navegação **dentro** de uma tela ou de uma feature nova, e para dar fonte a uma observação, não para reabrir essas regras.
+> **No BT App, a navegação principal está decidida** em `docs/NAVIGATION.md`: 5 abas (N1), sem menu lateral nem "Mais" (N5), tab bar visível também nas telas de detalhe e escondida só nos fluxos modais de tarefa (N4), aba de origem marcada (N10), uma busca só, no Explorar (N6), e rail a partir de 600px (N27). Use este arquivo para julgar a navegação **dentro** de uma tela ou de uma feature nova, e para dar fonte a uma observação, não para reabrir essas regras.
 
 ## A taxonomia do Rausch
 
@@ -32,7 +32,7 @@ Escolha a navegação pela **estrutura do conteúdo**, não pela estética.
 ## Tab bar e seus limites
 
 - **Serve a** 3 a 5 destinos independentes e de peso parecido; destinos **visíveis**, ao alcance, padrão nos dois sistemas.
-- **Limites:** teto de ~5; não expressa profundidade; as abas precisam ser **estáveis** (não mudam por papel ou experimento); **aba é para navegar entre modos, não para ação** como "Criar" ou "Registrar". O LetzPlay segue isso: registrar resultado e amistoso não são abas (N2).
+- **Limites:** teto de ~5; não expressa profundidade; as abas precisam ser **estáveis** (não mudam por papel ou experimento); **aba é para navegar entre modos, não para ação** como "Criar" ou "Registrar". O BT App segue isso: registrar resultado e amistoso não são abas (N2).
 - **Mais de 5 destinos** é achado em si: sinal de que a arquitetura de informação precisa de trabalho, não o componente de navegação.
 
 > **A falha padrão do Claude:** pegar o hambúrguer porque parece arrumado. Visível e cheio vence arrumado e escondido.

@@ -1,6 +1,6 @@
 ---
 name: orquestrar
-description: Conduz um lote de agentes do LetzPlay, da proposta ao merge (sessões, relay, validação combinada, prints e merge em série). Use quando for a sessão orquestradora ou receber "/orquestrar".
+description: Conduz um lote de agentes do BT App, da proposta ao merge (sessões, relay, validação combinada, prints e merge em série). Use quando for a sessão orquestradora ou receber "/orquestrar".
 ---
 
 # /orquestrar
@@ -23,17 +23,18 @@ Os scripts ficam em `.claude/skills/orquestrar/scripts/` e rodam do próprio rep
 
 ```bash
 export SP=<scratchpad da sessão>     # o caminho está no prompt de sistema
-export S=/home/user/letzplay/.claude/skills/orquestrar/scripts
+export S="$(git rev-parse --show-toplevel)/.claude/skills/orquestrar/scripts"   # rodar de dentro do clone
 ```
 
 O `combo-validate.sh` cria o worktree `$SP/combo` na primeira vez. Ele serve só para simular merges: nunca fazer commit nem push nele. O `git fetch` no repo atualiza os `origin/*` do worktree também, porque os dois compartilham as refs.
 
 ## 1. Ler o estado
 
-1. O documento de estado no Linear, a começar pela passagem de bastão.
-2. O "My issues" do Gabriel: Needs Decision e PRs esperando aprovação.
-3. Os PRs abertos, com CI e conflitos. As sessões do lote anterior (`list_sessions` com a tag `letzplay:lote-<N>`).
-4. A guarda de uso (seção 5).
+1. O `docs/AGENT_WORKFLOW.md` inteiro, uma vez por sessão: o `CLAUDE.md` não o importa, e as regras de merge, de relay e da guarda de uso estão nele.
+2. O documento de estado no Linear, a começar pela passagem de bastão.
+3. O "My issues" do Gabriel: Needs Decision e PRs esperando aprovação.
+4. Os PRs abertos, com CI e conflitos. As sessões do lote anterior (`list_sessions` com a tag `lote:<N>`; as sessões até o lote 4 levam a tag antiga, com o nome anterior do produto no prefixo).
+5. A guarda de uso (seção 5).
 
 Antes de levar uma pergunta ao Gabriel, ler os comentários recentes da issue: às vezes ele já respondeu direto na sessão do agente.
 
@@ -52,7 +53,7 @@ Com o ok do Gabriel, abrir na hora as sessões independentes. Investigação de 
 
 - `prompt`: `/pegar-issue <ID>` e, abaixo, uma nota curta com o que o agente precisa saber além da issue (decisão recente, ordem de merge). Pedir sempre `git merge` para atualizar a branch, nunca reset. Assinar `— 🤖 agente orquestrador`;
 - `title`: `<ID> · <assunto>`;
-- `tags`: `["letzplay:lote-<N>"]`.
+- `tags`: `["lote:<N>"]`. A tag não leva o nome do produto, para um rename não quebrar o filtro.
 
 Anotar a sessão de cada issue no documento de estado (ele é privado; o repo não).
 
@@ -109,7 +110,7 @@ Para cada PR entregue, nesta ordem:
    tail -25 "$SP/combo-lote<N>.log"
    ```
 
-   O script termina em `RESULTADO: verde` ou diz em que etapa falhou (saída de cada etapa em `$SP/combo-lote<N>-<etapa>.out`). Sobram duas variáveis CSS sem definição esperadas: `--dialog-drag-offset` e `--font-arimo`. Qualquer outra é contrato quebrado entre PRs.
+   O script termina em `RESULTADO: verde` ou diz em que etapa falhou (saída de cada etapa em `$SP/combo-lote<N>-<etapa>.out`). Sobram três variáveis CSS sem definição esperadas, escritas em runtime ou pelo `next/font`: `--dialog-drag-offset`, `--dialog-keyboard-inset` e `--font-arimo`. Qualquer outra é contrato quebrado entre PRs.
 
    O script não pega duas coisas; conferir à mão no `$SP/combo`: link com `#` para a rota de outra área, e tela de detalhe com `backHref` fixo em vez do `DetailHeader`:
 

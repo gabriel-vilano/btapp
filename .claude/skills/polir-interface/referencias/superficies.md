@@ -71,7 +71,7 @@ Alinhamento óptico se confirma olhando a tela. Sem a story aberta, o achado fic
 
 ## Sombra é elevação; borda é estrutura
 
-No DS do LetzPlay:
+No DS do BT App:
 
 - **Sombra** só no que flutua acima do conteúdo: `--shadow-subtle` (linha fixada do ranking, `AvatarUpload`) e `--shadow-strong` (Toast, Dialog).
 - **Borda** só em controle e em estado: Button secondary, Chip, Checkbox, FormInput, foco e seleção. Divisores (`--color-border-subtle`) também são borda.
@@ -105,7 +105,7 @@ Placeholder e iniciais (sem foto) não precisam de contorno: o fundo `--color-ba
 
 ## Área tocável de 48px
 
-Todo elemento interativo tem área de 48×48 (`--dimension-tap-target-minimum`, `docs/TOKENS.md` > "Acessibilidade — tap target"), mesmo o botão só de ícone com ícone `sm`. A fonte original aceita 44 ou 40; o DS do LetzPlay é mais rígido e fica com 48.
+Todo elemento interativo tem área de 48×48 (`--dimension-tap-target-minimum`, `docs/TOKENS.md` > "Acessibilidade — tap target"), mesmo o botão só de ícone com ícone `sm`. A fonte original aceita 44 ou 40; o DS do BT App é mais rígido e fica com 48.
 
 Se o visível for menor, completar com padding ou com pseudo-elemento:
 

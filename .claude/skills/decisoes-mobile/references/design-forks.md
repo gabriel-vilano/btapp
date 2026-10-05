@@ -11,7 +11,7 @@ Para cada fork encontrado:
 1. **Confira se a spec já decidiu** (`SKILL.md`, "Regra central"). Se decidiu, não é fork: é "Já decidido" ou "Observação com fonte".
 2. Nomeie a situação e por que a ambiguidade é real.
 3. Mostre 2 ou 3 opções com trade-offs honestos.
-4. Dê os **sinais** que apontam para uma delas no LetzPlay.
+4. Dê os **sinais** que apontam para uma delas no BT App.
 5. Escreva no formato Needs Decision do `SKILL.md`.
 
 Numa conversa, um ou dois forks por vez.
@@ -28,7 +28,7 @@ Numa conversa, um ou dois forks por vez.
 
 **Pergunta:** quantos destinos são de fato de primeiro nível, e quão independentes?
 **Sinais:** 3 a 5 seções iguais e independentes → A. Hierarquia funda ou 6+ → arrumar a arquitetura primeiro. App de propósito único (câmera, leitor) → C.
-**No LetzPlay:** decidido. 5 abas com rótulo, sem menu lateral nem "Mais" (`NAVIGATION.md`, N1 e N5). Destino novo entra numa aba existente.
+**No BT App:** decidido. 5 abas com rótulo, sem menu lateral nem "Mais" (`NAVIGATION.md`, N1 e N5). Destino novo entra numa aba existente.
 
 ## Fork 2: sheet × modal × tela cheia × tela nova
 
@@ -41,7 +41,7 @@ Numa conversa, um ou dois forks por vez.
 
 **Pergunta:** é um desvio passageiro ou um destino de verdade? A pessoa precisa do fundo?
 **Sinais:** tarefa curta com fundo relevante → A não modal. Curta, fundo irrelevante → A modal. Tarefa substancial → B. Parte da hierarquia → C. Só revela mais do que já está ali → D. **Fluxo de vários passos nunca é pilha de sheets**: é B ou C.
-**No LetzPlay:** os fluxos de tarefa (lançar resultado, registrar amistoso, propor horários, editar perfil, decisões do admin) já são modais de tela cheia com "Fechar" (N4, N18); toda entidade é tela com rota (N10).
+**No BT App:** os fluxos de tarefa (lançar resultado, registrar amistoso, propor horários, editar perfil, decisões do admin) já são modais de tela cheia com "Fechar" (N4, N18); toda entidade é tela com rota (N10).
 
 ## Fork 3: gesto × controle visível
 
@@ -64,7 +64,7 @@ Numa conversa, um ou dois forks por vez.
 
 **Pergunta:** com que frequência a ação é usada, e quanto a convenção pesa aqui?
 **Sinais:** frequente → B ou C. Confirmação rara num formulário com convenção forte → A aceitável. Uma ação de criar dominante → C. Ação ligada a uma lista rolável → B como barra fixa. Destrutiva → nunca no lugar fácil (fork 8).
-**No LetzPlay:** confira o cabeçalho da aba na `NAVIGATION.md` (seção 3) antes de abrir: "Registrar amistoso" no topo da aba Jogos já é decisão (N19).
+**No BT App:** confira o cabeçalho da aba na `NAVIGATION.md` (seção 3) antes de abrir: "Registrar amistoso" no topo da aba Jogos já é decisão (N19).
 
 ## Fork 5: lista × grade × carrossel
 
@@ -87,7 +87,7 @@ Numa conversa, um ou dois forks por vez.
 
 **Pergunta:** preenche-se uma vez (cadastro) ou edita-se sempre (configurações, perfil)?
 **Sinais:** uma vez, 10+ campos ou etapas naturais → B. Uma vez e curto → A. Edição frequente de uma parte → C.
-**No LetzPlay:** o cadastro já é em dois passos (`PRODUCT.md`).
+**No BT App:** o cadastro já é em dois passos (`PRODUCT.md`).
 
 ## Fork 7: densidade, mostrar tudo × revelar aos poucos
 
@@ -109,7 +109,7 @@ Numa conversa, um ou dois forks por vez.
 
 **Pergunta:** quanto estraga um toque errado, e dá para desfazer?
 **Sinais:** irreversível e danosa → C, de preferência também A. Reversível mas chata → B com desfazer. Rara e inofensiva → B. **Nunca** destrutiva ao lado de uma frequente na mesma zona fácil.
-**No LetzPlay:** "Corrigir placar" e "Anular resultado" ficam num menu visível só para o admin, nunca como botão primário (N31); "Sair" não pede confirmação (N8).
+**No BT App:** "Corrigir placar" e "Anular resultado" ficam num menu visível só para o admin, nunca como botão primário (N31); "Sair" não pede confirmação (N8).
 
 ## Fork 9: ensinar a interface
 
