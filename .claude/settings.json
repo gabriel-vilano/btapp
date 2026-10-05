@@ -21,7 +21,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/require-storybook-rule.mjs\""
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/require-rule-read.mjs\""
           }
         ]
       }
@@ -32,7 +32,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/require-storybook-rule.mjs\""
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/require-rule-read.mjs\""
           }
         ]
       }
