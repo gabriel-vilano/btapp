@@ -130,6 +130,8 @@ O merge na `master` publica sozinho:
 
 Por isso o PR é o único caminho de uma migration até o banco — revisar o SQL no PR como código de produção.
 
+**Renomear o repo mantém a Vercel e o Supabase conectados**, porque a ligação é por ID e não pelo nome. Depois do rename, conferir Vercel → Settings → Git e Supabase → Integrations. Renomear o projeto na Vercel muda os endereços `*.vercel.app` gerados a partir do nome: adicionar as URLs novas à lista de Redirect URLs do Supabase Auth antes de remover as antigas.
+
 ---
 
 ## Versionamento
