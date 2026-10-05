@@ -20,6 +20,9 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
+        with:
+          # O passo de aviso de coautoria lê o histórico do PR
+          fetch-depth: 0
       - uses: actions/setup-node@v7
         with:
           node-version: 22
@@ -32,6 +35,15 @@ jobs:
       - run: npm test
       # O build também roda a checagem de tipos do TypeScript (só do código do app)
       - run: npm run build
+      # Commit criado pela API do GitHub não passa pelo hook local (.githooks/commit-msg, ENG-181).
+      # Só avisa: o repo proíbe reescrever histórico, então não dá para bloquear nem corrigir.
+      - name: Avisar sobre Co-Authored-By nos commits do PR
+        if: github.event_name == 'pull_request'
+        # O checkout do PR é o merge com a base: HEAD^1 é a base e HEAD^2 a ponta do PR
+        run: |
+          git log --format='%h' -i --grep='^co-authored-by:' HEAD^1..HEAD^2 | while read -r commit; do
+            echo "::warning title=Co-Authored-By::O commit $commit tem trailer Co-Authored-By; o projeto não usa coautoria."
+          done
 
   stories:
     name: Stories (Storybook + a11y)

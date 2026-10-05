@@ -14,7 +14,7 @@
     "test:all": "vitest run",
     "storybook": "storybook dev -p 6006 --host 0.0.0.0",
     "build-storybook": "storybook build",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package && (git config core.hooksPath .githooks || true)"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
