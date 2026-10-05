@@ -4,5 +4,17 @@
     "vercel@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
     "commit-commands@claude-plugins-official": true
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "git config core.hooksPath .githooks || true"
+          }
+        ]
+      }
+    ]
   }
 }
