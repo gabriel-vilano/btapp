@@ -1,6 +1,6 @@
 // Pessoas e relações (docs/DOMAIN.md §1, "Pessoas e relações").
 
-/** Pessoa com conta no LetzPlay. O cadastro não coleta gênero (R26). */
+/** Pessoa com conta no app. O cadastro não coleta gênero (R26). */
 export interface Player {
   id: string;
   name: string;

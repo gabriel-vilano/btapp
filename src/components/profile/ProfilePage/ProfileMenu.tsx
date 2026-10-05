@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Dialog } from "@/src/components/ui/Dialog";
 import { IconButton } from "@/src/components/ui/IconButton";
 import { List, ListItem } from "@/src/components/ui/ListItem";
+import { brand } from "@/src/lib/brand";
 import { playerPath } from "@/src/lib/domain/profile-page";
 import styles from "./ProfilePage.module.css";
 
@@ -18,7 +19,7 @@ type ShareState = "idle" | "copied" | "failed";
 // Sem o sheet nativo (desktop, alguns navegadores), o link vai para a área de transferência
 async function shareProfile(url: string, name: string): Promise<ShareState> {
   if (typeof navigator.share === "function") {
-    await navigator.share({ title: `${name} no LetzPlay`, url }).catch(() => undefined);
+    await navigator.share({ title: `${name} no ${brand.name}`, url }).catch(() => undefined);
     return "idle";
   }
   try {

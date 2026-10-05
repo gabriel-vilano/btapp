@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { brand } from "@/src/lib/brand";
 import { scheduleWhatsAppHref, scheduleWhatsAppText } from "./whatsAppText";
 
 const SAT_14H = { starts_at: "2026-10-03T17:00:00.000Z", venue: "Arena Tucum" };
@@ -8,13 +9,13 @@ const WED_19H30 = { starts_at: "2026-10-07T22:30:00.000Z", venue: "Arena Tucum" 
 describe("texto do Abrir no WhatsApp", () => {
   it("proposta com a mesma arena: horários separados e a arena uma vez no fim", () => {
     expect(scheduleWhatsAppText({ kind: "proposal", options: [SAT_14H, SUN_10H, WED_19H30] })).toBe(
-      "Proponho sáb, 3 out, 14h; dom, 4 out, 10h ou qua, 7 out, 19h30, na Arena Tucum. Responde no LetzPlay ou aqui.",
+      `Proponho sáb, 3 out, 14h; dom, 4 out, 10h ou qua, 7 out, 19h30, na Arena Tucum. Responde no ${brand.name} ou aqui.`,
     );
   });
 
   it("proposta com arenas diferentes ou sem arena: cada horário com a sua", () => {
     const text = scheduleWhatsAppText({ kind: "proposal", options: [SAT_14H, { ...SUN_10H, venue: null }] });
-    expect(text).toBe("Proponho sáb, 3 out, 14h (Arena Tucum) ou dom, 4 out, 10h. Responde no LetzPlay ou aqui.");
+    expect(text).toBe(`Proponho sáb, 3 out, 14h (Arena Tucum) ou dom, 4 out, 10h. Responde no ${brand.name} ou aqui.`);
   });
 
   it("data acordada sem arena não menciona arena", () => {
