@@ -1,0 +1,63 @@
+#!/bin/sh
+# Hook commit-msg do LetzPlay (ENG-181, decisão D8 da PRD-38).
+# Vale para qualquer origem de commit local (terminal, VS Code, agente), por isso é
+# hook do git e não do Claude Code. Instalado por `git config core.hooksPath .githooks`
+# (postinstall do package.json e hook SessionStart de .claude/settings.json).
+#
+# 1. Remove linhas `Co-Authored-By:` (qualquer capitalização) e avisa no stderr.
+#    A linha `Claude-Session:` fica: é rastreabilidade, não coautoria.
+# 2. Reprova (exit 1) assunto fora do Conventional Commits do projeto.
+# 3. Avisa, sem bloquear, assunto de 73 a 100 caracteres.
+# Commits de merge e o revert gerado pelo git ficam isentos da validação do assunto.
+
+msg_file="$1"
+if [ -z "$msg_file" ] || [ ! -f "$msg_file" ]; then
+  echo "commit-msg: esperava o caminho do arquivo da mensagem, recebi '$msg_file'" >&2
+  exit 1
+fi
+
+# `wc -m` e `[[:upper:]]` precisam de locale UTF-8 para contar "ç" ou "É" como um caractere só
+export LC_ALL=C.UTF-8
+
+removed=$(grep -i '^co-authored-by:' "$msg_file")
+if [ -n "$removed" ]; then
+  tmp=$(mktemp)
+  grep -iv '^co-authored-by:' "$msg_file" > "$tmp"
+  cat "$tmp" > "$msg_file"
+  rm -f "$tmp"
+  echo "commit-msg: removi a coautoria (o projeto não usa Co-Authored-By):" >&2
+  echo "$removed" | sed 's/^/  - /' >&2
+fi
+
+# Primeira linha que não é comentário nem vazia (o git tira os comentários depois do hook)
+subject=$(grep -v '^#' "$msg_file" | grep -m1 -v '^[[:space:]]*$')
+
+case "$subject" in
+  "Merge branch"*|"Merge pull request"*|"Merge remote-tracking"*|"Revert \""*) exit 0 ;;
+esac
+
+types='feat|fix|chore|style|refactor|docs|test|perf|ci|build|revert'
+fail() {
+  echo "commit-msg: $1" >&2
+  echo "  recebi:   '$subject'" >&2
+  echo "  esperado: <tipo>[(escopo)]: <descrição em minúscula, sem ponto final>, tipo em $types, até 100 caracteres" >&2
+  exit 1
+}
+
+echo "$subject" | grep -Eq "^($types)(\([^)]+\))?!?: ." \
+  || fail "prefixo inválido ou ausente"
+description=${subject#*: }
+echo "$description" | grep -q '^[[:upper:]]' \
+  && fail "a descrição começa com maiúscula"
+case "$subject" in
+  *.) fail "o assunto termina com ponto final" ;;
+esac
+
+length=$(printf %s "$subject" | wc -m | tr -d ' ')
+if [ "$length" -gt 100 ]; then
+  fail "assunto com $length caracteres (máximo 100)"
+fi
+if [ "$length" -gt 72 ]; then
+  echo "commit-msg: aviso: assunto com $length caracteres; o ideal é até ~72" >&2
+fi
+exit 0
