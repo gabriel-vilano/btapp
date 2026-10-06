@@ -1,12 +1,12 @@
 ---
 name: movimento
-description: Cria animação e transição no DS do LetzPlay pela ordem certa — se anima, o propósito, as propriedades, o token de curva e duração, a interrupção e o movimento reduzido. Use ao animar, adicionar transição ou mexer em motion de componente. O modo revisar roda só por comando, "/movimento revisar <alvo>".
+description: Cria animação e transição no DS do BT App pela ordem certa — se anima, o propósito, as propriedades, o token de curva e duração, a interrupção e o movimento reduzido. Use ao animar, adicionar transição ou mexer em motion de componente. O modo revisar roda só por comando, "/movimento revisar <alvo>".
 argument-hint: "[revisar] <alvo>"
 ---
 
 # /movimento
 
-Motion do LetzPlay em dois modos, com a régua das regras de motion do Emil Kowalski, que o DS adotou (decisão D2; `docs/TOKENS.md` > "Motion: regras"). Origem e licença no fim.
+Motion do BT App em dois modos, com a régua das regras de motion do Emil Kowalski, que o DS adotou (decisão D2; `docs/TOKENS.md` > "Motion: regras"). Origem e licença no fim.
 
 - **Criar** (padrão): transforma um pedido de movimento em CSS que passa no modo revisar de primeira. Dispara sozinho quando a tarefa é animar algo.
 - **Revisar**: mede motion existente contra os padrões e fecha com **Bloquear** ou **Aprovar**. Roda **só** quando chamado explicitamente: `/movimento revisar <arquivos, pasta ou componente>`. Sem alvo, revisar os `.module.css` e `.tsx` do diff contra o `master` (`git diff --name-only origin/master...HEAD -- '*.css' '*.tsx'`). Nunca entrar no modo revisar por iniciativa própria, nem no meio do modo criar: a revisão é um portão que o Gabriel ou a `/pegar-issue` decidem abrir.
@@ -26,7 +26,7 @@ Valem nos dois modos.
 
 1. **Tokens do DS, nunca valores soltos.** Toda curva e duração vem de um `--motion-*` (mapa em PADROES.md > "Curvas" e "Durações"). Se nenhum token serve, propor o token novo em `styles/tokens/primitives.css` e na tabela do `docs/TOKENS.md` no mesmo PR, e não escrever o valor cru. A regra é do próprio Emil: estender os tokens do projeto, não criar um sistema paralelo.
 2. **Press é só state layer, sem escala** (decisão D3). O `:active` escurece o `::after` com `--color-state-layer-pressed` (`docs/TOKENS.md` > "State layers"). `transform: scale(...)` no `:active` é defeito, e a ausência de escala não é achado.
-3. **Hover dentro de `@media (hover: hover)`**, o padrão do DS (hurdle "iOS: sticky hover" do `CLAUDE.md`). Não exigir `and (pointer: fine)`: o Emil pede, o DS ainda não adotou.
+3. **Hover dentro de `@media (hover: hover)`**, o padrão do DS (hurdle "iOS: sticky hover" de `.claude/rules/css.md`). Não exigir `and (pointer: fine)`: o Emil pede, o DS ainda não adotou.
 4. **Só CSS, transição antes de keyframes.** A ferramenta mais barata que resolve: transição, `@starting-style`, animação CSS, WAAPI. Nunca instalar Motion (`motion.dev`) nem outra lib de animação. Spring só em CSS, com `linear()`; se não couber, fica fora do escopo e vira comentário na issue.
 5. **Sem Base UI.** Não existe `var(--transform-origin)` aqui: a origem é fixada por componente, no lado em que o painel nasce do gatilho (`transform-origin: top center` num menu que abre para baixo).
 6. **Movimento reduzido e hover chegam junto com a animação**, nunca depois. Reduzido é mais suave, e não zero: tirar o deslocamento e manter o esmaecimento.
@@ -72,7 +72,7 @@ Postura: olho rígido para o acabamento. A animação que "funciona", mas arrast
 7. **Só composição.** `transform` e `opacity`. Animar `width`, `height`, `margin`, `padding`, `top` ou `left` é achado de performance. O state layer (`background-color` num `::after` pequeno) é a exceção sancionada do DS (PADROES.md > "Propriedades").
 8. **Acessibilidade.** `prefers-reduced-motion` respeitado, mais suave e não zero; hover em `@media (hover: hover)`.
 9. **Entrada e saída assimétricas** onde o jogador decide (segurar, confirmar algo destrutivo): fase deliberada lenta, resposta do sistema rápida.
-10. **Coesão.** O movimento combina com a personalidade do componente e do produto: o LetzPlay é ferramenta de competição, então movimento seco e rápido. Na dúvida se o movimento está certo, o melhor é muitas vezes apagá-lo.
+10. **Coesão.** O movimento combina com a personalidade do componente e do produto: o BT App é ferramenta de competição, então movimento seco e rápido. Na dúvida se o movimento está certo, o melhor é muitas vezes apagá-lo.
 
 **Hierarquia de correção.** Ao propor a correção, preferir a mais alta da lista:
 

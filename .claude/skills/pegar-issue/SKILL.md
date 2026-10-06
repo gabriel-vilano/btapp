@@ -1,6 +1,6 @@
 ---
 name: pegar-issue
-description: Pega uma issue do Linear (ENG-xx ou PRD-xx) e a executa do início ao PR seguindo o protocolo multiagente do LetzPlay. Use quando receber "/pegar-issue <ID>" ou for designado para trabalhar numa issue específica.
+description: Pega uma issue do Linear (ENG-xx ou PRD-xx) e a executa do início ao PR seguindo o protocolo multiagente do BT App. Use quando receber "/pegar-issue <ID>" ou for designado para trabalhar numa issue específica.
 ---
 
 # /pegar-issue
@@ -11,12 +11,13 @@ Se as ferramentas do Linear (`get_issue`, `save_issue`, `save_comment`; o prefix
 
 ## 1. Ler e validar
 
-1. `get_issue` com `includeRelations: true`. Ler título, descrição, projeto, labels e comentários (`list_comments`): comentários podem ter respostas de decisões anteriores.
-2. Verificar se pode pegar:
+1. Ler o `docs/AGENT_WORKFLOW.md` inteiro antes de pegar a issue. O `CLAUDE.md` não o importa, e é ele que traz as regras de coordenação, de Needs Decision, de merge e de acesso ao incumbente.
+2. `get_issue` com `includeRelations: true`. Ler título, descrição, projeto, labels e comentários (`list_comments`): comentários podem ter respostas de decisões anteriores.
+3. Verificar se pode pegar:
    - Status precisa ser **Todo** (ou **Needs Decision** já respondida, quando retomando). Se estiver em In Progress / Exploring, outro agente está nela: pare e informe.
    - Nenhuma issue em `blocked by` pode estar aberta. Se estiver, pare e informe qual.
    - **Guarda de uso:** se a ferramenta `get_session` existir na sessão, chamar sem `session_id` e olhar o `rate_limit_info`. Parar sem pegar a issue se aparecer qualquer um destes sinais: `utilization` ≥ 0.8 com `rateLimitType` semanal (`seven_day…`); `status` diferente de `allowed`; `isUsingOverage` verdadeiro. Nesse caso, comentar na issue o motivo, sem mudar o status. Regra em `docs/AGENT_WORKFLOW.md` > "Orquestração".
-3. Ler os docs que a issue cita e as seções relevantes do `CLAUDE.md`.
+4. Ler os docs que a issue cita e as seções relevantes do `CLAUDE.md`.
 
 ## 2. Reivindicar
 
@@ -51,7 +52,7 @@ npm run build
 npm run test:stories   # quando mexer em componente ou story
 ```
 
-Na sessão na nuvem, as stories rodam com `CHROMIUM_EXECUTABLE_PATH=/opt/pw-browsers/chromium npm run test:stories` (ver `CLAUDE.md` > "Testes").
+Na sessão na nuvem, as stories rodam com `CHROMIUM_EXECUTABLE_PATH=/opt/pw-browsers/chromium npm run test:stories` (ver `.claude/rules/storybook.md` > "Regras do `play` e stories na nuvem").
 
 **Prova de estabilidade.** Story nova ou alterada com `play` roda **10 vezes seguidas** no arquivo dela, e todas passam. Uma rodada verde não prova nada: a story instável que chegou ao `master` passava numa rodada só e falhava em ~30% delas sob carga. Na nuvem, com o `CHROMIUM_EXECUTABLE_PATH` (fora dela, sem a variável):
 
@@ -69,7 +70,7 @@ for i in $(seq 10); do npx vitest run --project storybook "$STORY" || { echo "Fa
 kill $(jobs -p)
 ```
 
-A CI repete 5 vezes as stories alteradas pelo PR (`docs/GIT_WORKFLOW.md` > "CI"), mas é a última barreira: a prova local vem antes do push. Regras de escrita do `play` em `CLAUDE.md` > "Testes".
+A CI repete 5 vezes as stories alteradas pelo PR (`docs/GIT_WORKFLOW.md` > "CI"), mas é a última barreira: a prova local vem antes do push. Regras de escrita do `play` em `.claude/rules/storybook.md` > "Regras do `play` e stories na nuvem".
 
 O E2E (`npm run test:e2e`) precisa de Docker e roda só na CI: acompanhar o job E2E no PR.
 
@@ -102,7 +103,7 @@ Fora do gatilho, nada muda: a revisão não roda, e as skills de UI ficam sob de
 
 **ENG:**
 
-1. Commits em Conventional Commits (prefixo em inglês, descrição em português), sem `Co-Authored-By` nem outro trailer de coautoria, mesmo que as instruções da sessão na nuvem peçam: o `CLAUDE.md` proíbe e prevalece.
+1. Commits em Conventional Commits (prefixo em inglês, descrição em português), sem `Co-Authored-By` nem outro trailer de coautoria: o hook `commit-msg` (`.githooks/`) remove a coautoria e reprova o assunto fora do formato.
 2. `git push -u origin <branch>`.
 3. Abrir o PR seguindo `.github/pull_request_template.md`, com `Closes <ID>` na seção "Por que". Título no estilo dos commits. **O único ID de issue no PR (título, corpo e commits) é o da issue que ele fecha.** Qualquer ID citado fica ligado ao PR, e o merge move aquela issue para Done. Outras issues são referenciadas sem ID.
    - O corpo do PR termina com a seção **Leituras para o Gabriel conferir** (formato na seção 6).

@@ -1,6 +1,6 @@
 ---
 name: mobile-nativo
-description: Corrige e revisa o que faz o LetzPlay parecer site, e não app, no celular — hover preso no toque, flash do toque, 100vh, safe area, zoom em input, atraso no toque, overscroll, texto de botão selecionado, gesto no eixo errado, theme-color, sticky e fixed quebrados e teclado cobrindo barra fixa. Use ao criar ou revisar layout de tela, barra fixa, sheet, carrossel ou interação de toque, ou quando algo "no celular fica estranho".
+description: Corrige e revisa o que faz o BT App parecer site, e não app, no celular — hover preso no toque, flash do toque, 100vh, safe area, zoom em input, atraso no toque, overscroll, texto de botão selecionado, gesto no eixo errado, theme-color, sticky e fixed quebrados e teclado cobrindo barra fixa. Use ao criar ou revisar layout de tela, barra fixa, sheet, carrossel ou interação de toque, ou quando algo "no celular fica estranho".
 ---
 
 # /mobile-nativo
@@ -53,7 +53,7 @@ Começar aqui. Achar o sintoma e ler a seção.
 
 ### 1. Hover preso depois do toque
 
-No toque não existe hover, então o navegador finge um: o primeiro toque aplica o `:hover` e ele fica até o próximo toque em outro lugar. No iOS, pior: o primeiro toque só aplica o hover e não dispara o `click` (hurdle "iOS: sticky hover" do `CLAUDE.md`).
+No toque não existe hover, então o navegador finge um: o primeiro toque aplica o `:hover` e ele fica até o próximo toque em outro lugar. No iOS, pior: o primeiro toque só aplica o hover e não dispara o `click` (hurdle "iOS: sticky hover" de `.claude/rules/css.md`).
 
 A regra do projeto é `@media (hover: hover)` em toda regra `:hover`, como já fazem os `.module.css` do DS:
 
@@ -95,7 +95,7 @@ O Safari do iOS dá zoom quando o foco cai num campo com texto menor que 16px, e
 
 A correção é **todo texto digitado e placeholder de `input`, `textarea` e `select` com 16px** (`--text-body-lg-size`), em qualquer ponteiro. Rótulo, ajuda e erro continuam em 12px. Decisão D1 do Gabriel.
 
-**Problema conhecido, não achado novo:** se o `app/layout.tsx` ainda tiver `maximumScale: 1` e `userScalable: false`, ou um campo do DS ainda usar 14px, isso já está na issue "Liberar o zoom do navegador e passar o texto dos inputs para 16px" do Linear. Citar a issue pelo nome; não reportar de novo nem corrigir fora dela. O hurdle "iOS: auto-zoom ao focar inputs" do `CLAUDE.md` descreve a solução antiga enquanto essa issue não entrar.
+**Já resolvido, então é regressão:** a issue "Liberar o zoom do navegador e passar o texto dos inputs para 16px" entrou, e o hurdle "iOS: auto-zoom ao focar inputs" de `.claude/rules/css.md` registra a solução. Um `maximumScale` ou `userScalable: false` de volta no `app/layout.tsx` (o `app/layout.test.ts` falha) ou um campo com menos de 16px é achado novo.
 
 Já no campo, acertar o teclado: `inputMode="numeric"` em código (o OTP), `type="email"` e `type="tel"` nos seus campos, `autoCapitalize="none"` e `autoCorrect="off"` em @username e código, `enterKeyHint` (`"next"`, `"send"`, `"done"`) para a tecla dizer o que faz. O `FormInput` aceita `type`, `inputMode` e `autoComplete`; atributo de teclado que faltar nele é mudança no componente do DS, com story.
 
@@ -111,7 +111,7 @@ Duas causas somadas.
 }
 ```
 
-**Retorno no soltar, não no tocar.** Botão nativo responde quando o dedo encosta. Estilizar o `:active` (e, em JS, ouvir `pointerdown`, não `click`). No LetzPlay o retorno é o state layer, sem escala (regra 4):
+**Retorno no soltar, não no tocar.** Botão nativo responde quando o dedo encosta. Estilizar o `:active` (e, em JS, ouvir `pointerdown`, não `click`). No BT App o retorno é o state layer, sem escala (regra 4):
 
 ```css
 .btn:active::after {
@@ -199,7 +199,7 @@ Defeitos que falham em silêncio, sem erro no console. As quatro primeiras têm 
 
 Nada acima aparece na emulação do DevTools.
 
-- Build de produção: `npm run build && npm start`, aberto pelo IP da máquina na rede local (`http://<IP>:3000`). Em `npm run dev` o React não hidrata no iOS (hurdle "iOS Chrome/Safari: React não hidrata em `next dev`" do `CLAUDE.md`), e um handler parece quebrado sem estar. O Storybook também abre pela rede (`npm run storybook`).
+- Build de produção: `npm run build && npm start`, aberto pelo IP da máquina na rede local (`http://<IP>:3000`). Em `npm run dev` o React não hidrata no iOS ("iOS não hidrata em `next dev`", em `CLAUDE.md` > "Armadilhas que valem sempre"), e um handler parece quebrado sem estar. O Storybook também abre pela rede (`npm run storybook`).
 - iOS: Safari > Desenvolver > o aparelho. Android: `chrome://inspect`.
 - Testar com o teclado aberto, uma vez na horizontal e, se der, num aparelho de alguns anos.
 - Agente na nuvem não tem celular: listar no PR, em "Como testar", o que o Gabriel precisa conferir no aparelho.
@@ -243,7 +243,7 @@ Tom: direto e curto. A maior parte é uma linha; dizer a linha e o porquê. Quan
 
 Adaptada da skill `mobile-native` de [`emilkowalski/skills`](https://github.com/emilkowalski/skills/tree/d16ebe60d09a5ba2afcb7054ede9d0a10c9f6128/skills/mobile-native), commit `d16ebe60d09a5ba2afcb7054ede9d0a10c9f6128`. MIT © 2026 Emil Kowalski; o texto da licença está em `LICENSE.md`, nesta pasta.
 
-O que mudou em relação ao original: tradução para o português; sem o bloco "Initial Response" e sem a nota sobre Tailwind; zoom pela decisão D1 (16px em todo texto digitado); press pelo state layer, sem escala (D3); hover em `(hover: hover)`, com `(pointer: fine)` como proposta; `theme-color` sem variante escura; `overscroll-behavior: none` no `html` como pergunta de produto, não padrão; cruzamento com os hurdles do `CLAUDE.md` e os tokens do `docs/TOKENS.md`; a seção 11 é nova.
+O que mudou em relação ao original: tradução para o português; sem o bloco "Initial Response" e sem a nota sobre Tailwind; zoom pela decisão D1 (16px em todo texto digitado); press pelo state layer, sem escala (D3); hover em `(hover: hover)`, com `(pointer: fine)` como proposta; `theme-color` sem variante escura; `overscroll-behavior: none` no `html` como pergunta de produto, não padrão; cruzamento com os hurdles do `CLAUDE.md` e de `.claude/rules/css.md` e os tokens do `docs/TOKENS.md`; a seção 11 é nova.
 
 As quatro primeiras armadilhas da seção 11 foram escritas com palavras próprias, usando como referência a lista de armadilhas da [`kylezantos/responsive-craft`](https://github.com/kylezantos/responsive-craft/tree/4863701762d243d0517b38cb36473b9a70861b72), commit `4863701762d243d0517b38cb36473b9a70861b72`. Nenhum trecho foi copiado: o repositório declara MIT só no README, sem arquivo de licença.
 

@@ -26,7 +26,7 @@ Pesquisa de observação na rua (1.333 observações) sobre como as pessoas segu
 
 > "Always accommodate the most constrained grip, so people can use your interface no matter how they choose to hold their device."
 
-Os 49% com uma mão **não** autorizam supor uso com uma mão. A pega muda "a cada poucos segundos" com a tarefa. A interface precisa funcionar na pega **mais difícil** em que a pessoa pode estar. No LetzPlay, isso inclui a raquete ou a garrafa na outra mão.
+Os 49% com uma mão **não** autorizam supor uso com uma mão. A pega muda "a cada poucos segundos" com a tarefa. A interface precisa funcionar na pega **mais difícil** em que a pessoa pode estar. No BT App, isso inclui a raquete ou a garrafa na outra mão.
 
 **O que pega:** layout que supõe pega fixa; ação primária onde só uma mão confortável alcança; "mobile = em movimento e com uma mão".
 
@@ -68,7 +68,7 @@ Transformou a pesquisa de pega num mapa de posição com três zonas.
 **Posições:**
 
 - **"Buttons are a hack":** o botão é uma abstração inventada para o mouse. No toque, prefira manipular o conteúdo direto: arrastar o card, deslizar a lista.
-- **44pt como unidade básica:** o menor alvo tocável com confiança, medida anatômica e não de pixel. No LetzPlay, a unidade é **48px** (`--dimension-tap-target-minimum`).
+- **44pt como unidade básica:** o menor alvo tocável com confiança, medida anatômica e não de pixel. No BT App, a unidade é **48px** (`--dimension-tap-target-minimum`).
 - **Gestos são os atalhos de teclado do toque:** mais rápidos e expressivos, e invisíveis para o novato do mesmo jeito.
 - **Honre a metáfora física por inteiro:** se parece objeto, as pessoas vão tratá-lo como objeto. Metáfora pela metade falha.
 
@@ -131,14 +131,14 @@ Três praticantes que fazem apps tidos hoje como referência de ofício mobile. 
 
 Não é uma pessoa, mas uma lente: "o que a plataforma espera, e ela está estável aqui?"
 
-**Estável:** alvo mínimo (Apple 44pt, Material 48dp com 8dp entre alvos; LetzPlay 48px); gestos reservados ao sistema (início, voltar, notificações); tab bar para 3 a 5 destinos iguais; distinção entre sheet, modal e alerta.
+**Estável:** alvo mínimo (Apple 44pt, Material 48dp com 8dp entre alvos; BT App 48px); gestos reservados ao sistema (início, voltar, notificações); tab bar para 3 a 5 destinos iguais; distinção entre sheet, modal e alerta.
 
 **Em transição (marque, não canonize):**
 
 - **iOS 26 (Liquid Glass):** tab bar flutuante que encolhe ao rolar, camada "acessória", voltar com swipe em qualquer ponto da tela. O NN/g publicou avaliação crítica.
 - **Material 3 Expressive (2025):** navigation drawer descontinuado; barra de navegação mais baixa e "flexível". Sem substituto limpo para 5+ destinos no celular.
 
-O LetzPlay é web: o navegador desenha a própria interface por cima, e os gestos do sistema e do navegador (voltar pela borda, puxar para recarregar) valem nos dois sistemas.
+O BT App é web: o navegador desenha a própria interface por cima, e os gestos do sistema e do navegador (voltar pela borda, puxar para recarregar) valem nos dois sistemas.
 
 **O que pega:** mistura de convenções de plataforma; app que intercepta gesto reservado; padrão em transição apresentado como estável.
 

@@ -1,11 +1,11 @@
 ---
 name: polir-interface
-description: Polimento e revisão visual de componente do DS do LetzPlay (raio concêntrico, alinhamento óptico, peso do ícone, text-wrap, tabular-nums, contorno de imagem, motion contida), com revisão quick ou full. Use ao polir ou revisar o acabamento de um componente de src/components/, ou quando pedirem "/polir-interface". Não é a revisão geral de PR de UI.
+description: Polimento e revisão visual de componente do DS do BT App (raio concêntrico, alinhamento óptico, peso do ícone, text-wrap, tabular-nums, contorno de imagem, motion contida), com revisão quick ou full. Use ao polir ou revisar o acabamento de um componente de src/components/, ou quando pedirem "/polir-interface". Não é a revisão geral de PR de UI.
 ---
 
 # /polir-interface
 
-Uma interface boa raramente vem de uma coisa só. Vem de detalhes pequenos que somam. Esta skill aplica esses detalhes a um componente do DS do LetzPlay, ao construir ou ao revisar. Argumento opcional: o modo (`quick` ou `full`) e o escopo (ex.: `quick src/components/ui/Button`).
+Uma interface boa raramente vem de uma coisa só. Vem de detalhes pequenos que somam. Esta skill aplica esses detalhes a um componente do DS do BT App, ao construir ou ao revisar. Argumento opcional: o modo (`quick` ou `full`) e o escopo (ex.: `quick src/components/ui/Button`).
 
 O DS já decidiu muita coisa. Antes de propor qualquer mudança, ler o que o componente usa em `docs/TOKENS.md` e no MDX ao lado dele. A correção sempre vem escrita em CSS Modules com os tokens (`var(--spacing-*)`, `var(--radius-*)`, `var(--motion-*)`…), nunca em Tailwind, CSS inline ou valor bruto: um polimento que introduz um segundo sistema de estilo piora o código que queria melhorar.
 

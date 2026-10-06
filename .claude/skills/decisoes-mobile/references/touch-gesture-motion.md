@@ -6,13 +6,13 @@ A camada de interação: como a pessoa toca a interface e como ela se move em re
 
 | Fonte | Alvo mínimo | Espaço |
 | --- | --- | --- |
-| **LetzPlay (DS)** | **48 × 48px** em todo elemento interativo, inclusive botão só de ícone | ver abaixo |
+| **BT App (DS)** | **48 × 48px** em todo elemento interativo, inclusive botão só de ícone | ver abaixo |
 | Apple HIG | 44 × 44pt | "não arriscar ativar o controle vizinho" (sem número) |
 | Material 3 | 48 × 48dp | 8dp entre alvos |
 | WCAG 2.5.8 (AA) | 24 × 24px (piso) | — |
 | WCAG 2.5.5 (AAA) | 44 × 44px | — |
 
-**No LetzPlay, o piso é 48px** (`--dimension-tap-target-minimum`, `docs/TOKENS.md` > "Acessibilidade — tap target"). É mais rígido que a Apple; a skill nunca recomenda menos.
+**No BT App, o piso é 48px** (`--dimension-tap-target-minimum`, `docs/TOKENS.md` > "Acessibilidade — tap target"). É mais rígido que a Apple; a skill nunca recomenda menos.
 
 **Tamanho visual e área de toque são coisas separadas.** Um ícone de 16 ou 24px está bem visualmente; a área de toque precisa ter 48px, completada com padding ou `::before`.
 

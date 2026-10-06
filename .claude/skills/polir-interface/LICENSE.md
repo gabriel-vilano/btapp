@@ -4,7 +4,7 @@ Esta skill é uma adaptação de `make-interfaces-feel-better`, de Jakub Krehel
 (<https://github.com/jakubkrehel/make-interfaces-feel-better>, commit
 `35545ea1512ad59fa463e6b1f95ca9c052981fe6`), distribuída sob a licença MIT
 abaixo. A adaptação traduziu o texto, trocou os exemplos pelos tokens e CSS
-Modules do LetzPlay e mudou regras para seguir o design system do projeto
+Modules do BT App e mudou regras para seguir o design system do projeto
 (ver "Origem e licença" no `SKILL.md`).
 
 ---

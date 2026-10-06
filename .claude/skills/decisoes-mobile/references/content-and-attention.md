@@ -36,7 +36,7 @@ No celular, mais se varre do que se lê:
 
 ## Leitura de relance: atenção interrompida
 
-O uso mobile é interrompido por padrão. No LetzPlay, mais ainda: na quadra, entre games, ao sol. Ler de relance é decisão de design.
+O uso mobile é interrompido por padrão. No BT App, mais ainda: na quadra, entre games, ao sol. Ler de relance é decisão de design.
 
 - **Estado por posição, cor, forma e tamanho**, não por uma frase que obriga a parar. Primeiro se sabe o estado, depois, se quiser, lê-se o detalhe. Cor nunca sozinha: o estado também é texto (WCAG 1.4.1).
 - **Uma coisa principal por tela.** Focos concorrentes pedem um estudo que a pessoa interrompida não dá.
@@ -53,7 +53,7 @@ O achado recente do NN/g: o problema dominante do mobile é **camada demais**. S
 
 ## Estados: vazio, carregando e erro
 
-Uma tela não está desenhada até os estados fora do ideal estarem. São decisões de conteúdo, não casos de borda. No LetzPlay, a spec de cada tela costuma decidir (ex.: `NAVIGATION.md`, N14, N22 a N24): confira antes de propor.
+Uma tela não está desenhada até os estados fora do ideal estarem. São decisões de conteúdo, não casos de borda. No BT App, a spec de cada tela costuma decidir (ex.: `NAVIGATION.md`, N14, N22 a N24): confira antes de propor.
 
 - **Vazio:** nunca beco sem saída. Diga por que está vazio, em linguagem simples, e dê o próximo passo óbvio.
 - **Carregando:** esqueleto com o formato do conteúdo para carga de conteúdo; barra determinada quando a duração é conhecida; spinner só para espera curta e desconhecida. Sem pulo de layout quando o conteúdo chega.

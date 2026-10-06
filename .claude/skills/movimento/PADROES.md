@@ -253,6 +253,6 @@ Recomendar quando a sensação não se decide pelo código:
 
 - **Câmera lenta:** DevTools › Animations em 10% ou 25%, ou a duração 2 a 5 vezes maior por um momento. Ver se a cor cruza limpa, se a curva não para de golpe, se a origem está certa e se as propriedades coordenadas andam juntas.
 - **Quadro a quadro:** o painel Animations do Chrome mostra a defasagem entre propriedades coordenadas.
-- **Aparelho de verdade** para gesto (sheet, arraste): o celular na mesma rede, no build de produção (hurdle "iOS: React não hidrata em `next dev`" do `CLAUDE.md`).
+- **Aparelho de verdade** para gesto (sheet, arraste): o celular na mesma rede, no build de produção ("iOS não hidrata em `next dev`", em `CLAUDE.md` > "Armadilhas que valem sempre").
 - **Olho descansado no dia seguinte:** defeitos invisíveis durante o trabalho aparecem depois.
 - **Movimento reduzido:** DevTools › Rendering › "Emulate CSS media feature prefers-reduced-motion".

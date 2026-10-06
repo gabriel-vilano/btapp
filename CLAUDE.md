@@ -53,7 +53,7 @@ Next.js 16 (App Router, ler `node_modules/next/dist/docs/` antes de usar API nov
 
 ## Marca
 
-O nome do produto só entra no código por `src/lib/brand.ts`. Em `src/`, `app/` e `e2e/` (TS, TSX e MDX), nenhum literal do nome: nem em UI, nem em texto que sai do app (mensagem do WhatsApp, título do compartilhamento), nem em teste, story ou MDX (`{brand.name}` funciona em MDX). Fora do TypeScript, onde não dá para importar, o literal é permitido, e a lista desses lugares fica no comentário de `brand.ts`. O teste `brand.guard.test.ts` reprova o PR que descumprir. Docs não repetem o nome: só `README.md` e `docs/PRODUCT.md` o dizem; os outros escrevem "o produto".
+O nome do produto só entra no código por `src/lib/brand.ts`. Em `src/`, `app/` e `e2e/` (TS, TSX e MDX), nenhum literal do nome: nem em UI, nem em texto que sai do app (mensagem do WhatsApp, título do compartilhamento), nem em teste, story ou MDX (`{brand.name}` funciona em MDX). Fora do TypeScript, onde não dá para importar, o literal é permitido só nos lugares da lista do comentário de `brand.ts`. Docs não repetem o nome: só `README.md` e `docs/PRODUCT.md` o dizem; os outros escrevem "o produto". O teste `brand.guard.test.ts` varre o repo todo e reprova o PR que descumprir, e também qualquer menção ao nome antigo fora da exceção explicada nele.
 
 ## Supabase: o que não pode falhar
 
@@ -110,13 +110,13 @@ Documentamos o que é estável (decisão, padrão, princípio, hurdle, convenç�
 - `docs/AGENT_WORKFLOW.md`: Linear, Needs Decision, coordenação de agentes, merge, acesso ao incumbente
 - `src/components/.../Component.mdx`: fonte única da documentação de cada componente (Storybook)
 
-Regras com `paths` (`.claude/rules/`), carregadas ao mexer nos arquivos correspondentes:
+Regras com `paths` (`.claude/rules/`), carregadas ao ler os arquivos correspondentes. Nas três marcadas com *hook*, o `.claude/hooks/require-rule-read.mjs` barra a primeira escrita num arquivo que casa até a regra ser lida:
 
-- `storybook.md`: stories, estratégia de cobertura, `play`, padrão de MDX (`*.stories.tsx`, `*.mdx`, `.storybook/`). Um hook exige lê-la antes de escrever story ou MDX
-- `componentes.md`: onde mora cada componente e a regra dos grupos (`src/components/`)
+- `storybook.md`: stories, estratégia de cobertura, `play`, padrão de MDX (`*.stories.tsx`, `*.mdx`, `.storybook/`). *Hook*
+- `componentes.md`: onde mora cada componente e a regra dos grupos (`src/components/`). *Hook*
 - `icones.md`: wrapper `<Icon />`, sufixo `Icon`, Phosphor em Server Component (`.tsx`)
 - `css.md`: regras do DS, state layers, foco, tap target, hurdles de CSS no iOS (`.css`)
-- `supabase.md`: migrations e env vars (`supabase/`, `src/lib/supabase/`, server actions)
+- `supabase.md`: migrations e env vars (`supabase/`, `src/lib/supabase/`, server actions). *Hook*
 - `testes.md`: server actions, E2E e diagnóstico de falha na CI (testes, `e2e/`)
 - `next-patch.md`: o patch do Next e como atualizar (`patches/`, `package.json`, `next.config.ts`)
 

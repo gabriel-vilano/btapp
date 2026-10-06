@@ -4,14 +4,19 @@
 // `brand` (em MDX, `{brand.name}`).
 //
 // Onde o TypeScript não alcança, não dá para importar, então o literal é
-// permitido. Esta é a lista desses lugares; ao aparecer outro, acrescentar aqui:
-//   - supabase/        (templates de e-mail, `subject` e `project_id` do config.toml)
-//   - package.json     (e o package-lock.json, gerado a partir dele)
+// permitido. Esta é a lista desses lugares; ao aparecer outro, acrescentar aqui
+// e na allowlist de `brand.guard.test.ts`, que confere se as duas batem:
+//   - supabase/        (templates de e-mail e `subject` do config.toml)
 //   - .claude/         (skills, scripts e textos dos agentes)
-//   - patches/         (comentário de atribuição dentro do patch)
+//   - README.md        (título e apresentação do repo)
+//   - docs/PRODUCT.md  (o único doc que diz o nome; os outros escrevem "o produto")
+// No resto do repo, o guard reprova o literal, e o nome antigo em qualquer lugar
+// (a única exceção, o patch do Next, tem o motivo em `OLD_NAME_ALLOWED`).
 //
 // `name` é o nome de exibição ("BT App", com espaço e maiúsculas). Os
-// identificadores técnicos (chaves, hosts, project_id) seguem "btapp".
+// identificadores técnicos (nome do repo, `name` do package.json, project_id do
+// Supabase) seguem "btapp" e não entram na lista: não são o nome de exibição.
+// Chaves de storage e hosts de teste são neutros (`bt:`, `app.test`).
 //
 // Sem `baseUrl` nem `supportEmail` de propósito: nenhum código os consome
 // hoje (o compartilhamento do perfil usa `window.location.origin`) e o

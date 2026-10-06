@@ -265,7 +265,7 @@ Texto e fundo mudam juntos, em sincronia perfeita, porque é um elemento só sen
 
 ## Revelar na rolagem
 
-Só em superfície de marketing, e o LetzPlay ainda não tem. Não fazer em UI funcional visitada todo dia.
+Só em superfície de marketing, e o BT App ainda não tem. Não fazer em UI funcional visitada todo dia.
 
 ```css
 .reveal {

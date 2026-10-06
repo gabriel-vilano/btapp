@@ -16,7 +16,7 @@ Nota atual (Budiu / NN/g): o atrito de autenticação caiu muito (passkeys, biom
 4. **Tipo de campo igual ao tipo de dado.** E-mail → teclado de e-mail; telefone → teclado numérico; código → numérico com `autocomplete="one-time-code"`. Junto: dicas de preenchimento automático, capitalização e o rótulo da tecla Enter (`enterkeyhint`).
 5. **Corte campos sem dó.** Para cada um: "o que acontece se tirarmos?". Se nada quebra, sai. Pergunte depois, aos poucos, deduza do contexto, ou não pergunte.
 6. **Valores padrão bons e editáveis.** Já preenchido mas editável (data de hoje, a opção óbvia) é mais rápido que vazio.
-7. **Texto digitado com 16px.** Abaixo disso, o Safari do iOS dá zoom ao focar. Decisão do LetzPlay: todo texto digitado e placeholder de `input`, `textarea` e `select` em 16px; rótulo, ajuda e erro em 12px.
+7. **Texto digitado com 16px.** Abaixo disso, o Safari do iOS dá zoom ao focar. Decisão do BT App: todo texto digitado e placeholder de `input`, `textarea` e `select` em 16px; rótulo, ajuda e erro em 12px.
 
 ## Interação e feedback
 

@@ -14,9 +14,10 @@ shift
 REPO="$(git -C "$(dirname "$0")" rev-parse --show-toplevel)"
 COMBO="$SP/combo"
 LOG="$SP/$NAME.log"
-# Definidas fora do CSS: o useSheetDrag escreve a primeira em runtime,
-# e o next/font injeta a segunda. Qualquer outra é contrato quebrado entre PRs.
-EXPECTED_UNDEFINED_CSS="--dialog-drag-offset --font-arimo"
+# Definidas fora do CSS: o useSheetDrag e o useKeyboardInset escrevem as duas
+# primeiras em runtime, e o next/font injeta a terceira. Qualquer outra é
+# contrato quebrado entre PRs.
+EXPECTED_UNDEFINED_CSS="--dialog-drag-offset --dialog-keyboard-inset --font-arimo"
 
 exec >"$LOG" 2>&1
 echo "=== combo $NAME: $(date -u +%FT%TZ)"

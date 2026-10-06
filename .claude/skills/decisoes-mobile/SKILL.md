@@ -6,7 +6,7 @@ argument-hint: "[plan|audit] <tela ou issue>"
 
 # /decisoes-mobile
 
-Decide **qual padrão mobile serve e por quê**, não como codar. É o papel de *sparring* do `CLAUDE.md` ("O Gabriel decide; o Claude questiona") com fonte citada: cada achado vem atribuído a uma lente com nome, e cada escolha sem resposta única vira **fork** com 2 ou 3 opções, para o Gabriel decidir.
+Decide **qual padrão mobile serve e por quê**, não como codar. É o papel de *sparring* do `CLAUDE.md` > "Modo de trabalho" ("O Gabriel decide produto, negócio e tecnologia; você questiona") com fonte citada: cada achado vem atribuído a uma lente com nome, e cada escolha sem resposta única vira **fork** com 2 ou 3 opções, para o Gabriel decidir.
 
 Dois modos:
 
@@ -15,7 +15,7 @@ Dois modos:
 
 A skill não grava arquivo no repo, não abre navegador e não gera relatório HTML. A saída é texto para comentário no Linear ou para o corpo do PR.
 
-## Contexto fixo do LetzPlay
+## Contexto fixo do BT App
 
 Não pergunte o que já está aqui:
 
@@ -104,7 +104,7 @@ No máximo dois forks por vez numa conversa. Numa sessão autônoma, todos no me
 
 As falhas são de julgamento, não de código. Confira cada recomendação contra esta lista.
 
-1. **Hambúrguer porque "fica limpo".** Navegação escondida é pouco achada; a tab bar expõe os destinos. O LetzPlay já decidiu isso (N1, N5).
+1. **Hambúrguer porque "fica limpo".** Navegação escondida é pouco achada; a tab bar expõe os destinos. O BT App já decidiu isso (N1, N5).
 2. **Ação primária no topo.** Hábito de desktop. O topo é a zona mais cara do polegar.
 3. **Projetar para a pega média.** Não existe pega média. Acomode a mais restrita.
 4. **Bottom sheet como destino de navegação.** Sheet é para tarefa curta, com o fundo ainda relevante. Nunca empilhar sheets.
@@ -112,7 +112,7 @@ As falhas são de julgamento, não de código. Confira cada recomendação contr
 6. **Formulário em duas colunas e placeholder como rótulo.** No celular, coluna única e rótulo sempre visível.
 7. **Movimento como acabamento final.** Transição decidida depois do layout não comunica de onde as coisas vêm.
 8. **Densidade de desktop no celular.** Encolher não é priorizar. Algo precisa ser cortado ou adiado.
-9. **"Mobile" sem plataforma.** O LetzPlay é web nos dois sistemas: não assuma padrões só do iOS (swipe para voltar, detents de sheet) e marque o que difere no Android.
+9. **"Mobile" sem plataforma.** O BT App é web nos dois sistemas: não assuma padrões só do iOS (swipe para voltar, detents de sheet) e marque o que difere no Android.
 10. **Otimizar para a tela da vitrine.** Projete para o uso real: uma mão, teclado aberto, interrompido, ao sol.
 11. **Reabrir decisão de spec.** Ver "Regra central".
 
@@ -120,4 +120,4 @@ As falhas são de julgamento, não de código. Confira cada recomendação contr
 
 Adaptado de `skills/thumb-first-design/` em [kylezantos/thumb-first](https://github.com/kylezantos/thumb-first), commit `8048c78a91a92ef7e718f772380c3580dd8858b8`, MIT © 2026 Kyle Zantos. Texto completo da licença em `LICENSE.md`.
 
-O que mudou em relação à fonte: tradução para o português; só os modos Plan e Audit; sem relatório HTML (`report-template.html` e `output-format.md` ficaram de fora), sem gravar `mobile-audits/` e sem abrir navegador; saída no formato Needs Decision; checagem contra as specs do LetzPlay antes de abrir fork; alvo de toque de 48px; dados de pega marcados como de 2013; referências encurtadas e sem as indicações para skills que não temos.
+O que mudou em relação à fonte: tradução para o português; só os modos Plan e Audit; sem relatório HTML (`report-template.html` e `output-format.md` ficaram de fora), sem gravar `mobile-audits/` e sem abrir navegador; saída no formato Needs Decision; checagem contra as specs do BT App antes de abrir fork; alvo de toque de 48px; dados de pega marcados como de 2013; referências encurtadas e sem as indicações para skills que não temos.
