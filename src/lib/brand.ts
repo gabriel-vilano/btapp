@@ -10,7 +10,8 @@
 //   - .claude/         (skills, scripts e textos dos agentes)
 //   - README.md        (título e apresentação do repo)
 //   - docs/PRODUCT.md  (o único doc que diz o nome; os outros escrevem "o produto")
-// No resto do repo, o guard reprova o literal, e o nome antigo em qualquer lugar.
+// No resto do repo, o guard reprova o literal, e o nome antigo em qualquer lugar
+// (a única exceção, o patch do Next, tem o motivo em `OLD_NAME_ALLOWED`).
 //
 // `name` é o nome de exibição ("BT App", com espaço e maiúsculas). Os
 // identificadores técnicos (nome do repo, `name` do package.json, project_id do

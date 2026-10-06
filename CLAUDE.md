@@ -53,7 +53,7 @@ Next.js 16 (App Router, ler `node_modules/next/dist/docs/` antes de usar API nov
 
 ## Marca
 
-O nome do produto só entra no código por `src/lib/brand.ts`. Em `src/`, `app/` e `e2e/` (TS, TSX e MDX), nenhum literal do nome: nem em UI, nem em texto que sai do app (mensagem do WhatsApp, título do compartilhamento), nem em teste, story ou MDX (`{brand.name}` funciona em MDX). Fora do TypeScript, onde não dá para importar, o literal é permitido só nos lugares da lista do comentário de `brand.ts`. Docs não repetem o nome: só `README.md` e `docs/PRODUCT.md` o dizem; os outros escrevem "o produto". O teste `brand.guard.test.ts` varre o repo todo e reprova o PR que descumprir, e também qualquer menção ao nome antigo.
+O nome do produto só entra no código por `src/lib/brand.ts`. Em `src/`, `app/` e `e2e/` (TS, TSX e MDX), nenhum literal do nome: nem em UI, nem em texto que sai do app (mensagem do WhatsApp, título do compartilhamento), nem em teste, story ou MDX (`{brand.name}` funciona em MDX). Fora do TypeScript, onde não dá para importar, o literal é permitido só nos lugares da lista do comentário de `brand.ts`. Docs não repetem o nome: só `README.md` e `docs/PRODUCT.md` o dizem; os outros escrevem "o produto". O teste `brand.guard.test.ts` varre o repo todo e reprova o PR que descumprir, e também qualquer menção ao nome antigo fora da exceção explicada nele.
 
 ## Supabase: o que não pode falhar
 

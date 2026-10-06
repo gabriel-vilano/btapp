@@ -25,7 +25,7 @@ index a9c5ed8..2f1ff10 100644
 -                    isCachedRscPartial = segmentEntry.isPartial;
 -                    break;
 -                }
-+                // patch do projeto (ENG-139, vercel/next.js#98684): entrada Pending tratada como cache miss.
++                // patch LetzPlay (ENG-139, vercel/next.js#98684): entrada Pending tratada como cache miss.
 +                // Usar a promise do prefetch em voo deixava o segmento vazio quando ela
 +                // resolvia para null. Como miss, o roteador espera a resposta da navegação.
              case _cache.EntryStatus.Empty:
@@ -40,7 +40,7 @@ index a9c5ed8..2f1ff10 100644
 -                            isCachedHeadPartial = metadataEntry.isPartial;
 -                            break;
 -                        }
-+                        // patch do projeto (ENG-139, vercel/next.js#98684): entrada Pending tratada como cache miss.
++                        // patch LetzPlay (ENG-139, vercel/next.js#98684): entrada Pending tratada como cache miss.
 +                        // Usar a promise do prefetch em voo deixava o segmento vazio quando ela
 +                        // resolvia para null. Como miss, o roteador espera a resposta da navegação.
                      case _cache.EntryStatus.Empty:
@@ -73,7 +73,7 @@ index 508f8a1..76a57a7 100644
 -                    isCachedRscPartial = segmentEntry.isPartial;
 -                    break;
 -                }
-+                // patch do projeto (ENG-139, vercel/next.js#98684): entrada Pending tratada como cache miss.
++                // patch LetzPlay (ENG-139, vercel/next.js#98684): entrada Pending tratada como cache miss.
 +                // Usar a promise do prefetch em voo deixava o segmento vazio quando ela
 +                // resolvia para null. Como miss, o roteador espera a resposta da navegação.
              case EntryStatus.Empty:
@@ -88,7 +88,7 @@ index 508f8a1..76a57a7 100644
 -                            isCachedHeadPartial = metadataEntry.isPartial;
 -                            break;
 -                        }
-+                        // patch do projeto (ENG-139, vercel/next.js#98684): entrada Pending tratada como cache miss.
++                        // patch LetzPlay (ENG-139, vercel/next.js#98684): entrada Pending tratada como cache miss.
 +                        // Usar a promise do prefetch em voo deixava o segmento vazio quando ela
 +                        // resolvia para null. Como miss, o roteador espera a resposta da navegação.
                      case EntryStatus.Empty:

@@ -24,6 +24,15 @@ const LITERAL_ALLOWED: readonly string[] = [
   "docs/PRODUCT.md", // o único doc que diz o nome (regra "Marca" do CLAUDE.md)
 ];
 
+// Onde o nome antigo ainda fica, com o motivo. Só arquivo que não dá para mudar sem custo.
+const OLD_NAME_ALLOWED: Readonly<Record<string, string>> = {
+  // Os comentários do patch citam o nome antigo. Mudar o texto quebra o `postinstall` em todo
+  // node_modules já patcheado, inclusive o cache de build da Vercel: o patch-package não aplica
+  // o patch novo nem reconhece o antigo. O texto some quando o patch for refeito ou removido
+  // no próximo upgrade do Next (.claude/rules/next-patch.md), sobre uma instalação nova.
+  "patches/next+16.2.2.patch": "comentário de atribuição do patch",
+};
+
 // Montados por concatenação para este arquivo não casar consigo mesmo
 const OLD_NAME_PATTERNS = [
   new RegExp("letz" + "\\s?" + "play", "i"),
@@ -100,8 +109,16 @@ describe("guarda do nome do produto", () => {
   });
 
   it("nenhum arquivo cita o nome antigo", () => {
-    const hits = findHits(files, OLD_NAME_PATTERNS);
+    const scanned = new Map([...files].filter(([file]) => !(file in OLD_NAME_ALLOWED)));
+    const hits = findHits(scanned, OLD_NAME_PATTERNS);
     expect(hits, `Nome antigo encontrado; troque pelo nome atual ou por "o produto":\n${report(hits)}`).toEqual([]);
+  });
+
+  it("cada exceção do nome antigo ainda existe e ainda o cita (senão, sai da lista)", () => {
+    for (const file of Object.keys(OLD_NAME_ALLOWED)) {
+      const hits = findHits(new Map([[file, files.get(file) ?? ""]]), OLD_NAME_PATTERNS);
+      expect(hits.length, `${file} não cita mais o nome antigo; tire-o de OLD_NAME_ALLOWED`).toBeGreaterThan(0);
+    }
   });
 
   it("o nome atual só aparece como literal em brand.ts e nos lugares permitidos", () => {
