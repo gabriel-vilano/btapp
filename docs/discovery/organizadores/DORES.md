@@ -18,7 +18,7 @@ Cada dor recebe os tipos de fonte que a sustentam. Tipos diferentes contam mais 
 | Pelo menos uma fonte 1P ou 2L **lida na íntegra** | Necessário para "Forte" |
 | Marketing (MKT) | Não conta para a força; aparece só como contexto |
 
-Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos grandes** (TF Sports) e do incumbente. O organizador pequeno de arena quase não aparece nas reclamações públicas. A dor dele vem de regulamento, de vídeo e do construtor de software (GH).
+Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos grandes** (TF Sports) e do concorrente principal. O organizador pequeno de arena quase não aparece nas reclamações públicas. A dor dele vem de regulamento, de vídeo e do construtor de software (GH).
 
 ---
 
@@ -53,7 +53,7 @@ Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos
 | Um torcedor acusou um professor de jogar fora da categoria, ofendeu, e foi retirado do torneio pela polícia a pedido da federação | 1P | YT2 |
 | Perfil duplicado para driblar os organizadores e se inscrever em categoria abaixo do próprio nível. Jogadores analisam os perfis dos inscritos antes de se inscrever | 2L | RA2 |
 | Resposta da plataforma: a validação por CPF já existe, mas é **opção do gestor**; ficaria obrigatória num trimestre seguinte. A própria plataforma admite que olhar só a quantidade de torneios não é critério confiável | 2L | RA2 |
-| Denúncia por link no grupo de WhatsApp, checada **em outra plataforma** (o incumbente) por um circuito que usa app próprio. Mais de 25 pessoas desclassificadas como W.O. no mesmo torneio | 2L | RA3 |
+| Denúncia por link no grupo de WhatsApp, checada **em outra plataforma** (o concorrente principal) por um circuito que usa app próprio. Mais de 25 pessoas desclassificadas como W.O. no mesmo torneio | 2L | RA3 |
 | Resposta do circuito: verificar o ranqueamento na hora da inscrição é responsabilidade do atleta; a dupla inteira cai se um dos dois está irregular | 2L | RA3 |
 | Impugnação 10 dias depois da etapa, com base em ranking ativo **em outra federação**. O título fica, a vaga nas Finals não. Atleta pede direito de defesa e vai à Justiça. Cinco protocolos sem resposta em 7 dias | 2L | RA4 |
 | Atleta "em desacordo" com o regulamento "será automaticamente eliminado ... independente da fase da competição" | REG | REG1 |
@@ -79,11 +79,11 @@ Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos
 | Torneio de R$ 60 com gateway conectado mas sem chave PIX virava **grátis** para todos; o mesmo erro já tinha acontecido no day use | PC | GH #69 |
 | Três caminhos de pagamento convivem: gateway, PIX na chave do torneio com **upload de comprovante**, e "pendente, o administrador confirma depois" | PC | GH #69 |
 | Mensagem de WhatsApp com a cobrança antes do link do torneio; comprovante recebido muda o status para "em análise" | PC | GH #72 |
-| Página de torneio no incumbente com inscrição de R$ 0,00 na plataforma (pagamento combinado por fora, inferência) | Página do organizador | LP1 |
+| Página de torneio no concorrente principal com inscrição de R$ 0,00 na plataforma (pagamento combinado por fora, inferência) | Página do organizador | LP1 |
 | Torneios que cobram por PIX direto na chave do organizador, fora da plataforma | Resumo (pesquisa de mercado) | Evidência: documento D3 ("Estratégia de negócio: modelos de monetização"), projeto Discovery e estratégia no Linear |
-| Central de ajuda do incumbente para gestores: o inadimplente não sai sozinho; o gestor o remove à mão, na lista de inscritos | DOC | DOC1 |
-| Plataforma: taxa fixa por inscrição (Tênis Integrado) e percentual no PIX, com mínimo (incumbente); valores no D5 | REG · lido (pesquisa de mercado) | REG1; D5 |
-| Lado do jogador: pagamento feito pelo app que não chegou à arena; cobrança indevida é a maioria das poucas reclamações públicas visíveis contra o incumbente | 2L · Voz | RA-L1; D1 |
+| Central de ajuda do concorrente principal para gestores: o inadimplente não sai sozinho; o gestor o remove à mão, na lista de inscritos | DOC | DOC1 |
+| Plataforma: taxa fixa por inscrição (Tênis Integrado) e percentual no PIX, com mínimo (concorrente principal); valores no D5 | REG · lido (pesquisa de mercado) | REG1; D5 |
+| Lado do jogador: pagamento feito pelo app que não chegou à arena; cobrança indevida é a maioria das poucas reclamações públicas visíveis contra o concorrente principal | 2L · Voz | RA-L1; D1 |
 | Fornecedor recomenda "esquecer a planilha de Excel e o comprovante de PIX enviado por e-mail" | MKT | Blog de fornecedor (resumo) |
 
 ---
@@ -96,12 +96,12 @@ Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos
 | --- | --- | --- |
 | Duas semanas pedindo troca de parceiro (prevista no regulamento) por e-mail e WhatsApp, a 5 dias do torneio, sem resposta | 2L | RA6 |
 | Dupla perde R$ 438 por não poder jogar por saúde: o circuito não cancela, não troca por produto nem gera crédito | 2L | RA7 |
-| Torneio tirado do incumbente sem aviso, e os jogadores sem saber o que fazer | 2L (sem resposta) | RA5 |
+| Torneio tirado do concorrente principal sem aviso, e os jogadores sem saber o que fazer | 2L (sem resposta) | RA5 |
 | Reembolso só em 3 casos, "somente após o fim da etapa", por e-mail, **dentro de um número de cancelamentos definido para a etapa** | REG | REG1 |
 | Substituição só até 20h da véspera, com justificativa por e-mail; "caso o evento tenha iniciado, não será permitida em nenhuma hipótese" | REG | REG1 |
 | *Alternate* na 1ª rodada para evitar W.O., pagando PIX na hora para a conta da federação | REG | REG1 |
 | Ranking de desafio: trocar de parceiro tira a dupla do ranking | REG | REG2 |
-| Perguntas frequentes de gestores na central de ajuda do incumbente: substituir jogador **depois da chave publicada**, inscrever alguém depois de encerrar, reabrir inscrições, estorno pedido pelo jogador, W.O. duplo | DOC | DOC1 |
+| Perguntas frequentes de gestores na central de ajuda do concorrente principal: substituir jogador **depois da chave publicada**, inscrever alguém depois de encerrar, reabrir inscrições, estorno pedido pelo jogador, W.O. duplo | DOC | DOC1 |
 | Construtor cria uma área de "duplas incompletas" para trocar ou remover parceiro e promover o parceiro a titular quando quem pagou desiste | PC | GH #50 |
 | Estorno de day use: arena cancela, sempre devolve; aluno cancela, devolve dentro da janela; o aluno escolhe PIX ou crédito | PC | GH #64 |
 
@@ -116,7 +116,7 @@ Uma ressalva vale para todo o arquivo: **a maior parte da voz 2L é de circuitos
 | Depois da inscrição, os atletas vão para um grupo de WhatsApp com informações e link de denúncia; o suporte pelo WhatsApp não responde | 2L | RA3 |
 | Organizador diz no WhatsApp que vai ver e não dá retorno | 2L | RA6 |
 | Cinco protocolos abertos em 7 dias sem resposta | 2L | RA4 |
-| A plataforma pede o placar à atleta **pelo WhatsApp** para cobrar o organizador; o incumbente mantém um grupo de suporte no WhatsApp com usuários | 2L | RA1, RA2 |
+| A plataforma pede o placar à atleta **pelo WhatsApp** para cobrar o organizador; o concorrente principal mantém um grupo de suporte no WhatsApp com usuários | 2L | RA1, RA2 |
 | Ranking de desafio: aviso de desafio e resultado no grupo "BT – Nômades Ranking", com *template* obrigatório | REG | REG2 |
 | Sem o WhatsApp do atleta no cadastro, a academia "não tinha como mandar senha, cobrança ou aviso de horário" | PC | GH #72 |
 | Tamanho da camisa descoberto "individualmente via WhatsApp depois de fechar inscrição" | PC | GH #70 |

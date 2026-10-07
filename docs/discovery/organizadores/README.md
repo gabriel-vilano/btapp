@@ -33,7 +33,7 @@ O critério da issue é **dor real, dita por quem vive o problema**. Cada fonte 
 | **PC** | Praticante-construtor: alguém que opera ou atende uma academia e escreve o próprio software em público | Pull requests do ArenaHub (GH) |
 | **DEM** | Demanda publicada: pedido de freelancer, produto vendido para o organizador | 99Freelas, Hotmart |
 | **N** | Notícia com fala de dono de arena ou organizador | O Tempo 2021 |
-| **DOC** | Documentação de fornecedor: mostra o fluxo de trabalho na ferramenta e as perguntas frequentes dos gestores | Central de ajuda do incumbente (DOC1) |
+| **DOC** | Documentação de fornecedor: mostra o fluxo de trabalho na ferramenta e as perguntas frequentes dos gestores | Central de ajuda do concorrente principal (DOC1) |
 | **MKT** | Marketing de fornecedor. **Só fonte secundária** | Blogs de Tecnofit, Atletis, Tornfy |
 
 ## Escala de força

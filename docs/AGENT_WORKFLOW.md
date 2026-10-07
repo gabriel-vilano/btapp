@@ -157,9 +157,9 @@ O passo a passo executável, com os scripts de validação combinada, espera da 
 
 ---
 
-## Acesso ao incumbente
+## Acesso ao concorrente principal
 
-**Nenhum agente acessa site, app, área logada ou API do incumbente** (a plataforma de ranking e torneio que serve de referência ao produto), com qualquer ferramenta (WebFetch, Firecrawl, Playwright, curl). Os Termos de Uso dele proíbem acesso automatizado e o uso dos dados da plataforma em aplicativos concorrentes. O domínio, os subdomínios, a cláusula e a data da leitura estão no documento "Regra de acesso ao incumbente" do Linear (projeto Discovery e estratégia): **leia-o antes de qualquer pesquisa de concorrentes**.
+**Nenhum agente acessa site, app, área logada ou API do concorrente principal** (a plataforma líder do mercado), com qualquer ferramenta (WebFetch, Firecrawl, Playwright, curl). Os Termos de Uso dele proíbem acesso automatizado e o uso dos dados da plataforma em aplicativos concorrentes. O domínio, os subdomínios, a cláusula e a data da leitura estão no documento "Regra de acesso ao concorrente principal" do Linear (projeto Discovery e estratégia): **leia-o antes de qualquer pesquisa de concorrentes**.
 
-- Material do incumbente entra só por prints ou gravações feitos pelo Gabriel, guardados em lugar privado (Linear, Figma ou Dropbox), nunca no repositório, que é público.
-- Precisa de algo do incumbente? Peça os prints ao Gabriel, com a lista de telas, em vez de buscar.
+- Material do concorrente principal entra só por prints ou gravações feitos pelo Gabriel, guardados em lugar privado (Linear, Figma ou Dropbox), nunca no repositório, que é público.
+- Precisa de algo do concorrente principal? Peça os prints ao Gabriel, com a lista de telas, em vez de buscar.

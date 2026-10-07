@@ -50,7 +50,7 @@ Só o dono do produto responde.
 
 1. O produto quer ser **ranking por pontos** (o que a CBT e os circuitos já fazem), **rating de nível** (o que DUPR e UTR fazem) ou os dois? A diferença muda quem é o parceiro natural.
 2. Qual a relação desejada com a CBT e com os circuitos: complementar, integrar, ignorar? O caso UTR × ITF mostra que a federação pode reagir.
-3. O incumbente **já é** software do organizador (CBBT, federações e arenas rodam nele). O redesign trata o organizador como canal de distribuição (como PickleballBrackets e Playtomic Manager fizeram) ou só como fonte de dados para o app do jogador?
+3. O concorrente principal **já é** software do organizador (CBBT, federações e arenas rodam nele). O produto trata o organizador como canal de distribuição (como PickleballBrackets e Playtomic Manager fizeram) ou só como fonte de dados para o app do jogador?
 4. Existe no BT um "técnico universitário", alguém cuja decisão dependa do nível de um jogador? Por exemplo: dupla procurando parceiro, organizador separando categoria, patrocinador.
 5. Qual é o limite aceitável para o que começa grátis e pode virar pago depois, sabendo da reação ao Strava em 2020?
 6. O produto aceita resultados de partidas fora de torneio (jogos de ranking marcados no WhatsApp) como dado válido?

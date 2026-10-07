@@ -101,7 +101,7 @@ Cada coluna é uma fase. As células vêm das fontes indicadas; o que é inferê
 | *linha de visibilidade* | | | | |
 | **Bastidores** | Confere pagamentos; remove inadimplente à mão; verifica categoria com foto e outra plataforma; dimensiona quadras e equipe (`JOR` 1.1; `DOR D1`, `D2`) | Sorteia chave com cabeças de chave; monta programação; descobre tamanho de camisa no WhatsApp (`JOR` 1.1) | Monta quadras e kits; compra frutas; troca formato por clima; anota súmula em papel (`JOR` 1.2) | Lança resultado das súmulas; finaliza no sistema; emite nota fiscal; decide reembolso e impugnação (`JOR` 1.3) |
 | *linha de interação interna* | | | | |
-| **Suporte** | Plataforma de inscrição (o incumbente, Tênis Integrado, app de circuito); gateway, boleto, PIX na chave do organizador; federação homologa (`APR`, achado 2) | Plataforma gera a chave; grupo de WhatsApp; planilha para formatos que a plataforma não cobre (`DOR D9`) | Sistema de som; rádio comunicador; WhatsApp; formulário de denúncia (`JOR` 1.2) | Plataforma; federação (repasse de 80%, multa se não divulgar patrocinador); reclamação pública como canal de fato (`JOR` 1.3) |
+| **Suporte** | Plataforma de inscrição (o concorrente principal, Tênis Integrado, app de circuito); gateway, boleto, PIX na chave do organizador; federação homologa (`APR`, achado 2) | Plataforma gera a chave; grupo de WhatsApp; planilha para formatos que a plataforma não cobre (`DOR D9`) | Sistema de som; rádio comunicador; WhatsApp; formulário de denúncia (`JOR` 1.2) | Plataforma; federação (repasse de 80%, multa se não divulgar patrocinador); reclamação pública como canal de fato (`JOR` 1.3) |
 | **Pontos de falha** | F1, F2, F3 | F4 | F5, F6, F7 | F8, F9, F10 |
 
 ---

@@ -5,7 +5,7 @@
 
 ## Sobre o projeto
 
-Redesign de uma plataforma de rankings, torneios e comunidade de Beach Tennis, focado no jogador competitivo (visão, escopo e JTBD em `docs/PRODUCT.md`). Side project com três objetivos: portfolio de Design Engineer, produto real para lançamento e aprendizado técnico prático.
+Plataforma própria de rankings, torneios e comunidade de Beach Tennis, focada no jogador competitivo (visão, escopo e JTBD em `docs/PRODUCT.md`). O produto está em discovery: docs, specs e código existentes são hipóteses a validar com jogadores e organizadores, e a evidência da pesquisa mora no Linear. Três objetivos: produto real para lançamento, portfolio de Design Engineer e aprendizado técnico prático.
 
 O desenvolvedor, Gabriel, é designer (~4 anos em branding e gráfico, ~2 em UX/UI) em transição para Design Engineer, com domínio de HTML/CSS e noções de JavaScript.
 
@@ -89,7 +89,7 @@ Checklist por feature:
 
 Regras inegociáveis:
 
-- **Não acesse o incumbente** (a plataforma que inspirou o produto): nem páginas, área logada ou API, com nenhuma ferramenta. Os Termos de Uso dela proíbem acesso automatizado; domínio, cláusula e data estão no documento "Regra de acesso ao incumbente" do Linear (projeto Discovery e estratégia). Precisa de algo dela? Peça prints ao Gabriel.
+- **Não acesse o concorrente principal** (a plataforma líder do mercado): nem páginas, área logada ou API, com nenhuma ferramenta. Os Termos de Uso dela proíbem acesso automatizado; domínio, cláusula e data estão no documento "Regra de acesso ao concorrente principal" do Linear (projeto Discovery e estratégia). Precisa de algo dela? Peça prints ao Gabriel.
 - **Nunca** rebase, force push, `git reset --hard` nem auto-merge. Conflito se resolve com `git merge origin/master`; quem mergeia é a orquestradora ou o Gabriel (`docs/AGENT_WORKFLOW.md` > "Merge").
 
 ## Armadilhas que valem sempre
@@ -107,7 +107,7 @@ Documentamos o que é estável (decisão, padrão, princípio, hurdle, convenç�
 - `docs/PROFILE.md` (PF1…), `docs/SCHEDULING.md` (M1…), `docs/RESULTS.md` (RG1…), `docs/NAVIGATION.md` (N1…), `docs/EXPLORE.md` (EX1…), `docs/HEAD_TO_HEAD.md` (HH1…), `docs/RANKING.md` (RK1…), `docs/ROUND_DRAW.md` (SR1…), `docs/FEED_CARDS.md`: specs de tela e fluxo
 - `docs/TOKENS.md`: design system (arquitetura CSS, tokens, escala tipográfica)
 - `docs/GIT_WORKFLOW.md`: branches, PR, CI, merge, versionamento
-- `docs/AGENT_WORKFLOW.md`: Linear, Needs Decision, coordenação de agentes, merge, acesso ao incumbente
+- `docs/AGENT_WORKFLOW.md`: Linear, Needs Decision, coordenação de agentes, merge, acesso ao concorrente principal
 - `src/components/.../Component.mdx`: fonte única da documentação de cada componente (Storybook)
 
 Regras com `paths` (`.claude/rules/`), carregadas ao ler os arquivos correspondentes. Nas três marcadas com *hook*, o `.claude/hooks/require-rule-read.mjs` barra a primeira escrita num arquivo que casa até a regra ser lida:

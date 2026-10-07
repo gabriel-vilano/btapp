@@ -28,10 +28,10 @@ A mesma do `docs/DISCOVERY.md`, usada em todos os arquivos:
 
 | Nível | Critério |
 | --- | --- |
-| **Forte** | Várias fontes independentes concordam, e pelo menos uma foi lida na íntegra ou é dado público do próprio incumbente |
+| **Forte** | Várias fontes independentes concordam, e pelo menos uma foi lida na íntegra ou é dado público do próprio concorrente principal |
 | **Média** | Uma fonte específica e verificável, ou várias fontes concordantes vistas só pelo resumo de busca |
 | **Fraca** | Benchmark genérico fora do BT, opinião, ou inferência sem fonte direta |
 
 ## Limitação comum do método
 
-A sessão roda atrás de um proxy que bloqueia boa parte dos sites (lojas de app, o site do incumbente, sites de reclamação pública, federações). Parte das páginas foi lida via um serviço de scraping com orçamento limitado. O resto foi visto só pelo resumo do mecanismo de busca, e cada arquivo marca o que foi lido e o que foi só resumo. Não há entrevistas com jogadores: a voz do usuário vem de reviews públicas, que têm viés negativo.
+A sessão roda atrás de um proxy que bloqueia boa parte dos sites (lojas de app, o site do concorrente principal, sites de reclamação pública, federações). Parte das páginas foi lida via um serviço de scraping com orçamento limitado. O resto foi visto só pelo resumo do mecanismo de busca, e cada arquivo marca o que foi lido e o que foi só resumo. Não há entrevistas com jogadores: a voz do usuário vem de reviews públicas, que têm viés negativo.

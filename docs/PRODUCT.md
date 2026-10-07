@@ -10,7 +10,9 @@ Visão de produto, contexto do esporte, JTBD e decisões duráveis. O nome do pr
 
 Plataforma de gestão de rankings, torneios e comunidade de esportes de raquete, com foco exclusivo no **jogador competitivo de Beach Tennis**.
 
-O produto é pensado a partir do que as plataformas de ranking e torneio já existentes fazem, e propõe três coisas: otimizações nos fluxos do jogador, funcionalidades novas e, potencialmente, objetivos de mercado novos. A experiência é construída com uma interface mais intuitiva e uma arquitetura moderna.
+O produto é próprio e entra num mercado que já tem uma plataforma líder, o concorrente principal, objeto de análise deste projeto. Ele propõe três coisas: otimizações nos fluxos do jogador, funcionalidades novas e, potencialmente, objetivos de mercado novos. A experiência é construída com uma interface mais intuitiva e uma arquitetura moderna.
+
+Tudo neste documento são hipóteses até o discovery validá-las com jogadores e organizadores. A evidência bruta fica no Linear.
 
 Três objetivos simultâneos: portfolio de Design Engineer, produto real para lançamento, aprendizado técnico prático.
 
@@ -19,7 +21,7 @@ Três objetivos simultâneos: portfolio de Design Engineer, produto real para la
 ## Princípios de design
 
 - **Mobile-first.** Largura base 393px ou 430px. Responsivo depois.
-- **Resolver os 4 problemas do incumbente** (ver "Problemas do incumbente que o produto resolve").
+- **Resolver os 4 problemas do concorrente principal** (ver "Problemas do concorrente principal que o produto quer resolver (hipóteses)").
 - **Perfil com duas leituras** — social (acompanhar amigo) e competitiva (avaliar adversário).
 - **Ranking como momento emocional**, não como tabela de dados. Subir motiva, descer frustra — a UI precisa sustentar essa carga.
 - **Feed é Activity Stream** (modelo Strava), não rede social. Conteúdo automático (resultados, inscrições, amizades) prevalece sobre UGC.
@@ -57,9 +59,9 @@ Foco: jogador competitivo de Beach Tennis. O `docs/DISCOVERY.md` ranqueia as opo
 
 ---
 
-## Problemas do incumbente que o produto resolve
+## Problemas do concorrente principal que o produto quer resolver (hipóteses)
 
-O audit heurístico do app do incumbente (a plataforma de referência) agrupa os problemas em quatro categorias, que guiam o design:
+A análise heurística do app do concorrente principal, feita a partir de prints do Gabriel, agrupa os problemas em quatro categorias, que guiam o design:
 
 1. **Consistência visual e semântica:** cor sem lógica, tipografia irregular, componentes sem padrão.
 2. **Arquitetura de informação:** a mesma ação em vários lugares, busca duplicada, perfil sobrecarregado.
@@ -110,6 +112,6 @@ O audit completo, com evidência por tela, é o documento "Auditoria do app atua
 ## Métricas de sucesso (validação no beta)
 
 - Jogadores completam fluxos críticos sem ajuda?
-- Os 4 problemas do incumbente foram resolvidos?
+- Os 4 problemas do concorrente principal foram resolvidos?
 - Os JTBDs (ver "Jobs-to-be-done") estão sendo atendidos?
 - Quais bugs aparecem em campo que não apareceram em dev?

@@ -16,7 +16,7 @@ Síntese feita em 25/09/2026, sem pesquisa nova: todo o insumo já estava coleta
 | --- | --- | --- | --- |
 | 1 | [`01-mapa-suposicoes.md`](01-mapa-suposicoes.md) | Assumption mapping (David Bland) | Em que o produto está apostando sem saber, e o que é mais arriscado? **Comece por aqui** |
 | 2 | [`02-arvore-oportunidades.md`](02-arvore-oportunidades.md) | Opportunity Solution Tree (Teresa Torres) | Que resultado buscamos, que dores e desejos levam a ele, e que soluções o mercado já tentou? |
-| 3 | [`03-forcas-progresso.md`](03-forcas-progresso.md) | Forças do progresso (Bob Moesta, JTBD) | O que empurra o jogador e o organizador para longe do WhatsApp, da planilha e do incumbente, e o que os segura? |
+| 3 | [`03-forcas-progresso.md`](03-forcas-progresso.md) | Forças do progresso (Bob Moesta, JTBD) | O que empurra o jogador e o organizador para longe do WhatsApp, da planilha e do concorrente principal, e o que os segura? |
 | 4 | [`04-mapa-do-job.md`](04-mapa-do-job.md) | Job map (Tony Ulwick) | Quais são as etapas de "competir em Beach Tennis" e onde dói em cada uma? |
 | 5 | [`05-service-blueprint.md`](05-service-blueprint.md) | Service blueprint | Num fim de semana de torneio, o que o jogador vê, o que o organizador faz por trás, e onde quebra? |
 | 6 | [`06-proto-personas.md`](06-proto-personas.md) | Proto-personas comportamentais | Que arquétipos de comportamento aparecem na evidência, e o que falta validar em cada um? |
@@ -64,7 +64,7 @@ Os arquivos de origem estão em PRs abertos. Os links relativos destes artefatos
 | `APR` | [`aprofundamento/README.md`](../aprofundamento/README.md) | `docs/prd-15-discovery-aprofundamento` (#28) | O que muda no top 10; correções à pesquisa anterior |
 | `VZA` | voz ampliada (evidência: documento D1 ("Evidência: voz do usuário e reclamações"), projeto Discovery e estratégia no Linear) | idem | Modo de falha da confirmação pelo adversário |
 | `RAT` | [`aprofundamento/RATING.md`](../aprofundamento/RATING.md) | idem | Rating × ranking por pontos; regras CBT |
-| `TDN` | teardown (evidência: documento D2 ("Evidência: concorrentes e incumbente (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear) | idem | Ranketes e o incumbente (v10) fluxo por fluxo |
+| `TDN` | teardown (evidência: documento D2 ("Evidência: concorrentes (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear) | idem | Ranketes e o concorrente principal (v10) fluxo por fluxo |
 | `RIN` | [`aprofundamento/REFERENCIAS_INTERNACIONAIS.md`](../aprofundamento/REFERENCIAS_INTERNACIONAIS.md) | idem | Como DUPR, Playtomic, Strava e UTR cresceram |
 | `ORG` | [`organizadores/SINTESE.md`](../organizadores/SINTESE.md) | `docs/prd-16-dores-organizadores` (#30) | 5 dores fortes do organizador; riscos RO1–RO5 |
 | `DOR` | [`organizadores/DORES.md`](../organizadores/DORES.md) | idem | Dores D1–D9 com evidência e gambiarras |
@@ -89,8 +89,8 @@ A mesma de todo o discovery, para que os números conversem:
 
 ### Limites que valem para todos os artefatos
 
-- **Não há entrevista com jogador nem com organizador.** A voz do BT brasileiro na amostra é pequena (as reclamações públicas contra o incumbente são poucas; o Reddit do BT fala de raquete). Toda persona, força e classificação de Kano aqui é hipótese.
-- **Não há dado de uso do incumbente.** É a fonte que mais mudaria estes artefatos.
+- **Não há entrevista com jogador nem com organizador.** A voz do BT brasileiro na amostra é pequena (as reclamações públicas contra o concorrente principal são poucas; o Reddit do BT fala de raquete). Toda persona, força e classificação de Kano aqui é hipótese.
+- **Não há dado de uso do concorrente principal.** É a fonte que mais mudaria estes artefatos.
 - **A voz de fora do BT pesa muito** (DUPR, UTR, Playtomic). Onde uma conclusão depende dela, o artefato marca.
 - **A síntese não acrescenta fatos.** Onde um artefato diz algo que não está nas fontes, está marcado como *inferência*.
 

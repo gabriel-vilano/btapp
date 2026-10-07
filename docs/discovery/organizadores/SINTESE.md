@@ -15,7 +15,7 @@ A pesquisa de mercado dizia que as dores de organizador e arena "vêm quase só 
 | Tipo de fonte | Quantidade | Exemplos |
 | --- | --- | --- |
 | Primeira pessoa (1P) | 4 fontes | Vlog de organizadoras num torneio de 2 dias; diretor de federação sobre categorias; organizador veterano sobre patrocínio; reviews de organizadores |
-| Dois lados (2L) | 7 reclamações lidas, 5 delas com resposta da empresa | Circuito nacional (TF Sports), plataforma (o incumbente) |
+| Dois lados (2L) | 7 reclamações lidas, 5 delas com resposta da empresa | Circuito nacional (TF Sports), plataforma (o concorrente principal) |
 | Regulamento lido na íntegra (REG) | 4 | FET, FCTBT, ranking Nômades, ranking AVB |
 | Acadêmico com visita e entrevista (ACAD) | 2 | Caso de uma arena no interior do CE; 10 arenas em 5 estados |
 | Praticante-construtor (PC) | 1 | App de academia escrito em público, com 1.088 commits |
@@ -53,7 +53,7 @@ O top 10 da pesquisa de mercado, visto pelo lado de quem opera a competição.
 | Oportunidade do jogador | Dores do organizador que a limitam | O que a evidência sugere (descritivo) |
 | --- | --- | --- |
 | **1. Resultado que entra rápido e em que dá para confiar** | 6, 7, 5 | Em torneio, o resultado passa pela súmula do árbitro ou pela mão do organizador, e a plataforma diz que isso é responsabilidade dele (RA1). Em ranking de desafio, depende do jogador informar no grupo ou no formulário (REG2, REG3). O app do jogador só entrega "rápido" se alguém da operação fizer a sua parte. A causa do atraso não foi observada. |
-| **2. Nível do adversário e perfil em que dá para confiar** | 1 | É a dor com mais tipos de fonte **dos dois lados**: o jogador reclama de *sandbagging*, e o diretor de federação diz que é o maior estresse do torneio e que não tem método. Hoje a checagem é manual: foto no WhatsApp, consulta a outra plataforma, impugnação depois do evento. A validação por CPF existe no incumbente, mas como opção do gestor (RA2). |
+| **2. Nível do adversário e perfil em que dá para confiar** | 1 | É a dor com mais tipos de fonte **dos dois lados**: o jogador reclama de *sandbagging*, e o diretor de federação diz que é o maior estresse do torneio e que não tem método. Hoje a checagem é manual: foto no WhatsApp, consulta a outra plataforma, impugnação depois do evento. A validação por CPF existe no concorrente principal, mas como opção do gestor (RA2). |
 | **3. Horário e notificação confiáveis no dia do torneio** | 4, 5 | A programação é responsabilidade do árbitro geral e da organização; a chamada é por som ou voz; o aviso de mudança vai pelo grupo de WhatsApp. Um construtor precisou tornar o WhatsApp obrigatório no cadastro para conseguir avisar horário (GH #72). |
 | **4. Explicar por que a posição mudou** | 1, 7 | Cada organizador escreve a sua tabela (W.O. vale 0 na FET; ranking de arena mistura torneio com "selo" e desafio). Desclassificação e impugnação mudam posição **depois** do evento (RA4). |
 | **5. Regra do organizador visível e previsível** | 3, 1 | As regras que mais geram conflito são justamente as de troca, reembolso, W.O. e categoria. Elas estão no regulamento em PDF ou na página do torneio, e cada organizador tem a sua. Organizadores elogiam o app que explica bem as regras (AS1). |
@@ -78,7 +78,7 @@ Descritivos, não recomendações.
 | # | Risco | Evidência | Força |
 | --- | --- | --- | --- |
 | RO1 | **O app do jogador promete o que depende do organizador.** Resultado, horário e regra dependem de quem opera a competição, que está fora do MVP | RA1, REG1, REG2, REG3 | Forte |
-| RO2 | **O organizador federado não escolhe a ferramenta.** Federação usa Tênis Integrado; CBBT usa o incumbente; circuitos usam app próprio | REG1, REG4, LP2, RA3 | Forte |
+| RO2 | **O organizador federado não escolhe a ferramenta.** Federação usa Tênis Integrado; CBBT usa o concorrente principal; circuitos usam app próprio | REG1, REG4, LP2, RA3 | Forte |
 | RO3 | **O WhatsApp continua sendo a camada de comunicação** mesmo de quem tem sistema próprio | RA3, REG2, GH #72, ACAD2 | Forte |
 | RO4 | **A arena pequena está sob pressão** (preço caindo, 40–50% de ocupação numa cidade saturada) e usa torneio como marketing, não como receita | ACAD1, ACAD2 | Média |
 | RO5 | **Surgem sistemas feitos por quem opera academia**, com escopo de torneio + aula + day use | GH | Fraca (um caso) |
@@ -90,7 +90,7 @@ Descritivos, não recomendações.
 Só o Gabriel responde. Cada uma muda a leitura acima.
 
 1. **O app do jogador vai prometer resultado rápido e horário confiável mesmo sem controlar a operação do organizador?** Ligada ao risco RO1 e à pergunta 3 da pesquisa de mercado (a visão do organizador continua fora do MVP?).
-2. **O redesign trata o organizador como alguém que usa o incumbente** (e então a operação dele é a do incumbente) **ou como alguém que pode usar outras ferramentas?** Muda a leitura de RO2 e da oportunidade 5.
+2. **O produto trata o organizador como alguém que usa o concorrente principal** (e então a operação dele é a do concorrente principal) **ou como alguém que pode usar outras ferramentas?** Muda a leitura de RO2 e da oportunidade 5.
 3. **Integridade de categoria (dor 1) é problema do app do jogador?** É a dor com mais evidência dos dois lados, e também a oportunidade 2. Mas a decisão de categoria é do organizador e da federação.
 4. **Qual formato de ranking o MVP representa?** (pergunta que continua aberta desde a pesquisa de regras de ranking). No ranking de desafio, o jogador informa o resultado; no torneio, o árbitro ou o organizador. As dores 6 e 7 dependem disso.
 5. **Dá para fazer de 4 a 6 entrevistas com o roteiro antes de fechar o escopo do MVP?** A causa do atraso de resultado (dor 6) e o motivo de troca de ferramenta só aparecem em entrevista.

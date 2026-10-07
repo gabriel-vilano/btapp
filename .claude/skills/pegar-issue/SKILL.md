@@ -11,7 +11,7 @@ Se as ferramentas do Linear (`get_issue`, `save_issue`, `save_comment`; o prefix
 
 ## 1. Ler e validar
 
-1. Ler o `docs/AGENT_WORKFLOW.md` inteiro antes de pegar a issue. O `CLAUDE.md` não o importa, e é ele que traz as regras de coordenação, de Needs Decision, de merge e de acesso ao incumbente.
+1. Ler o `docs/AGENT_WORKFLOW.md` inteiro antes de pegar a issue. O `CLAUDE.md` não o importa, e é ele que traz as regras de coordenação, de Needs Decision, de merge e de acesso ao concorrente principal.
 2. `get_issue` com `includeRelations: true`. Ler título, descrição, projeto, labels e comentários (`list_comments`): comentários podem ter respostas de decisões anteriores.
 3. Verificar se pode pegar:
    - Status precisa ser **Todo** (ou **Needs Decision** já respondida, quando retomando). Se estiver em In Progress / Exploring, outro agente está nela: pare e informe.

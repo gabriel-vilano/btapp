@@ -2,7 +2,7 @@
 
 O lado de quem organiza ranking e torneio de Beach Tennis: o que faz, como lança resultado, como marca jogo, quanto paga e do que reclama. Foco em **dor real**, não em marketing de fornecedor.
 
-**Pesquisa feita em 25/09/2026.** Todas as fontes foram acessadas nessa data. Os links das reviews e das páginas do incumbente, e os códigos de fonte (`AS1`, `RA1`, `DOC1`…), estão fora do repo (evidência: documento D5 ("Fontes e ferramentas dos organizadores"), projeto Discovery e estratégia no Linear).
+**Pesquisa feita em 25/09/2026.** Todas as fontes foram acessadas nessa data. Os links das reviews e das páginas do concorrente principal, e os códigos de fonte (`AS1`, `RA1`, `DOC1`…), estão fora do repo (evidência: documento D5 ("Fontes e ferramentas dos organizadores"), projeto Discovery e estratégia no Linear).
 
 > **Sem decisões de produto.** O `docs/PRODUCT.md` deixa a visão do organizador fora do MVP. Este doc não muda isso: ele registra o que o organizador faz porque várias oportunidades do jogador dependem dele.
 
@@ -22,7 +22,7 @@ O lado de quem organiza ranking e torneio de Beach Tennis: o que faz, como lanç
 
 | Tipo de fonte | O que diz bem | O que não diz | Itens nesta frente |
 | --- | --- | --- | --- |
-| Regra (caderno de encargos, regulamento, help center) | O que o organizador é obrigado a fazer e quanto repassa | Se isso dói | 1 caderno de encargos (lido na íntegra), 4 páginas de help center do incumbente, 1 regulamento de ranking de arena |
+| Regra (caderno de encargos, regulamento, help center) | O que o organizador é obrigado a fazer e quanto repassa | Se isso dói | 1 caderno de encargos (lido na íntegra), 4 páginas de help center do concorrente principal, 1 regulamento de ranking de arena |
 | Review de app de organizador | Dor e elogio em primeira pessoa | Representatividade (amostra pequena, positiva) | 13 (Meu Ranking Organizador: 10 iOS + 3 Android), 10 (Beach Tennis Super 8), 1 (Playtomic Manager) |
 | Marketing de fornecedor | A dor que o fornecedor acha que vende | Se a dor é real e frequente | Página de promoter do Ranketes, blogs de plataforma de inscrição |
 | Entrevista publicada | — | — | **Nenhuma encontrada** (3 buscas) |
@@ -57,9 +57,9 @@ O regulamento de BT 2026 da CBT ([PDF](https://tenis-integrado-prod.s3.amazonaws
 
 **Leitura descritiva:** no torneio nacional, a fonte oficial de horário é a sala de arbitragem e o som, não um app. É o contexto das queixas de horário da oportunidade 3.
 
-### 1.3 Ranking de arena (incumbente)
+### 1.3 Ranking de arena (concorrente principal)
 
-As perguntas frequentes do help center do incumbente mostram as tarefas recorrentes de quem gere ranking (seção Perguntas Frequentes, lida; `DOC1`):
+As perguntas frequentes do help center do concorrente principal mostram as tarefas recorrentes de quem gere ranking (seção Perguntas Frequentes, lida; `DOC1`):
 
 - trocar um jogador de categoria;
 - substituir jogadores;
@@ -82,12 +82,12 @@ A página de promoter do Ranketes lista, em primeira pessoa, o que dá errado nu
 
 | Contexto | Quem lança | Regra | Fonte | Força |
 | --- | --- | --- | --- | --- |
-| Ranking de arena no incumbente | Configurável: "jogadores e administradores" no exemplo | Adversário aprova; sem resposta, aprova sozinho em 24h. "Contestação" sem regra; "casos omissos" com a organização | Regulamento de um ranking de arena (link: D5) | Forte (Lido) |
-| Torneio no incumbente | Organizador | Resultado publicado na chave, com dia, hora e local de cada jogo | Torneio CBBT (link: D5) | Forte (Lido) |
+| Ranking de arena no concorrente principal | Configurável: "jogadores e administradores" no exemplo | Adversário aprova; sem resposta, aprova sozinho em 24h. "Contestação" sem regra; "casos omissos" com a organização | Regulamento de um ranking de arena (link: D5) | Forte (Lido) |
+| Torneio no concorrente principal | Organizador | Resultado publicado na chave, com dia, hora e local de cada jogo | Torneio CBBT (link: D5) | Forte (Lido) |
 | Torneio federado | Promotor e arbitragem | Relatório final em até 2 dias | Caderno de encargos | Forte (Lido) |
 | Meu Ranking | Organizador ou sistema | Geração de jogos e atualização de resultados automáticas (review de organizador) | Review de loja (link: D5) | Média |
 
-**Onde isso falha, na voz do jogador:** um jogador relata, numa review do incumbente, torneio com jogos pendentes meses depois do fim (evidência: documento D1 ("Evidência: voz do usuário e reclamações"), projeto Discovery e estratégia no Linear), e outro, numa reclamação pública resolvida, que o 3º lugar dele no torneio não foi lançado (`RA1`). Os dois culpam o app; a ação que faltou era do organizador. **Força: Média** (2 casos, 1 app).
+**Onde isso falha, na voz do jogador:** um jogador relata, numa review do concorrente principal, torneio com jogos pendentes meses depois do fim (evidência: documento D1 ("Evidência: voz do usuário e reclamações"), projeto Discovery e estratégia no Linear), e outro, numa reclamação pública resolvida, que o 3º lugar dele no torneio não foi lançado (`RA1`). Os dois culpam o app; a ação que faltou era do organizador. **Força: Média** (2 casos, 1 app).
 
 ---
 
@@ -105,7 +105,7 @@ A página de promoter do Ranketes lista, em primeira pessoa, o que dá errado nu
 
 ## 4. Quanto o organizador paga
 
-Preços de ferramenta (do incumbente, Tênis Integrado, Arena Online, Playtomic Manager, Sympla, Ranketes e outros) estão fora do repo (evidência: documento D5 ("Fontes e ferramentas dos organizadores"), projeto Discovery e estratégia no Linear). Aqui ficam só as taxas e inscrições da federação, que são regra pública de competição.
+Preços de ferramenta (do concorrente principal, Tênis Integrado, Arena Online, Playtomic Manager, Sympla, Ranketes e outros) estão fora do repo (evidência: documento D5 ("Fontes e ferramentas dos organizadores"), projeto Discovery e estratégia no Linear). Aqui ficam só as taxas e inscrições da federação, que são regra pública de competição.
 
 | Item | Valor (2026) | Quem paga | Fonte | Força |
 | --- | --- | --- | --- | --- |
@@ -143,7 +143,7 @@ E do que elogia: simplicidade (8 de 10), suporte rápido (5 de 10), regulamento 
 | Achado | Força | Fonte |
 | --- | --- | --- |
 | A tabela de premiação da federação do PR tem faixa "até 5 duplas" por categoria, e o bônus por volume exige de 150 a 400 inscritos no torneio inteiro | Forte (Lido) | Caderno de encargos |
-| Na CBBT (incumbente), várias categorias de uma etapa com prazo em 10/09 mostram de 2 a 6 inscritos; categorias do Brasileiro com prazo em 06/11 mostram de 0 a 4 | Forte (Lido); retrato de um dia | Página da CBBT no incumbente (link: D5) |
+| Na CBBT (concorrente principal), várias categorias de uma etapa com prazo em 10/09 mostram de 2 a 6 inscritos; categorias do Brasileiro com prazo em 06/11 mostram de 0 a 4 | Forte (Lido); retrato de um dia | Página da CBBT no concorrente principal (link: D5) |
 | Na categoria vista (CBBT 250, Dupla Mista D), 5 duplas em 2 grupos, um deles com 1 jogo só | Forte (Lido); 1 caso | Torneio CBBT (link: D5) |
 | Ranking de arena citado por organizador: perto de 80 pessoas no ranking dele | Média | Meu Ranking Organizador, review de loja (`AS1`) |
 
@@ -169,12 +169,12 @@ Só o Gabriel responde.
 
 1. **A visão do organizador continua fora do MVP?** Esta frente reforça que as oportunidades 1, 3, 4 e 5 passam por decisões do organizador (pergunta 3 do `SINTESE.md`).
 2. **O Gabriel conhece organizadores de BT que topariam uma conversa de 30 minutos?** Nenhuma entrevista publicada foi encontrada. Duas ou três conversas cobririam a maior lacuna desta frente.
-3. **O redesign mostra ao jogador a origem dos pontos de um torneio (tabela, bônus, chancela)?** É decisão de produto; a evidência só diz que a conta tem mais peças do que parece.
+3. **O produto mostra ao jogador a origem dos pontos de um torneio (tabela, bônus, chancela)?** É decisão de produto; a evidência só diz que a conta tem mais peças do que parece.
 
 ---
 
 ## Nota de método: uso de ferramentas nesta frente
 
-- **Firecrawl: 6 chamadas** nesta frente (o regulamento da CBT citado na seção 1.2 foi lido na rodada de verificação final, contada no `README.md`). 5 `firecrawl_scrape` (caderno de encargos em PDF, review pública do Playtomic Manager e páginas de loja do Beach Tennis Super 8, do Super Oito, sem reviews, e do Meu Ranking Organizador) e 1 `firecrawl_search` (YouTube, sem resultado). As páginas do incumbente e do Ranketes citadas aqui foram lidas na frente de teardown (evidência: documento D2 ("Evidência: concorrentes e incumbente (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear).
+- **Firecrawl: 6 chamadas** nesta frente (o regulamento da CBT citado na seção 1.2 foi lido na rodada de verificação final, contada no `README.md`). 5 `firecrawl_scrape` (caderno de encargos em PDF, review pública do Playtomic Manager e páginas de loja do Beach Tennis Super 8, do Super Oito, sem reviews, e do Meu Ranking Organizador) e 1 `firecrawl_search` (YouTube, sem resultado). As páginas do concorrente principal e do Ranketes citadas aqui foram lidas na frente de teardown (evidência: documento D2 ("Evidência: concorrentes (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear).
 - **Busca nativa: 9.**
 - Nenhum nome de organizador ou atleta foi copiado. As reviews citadas não identificam autor.

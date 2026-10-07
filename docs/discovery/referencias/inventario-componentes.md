@@ -131,7 +131,7 @@ Geralmente sem story (`.claude/rules/storybook.md`); quando valer, uma story-gal
 | Ferramenta | Chamadas | Limite | Observação |
 | --- | --- | --- | --- |
 | **Mobbin** (`search_screens`, `search_flows`) | **25** | 70 | Ranking 5 · Feed 4 · Perfil 4 · H2H 2 · Placar 4 · Descoberta 4 · Navegação 2. Cerca de 230 telas vistas |
-| **Firecrawl** (`firecrawl_scrape`) | **5** | 30 | Playtomic Help (2), site do incumbente (1, redirecionou para a home), Material 3 e Apple HIG (2). Modo Alexandria não usado |
+| **Firecrawl** (`firecrawl_scrape`) | **5** | 30 | Playtomic Help (2), site do concorrente principal (1, redirecionou para a home), Material 3 e Apple HIG (2). Modo Alexandria não usado |
 | WebSearch | 2 | — | UTR e Playtomic |
 | WebFetch | 2 | — | Playtomic Manager e Material 3: bloqueados pelo proxy da sessão, refeitos com Firecrawl |
 

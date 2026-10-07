@@ -8,7 +8,7 @@ Pergunta 3 da issue. Pesquisa feita em 25/09/2026. Os códigos de fonte (`AS1`, 
 
 ## Resumo
 
-- **Muitas vezes quem escolhe a ferramenta não é o organizador.** O organizador de etapa federada usa o sistema da federação (Tênis Integrado na FET e na FCTBT; o incumbente na CBBT). O circuito grande usa app próprio. Só o dono de arena e o organizador independente escolhem de fato.
+- **Muitas vezes quem escolhe a ferramenta não é o organizador.** O organizador de etapa federada usa o sistema da federação (Tênis Integrado na FET e na FCTBT; o concorrente principal na CBBT). O circuito grande usa app próprio. Só o dono de arena e o organizador independente escolhem de fato.
 - **A ferramenta oficial nunca está sozinha.** Em volta dela há sempre WhatsApp, formulário, e-mail, PIX na chave do organizador e, às vezes, planilha. Ver as gambiarras em [`DORES.md`](DORES.md).
 - **Dois modelos de cobrança convivem:** taxa por inscrição (a plataforma tira um valor de cada atleta) e mensalidade de SaaS (a arena paga por mês). O organizador de torneio sente mais a primeira; o dono de arena, a segunda.
 - **Sobre "por que troca", a evidência é fraca.** Não se achou nenhum relato de organizador explicando uma troca. O que existe são pistas: elogio a simplicidade e suporte (AS1), pedido de planilha para um formato que a ferramenta não cobria (FL1), fornecedor que sumiu (BT Match, página 404), e alguém que desistiu de procurar e escreveu o próprio sistema (GH).
@@ -20,10 +20,10 @@ Pergunta 3 da issue. Pesquisa feita em 25/09/2026. Os códigos de fonte (`AS1`, 
 | Organizador | Ferramenta principal | Em volta | Quem escolheu | Fonte |
 | --- | --- | --- | --- | --- |
 | Etapa federada (estadual) | Tênis Integrado: inscrição, boleto, súmula lançada pelo árbitro, ranking | E-mail para troca e reembolso; PIX na hora para *alternate*; sistema de som | A federação | REG1, REG4 |
-| Confederação (CBBT) | O incumbente (páginas de torneio e ranking); inscrição no site da CBBT | — | A confederação | LP2; `CONCORRENTES.md` |
-| Circuito nacional privado (TF Sports) | App próprio de inscrição e pagamento | Grupo de WhatsApp, formulário de denúncia, **consulta ao incumbente** para checar ranking, protocolo de atendimento | O circuito | RA3, RA4 |
-| Torneio independente em arena | O incumbente ou similar; às vezes inscrição a R$ 0 na plataforma e pagamento por fora | WhatsApp; PIX | O organizador | LP1, RA1, RA5 |
-| Ranking de desafio (clube ou arena) | Página no site + formulário; ou app de ranking (Meu Ranking, o incumbente) | Grupo de WhatsApp com *template* | O clube | REG2, REG3, AS1 |
+| Confederação (CBBT) | O concorrente principal (páginas de torneio e ranking); inscrição no site da CBBT | — | A confederação | LP2; `CONCORRENTES.md` |
+| Circuito nacional privado (TF Sports) | App próprio de inscrição e pagamento | Grupo de WhatsApp, formulário de denúncia, **consulta ao concorrente principal** para checar ranking, protocolo de atendimento | O circuito | RA3, RA4 |
+| Torneio independente em arena | O concorrente principal ou similar; às vezes inscrição a R$ 0 na plataforma e pagamento por fora | WhatsApp; PIX | O organizador | LP1, RA1, RA5 |
+| Ranking de desafio (clube ou arena) | Página no site + formulário; ou app de ranking (Meu Ranking, o concorrente principal) | Grupo de WhatsApp com *template* | O clube | REG2, REG3, AS1 |
 | Arena (operação inteira) | App de reserva e gestão; Instagram e WhatsApp com chatbot para reserva | Catraca com biometria em algumas | O dono | ACAD2 |
 | Academia que escreveu o próprio sistema | ArenaHub (aulas, day use, torneios, pagamento por atleta, Mercado Pago) | WhatsApp obrigatório no cadastro | O dono | GH |
 | Organizador pequeno sem sistema | Planilha encomendada ou comprada | — | O organizador | FL1, FL2 |

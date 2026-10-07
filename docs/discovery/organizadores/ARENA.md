@@ -26,7 +26,7 @@ Pergunta 5 da issue: ocupação de quadra, aulas, day use, eventos. Pesquisa fei
 | Planos | Trimestral com aula 2×/semana + day use no fim de semana; plano família; plano *kids*; preço menor para aluno | ACAD2 | Acadêmico |
 | Bar e restaurante | 70% do faturamento numa arena; "o mais caro não são as quadras, mas a infraestrutura do entorno" em outra | ACAD1, N1 | Acadêmico, N |
 | Publicidade nos eventos | Placas e *banners* nas laterais com "cobrança de mensalidades ... prática comum em todas as arenas visitadas" | ACAD2 | Acadêmico |
-| Inscrição de torneio | R$ 50–80 por categoria em arenas que usam o incumbente; torneio de R$ 60 num sistema de academia | Evidência: documento D3 ("Estratégia de negócio: modelos de monetização"), projeto Discovery e estratégia no Linear; GH #69 | Resumo; PC |
+| Inscrição de torneio | R$ 50–80 por categoria em arenas que usam o concorrente principal; torneio de R$ 60 num sistema de academia | Evidência: documento D3 ("Estratégia de negócio: modelos de monetização"), projeto Discovery e estratégia no Linear; GH #69 | Resumo; PC |
 | Loja, fisioterapia, eventos corporativos | Citados em reportagens | N1; `MERCADO.md` | N |
 
 ---

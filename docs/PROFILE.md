@@ -32,7 +32,7 @@ A leitura competitiva vem primeiro por três razões:
 
 - **É a dor com mais evidência.** "Nível do adversário e perfil em que dá para confiar" é a oportunidade 2 da síntese do discovery, com evidência forte (13 menções em 4 apps e 18 threads). O JTBD 4 é "o mais coberto pela oferta e o menos citado pela demanda" (`MATRIZ_FEATURES.md`). [DSC]
 - **A leitura social cabe em pouco espaço.** Ela precisa de identidade (foto, nome), do vínculo (amigos ou não) e do que o amigo tem feito. As duas primeiras cabem no cabeçalho, e a terceira é o próprio conteúdo competitivo: posição, resultados e conquistas. [REF]
-- **O problema 2 do incumbente inclui o perfil sobrecarregado** (`docs/PRODUCT.md` > "Problemas do incumbente que o produto resolve"). Configurações e conta já saíram do perfil (N8). Esta spec corta o resto: o perfil só mostra o que responde a uma das três perguntas abaixo. [NAV]
+- **O problema 2 do concorrente principal inclui o perfil sobrecarregado** (`docs/PRODUCT.md` > "Problemas do concorrente principal que o produto quer resolver (hipóteses)"). Configurações e conta já saíram do perfil (N8). Esta spec corta o resto: o perfil só mostra o que responde a uma das três perguntas abaixo. [NAV]
 
 | Leitura | Pergunta | O que responde |
 | --- | --- | --- |
@@ -278,7 +278,7 @@ Compõe Avatar 96, nome, @username, dois StatTile, RecordLine e um slot de açã
 | **Selo de categoria do jogador e trilha de promoção** | A categoria é da inscrição (PF11), e subir de categoria está fora do MVP (DOMAIN §5) |
 | **Feed de atividade no perfil** | As partidas recentes e as temporadas já mostram o que o jogador fez. Uma aba de atividade repetiria o feed |
 | **Denunciar e bloquear** | Sem chat nem conteúdo livre no MVP, o risco de abuso é baixo. Entra junto com comentários, que são o primeiro conteúdo livre |
-| **Perfil verificado e confiabilidade do nível** | Oportunidade de encantamento (Kano), sem app de BT que faça (`07-kano.md`). Depende da relação com o incumbente (DISCOVERY §7, pergunta 2) |
+| **Perfil verificado e confiabilidade do nível** | Oportunidade de encantamento (Kano), sem app de BT que faça (`07-kano.md`). Depende da relação com o concorrente principal (DISCOVERY §7, pergunta 2) |
 | **Seguir sem amizade** | O modelo tem só amizade bilateral (R24) |
 
 ---
@@ -332,4 +332,4 @@ Medidas no beta com Rankin e Vila. Sem meta fixa: a primeira rodada define a lin
 - **Cartel sem contexto.** "182 vitórias · 92 derrotas" não diz contra quem. Um jogador que só joga amistoso contra iniciantes tem cartel melhor que um da categoria A. Se os jogadores lerem o cartel como nível, a próxima versão separa por categoria ou tira o amistoso.
 - **Posição exposta a quem não é amigo.** A tabela já é pública, mas ver a própria posição no perfil, aberto por um adversário, pode incomodar quem está no fim. Ouvir os jogadores do beta.
 - **Pouco dado no começo.** Com o beta do zero, todo perfil nasce com "0 jogos". Os estados vazios (6.2) carregam o perfil nas primeiras semanas, e a carga das inscrições (R32) pelo menos preenche "Rankings".
-- **Perfil duplicado.** A integridade do cadastro (DSC 3.1) não é resolvida por esta spec: um jogador com duas contas tem dois perfis com cartéis parciais. É do cadastro e da relação com o incumbente.
+- **Perfil duplicado.** A integridade do cadastro (DSC 3.1) não é resolvida por esta spec: um jogador com duas contas tem dois perfis com cartéis parciais. É do cadastro e da relação com o concorrente principal.

@@ -88,7 +88,7 @@ Fixtured desenha o evento **"Postponed" com borda tracejada**, cores apagadas. O
 | eBay | Total de resultados no título da folha, grupos de chips | [tela](https://mobbin.com/screens/d55ba40e-351f-49c6-9b21-2325352b203c) |
 | Agoda | "Reset" por seção | [tela](https://mobbin.com/screens/cf8e5454-ab81-4a22-9099-2ae4a8a1cc0c) |
 
-Amostra: 34 telas em 4 buscas, 26 usadas, de 27 apps. Descartadas: grades de jogos de ligas profissionais sem inscrição (SiriusXM, parte do DAZN e NFL). **Lacuna:** o Mobbin não tem Playtomic nem apps de torneio de BT; a descoberta do incumbente não foi vista.
+Amostra: 34 telas em 4 buscas, 26 usadas, de 27 apps. Descartadas: grades de jogos de ligas profissionais sem inscrição (SiriusXM, parte do DAZN e NFL). **Lacuna:** o Mobbin não tem Playtomic nem apps de torneio de BT; a descoberta do concorrente principal não foi vista.
 
 ---
 

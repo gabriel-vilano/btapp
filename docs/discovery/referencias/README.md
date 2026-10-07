@@ -29,7 +29,7 @@ Levantamento de padrões de UI para as superfícies do produto, feito em setembr
 
 **Links.** Todas as telas apontam para o `mobbin_url` (exige conta no Mobbin). Nenhuma imagem de terceiros foi copiada para o repo, por direito autoral. Onde a tela importa, o texto descreve **o que observar** nela.
 
-**Viés da amostra.** O Mobbin cobre bem apps globais (Strava, Duolingo, Premier League, FotMob) e mal os apps de nicho de raquete brasileiros. Não há tela do incumbente, do Tênis Integrado ou do Playtomic no Mobbin: esses entram por site e loja de apps, com evidência mais fraca. O Mobbin também não cobre Android; o Material 3 entra como referência documentada.
+**Viés da amostra.** O Mobbin cobre bem apps globais (Strava, Duolingo, Premier League, FotMob) e mal os apps de nicho de raquete brasileiros. Não há tela do concorrente principal, do Tênis Integrado ou do Playtomic no Mobbin: esses entram por site e loja de apps, com evidência mais fraca. O Mobbin também não cobre Android; o Material 3 entra como referência documentada.
 
 ## Relação com outros docs
 

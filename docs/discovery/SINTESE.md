@@ -20,11 +20,11 @@ Cada oportunidade foi pontuada pelos **tipos de fonte** que a sustentam. Tipos d
 | **C** | Comunidade: threads do Reddit sobre o mesmo tema | voz do usuário (D1), Apêndice B |
 | **N** | Negócio ou mercado: modelo de receita, dado de mercado ou de público | modelos de negócio (evidência: documento D3 ("Estratégia de negócio: modelos de monetização"), projeto Discovery e estratégia no Linear), `MERCADO.md`, `PUBLICO.md` |
 
-Os códigos de review e reclamação citados abaixo (L1, G3, RA1, RD5…) são os da voz do usuário e resolvem no D1. Notas e números de loja e preços de empresa estão no D2 (evidência: documento D2 ("Evidência: concorrentes e incumbente (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear); contadores de cadastro, no D4 (evidência: documento D4 ("Evidência: mercado e contadores do incumbente"), projeto Discovery e estratégia no Linear).
+Os códigos de review e reclamação citados abaixo (L1, G3, RA1, RD5…) são os da voz do usuário e resolvem no D1. Notas e números de loja e preços de empresa estão no D2 (evidência: documento D2 ("Evidência: concorrentes (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear); contadores de cadastro, no D4 (evidência: documento D4 ("Evidência: mercado e contadores do concorrente principal"), projeto Discovery e estratégia no Linear).
 
 **Critério de ordem:** primeiro o número de tipos de fonte; no empate, o número de menções na voz do usuário; no empate, se há fonte do BT brasileiro (e não só de padel, tênis ou pickleball).
 
-**O que não entra na conta:** entrevista com jogador (não houve) e dado de uso do incumbente (não há acesso). São as duas fontes que mais mudariam este ranking.
+**O que não entra na conta:** entrevista com jogador (não houve) e dado de uso do concorrente principal (não há acesso). São as duas fontes que mais mudariam este ranking.
 
 ---
 
@@ -53,9 +53,9 @@ Lançamento pelo jogador, confirmação do adversário, prazo e auto-aprovação
 
 | Tipo | Evidência |
 | --- | --- |
-| R | Rankings de arena no incumbente já usam "lança → adversário aprova → auto-aprovação em 24h" (pesquisa de domínio) |
-| O | Ranketes, DUPR, Playtomic (24h) e o incumbente (24h, só em rankings configurados) validam pelo adversário, e nenhum arbitra a recusa. Em torneio, quem lança é o organizador (correção do `aprofundamento/`) |
-| V | Jogos pendentes há meses (incumbente, L4) · colocação em torneio que nunca foi lançada (reclamação pública, RA1) · placar que demora a atualizar (DUPR) |
+| R | Rankings de arena no concorrente principal já usam "lança → adversário aprova → auto-aprovação em 24h" (pesquisa de domínio) |
+| O | Ranketes, DUPR, Playtomic (24h) e o concorrente principal (24h, só em rankings configurados) validam pelo adversário, e nenhum arbitra a recusa. Em torneio, quem lança é o organizador (correção do `aprofundamento/`) |
+| V | Jogos pendentes há meses (concorrente principal, L4) · colocação em torneio que nunca foi lançada (reclamação pública, RA1) · placar que demora a atualizar (DUPR) |
 | C | 4 threads sobre rating que demora meses (DUPR, UTR) |
 | N | Hipótese H1 do `DISCOVERY.md` (cold start de dados); o valor de toda estatística paga dos concorrentes depende disso |
 
@@ -69,7 +69,7 @@ Perfil único, categoria verdadeira, e um sinal de quanto o nível é confiável
 | --- | --- |
 | R | CBT 2026: promoção obrigatória do top 8 nacional ou por avaliação técnica discricionária; descer só a pedido depois da virada do ano, a critério da CBT; homologação obrigatória de todo torneio de BT, com veto a material de "organizações paralelas", o que atinge a CBBT (correção do `aprofundamento/`) |
 | O | Só UTR (Verified) e DUPR (Reliability Score, peso menor para autodeclarado) separam resultado confiável de autodeclarado. Nenhum app de BT faz isso |
-| V | Perfil duplicado e sandbagging: 6 menções em 4 apps. Rating que não reflete o nível: 7 em 3 apps. O incumbente guarda o histórico dos jogadores, mas não o usa para sugerir ou limitar categorias (review) |
+| V | Perfil duplicado e sandbagging: 6 menções em 4 apps. Rating que não reflete o nível: 7 em 3 apps. O concorrente principal guarda o histórico dos jogadores, mas não o usa para sugerir ou limitar categorias (review) |
 | C | 15 threads sobre rating que "mente" e 3 sobre sandbagging. É o tema mais discutido fora das lojas |
 | N | Integridade é argumento de venda para o organizador: sandbagging custa a credibilidade do torneio (`DISCOVERY.md` 4.2) |
 
@@ -81,7 +81,7 @@ Chave publicada, horário do próximo jogo e mudança de programação, com avis
 | --- | --- |
 | R | CBT 2026 e FCTBT jogam no atleta a responsabilidade de acompanhar chave e horário. A programação muda por clima e atraso |
 | O | O WhatsApp é quem cumpre esse papel hoje (grupo por torneio). O Meu Ranking passou a exibir o link do grupo depois da inscrição. O LiveBT existe desde 2019 só para isso |
-| V | Notificação que não chega e faz perder torneio (incumbente, L2) · W.O. numa quartas de final de Brasileiro porque o app não mostrou o horário (Tênis Integrado) · aviso só por e-mail, sem push (incumbente, L7) |
+| V | Notificação que não chega e faz perder torneio (concorrente principal, L2) · W.O. numa quartas de final de Brasileiro porque o app não mostrou o horário (Tênis Integrado) · aviso só por e-mail, sem push (concorrente principal, L7) |
 
 **Por que está em 3º apesar de menos menções:** é a dor com a consequência competitiva mais cara da amostra (perder o jogo por W.O.).
 
@@ -111,12 +111,12 @@ O jogador reclama com o app de coisas que o organizador decide: formato de chave
 
 ### 6. Navegação direta para a tarefa do dia
 
-Ver o próximo jogo, a posição no ranking e o resultado a confirmar sem procurar. É o problema 2 do audit do app atual (arquitetura de informação; `docs/PRODUCT.md` (seção "Problemas do incumbente que o produto resolve")), agora com voz de usuário.
+Ver o próximo jogo, a posição no ranking e o resultado a confirmar sem procurar. É o problema 2 do audit do app atual (arquitetura de informação; `docs/PRODUCT.md` (seção "Problemas do concorrente principal que o produto quer resolver (hipóteses)")), agora com voz de usuário.
 
 | Tipo | Evidência |
 | --- | --- |
 | O | Ninguém se diferencia por isso. O Meu Ranking, o mais bem avaliado do BT nas lojas (D2), tem reviews curtas elogiando a fluidez das chaves (M5) |
-| V | 15 menções em 5 apps, a dor mais citada da amostra. Informação simples a mais de 3 cliques (G3) · ter de procurar a informação a cada vez que entra no app (G1), as duas no incumbente |
+| V | 15 menções em 5 apps, a dor mais citada da amostra. Informação simples a mais de 3 cliques (G3) · ter de procurar a informação a cada vez que entra no app (G1), as duas no concorrente principal |
 
 ### 7. Conta, sessão e desempenho que não atrapalham
 
@@ -124,10 +124,10 @@ Login que persiste, cadastro que funciona, conta que se exclui, app rápido e su
 
 | Tipo | Evidência |
 | --- | --- |
-| O | O próprio incumbente lançou em 24/08/2026 uma versão que preserva a sessão após atualizações. O Tênis Integrado prende o CPF numa conta cancelada |
-| V | Lentidão e bugs: 13 menções em 5 apps. Conta e login: 8 em 3 apps. Suporte: 9 em 5 apps. logout depois de poucos minutos (incumbente, L1) · login não reconhecido no meio do torneio (Tênis Integrado, TG2) |
+| O | O próprio concorrente principal lançou em 24/08/2026 uma versão que preserva a sessão após atualizações. O Tênis Integrado prende o CPF numa conta cancelada |
+| V | Lentidão e bugs: 13 menções em 5 apps. Conta e login: 8 em 3 apps. Suporte: 9 em 5 apps. logout depois de poucos minutos (concorrente principal, L1) · login não reconhecido no meio do torneio (Tênis Integrado, TG2) |
 
-**Leitura descritiva:** o incumbente declara quase todas as features dos JTBDs 1 a 4. As queixas são de confiabilidade e de navegação, não de feature ausente (`MATRIZ_FEATURES.md`, seção 4).
+**Leitura descritiva:** o concorrente principal declara quase todas as features dos JTBDs 1 a 4. As queixas são de confiabilidade e de navegação, não de feature ausente (`MATRIZ_FEATURES.md`, seção 4).
 
 ### 8. Descobrir competição por nível e região num lugar só
 
@@ -172,9 +172,9 @@ Oportunidades com evidência, mas menos que as 10 acima.
 | Oportunidade | JTBD | Por que ficou fora | Força |
 | --- | --- | --- | --- |
 | Rating de dupla com parceiro variável | 3, 5 | Problema aberto até fora do BT (UTR, DUPR, Playtomic). Depende da pergunta D2 do feed (ranking individual ou por dupla) | Média |
-| H2H com os dois recortes (dupla e jogador) | 3 | Já é table stakes no BT (o incumbente, Meu Ranking, Ranketes). O diferencial seria o recorte, com evidência só do padel profissional | Média |
+| H2H com os dois recortes (dupla e jogador) | 3 | Já é table stakes no BT (o concorrente principal, Meu Ranking, Ranketes). O diferencial seria o recorte, com evidência só do padel profissional | Média |
 | Marcação do jogo de ranking dentro do app | 2 | Só o Ranketes oferece. Nenhuma review pede. O Meu Ranking foi na direção oposta (link para o WhatsApp) | Média (oferta); sem demanda |
-| Feed de atividade e camada social | 4 | Oferta abundante (o incumbente, Ranketes, Playtomic), demanda quase nula na amostra: 1 elogio e 1 queixa. Ausência em review não prova ausência de valor | Fraca |
+| Feed de atividade e camada social | 4 | Oferta abundante (o concorrente principal, Ranketes, Playtomic), demanda quase nula na amostra: 1 elogio e 1 queixa. Ausência em review não prova ausência de valor | Fraca |
 | Retrospectiva do ano | 5 | Nenhum app de raquete de ranking faz; só Rivals e Strava (pago) | Fraca |
 
 ---
@@ -185,14 +185,14 @@ Achados que corrigem ou atualizam o mapa anterior.
 
 | Tema | No `DISCOVERY.md` | Agora | Fonte |
 | --- | --- | --- | --- |
-| Nota do incumbente | Nota baixa nas duas lojas, com base de instalações citada acima da real | **Nota baixa na loja da Apple e um pouco melhor na do Android; base de instalações menor que a citada** (números: D2) | Lojas lidas em 25/09/2026 |
-| Incumbente | Incumbente parado | **Em transição:** v10 (19/08/2026) com nova identidade visual e infraestrutura para uma nova fase; v11 (24/08/2026) corrige sessão | Histórico de versões na loja |
-| Taxa do incumbente | Não encontrada | **Encontrada:** taxa por meio de pagamento (Pix, boleto, cartão), cobrada do organizador (valores: D2) | Help center do incumbente (lido) |
+| Nota do concorrente principal | Nota baixa nas duas lojas, com base de instalações citada acima da real | **Nota baixa na loja da Apple e um pouco melhor na do Android; base de instalações menor que a citada** (números: D2) | Lojas lidas em 25/09/2026 |
+| Concorrente principal | Concorrente principal parado | **Em transição:** v10 (19/08/2026) com nova identidade visual e infraestrutura para uma nova fase; v11 (24/08/2026) corrige sessão | Histórico de versões na loja |
+| Taxa do concorrente principal | Não encontrada | **Encontrada:** taxa por meio de pagamento (Pix, boleto, cartão), cobrada do organizador (valores: D2) | Help center do concorrente principal (lido) |
 | Taxa do Tênis Integrado | Não encontrada | **Taxa fixa por inscrição** (regulamento FET 2025/26; valor: D2) | Regulamento lido |
 | Playtomic Manager | Faixa de preço antiga | **Faixa de preço atualizada**, com milhares de clubes (preço e número: D2) | Página de preços (lida) |
 | Concorrente novo | — | **Ranketes** (2026): confirmação pelo adversário, desafio com data, H2H da temporada, Finals, selos, preço público. Uso quase nulo nas lojas (números: D2): desde 26/09 é referência pontual, não concorrente a monitorar | Site (lido); lojas lidas no aprofundamento |
 | Melhor avaliado do BT | — | **Meu Ranking**, com a melhor nota do BT na loja da Apple (nota: D2) | Loja (lida) |
-| Base competitiva formal | 1,1 mi praticantes | **Dezenas de milhares de cadastros** somando 8 páginas de federações e circuitos no incumbente (contagem: D4). Duas ordens de grandeza abaixo | Contadores públicos (resumo de busca) |
+| Base competitiva formal | 1,1 mi praticantes | **Dezenas de milhares de cadastros** somando 8 páginas de federações e circuitos no concorrente principal (contagem: D4). Duas ordens de grandeza abaixo | Contadores públicos (resumo de busca) |
 | Brasil no ITF | "Brasil tem 60% dos jogadores" | **180 torneios ITF em 2025**, líder mundial, mas no máximo ~1/3 do calendário. O "60%" não tem denominador | FPT sobre calendário ITF (resumo) |
 | Perfil | Contradição 54% homens × maioria feminina | **4 estudos locais independentes dão maioria feminina**, adultos de 25–45, classe A/B. Só o número da CBT (sem método) diz o contrário | `PUBLICO.md` |
 
@@ -204,9 +204,9 @@ Descritivos. Não são recomendações.
 
 | # | Risco | Evidência | Força |
 | --- | --- | --- | --- |
-| RS1 | **O incumbente está se redesenhando ao mesmo tempo.** O incumbente anunciou nova identidade e uma nova fase em agosto de 2026 | Histórico de versões lido | Forte |
+| RS1 | **O concorrente principal está se redesenhando ao mesmo tempo.** O concorrente principal anunciou nova identidade e uma nova fase em agosto de 2026 | Histórico de versões lido | Forte |
 | RS2 | **Um entrante já ocupa o discurso das lacunas** do jogador competitivo (confirmação, desafio, H2H da temporada, Finals) | Site do Ranketes lido. Uso quase nulo nas lojas (aprofundamento) | Forte (discurso); **rebaixado**: uso quase nulo |
-| RS3 | **O público competitivo formal pode ser pequeno.** Dezenas de milhares de cadastros em circuitos no incumbente (contagem: D4) × 1,1 mi praticantes estimados | `MERCADO.md` D2 | Fraca (contadores parciais) |
+| RS3 | **O público competitivo formal pode ser pequeno.** Dezenas de milhares de cadastros em circuitos no concorrente principal (contagem: D4) × 1,1 mi praticantes estimados | `MERCADO.md` D2 | Fraca (contadores parciais) |
 | RS4 | **O jogador muitas vezes não escolhe o app.** A federação, a arena ou o circuito escolhe, e o jogador segue | 4 reviews em 3 apps; white-label por arena | Forte |
 | RS5 | **O WhatsApp resolve o dia do torneio e a marcação**, e quem tentou substituí-lo (Meu Ranking) passou a apontar para ele | `CONCORRENTES.md` 1.3 e 5 | Média |
 | RS6 | **Nenhum número de mercado do BT tem metodologia pública** | `MERCADO.md` seção 8 | Forte (a ausência) |
@@ -217,7 +217,7 @@ Descritivos. Não são recomendações.
 
 Só o Gabriel responde. Cada uma muda a leitura das oportunidades acima. As decisões de 26/09 estão registradas abaixo da pergunta correspondente.
 
-1. **Qual é a relação do redesign com o incumbente, agora que ele lançou nova identidade e uma nova fase em agosto de 2026?** Portfolio independente, proposta para a própria empresa, ou produto que compete com ela? Muda o peso da oportunidade 5 (organizadores já estão no incumbente) e do risco RS1. Refina a pergunta 2 do `DISCOVERY.md`.
+1. **Qual é a relação do produto com o concorrente principal, agora que ele lançou nova identidade e uma nova fase em agosto de 2026?** O produto é próprio e compete com ele; o que resta decidir é a estratégia de entrada. Muda o peso da oportunidade 5 (organizadores já estão no concorrente principal) e do risco RS1. Refina a pergunta 2 do `DISCOVERY.md`.
    - **Adiado (26/09)** para a issue de decisões estratégicas do time Product no Linear.
 2. **O público do beta é o competidor federado (CBT, CBBT, circuitos) ou o jogador de ranking de arena?** As regras, as dores e o tamanho são diferentes (RS3). Ligada à pergunta aberta de formato de ranking da pesquisa de domínio, que continua em aberto.
 3. **A visão do organizador continua fora do MVP?** As oportunidades 1, 3 e 5 dependem de quem lança resultado e publica a programação, e em torneio esse alguém é o organizador. O `docs/PRODUCT.md` tira a visão do organizador do MVP.
@@ -225,7 +225,7 @@ Só o Gabriel responde. Cada uma muda a leitura das oportunidades acima. As deci
 5. **Qual é a postura diante do WhatsApp:** substituir, integrar (como o Meu Ranking) ou ignorar? Muda a leitura das oportunidades 3 e 1 e do "abaixo do corte" de marcação.
 6. **O Ranketes é referência, concorrente, ou irrelevante para o objetivo de portfolio?** Ele já declara boa parte das lacunas (RS2).
    - **Decidido (26/09):** referência pontual, não concorrente a monitorar. Uso quase nulo, segundo o teardown (D2).
-7. **Dá para fazer 5 a 8 entrevistas com jogadores competitivos e 2 a 3 com organizadores antes do beta?** É a lacuna de evidência mais cara: a voz do BT brasileiro na amostra é pequena, e as dores de organizador e arena vêm quase só de marketing de fornecedor. Dado de uso do incumbente (se houver acesso) seria a fonte mais forte de todas.
+7. **Dá para fazer 5 a 8 entrevistas com jogadores competitivos e 2 a 3 com organizadores antes do beta?** É a lacuna de evidência mais cara: a voz do BT brasileiro na amostra é pequena, e as dores de organizador e arena vêm quase só de marketing de fornecedor. Dado de uso do concorrente principal (se houver acesso) seria a fonte mais forte de todas.
    - **Suspensa (26/09):** não há pesquisa com usuários por agora. Entrevistas ficam para um momento posterior.
 8. **O perfil majoritariamente feminino dos estudos locais muda algo no tom e nos textos?** Conecta com a pergunta D7 do feed (gênero gramatical).
    - **Decidido (26/09):** coberto, por ora, pelos textos neutros e pela concordância com a categoria.

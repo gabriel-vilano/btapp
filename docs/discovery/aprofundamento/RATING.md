@@ -8,7 +8,7 @@ Pesquisa feita em 25/09/2026.
 
 **Como ler.**
 - **Lido** = página aberta na íntegra via WebFetch. **Resumo** = visto só no snippet ou resumo da busca.
-- Na primeira passada, **nenhuma página pôde ser lida na íntegra**: o proxy bloqueou todos os domínios tentados (ver "Nota de método"). Depois, **4 fontes centrais foram lidas na íntegra via Firecrawl** (help center do DUPR, FAQ de duplas do UTR, help center da Playtomic e a página da CBBT no incumbente). As linhas confirmadas por essa leitura estão marcadas **Lido**. As demais seguem **Resumo**; onde o resumo vem de help center ou documento oficial, isso está indicado.
+- Na primeira passada, **nenhuma página pôde ser lida na íntegra**: o proxy bloqueou todos os domínios tentados (ver "Nota de método"). Depois, **4 fontes centrais foram lidas na íntegra via Firecrawl** (help center do DUPR, FAQ de duplas do UTR, help center da Playtomic e a página da CBBT no concorrente principal). As linhas confirmadas por essa leitura estão marcadas **Lido**. As demais seguem **Resumo**; onde o resumo vem de help center ou documento oficial, isso está indicado.
 - **Força:** **Forte** = várias fontes independentes concordam e pelo menos uma é doc oficial. **Média** = uma fonte específica verificável, ou várias concordantes só por resumo. **Fraca** = opinião, fonte única não oficial ou inferência.
 - Datas: quando a fonte não traz data visível, vale a data de acesso (25/09/2026).
 
@@ -211,7 +211,7 @@ Pesquisa feita em 25/09/2026.
 | Achado | Força | Fonte |
 | --- | --- | --- |
 | Existe a CBBT, Confederação Brasileira de Beach Tennis, reconhecida pela Secretaria Especial do Esporte em 12/05/2020. Ou seja, **duas confederações** disputam o BT no Brasil. Resumo. O regulamento da CBT 2026 (lido, ver 6.2) trata qualquer torneio não homologado por ela como irregular e veda material de "organizações paralelas": a disputa é **aberta e com sanção prevista** | Média (existência da CBBT); Forte (a regra da CBT) | [CBBT](https://cbbtennis.com.br/), [FSMBT](https://fsmbt.com/Publicacao.aspx?id=138543) |
-| A CBBT roda no próprio incumbente, com uma base grande de jogadores, dezenas de rankings em andamento e centenas de torneios (contadores: evidência: documento D4 ("Evidência: mercado e contadores do incumbente"), projeto Discovery e estratégia no Linear). Os torneios têm **dupla chancela** (ex.: "CBBT 250 / FGBT500", "CBBT100 / FPEBT400"): o mesmo evento pontua em duas tabelas, a nacional e a estadual. **Lido** | Forte | D4 |
+| A CBBT roda no próprio concorrente principal, com uma base grande de jogadores, dezenas de rankings em andamento e centenas de torneios (contadores: evidência: documento D4 ("Evidência: mercado e contadores do concorrente principal"), projeto Discovery e estratégia no Linear). Os torneios têm **dupla chancela** (ex.: "CBBT 250 / FGBT500", "CBBT100 / FPEBT400"): o mesmo evento pontua em duas tabelas, a nacional e a estadual. **Lido** | Forte | D4 |
 | Outro sistema grande: Ranking Beach Tennis (derivado do rankingdetenis.com, desde 2016), app MeuRanking. Resumo | Média | [Ranking Beach Tennis](https://www.rankingbeachtennis.com/) |
 | Exemplo de ranking de arena (AVB, On The Beach): pontuação **individual** mesmo em duplas; selos OTB100, OTB250; categoria B vale 90%, C 80%, D 70%. Campeão de C num OTB250 faz 200, vice 160. Pontos cumulativos com bônus por vitória. Resumo | Média | [On The Beach, Regulamento AVB](https://onthebeach.com.br/regulamento-do-ranking-de-beach-tennis/) |
 | Regulamentos de torneio preveem desclassificação sem reembolso para quem se inscreve abaixo do nível técnico. Resumo | Média | [Pró Spin](https://blog.prospin.com.br/torneios/categorias-do-beach-tennis/), [Beach Tennis BRA](https://beachtennisbra.com.br/dicas/quais-sao-as-categorias-do-beach-tennis-disputadas-nos-torneios-oficiais/) |
@@ -263,7 +263,7 @@ Leitura por evidência. Não é recomendação.
 **Ganha força.**
 - Fragmentação documentada: ITF, CBT, CBBT (duas confederações) e rankings de arena com tabelas próprias e pesos por categoria diferentes (6.1–6.3). Força **Média**.
 - UTR, DUPR e WTN existem exatamente para "atravessar" clubes e eventos, e UTR-P mostra que o formato foi portado de um esporte para outro (2.2). O WTN não cobre BT (4). Força **Média**.
-- O incumbente já hospeda rankings de CBBT e federações estaduais (6.3). Isso é fato; o que ele implica é pergunta aberta.
+- O concorrente principal já hospeda rankings de CBBT e federações estaduais (6.3). Isso é fato; o que ele implica é pergunta aberta.
 
 **Perde força.**
 - Os sistemas que atravessam fronteiras cresceram com **patrocínio institucional**: DUPR como rating exclusivo da USA Pickleball, UTR-P como parceiro exclusivo da APP, WTN via ITF e federações nacionais (1.3, 2.2, 4). No BT brasileiro, o poder de definir categoria está nas confederações, e a CBT usa regra administrativa (proibição de descer), não rating. Força **Média**.
@@ -280,14 +280,14 @@ Só o que o dono do produto responde.
 3. Um nível próprio do produto entraria em conflito com a categoria oficial de alguma confederação ou regulamento de torneio?
 4. O quanto importa, para o jogador de BT, que o nível não caia por culpa do parceiro? É dor vista em campo ou só nos fóruns de outros esportes?
 5. Confiança/verificação seria algo que o produto oferece de graça, ou algo que se cobra (como DUPR e UTR fazem)?
-6. Os organizadores de ranking de arena que já usam o incumbente aceitariam um número que não depende da tabela de pontos deles?
+6. Os organizadores de ranking de arena que já usam o concorrente principal aceitariam um número que não depende da tabela de pontos deles?
 
 ---
 
 ## Nota de método
 
 - **WebSearch:** 34 de 35 permitidas.
-- **Firecrawl (coordenador, depois da primeira passada):** 5 leituras na íntegra (help center do DUPR, FAQ de duplas do UTR, help center da Playtomic, página da CBBT no incumbente, regulamento de BT 2026 da CBT em PDF).
+- **Firecrawl (coordenador, depois da primeira passada):** 5 leituras na íntegra (help center do DUPR, FAQ de duplas do UTR, help center da Playtomic, página da CBBT no concorrente principal, regulamento de BT 2026 da CBT em PDF).
 - **WebFetch:** 6 tentativas, **6 falharam** (bloqueio de egress do proxy em pickleheads.com, support.universaltennis.com, playerhelp.playtomic.com, worldtennisnumber.com, en.wikipedia.org e dupr.com). Parei de tentar após a sexta falha, porque todos os domínios testados, inclusive Wikipedia, estavam bloqueados.
 - Consequência: na primeira passada, **todas as linhas eram Resumo**. As marcadas **Lido** foram confirmadas depois pelo Firecrawl. A classificação **Forte** foi usada só quando várias fontes concordam e ao menos uma é help center ou documento oficial (resumo de doc oficial).
 - Não usei Firecrawl, Mobbin, MCP nem curl.

@@ -140,7 +140,7 @@ O jogador decide o que disputar, em que categoria e com quem.
 | --- | --- | --- |
 | O regulamento põe no atleta a responsabilidade de acompanhar chave e horário | CBT 2026, FCTBT (`DSC` 1.1) | Forte (regra) |
 | A programação muda por clima e atraso; o aviso vai pelo grupo | `DOR D4`, `D5` | Forte |
-| O app avisa só por e-mail, sem push | Incumbente (`MER O3`) | Forte |
+| O app avisa só por e-mail, sem push | Concorrente principal (`MER O3`) | Forte |
 | No ranking de arena, marcar o jogo é uma negociação no WhatsApp com 3 opções de horário | `JOR` 2 (REG2) | Forte (regra); dor inferida |
 
 | ID | Resultado desejado |

@@ -121,7 +121,7 @@ Cada galho lista suas folhas com a fonte, e depois o que o mercado já tentou pa
 | --- | --- | --- | --- |
 | Grupo de WhatsApp por torneio, com *template* de aviso | Organizadores, Nômades BT | A1, A3 | `DOR D4`, `JOR` |
 | Link do grupo de WhatsApp exibido após a inscrição | Meu Ranking | A3 | `CON` |
-| Dia, hora e local por jogo na chave | Incumbente | A2 | `APR`, O3 |
+| Dia, hora e local por jogo na chave | Concorrente principal | A2 | `APR`, O3 |
 | Notificação de rodada | Meu Ranking | A1 | `MAT` |
 | App dedicado à programação ao vivo | LiveBT (desde 2019) | A1 | `MER O3` |
 | Chamada por som e rádio comunicador | Mesa de arbitragem | A1 | `JOR` 1.2 |
@@ -137,10 +137,10 @@ Cada galho lista suas folhas com a fonte, e depois o que o mercado já tentou pa
 
 | Solução vista | Onde | Folha | Fonte |
 | --- | --- | --- | --- |
-| Jogador lança → adversário aprova → auto-aprovação em 24h | Incumbente (rankings configurados), Playtomic | B1 | `APR`, correções |
+| Jogador lança → adversário aprova → auto-aprovação em 24h | Concorrente principal (rankings configurados), Playtomic | B1 | `APR`, correções |
 | Validação pelo adversário; qualquer recusa apaga a partida | DUPR | B1, B2 | `VZA` |
 | Resultado suspenso quando contestado; a plataforma diz não ter autoridade para obrigar | Playtomic | B2 | `VZA` |
-| Contestação vira "caso omisso" do organizador | Incumbente | B2 | `VZA` |
+| Contestação vira "caso omisso" do organizador | Concorrente principal | B2 | `VZA` |
 | Súmula em papel do árbitro, lançada depois | Torneio federado | B1 | `JOR` 1.2 |
 | Repasse ao organizador só depois de finalizar no sistema | FET | B1 | `DOR D6`, `D8` |
 | Seta de subida e queda; bônus de até 1,6× por vencer quem está acima | Ranketes | B3 | `APR`, O4 |
@@ -157,14 +157,14 @@ flowchart TB
   B3["B3 · Entendo por que a posição mudou"]
   B --> B1 & B2 & B3
 
-  s1["Lança, adversário aprova,<br/>auto 24h (incumbente, Playtomic)"]
+  s1["Lança, adversário aprova,<br/>auto 24h (concorrente principal, Playtomic)"]
   s2["Súmula do árbitro<br/>lançada depois (federado)"]
   s3["Repasse só após finalizar<br/>no sistema (FET)"]
   B1 --> s1 & s2 & s3
 
   s4["Recusa apaga a partida (DUPR)"]
   s5["Resultado suspenso,<br/>sem árbitro (Playtomic)"]
-  s6["Caso omisso do<br/>organizador (incumbente)"]
+  s6["Caso omisso do<br/>organizador (concorrente principal)"]
   B2 --> s4 & s5 & s6
 
   s7["Seta e bônus por vencer<br/>quem está acima (Ranketes)"]
@@ -187,12 +187,12 @@ flowchart TB
 
 | Solução vista | Onde | Folha | Fonte |
 | --- | --- | --- | --- |
-| Validação por CPF, como opção do gestor | Incumbente | C1 | `DOR D1` (RA2) |
+| Validação por CPF, como opção do gestor | Concorrente principal | C1 | `DOR D1` (RA2) |
 | Promoção obrigatória (top 8 nacional; campeão da iniciante sobe) | CBT, FCTBT, FPT | C1 | `RAT` 6.2, `DOR D1` |
 | Foto no WhatsApp e consulta a outra plataforma | Organizadores | C1 | `DOR`, gambiarras |
 | Nível com selo de verificação | UTR (Verified) | C1, C2 | `MAT` |
 | Nível com índice de confiabilidade | DUPR (Reliability Score) | C1, C2 | `MAT`, `RAT` |
-| H2H entre jogadores | Incumbente, Meu Ranking, Ranketes (da temporada) | C2 | `MAT` |
+| H2H entre jogadores | Concorrente principal, Meu Ranking, Ranketes (da temporada) | C2 | `MAT` |
 | Adversários em comum | Match! Tennis | C2 | `DSC` 3.3 |
 | Rating que atravessa clubes | DUPR, UTR, Playtomic (fora do BT) | C3 | `RAT` |
 
@@ -206,7 +206,7 @@ flowchart TB
 
 | Solução vista | Onde | Folha | Fonte |
 | --- | --- | --- | --- |
-| Lista de torneios com filtros | Incumbente, Meu Ranking, Playtomic, UTR | D1 | `MAT` |
+| Lista de torneios com filtros | Concorrente principal, Meu Ranking, Playtomic, UTR | D1 | `MAT` |
 | Atletas por distância | Ranketes | D1 | `MAT` |
 | Partidas abertas por nível | Playtomic | D1 | `MAT` |
 | Inscrição confirmada só com os dois pagamentos | TF Sports | D2 | `DOR D2` |
@@ -224,7 +224,7 @@ flowchart TB
 | Solução vista | Onde | Folha | Fonte |
 | --- | --- | --- | --- |
 | Gráfico de evolução no plano pago | Playtomic Premium, UTR Power, DUPR+ | E1 | `MAT` |
-| Painel de desempenho | Incumbente | E1 | `MAT` |
+| Painel de desempenho | Concorrente principal | E1 | `MAT` |
 | Selo de top 10 | Ranketes | E2 | `MAT` |
 | Zona de promoção na liga | Duolingo | E2 | `DSC`, `REF` 01 |
 | Retrospectiva do ano | Strava (pago), Rivals | E1 | `MAT L12` |
@@ -237,7 +237,7 @@ flowchart TB
 
 | Solução vista | Onde | Fonte |
 | --- | --- | --- |
-| Seguir, torcer, comentar | Incumbente, Ranketes | `MAT` |
+| Seguir, torcer, comentar | Concorrente principal, Ranketes | `MAT` |
 | Kudos e feed de atividade | Strava | `RIN`, `REF` 02 |
 
 ### G · Uso o app sem atrito
@@ -250,7 +250,7 @@ flowchart TB
 | Solução vista | Onde | Fonte |
 | --- | --- | --- |
 | Tab bar com 4 ou 5 destinos (28 de 28 apps de esporte) | Mercado | `REF` 07 |
-| Versão para preservar a sessão após atualizações | Incumbente (v11) | `MER O7` |
+| Versão para preservar a sessão após atualizações | Concorrente principal (v11) | `MER O7` |
 
 ---
 

@@ -553,7 +553,7 @@ Exemplo da R11, 2 sets de 6: Pedro vence o 1º set por 6/4 e desiste perdendo o 
 **JTBD:** Job 2  
 **Gatilho:** atualização de classificação após rodada processada  
 **Variações:** subiu, desceu, marco (Líder / Top N), classificado para a final  
-**Observação:** feature nova — não existe no incumbente
+**Observação:** feature nova — não existe no concorrente principal
 
 **A posição é da unidade competidora** (`DOMAIN.md` R1): em duplas, o card mostra os dois jogadores, com o cabeçalho de dupla da seção 6.2 (stack de avatares 40px e "[Nome1] e [Nome2] subiram no ranking"). O verbo concorda com a unidade: singular em simples, plural em duplas.
 

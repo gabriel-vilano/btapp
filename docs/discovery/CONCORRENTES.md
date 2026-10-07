@@ -1,12 +1,12 @@
 # CONCORRENTES.md
 
-Análise de concorrentes e produtos similares ao incumbente, do ponto de vista do jogador competitivo de Beach Tennis no Brasil.
+Análise de concorrentes e produtos similares ao concorrente principal, do ponto de vista do jogador competitivo de Beach Tennis no Brasil.
 
 Pesquisa feita em 25/09/2026.
 
 > Este doc é **descritivo**. Registra o que existe, como se posiciona, como cobra e o que os usuários dizem, em conclusão neutra. **Não recomenda nem decide.** O mapa de oportunidades está no `DISCOVERY.md` (seção 2.2 traz o primeiro mapa de concorrentes). Aqui ele é aprofundado produto a produto. JTBDs citados pelo número seguem o `docs/PRODUCT.md`.
 >
-> Preços de empresa, notas e contagens de loja, números declarados, trechos de review e identificadores de loja saíram do repo: evidência: documento D2 ("Evidência: concorrentes e incumbente (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear.
+> Preços de empresa, notas e contagens de loja, números declarados, trechos de review e identificadores de loja saíram do repo: evidência: documento D2 ("Evidência: concorrentes (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear.
 
 ---
 
@@ -38,14 +38,14 @@ Pesquisa feita em 25/09/2026.
 
 O núcleo da concorrência. Todos atendem **organizador e jogador ao mesmo tempo** (modelo B2B2C): quem paga é o organizador, quem usa o app de jogador é o atleta.
 
-### 1.1 O incumbente
+### 1.1 O concorrente principal
 
 | Campo | Achado | Força | Fonte |
 | --- | --- | --- | --- |
-| Proposta | Sistema de gestão de rankings, torneios, barragens, aulas, locações e agenda de quadras. Para o jogador: H2H, painel de desempenho, histórico | Forte (Lido) | Site e loja do incumbente (D2) |
+| Proposta | Sistema de gestão de rankings, torneios, barragens, aulas, locações e agenda de quadras. Para o jogador: H2H, painel de desempenho, histórico | Forte (Lido) | Site e loja do concorrente principal (D2) |
 | Público | Organizador (academia, arena, clube, condomínio, liga, circuito) + jogador. Tênis, BT e padel | Forte (Lido) | idem |
-| Base declarada | A maior base declarada do setor no Brasil, autodeclarada, sem data nem método (números: D2) | Média (Lido, autodeclarado) | Site do incumbente (D2) |
-| Clientes de BT | CBBT e federações estaduais de BT (FPaBT, FGBT, FPEBT, FTBT, FBBT); Circuito Beach Tennis (contadores: D2 e D4) | Média (Resumo; CBBT Lido) | Páginas públicas das federações no incumbente (D2) |
+| Base declarada | A maior base declarada do setor no Brasil, autodeclarada, sem data nem método (números: D2) | Média (Lido, autodeclarado) | Site do concorrente principal (D2) |
+| Clientes de BT | CBBT e federações estaduais de BT (FPaBT, FGBT, FPEBT, FTBT, FBBT); Circuito Beach Tennis (contadores: D2 e D4) | Média (Resumo; CBBT Lido) | Páginas públicas das federações no concorrente principal (D2) |
 | Features jogador | Lançar resultado, buscar torneio, participar de ranking, achar quadra, estatísticas, rede social própria (seguir, torcer, comentar) | Forte (Lido) | Loja |
 | Features gestor | Clientes, agenda, aulas e professores, locação online, clubinho e day use, rankings e barragens, torneios, financeiro, loja e lanchonete, automações, dezenas de gráficos | Forte (Lido) | Home |
 | Receita | SaaS para gestor. Sem preço público: o caminho é pedir um perfil de gestão | Forte (Lido) | Home |
@@ -89,7 +89,7 @@ O núcleo da concorrência. Todos atendem **organizador e jogador ao mesmo tempo
 
 ### 1.4 Ranketes
 
-> **Decisão (26/09):** o Ranketes é **referência pontual**, não concorrente a monitorar. Motivo: uso quase nulo nas lojas (evidência: documento D2 ("Evidência: concorrentes e incumbente (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear).
+> **Decisão (26/09):** o Ranketes é **referência pontual**, não concorrente a monitorar. Motivo: uso quase nulo nas lojas (evidência: documento D2 ("Evidência: concorrentes (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear).
 
 | Campo | Achado | Força | Fonte |
 | --- | --- | --- | --- |
@@ -133,7 +133,7 @@ O "Super 8" (e variantes Super 4/6/12) é o formato social mais citado do BT ama
 | Produto | O que faz | Observação | Força | Fonte |
 | --- | --- | --- | --- | --- |
 | Super Oito (superoito.app) | Cria e gere torneios, resultado ao vivo, "modo telão". Plano grátis até 1 categoria; Premium com 7 dias grátis | Preço do Premium não encontrado | Média (Resumo) | [superoito.app](https://www.superoito.app/), loja Android |
-| Beach Tennis Super 8 (mesmo dev) | Sorteio de jogos e quadras, critério de vitória configurável | Recomendado pela loja iOS junto do incumbente (números: D2) | Média (Resumo) | Loja Android (D2) |
+| Beach Tennis Super 8 (mesmo dev) | Sorteio de jogos e quadras, critério de vitória configurável | Recomendado pela loja iOS junto do concorrente principal (números: D2) | Média (Resumo) | Loja Android (D2) |
 | Super 8 - Beach Tennis (Codecacto) | Super 4/6/8/12, dupla fixa ou rotativa, **100% offline** | — | Média (Resumo) | Loja Android |
 | Super 8 Live (super8.live) | Ligas e torneios em Super 8 com ranking | — | Fraca (Resumo) | [super8.live](https://app.super8.live/leagues) |
 
@@ -147,7 +147,7 @@ O "Super 8" (e variantes Super 4/6/12) é o formato social mais citado do BT ama
 | **PlayUse** | Marketplace de vaga em jogo: "encontre jogos de BT do seu nível", paga só a sua vaga | Média (Resumo) | [playuse.app](https://playuse.app/) |
 | **DUPLA** | App para arena com pontos de fidelidade, desafios, sorteios, reserva por WhatsApp automatizado, 3 planos (preço não visível) | Média (Resumo) | [site.appdupla.com](https://site.appdupla.com/) |
 | Super BT, ArenaBT, Play BT, Play da Galera, z2play | Vistos só pelo nome em buscas ou nas recomendações da loja iOS | Fraca | Loja iOS (listas de recomendação) |
-| **"BT Ranking", "Beach Tennis Brasil"** | Nenhum produto com esses nomes encontrado. Os resultados apontam para CBT, CBBT (via incumbente) e grupos de WhatsApp | Média (ausência em várias buscas) | — |
+| **"BT Ranking", "Beach Tennis Brasil"** | Nenhum produto com esses nomes encontrado. Os resultados apontam para CBT, CBBT (via concorrente principal) e grupos de WhatsApp | Média (ausência em várias buscas) | — |
 
 ---
 
@@ -246,7 +246,7 @@ Todos vendem para o dono da arena. Quase todos incluem "torneios e ranking" como
 
 | Produto | Foco | Competição | Preço público | Força | Fonte |
 | --- | --- | --- | --- | --- | --- |
-| **Incumbente (gestão)** | Arena, clube, academia, liga, federação | Rankings, barragens, torneios | Não público | Forte (Lido) | 1.1 |
+| **Concorrente principal (gestão)** | Arena, clube, academia, liga, federação | Rankings, barragens, torneios | Não público | Forte (Lido) | 1.1 |
 | **BT Match** | Arena de BT | Inscrições, grupos, jogos e ranking com página pública | Planos "Torneios" e "Arena Completa", 15 dias grátis; valor não encontrado. **Em 25/09/2026 o domínio retornou página 404 da hospedagem** | Média para features (Resumo); Forte para o 404 (Lido) | [btmatch.com.br](https://btmatch.com.br/) |
 | **Arena Online** | Arenas menores | Torneios e rankings | Sim, mensalidade com preço de lançamento | Fraca (Resumo, fonte única) | [arenaonline.app.br](https://arenaonline.app.br/) |
 | **Arena Manager** | White-label multiesporte | Não destacado | Mensalidade fixa, 0% sobre mensalidade dos alunos, Pix | Média (Resumo) | [arenamanager.com.br](https://arenamanager.com.br/) |
@@ -281,7 +281,7 @@ Todos vendem para o dono da arena. Quase todos incluem "torneios e ranking" como
 
 | Produto | Tipo | Público pagante | Cobre BT? | Rating/ranking do jogador | H2H | Confirmação de resultado pelo adversário | Preço público |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Incumbente | Ranking + torneio + gestão | Organizador/arena | Sim (CBBT) | Ranking por competição | Sim | Em rankings configurados (ver `DISCOVERY.md`) | Não |
+| Concorrente principal | Ranking + torneio + gestão | Organizador/arena | Sim (CBBT) | Ranking por competição | Sim | Em rankings configurados (ver `DISCOVERY.md`) | Não |
 | Tênis Integrado | Federativo | Federação (atleta via filiação) | Sim (CBT) | Ranking oficial | — | — | Taxas federativas |
 | Meu Ranking (RDT) | Ranking contínuo + torneio | Organizador | Sim | Ranking por rodada | Sim | — | Não |
 | Ranketes | Ranking aberto + torneio + gestão | Competição por participação; professor; arena | Sim | Pontos por temporada | Sim, da temporada | Sim | Sim |
@@ -310,25 +310,25 @@ Descritivo. Sem recomendação.
 
 | Padrão | Quem tem | Força |
 | --- | --- | --- |
-| **Inscrição em torneio com pagamento online** (Pix, cartão, boleto) | Incumbente, Tênis Integrado, Meu Ranking, Tornfy, TennisUP, Ranketes, Torneio Já, Sympla | Forte |
+| **Inscrição em torneio com pagamento online** (Pix, cartão, boleto) | Concorrente principal, Tênis Integrado, Meu Ranking, Tornfy, TennisUP, Ranketes, Torneio Já, Sympla | Forte |
 | **Chave e programação automáticas** | Todos os apps de torneio, inclusive os de Super 8 gratuitos | Forte |
 | **Ranking por competição** (da arena, da liga, do circuito) | Todos os BR | Forte |
-| **Histórico de jogos e estatística básica** (V/D) | Incumbente, Tênis Integrado, Meu Ranking, Ranketes | Forte |
-| **H2H entre jogadores** | Incumbente, Meu Ranking, Ranketes; fora do BT, UTR, Match! Tennis, StudyPadel | Forte |
-| **Dois apps ou dois modos: organizador × jogador** | Meu Ranking, TennisUP, Tornfy (gestão web), incumbente (perfil de gestão) | Forte |
+| **Histórico de jogos e estatística básica** (V/D) | Concorrente principal, Tênis Integrado, Meu Ranking, Ranketes | Forte |
+| **H2H entre jogadores** | Concorrente principal, Meu Ranking, Ranketes; fora do BT, UTR, Match! Tennis, StudyPadel | Forte |
+| **Dois apps ou dois modos: organizador × jogador** | Meu Ranking, TennisUP, Tornfy (gestão web), concorrente principal (perfil de gestão) | Forte |
 | **Jogador não paga para usar o app** | Todos os BR; o jogador paga inscrição e filiação ao organizador | Forte |
-| **Multiesporte** (tênis + BT, muitas vezes padel e pickleball) | Incumbente, Tênis Integrado (3 apps), Meu Ranking (9 esportes), Tornfy, Ranketes | Forte |
+| **Multiesporte** (tênis + BT, muitas vezes padel e pickleball) | Concorrente principal, Tênis Integrado (3 apps), Meu Ranking (9 esportes), Tornfy, Ranketes | Forte |
 
 ### 7.2 Lacunas (ninguém faz bem, pela evidência disponível)
 
 | Lacuna | Evidência | Força |
 | --- | --- | --- |
-| **Avaliação de loja dos apps de ranking BR é baixa**, exceto um | Na loja iOS, o incumbente e o Tênis Integrado são mal avaliados, e o Meu Ranking bem avaliado (todos lidos). Na loja Android a distância é menor (notas: D2). As queixas são de sessão, notificação, lentidão, conta que não exclui, e não de feature ausente | Forte |
-| **Programação e notificação confiáveis no dia do torneio** | Review de app federativo relata W.O. num Brasileiro por programação que não apareceu (D2); reviews do incumbente relatam torneio perdido por notificação que não chegou (D1); LiveBT existe desde 2019 para esse mesmo problema; organizadores empurram o jogador para o grupo de WhatsApp | Forte |
-| **Resultado depende do organizador lançar** | Reviews do incumbente: jogos pendentes por meses (D1). Ranketes, Playtomic (24h) e o incumbente em ranking configurado (24h) validam pelo adversário, e nenhum arbitra a recusa (correção do `aprofundamento/`) | Média |
+| **Avaliação de loja dos apps de ranking BR é baixa**, exceto um | Na loja iOS, o concorrente principal e o Tênis Integrado são mal avaliados, e o Meu Ranking bem avaliado (todos lidos). Na loja Android a distância é menor (notas: D2). As queixas são de sessão, notificação, lentidão, conta que não exclui, e não de feature ausente | Forte |
+| **Programação e notificação confiáveis no dia do torneio** | Review de app federativo relata W.O. num Brasileiro por programação que não apareceu (D2); reviews do concorrente principal relatam torneio perdido por notificação que não chegou (D1); LiveBT existe desde 2019 para esse mesmo problema; organizadores empurram o jogador para o grupo de WhatsApp | Forte |
+| **Resultado depende do organizador lançar** | Reviews do concorrente principal: jogos pendentes por meses (D1). Ranketes, Playtomic (24h) e o concorrente principal em ranking configurado (24h) validam pelo adversário, e nenhum arbitra a recusa (correção do `aprofundamento/`) | Média |
 | **Não existe rating individual de BT que atravesse arenas e federações** | UTR, DUPR, WTN e Playtomic não cobrem BT. No Brasil, cada arena, circuito, CBT e CBBT tem seu ranking. Ranketes propõe pontos próprios, mas é novo | Forte (ausência confirmada em várias buscas) |
 | **Rating de duplas com parceiro variável é problema não resolvido nem fora do BT** | UTR aplica o mesmo delta aos dois; DUPR usa confiabilidade e peso por origem; Playtomic é criticado por ser manipulável pela escolha de parceiro | Média |
-| **Integridade de identidade** (perfil único, categoria verdadeira) | App federativo prende o CPF numa conta cancelada (D2); reclamação pública contra o incumbente sobre sandbagging (evidência: documento D1 ("Evidência: voz do usuário e reclamações"), projeto Discovery e estratégia no Linear; ver `DISCOVERY.md`); DUPR e UTR separam resultado verificado de autodeclarado, os BR não | Média |
+| **Integridade de identidade** (perfil único, categoria verdadeira) | App federativo prende o CPF numa conta cancelada (D2); reclamação pública contra o concorrente principal sobre sandbagging (evidência: documento D1 ("Evidência: voz do usuário e reclamações"), projeto Discovery e estratégia no Linear; ver `DISCOVERY.md`); DUPR e UTR separam resultado verificado de autodeclarado, os BR não | Média |
 | **Marcação do jogo continua no WhatsApp** | Regulamentos de arena citam o grupo; Meu Ranking passou a exibir o link do grupo em vez de substituí-lo. Só Ranketes declara desafio com data e lembrete dentro do app | Média |
 | **Descoberta de torneio por nível e região num lugar só** | Pelo menos 8 plataformas de inscrição BR mais Sympla e Instagram. Nenhum agregador encontrado além de portais regionais (Torneio Já no Sul, torneio.app) | Média |
 | **Monetização direta do jogador no BT** | Fora do BT existe (UTR, DUPR, Match! Tennis, myTennis, Playtomic Premium; valores: D2). No BT brasileiro não foi encontrada assinatura de jogador; a monetização é por inscrição, filiação e SaaS | Média |
@@ -337,7 +337,7 @@ Descritivo. Sem recomendação.
 
 | Padrão | Evidência | Força |
 | --- | --- | --- |
-| O incumbente está em transição | O incumbente lançou v10 e v11 em ago/2026 com nova identidade e "nova fase"; Tênis Integrado lançou ~25 versões em 12 meses; Meu Ranking reescreveu o app (v16, set/2025) | Forte (Lido) |
+| O concorrente principal está em transição | O concorrente principal lançou v10 e v11 em ago/2026 com nova identidade e "nova fase"; Tênis Integrado lançou ~25 versões em 12 meses; Meu Ranking reescreveu o app (v16, set/2025) | Forte (Lido) |
 | Entrantes novos copiam o vocabulário do jogador competitivo | Ranketes (2026): temporada, H2H da temporada, Finals, desafio com data, selo de top 10 | Forte (Lido) |
 | O preço do SaaS de arena BR converge para uma faixa mensal estreita | Arena Online, Atacante e Ranketes têm mensalidades próximas (valores: D2) | Média (2 de 3 por resumo) |
 | Players de reserva cobram por transação do jogador | Minha Quadra (comissão por reserva); Playtomic (taxa por reserva); PickleballBrackets (taxa fixa + percentual) | Média |
@@ -347,4 +347,4 @@ Descritivo. Sem recomendação.
 
 ## 8. Identificadores de loja
 
-A tabela de identificadores de loja (pacote Android e id iOS de cada produto, para coleta de reviews) saiu do repo: evidência: documento D2 ("Evidência: concorrentes e incumbente (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear.
+A tabela de identificadores de loja (pacote Android e id iOS de cada produto, para coleta de reviews) saiu do repo: evidência: documento D2 ("Evidência: concorrentes (preços, números, ids de loja)"), projeto Discovery e estratégia no Linear.

@@ -33,7 +33,7 @@ As siglas de decisão são as mesmas do `docs/DOMAIN.md` > "Fontes". As que esta
 
 ## 1. Princípio
 
-**Cinco destinos, um lugar para cada coisa.** O problema 2 do incumbente é de arquitetura de informação: a mesma ação em vários lugares, busca duplicada e perfil sobrecarregado (`docs/PRODUCT.md` > "Problemas do incumbente que o produto resolve"). A resposta desta spec é uma regra só, aplicada a tudo: **cada entidade tem uma rota, e cada ação tem uma casa**. Os atalhos (bloco de pendências, notificação, badge) levam até a casa; eles não viram uma segunda casa.
+**Cinco destinos, um lugar para cada coisa.** O problema 2 do concorrente principal é de arquitetura de informação: a mesma ação em vários lugares, busca duplicada e perfil sobrecarregado (`docs/PRODUCT.md` > "Problemas do concorrente principal que o produto quer resolver (hipóteses)"). A resposta desta spec é uma regra só, aplicada a tudo: **cada entidade tem uma rota, e cada ação tem uma casa**. Os atalhos (bloco de pendências, notificação, badge) levam até a casa; eles não viram uma segunda casa.
 
 | Problema do audit | Como esta spec resolve |
 | --- | --- |

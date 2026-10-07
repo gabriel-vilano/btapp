@@ -35,7 +35,7 @@ Perfis vistos neste discovery. A proposta de amostra é um ponto de partida, e a
 2. Consegue lembrar um evento específico com detalhe.
 3. Mistura de porte: pelo menos uma arena com até 4 quadras e uma com 8 ou mais.
 4. Mistura de região: pelo menos uma fora de SP.
-5. Mistura de ferramenta: pelo menos um que usa sistema (o incumbente, Tênis Integrado, outro) e um que usa principalmente WhatsApp e planilha.
+5. Mistura de ferramenta: pelo menos um que usa sistema (o concorrente principal, Tênis Integrado, outro) e um que usa principalmente WhatsApp e planilha.
 
 ---
 
